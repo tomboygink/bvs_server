@@ -1,0 +1,30 @@
+{
+  "name": "001",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run_server": "node ./server/server/server/main.js",
+    "run_installer": "node ./server/installer/x_installer/main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/material": "^5.10.11",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
+    "hbs": "^4.2.0",
+    "mobx": "^6.6.2",
+    "mobx-react": "^7.5.3",
+    "pg": "^8.8.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ws": "^8.10.0"
+  }
+}
