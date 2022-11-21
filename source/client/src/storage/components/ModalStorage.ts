@@ -1,4 +1,9 @@
 import { observable, action, computed, makeAutoObservable } from 'mobx';
+import { configure } from "mobx"
+
+configure({
+    enforceActions: "never",
+})
 
 import { IWSQuery, WSQuery, IWSResult } from '../../../../xcore/WSQuery';
 import { WSocket } from '../WSocket'; 

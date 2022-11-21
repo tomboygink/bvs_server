@@ -11,11 +11,14 @@ interface IProps{}
 export class ChangeUserData extends React.Component<IProps> {
     constructor(props:any){
         super(props);
+     
     }
-      render(): React.ReactNode {
+     
+    componentDidMount(): void {
       let user =  APP_STORAGE.auth_form.user;
       if(APP_STORAGE.personal_acc.getFamily() === ''){
-      APP_STORAGE.personal_acc.setFamily(user.family)  
+            
+      APP_STORAGE.personal_acc.setFamily(user.name)  
       }
 
       if(APP_STORAGE.personal_acc.getName() === ''){
@@ -34,15 +37,18 @@ export class ChangeUserData extends React.Component<IProps> {
       if(APP_STORAGE.personal_acc.getEmail() === ''){
       APP_STORAGE.personal_acc.setEmail(user.email)  
       }
-
-      if(APP_STORAGE.personal_acc.getInfo() === ''){
-      APP_STORAGE.personal_acc.setInfo(user.info)  
-      }
+      
 
       if(APP_STORAGE.personal_acc.getLogin() === ''){
       APP_STORAGE.personal_acc.setLogin(user.login)  
       }
 
+        
+  }
+
+
+      render(): React.ReactNode {
+      
 
       return (
       <React.Fragment>
@@ -56,6 +62,7 @@ export class ChangeUserData extends React.Component<IProps> {
               size='small'
               onChange={ (e)=>{ APP_STORAGE.personal_acc.setFamily(e.target.value);; } }
               value={ APP_STORAGE.personal_acc.getFamily() || '' } />
+          
 
 
         <Typography variant="caption">Имя:</Typography>
@@ -63,7 +70,7 @@ export class ChangeUserData extends React.Component<IProps> {
               fullWidth 
               size='small'
               onChange={ (e)=>{ APP_STORAGE.personal_acc.setName(e.target.value); } }
-              value={ APP_STORAGE.personal_acc.getName() || user.name} />
+              value={ APP_STORAGE.personal_acc.getName() || ''} />
 
 
         <Typography variant="caption" >Отчество:</Typography>
@@ -71,7 +78,7 @@ export class ChangeUserData extends React.Component<IProps> {
               fullWidth  
               size='small' 
               onChange={ (e)=>{ APP_STORAGE.personal_acc.setFather(e.target.value); } }
-              value={ APP_STORAGE.personal_acc.getFather() || user.father }  />
+              value={ APP_STORAGE.personal_acc.getFather() ||'' }  />
 
       
         <Typography variant="caption">Телофон:</Typography>
@@ -83,7 +90,7 @@ export class ChangeUserData extends React.Component<IProps> {
               type="tel"
               required
               onChange={ (e)=>{ APP_STORAGE.personal_acc.setTelephone(e.target.value); } }
-              value={ APP_STORAGE.personal_acc.getTelephone() || user.telephone } />
+              value={ APP_STORAGE.personal_acc.getTelephone()} />
 
 
         <Typography variant="caption">E-mail:</Typography>
@@ -95,16 +102,15 @@ export class ChangeUserData extends React.Component<IProps> {
               type = 'email'
               required
               onChange={ (e)=>{ APP_STORAGE.personal_acc.setEmail(e.target.value); } }
-              value={ APP_STORAGE.personal_acc.getEmail() || user.email} />
-
+              value={ APP_STORAGE.personal_acc.getEmail() || ''} />
+              
 
         <Typography variant="caption">Примечание:</Typography>
         <TextField 
               fullWidth 
               size='small'
               onChange={ (e)=>{ APP_STORAGE.personal_acc.setInfo(e.target.value); } }
-              value={ APP_STORAGE.personal_acc.getInfo()  || user.info}  />
-
+              value={ APP_STORAGE.personal_acc.getInfo()  || ''}  />
       
         </Box>
         <Divider/>
