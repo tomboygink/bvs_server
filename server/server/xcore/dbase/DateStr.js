@@ -73,7 +73,7 @@ function strToDate(str_dt) {
     if (dtx.length > 2) {
         var ret_dt = dtx[2].trim() + "-" + dtx[1].trim() + "-" + dtx[0].trim();
         var dres = Date.parse(ret_dt);
-        if (dres === NaN)
+        if (Number.isNaN(ret_dt) === true)
             return null;
         return new Date(dres);
     }
@@ -97,7 +97,7 @@ function strToDateTime(str_dt) {
         dt_str += "T00:00:00";
     }
     ret_dt = Date.parse(dt_str);
-    if (ret_dt === NaN)
+    if (Number.isNaN(ret_dt) === true)
         return null;
     return ret_dt;
 }
@@ -119,7 +119,7 @@ function sqlToDateTime(str_dt) {
         dt_str += "T00:00:00";
     }
     ret_dt = Date.parse(dt_str);
-    if (ret_dt === NaN)
+    if (Number.isNaN(ret_dt) === true)
         return null;
     return ret_dt;
 }

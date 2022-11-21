@@ -74,4 +74,8 @@ export class SessionsTable {
         return '';
     }
 
+    async deleteSess(){
+        await this.db.query("SELECT DeleteSessions('"+this.args.sess_id+"')");
+    }
+
 }
