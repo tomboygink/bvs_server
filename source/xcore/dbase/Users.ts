@@ -78,7 +78,11 @@ export class UserTable {
         for (var r in db_res.rows) {
             result.push(db_res.rows[r]);
         }
-        return result;
+        if (crypto.createHmac('sha256', CONFIG.key_code).update(this.args.new_password).digest('hex') === result[0].password)
+        {
+            return result;
+        }
+        else{return [];}
     }
 
 }

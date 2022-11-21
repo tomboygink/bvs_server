@@ -10,7 +10,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
     var wsres: IWSResult = new WSResult(q.cmd);
 
 
-    console.log(q);
+    //console.log(q);
 
     var sess_code;
     var data;
@@ -75,8 +75,18 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
             else {
                 ut = new UserTable(q.args, q.sess_code);
-                wsres.data = await ut.changePass();
-                wsres.code = q.sess_code;
+                data = await ut.changePass();
+                if(data[0] === undefined)
+                {
+                    wsres.error = 'Старый пароль не верен';
+                    wsres.code = q.sess_code;
+                    wsres.data = []
+                }
+                else{
+                    wsres.data = data;
+                    wsres.code = q.sess_code;
+                    wsres.error = '';
+                }
             }     
 
         } break;

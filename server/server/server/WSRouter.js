@@ -42,12 +42,11 @@ var Sessions_1 = require("../xcore/dbase/Sessions");
 var Users_1 = require("../xcore/dbase/Users");
 function WSRoute(_ws, q) {
     return __awaiter(this, void 0, void 0, function () {
-        var wsres, sess_code, data, _a, st, ut, code, ut, st, _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var wsres, sess_code, data, _a, st, ut, code, ut, st;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
                     wsres = new WSQuery_1.WSResult(q.cmd);
-                    console.log(q);
                     _a = q.cmd;
                     switch (_a) {
                         case 'get_UserBySessionCode': return [3, 1];
@@ -62,10 +61,10 @@ function WSRoute(_ws, q) {
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, st.selectSessCode()];
                 case 2:
-                    code = _c.sent();
+                    code = _b.sent();
                     return [4, ut.selectUserBySessCode()];
                 case 3:
-                    data = _c.sent();
+                    data = _b.sent();
                     if (code[0] == undefined) {
                         wsres.error = "Данного кода сессии не существует";
                     }
@@ -80,10 +79,10 @@ function WSRoute(_ws, q) {
                     st = new Sessions_1.SessionsTable(q.args);
                     return [4, st.insertSess()];
                 case 5:
-                    sess_code = _c.sent();
+                    sess_code = _b.sent();
                     return [4, ut.selectUser()];
                 case 6:
-                    data = _c.sent();
+                    data = _b.sent();
                     if (sess_code === '' && data[0] === undefined) {
                         wsres.error = "Пользователя не существует или введены не верные данные";
                     }
@@ -96,7 +95,7 @@ function WSRoute(_ws, q) {
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, ut.updateUser()];
                 case 8:
-                    data = _c.sent();
+                    data = _b.sent();
                     if (data[0] === undefined) {
                         wsres.error = "Пользователя не существует";
                     }
@@ -119,12 +118,20 @@ function WSRoute(_ws, q) {
                     return [3, 13];
                 case 11:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
-                    _b = wsres;
                     return [4, ut.changePass()];
                 case 12:
-                    _b.data = _c.sent();
-                    wsres.code = q.sess_code;
-                    _c.label = 13;
+                    data = _b.sent();
+                    if (data[0] === undefined) {
+                        wsres.error = 'Старый пароль не верен';
+                        wsres.code = q.sess_code;
+                        wsres.data = [];
+                    }
+                    else {
+                        wsres.data = data;
+                        wsres.code = q.sess_code;
+                        wsres.error = '';
+                    }
+                    _b.label = 13;
                 case 13: return [3, 16];
                 case 14:
                     {
