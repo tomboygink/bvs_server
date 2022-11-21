@@ -3,7 +3,7 @@ import { IWSQuery, IWSResult, WSQuery } from '../../../xcore/WSQuery';
 import { PageStorage } from './PageStorage';
 import { AuthFormStorage } from './components/AuthFormStorage';
 import { AppBarStorage } from './components/AppBarStorage';
-import { PersonalAccauntStorage } from './components/PersonalAccauntStorage';
+import { PersonalAccauntStorage } from './components/ModalStorage';
 import { WSocket } from './WSocket';
 import {getCookie , setCookie, deleteCookie }  from './browserCookes'
 import { UsersEntity } from '../../../xcore/dbase/Users';
@@ -48,10 +48,8 @@ class AppStorage {
 
         var q:IWSQuery = new WSQuery('get_UserBySessionCode', { code: ss_code });
         (await WSocket.get()).send(q);
-        console.log(q); 
     }
-
-   
+ 
 };
 
 export const APP_STORAGE: AppStorage = new AppStorage();
