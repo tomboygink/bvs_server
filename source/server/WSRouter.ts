@@ -59,21 +59,34 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             data = await ut.updateUser();
             if (data[0] === undefined) { wsres.error = "Пользователя не существует"; }
             else { wsres.data = data; wsres.code = q.sess_code }
-        }break;
-        
-        
-        case 'set_ChangePass': { 
+        } break;
 
-        }break;
 
-        case 'deleteCookie':{
+        case 'set_ChangePass': {
+            if (q.args.new_password === q.args.old_password) {
+                wsres.error = 'Новый пароль не должен повторять старый';
+                wsres.data = [];
+                wsres.code = q.sess_code;
+            }
+            else if (q.args.login === q.args.new_password) {
+                wsres.error = 'Пароль не должен совпадать с логином';
+                wsres.data = [];
+                wsres.code = q.sess_code;
+            }
+            else {
+                ut = new UserTable(q.args, q.sess_code);
+                wsres.data = await ut.changePass();
+                wsres.code = q.sess_code;
+            }     
+
+        } break;
+
+        case 'deleteCookie': {
             st = new SessionsTable(q.args);
             st.deleteSess();
-            wsres.code='';
-            wsres.data=[];
-        }break;
-
-
+            wsres.code = '';
+            wsres.data = [];
+        } break;
 
         //другие коды которые не описаны 
         default: {

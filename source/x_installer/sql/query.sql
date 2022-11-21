@@ -275,7 +275,7 @@ as $$
 	WHERE sessions.sess_code = c_sess_code
 $$ LANGUAGE sql;
 
---Обновление пользователя 
+--Обновление данных пользователя 
 DROP FUNCTION IF EXISTS UpdateUser;
 create function UpdateUser(
 	c_sess_code VARCHAR(250),
@@ -321,6 +321,43 @@ SET
 	act_mail = CASE WHEN ((SELECT email FROM users WHERE login=c_login) <> c_email) THEN (false) ELSE (SELECT act_mail FROM users WHERE login=c_login) END,
 	email=c_email,
  	info = c_info
+WHERE login=c_login;
+SELECT * FROM SelectUserBySessCode(c_sess_code)
+$$ LANGUAGE sql;
+
+--Обновление пароля пользователя
+DROP FUNCTION IF EXISTS ChangePass;
+create function ChangePass(
+	c_sess_code VARCHAR(250),
+	c_login VARCHAR(250),
+	c_new_password VARCHAR(250),
+	c_old_password VARCHAR(250)
+)
+RETURNS TABLE (
+	id BIGINT, 
+	login VARCHAR(250), 
+	password VARCHAR(250), 
+	family VARCHAR(150), 
+	name VARCHAR(150), 
+	father VARCHAR(150), 
+	telephone VARCHAR(50), 
+	email VARCHAR(150), 
+	org_id BIGINT, 
+	job_title_id BIGINT, 
+	roles_ids JSON,
+	user_data JSON, 
+	mail_code VARCHAR(250), 
+	act_mail BOOLEAN, 
+	re_password_code VARCHAR(250), 
+	deleted BOOLEAN, 
+	deleted_date TIMESTAMP, 
+	created_at TIMESTAMP, 
+	info TEXT
+)
+as $$
+UPDATE users
+SET
+	password = CASE WHEN ((SELECT password FROM users WHERE login=c_login AND password=c_old_password) <> c_new_password) THEN (c_new_password) ELSE (SELECT password FROM users WHERE login=c_login) END
 WHERE login=c_login;
 SELECT * FROM SelectUserBySessCode(c_sess_code)
 $$ LANGUAGE sql;

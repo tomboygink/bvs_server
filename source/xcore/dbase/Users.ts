@@ -59,6 +59,7 @@ export class UserTable {
         return result;
     }
 
+    //Изменение данных пользователя 
     async updateUser(): Promise<UsersEntity[]> {
         var db_res = await this.db.query("SELECT * FROM UpdateUser('" + this.sess_code + "', '"+this.args.login+"','"+
         this.args.family+"','"+this.args.name+"','"+this.args.father+"','"+this.args.telephone+"','"+this.args.email+"','"+this.args.info+"')");
@@ -68,6 +69,16 @@ export class UserTable {
         }
         return result;
 
+    }
+
+    //Изменения пароля из панели управления
+    async changePass():Promise<UsersEntity[]>{
+        var db_res = await this.db.query("SELECT * FROM ChangePass('" + this.sess_code + "', '"+this.args.login+"','"+ crypto.createHmac('sha256', CONFIG.key_code).update(this.args.new_password).digest('hex')+"','"+ crypto.createHmac('sha256', CONFIG.key_code).update(this.args.old_password).digest('hex') +"')");
+        var result: UsersEntity[] = new Array();
+        for (var r in db_res.rows) {
+            result.push(db_res.rows[r]);
+        }
+        return result;
     }
 
 }
