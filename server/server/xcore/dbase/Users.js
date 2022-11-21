@@ -138,7 +138,13 @@ var UserTable = (function () {
                         for (r in db_res.rows) {
                             result.push(db_res.rows[r]);
                         }
-                        return [2, result];
+                        if (crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.new_password).digest('hex') === result[0].password) {
+                            return [2, result];
+                        }
+                        else {
+                            return [2, []];
+                        }
+                        return [2];
                 }
             });
         });
