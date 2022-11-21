@@ -39,14 +39,11 @@ export class Modal extends React.Component<IProps> {
 
       <CloseIcon  
           onClick={()=>{ APP_STORAGE.personal_acc.setPersonalAccaunt(false); }}/>
-
       </Box>  
       
       <Divider 
           sx = {{marginBottom: '20px'}}/>
-     
-      {modal_date}  
-      
+          {modal_date}    
       </Box>
       </Dialog>
       </React.Fragment>
