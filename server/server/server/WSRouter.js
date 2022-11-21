@@ -42,9 +42,9 @@ var Sessions_1 = require("../xcore/dbase/Sessions");
 var Users_1 = require("../xcore/dbase/Users");
 function WSRoute(_ws, q) {
     return __awaiter(this, void 0, void 0, function () {
-        var wsres, sess_code, data, _a, st, ut, code, ut, st;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var wsres, sess_code, data, _a, st, ut, code, ut, st, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
                     wsres = new WSQuery_1.WSResult(q.cmd);
                     console.log(q);
@@ -54,18 +54,18 @@ function WSRoute(_ws, q) {
                         case 'get_UserByAuth': return [3, 4];
                         case 'set_CUserData': return [3, 7];
                         case 'set_ChangePass': return [3, 9];
-                        case 'deleteCookie': return [3, 10];
+                        case 'deleteCookie': return [3, 14];
                     }
-                    return [3, 11];
+                    return [3, 15];
                 case 1:
                     st = new Sessions_1.SessionsTable(q.args);
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, st.selectSessCode()];
                 case 2:
-                    code = _b.sent();
+                    code = _c.sent();
                     return [4, ut.selectUserBySessCode()];
                 case 3:
-                    data = _b.sent();
+                    data = _c.sent();
                     if (code[0] == undefined) {
                         wsres.error = "Данного кода сессии не существует";
                     }
@@ -74,16 +74,16 @@ function WSRoute(_ws, q) {
                         wsres.code = sess_code;
                         wsres.data = data;
                     }
-                    return [3, 12];
+                    return [3, 16];
                 case 4:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     st = new Sessions_1.SessionsTable(q.args);
                     return [4, st.insertSess()];
                 case 5:
-                    sess_code = _b.sent();
+                    sess_code = _c.sent();
                     return [4, ut.selectUser()];
                 case 6:
-                    data = _b.sent();
+                    data = _c.sent();
                     if (sess_code === '' && data[0] === undefined) {
                         wsres.error = "Пользователя не существует или введены не верные данные";
                     }
@@ -91,12 +91,12 @@ function WSRoute(_ws, q) {
                         wsres.code = sess_code;
                         wsres.data = data;
                     }
-                    return [3, 12];
+                    return [3, 16];
                 case 7:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, ut.updateUser()];
                 case 8:
-                    data = _b.sent();
+                    data = _c.sent();
                     if (data[0] === undefined) {
                         wsres.error = "Пользователя не существует";
                     }
@@ -104,25 +104,42 @@ function WSRoute(_ws, q) {
                         wsres.data = data;
                         wsres.code = q.sess_code;
                     }
-                    return [3, 12];
+                    return [3, 16];
                 case 9:
-                    {
-                    }
-                    return [3, 12];
+                    if (!(q.args.new_password === q.args.old_password)) return [3, 10];
+                    wsres.error = 'Новый пароль не должен повторять старый';
+                    wsres.data = [];
+                    wsres.code = q.sess_code;
+                    return [3, 13];
                 case 10:
+                    if (!(q.args.login === q.args.new_password)) return [3, 11];
+                    wsres.error = 'Пароль не должен совпадать с логином';
+                    wsres.data = [];
+                    wsres.code = q.sess_code;
+                    return [3, 13];
+                case 11:
+                    ut = new Users_1.UserTable(q.args, q.sess_code);
+                    _b = wsres;
+                    return [4, ut.changePass()];
+                case 12:
+                    _b.data = _c.sent();
+                    wsres.code = q.sess_code;
+                    _c.label = 13;
+                case 13: return [3, 16];
+                case 14:
                     {
                         st = new Sessions_1.SessionsTable(q.args);
                         st.deleteSess();
                         wsres.code = '';
                         wsres.data = [];
                     }
-                    return [3, 12];
-                case 11:
+                    return [3, 16];
+                case 15:
                     {
                         wsres.error = "\u041A\u043E\u043C\u0430\u043D\u0434\u0430 \"".concat(q.cmd, "\" \u043D\u0435 \u0440\u0430\u0441\u043F\u043E\u0437\u043D\u0430\u043D\u0430");
                     }
-                    return [3, 12];
-                case 12:
+                    return [3, 16];
+                case 16:
                     _ws.send((0, WSQuery_1.WSStr)(wsres));
                     return [2];
             }
