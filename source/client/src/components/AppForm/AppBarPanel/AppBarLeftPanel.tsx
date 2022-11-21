@@ -18,6 +18,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
     constructor(props:any){
         super(props);     
     }
+
  
     render(): React.ReactNode {
         return (

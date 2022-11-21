@@ -8,12 +8,11 @@ export class PersonalAccauntStorage{
   
     @observable PersonalAccaunt: boolean = false; 
 
-    @observable change_password: boolean = false;  /// Для кнопки смены пароля
-
     @observable family:string = '';
     @observable name:string = '';
     @observable father:string = '';
     @observable telephone:string = '';
+    @observable login:string = '';
     @observable old_password:string = '';
     @observable new_password:string= '';
     @observable repeat_password:string = '';
@@ -28,6 +27,8 @@ export class PersonalAccauntStorage{
 
     @observable errr_new_pass:boolean=false;
     @observable error_new_message:string=null;
+    
+    @observable modal:number=null
   
 
     ////////////////////////////////////валидация формы
@@ -37,6 +38,8 @@ export class PersonalAccauntStorage{
 
     @observable phone_err:boolean=false; ///ошибка при вводе адреса электронной почты
     @observable phone_err_mess:string = '';///сообщение об ошибке адреса электронной почты
+
+    @observable modal_title:string = ''
  
     constructor(){
         makeAutoObservable(this);
@@ -45,6 +48,12 @@ export class PersonalAccauntStorage{
    
     @action setPersonalAccaunt(val:boolean){ this.PersonalAccaunt = val; } 
     @computed getPersonalAccaunt():boolean{ return this.PersonalAccaunt; } 
+
+    @action setModal(val:number){ this.modal = val; } 
+    @computed getModal():number{ return this.modal; } 
+
+    @action setModalTitle(val:string){ this.modal_title = val; } 
+    @computed getModalTitle():string{ return this.modal_title; } 
 
     /////////////Проверка формы перед отправкой на сервер (Валидация формы)
     @action setError_emain(val:boolean){ this.email_err = val; }
@@ -64,6 +73,9 @@ export class PersonalAccauntStorage{
 
 
 //////////////////////////////////////////////Для проверки пароля
+
+    @action setLogin(val:string){ this.login = val; }
+    @computed getLogin():string{ return this.login; }
 
     @action setError_pass(val:boolean){ this.error_pass = val; }
     @computed getError_pass():boolean{ return this.error_pass; }
@@ -145,7 +157,9 @@ export class PersonalAccauntStorage{
         }
         
         if (this.getName() !== '' && this.getFather() !== '' && this.getTelephone() !== '' && this.getEmail() !== '' &&  this.getError_phone() == false &&  this.getError_emain () === false) {
-        q.args = { family: this.getFamily(), 
+        q.args = { 
+            family: this.getFamily(), 
+            login:this.getLogin(),
             name:this.getName(), 
             father:this.getFather(),
             telephone:this.getTelephone(),
@@ -158,8 +172,6 @@ export class PersonalAccauntStorage{
       (await WSocket.get()).send(q);
        }
     }
-
-
 
     async set_ChangePass(name: string, value: any, _options?: any) {
         var sess_code = value;
@@ -201,7 +213,8 @@ export class PersonalAccauntStorage{
 
        if (this.getOld_Pass() !== '' && this.getNew_Pass() !== '' && this.getNew_Pass() ===  this.getRepeat_password() && this.getNew_Pass().length > 6) {
            
-        q.args = { 
+        q.args = {
+            login:this.getLogin(), 
             old_password:this.getOld_Pass(), 
             new_password:this.getNew_Pass(),
             repeat_password:this.getRepeat_password()

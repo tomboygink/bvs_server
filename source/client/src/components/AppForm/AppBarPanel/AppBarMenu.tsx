@@ -30,9 +30,22 @@ export class AccountMenu extends React.Component<IProps> {
             };
             (await WSocket.get()).send(q);
             APP_STORAGE.auth_form.setUser(null);
-            deleteCookie('sess_id', APP_STORAGE.auth_form.getdt() )  
+            deleteCookie('sess_id', APP_STORAGE.auth_form.getdt() ) 
+            console.log('Delete sess_id :', APP_STORAGE.auth_form.getdt() )
             }
+
+    async ChangeCUserData( ) {
+        APP_STORAGE.personal_acc.setModal(1);
+        APP_STORAGE.personal_acc.setPersonalAccaunt(true);
+        APP_STORAGE.personal_acc.setModalTitle('Изменение данных')
+        }
  
+
+    async ChangePassword () {
+        APP_STORAGE.personal_acc.setModal(2);
+        APP_STORAGE.personal_acc.setPersonalAccaunt(true);
+        APP_STORAGE.personal_acc.setModalTitle('Изменение пароля')
+    }
     render(): React.ReactNode {
 
         const user =  APP_STORAGE.auth_form.user;
@@ -64,13 +77,13 @@ export class AccountMenu extends React.Component<IProps> {
             </MenuItem>
             <Divider />
              
-            <MenuItem onClick={()=>{ APP_STORAGE.personal_acc.setPersonalAccaunt(true); }} >
+            <MenuItem  onClick={ ()=>{this.ChangeCUserData();}}>
             <ListItemIcon>
             <CreateIcon fontSize="small" />
             </ListItemIcon>  Изменить данные пользователя
             </MenuItem>
 
-            <MenuItem >
+            <MenuItem onClick= {()=> {this.ChangePassword(); }}>
             <ListItemIcon>
             <LockOpenIcon fontSize="small" />
             </ListItemIcon>  Изменить пароль

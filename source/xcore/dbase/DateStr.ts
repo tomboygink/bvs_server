@@ -113,8 +113,10 @@ export function sqlToDateTime(str_dt:string){
     }
 
     ret_dt = Date.parse(dt_str);
+
     //if(ret_dt === NaN) return null;
     if(Number.isNaN(ret_dt) === true) return null;
+
 
     return ret_dt;
 }
