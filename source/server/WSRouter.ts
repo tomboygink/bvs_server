@@ -62,8 +62,16 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         }break;
         
         
-        case 'set_ChangePass': { }
-            break;
+        case 'set_ChangePass': { 
+
+        }break;
+
+        case 'deleteCookie':{
+            st = new SessionsTable(q.args);
+            st.deleteSess();
+            wsres.code='';
+            wsres.data=[];
+        }break;
 
 
 

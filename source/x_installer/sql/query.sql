@@ -93,6 +93,15 @@ as $$
 	WHERE sess_code = c_sess_code
 $$ LANGUAGE sql;
 
+--Удаление сесси при выходе 
+DROP FUNCTION IF EXISTS DeleteSessions;
+CREATE OR REPLACE FUNCTION DeleteSessions (
+	c_sess_code VARCHAR(250)
+) RETURNS VOID AS $$
+	DELETE FROM sessions WHERE sess_code=c_sess_code
+$$ 
+LANGUAGE sql;
+
 
 
 
