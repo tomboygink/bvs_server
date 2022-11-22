@@ -13,6 +13,10 @@ export class ChangePassword extends React.Component<IProps> {
         super(props);
     }
 
+    async saveСhanges( ) {
+        APP_STORAGE.personal_acc.set_ChangePass('sess_id', APP_STORAGE.auth_form.getdt())
+        }
+
     render(): React.ReactNode {
      const user =  APP_STORAGE.auth_form.user;
      if(APP_STORAGE.personal_acc.getLogin() === ''){
@@ -24,7 +28,7 @@ export class ChangePassword extends React.Component<IProps> {
                   <Box> 
 {/* ---------------------------------------смена пароля */}
                  <form> 
-                <Typography variant="caption">Старый пароль:</Typography>
+                <Typography variant="caption" sx = {{color: '#0D80D8'}}>Старый пароль:</Typography>
                 <TextField 
                         fullWidth 
                         size='small'
@@ -37,7 +41,7 @@ export class ChangePassword extends React.Component<IProps> {
                         value={ APP_STORAGE.personal_acc.getOld_Pass() || '' } />
                         
 
-                <Typography variant="caption">Новый пароль:</Typography>
+                <Typography variant="caption" sx = {{color: '#0D80D8'}}>Новый пароль:</Typography>
                 <TextField 
                         fullWidth
                         size='small' 
@@ -52,13 +56,13 @@ export class ChangePassword extends React.Component<IProps> {
 
            
 
-                <Typography variant="caption">Подтверждение пароля:</Typography>
+                <Typography variant="caption" sx = {{color: '#0D80D8'}}>Подтверждение пароля:</Typography>
                 <TextField
                     fullWidth
                     name="password"
                     autoComplete="on"
                     error={APP_STORAGE.personal_acc.getError_pass()}
-                    helperText= {APP_STORAGE.personal_acc.getError_message()}
+                    helperText= {APP_STORAGE.personal_acc.getError_message()|| APP_STORAGE.personal_acc.getCmdErrPass()}
                     size='small' 
                     type="password"
                     onChange={ (e)=>{ APP_STORAGE.personal_acc.setRepeat_password(e.target.value); } }
@@ -71,7 +75,7 @@ export class ChangePassword extends React.Component<IProps> {
 
                 <Button   sx ={{mr: 2}}     
                     variant="outlined"
-                    onClick={ ()=>{ APP_STORAGE.personal_acc.set_ChangePass('sess_id', APP_STORAGE.auth_form.getdt())}}>
+                      onClick={ ()=>{this.saveСhanges();}}>   
                     Сохранить
                 </Button>
                 </Box>

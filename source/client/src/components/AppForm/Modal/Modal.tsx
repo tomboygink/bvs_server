@@ -28,7 +28,8 @@ export class Modal extends React.Component<IProps> {
       return (
       <React.Fragment>
 
-      <Dialog open={APP_STORAGE.personal_acc.getPersonalAccaunt()}>
+      <Dialog open={APP_STORAGE.personal_acc.getPersonalAccaunt()}  fullWidth >
+       
       <Box  sx={{p: 2}}>
 
       <Box className='ModalTitle' sx = { {display: 'flex' , justifyContent: 'space-between', mb: '12px'}}> 
