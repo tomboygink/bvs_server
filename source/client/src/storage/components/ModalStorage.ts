@@ -40,7 +40,7 @@ export class PersonalAccauntStorage{
     @observable cmd_error_pass: string = null;
     @observable cmd_error_data: string = null;
   
-    @observable checked_email: boolean = null; /// потдверждение  пароля
+    @observable checked_email: boolean = false; /// потдверждение  пароля
     ////////////////////////////////////валидация формы
 
     
@@ -185,6 +185,7 @@ export class PersonalAccauntStorage{
             father:this.getFather(),
             telephone:this.getTelephone(),
             email:this.getEmail(),
+            confirm_email : this.getChecked(),
             info:this.getInfo()
          };
          q.sess_code = sess_code;

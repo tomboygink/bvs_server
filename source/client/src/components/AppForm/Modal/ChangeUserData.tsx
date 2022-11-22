@@ -19,8 +19,7 @@ export class ChangeUserData extends React.Component<IProps> {
       }
 
     async confirmEmail () {
-   
-      
+      alert('fuydgfydsfgdfs') 
     }
     
 
@@ -58,7 +57,10 @@ export class ChangeUserData extends React.Component<IProps> {
 
 
       render(): React.ReactNode {
-      
+            const checked = APP_STORAGE.modal.getChecked();
+            const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+                  APP_STORAGE.modal.setChecked(event.target.checked);
+                };
       return (
       <React.Fragment>
 
@@ -115,10 +117,10 @@ export class ChangeUserData extends React.Component<IProps> {
               value={ APP_STORAGE.modal.getEmail() || ''} /> 
 
       <Checkbox
-            // checked={ () => {this.confirmEmail}}
-            ///onChange={handleChange}
+             checked={checked}
+            onChange={handleChange}
             id="myCheck"
-            onChange = { () => {this.confirmEmail}}
+            //onChange = { () => {this.confirmEmail}}
             inputProps={{ 'aria-label': 'controlled' }}
     />
       </Box>        
