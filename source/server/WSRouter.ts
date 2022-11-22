@@ -5,6 +5,10 @@ import { IWSQuery, IWSResult, WSResult, WSStr } from '../xcore/WSQuery';
 import { SessionsTable } from '../xcore/dbase/Sessions';
 import { UserTable } from '../xcore/dbase/Users';
 
+
+import {SendMail} from '../xcore/mailer/sendMail';
+
+
 export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
     // начало - создание ответа
     var wsres: IWSResult = new WSResult(q.cmd);
@@ -52,8 +56,11 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.code = sess_code;
                 wsres.data = data;
             }
+
         } break;
 
+
+        //Смена данных пользователя
         case 'set_CUserData': {
             ut = new UserTable(q.args, q.sess_code);
             data = await ut.updateUser();
@@ -62,6 +69,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         } break;
 
 
+        //Смена пароля пользователя
         case 'set_ChangePass': {
             if (q.args.new_password === q.args.old_password) {
                 wsres.error = 'Новый пароль не должен повторять старый';
@@ -96,6 +104,15 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             st.deleteSess();
             wsres.code = '';
             wsres.data = [];
+        } break;
+
+        case 'set_ActMail':{
+            //ТЕСТ ОТПРАВКИ СООБЩЕНИЙ В ПОЧТУ 
+            //ГЕНЕРАЦИЯ КОДА id_login_email
+
+            var sendMail = new SendMail();
+            sendMail.send();
+            //При подтверждении обновление данных по коду
         } break;
 
         //другие коды которые не описаны 
