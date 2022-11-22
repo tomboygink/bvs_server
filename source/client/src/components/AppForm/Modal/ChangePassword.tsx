@@ -14,13 +14,13 @@ export class ChangePassword extends React.Component<IProps> {
     }
 
     async saveСhanges( ) {
-        APP_STORAGE.personal_acc.set_ChangePass('sess_id', APP_STORAGE.auth_form.getdt())
+        APP_STORAGE.modal.set_ChangePass('sess_id', APP_STORAGE.auth_form.getdt())
         }
 
     render(): React.ReactNode {
      const user =  APP_STORAGE.auth_form.user;
-     if(APP_STORAGE.personal_acc.getLogin() === ''){
-        APP_STORAGE.personal_acc.setLogin(user.login)  
+     if(APP_STORAGE.modal.getLogin() === ''){
+        APP_STORAGE.modal.setLogin(user.login)  
         }
      
         return (
@@ -34,11 +34,11 @@ export class ChangePassword extends React.Component<IProps> {
                         size='small'
                         name="password"
                         autoComplete='on'
-                        error={APP_STORAGE.personal_acc.getErrr_old_pass()}
-                        helperText= {APP_STORAGE.personal_acc.getError_old_message()}
+                        error={APP_STORAGE.modal.getErrr_old_pass()}
+                        helperText= {APP_STORAGE.modal.getError_old_message()}
                         type="password"
-                        onChange={ (e)=>{ APP_STORAGE.personal_acc.setOld_Pass(e.target.value); } }
-                        value={ APP_STORAGE.personal_acc.getOld_Pass() || '' } />
+                        onChange={ (e)=>{ APP_STORAGE.modal.setOld_Pass(e.target.value); } }
+                        value={ APP_STORAGE.modal.getOld_Pass() || '' } />
                         
 
                 <Typography variant="caption" sx = {{color: '#0D80D8'}}>Новый пароль:</Typography>
@@ -47,11 +47,11 @@ export class ChangePassword extends React.Component<IProps> {
                         size='small' 
                         name="password"
                         autoComplete="on"
-                        error={APP_STORAGE.personal_acc.getErrr_new_pass()}
+                        error={APP_STORAGE.modal.getErrr_new_pass()}
                         type="password"
-                        helperText= {APP_STORAGE.personal_acc.getError_new_message()}
-                        onChange={ (e)=>{ APP_STORAGE.personal_acc.setNew_Pass(e.target.value); } }
-                        value={ APP_STORAGE.personal_acc.getNew_Pass() || '' }  />
+                        helperText= {APP_STORAGE.modal.getError_new_message()}
+                        onChange={ (e)=>{ APP_STORAGE.modal.setNew_Pass(e.target.value); } }
+                        value={ APP_STORAGE.modal.getNew_Pass() || '' }  />
 
 
            
@@ -61,12 +61,12 @@ export class ChangePassword extends React.Component<IProps> {
                     fullWidth
                     name="password"
                     autoComplete="on"
-                    error={APP_STORAGE.personal_acc.getError_pass()}
-                    helperText= {APP_STORAGE.personal_acc.getError_message()|| APP_STORAGE.personal_acc.getCmdErrPass()}
+                    error={APP_STORAGE.modal.getError_pass()}
+                    helperText= {APP_STORAGE.modal.getError_message()|| APP_STORAGE.modal.getCmdErrPass()}
                     size='small' 
                     type="password"
-                    onChange={ (e)=>{ APP_STORAGE.personal_acc.setRepeat_password(e.target.value); } }
-                    value={ APP_STORAGE.personal_acc.getRepeat_password() || ''} />
+                    onChange={ (e)=>{ APP_STORAGE.modal.setRepeat_password(e.target.value); } }
+                    value={ APP_STORAGE.modal.getRepeat_password() || ''} />
                  </form>
                 </Box>
                 <Box 

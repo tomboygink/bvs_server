@@ -40,7 +40,7 @@ export class PersonalAccauntStorage{
     @observable cmd_error_pass: string = null;
     @observable cmd_error_data: string = null;
   
-
+    @observable checked_email: boolean = null; /// потдверждение  пароля
     ////////////////////////////////////валидация формы
 
     
@@ -56,6 +56,8 @@ export class PersonalAccauntStorage{
     constructor(){
         makeAutoObservable(this);
     }
+    @action setChecked(val:boolean) { this.checked_email = val}
+    @computed getChecked():boolean { return this.checked_email; }
      
     @action setCmdErrPass(val:string){ this.cmd_error_pass = val; } 
     @computed getCmdErrPass():string{ return this.cmd_error_pass; } 
@@ -175,7 +177,7 @@ export class PersonalAccauntStorage{
             this.setPhone_message('')
         }
         
-        if (this.getName() !== '' && this.getFather() !== '' && this.getTelephone() !== '' && this.getEmail() !== '' &&  this.getError_phone() == false &&  this.getError_emain () === false) {
+        if (this.getFamily() !== '' && this.getName() !== '' && this.getFather() !== '' && this.getTelephone() !== '' && this.getEmail() !== '' &&  this.getError_phone() == false &&  this.getError_emain () === false) {
         q.args = { 
             family: this.getFamily(), 
             login:this.getLogin(),

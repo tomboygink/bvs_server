@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 ;
-import {TextField, Box, Dialog , Divider , Typography } from '@mui/material';
+import {TextField, Box, Dialog , Divider , Typography} from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -20,33 +20,35 @@ export class Modal extends React.Component<IProps> {
     }
       render(): React.ReactNode {
       var modal_date:React.ReactNode = <></>;
-      if(APP_STORAGE.personal_acc.getModal() === 1 ) {
+      if(APP_STORAGE.modal.getModal() === 1 ) {
             modal_date = <ChangeUserData/>} 
-       else if (APP_STORAGE.personal_acc.getModal() === 2 ) { 
+       else if (APP_STORAGE.modal.getModal() === 2 ) { 
             modal_date = <ChangePassword/>;}
 
       return (
       <React.Fragment>
 
-      <Dialog open={APP_STORAGE.personal_acc.getPersonalAccaunt()}  fullWidth >
+      <Dialog open={APP_STORAGE.modal.getPersonalAccaunt()}  fullWidth >
        
       <Box  sx={{p: 2}}>
 
       <Box className='ModalTitle' sx = { {display: 'flex' , justifyContent: 'space-between', mb: '12px'}}> 
        
       <Typography> 
-          { APP_STORAGE.personal_acc.getModalTitle()}
+          { APP_STORAGE.modal.getModalTitle()}
       </Typography>
 
       <CloseIcon  
-          onClick={()=>{ APP_STORAGE.personal_acc.setPersonalAccaunt(false); }}/>
+          onClick={()=>{ APP_STORAGE.modal.setPersonalAccaunt(false); }}/>
       </Box>  
       
       <Divider 
           sx = {{marginBottom: '20px'}}/>
           {modal_date}    
       </Box>
+
       </Dialog>
+
       </React.Fragment>
         );
     }

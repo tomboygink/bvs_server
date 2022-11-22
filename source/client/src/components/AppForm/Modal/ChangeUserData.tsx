@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import {TextField, Box, Button , Divider , Typography } from '@mui/material';
+import {TextField, Box, Button , Divider , Typography, Checkbox } from '@mui/material';
 import { APP_STORAGE } from '../../../storage/AppStorage';
 
 interface IProps{}
@@ -15,36 +15,42 @@ export class ChangeUserData extends React.Component<IProps> {
     }
      
     async saveСhanges( ) {
-      APP_STORAGE.personal_acc.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt())
+      APP_STORAGE.modal.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt())
       }
+
+    async confirmEmail () {
+   
+      
+    }
+    
 
     componentDidMount(): void {
       let user =  APP_STORAGE.auth_form.user;
-      if(APP_STORAGE.personal_acc.getFamily() === ''){
+      if(APP_STORAGE.modal.getFamily() === ''){
             
-      APP_STORAGE.personal_acc.setFamily(user.family)  
+      APP_STORAGE.modal.setFamily(user.family)  
       }
 
-      if(APP_STORAGE.personal_acc.getName() === ''){
-      APP_STORAGE.personal_acc.setName(user.name)  
+      if(APP_STORAGE.modal.getName() === ''){
+      APP_STORAGE.modal.setName(user.name)  
       }
 
-      if(APP_STORAGE.personal_acc.getFather() === ''){
-      APP_STORAGE.personal_acc.setFather(user.father)  
+      if(APP_STORAGE.modal.getFather() === ''){
+      APP_STORAGE.modal.setFather(user.father)  
       }
 
-      if(APP_STORAGE.personal_acc.getTelephone() === ''){
-      APP_STORAGE.personal_acc.setTelephone(user.telephone)  
+      if(APP_STORAGE.modal.getTelephone() === ''){
+      APP_STORAGE.modal.setTelephone(user.telephone)  
       }
 
 
-      if(APP_STORAGE.personal_acc.getEmail() === ''){
-      APP_STORAGE.personal_acc.setEmail(user.email)  
+      if(APP_STORAGE.modal.getEmail() === ''){
+      APP_STORAGE.modal.setEmail(user.email)  
       }
       
 
-      if(APP_STORAGE.personal_acc.getLogin() === ''){
-      APP_STORAGE.personal_acc.setLogin(user.login)  
+      if(APP_STORAGE.modal.getLogin() === ''){
+      APP_STORAGE.modal.setLogin(user.login)  
       }
 
         
@@ -63,8 +69,8 @@ export class ChangeUserData extends React.Component<IProps> {
         <TextField 
               fullWidth 
               size='small'
-              onChange={ (e)=>{ APP_STORAGE.personal_acc.setFamily(e.target.value);; } }
-              value={ APP_STORAGE.personal_acc.getFamily() || '' } />
+              onChange={ (e)=>{ APP_STORAGE.modal.setFamily(e.target.value);; } }
+              value={ APP_STORAGE.modal.getFamily() || '' } />
           
 
 
@@ -72,48 +78,57 @@ export class ChangeUserData extends React.Component<IProps> {
         <TextField 
               fullWidth 
               size='small'
-              onChange={ (e)=>{ APP_STORAGE.personal_acc.setName(e.target.value); } }
-              value={ APP_STORAGE.personal_acc.getName() || ''} />
+              onChange={ (e)=>{ APP_STORAGE.modal.setName(e.target.value); } }
+              value={ APP_STORAGE.modal.getName() || ''} />
 
 
         <Typography variant="caption" sx = {{color: '#0D80D8'}}>Отчество:</Typography>
         <TextField
               fullWidth  
               size='small' 
-              onChange={ (e)=>{ APP_STORAGE.personal_acc.setFather(e.target.value); } }
-              value={ APP_STORAGE.personal_acc.getFather() || '' }  />
+              onChange={ (e)=>{ APP_STORAGE.modal.setFather(e.target.value); } }
+              value={ APP_STORAGE.modal.getFather() || '' }  />
 
       
         <Typography variant="caption"  sx = {{color: '#0D80D8'}}>Телофон:</Typography>
         <TextField 
-              error={APP_STORAGE.personal_acc.getError_phone()}
-              helperText= {APP_STORAGE.personal_acc.getPhone_message()}
+              error={APP_STORAGE.modal.getError_phone()}
+              helperText= {APP_STORAGE.modal.getPhone_message()}
               fullWidth 
               size='small' 
               type="tel"
               required
-              onChange={ (e)=>{ APP_STORAGE.personal_acc.setTelephone(e.target.value); } }
-              value={ APP_STORAGE.personal_acc.getTelephone()} />
+              onChange={ (e)=>{ APP_STORAGE.modal.setTelephone(e.target.value); } }
+              value={ APP_STORAGE.modal.getTelephone()} />
 
 
         <Typography variant="caption" sx = {{color: '#0D80D8'}}>E-mail:</Typography>
+        <Box sx = {{display: 'flex'}}> 
         <TextField
-              error={APP_STORAGE.personal_acc.getError_emain()}
-              helperText= {APP_STORAGE.personal_acc.getEmail_message() || APP_STORAGE.personal_acc.getCmdErrData()}
+              error={APP_STORAGE.modal.getError_emain()}
+              helperText= {APP_STORAGE.modal.getEmail_message() || APP_STORAGE.modal.getCmdErrData()}
               fullWidth   
               size='small'
               type = 'email'
               required
-              onChange={ (e)=>{ APP_STORAGE.personal_acc.setEmail(e.target.value); } }
-              value={ APP_STORAGE.personal_acc.getEmail() || ''} />
-              
+              onChange={ (e)=>{ APP_STORAGE.modal.setEmail(e.target.value); } }
+              value={ APP_STORAGE.modal.getEmail() || ''} /> 
+
+      <Checkbox
+            // checked={ () => {this.confirmEmail}}
+            ///onChange={handleChange}
+            id="myCheck"
+            onChange = { () => {this.confirmEmail}}
+            inputProps={{ 'aria-label': 'controlled' }}
+    />
+      </Box>        
 
         <Typography variant="caption">ПРИМЕЧАНИЕ:</Typography>
         <TextField 
               fullWidth 
               size='small'
-              onChange={ (e)=>{ APP_STORAGE.personal_acc.setInfo(e.target.value); } }
-              value={ APP_STORAGE.personal_acc.getInfo()  || ''}  />
+              onChange={ (e)=>{ APP_STORAGE.modal.setInfo(e.target.value); } }
+              value={ APP_STORAGE.modal.getInfo()  || ''}  />
       
         </Box>
         <Divider/>
