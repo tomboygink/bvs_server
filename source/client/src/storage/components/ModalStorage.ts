@@ -1,17 +1,19 @@
 import { observable, action, computed, makeAutoObservable } from 'mobx';
-import { configure } from "mobx"
-
-configure({
-    enforceActions: "never",
-})
 
 import { IWSQuery, WSQuery, IWSResult } from '../../../../xcore/WSQuery';
-import { WSocket } from '../WSocket'; 
+import { WSocket } from '../WSocket';
+
+import { UsersEntity } from '../../../../xcore/dbase/Users';
+import {getCookie , setCookie, deleteCookie }  from '../browserCookes';
+
+
+
 
 export class PersonalAccauntStorage{
 
   
     @observable PersonalAccaunt: boolean = false; 
+
 
     @observable family:string = '';
     @observable name:string = '';
@@ -33,10 +35,15 @@ export class PersonalAccauntStorage{
     @observable errr_new_pass:boolean=false;
     @observable error_new_message:string=null;
     
-    @observable modal:number=null
+    @observable modal:number=null;
+
+    @observable cmd_error_pass: string = null;
+    @observable cmd_error_data: string = null;
   
 
     ////////////////////////////////////валидация формы
+
+    
 
     @observable email_err:boolean=false; ///ошибка при вводе адреса электронной почты
     @observable email_err_mess:string = '';///сообщение об ошибке адреса электронной почты
@@ -49,7 +56,12 @@ export class PersonalAccauntStorage{
     constructor(){
         makeAutoObservable(this);
     }
+     
+    @action setCmdErrPass(val:string){ this.cmd_error_pass = val; } 
+    @computed getCmdErrPass():string{ return this.cmd_error_pass; } 
 
+    @action setCmdErrData(val:string){ this.cmd_error_data = val; } 
+    @computed getCmdErrData():string{ return this.cmd_error_data; } 
    
     @action setPersonalAccaunt(val:boolean){ this.PersonalAccaunt = val; } 
     @computed getPersonalAccaunt():boolean{ return this.PersonalAccaunt; } 
@@ -131,6 +143,8 @@ export class PersonalAccauntStorage{
     @computed getInfo():string{ return this.info; }
 
 
+   
+
 
     async set_CUserData(name: string, value: any, _options?: any){
         var sess_code = value;
@@ -174,9 +188,10 @@ export class PersonalAccauntStorage{
          q.sess_code = sess_code;
 
          
-      (await WSocket.get()).send(q);
+      (await WSocket.get()).send(q);  
        }
     }
+    
 
     async set_ChangePass(name: string, value: any, _options?: any) {
         var sess_code = value;
@@ -227,8 +242,17 @@ export class PersonalAccauntStorage{
           q.sess_code = sess_code;
          (await WSocket.get()).send(q);  
        }
-      
-    
     }
- 
+
+   
+     
+    onGetChangePass(dt: IWSResult){
+        this.setCmdErrPass(dt.error);
+    }
+
+    onGetCUserData(dt: IWSResult){
+        this.setCmdErrData(dt.error);
+
+    }
+
 }

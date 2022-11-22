@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -69,9 +69,10 @@ var UsersEntity = (function () {
 }());
 exports.UsersEntity = UsersEntity;
 var UserTable = (function () {
-    function UserTable(_args) {
+    function UserTable(_args, _sess_code) {
         this.db = (0, DBase_1.getDB)();
         this.args = _args;
+        this.sess_code = _sess_code;
     }
     UserTable.prototype.selectUser = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -103,6 +104,47 @@ var UserTable = (function () {
                             result.push(db_res.rows[r]);
                         }
                         return [2, result];
+                }
+            });
+        });
+    };
+    UserTable.prototype.updateUser = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var db_res, result, r;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.db.query("SELECT * FROM UpdateUser('" + this.sess_code + "', '" + this.args.login + "','" +
+                            this.args.family + "','" + this.args.name + "','" + this.args.father + "','" + this.args.telephone + "','" + this.args.email + "','" + this.args.info + "')")];
+                    case 1:
+                        db_res = _a.sent();
+                        result = new Array();
+                        for (r in db_res.rows) {
+                            result.push(db_res.rows[r]);
+                        }
+                        return [2, result];
+                }
+            });
+        });
+    };
+    UserTable.prototype.changePass = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var db_res, result, r;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.db.query("SELECT * FROM ChangePass('" + this.sess_code + "', '" + this.args.login + "','" + crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.new_password).digest('hex') + "','" + crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.old_password).digest('hex') + "')")];
+                    case 1:
+                        db_res = _a.sent();
+                        result = new Array();
+                        for (r in db_res.rows) {
+                            result.push(db_res.rows[r]);
+                        }
+                        if (crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.new_password).digest('hex') === result[0].password) {
+                            return [2, result];
+                        }
+                        else {
+                            return [2, []];
+                        }
+                        return [2];
                 }
             });
         });

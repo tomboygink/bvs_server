@@ -16,8 +16,12 @@ class AppStorage {
     @observable auth_form: AuthFormStorage = null;
     @observable app_bar:  AppBarStorage = null;
     @observable personal_acc: PersonalAccauntStorage = null;
-
     
+
+    @observable dt:any = null;
+    
+    @action setdt(val:any){ this.dt = val; }
+    @computed getdt():any{ return this.dt; }
  
     constructor() {
         this.main = new PageStorage();
@@ -30,10 +34,12 @@ class AppStorage {
     }
 
     @action async onWSData(dt: IWSResult) {
-        // console.log("SOCKET RESULT", dt); 
+        console.log("SOCKET RESULT", dt); 
+        this.setdt(dt)
         switch (dt.cmd) {
             case ('get_UserByAuth'): { this.auth_form.onGetUserByAuth(dt); } break;
             case ('get_UserBySessionCode'): { this.auth_form.onGetUserBySessionCode(dt); } break;
+            case ('set_ChangePass'): { this.personal_acc.onGetChangePass(dt); } break;
             default: { } break;
         }
     }

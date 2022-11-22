@@ -14,11 +14,15 @@ export class ChangeUserData extends React.Component<IProps> {
      
     }
      
+    async saveСhanges( ) {
+      APP_STORAGE.personal_acc.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt())
+      }
+
     componentDidMount(): void {
       let user =  APP_STORAGE.auth_form.user;
       if(APP_STORAGE.personal_acc.getFamily() === ''){
             
-      APP_STORAGE.personal_acc.setFamily(user.name)  
+      APP_STORAGE.personal_acc.setFamily(user.family)  
       }
 
       if(APP_STORAGE.personal_acc.getName() === ''){
@@ -49,14 +53,13 @@ export class ChangeUserData extends React.Component<IProps> {
 
       render(): React.ReactNode {
       
-
       return (
       <React.Fragment>
 
       <Box>     
        
 
-        <Typography variant="caption">Фамилия:</Typography>
+        <Typography variant="caption" sx = {{color: '#0D80D8'}}>Фамилия: </Typography> 
         <TextField 
               fullWidth 
               size='small'
@@ -65,7 +68,7 @@ export class ChangeUserData extends React.Component<IProps> {
           
 
 
-        <Typography variant="caption">Имя:</Typography>
+        <Typography variant="caption" sx = {{color: '#0D80D8'}}>Имя:</Typography>
         <TextField 
               fullWidth 
               size='small'
@@ -73,15 +76,15 @@ export class ChangeUserData extends React.Component<IProps> {
               value={ APP_STORAGE.personal_acc.getName() || ''} />
 
 
-        <Typography variant="caption" >Отчество:</Typography>
+        <Typography variant="caption" sx = {{color: '#0D80D8'}}>Отчество:</Typography>
         <TextField
               fullWidth  
               size='small' 
               onChange={ (e)=>{ APP_STORAGE.personal_acc.setFather(e.target.value); } }
-              value={ APP_STORAGE.personal_acc.getFather() ||'' }  />
+              value={ APP_STORAGE.personal_acc.getFather() || '' }  />
 
       
-        <Typography variant="caption">Телофон:</Typography>
+        <Typography variant="caption"  sx = {{color: '#0D80D8'}}>Телофон:</Typography>
         <TextField 
               error={APP_STORAGE.personal_acc.getError_phone()}
               helperText= {APP_STORAGE.personal_acc.getPhone_message()}
@@ -93,10 +96,10 @@ export class ChangeUserData extends React.Component<IProps> {
               value={ APP_STORAGE.personal_acc.getTelephone()} />
 
 
-        <Typography variant="caption">E-mail:</Typography>
+        <Typography variant="caption" sx = {{color: '#0D80D8'}}>E-mail:</Typography>
         <TextField
               error={APP_STORAGE.personal_acc.getError_emain()}
-              helperText= {APP_STORAGE.personal_acc.getEmail_message()}
+              helperText= {APP_STORAGE.personal_acc.getEmail_message() || APP_STORAGE.personal_acc.getCmdErrData()}
               fullWidth   
               size='small'
               type = 'email'
@@ -105,7 +108,7 @@ export class ChangeUserData extends React.Component<IProps> {
               value={ APP_STORAGE.personal_acc.getEmail() || ''} />
               
 
-        <Typography variant="caption">Примечание:</Typography>
+        <Typography variant="caption">ПРИМЕЧАНИЕ:</Typography>
         <TextField 
               fullWidth 
               size='small'
@@ -118,7 +121,8 @@ export class ChangeUserData extends React.Component<IProps> {
 
         <Button  sx ={{mr: 2}}   
               variant="outlined"
-              onClick={ ()=>{ APP_STORAGE.personal_acc.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt())}}>
+            //   onClick={ ()=>{ APP_STORAGE.personal_acc.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt())}}> 
+              onClick={ ()=>{this.saveСhanges();}}>
               Сохранить
         </Button>
       </Box>
