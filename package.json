@@ -24,6 +24,7 @@
     "@types/hbs": "^4.0.1",
     "@types/jest": "^29.2.0",
     "@types/node": "^18.11.7",
+    "@types/nodemailer": "^6.4.6",
     "@types/pg": "^8.6.5",
     "@types/ws": "^8.5.3",
     "babel-loader": "^9.0.0",
@@ -52,9 +53,11 @@
     "mobx": "^6.6.2",
     "mobx-react": "^7.5.3",
     "mui-tel-input": "^2.0.4",
+    "nodemailer": "^6.8.0",
     "pg": "^8.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "save": "^2.9.0",
     "ws": "^8.10.0"
   }
 }
