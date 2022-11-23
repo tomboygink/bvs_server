@@ -1,8 +1,16 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import {TextField, Box, Button , Divider , Typography, Checkbox } from '@mui/material';
+import {TextField, Box, Button , Divider , Typography, Checkbox, Alert  , } from '@mui/material';
 import { APP_STORAGE } from '../../../storage/AppStorage';
+import SaveIcon from '@mui/icons-material/Save';
+import CallMissedOutgoingIcon from '@mui/icons-material/CallMissedOutgoing';
+
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
+import CheckIcon from '@mui/icons-material/Check';
 
 interface IProps{}
 
@@ -16,6 +24,8 @@ export class ChangeUserData extends React.Component<IProps> {
      
     async saveСhanges( ) {
       APP_STORAGE.modal.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt())
+
+      
       }
 
     async confirmEmail () {
@@ -92,7 +102,7 @@ export class ChangeUserData extends React.Component<IProps> {
               value={ APP_STORAGE.modal.getFather() || '' }  />
 
       
-        <Typography variant="caption"  sx = {{color: '#0D80D8'}}>Телофон:</Typography>
+        <Typography variant="caption"  sx = {{color: '#0D80D8'}}>Телефон:</Typography>
         <TextField 
               error={APP_STORAGE.modal.getError_phone()}
               helperText= {APP_STORAGE.modal.getPhone_message()}
@@ -116,14 +126,24 @@ export class ChangeUserData extends React.Component<IProps> {
               onChange={ (e)=>{ APP_STORAGE.modal.setEmail(e.target.value); } }
               value={ APP_STORAGE.modal.getEmail() || ''} /> 
 
+
       <Checkbox
-             checked={checked}
+            checked={checked}
             onChange={handleChange}
             id="myCheck"
             //onChange = { () => {this.confirmEmail}}
             inputProps={{ 'aria-label': 'controlled' }}
     />
       </Box>        
+
+      
+      <Typography variant="caption" sx = {{color: '#0D80D8'}}>Состояние:</Typography>
+         <TextField 
+              fullWidth 
+              size='small'
+              value= 'Действующая'/>
+
+
 
         <Typography variant="caption">ПРИМЕЧАНИЕ:</Typography>
         <TextField 
@@ -134,14 +154,17 @@ export class ChangeUserData extends React.Component<IProps> {
       
         </Box>
         <Divider/>
-      <Box className='right-wrapper' sx ={{pl: 1, mt : 2}}>
-
-        <Button  sx ={{mr: 2}}   
+      <Box className='right-wrapper' sx ={{pl: 1, mt : 2}}> 
+      <Button  sx ={{mr: 2 , mb: '16px'}}   
               variant="outlined"
             //   onClick={ ()=>{ APP_STORAGE.personal_acc.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt())}}> 
               onClick={ ()=>{this.saveСhanges();}}>
               Сохранить
-        </Button>
+      </Button>
+        {/* <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+        Данные успешно сохранены. Перезагрузите страницу
+      </Alert> */}
+
       </Box>
       </React.Fragment>
         );

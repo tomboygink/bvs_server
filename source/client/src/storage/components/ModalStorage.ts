@@ -13,7 +13,7 @@ export class PersonalAccauntStorage{
 
   
     @observable PersonalAccaunt: boolean = false; 
-
+    @observable alert_message : string = '';
 
     @observable family:string = '';
     @observable name:string = '';
@@ -191,7 +191,7 @@ export class PersonalAccauntStorage{
          q.sess_code = sess_code;
 
          
-      (await WSocket.get()).send(q);  
+      (await WSocket.get()).send(q);   alert('Данные сохранены, перезагрузите страницу') 
        }
     }
     

@@ -18,6 +18,52 @@ export class Modal extends React.Component<IProps> {
     constructor(props:any){
         super(props);
     }
+
+    async closeModal( ) {
+        APP_STORAGE.modal.setPersonalAccaunt(false);
+        let user =  APP_STORAGE.auth_form.user;
+        if(APP_STORAGE.modal.getFamily() !== ''){
+              
+        APP_STORAGE.modal.setFamily(user.family)  
+        }
+  
+        if(APP_STORAGE.modal.getName() !==''){
+        APP_STORAGE.modal.setName(user.name)  
+        }
+  
+        if(APP_STORAGE.modal.getFather() !== ''){
+        APP_STORAGE.modal.setFather(user.father)  
+        }
+  
+        if(APP_STORAGE.modal.getTelephone() !== ''){
+        APP_STORAGE.modal.setTelephone(user.telephone)  
+        }
+  
+  
+        if(APP_STORAGE.modal.getEmail() !== ''){
+        APP_STORAGE.modal.setEmail(user.email)  
+        }
+        
+  
+        if(APP_STORAGE.modal.getLogin() !== ''){
+        APP_STORAGE.modal.setLogin(user.login)  
+        }
+
+        if(APP_STORAGE.modal.getOld_Pass() !== ''){
+            APP_STORAGE.modal.setOld_Pass('')  
+        }
+
+        if(APP_STORAGE.modal.getNew_Pass() !== ''){
+            APP_STORAGE.modal.setNew_Pass('')  
+        } 
+            
+        if(APP_STORAGE.modal.getRepeat_password() !== ''){
+            APP_STORAGE.modal.setRepeat_password('')  
+        }     
+
+        }
+
+        
       render(): React.ReactNode {
       var modal_date:React.ReactNode = <></>;
       if(APP_STORAGE.modal.getModal() === 1 ) {
@@ -39,7 +85,7 @@ export class Modal extends React.Component<IProps> {
       </Typography>
 
       <CloseIcon  
-          onClick={()=>{ APP_STORAGE.modal.setPersonalAccaunt(false); }}/>
+           onClick={ ()=>{this.closeModal();}}/>
       </Box>  
       
       <Divider 
