@@ -1,5 +1,8 @@
 import React from 'react';
 
+import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
+
 import { observer } from 'mobx-react';
 import { APP_STORAGE } from './storage/AppStorage';
 
@@ -18,32 +21,33 @@ export class App extends React.Component<IProps>{
     }
 
     componentDidMount(): void {
-        APP_STORAGE.main.setTitle("ПОДТВЕРЖДЕНИЕ ПОЧТЫ");
     }
-
 
     componentWillUnmount(): void {}
     
     async set_sendCode() {
-        APP_STORAGE.set_sendCode()
+        APP_STORAGE.set_SendCode()
+        //APP_STORAGE.modal.set_SendCode('sess_id', APP_STORAGE.auth_form.getdt())
+        //var ss_code = getCookie('sess_id');
   }
 
     render(): React.ReactNode {
-        document.title = APP_STORAGE.main.getTitle();
 
        
    
         return ( 
             <React.Fragment> 
-                <Box sx = {{display: 'grid' , justifyContent: 'center'  , mt: '10%'}}> 
-            <Typography sx ={{p: '20px'}}> Введите код</Typography>
+      <CssBaseline />
+      <Container maxWidth="sm">
+        <Box sx={{ bgcolor: '#cfe8fc47', height: '100vh' }} >
+            <Typography sx ={{p: '20px' , color: '#1976D2'}}> Введите код</Typography>
             <TextField
                                     fullWidth
                                     size='small'
                                     onChange={(e) => { APP_STORAGE.setCode(e.target.value); }}
                                     value={APP_STORAGE.getCode() || ''} />
 
-            <Button sx={{ m: '20px' }}
+                    <Button sx={{ m: '20px' }}
                                     variant="outlined"
                                     //   onClick={ ()=>{ APP_STORAGE.personal_acc.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt())}}> 
                                     onClick={() => { this.set_sendCode(); }}>
@@ -51,6 +55,7 @@ export class App extends React.Component<IProps>{
                               </Button>
 
                    </Box>
+                   </Container>
             </React.Fragment>
         );
     }
