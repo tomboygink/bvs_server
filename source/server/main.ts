@@ -72,10 +72,18 @@ class AppServer{
         this.app.all("/", (req:express.Request, res:express.Response)=>{
             res.render('index.hbs', { title: "---" });
         });
+        this.app.all("/confirm_mail", (req:express.Request, res:express.Response)=>{
+            console.log(req.query)
+            res.render('confirm_mail.hbs', {title:"Подтверждение почты"});
+        });
 
         this.app.all('/quit', (req:express.Request, res:express.Response)=>{ res.send('QUIT SERVER'); this.server.close(); });
     }
+    
+   
 
+
+     
 
     async onCloseServer(){
         await endDB();

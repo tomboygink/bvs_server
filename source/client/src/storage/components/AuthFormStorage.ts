@@ -21,6 +21,7 @@ export class AuthFormStorage{
         makeAutoObservable(this);
     }
 
+   
     @action setLogin(val:string){ this.login = val; } //устанавливает значение поля - Логин
     @computed getLogin():string{ return this.login; } //возвращает значение поля - Логин (отмечает геттер)
 

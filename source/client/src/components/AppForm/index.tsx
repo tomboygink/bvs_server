@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import {AppBarPanel} from './AppBarPanel/AppBarPanel'
 import {Modal} from './Modal/Modal'
-import Alert from '@mui/material/Alert';
+import {Box } from '@mui/material';
 import { APP_STORAGE } from '../../storage/AppStorage';
 
 interface IProps{}
@@ -14,21 +14,23 @@ export class AppForm extends React.Component<IProps> {
     constructor(props:any){
         super(props);
     }
+  
 
     render(): React.ReactNode {
-     const user =  APP_STORAGE.auth_form.user;
-
+     
+        if (APP_STORAGE.auth_form.getUser())  
      
         return (
             <React.Fragment>
+                <Box className='1111' style={{display : 'flex'}}> 
                 <AppBarPanel/>
-                <Modal/>
-                <Alert >
-        This is a success alert — check it out!
-      </Alert>
-            </React.Fragment>
+                 <Modal/>
+                <Box sx = {{mt : '20%'}}></Box>
+                </Box>
+            </React.Fragment> 
         );
-    }
+    
+}
 }
 
 

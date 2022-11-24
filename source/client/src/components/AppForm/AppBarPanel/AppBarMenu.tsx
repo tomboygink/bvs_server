@@ -46,9 +46,12 @@ export class AccountMenu extends React.Component<IProps> {
         APP_STORAGE.modal.setPersonalAccaunt(true);
         APP_STORAGE.modal.setModalTitle('Изменение пароля')
     }
+
     render(): React.ReactNode {
-        const user =  APP_STORAGE.auth_form.getUser(); 
-         
+        const  user =  APP_STORAGE.auth_form.getUser();
+      
+        
+        console.log('GHHYFFD') 
         
         return (
             <React.Fragment>

@@ -21,7 +21,7 @@ export class Modal extends React.Component<IProps> {
 
     async closeModal( ) {
         APP_STORAGE.modal.setPersonalAccaunt(false);
-        let user =  APP_STORAGE.auth_form.user;
+        let user =  APP_STORAGE.auth_form.getUser();
         if(APP_STORAGE.modal.getFamily() !== ''){
               
         APP_STORAGE.modal.setFamily(user.family)  
