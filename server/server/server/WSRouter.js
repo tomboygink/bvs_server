@@ -57,8 +57,9 @@ function WSRoute(_ws, q) {
                         case 'set_ChangePass': return [3, 9];
                         case 'deleteCookie': return [3, 14];
                         case 'set_ActMail': return [3, 15];
+                        case 'set_Code': return [3, 16];
                     }
-                    return [3, 16];
+                    return [3, 17];
                 case 1:
                     st = new Sessions_1.SessionsTable(q.args);
                     ut = new Users_1.UserTable(q.args, q.sess_code);
@@ -76,7 +77,7 @@ function WSRoute(_ws, q) {
                         wsres.code = sess_code;
                         wsres.data = data;
                     }
-                    return [3, 17];
+                    return [3, 18];
                 case 4:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     st = new Sessions_1.SessionsTable(q.args);
@@ -93,7 +94,7 @@ function WSRoute(_ws, q) {
                         wsres.code = sess_code;
                         wsres.data = data;
                     }
-                    return [3, 17];
+                    return [3, 18];
                 case 7:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, ut.updateUser()];
@@ -106,7 +107,7 @@ function WSRoute(_ws, q) {
                         wsres.data = data;
                         wsres.code = q.sess_code;
                     }
-                    return [3, 17];
+                    return [3, 18];
                 case 9:
                     if (!(q.args.new_password === q.args.old_password)) return [3, 10];
                     wsres.error = 'Новый пароль не должен повторять старый';
@@ -135,7 +136,7 @@ function WSRoute(_ws, q) {
                         wsres.error = '';
                     }
                     _b.label = 13;
-                case 13: return [3, 17];
+                case 13: return [3, 18];
                 case 14:
                     {
                         st = new Sessions_1.SessionsTable(q.args);
@@ -143,19 +144,27 @@ function WSRoute(_ws, q) {
                         wsres.code = '';
                         wsres.data = [];
                     }
-                    return [3, 17];
+                    return [3, 18];
                 case 15:
                     {
-                        sendMail = new sendMail_1.SendMail();
-                        sendMail.send();
+                        if (q.args.email !== '') {
+                            sendMail = new sendMail_1.SendMail(q.args, q.sess_code);
+                            sendMail.send();
+                        }
+                        else {
+                            wsres.error = "Введите email";
+                        }
                     }
-                    return [3, 17];
+                    return [3, 18];
                 case 16:
+                    { }
+                    _b.label = 17;
+                case 17:
                     {
                         wsres.error = "\u041A\u043E\u043C\u0430\u043D\u0434\u0430 \"".concat(q.cmd, "\" \u043D\u0435 \u0440\u0430\u0441\u043F\u043E\u0437\u043D\u0430\u043D\u0430");
                     }
-                    return [3, 17];
-                case 17:
+                    return [3, 18];
+                case 18:
                     _ws.send((0, WSQuery_1.WSStr)(wsres));
                     return [2];
             }

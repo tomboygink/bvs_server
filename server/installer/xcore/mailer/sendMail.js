@@ -41,16 +41,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 exports.SendMail = void 0;
 var nodemailer_1 = __importDefault(require("nodemailer"));
-var crypto_1 = __importDefault(require("crypto"));
-var config_1 = require("../../xcore/config");
 var SendMail = (function () {
-    function SendMail(_args, _sess_code) {
-        this.args = _args;
-        this.sess_code = _sess_code;
+    function SendMail() {
     }
     SendMail.prototype.send = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var transporter;
+            var transporter, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -65,12 +61,12 @@ var SendMail = (function () {
                         });
                         return [4, transporter.sendMail({
                                 from: 'noreplay@bvs45.ru',
-                                to: this.args.email,
+                                to: 'letovaltseva@bvs45.ru',
                                 subject: 'Activate mail',
-                                html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://127.0.0.1:3040/confirm_mail">Click this link</a></h1> and paste this code <b>' + crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex') + '</b>'
+                                text: 'This message was sent from bvs_server to activate mail.'
                             })];
                     case 1:
-                        _a.sent();
+                        result = _a.sent();
                         return [2];
                 }
             });

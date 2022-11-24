@@ -6,7 +6,7 @@ import { SessionsTable } from '../xcore/dbase/Sessions';
 import { UserTable } from '../xcore/dbase/Users';
 
 
-import {SendMail} from '../xcore/mailer/sendMail';
+import { SendMail } from '../xcore/mailer/sendMail';
 
 
 export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
@@ -59,7 +59,6 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
         } break;
 
-
         //Смена данных пользователя
         case 'set_CUserData': {
             ut = new UserTable(q.args, q.sess_code);
@@ -67,7 +66,6 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             if (data[0] === undefined) { wsres.error = "Пользователя не существует"; }
             else { wsres.data = data; wsres.code = q.sess_code }
         } break;
-
 
         //Смена пароля пользователя
         case 'set_ChangePass': {
@@ -84,18 +82,17 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             else {
                 ut = new UserTable(q.args, q.sess_code);
                 data = await ut.changePass();
-                if(data[0] === undefined)
-                {
+                if (data[0] === undefined) {
                     wsres.error = 'Старый пароль не верен';
                     wsres.code = q.sess_code;
                     wsres.data = []
                 }
-                else{
+                else {
                     wsres.data = data;
                     wsres.code = q.sess_code;
                     wsres.error = '';
                 }
-            }     
+            }
 
         } break;
 
@@ -106,14 +103,15 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             wsres.data = [];
         } break;
 
-        case 'set_ActMail':{
-            //ТЕСТ ОТПРАВКИ СООБЩЕНИЙ В ПОЧТУ 
-            //ГЕНЕРАЦИЯ КОДА id_login_email
+        case 'set_ActMail': {
+            if (q.args.email !== '') {
 
-            var sendMail = new SendMail();
-            sendMail.send();
-            //При подтверждении обновление данных по коду
+                var sendMail = new SendMail(q.args, q.sess_code);
+                sendMail.send();
+            }else{wsres.error = "Введите email";}
         } break;
+
+        case 'set_Code':{}
 
         //другие коды которые не описаны 
         default: {
