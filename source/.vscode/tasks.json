@@ -23,6 +23,17 @@
 				"isDefault": true
 			}
 		},
+		{
+			"type": "npm",
+			"script": "build_email_dev",
+			"problemMatcher": [],
+			"label": "npm: build_email_dev",
+			"detail": "компиляция отладочной версии клиента",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
         {
 			"type": "npm",
 			"script": "build_client",

@@ -185,7 +185,6 @@ export class PersonalAccauntStorage{
             father:this.getFather(),
             telephone:this.getTelephone(),
             email:this.getEmail(),
-            confirm_email : this.getChecked(),
             info:this.getInfo()
          };
          q.sess_code = sess_code;
@@ -247,6 +246,17 @@ export class PersonalAccauntStorage{
        }
     }
 
+    async  set_ActMail (name: string, value: any, _options?: any) {
+        var sess_code = value;
+        var q:IWSQuery = new WSQuery("set_ActMail");
+        q.args = {
+            login:this.getLogin(),
+            email:this.getEmail(),
+         }; 
+          q.sess_code = sess_code;
+         (await WSocket.get()).send(q);  this.setPersonalAccaunt(false);
+
+    }
    
      
     onGetChangePass(dt: IWSResult){
@@ -254,8 +264,7 @@ export class PersonalAccauntStorage{
     }
 
     onGetCUserData(dt: IWSResult){
-        this.setCmdErrData(dt.error);
-
+        this.setCmdErrData(dt.error); 
     }
 
 }

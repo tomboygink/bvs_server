@@ -48,6 +48,7 @@ function WSRoute(_ws, q) {
             switch (_b.label) {
                 case 0:
                     wsres = new WSQuery_1.WSResult(q.cmd);
+                    console.log(q);
                     _a = q.cmd;
                     switch (_a) {
                         case 'get_UserBySessionCode': return [3, 1];
