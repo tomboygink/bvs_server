@@ -191,7 +191,7 @@ export class PersonalAccauntStorage{
          q.sess_code = sess_code;
 
          
-      (await WSocket.get()).send(q);   alert('Данные сохранены, перезагрузите страницу') 
+      (await WSocket.get()).send(q);  this.setPersonalAccaunt(false);
        }
     }
     
@@ -243,7 +243,7 @@ export class PersonalAccauntStorage{
             repeat_password:this.getRepeat_password()
          }; 
           q.sess_code = sess_code;
-         (await WSocket.get()).send(q);  
+         (await WSocket.get()).send(q);  this.setPersonalAccaunt(false);
        }
     }
 
