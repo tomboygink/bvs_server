@@ -13,7 +13,7 @@ export class PersonalAccauntStorage{
 
   
     @observable PersonalAccaunt: boolean = false; 
-
+    @observable alert_message : string = '';
 
     @observable family:string = '';
     @observable name:string = '';
@@ -40,7 +40,7 @@ export class PersonalAccauntStorage{
     @observable cmd_error_pass: string = null;
     @observable cmd_error_data: string = null;
   
-
+    @observable checked_email: boolean = false; /// потдверждение  пароля
     ////////////////////////////////////валидация формы
 
     
@@ -56,6 +56,8 @@ export class PersonalAccauntStorage{
     constructor(){
         makeAutoObservable(this);
     }
+    @action setChecked(val:boolean) { this.checked_email = val}
+    @computed getChecked():boolean { return this.checked_email; }
      
     @action setCmdErrPass(val:string){ this.cmd_error_pass = val; } 
     @computed getCmdErrPass():string{ return this.cmd_error_pass; } 
@@ -175,7 +177,7 @@ export class PersonalAccauntStorage{
             this.setPhone_message('')
         }
         
-        if (this.getName() !== '' && this.getFather() !== '' && this.getTelephone() !== '' && this.getEmail() !== '' &&  this.getError_phone() == false &&  this.getError_emain () === false) {
+        if (this.getFamily() !== '' && this.getName() !== '' && this.getFather() !== '' && this.getTelephone() !== '' && this.getEmail() !== '' &&  this.getError_phone() == false &&  this.getError_emain () === false) {
         q.args = { 
             family: this.getFamily(), 
             login:this.getLogin(),
@@ -183,12 +185,13 @@ export class PersonalAccauntStorage{
             father:this.getFather(),
             telephone:this.getTelephone(),
             email:this.getEmail(),
+            confirm_email : this.getChecked(),
             info:this.getInfo()
          };
          q.sess_code = sess_code;
 
          
-      (await WSocket.get()).send(q);  
+      (await WSocket.get()).send(q);  this.setPersonalAccaunt(false);
        }
     }
     
@@ -240,7 +243,7 @@ export class PersonalAccauntStorage{
             repeat_password:this.getRepeat_password()
          }; 
           q.sess_code = sess_code;
-         (await WSocket.get()).send(q);  
+         (await WSocket.get()).send(q);  this.setPersonalAccaunt(false);
        }
     }
 

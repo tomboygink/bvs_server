@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import {AppBarPanel} from './AppBarPanel/AppBarPanel'
 import {Modal} from './Modal/Modal'
-
+import Alert from '@mui/material/Alert';
 import { APP_STORAGE } from '../../storage/AppStorage';
 
 interface IProps{}
@@ -23,6 +23,9 @@ export class AppForm extends React.Component<IProps> {
             <React.Fragment>
                 <AppBarPanel/>
                 <Modal/>
+                <Alert >
+        This is a success alert — check it out!
+      </Alert>
             </React.Fragment>
         );
     }

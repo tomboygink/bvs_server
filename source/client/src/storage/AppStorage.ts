@@ -15,7 +15,7 @@ class AppStorage {
     @observable main: PageStorage = null;
     @observable auth_form: AuthFormStorage = null;
     @observable app_bar:  AppBarStorage = null;
-    @observable personal_acc: PersonalAccauntStorage = null;
+    @observable modal: PersonalAccauntStorage = null;
     
 
     @observable dt:any = null;
@@ -27,7 +27,7 @@ class AppStorage {
         this.main = new PageStorage();
         this.auth_form = new AuthFormStorage();
         this.app_bar = new AppBarStorage();
-        this.personal_acc = new PersonalAccauntStorage();
+        this.modal = new PersonalAccauntStorage();
         makeAutoObservable(this);
 
         // WSocket.get();
@@ -39,7 +39,8 @@ class AppStorage {
         switch (dt.cmd) {
             case ('get_UserByAuth'): { this.auth_form.onGetUserByAuth(dt); } break;
             case ('get_UserBySessionCode'): { this.auth_form.onGetUserBySessionCode(dt); } break;
-            case ('set_ChangePass'): { this.personal_acc.onGetChangePass(dt); } break;
+            case ('set_ChangePass'): { this.modal.onGetChangePass(dt); } break;
+            case ('set_CUserData') : { this.modal.onGetCUserData(dt); } break;
             default: { } break;
         }
     }

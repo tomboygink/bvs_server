@@ -35,24 +35,25 @@ export class AccountMenu extends React.Component<IProps> {
             }
 
     async ChangeCUserData( ) {
-        APP_STORAGE.personal_acc.setModal(1);
-        APP_STORAGE.personal_acc.setPersonalAccaunt(true);
-        APP_STORAGE.personal_acc.setModalTitle('Изменение данных')
+        APP_STORAGE.modal.setModal(1);
+        APP_STORAGE.modal.setPersonalAccaunt(true);
+        APP_STORAGE.modal.setModalTitle('Изменение данных')
         }
  
 
     async ChangePassword () {
-        APP_STORAGE.personal_acc.setModal(2);
-        APP_STORAGE.personal_acc.setPersonalAccaunt(true);
-        APP_STORAGE.personal_acc.setModalTitle('Изменение пароля')
+        APP_STORAGE.modal.setModal(2);
+        APP_STORAGE.modal.setPersonalAccaunt(true);
+        APP_STORAGE.modal.setModalTitle('Изменение пароля')
     }
     render(): React.ReactNode {
-
         const user =  APP_STORAGE.auth_form.getUser(); 
+         
+        
         return (
             <React.Fragment>
                 <IconButton id = 'btnPerfil'onClick={()=>{ APP_STORAGE.app_bar.setAppBarUser(true);  }}>
-                <Avatar sx={{ width: 32, height: 32 }}></Avatar><Typography sx={{  pl: '1rem', color : 'white'}} > {user.family}  </Typography>
+                <Avatar sx={{ width: 32, height: 32 }}></Avatar><Typography sx={{  pl: '1rem', color : 'white'}} > {user.family} {user.name} {user.father}  </Typography>
                 </IconButton>
             <Menu
                 anchorEl={document.getElementById('btnPerfil')}
@@ -73,7 +74,7 @@ export class AccountMenu extends React.Component<IProps> {
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }} /// смещаем компонент вправо
                 >
             <MenuItem>
-            <Avatar /> {user.family}
+            <Avatar /> {user.family} {user.name}
             </MenuItem>
             <Divider />
              
