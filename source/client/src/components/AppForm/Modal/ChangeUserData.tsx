@@ -55,11 +55,11 @@ export class ChangeUserData extends React.Component<IProps> {
 
 
       render(): React.ReactNode {
+            var act_mail:React.ReactNode = <></>;
             const checked = APP_STORAGE.modal.getChecked();
 
-            // if (APP_STORAGE.auth_form.getUser().act_mail === false) {
+ 
 
-            // }
             return (
                   <React.Fragment>
 

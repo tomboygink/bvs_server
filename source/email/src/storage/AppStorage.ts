@@ -49,9 +49,8 @@ class AppStorage {
             q.args = { code: this.getCode()};
             q.sess_code = ss_code;
             (await WSocket.get()).send(q);
+            window.location.assign('http://127.0.0.1:3040/');
         }
-  
-
     }
 };
 

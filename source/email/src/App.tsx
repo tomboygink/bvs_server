@@ -31,8 +31,6 @@ export class App extends React.Component<IProps>{
     
     async set_sendCode() {
         APP_STORAGE.set_SendCode()
-        //APP_STORAGE.modal.set_SendCode('sess_id', APP_STORAGE.auth_form.getdt())
-        //var ss_code = getCookie('sess_id');
   }
 
     render(): React.ReactNode {
@@ -53,12 +51,6 @@ export class App extends React.Component<IProps>{
                                     onChange={(e) => { APP_STORAGE.setCode(e.target.value); }}
                                     value={APP_STORAGE.getCode() || ''} />
 
-                    {/* <Button sx={{ m: '20px' }}
-                                    variant="outlined"
-                                    //   onClick={ ()=>{ APP_STORAGE.personal_acc.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt())}}> 
-                                    onClick={() => { this.set_sendCode(); }}>
-                                    Отправить
-                              </Button> */}
                               <CircularIntegration/>
 
                    </Box>
