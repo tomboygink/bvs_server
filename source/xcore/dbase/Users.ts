@@ -84,6 +84,8 @@ export class UserTable {
         }
         else{return [];}
     }
+
+    
     //Обновление данных по email
     async updateMail():Promise<UsersEntity[]>{
         //обновление email
