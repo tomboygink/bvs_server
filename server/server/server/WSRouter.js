@@ -43,9 +43,9 @@ var Users_1 = require("../xcore/dbase/Users");
 var sendMail_1 = require("../xcore/mailer/sendMail");
 function WSRoute(_ws, q) {
     return __awaiter(this, void 0, void 0, function () {
-        var wsres, sess_code, data, _a, st, ut, code, ut, st, sendMail;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var wsres, sess_code, data, _a, st, ut, code, ut, st, sendMail, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
                     wsres = new WSQuery_1.WSResult(q.cmd);
                     console.log(q);
@@ -57,18 +57,18 @@ function WSRoute(_ws, q) {
                         case 'set_ChangePass': return [3, 9];
                         case 'deleteCookie': return [3, 14];
                         case 'set_ActMail': return [3, 15];
-                        case 'set_Code': return [3, 16];
+                        case 'set_MailCode': return [3, 16];
                     }
-                    return [3, 17];
+                    return [3, 20];
                 case 1:
                     st = new Sessions_1.SessionsTable(q.args);
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, st.selectSessCode()];
                 case 2:
-                    code = _b.sent();
+                    code = _c.sent();
                     return [4, ut.selectUserBySessCode()];
                 case 3:
-                    data = _b.sent();
+                    data = _c.sent();
                     if (code[0] == undefined) {
                         wsres.error = "Данного кода сессии не существует";
                     }
@@ -77,16 +77,16 @@ function WSRoute(_ws, q) {
                         wsres.code = sess_code;
                         wsres.data = data;
                     }
-                    return [3, 18];
+                    return [3, 21];
                 case 4:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     st = new Sessions_1.SessionsTable(q.args);
                     return [4, st.insertSess()];
                 case 5:
-                    sess_code = _b.sent();
+                    sess_code = _c.sent();
                     return [4, ut.selectUser()];
                 case 6:
-                    data = _b.sent();
+                    data = _c.sent();
                     if (sess_code === '' && data[0] === undefined) {
                         wsres.error = "Пользователя не существует или введены не верные данные";
                     }
@@ -94,12 +94,12 @@ function WSRoute(_ws, q) {
                         wsres.code = sess_code;
                         wsres.data = data;
                     }
-                    return [3, 18];
+                    return [3, 21];
                 case 7:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, ut.updateUser()];
                 case 8:
-                    data = _b.sent();
+                    data = _c.sent();
                     if (data[0] === undefined) {
                         wsres.error = "Пользователя не существует";
                     }
@@ -107,7 +107,7 @@ function WSRoute(_ws, q) {
                         wsres.data = data;
                         wsres.code = q.sess_code;
                     }
-                    return [3, 18];
+                    return [3, 21];
                 case 9:
                     if (!(q.args.new_password === q.args.old_password)) return [3, 10];
                     wsres.error = 'Новый пароль не должен повторять старый';
@@ -124,7 +124,7 @@ function WSRoute(_ws, q) {
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, ut.changePass()];
                 case 12:
-                    data = _b.sent();
+                    data = _c.sent();
                     if (data[0] === undefined) {
                         wsres.error = 'Старый пароль не верен';
                         wsres.code = q.sess_code;
@@ -135,8 +135,8 @@ function WSRoute(_ws, q) {
                         wsres.code = q.sess_code;
                         wsres.error = '';
                     }
-                    _b.label = 13;
-                case 13: return [3, 18];
+                    _c.label = 13;
+                case 13: return [3, 21];
                 case 14:
                     {
                         st = new Sessions_1.SessionsTable(q.args);
@@ -144,7 +144,7 @@ function WSRoute(_ws, q) {
                         wsres.code = '';
                         wsres.data = [];
                     }
-                    return [3, 18];
+                    return [3, 21];
                 case 15:
                     {
                         if (q.args.email !== '') {
@@ -155,16 +155,27 @@ function WSRoute(_ws, q) {
                             wsres.error = "Введите email";
                         }
                     }
-                    return [3, 18];
+                    return [3, 21];
                 case 16:
-                    { }
-                    _b.label = 17;
+                    if (!(q.args === '')) return [3, 17];
+                    wsres.error = "Код не введен";
+                    wsres.code = q.sess_code;
+                    return [3, 19];
                 case 17:
+                    ut = new Users_1.UserTable(q.args, q.sess_code);
+                    _b = wsres;
+                    return [4, ut.updateMail()];
+                case 18:
+                    _b.data = _c.sent();
+                    wsres.code = q.sess_code;
+                    _c.label = 19;
+                case 19: return [3, 21];
+                case 20:
                     {
                         wsres.error = "\u041A\u043E\u043C\u0430\u043D\u0434\u0430 \"".concat(q.cmd, "\" \u043D\u0435 \u0440\u0430\u0441\u043F\u043E\u0437\u043D\u0430\u043D\u0430");
                     }
-                    return [3, 18];
-                case 18:
+                    return [3, 21];
+                case 21:
                     _ws.send((0, WSQuery_1.WSStr)(wsres));
                     return [2];
             }

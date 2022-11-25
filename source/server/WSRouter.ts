@@ -103,15 +103,25 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             wsres.data = [];
         } break;
 
+        //отправка сообщения на почту с кодом
         case 'set_ActMail': {
             if (q.args.email !== '') {
-
                 var sendMail = new SendMail(q.args, q.sess_code);
                 sendMail.send();
-            }else{wsres.error = "Введите email";}
+            } else { wsres.error = "Введите email"; }
         } break;
 
-        case 'set_Code':{}
+        //Обновление данных пользователя о email
+        case 'set_MailCode': {
+            if (q.args === '') { wsres.error = "Код не введен"; wsres.code = q.sess_code }
+            else {
+                ut = new UserTable(q.args, q.sess_code);
+                wsres.data = await ut.updateMail();
+                wsres.code = q.sess_code;
+            }
+
+        }
+            break;
 
         //другие коды которые не описаны 
         default: {
