@@ -317,7 +317,7 @@ SET
  	name = c_name,
  	father = c_father,
  	telephone = c_telephone,
-	mail_code = CASE WHEN ((SELECT email FROM users WHERE login=c_login) <> c_email) THEN (c_email) ELSE (SELECT mail_code FROM users WHERE login=c_login) END,
+	mail_code = CASE WHEN ((SELECT email FROM users WHERE login=c_login) <> c_email) THEN ('') ELSE (SELECT mail_code FROM users WHERE login=c_login) END,
 	act_mail = CASE WHEN ((SELECT email FROM users WHERE login=c_login) <> c_email) THEN (false) ELSE (SELECT act_mail FROM users WHERE login=c_login) END,
 	email=c_email,
  	info = c_info
@@ -360,4 +360,18 @@ SET
 	password = CASE WHEN ((SELECT password FROM users WHERE login=c_login AND password=c_old_password) <> c_new_password) THEN (c_new_password) ELSE (SELECT password FROM users WHERE login=c_login) END
 WHERE login=c_login;
 SELECT * FROM SelectUserBySessCode(c_sess_code)
+$$ LANGUAGE sql;
+
+--Обновление и подтверждение email 
+DROP FUNCTION IF EXISTS UpdateUserEmail;
+create function UpdateUserEmail
+(c_mail_code VARCHAR(250),
+ c_sess_code VARCHAR(250))
+RETURNS VOID AS $$
+	UPDATE users 
+	SET mail_code = c_mail_code,
+	act_mail = true
+	
+	WHERE login = (select login from users inner join sessions on sessions.uid = users.id where sess_code = c_sess_code)
+
 $$ LANGUAGE sql;

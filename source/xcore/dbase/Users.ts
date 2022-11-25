@@ -84,5 +84,19 @@ export class UserTable {
         }
         else{return [];}
     }
+    //Обновление данных по email
+    async updateMail():Promise<UsersEntity[]>{
+        //обновление email
+        await this.db.query("SELECT * FROM UpdateUserEmail('" + this.args.code.Trim() + "', '"+ this.sess_code +"')");
+        
+        //Получение актуальных данных
+        var db_res = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
+        var result: UsersEntity[] = new Array();
+        for (var r in db_res.rows) {
+            result.push(db_res.rows[r]);
+        }
+        return result
+
+    }
 
 }
