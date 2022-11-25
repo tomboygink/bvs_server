@@ -35,12 +35,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 exports.WSRoute = void 0;
 var WSQuery_1 = require("../xcore/WSQuery");
 var Sessions_1 = require("../xcore/dbase/Sessions");
 var Users_1 = require("../xcore/dbase/Users");
 var sendMail_1 = require("../xcore/mailer/sendMail");
+var crypto_1 = __importDefault(require("crypto"));
+var config_1 = require("../xcore/config");
 function WSRoute(_ws, q) {
     return __awaiter(this, void 0, void 0, function () {
         var wsres, sess_code, data, _a, st, ut, code, ut, st, sendMail, _b;
@@ -157,8 +162,8 @@ function WSRoute(_ws, q) {
                     }
                     return [3, 21];
                 case 16:
-                    if (!(q.args === '')) return [3, 17];
-                    wsres.error = "Код не введен";
+                    if (!(q.args === '' || (crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex') === this.args.code))) return [3, 17];
+                    wsres.error = "Не верный код";
                     wsres.code = q.sess_code;
                     return [3, 19];
                 case 17:
