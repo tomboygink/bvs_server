@@ -113,14 +113,13 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
         //Обновление данных пользователя о email
         case 'set_MailCode': {
-            if (q.args === '' || (crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex') === this.args.code) ) 
-            { wsres.error = "Не верный код"; wsres.code = q.sess_code }
+            ut = new UserTable(q.args, q.sess_code);
+            data = await ut.updateMail();
+            if (data[0] === undefined) { wsres.error = "Введен неверный код" }
             else {
-                ut = new UserTable(q.args, q.sess_code);
                 wsres.data = await ut.updateMail();
                 wsres.code = q.sess_code;
             }
-
         }
             break;
 
