@@ -3,15 +3,8 @@ import { observer } from 'mobx-react';
 
 import { TextField, Box, Button, Divider, Typography, Checkbox, Alert, } from '@mui/material';
 import { APP_STORAGE } from '../../../storage/AppStorage';
-import SaveIcon from '@mui/icons-material/Save';
-import CallMissedOutgoingIcon from '@mui/icons-material/CallMissedOutgoing';
+import Tooltip from '../Tooltip/Tooltip'
 
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-
-import CheckIcon from '@mui/icons-material/Check';
-import { userInfo } from 'os';
 
 interface IProps { }
 
@@ -25,11 +18,6 @@ export class ChangeUserData extends React.Component<IProps> {
 
       async saveСhanges() {
             APP_STORAGE.modal.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt())
-      }
-
-
-      async set_ActMail() {
-            APP_STORAGE.modal.set_ActMail('sess_id', APP_STORAGE.auth_form.getdt())
       }
 
 
@@ -68,9 +56,10 @@ export class ChangeUserData extends React.Component<IProps> {
 
       render(): React.ReactNode {
             const checked = APP_STORAGE.modal.getChecked();
-            // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-            //       APP_STORAGE.modal.setChecked(event.target.checked);
-            // };
+
+            // if (APP_STORAGE.auth_form.getUser().act_mail === false) {
+
+            // }
             return (
                   <React.Fragment>
 
@@ -135,16 +124,9 @@ export class ChangeUserData extends React.Component<IProps> {
                                           inputProps={{ 'aria-label': 'controlled' }}
                                     />
                               </Box>
-
-                              <Button 
-                                    fullWidth
-                                    sx={{ mr: 2, mb: '16px' , mt: '12px'}}
-                                    variant="outlined"
-                                    onClick={() => { this.set_ActMail(); }}>
-                                    Подтвердить почту
-                              </Button>
-
-
+                              
+                              
+                              <Tooltip />
 
                               <Typography variant="caption">ПРИМЕЧАНИЕ:</Typography>
                               <TextField
@@ -158,11 +140,9 @@ export class ChangeUserData extends React.Component<IProps> {
                         <Box className='right-wrapper' sx={{ pl: 1, mt: 2 }}>
                               <Button sx={{ mr: 2, mb: '16px' }}
                                     variant="outlined"
-                                    //   onClick={ ()=>{ APP_STORAGE.personal_acc.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt())}}> 
                                     onClick={() => { this.saveСhanges(); }}>
                                     Сохранить
                               </Button>
-
                         </Box>
                   </React.Fragment>
             );

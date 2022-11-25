@@ -49,9 +49,7 @@ export class AccountMenu extends React.Component<IProps> {
 
     render(): React.ReactNode {
         const  user =  APP_STORAGE.auth_form.getUser();
-      
-        
-        console.log('GHHYFFD') 
+
         
         return (
             <React.Fragment>
