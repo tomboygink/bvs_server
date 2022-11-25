@@ -1,12 +1,12 @@
 import WebSocket from 'ws';
 import { IWSQuery, IWSResult, WSResult, WSStr } from '../xcore/WSQuery';
-
-//import { ProjectsTable } from '../xcore/dbase/ProjectsTable';
 import { SessionsTable } from '../xcore/dbase/Sessions';
 import { UserTable } from '../xcore/dbase/Users';
-
-
 import { SendMail } from '../xcore/mailer/sendMail';
+
+import crypto from 'crypto';
+//import { CONFIG } from '../../xcore/config';
+import { CONFIG } from '../xcore/config'
 
 
 export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
@@ -113,7 +113,8 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
         //Обновление данных пользователя о email
         case 'set_MailCode': {
-            if (q.args === '') { wsres.error = "Код не введен"; wsres.code = q.sess_code }
+            if (q.args === '' || (crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex') === this.args.code) ) 
+            { wsres.error = "Не верный код"; wsres.code = q.sess_code }
             else {
                 ut = new UserTable(q.args, q.sess_code);
                 wsres.data = await ut.updateMail();
