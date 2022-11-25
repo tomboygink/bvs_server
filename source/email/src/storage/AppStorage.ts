@@ -9,7 +9,9 @@ import {getCookie , setCookie, deleteCookie }  from '../storage/browserCookes'
 class AppStorage {
     @observable code: string = null;
     @observable dt:any = null;
-
+    @observable error: boolean = false;
+    @observable error_mass: string = null;
+    
     constructor() {
         makeAutoObservable(this);
 
@@ -17,12 +19,15 @@ class AppStorage {
     }
 
    
- 
 
-    @action setCode(u:any){ this.code = u; } //устанавливает значение класса UsersEntity
-    @computed getCode():any{ return this.code; } //возвращает значение класса UsersEntity
+    @action setCode(u:string){ this.code = u; } 
+    @computed getCode():string{ return this.code; } 
+    
+    @action setError(u:boolean){ this.error = u; } 
+    @computed getError():boolean{ return this.error; } 
 
-   
+    @action setErrorMass(u:string) {this.error_mass = u ;}
+    @computed getErorMass():string {return this.error_mass; }   
 
     /**
      * Получить пользователя по коду сессии из куков (пользователь уже заходил с этого браузера)
@@ -30,13 +35,22 @@ class AppStorage {
      */
 
    
-
     async set_SendCode () {
         var ss_code = getCookie('sess_id');
         var q:IWSQuery = new WSQuery("set_MailCode");
-        q.args = { code: this.getCode()};
-        q.sess_code = ss_code;
-        (await WSocket.get()).send(q);
+        console.log(this.getCode())
+        if (this.getCode() === null) {
+            this.setError(true);
+            this.setErrorMass('Введите код подтверждения')
+        }
+        else {
+            this.setError(false);
+            this.setErrorMass('')
+            q.args = { code: this.getCode()};
+            q.sess_code = ss_code;
+            (await WSocket.get()).send(q);
+        }
+  
 
     }
 };
