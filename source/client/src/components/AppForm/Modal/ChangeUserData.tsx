@@ -5,6 +5,8 @@ import { TextField, Box, Button, Divider, Typography, Checkbox, Alert, } from '@
 import { APP_STORAGE } from '../../../storage/AppStorage';
 import Tooltip from '../Tooltip/Tooltip'
 
+import { Route } from 'react-router-dom';
+
 
 interface IProps { }
 
@@ -55,9 +57,14 @@ export class ChangeUserData extends React.Component<IProps> {
 
 
       render(): React.ReactNode {
-            var act_mail:React.ReactNode = <></>;
-            const checked = APP_STORAGE.modal.getChecked();
-
+            var act_mail:React.ReactNode = <></>; ////Для кнопки подтверждения почты
+            const checked = APP_STORAGE.auth_form.getUser().act_mail;
+            if (checked === false) {
+                  act_mail = <Tooltip />
+            }
+            if (checked === true) {
+                  act_mail = <></>
+            }
  
 
             return (
@@ -126,7 +133,7 @@ export class ChangeUserData extends React.Component<IProps> {
                               </Box>
                               
                               
-                              <Tooltip />
+                              {act_mail}
 
                               <Typography variant="caption">ПРИМЕЧАНИЕ:</Typography>
                               <TextField
@@ -144,6 +151,7 @@ export class ChangeUserData extends React.Component<IProps> {
                                     Сохранить
                               </Button>
                         </Box>
+
                   </React.Fragment>
             );
       }

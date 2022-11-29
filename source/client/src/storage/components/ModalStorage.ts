@@ -9,6 +9,8 @@ import {getCookie , setCookie, deleteCookie }  from '../browserCookes';
 
 
 
+
+
 export class PersonalAccauntStorage{
 
   
@@ -51,7 +53,13 @@ export class PersonalAccauntStorage{
     @observable phone_err:boolean=false; ///ошибка при вводе адреса электронной почты
     @observable phone_err_mess:string = '';///сообщение об ошибке адреса электронной почты
 
-    @observable modal_title:string = ''
+    @observable modal_title:string = '';
+
+
+    @observable code: any =  window.location.search.replace(/%20/g, "").split('=');
+    @observable dt:any = null;
+    @observable error: boolean = false;
+    @observable error_mass: string = null;
  
     constructor(){
         makeAutoObservable(this);
@@ -143,6 +151,17 @@ export class PersonalAccauntStorage{
 
     @action setInfo(val:string){ this.info = val; }
     @computed getInfo():string{ return this.info; }
+
+    @action setCode(u:any){ this.code = u; } 
+    @computed getCode():any{ return this.code; } 
+
+    
+    
+    @action setError(u:boolean){ this.error = u; } 
+    @computed getError():boolean{ return this.error; } 
+
+    @action setErrorMass(u:string) {this.error_mass = u ;}
+    @computed getErorMass():string {return this.error_mass; } 
 
 
    
@@ -257,8 +276,29 @@ export class PersonalAccauntStorage{
          (await WSocket.get()).send(q);  this.setPersonalAccaunt(false);
 
     }
-   
-     
+
+ 
+    async set_SendCode () {
+        console.log('1122122' , this.getCode()[1])
+        var ss_code = getCookie('sess_id');
+        var q:IWSQuery = new WSQuery("set_MailCode");
+        if (this.getCode()[1] === null) {
+            this.setError(true);
+            this.setErrorMass('Введите код подтверждения')
+        }
+        else {
+            this.setError(false);
+            this.setErrorMass('')
+            q.args = { 
+                code: this.getCode()[1]
+            };
+            q.sess_code = ss_code;
+            (await WSocket.get()).send(q);
+            window.location.assign('http://127.0.0.1:3040/');
+        }
+    }
+
+
     onGetChangePass(dt: IWSResult){
         this.setCmdErrPass(dt.error);
     }

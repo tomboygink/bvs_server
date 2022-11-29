@@ -10,9 +10,10 @@ import { observer } from 'mobx-react';
 import { APP_STORAGE } from './storage/AppStorage';
 import  CircularIntegration  from './components/reload'
 
-import { TextField, Box, Button, Divider, Typography, Checkbox, Alert, } from '@mui/material';
+import { TextField, Box, Typography, Alert, } from '@mui/material';
 
-
+import Tooltip from '../../client/src/components/AppForm/Tooltip/Tooltip'
+//  import {ConfirmMail} from '../../client/src/components/AppForm/ConfirmMail/ConfirmMail'
 
 
 interface IProps {}
@@ -34,20 +35,24 @@ export class App extends React.Component<IProps>{
   }
 
     render(): React.ReactNode {
-
-       
+    let splArr = window.location.search.replace(/%20/g, "");
+    let splArr1 = splArr.split('=')
+    APP_STORAGE.setCode((splArr1[1]))
    
         return ( 
             <React.Fragment> 
       <CssBaseline />
       <Container maxWidth="sm">
         <Box className='box_wrapper' sx={{p: '12px', mt: '10%', borderRadius: '4px', display: 'grid', boxShadow: '1px 3px 20px -1px rgb(3 131 229 / 20%);'}} >
-            <Typography sx ={{p: '20px' , color: '#1976D2', justifySelf: 'center'}}> Введите код подтверждения</Typography>
-            <TextField  sx = {{justifySelf: 'center'}}
+            <Typography sx ={{p: '20px' , color: '#1976D2', justifySelf: 'center'}}> Подтвердите код</Typography>
+            <TextField sx = {{justifySelf: 'center'}}
                                     error = {APP_STORAGE.getError()}
                                     helperText={APP_STORAGE.getErorMass()}
                                     fullWidth
                                     size='small'
+                                    disabled
+                                    id="outlined-disabled"
+                                    label="код подтверждения"
                                     onChange={(e) => { APP_STORAGE.setCode(e.target.value); }}
                                     value={APP_STORAGE.getCode() || ''} />
 
@@ -55,6 +60,9 @@ export class App extends React.Component<IProps>{
 
                    </Box>
                    </Container>
+                   <Alert sx = {{position: 'absolute', display: 'flex', top: '0', right: '0', left: '0'}}>
+        Успешно
+      </Alert>
             </React.Fragment>
         );
     }
