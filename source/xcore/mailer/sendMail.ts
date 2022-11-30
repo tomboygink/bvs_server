@@ -13,6 +13,8 @@ export class SendMail {
     }
 
     async send() {
+        let a = ''
+        a = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login+"_"+this.args.email).digest('hex')
         const transporter = nodemailer.createTransport({
             host: "smtp.yandex.ru",
             port: 465,
@@ -24,15 +26,14 @@ export class SendMail {
         });
 
         await transporter.sendMail({
+            
             from: 'noreplay@bvs45.ru',
             //Получение email от пользователя 
             to: this.args.email,
             subject: 'Activate mail',
             //Добавить сгенерированный код и ссылка на сайт
-            html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://127.0.0.1:3040/confirm_mail">Click this link</a></h1> and paste this code <b>'+ crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login+"_"+this.args.email).digest('hex')+'</b>',
+            html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://127.0.0.1:3040/confirm_mail?code= '+ a +'">Click this link</a></h1> and paste this code <b>'+ crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login+"_"+this.args.email).digest('hex')+'</b>',
         })
-
-        //console.log(result)
 
     }
 }

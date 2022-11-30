@@ -149,6 +149,26 @@ var UserTable = (function () {
             });
         });
     };
+    UserTable.prototype.updateMail = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var db_res, result, r;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.db.query("SELECT * FROM UpdateUserEmail('" + this.args.code + "', '" + this.sess_code + "')")];
+                    case 1:
+                        _a.sent();
+                        return [4, this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')")];
+                    case 2:
+                        db_res = _a.sent();
+                        result = new Array();
+                        for (r in db_res.rows) {
+                            result.push(db_res.rows[r]);
+                        }
+                        return [2, result];
+                }
+            });
+        });
+    };
     return UserTable;
 }());
 exports.UserTable = UserTable;

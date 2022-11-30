@@ -88,7 +88,7 @@ export class UserTable {
     //Обновление данных по email
     async updateMail(): Promise<UsersEntity[]> {
         //обновление email
-        if (crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex') === this.args.code) {
+        //if (crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex') === this.args.code) {
             await this.db.query("SELECT * FROM UpdateUserEmail('" + this.args.code + "', '" + this.sess_code + "')");
 
 
@@ -100,8 +100,8 @@ export class UserTable {
             }
             return result
         }
-        else{return[]}
+       // else{return[]}
 
-    }
+    //}
 
 }

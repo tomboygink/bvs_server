@@ -7,8 +7,6 @@ import Fab from '@mui/material/Fab';
 import CheckIcon from '@mui/icons-material/Check';
 import SaveIcon from '@mui/icons-material/Save';
 
-
-
 import { APP_STORAGE } from '../storage/AppStorage';
 
 export default function CircularIntegration() {
@@ -44,7 +42,7 @@ export default function CircularIntegration() {
         setSuccess(true);
         setLoading(false);
       }, 1000,
-      APP_STORAGE.set_SendCode())
+      APP_STORAGE.set_SendCode());
     }
   };
 
@@ -75,6 +73,7 @@ export default function CircularIntegration() {
           />
         )}
       </Box>
+      
     </Box>
   );
 }

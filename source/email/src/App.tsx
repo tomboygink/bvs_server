@@ -10,9 +10,10 @@ import { observer } from 'mobx-react';
 import { APP_STORAGE } from './storage/AppStorage';
 import  CircularIntegration  from './components/reload'
 
-import { TextField, Box, Button, Divider, Typography, Checkbox, Alert, } from '@mui/material';
+import { TextField, Box, Typography, Alert, } from '@mui/material';
 
-
+import Tooltip from '../../client/src/components/AppForm/Tooltip/Tooltip'
+//  import {ConfirmMail} from '../../client/src/components/AppForm/ConfirmMail/ConfirmMail'
 
 
 interface IProps {}
@@ -31,38 +32,37 @@ export class App extends React.Component<IProps>{
     
     async set_sendCode() {
         APP_STORAGE.set_SendCode()
-        //APP_STORAGE.modal.set_SendCode('sess_id', APP_STORAGE.auth_form.getdt())
-        //var ss_code = getCookie('sess_id');
   }
 
     render(): React.ReactNode {
-
-       
+    let splArr = window.location.search.replace(/%20/g, "");
+    let splArr1 = splArr.split('=')
+    APP_STORAGE.setCode((splArr1[1]))
    
         return ( 
             <React.Fragment> 
       <CssBaseline />
       <Container maxWidth="sm">
         <Box className='box_wrapper' sx={{p: '12px', mt: '10%', borderRadius: '4px', display: 'grid', boxShadow: '1px 3px 20px -1px rgb(3 131 229 / 20%);'}} >
-            <Typography sx ={{p: '20px' , color: '#1976D2', justifySelf: 'center'}}> Введите код подтверждения</Typography>
-            <TextField  sx = {{justifySelf: 'center'}}
+            <Typography sx ={{p: '20px' , color: '#1976D2', justifySelf: 'center'}}> Подтвердите код</Typography>
+            <TextField sx = {{justifySelf: 'center'}}
                                     error = {APP_STORAGE.getError()}
                                     helperText={APP_STORAGE.getErorMass()}
                                     fullWidth
                                     size='small'
+                                    disabled
+                                    id="outlined-disabled"
+                                    label="код подтверждения"
                                     onChange={(e) => { APP_STORAGE.setCode(e.target.value); }}
                                     value={APP_STORAGE.getCode() || ''} />
 
-                    {/* <Button sx={{ m: '20px' }}
-                                    variant="outlined"
-                                    //   onClick={ ()=>{ APP_STORAGE.personal_acc.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt())}}> 
-                                    onClick={() => { this.set_sendCode(); }}>
-                                    Отправить
-                              </Button> */}
                               <CircularIntegration/>
 
                    </Box>
                    </Container>
+                   <Alert sx = {{position: 'absolute', display: 'flex', top: '0', right: '0', left: '0'}}>
+        Успешно
+      </Alert>
             </React.Fragment>
         );
     }
