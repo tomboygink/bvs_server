@@ -151,7 +151,7 @@ var UserTable = (function () {
     };
     UserTable.prototype.updateMail = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var db_res, result, r;
+            var db, db_res, result, r;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, this.db.query("SELECT * FROM UpdateUserEmail('" + this.args.code + "', '" + this.sess_code + "')")];
@@ -159,6 +159,12 @@ var UserTable = (function () {
                         _a.sent();
                         return [4, this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')")];
                     case 2:
+                        db = _a.sent();
+                        return [4, this.db.query("SELECT * FROM UpdateRePassCode ('" + this.sess_code + "','" + crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(db.rows[0].email + "_" + db.rows[0].password).digest('hex') + "')")];
+                    case 3:
+                        _a.sent();
+                        return [4, this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')")];
+                    case 4:
                         db_res = _a.sent();
                         result = new Array();
                         for (r in db_res.rows) {
