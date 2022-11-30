@@ -3,9 +3,12 @@ import { observer } from 'mobx-react';
 
 import { APP_STORAGE } from '../storage/AppStorage';
 
-import {Avatar, Button, TextField, Box, Container, CssBaseline, Typography , Alert , AlertTitle} from '@mui/material';
+import {Avatar, Button, TextField, Box, Container, CssBaseline, Typography , Alert , FormControlLabel,Checkbox } from '@mui/material';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 interface IProps{}
@@ -32,7 +35,7 @@ export class AuthForm extends React.Component<IProps> {
             <CssBaseline />
                 <Box
                 sx={{
-                marginTop: 8,
+                mt: '10%',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -71,6 +74,10 @@ export class AuthForm extends React.Component<IProps> {
                         onChange={ (e)=>{ APP_STORAGE.auth_form.setPassword(e.target.value); } }
                         value={ APP_STORAGE.auth_form.getPassword() }
                     />
+                    <FormControlLabel
+                        control={<Checkbox value="remember" color="primary" />}
+                        label="Запомнить меня"
+                    />
                     <Button
                         type="button"
                         fullWidth
@@ -83,6 +90,20 @@ export class AuthForm extends React.Component<IProps> {
                 </Box>
                 {error_alert}
                 </Box>
+                <Grid container sx= {{mt: '12px'}}>
+              <Grid item xs>
+                <Link 
+                   href="#" 
+                   variant="body2"
+                   onClick={ () => { APP_STORAGE.auth_form.setForgotPass(true)}}>
+                    
+                  Забыли пароль?
+                </Link>
+              </Grid>
+              <Grid item>
+             
+              </Grid>
+            </Grid>
                 </Container> 
             </ThemeProvider>
             </React.Fragment>

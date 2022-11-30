@@ -3,7 +3,12 @@ import { observer } from 'mobx-react';
 
 import { TextField, Box, Button, Divider, Typography, Checkbox, Alert, } from '@mui/material';
 import { APP_STORAGE } from '../../../storage/AppStorage';
-import Tooltip from '../Tooltip/Tooltip'
+import Tooltip from '../Tooltip/Tooltip';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import SaveIcon from '@mui/icons-material/Save';
+
+
+
 
 import { Route } from 'react-router-dom';
 
@@ -19,7 +24,7 @@ export class ChangeUserData extends React.Component<IProps> {
       }
 
       async saveСhanges() {
-            APP_STORAGE.modal.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt())
+            APP_STORAGE.modal.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt()); 
       }
 
 
@@ -65,14 +70,14 @@ export class ChangeUserData extends React.Component<IProps> {
             if (checked === true) {
                   act_mail = <></>
             }
- 
+           
 
             return (
                   <React.Fragment>
 
                         <Box>
 
-
+                              <Box className='wrapper' sx= {{display: 'grid' , gridTemplateColumns: '1fr 8fr', gap: '8px' , alignItems: 'center'}}>
                               <Typography variant="caption" sx={{ color: '#0D80D8' }}>Фамилия: </Typography>
                               <TextField
                                     fullWidth
@@ -127,30 +132,41 @@ export class ChangeUserData extends React.Component<IProps> {
                               <Checkbox
                                           checked={APP_STORAGE.auth_form.getUser().act_mail}
                                           id="myCheck"
+                                          color="success"
                                           //onChange = { () => {this.confirmEmail}}
                                           inputProps={{ 'aria-label': 'controlled' }}
                                     />
                               </Box>
                               
-                              
+                              </Box>
                               {act_mail}
-
+                              <Divider sx ={{padding : '12px'}}/>
                               <Typography variant="caption">ПРИМЕЧАНИЕ:</Typography>
-                              <TextField
+                              {/* <TextField
                                     fullWidth
                                     size='small'
                                     onChange={(e) => { APP_STORAGE.modal.setInfo(e.target.value); }}
-                                    value={APP_STORAGE.modal.getInfo() || ''} />
+                                    value={APP_STORAGE.modal.getInfo() || ''}
+                                     /> */}
+
+                              <TextareaAutosize
+                                          aria-label="minimum height"
+                                          minRows={12}
+                                          style={{ width: '100%' }}
+                                          onChange={(e) => { APP_STORAGE.modal.setInfo(e.target.value); }}
+                                          value={APP_STORAGE.modal.getInfo() || ''}
+                              />
 
                         </Box>
-                        <Divider />
-                        <Box className='right-wrapper' sx={{ pl: 1, mt: 2 }}>
-                              <Button sx={{ mr: 2, mb: '16px' }}
+                        <Divider sx = {{mb: '12px' , mt : '12px'}} />
+                   
+                              <Button sx={{ mr: 2, mb: '16px', pt: 1 }}
+                                    endIcon={<SaveIcon />}
                                     variant="outlined"
                                     onClick={() => { this.saveСhanges(); }}>
                                     Сохранить
                               </Button>
-                        </Box>
+                 
 
                   </React.Fragment>
             );

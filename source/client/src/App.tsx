@@ -7,6 +7,7 @@ import { APP_STORAGE } from './storage/AppStorage';
 
 import { AuthForm } from './components/AuthForm';
 import { AppForm } from './components/AppForm/index';
+import { ForgotPass } from './components/ForgotPass'
 
 interface IProps {}
 
@@ -37,6 +38,12 @@ export class App extends React.Component<IProps>{
             ret_dt = <AppForm/>} 
        else if (user === null && document.cookie === '' ) { 
             ret_dt = <AuthForm/>;}
+
+        if (APP_STORAGE.auth_form.getForgotPass() === true ) {
+            ret_dt = <ForgotPass />
+        }
+
+        
    
         return ( 
             <React.Fragment> 

@@ -38,6 +38,7 @@ export class PersonalAccauntStorage{
     @observable error_new_message:string=null;
     
     @observable modal:number=null;
+    @observable alert_dialog:boolean=false;
 
     @observable cmd_error_pass: string = null;
     @observable cmd_error_data: string = null;
@@ -78,6 +79,9 @@ export class PersonalAccauntStorage{
 
     @action setModal(val:number){ this.modal = val; } 
     @computed getModal():number{ return this.modal; } 
+
+    @action setAlertDialog(val:boolean) { this.alert_dialog = val}
+    @computed getAlertDialog():boolean {return this.alert_dialog}
 
     @action setModalTitle(val:string){ this.modal_title = val; } 
     @computed getModalTitle():string{ return this.modal_title; } 
@@ -171,8 +175,9 @@ export class PersonalAccauntStorage{
         var sess_code = value;
         var q:IWSQuery = new WSQuery("set_CUserData");
         
-        const email = this.getEmail();
-        const phone =  this.getTelephone();
+       
+         const email = this.getEmail();
+         const phone =  this.getTelephone();
         const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         const regexp_ph = /^((\+7|7|8)+([0-9]){10})$/;
         const matches = email.match(regexp);
@@ -279,7 +284,6 @@ export class PersonalAccauntStorage{
 
  
     async set_SendCode () {
-        console.log('1122122' , this.getCode()[1])
         var ss_code = getCookie('sess_id');
         var q:IWSQuery = new WSQuery("set_MailCode");
         if (this.getCode()[1] === null) {

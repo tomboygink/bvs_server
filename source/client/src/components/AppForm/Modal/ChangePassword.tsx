@@ -2,7 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import {TextField, Box, Button, Typography, Divider} from '@mui/material';
-import { APP_STORAGE } from '../../../storage/AppStorage' 
+import { APP_STORAGE } from '../../../storage/AppStorage'
+import SaveIcon from '@mui/icons-material/Save'; 
 
 interface IProps{}
 
@@ -25,9 +26,8 @@ export class ChangePassword extends React.Component<IProps> {
      
         return (
             <React.Fragment>
-                  <Box> 
-{/* ---------------------------------------смена пароля */}
-                 <form> 
+                  <Box sx= {{display: 'grid' , gridTemplateColumns: '1fr 8fr', gap: '8px' , alignItems: 'center'}}> 
+{/* ---------------------------------------смена пароля */}  
                 <Typography variant="caption" sx = {{color: '#0D80D8'}}>Старый пароль:</Typography>
                 <TextField 
                         fullWidth 
@@ -67,19 +67,16 @@ export class ChangePassword extends React.Component<IProps> {
                     type="password"
                     onChange={ (e)=>{ APP_STORAGE.modal.setRepeat_password(e.target.value); } }
                     value={ APP_STORAGE.modal.getRepeat_password() || ''} />
-                 </form>
+               
                 </Box>
-                <Box 
-                   className='right-wrapper' 
-                   sx ={{pl: 1, mt : 2}}>
-
-                <Button   sx ={{mr: 2}}     
+                
+                <Divider sx = {{pt: 2}} />
+                <Button  sx={{ mr: 2, mt: '8px' }} 
+                    endIcon={<SaveIcon />}     
                     variant="outlined"
-                      onClick={ ()=>{this.saveСhanges();}}>   
+                    onClick={ ()=>{this.saveСhanges();}}>   
                     Сохранить
                 </Button>
-                </Box>
-
                 
 
             </React.Fragment>

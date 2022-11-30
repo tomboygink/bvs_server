@@ -3,8 +3,10 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import EmailIcon from '@mui/icons-material/Email';
 
 import { APP_STORAGE } from '../../../storage/AppStorage';
+
 
 
 const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -21,6 +23,7 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 
 export default function CustomizedTooltips() {
+  
   return (
     <div>
       <HtmlTooltip
@@ -30,7 +33,13 @@ export default function CustomizedTooltips() {
           </React.Fragment>
         }
       >
-       <Button onClick={(e) => {APP_STORAGE.modal.set_ActMail('sess_id', APP_STORAGE.auth_form.getdt())}}>Подтвердить почту</Button>
+       <Button 
+              variant="outlined" 
+              endIcon={<EmailIcon />} 
+              onClick={(e) => {APP_STORAGE.modal.set_ActMail('sess_id', APP_STORAGE.auth_form.getdt())}}>
+              Подтвердить почту
+       </Button>
+    
       </HtmlTooltip>
     </div>
   );
