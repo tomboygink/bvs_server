@@ -30,6 +30,9 @@ export class ForgotPass extends React.Component<IProps> {
                 <Typography component="h1" variant="h5">
                      Сброс пароля
                 </Typography>
+                <Typography sx={{fontSize: '12px', color: 'grey'}}>
+                Забыли пароль? Пожалуйста, введите адрес электронной почты и новый пароль. Вы получите ссылку для подтверждения пароля по электронной почте.
+                </Typography>
              
                 <Box component="form" noValidate sx={{ mt: 1 }}>
                     <TextField
