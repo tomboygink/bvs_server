@@ -379,10 +379,10 @@ $$ LANGUAGE sql;
 -- Обновление кода для пароля 
 DROP FUNCTION IF EXISTS UpdateRePassCode;
 create or replace function UpdateRePassCode(
-	c_sess_code VARCHAR(250),
+	c_login VARCHAR(250),
 	c_re_password_code VARCHAR(250))
 RETURNS VOID AS $$
 	UPDATE users
 	SET re_password_code = c_re_password_code
-	WHERE login = (select login from users inner join sessions on sessions.uid = users.id where sess_code = c_sess_code)
+	WHERE login = c_login
 $$ LANGUAGE sql;

@@ -88,20 +88,25 @@ export class UserTable {
     //Обновление данных по email
     async updateMail(): Promise<UsersEntity[]> {
         //обновление email
-        //if (crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex') === this.args.code) {
-            await this.db.query("SELECT * FROM UpdateUserEmail('" + this.args.code + "', '" + this.sess_code + "')");
-            var db = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
-            await this.db.query("SELECT * FROM UpdateRePassCode ('"+this.sess_code+"','"+ crypto.createHmac('sha256', CONFIG.key_code).update(db.rows[0].email+"_"+db.rows[0].password).digest('hex')+"')");
-            //Получение актуальных данных
-            var db_res = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
-            var result: UsersEntity[] = new Array();
-            for (var r in db_res.rows) {
-                result.push(db_res.rows[r]);
-            }
-            return result
+        await this.db.query("SELECT * FROM UpdateUserEmail('" + this.args.code + "', '" + this.sess_code + "')");
+        var db = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
+        await this.db.query("SELECT * FROM UpdateRePassCode ('" + db.rows[0].login + "','" + crypto.createHmac('sha256', CONFIG.key_code).update(db.rows[0].email + "_" + db.rows[0].password).digest('hex') + "')");
+        //Получение актуальных данных
+        var db_res = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
+        var result: UsersEntity[] = new Array();
+        for (var r in db_res.rows) {
+            result.push(db_res.rows[r]);
         }
-       // else{return[]}
+        return result
+    }
 
-    //}
+    async updateRePass(): Promise<UsersEntity[]> {
+        //обновление пароля шифрование нового пароля
+        //получение актуальных данных
+        //изменение re_pass_code //генерируется из email и пароля (нового) 
+
+        var result: UsersEntity[] = new Array();
+        return result;
+    }
 
 }

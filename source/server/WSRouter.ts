@@ -115,6 +115,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         }break;
 
         //------------------------------------------------------------------------ЗАБЫЛИ ПАРОЛЬ
+        //обновление пароля и кода для именения пароля
         case 'set_NewPass': { 
 
         }break;
