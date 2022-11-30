@@ -90,8 +90,8 @@ export class UserTable {
         //обновление email
         //if (crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex') === this.args.code) {
             await this.db.query("SELECT * FROM UpdateUserEmail('" + this.args.code + "', '" + this.sess_code + "')");
-
-
+            var db = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
+            await this.db.query("SELECT * FROM UpdateRePassCode ('"+this.sess_code+"','"+ crypto.createHmac('sha256', CONFIG.key_code).update(db.rows[0].email+"_"+db.rows[0].password).digest('hex')+"')");
             //Получение актуальных данных
             var db_res = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
             var result: UsersEntity[] = new Array();
