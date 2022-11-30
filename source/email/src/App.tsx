@@ -57,12 +57,9 @@ export class App extends React.Component<IProps>{
                                     value={APP_STORAGE.getCode() || ''} />
 
                               <CircularIntegration/>
-
                    </Box>
                    </Container>
-                   <Alert sx = {{position: 'absolute', display: 'flex', top: '0', right: '0', left: '0'}}>
-        Успешно
-      </Alert>
+             
             </React.Fragment>
         );
     }

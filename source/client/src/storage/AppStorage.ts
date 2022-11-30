@@ -19,9 +19,13 @@ class AppStorage {
     
 
     @observable dt:any = null;
+    @observable dtUser:any = null;
     
     @action setdt(val:any){ this.dt = val; }
     @computed getdt():any{ return this.dt; }
+
+    @action setdtUser(val :any) {this.dtUser = val }
+    @computed getdtUser() : any { return this.dtUser}
  
     constructor() {
         this.main = new PageStorage();
@@ -35,7 +39,8 @@ class AppStorage {
 
     @action async onWSData(dt: IWSResult) {
         console.log("SOCKET RESULT", dt); 
-        this.setdt(dt)
+        this.auth_form.setUserWS(dt);
+        this.setdtUser(dt.data)
         switch (dt.cmd) {
             case ('get_UserByAuth'): { this.auth_form.onGetUserByAuth(dt); } break;
             case ('get_UserBySessionCode'): { this.auth_form.onGetUserBySessionCode(dt); } break;
@@ -56,7 +61,6 @@ class AppStorage {
         var q:IWSQuery = new WSQuery('get_UserBySessionCode', { code: ss_code });
         (await WSocket.get()).send(q);
     }
- 
 };
 
 export const APP_STORAGE: AppStorage = new AppStorage();
