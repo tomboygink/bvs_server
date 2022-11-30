@@ -63,7 +63,6 @@ class AppStorage {
         }
     }
 };
-
-   
+ 
 export const APP_STORAGE: AppStorage = new AppStorage();
 
