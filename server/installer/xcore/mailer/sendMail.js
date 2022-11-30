@@ -48,12 +48,14 @@ var SendMail = (function () {
         this.args = _args;
         this.sess_code = _sess_code;
     }
-    SendMail.prototype.send = function () {
+    SendMail.prototype.sendConfirmMail = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var transporter;
+            var a, transporter;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        a = '';
+                        a = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex');
                         transporter = nodemailer_1["default"].createTransport({
                             host: "smtp.yandex.ru",
                             port: 465,
@@ -67,7 +69,7 @@ var SendMail = (function () {
                                 from: 'noreplay@bvs45.ru',
                                 to: this.args.email,
                                 subject: 'Activate mail',
-                                html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://127.0.0.1:3040/confirm_mail">Click this link</a></h1> and paste this code <b>' + crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex') + '</b>'
+                                html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://127.0.0.1:3040/confirm_mail?code= ' + a + '">Click this link</a></h1>'
                             })];
                     case 1:
                         _a.sent();
@@ -75,6 +77,11 @@ var SendMail = (function () {
                 }
             });
         });
+    };
+    SendMail.prototype.sendRePassword = function () {
+        return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+            return [2];
+        }); });
     };
     return SendMail;
 }());

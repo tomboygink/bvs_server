@@ -160,7 +160,7 @@ var UserTable = (function () {
                         return [4, this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')")];
                     case 2:
                         db = _a.sent();
-                        return [4, this.db.query("SELECT * FROM UpdateRePassCode ('" + this.sess_code + "','" + crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(db.rows[0].email + "_" + db.rows[0].password).digest('hex') + "')")];
+                        return [4, this.db.query("SELECT * FROM UpdateRePassCode ('" + db.rows[0].login + "','" + crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(db.rows[0].email + "_" + db.rows[0].password).digest('hex') + "')")];
                     case 3:
                         _a.sent();
                         return [4, this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')")];
@@ -172,6 +172,15 @@ var UserTable = (function () {
                         }
                         return [2, result];
                 }
+            });
+        });
+    };
+    UserTable.prototype.updateRePass = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var result;
+            return __generator(this, function (_a) {
+                result = new Array();
+                return [2, result];
             });
         });
     };
