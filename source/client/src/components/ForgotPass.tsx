@@ -31,10 +31,24 @@ export class ForgotPass extends React.Component<IProps> {
                      Сброс пароля
                 </Typography>
                 <Typography sx={{fontSize: '12px', color: 'grey'}}>
-                Забыли пароль? Пожалуйста, введите адрес электронной почты и новый пароль. Вы получите ссылку для подтверждения пароля по электронной почте.
+                Забыли пароль? Пожалуйста, введите логин, адрес электронной почты и новый пароль. Вы получите код подтверждения по электронной почте.
                 </Typography>
              
                 <Box component="form" noValidate sx={{ mt: 1 }}>
+
+                <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Логин"
+                        name="login"
+                        autoComplete="login"
+                        autoFocus  
+                        onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
+                        value={ APP_STORAGE.auth_form.getLogin() }
+                    />
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -46,7 +60,6 @@ export class ForgotPass extends React.Component<IProps> {
                         label="email"
                         name="email"
                         autoComplete="email"
-                        autoFocus  
                         onChange={ (e)=>{ APP_STORAGE.auth_form.setEmail(e.target.value); } }
                         value={ APP_STORAGE.auth_form.getEmail() }
                     />
@@ -85,6 +98,15 @@ export class ForgotPass extends React.Component<IProps> {
                     >
                         Сохранить
                     </Button>
+                    <div>
+        <TextField
+          label="Код"
+          id="outlined-size-small"
+          defaultValue="  "
+          size="small"
+        />
+      </div>
+
                 </Box>
             
                 </Container> 
