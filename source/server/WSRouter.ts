@@ -14,7 +14,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
     var wsres: IWSResult = new WSResult(q.cmd);
 
 
-    //console.log(q);
+    console.log(q);
 
     var sess_code;
     var data;
@@ -112,13 +112,15 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.data = await ut.updateMail();
                 wsres.code = q.sess_code;
             }
-        }break;
+        } break;
 
         //------------------------------------------------------------------------ЗАБЫЛИ ПАРОЛЬ
         //обновление пароля и кода для именения пароля
-        case 'set_NewPass': { 
-
-        }break;
+        //case 'set_NewPass': { 
+        case 'set_ForgPass': {
+            ut = new UserTable(q.args, q.sess_code);
+            ut.forgPass();
+        } break;
 
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА

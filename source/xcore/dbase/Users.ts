@@ -59,6 +59,20 @@ export class UserTable {
         return result;
     }
 
+
+    //Обновление данных по email
+    async updateMail(): Promise<UsersEntity[]> {
+        //обновление email
+        await this.db.query("SELECT * FROM UpdateUserEmail('" + this.args.code + "', '" + this.sess_code + "')");
+        //Получение актуальных данных
+        var db_res = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
+        var result: UsersEntity[] = new Array();
+        for (var r in db_res.rows) {
+            result.push(db_res.rows[r]);
+        }
+        return result
+    }
+
     //Изменение данных пользователя 
     async updateUser(): Promise<UsersEntity[]> {
         var db_res = await this.db.query("SELECT * FROM UpdateUser('" + this.sess_code + "', '" + this.args.login + "','" +
@@ -73,7 +87,15 @@ export class UserTable {
 
     //Изменения пароля из панели управления
     async changePass(): Promise<UsersEntity[]> {
-        var db_res = await this.db.query("SELECT * FROM ChangePass('" + this.sess_code + "', '" + this.args.login + "','" + crypto.createHmac('sha256', CONFIG.key_code).update(this.args.new_password).digest('hex') + "','" + crypto.createHmac('sha256', CONFIG.key_code).update(this.args.old_password).digest('hex') + "')");
+        //страный пароль
+        var old_pass = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.old_password).digest('hex');
+        //генерация нового пароля 
+        var pass = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.new_password).digest('hex');
+        var re_pass_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login+"_"+pass).digest('hex');
+        //изменение re_pass_code
+        await this.db.query("SELECT * FROM UpdateRePassCode ('" + this.args.login + "','" + re_pass_code + "')");
+        //изменение пароля 
+        var db_res = await this.db.query("SELECT * FROM ChangePass('" + this.sess_code + "', '" + this.args.login + "','" + pass + "','" + old_pass + "')");
         var result: UsersEntity[] = new Array();
         for (var r in db_res.rows) {
             result.push(db_res.rows[r]);
@@ -85,25 +107,21 @@ export class UserTable {
     }
 
 
-    //Обновление данных по email
-    async updateMail(): Promise<UsersEntity[]> {
-        //обновление email
-        await this.db.query("SELECT * FROM UpdateUserEmail('" + this.args.code + "', '" + this.sess_code + "')");
-        var db = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
-        await this.db.query("SELECT * FROM UpdateRePassCode ('" + db.rows[0].login + "','" + crypto.createHmac('sha256', CONFIG.key_code).update(db.rows[0].email + "_" + db.rows[0].password).digest('hex') + "')");
-        //Получение актуальных данных
-        var db_res = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
-        var result: UsersEntity[] = new Array();
-        for (var r in db_res.rows) {
-            result.push(db_res.rows[r]);
-        }
-        return result
-    }
+    
 
-    async updateRePass(): Promise<UsersEntity[]> {
+    async forgPass(): Promise<UsersEntity[]> {
         //обновление пароля шифрование нового пароля
         //получение актуальных данных
         //изменение re_pass_code //генерируется из email и пароля (нового) 
+
+        //Генерация пароля
+        var pass = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.new_password).digest('hex');
+        //Генерация кода 
+        var re_pass_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login+"_"+pass).digest('hex');
+        //Изменение re_pass_code и пароля
+        await this.db.query("SELECT * FROM ForgPass ('"+this.args.email+"','"+this.args.login+"','"+pass+"','"+re_pass_code+"')");
+
+
 
         var result: UsersEntity[] = new Array();
         return result;
