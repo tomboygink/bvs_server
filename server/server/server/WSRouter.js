@@ -48,6 +48,7 @@ function WSRoute(_ws, q) {
             switch (_c.label) {
                 case 0:
                     wsres = new WSQuery_1.WSResult(q.cmd);
+                    console.log(q);
                     _a = q.cmd;
                     switch (_a) {
                         case 'get_UserBySessionCode': return [3, 1];
@@ -56,7 +57,7 @@ function WSRoute(_ws, q) {
                         case 'set_ChangePass': return [3, 9];
                         case 'set_ActMail': return [3, 14];
                         case 'set_MailCode': return [3, 15];
-                        case 'set_NewPass': return [3, 20];
+                        case 'get_ForgPass': return [3, 20];
                         case 'deleteCookie': return [3, 21];
                     }
                     return [3, 22];
@@ -166,6 +167,8 @@ function WSRoute(_ws, q) {
                 case 19: return [3, 23];
                 case 20:
                     {
+                        ut = new Users_1.UserTable(q.args, q.sess_code);
+                        ut.forgPass();
                     }
                     return [3, 23];
                 case 21:

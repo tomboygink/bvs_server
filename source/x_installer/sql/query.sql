@@ -386,3 +386,17 @@ RETURNS VOID AS $$
 	SET re_password_code = c_re_password_code
 	WHERE login = c_login
 $$ LANGUAGE sql;
+
+--Забыли пароль 
+DROP FUNCTION IF EXISTS ForgPass;
+create or replace function ForgPass(
+	c_email VARCHAR(150),
+	c_login VARCHAR(250),
+	c_password VARCHAR(250),
+	c_re_password_code VARCHAR(250))
+RETURNS VOID AS $$
+	UPDATE users
+	SET re_password_code = c_re_password_code,
+	password = c_password
+	WHERE login = c_login AND email = c_email
+$$ LANGUAGE sql; 

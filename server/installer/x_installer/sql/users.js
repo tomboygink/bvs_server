@@ -13,6 +13,6 @@ exports.users_table = {
 };
 exports.insert_admin = {
     sql: "INSERT INTO users(login, password, family, name, father, telephone, email, org_id, job_title_id, roles_ids, user_data, mail_code, act_mail, re_password_code, deleted, deleted_date, created_at, info) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)",
-    args: ['admin', crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update('admin').digest('hex'), 'admin', 'admin', 'admin', '0(000)000-00-00', '', 1, 1, '{"roles":[1,2]}', '{"user_data":[]}', '', false, '', false, null, (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())), '']
+    args: ['admin', crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update('admin').digest('hex'), 'admin', 'admin', 'admin', '0(000)000-00-00', '', 1, 1, '{"roles":[1,2]}', '{"user_data":[]}', '', false, crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update('admin' + '_' + crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update('admin').digest('hex')).digest('hex'), false, null, (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())), '']
 };
 //# sourceMappingURL=users.js.map
