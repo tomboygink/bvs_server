@@ -57,7 +57,7 @@ function WSRoute(_ws, q) {
                         case 'set_ChangePass': return [3, 9];
                         case 'set_ActMail': return [3, 14];
                         case 'set_MailCode': return [3, 15];
-                        case 'get_ForgPass': return [3, 20];
+                        case 'set_ForgPass': return [3, 20];
                         case 'deleteCookie': return [3, 21];
                     }
                     return [3, 22];

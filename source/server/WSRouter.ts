@@ -46,6 +46,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             var st = new SessionsTable(q.args);
             // Авторизация по логину и паролю
             sess_code = await st.insertSess();
+           
             //Генерация кода сессии, запись в бд
             data = await ut.selectUser();
 
@@ -93,7 +94,6 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
 
         } break;
-
         //------------------------------------------------------------------------АКТИВАЦИЯ ПОЧТЫ
         //отправка сообщения на почту с кодом
         case 'set_ActMail': {
@@ -113,7 +113,6 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.code = q.sess_code;
             }
         } break;
-
         //------------------------------------------------------------------------ЗАБЫЛИ ПАРОЛЬ
         //обновление пароля и кода для именения пароля
         //case 'set_NewPass': { 

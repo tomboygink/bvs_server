@@ -25,7 +25,33 @@ export class SessionsTable {
 
     }
 
-    //Выбор сессии по коду
+    //--------------------------------------------------------------------------------------Добавление сессии
+    async insertSess() {
+
+        var db = await this.db.query("SELECT * FROM SelectUser ('" + this.args.login + "', '" + crypto.createHmac('sha256', CONFIG.key_code).update(this.args.password).digest('hex') + "')");
+        
+       
+        if (db.rows.length !== 0) {
+            const date = new Date;
+            date.setDate(date.getDate() + 15);
+            // получаем id для записи 
+            var id_q = await this.db.query("SELECT max(id) FROM sessions");
+            var id: number = 0;
+            //если записей в Sessions не было то присваеваем 1
+            if (id_q.rows[0].max === null) { id++; }
+            //иначе к последней записи добавляем 1 
+            else { id = parseInt(id_q.rows[0].max) + 1 }
+
+            var sess = crypto.createHmac('sha256', CONFIG.key_code).update(id + "_" + dateTimeToSQL(date) + "_" + db.rows[0].selectiduser).digest('hex');
+            //записываем в Sessions
+            await this.db.query("SELECT addusersession (CAST (" + db.rows[0].id + " AS INTEGER), CAST ('" + dateTimeToSQL(date) +
+                "' AS TIMESTAMP), CAST ('" + dateTimeToSQL(new Date(Date.now())) + "' AS TIMESTAMP), CAST('" + sess + "' AS VARCHAR(250)), CAST('{\"data\":[]}' AS JSON));");
+            return sess;
+        }
+        return '';
+    }
+
+
     async selectSessCode(): Promise<SessionsEntity[]> {
         var db_res = await this.db.query("SELECT * FROM SelectSessCode ('" + this.args.code + "')");
         var result: SessionsEntity[] = new Array();
@@ -36,46 +62,9 @@ export class SessionsTable {
     }
 
 
-    //Выбор всех сессий пользователя
-    async selectAllSess(): Promise<SessionsEntity[]> {
-
-        var db_res = await this.db.query("SELECT * FROM sessions")
-        var result: SessionsEntity[] = new Array();
-        for (var r in db_res.rows) {
-            result.push(db_res.rows[r]);
-        }
-        return result;
+    async deleteSess() {
+        await this.db.query("SELECT DeleteSessions('" + this.args.sess_id + "')");
     }
 
-    //добавление сессии
-    async insertSess() {
-        //получение ID пользователя
-        var db = await this.db.query("SELECT SelectIdUser ('" + this.args.login + "', '" + crypto.createHmac('sha256', CONFIG.key_code).update(this.args.password).digest('hex') + "')");
-        //Установка времени сесии 15 дней
-        if (db.rows[0].selectiduser !== null) {
-
-            const date = new Date;
-            date.setDate(date.getDate() + 15);
-            // получаем id для записи 
-            var id_q = await this.db.query("select max(id) from sessions");
-            var id: number = 0;
-            //если записей в Sessions не было то присваеваем 1
-            if (id_q.rows[0].max === null) { id++; }
-            //иначе к последней записи добавляем 1 
-            else { id = parseInt(id_q.rows[0].max) + 1 }
-
-            //генерируем зашифрованный код
-            var sess = crypto.createHmac('sha256', CONFIG.key_code).update(id + "_" + dateTimeToSQL(date) + "_" + db.rows[0].selectiduser).digest('hex'); 3
-
-            //записываем в Sessions, используя функцию
-            await this.db.query("select addusersession (cast (" + db.rows[0].selectiduser + " as integer), cast ('" + dateTimeToSQL(date) + "' as timestamp), cast ('" + dateTimeToSQL(new Date(Date.now())) + "' as timestamp), cast('" + sess + "' as varchar(250)), cast('{\"data\":[]}' as json));");
-            return sess;
-        }
-        return '';
-    }
-
-    async deleteSess(){
-        await this.db.query("SELECT DeleteSessions('"+this.args.sess_id+"')");
-    }
 
 }

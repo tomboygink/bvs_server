@@ -58,7 +58,7 @@ COMMENT ON COLUMN sessions.sess_data IS 'Данные сессии в форма
 
 DROP FUNCTION IF EXISTS AddUserSession;
 -- Функция сессий пользователя
-create function AddUserSession 
+create or replace function AddUserSession 
 (
  c_Uid BIGINT,
  c_Expires TIMESTAMP,
@@ -164,7 +164,7 @@ COMMENT ON COLUMN users.info IS 'дополнительное описание';
 
 DROP FUNCTION IF EXISTS AddUser;
 --Функция добавления пользователя 
-create function AddUser
+create or replace function AddUser
 (
 	c_login VARCHAR(250), 
 	c_password VARCHAR(250), 
@@ -277,7 +277,7 @@ $$ LANGUAGE sql;
 
 --Обновление данных пользователя 
 DROP FUNCTION IF EXISTS UpdateUser;
-create function UpdateUser(
+create or replace function UpdateUser(
 	c_sess_code VARCHAR(250),
 	c_login VARCHAR(250),
 	--c_password VARCHAR(250),
@@ -327,7 +327,7 @@ $$ LANGUAGE sql;
 
 --Обновление пароля пользователя
 DROP FUNCTION IF EXISTS ChangePass;
-create function ChangePass(
+create or replace function ChangePass(
 	c_sess_code VARCHAR(250),
 	c_login VARCHAR(250),
 	c_new_password VARCHAR(250),
@@ -364,7 +364,7 @@ $$ LANGUAGE sql;
 
 --Обновление и подтверждение email 
 DROP FUNCTION IF EXISTS UpdateUserEmail;
-create function UpdateUserEmail
+create or replace function UpdateUserEmail
 (c_mail_code VARCHAR(250),
  c_sess_code VARCHAR(250))
 RETURNS VOID AS $$
