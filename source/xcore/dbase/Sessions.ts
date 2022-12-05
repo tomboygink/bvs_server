@@ -51,7 +51,7 @@ export class SessionsTable {
         return '';
     }
 
-
+    //--------------------------------------------------------------------------------------Получение сессии из базы данных
     async selectSessCode(): Promise<SessionsEntity[]> {
         var db_res = await this.db.query("SELECT * FROM SelectSessCode ('" + this.args.code + "')");
         var result: SessionsEntity[] = new Array();
@@ -61,7 +61,7 @@ export class SessionsTable {
         return result;
     }
 
-
+    //--------------------------------------------------------------------------------------Удаление сессии при выходе
     async deleteSess() {
         await this.db.query("SELECT DeleteSessions('" + this.args.sess_id + "')");
     }

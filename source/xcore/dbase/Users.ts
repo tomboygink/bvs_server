@@ -59,7 +59,6 @@ export class UserTable {
         return result;
     }
 
-
     //Обновление данных по email
     async updateMail(): Promise<UsersEntity[]> {
         //обновление email
@@ -77,6 +76,8 @@ export class UserTable {
     async updateUser(): Promise<UsersEntity[]> {
         var db_res = await this.db.query("SELECT * FROM UpdateUser('" + this.args.login + "','" +
             this.args.family + "','" + this.args.name + "','" + this.args.father + "','" + this.args.telephone + "','" + this.args.email + "','" + this.args.info + "')");
+        db_res = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
+    
         var result: UsersEntity[] = new Array();
         for (var r in db_res.rows) {
             result.push(db_res.rows[r]);
@@ -96,6 +97,8 @@ export class UserTable {
         await this.db.query("SELECT * FROM UpdateRePassCode ('" + this.args.login + "','" + re_pass_code + "')");
         //изменение пароля 
         var db_res = await this.db.query("SELECT * FROM ChangePass('" + this.sess_code + "', '" + this.args.login + "','" + pass + "','" + old_pass + "')");
+
+        db_res = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
         var result: UsersEntity[] = new Array();
         for (var r in db_res.rows) {
             result.push(db_res.rows[r]);
@@ -106,9 +109,7 @@ export class UserTable {
         else { return []; }
     }
 
-
-    
-
+    //Забыли пароль
     async forgPass(): Promise<UsersEntity[]> {
         //обновление пароля шифрование нового пароля
         //получение актуальных данных
@@ -120,8 +121,6 @@ export class UserTable {
         var re_pass_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login+"_"+pass).digest('hex');
         //Изменение re_pass_code и пароля
         await this.db.query("SELECT * FROM ForgPass ('"+this.args.email+"','"+this.args.login+"','"+pass+"','"+re_pass_code+"')");
-
-
 
         var result: UsersEntity[] = new Array();
         return result;
