@@ -61,6 +61,38 @@ var SessionsTable = (function () {
         this.db = (0, DBase_1.getDB)();
         this.args = _args;
     }
+    SessionsTable.prototype.insertSess = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var db, date, id_q, id, sess;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.db.query("SELECT * FROM SelectUser ('" + this.args.login + "', '" + crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.password).digest('hex') + "')")];
+                    case 1:
+                        db = _a.sent();
+                        if (!(db.rows.length !== 0)) return [3, 4];
+                        date = new Date;
+                        date.setDate(date.getDate() + 15);
+                        return [4, this.db.query("SELECT max(id) FROM sessions")];
+                    case 2:
+                        id_q = _a.sent();
+                        id = 0;
+                        if (id_q.rows[0].max === null) {
+                            id++;
+                        }
+                        else {
+                            id = parseInt(id_q.rows[0].max) + 1;
+                        }
+                        sess = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(id + "_" + (0, DateStr_1.dateTimeToSQL)(date) + "_" + db.rows[0].selectiduser).digest('hex');
+                        return [4, this.db.query("SELECT addusersession (CAST (" + db.rows[0].id + " AS INTEGER), CAST ('" + (0, DateStr_1.dateTimeToSQL)(date) +
+                                "' AS TIMESTAMP), CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP), CAST('" + sess + "' AS VARCHAR(250)), CAST('{\"data\":[]}' AS JSON));")];
+                    case 3:
+                        _a.sent();
+                        return [2, sess];
+                    case 4: return [2, ''];
+                }
+            });
+        });
+    };
     SessionsTable.prototype.selectSessCode = function () {
         return __awaiter(this, void 0, void 0, function () {
             var db_res, result, r;
@@ -74,55 +106,6 @@ var SessionsTable = (function () {
                             result.push(db_res.rows[r]);
                         }
                         return [2, result];
-                }
-            });
-        });
-    };
-    SessionsTable.prototype.selectAllSess = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var db_res, result, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT * FROM sessions")];
-                    case 1:
-                        db_res = _a.sent();
-                        result = new Array();
-                        for (r in db_res.rows) {
-                            result.push(db_res.rows[r]);
-                        }
-                        return [2, result];
-                }
-            });
-        });
-    };
-    SessionsTable.prototype.insertSess = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var db, date, id_q, id, sess;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT SelectIdUser ('" + this.args.login + "', '" + crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.password).digest('hex') + "')")];
-                    case 1:
-                        db = _a.sent();
-                        if (!(db.rows[0].selectiduser !== null)) return [3, 4];
-                        date = new Date;
-                        date.setDate(date.getDate() + 15);
-                        return [4, this.db.query("select max(id) from sessions")];
-                    case 2:
-                        id_q = _a.sent();
-                        id = 0;
-                        if (id_q.rows[0].max === null) {
-                            id++;
-                        }
-                        else {
-                            id = parseInt(id_q.rows[0].max) + 1;
-                        }
-                        sess = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(id + "_" + (0, DateStr_1.dateTimeToSQL)(date) + "_" + db.rows[0].selectiduser).digest('hex');
-                        3;
-                        return [4, this.db.query("select addusersession (cast (" + db.rows[0].selectiduser + " as integer), cast ('" + (0, DateStr_1.dateTimeToSQL)(date) + "' as timestamp), cast ('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' as timestamp), cast('" + sess + "' as varchar(250)), cast('{\"data\":[]}' as json));")];
-                    case 3:
-                        _a.sent();
-                        return [2, sess];
-                    case 4: return [2, ''];
                 }
             });
         });
