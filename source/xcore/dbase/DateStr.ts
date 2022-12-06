@@ -121,7 +121,41 @@ export function sqlToDateTime(str_dt:string){
     return ret_dt;
 }
 
+//*******************************************************************************************************************************
+//Преобразование строки полученных данных в строку SQL
+export function time_to_datetime(times:string){
+    var tarr = times.split("/"); //разделяем на время и дату 
+    if(tarr.length<2){return;}
+    
+    var tmarr = tarr[0].split(":"); // разделяем время на часы минуты и секунды
+    if(tmarr.length<3) {return;}
 
+    var dtarr = tarr[1].split(":"); // разделяем дату на число месяц и год
+    if(dtarr.length<3) {return;}
 
+    var YYYY = "20" + dtarr[2];
+    if(isNaN(parseInt(YYYY))) {return null;}
+    //if(parseInt(YYYY)<10){YYYY= "0" + YYYY;}
 
+    var MM = dtarr[1];
+    if(isNaN(parseInt(MM))){return null;}
+    //if(parseInt(MM)<10) {MM = "0" + MM; }
 
+    var DD = dtarr[0];
+    if(isNaN(parseInt(DD))) {return null;}
+    //if(parseInt(DD)<10) {DD = "0" + DD; }
+
+    var hh = tmarr[0];
+    if(isNaN(parseInt(hh))){return null;}
+    //if(parseInt(hh)<10) {hh = 0 + hh;}
+
+    var mm = tmarr[1];
+    if(isNaN(parseInt(mm))){return null;}
+    //if(parseInt(mm)<10){mm = 0 + mm; }
+
+    var ss = tmarr[2];
+    if(isNaN(parseInt(ss))){return null;}
+    //if( ss != "00" && parseInt(ss)<10) {ss = 0 + ss}
+
+    return YYYY + "-" + MM + '-' + DD + ' ' + hh + ':' + mm + ':' + ss;        
+}

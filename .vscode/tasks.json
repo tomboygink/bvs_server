@@ -77,6 +77,29 @@
 				"kind": "build",
 				"isDefault": true
 			}
+		},
+
+		{
+			"type": "npm",
+			"script": "build_server_receiver",
+			"problemMatcher": [],
+			"label": "npm: build_server_receiver",
+			"detail": "компиляция сервера передачи данных",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"type": "npm",
+			"script": "run_server_receiver",
+			"problemMatcher": [],
+			"label": "npm: run_server_receiver",
+			"detail": "запуск сервера передачи данных",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
 		}
 	]
 }
