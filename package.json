@@ -10,7 +10,10 @@
     "build_client": "npx webpack --config source/client/webpack.prod.js",
     "run_server": "node ./server/server/server/main.js",
     "build_installer": "npx tsc -w -p source/x_installer",
-    "run_installer": "node ./server/installer/x_installer/main.js"
+    "run_installer": "node ./server/installer/x_installer/main.js",
+
+    "build_server_receiver": "npx tsc -w -p source/server_receiver",
+    "run_server_receiver": "node ./server/server_receiver/server_receiver/main.js"
   },
   "author": "",
   "license": "ISC",
