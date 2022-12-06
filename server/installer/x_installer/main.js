@@ -43,6 +43,10 @@ var orgs_1 = require("./sql/orgs");
 var jobs_titles_1 = require("./sql/jobs_titles");
 var users_roles_1 = require("./sql/users_roles");
 var sessions_1 = require("./sql/sessions");
+var dev_sess_1 = require("./sql/dev_sess");
+var devs_groups_1 = require("./sql/devs_groups");
+var devs_1 = require("./sql/devs");
+var info_log_1 = require("./sql/info_log");
 function run() {
     return __awaiter(this, void 0, void 0, function () {
         var db, dt;
@@ -95,6 +99,26 @@ function run() {
                     return [4, db.query(users_1.insert_admin.sql, users_1.insert_admin.args)];
                 case 10:
                     _a.sent();
+                    console.log("ADDING TABLE \"dev_sess\"");
+                    return [4, db.query(dev_sess_1.dev_sess_table.sql, dev_sess_1.dev_sess_table.args)];
+                case 11:
+                    _a.sent();
+                    console.log("TABLE \"dev_sess\" ADD");
+                    console.log("ADDING TABLE \"devs_groups\"");
+                    return [4, db.query(devs_groups_1.devs_groups_table.sql, devs_groups_1.devs_groups_table.args)];
+                case 12:
+                    _a.sent();
+                    console.log("TABLE \"devs_groups\" ADD");
+                    console.log("ADDING TABLE \"devs\"");
+                    return [4, db.query(devs_1.devs_table.sql, devs_1.devs_table.args)];
+                case 13:
+                    _a.sent();
+                    console.log("TABLE \"devs\" ADD");
+                    console.log("ADDING TABLE \"info_log\"");
+                    return [4, db.query(info_log_1.info_log_table.sql, info_log_1.info_log_table.args)];
+                case 14:
+                    _a.sent();
+                    console.log("TABLE \"info_log\" ADD");
                     (0, DBase_1.endDB)();
                     console.log("END INSTALLER");
                     return [2];
