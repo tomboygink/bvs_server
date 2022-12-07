@@ -116,14 +116,14 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             ut = new UserTable(q.args, q.sess_code);
             sendMail = new SendMail(q.args, q.sess_code);
             data = await ut.SelectUserLoginEmail();
-            
-            //console.log(data);
+                        
             if(data[0] == undefined)
             {
-                wsres.error = 'Данные введены не верно или такого пользователя не существует';
+                wsres.error = 'Данные введены не верно или пользователя с такими данными не существует, обращайтесь к администратору системы';
             }
             else{
-                sendMail.sendRePassword();
+                if(data[0].act_mail === true){sendMail.sendRePassword();}
+                else {wsres.error = 'Данный email не был подтвержден, обращайтесь к администратору системы'}
             }
 
         } break;

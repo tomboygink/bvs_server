@@ -172,10 +172,15 @@ function WSRoute(_ws, q) {
                 case 21:
                     data = _c.sent();
                     if (data[0] == undefined) {
-                        wsres.error = 'Данные введены не верно или такого пользователя не существует';
+                        wsres.error = 'Данные введены не верно или пользователя с такими данными не существует, обращайтесь к администратору системы';
                     }
                     else {
-                        sendMail.sendRePassword();
+                        if (data[0].act_mail === true) {
+                            sendMail.sendRePassword();
+                        }
+                        else {
+                            wsres.error = 'Данный email не был подтвержден, обращайтесь к администратору системы';
+                        }
                     }
                     return [3, 24];
                 case 22:
