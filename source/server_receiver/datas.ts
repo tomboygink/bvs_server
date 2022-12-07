@@ -1,6 +1,6 @@
 //импорт базы данных
 import { DBase, getDB } from "../xcore/dbase/DBase"
-import { time_to_datetime } from "../xcore/dbase/DateStr"
+import { time_to_datetime, dateTimeToSQL } from "../xcore/dbase/DateStr"
 
 export class ServerData{
 
@@ -110,8 +110,100 @@ export class ServerData{
             return;
         }
 
+        //Сохранение в базу данных
+        await this.saveSqlData(TIME, NUMBER, SENSORS, AKB, this.data_str);
+    }
 
-        //ДОБАВИТЬ СОХРАНЕНИЕ В БАЗУ ДАННЫХ
+    async saveSqlData(time:string, number:string, sensors:(string|number)[], akb:string, data_str:string)
+    {
+        var errors = false;
+        var err_info = '';
+        //получаем устройства для проверки с полученными данными 
+        //var query_devs = await this.pg_pool.Query({text:"SELECT * FROM devs WHERE number = $1", values: [number]});
+        var query_devs = await this.db.query("SELECT * FROM devs WHERE number = '"+number+"'" );
+
+
+        //Если устройство отсутствует в базе данных
+        if(query_devs.rows.length===0)
+        {
+            console.log("ДАННОЕ УСТРОЙСТВО ОТСУТСВУЕТ В БАЗЕ ДАННЫХ");
+            await this.db.query("INSERT INTO info_log (msg_type, log, info) VALUES ('ERROR', '"+data_str+"', 'ДАННОЕ УСТРОЙСТВО ОТСУТСВУЕТ В БАЗЕ ДАННЫХ')");
+            errors = true;
+        }
+
+        
+        //  console.log("Сенсеров в бд", query_devs[0].sensors["s"].length);
+        //если устройство есть в бд
+        if(errors==false)
+        {        
+
+            //console.log(query_devs[0].sensors["s"].length," ", sensors.length);
+
+            //Если количество переданных данных больше чем в базе данных
+            if(query_devs.rows[0].sensors["s"].length<sensors.length)
+            {
+               // console.log("ПРИНЯТО БОЛЬШЕ ДАННЫХ С СЕНСЕРОВ, ЧЕМ В БАЗЕ ДАННЫХ(ВОЗМОЖНА ПОТЕРЯ ДАННЫХ)");
+                err_info = "ПРИНЯТО БОЛЬШЕ ДАННЫХ С СЕНСЕРОВ, ЧЕМ В БАЗЕ ДАННЫХ(ВОЗМОЖНА ПОТЕРЯ ДАННЫХ)";
+                await this.db.query("INSERT INTO info_log (msg_type, log, info) VALUES ('WARNING', '"+data_str+"', 'ПРИНЯТО БОЛЬШЕ ДАННЫХ С СЕНСЕРОВ, ЧЕМ В БАЗЕ ДАННЫХ(ВОЗМОЖНА ПОТЕРЯ ДАННЫХ)')");
+                errors = true;
+            }
+            //Если количество переданных данных меньше чем в базе данных
+            if(query_devs.rows[0].sensors["s"].length>sensors.length)
+            {
+                //console.log("ПРИНЯТО МЕНЬШЕ ДАННЫХ С СЕНСЕРОВ, ЧЕМ В БАЗЕ ДАННЫХ");
+                err_info = "ПРИНЯТО МЕНЬШЕ ДАННЫХ С СЕНСЕРОВ, ЧЕМ В БАЗЕ ДАННЫХ";
+                await this.db.query("INSERT INTO info_log (msg_type, log, info) VALUES ('WARNING', '"+data_str+"', 'ПРИНЯТО МЕНЬШЕ ДАННЫХ С СЕНСЕРОВ, ЧЕМ В БАЗЕ ДАННЫХ')");
+                errors = true;
+            }
+           
+            if(errors){
+                console.log(err_info);
+                console.log("\x1b[33m", data_str, err_info);
+            }
+
+
+
+            //время сервера
+            //var srv_time = new Date().getFullYear() +"-"+ new Date().getMonth() +"-"+ new Date().getDate()+" "+new Date().getHours() + ":" + new Date().getMinutes() +":"+ new Date().getSeconds();
+            
+            var srv_time = dateTimeToSQL(new Date(Date.now()));
+
+            //json для глубины и данных 
+            var obj = query_devs.rows[0].sensors["s"];
+
+            //console.log("ДАТЧИКОВ", obj.length);
+       
+
+            //создание json с глубиной и данными по сенсерам
+            var s = '{"s":[';
+            for( var i = 0; i < obj.length ; i++)
+            {
+                if(i!==obj.length-1){
+                    if(sensors.length>i){s+='{"depth":"'+obj[i].depth+'", "data":"'+sensors[i]+'"},'}
+                    else{s+='{"depth":"'+obj[i].depth+'", "data":"0.0"},'}
+                }
+                else{
+                    if(sensors.length>i){s+='{"depth":"'+obj[i].depth+'", "data":"'+sensors[i]+'"}'}
+                    else{s+='{"depth":"'+obj[i].depth+'", "data":"0.0"}'}
+                }
+            }
+            s+=']}';
+
+            //console.log("JSON TO SQL ", s);
+            //сохранение сессии в бд
+
+            var sess_data_sql = await this.db.query("INSERT INTO dev_sess (time_dev, time_srv, dev_number, dev_id, level_akb, sess_data) VALUES ('"+time+"', '"+srv_time+"', '"+query_devs.rows[0].number+"', "+query_devs.rows[0].id+", "+akb+", '"+s+"') RETURNING id");
+
+            //console.log(sess_data_sql.rows);
+
+            if(sess_data_sql.rows[0].id==0|| sess_data_sql==null|| sess_data_sql==undefined)
+            {
+                await this.db.query("INSERT INTO info_log (msg_type, log, info) VALUES ('WARNING', '"+data_str+"', 'НЕ МОГУ СОЗДАТЬ СЕСИИЮ ДЛЯ ПРИЕМА ДАННЫХ')");
+                console.log("\x1b[33m", data_str, 'НЕ МОГУ СОЗДАТЬ СЕСИИЮ ДЛЯ ПРИЕМА ДАННЫХ');
+            }
+        }
+
+
     }
 
 
