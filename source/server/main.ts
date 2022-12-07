@@ -72,6 +72,7 @@ class AppServer{
         this.app.all("/", (req:express.Request, res:express.Response)=>{
             res.render('index.hbs', { title: "---" });
         });
+
         this.app.all("/confirm_mail", (req:express.Request, res:express.Response)=>{
             res.render('confirm_mail.hbs', {title:"Подтверждение почты"});
         });

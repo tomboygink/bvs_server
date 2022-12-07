@@ -16,11 +16,12 @@ export class AuthFormStorage{
     @observable email: string = ''; 
     @observable new_password:string = '';
     @observable repeat_password:string = '';
-
+    @observable code:string = '';
     
     @observable user: UsersEntity = null;
 
-    @observable cmderror:any = null;
+    @observable cmderror:any = null; // используется в компоненте Alert , если есть ошибка
+    @observable alert_forg_pass : string = ''; // для смены пароля ( форма ForgotPassForm )
 
     @observable dt:string = null;  ///куки
 
@@ -53,11 +54,14 @@ export class AuthFormStorage{
     @action setUser(u:UsersEntity){ this.user = u; } //устанавливает значение класса UsersEntity
     @computed getUser():UsersEntity{ return this.user; } //возвращает значение класса UsersEntity
 
-    @action setCmderror(u:any){ this.cmderror = u; } //устанавливает значение класса UsersEntity
-    @computed getCmderror():any{ return this.cmderror; } //возвращает значение класса UsersEntity
+    @action setCmderror(u:any){ this.cmderror = u; }  // ошибки cmd (Websoket)
+    @computed getCmderror():any{ return this.cmderror; } 
 
-    @action setdt(u:string){ this.dt = u; } //устанавливает значение класса UsersEntity
-    @computed getdt():string{ return this.dt; } //возвращает значение класса UsersEntity
+    @action setAlertForgPass(val:any) { this.alert_forg_pass = val}  //
+    @computed getAlertForgPass():any{ return this.alert_forg_pass}
+
+    @action setdt(u:string){ this.dt = u; } 
+    @computed getdt():string{ return this.dt; } 
 
     @action setForgotPass(u:boolean) { this.forgot_pass = u; }
     @action getForgotPass():boolean { return this.forgot_pass }
@@ -97,7 +101,8 @@ export class AuthFormStorage{
     @action setError_repeat_message(val:string){ this.error_repeat_message = val; }
     @computed getError_repeat_message():string{ return this.error_repeat_message; }
 
-
+    @action setCode(val:string){ this.code = val; }
+    @computed getCode():string{ return this.code; }
  
 
     async get_UserByAuth(){
@@ -114,11 +119,13 @@ export class AuthFormStorage{
         if(this.getLogin() === ''){
             this.setError_login(true);
             this.setLogin_message('Поле не должно быть пустым ')
+            this.setAlertForgPass('');
         }
+    
+        
 
         if(this.getLogin() !== ''){
             this.setError_login(false);
-            this.setLogin_message('')
         }
 
         if ( matches === null) {
@@ -139,6 +146,11 @@ export class AuthFormStorage{
             this.setError_new_message('')
         }
 
+        if(this.getLogin() === this.getNewPass() ){
+            this.setErrr_new_pass(true);
+            this.setError_new_message('Пароль не должен совпадать с логином')
+        }
+
         if(this.getNewPass() !==  this.getRepeatPass()) {
             this.setError_repeat_pass(true);
             this.setError_repeat_message('Пароли не совпадают. Повторите попытку.')
@@ -150,16 +162,30 @@ export class AuthFormStorage{
 
         if ( this.getEmail() !== '' && this.getNewPass() !== '' && this.getRepeatPass() !== ''  && this.getNewPass() === this.getRepeatPass()) {
             var q:IWSQuery = new WSQuery("set_ForgPass");
-            q.args = { login: this.getLogin(), email : this.getEmail(), new_password:this.getNewPass(), repeat_password : this.getRepeatPass()  };
+            q.args = { 
+                login: this.getLogin(), 
+                email : this.getEmail(), 
+                new_password:this.getNewPass(), 
+                repeat_password : this.getRepeatPass()  };
+                this.setAlertForgPass('На указанную почту отправлен код подтверждения.');
             (await WSocket.get()).send(q); 
-           
-             
-
         }
-        
     }
 
-
+    async set_SaveNewPass() {
+        if ( this.getEmail() !== '' && this.getNewPass() !== '' && this.getRepeatPass() !== ''  && this.getNewPass() === this.getRepeatPass() && this.getCode() !== '') {
+            var q:IWSQuery = new WSQuery("set_SaveNewPass");
+            q.args = { 
+                login: this.getLogin(), 
+                email : this.getEmail(), 
+                new_password:this.getNewPass(), 
+                repeat_password : this.getRepeatPass(),
+                code : this.getCode()  };
+                
+            (await WSocket.get()).send(q); 
+        }
+       
+    }
 
     setUserWS(dt: IWSResult){
         if(dt.error !== null && dt.error.trim() !== ''){}
