@@ -7,7 +7,7 @@ import { APP_STORAGE } from './storage/AppStorage';
 
 import { AuthForm } from './components/AuthForm';
 import { AppForm } from './components/AppForm/index';
-import { ForgotPass } from './components/ForgotPass'
+import { ForgotPass } from './components/ForgotPassForm'
 
 interface IProps {}
 

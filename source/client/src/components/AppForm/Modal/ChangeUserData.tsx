@@ -56,12 +56,16 @@ export class ChangeUserData extends React.Component<IProps> {
             if (APP_STORAGE.modal.getLogin() === '') {
                   APP_STORAGE.modal.setLogin(user.login)
             }
-
-
+           
+         
       }
 
 
       render(): React.ReactNode {
+         
+                  APP_STORAGE.modal.setActMail(APP_STORAGE.auth_form.getUser().act_mail)
+            
+
             var act_mail:React.ReactNode = <></>; ////Для кнопки подтверждения почты
             const checked = APP_STORAGE.auth_form.getUser().act_mail;
             if (checked === false) {
@@ -71,10 +75,10 @@ export class ChangeUserData extends React.Component<IProps> {
                   act_mail = <></>
             }
            
+             
 
             return (
                   <React.Fragment>
-
                         <Box>
 
                               <Box className='wrapper' sx= {{display: 'grid' , gridTemplateColumns: '1fr 8fr', gap: '8px' , alignItems: 'center'}}>
