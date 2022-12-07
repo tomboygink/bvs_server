@@ -110,7 +110,6 @@ export class UserTable {
     }
 
     //Забыли пароль
-
     async SelectUserLoginEmail():Promise<UsersEntity[]>{
         var db_res = await this.db.query("SELECT * FROM SelectUserLoginEmail ('" + this.args.login + "', '" + this.args.email + "')");
         var result: UsersEntity[] = new Array();
