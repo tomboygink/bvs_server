@@ -84,23 +84,23 @@ export class AuthForm extends React.Component<IProps> {
                     >
                         Войти
                     </Button>
-                </Box>
-                {error_alert}
-                </Box>
-                <Grid container sx= {{mt: '12px'}}>
-              <Grid item xs>
-                <Link 
-                   href="#" 
-                   variant="body2"
-                   onClick={ () => { APP_STORAGE.auth_form.setForgotPass(true)}}>
+                    </Box>
+                        {error_alert}
+                    </Box>
+                    <Grid container sx= {{mt: '12px'}}>
+                    <Grid item xs>
+                    <Link 
+                        href="#" 
+                        variant="body2"
+                        onClick={ () => { APP_STORAGE.auth_form.setForgotPass(true)}}>
                     
                   Забыли пароль?
-                </Link>
-              </Grid>
-              <Grid item>
+                    </Link>
+                    </Grid>
+                    <Grid item>
              
-              </Grid>
-            </Grid>
+                    </Grid>
+                    </Grid>
                 </Container> 
             </ThemeProvider>
             </React.Fragment>

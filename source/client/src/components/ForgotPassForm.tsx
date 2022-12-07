@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import { APP_STORAGE } from '../storage/AppStorage';
 
-import {Avatar, Button, TextField, Box, Container, CssBaseline, Typography, Divider } from '@mui/material';
+import {Avatar, Button, TextField, Box, Container, CssBaseline, Typography, Divider, Alert  } from '@mui/material';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -13,7 +13,7 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 interface IProps{}
 
 const theme = createTheme(); 
-//Компонент формы авторизации
+//Если пользователь забыл пароль
 @observer
 export class ForgotPass extends React.Component<IProps> {
     constructor(props:any){
@@ -21,6 +21,11 @@ export class ForgotPass extends React.Component<IProps> {
     }
 
     render(): React.ReactNode {
+        var error_alert:React.ReactNode = <></>;
+        if(APP_STORAGE.auth_form.getAlertForgPass() !== ''){
+            error_alert =   <Alert sx={{display: 'flex' , position: 'absolute', right: 0, bottom: 0, mb: '15px'}} severity="success">{APP_STORAGE.auth_form.getAlertForgPass()}</Alert>
+        }
+
         return (
             <React.Fragment>
             <ThemeProvider theme={theme}>
@@ -109,27 +114,29 @@ export class ForgotPass extends React.Component<IProps> {
                     >
                         Получить код
                     </Button>
-                  <Divider sx ={{mb: '12px', mt: '12px'}} />
+                    <Divider sx ={{mb: '12px', mt: '12px'}} />
                     <TextField
                         label="Код подтверждения"
                         id="outlined-size-small"
-                        defaultValue="  "
                         size="small"
+                        onChange={ (e)=>{ APP_STORAGE.auth_form.setCode(e.target.value); } }
+                        value={ APP_STORAGE.auth_form.getCode() || '' }
                     />
     
                     
                      <Button sx= {{background: '#edf2ff', color: '#1976d2;' , mt : '12px' , mb: '12px'}}
                         type="button"
                         fullWidth
-                       // onClick={ ()=>{  APP_STORAGE.auth_form.set_ForgPass();}}
+                       onClick={ ()=>{  APP_STORAGE.auth_form.set_SaveNewPass();}}
                      >
                        Сохранить
                     </Button>
 
-                </Box>
+                    </Box>
             
                 </Container> 
             </ThemeProvider>
+              {error_alert}
             </React.Fragment>
         );
     }
