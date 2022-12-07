@@ -68,7 +68,6 @@ export class ForgotPass extends React.Component<IProps> {
                         error = { APP_STORAGE.auth_form. getError_emain() } 
                         helperText = { APP_STORAGE.auth_form.getEmail_message()}
                         fullWidth
-                        id="email"
                         label="email"
                         name="email"
                         autoComplete="email"
@@ -85,7 +84,6 @@ export class ForgotPass extends React.Component<IProps> {
                         helperText= {APP_STORAGE.auth_form.getError_new_message()}
                         label="Новый пароль"
                         type="password"
-                        id="password"
                         autoComplete="current-password"
                         onChange={ (e)=>{ APP_STORAGE.auth_form.setNewPass(e.target.value); } }
                         value={ APP_STORAGE.auth_form.getNewPass() }
@@ -101,7 +99,6 @@ export class ForgotPass extends React.Component<IProps> {
                         name="password"
                         label="Повторите пароль"
                         type="password"
-                        id="password"
                         autoComplete="current-password"
                         onChange={ (e)=>{ APP_STORAGE.auth_form.setRepeatPass(e.target.value); } }
                         value={ APP_STORAGE.auth_form.getRepeatPass() }
@@ -114,7 +111,7 @@ export class ForgotPass extends React.Component<IProps> {
                     >
                         Получить код
                     </Button>
-                    <Divider sx ={{mb: '12px', mt: '12px'}} />
+                    {/* <Divider sx ={{mb: '12px', mt: '12px'}} />
                     <TextField
                         label="Код подтверждения"
                         id="outlined-size-small"
@@ -130,7 +127,7 @@ export class ForgotPass extends React.Component<IProps> {
                        onClick={ ()=>{  APP_STORAGE.auth_form.set_SaveNewPass();}}
                      >
                        Сохранить
-                    </Button>
+                    </Button> */}
 
                     </Box>
             

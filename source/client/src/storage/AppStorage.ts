@@ -46,6 +46,7 @@ class AppStorage {
             case ('get_UserBySessionCode'): { this.auth_form.onGetUserBySessionCode(dt); } break;
             case ('set_ChangePass'): { this.modal.onGetChangePass(dt); } break;
             case ('set_CUserData') : { this.modal.onGetCUserData(dt); } break;
+            case ('set_ForgPass') : { this.auth_form.onSaveNewPass(dt); } break;
             default: { } break;
         }
     }
