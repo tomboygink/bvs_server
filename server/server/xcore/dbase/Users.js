@@ -201,13 +201,12 @@ var UserTable = (function () {
     };
     UserTable.prototype.forgPass = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var pass, re_pass_code, result;
+            var pass, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.new_password).digest('hex');
-                        re_pass_code = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + pass).digest('hex');
-                        return [4, this.db.query("SELECT * FROM ForgPass ('" + this.args.email + "','" + this.args.login + "','" + pass + "','" + re_pass_code + "')")];
+                        return [4, this.db.query("SELECT * FROM ForgPass ('" + this.args.email + "','" + this.args.login + "','" + pass + "','" + this.args.code + "')")];
                     case 1:
                         _a.sent();
                         result = new Array();
