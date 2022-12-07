@@ -17,6 +17,7 @@ export class AuthFormStorage{
     @observable new_password:string = '';
     @observable repeat_password:string = '';
     @observable code:string = '';
+    @observable dt_set_forgPass: string = ''; /// если данные успешно отправлены
     
     @observable user: UsersEntity = null;
 
@@ -39,6 +40,8 @@ export class AuthFormStorage{
     @observable errr_repeat_pass:boolean=false;
     @observable error_repeat_message:string=null;
 
+    @observable error_code:boolean=false;  /// если поле КОД пусто,  помечаем поле как error
+    @observable error_code_mess:string= '';  /// если поле КОД пусто, то отправляем сообщение об ошибке
 
     constructor(){
         makeAutoObservable(this);
@@ -67,6 +70,9 @@ export class AuthFormStorage{
     @action getForgotPass():boolean { return this.forgot_pass }
                                             
     ///////////////////////Если пользователь забыл пароль
+
+    @action set_forgPass(val:string){ this.dt_set_forgPass = val; }
+    @computed get_forgPass():string{ return this.dt_set_forgPass; } 
 
     @action setEmail(val:string){ this.email = val; }
     @computed getEmail():string{ return this.email; } 
@@ -100,6 +106,12 @@ export class AuthFormStorage{
 
     @action setError_repeat_message(val:string){ this.error_repeat_message = val; }
     @computed getError_repeat_message():string{ return this.error_repeat_message; }
+
+    @action setError_code(val:boolean){ this.error_code = val; }
+    @computed getError_code():boolean{ return this.error_code; }
+
+    @action setError_code_mess(val:string){ this.error_code_mess = val; }
+    @computed getError_code_mess():string{ return this.error_code_mess; }
 
     @action setCode(val:string){ this.code = val; }
     @computed getCode():string{ return this.code; }
@@ -173,6 +185,12 @@ export class AuthFormStorage{
     }
 
     async set_SaveNewPass() {
+        
+        if (this.getCode() === ''){
+             this.setError_code(true);
+             this.setError_code_mess('Повторите попытку.')
+        }
+
         if ( this.getEmail() !== '' && this.getNewPass() !== '' && this.getRepeatPass() !== ''  && this.getNewPass() === this.getRepeatPass() && this.getCode() !== '') {
             var q:IWSQuery = new WSQuery("set_SaveNewPass");
             q.args = { 
@@ -209,6 +227,10 @@ export class AuthFormStorage{
 
     onGetUserBySessionCode(dt: IWSResult){
         this.setUserWS(dt);
+    }
+
+    onSaveNewPass(dt: IWSResult){
+        this.set_forgPass(dt.error)
     }
 
 }
