@@ -167,6 +167,43 @@ as $$
     WHERE login = c_login and password = c_password
 $$ LANGUAGE sql;
 
+
+
+
+--------------------------------------------------------------------------------------------Функция получения данных по логину и email
+DROP FUNCTION IF EXISTS SelectUserLoginEmail;
+CREATE OR REPLACE FUNCTION SelectUserLoginEmail(
+    c_login VARCHAR(250), 
+    c_email VARCHAR(250)
+)
+RETURNS table(
+    id BIGINT, 
+    login VARCHAR(250), 
+    password VARCHAR(250), 
+    family VARCHAR(150), 
+    name VARCHAR(150), 
+    father VARCHAR(150), 
+    telephone VARCHAR(50), 
+    email VARCHAR(150), 
+    org_id BIGINT, 
+    job_title_id BIGINT, 
+    roles_ids JSON,
+    user_data JSON, 
+    mail_code VARCHAR(250), 
+    act_mail BOOLEAN, 
+    re_password_code VARCHAR(250), 
+    deleted BOOLEAN, 
+    deleted_date TIMESTAMP, 
+    created_at TIMESTAMP, 
+    info TEXT
+)
+as $$
+    SELECT users
+    FROM users 
+    WHERE login = c_login and email = c_email
+$$ LANGUAGE sql;
+
+
 --------------------------------------------------------------------------------------------Функция получения данных по коду сессии
 DROP FUNCTION IF EXISTS SelectUserBySessCode;
 CREATE OR REPLACE FUNCTION SelectUserBySessCode(

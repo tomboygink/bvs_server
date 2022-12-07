@@ -58,9 +58,9 @@ function WSRoute(_ws, q) {
                         case 'set_ActMail': return [3, 14];
                         case 'set_MailCode': return [3, 15];
                         case 'set_ForgPass': return [3, 20];
-                        case 'deleteCookie': return [3, 21];
+                        case 'deleteCookie': return [3, 22];
                     }
-                    return [3, 22];
+                    return [3, 23];
                 case 1:
                     st = new Sessions_1.SessionsTable(q.args);
                     ut = new Users_1.UserTable(q.args, q.sess_code);
@@ -78,7 +78,7 @@ function WSRoute(_ws, q) {
                         wsres.code = sess_code;
                         wsres.data = data;
                     }
-                    return [3, 23];
+                    return [3, 24];
                 case 4:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     st = new Sessions_1.SessionsTable(q.args);
@@ -95,7 +95,7 @@ function WSRoute(_ws, q) {
                         wsres.code = sess_code;
                         wsres.data = data;
                     }
-                    return [3, 23];
+                    return [3, 24];
                 case 7:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, ut.updateUser()];
@@ -108,7 +108,7 @@ function WSRoute(_ws, q) {
                         wsres.data = data;
                         wsres.code = q.sess_code;
                     }
-                    return [3, 23];
+                    return [3, 24];
                 case 9:
                     if (!(q.args.new_password === q.args.old_password)) return [3, 10];
                     wsres.error = 'Новый пароль не должен повторять старый';
@@ -137,7 +137,7 @@ function WSRoute(_ws, q) {
                         wsres.error = '';
                     }
                     _c.label = 13;
-                case 13: return [3, 23];
+                case 13: return [3, 24];
                 case 14:
                     {
                         if (q.args.email !== '') {
@@ -148,7 +148,7 @@ function WSRoute(_ws, q) {
                             wsres.error = "Введите email";
                         }
                     }
-                    return [3, 23];
+                    return [3, 24];
                 case 15:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, ut.updateMail()];
@@ -164,27 +164,34 @@ function WSRoute(_ws, q) {
                     _b.data = _c.sent();
                     wsres.code = q.sess_code;
                     _c.label = 19;
-                case 19: return [3, 23];
+                case 19: return [3, 24];
                 case 20:
-                    {
-                        ut = new Users_1.UserTable(q.args, q.sess_code);
-                        ut.forgPass();
-                    }
-                    return [3, 23];
+                    ut = new Users_1.UserTable(q.args, q.sess_code);
+                    sendMail = new sendMail_1.SendMail(q.args, q.sess_code);
+                    return [4, ut.SelectUserLoginEmail()];
                 case 21:
+                    data = _c.sent();
+                    if (data[0] == undefined) {
+                        wsres.error = 'Данные введены не верно или такого пользователя не существует';
+                    }
+                    else {
+                        sendMail.sendRePassword();
+                    }
+                    return [3, 24];
+                case 22:
                     {
                         st = new Sessions_1.SessionsTable(q.args);
                         st.deleteSess();
                         wsres.code = '';
                         wsres.data = [];
                     }
-                    return [3, 23];
-                case 22:
+                    return [3, 24];
+                case 23:
                     {
                         wsres.error = "\u041A\u043E\u043C\u0430\u043D\u0434\u0430 \"".concat(q.cmd, "\" \u043D\u0435 \u0440\u0430\u0441\u043F\u043E\u0437\u043D\u0430\u043D\u0430");
                     }
-                    return [3, 23];
-                case 23:
+                    return [3, 24];
+                case 24:
                     _ws.send((0, WSQuery_1.WSStr)(wsres));
                     return [2];
             }

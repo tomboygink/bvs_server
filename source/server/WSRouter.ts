@@ -13,9 +13,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
     // начало - создание ответа
     var wsres: IWSResult = new WSResult(q.cmd);
 
-
     console.log(q);
-
     var sess_code;
     var data;
 
@@ -49,7 +47,6 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
            
             //Генерация кода сессии, запись в бд
             data = await ut.selectUser();
-
             if (sess_code === '' && data[0] === undefined) { wsres.error = "Пользователя не существует или введены не верные данные"; }
             else {
                 wsres.code = sess_code;
@@ -115,10 +112,20 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         } break;
         //------------------------------------------------------------------------ЗАБЫЛИ ПАРОЛЬ
         //обновление пароля и кода для именения пароля
-        //case 'set_NewPass': { 
         case 'set_ForgPass': {
             ut = new UserTable(q.args, q.sess_code);
-            ut.forgPass();
+            sendMail = new SendMail(q.args, q.sess_code);
+            data = await ut.SelectUserLoginEmail();
+            
+            //console.log(data);
+            if(data[0] == undefined)
+            {
+                wsres.error = 'Данные введены не верно или такого пользователя не существует';
+            }
+            else{
+                sendMail.sendRePassword();
+            }
+
         } break;
 
 
