@@ -118,15 +118,16 @@ export class ForgotPass extends React.Component<IProps> {
                     <TextField
                         label="Код подтверждения"
                         id="outlined-size-small"
-                        defaultValue="  "
                         size="small"
+                        onChange={ (e)=>{ APP_STORAGE.auth_form.setCode(e.target.value); } }
+                        value={ APP_STORAGE.auth_form.getCode() || '' }
                     />
     
                     
                      <Button sx= {{background: '#edf2ff', color: '#1976d2;' , mt : '12px' , mb: '12px'}}
                         type="button"
                         fullWidth
-                       // onClick={ ()=>{  APP_STORAGE.auth_form.set_ForgPass();}}
+                       onClick={ ()=>{  APP_STORAGE.auth_form.set_SaveNewPass();}}
                      >
                        Сохранить
                     </Button>

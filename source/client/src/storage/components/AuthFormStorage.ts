@@ -16,6 +16,7 @@ export class AuthFormStorage{
     @observable email: string = ''; 
     @observable new_password:string = '';
     @observable repeat_password:string = '';
+    @observable code:string = '';
     
     @observable user: UsersEntity = null;
 
@@ -100,7 +101,8 @@ export class AuthFormStorage{
     @action setError_repeat_message(val:string){ this.error_repeat_message = val; }
     @computed getError_repeat_message():string{ return this.error_repeat_message; }
 
-
+    @action setCode(val:string){ this.code = val; }
+    @computed getCode():string{ return this.code; }
  
 
     async get_UserByAuth(){
@@ -119,6 +121,8 @@ export class AuthFormStorage{
             this.setLogin_message('Поле не должно быть пустым ')
             this.setAlertForgPass('');
         }
+    
+        
 
         if(this.getLogin() !== ''){
             this.setError_login(false);
@@ -142,6 +146,11 @@ export class AuthFormStorage{
             this.setError_new_message('')
         }
 
+        if(this.getLogin() === this.getNewPass() ){
+            this.setErrr_new_pass(true);
+            this.setError_new_message('Пароль не должен совпадать с логином')
+        }
+
         if(this.getNewPass() !==  this.getRepeatPass()) {
             this.setError_repeat_pass(true);
             this.setError_repeat_message('Пароли не совпадают. Повторите попытку.')
@@ -163,7 +172,20 @@ export class AuthFormStorage{
         }
     }
 
-
+    async set_SaveNewPass() {
+        if ( this.getEmail() !== '' && this.getNewPass() !== '' && this.getRepeatPass() !== ''  && this.getNewPass() === this.getRepeatPass() && this.getCode() !== '') {
+            var q:IWSQuery = new WSQuery("set_SaveNewPass");
+            q.args = { 
+                login: this.getLogin(), 
+                email : this.getEmail(), 
+                new_password:this.getNewPass(), 
+                repeat_password : this.getRepeatPass(),
+                code : this.getCode()  };
+                
+            (await WSocket.get()).send(q); 
+        }
+       
+    }
 
     setUserWS(dt: IWSResult){
         if(dt.error !== null && dt.error.trim() !== ''){}
