@@ -119,7 +119,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                         
             if(data[0] == undefined)
             {
-                wsres.error = 'Данные введены не верно или пользователя с такими данными не существует, обращайтесь к администратору системы';
+                wsres.error = 'Данные введены неверно или пользователя с такими данными не существует, обращайтесь к администратору системы';
             }
             else{
                 if(data[0].act_mail === true){sendMail.sendRePassword();}
@@ -127,6 +127,18 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
 
         } break;
+
+        case 'set_SaveNewPass':{
+            let a = crypto.createHmac('sha256', CONFIG.key_code).update(q.args.login+"_"+q.args.new_password).digest('hex');
+            if(q.args.code!==a)
+            {
+                wsres.error = 'Код подтверждения неверен, проверте правильность введеного кода'
+            }
+            else{
+                ut = new UserTable(q.args, q.sess_code);
+                ut.forgPass();
+            }
+        }break;
 
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
