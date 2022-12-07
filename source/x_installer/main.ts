@@ -2,12 +2,19 @@
 import { DBase, endDB, getDB } from '../xcore/dbase/DBase';
 import { dateTimeToStr } from '../xcore/dbase/DateStr';
 
+//Таблицы пользователя
 import { users_table, insert_admin } from './sql/users';
 import {orgs_table, org_insert_admin} from './sql/orgs';
 import {jobs_titles_table, insert_jt_admin} from './sql/jobs_titles';
 import {users_roles_table, insert_role} from './sql/users_roles';
-
 import {sessions_table} from './sql/sessions';
+
+//Таблицы сессий
+import {dev_sess_table} from './sql/dev_sess';
+import {devs_groups_table} from './sql/devs_groups';
+import {devs_table} from './sql/devs';
+import {info_log_table} from './sql/info_log';
+
 
 async function run(){
     var db:DBase = getDB();
@@ -15,12 +22,8 @@ async function run(){
     var dt = await db.NOW();
     console.log("START INSTALLER", dateTimeToStr(dt));
 
-    /////
-    /*
-    
-    await db.query(insert_admin.sql, insert_admin.args);
-    */
-
+   
+    //Создание таблиц пользователя
     console.log("ADDING TABLE \"orgs\"");
     await db.query(orgs_table.sql);
     console.log("TABLE \"orgs\" ADD");
@@ -42,7 +45,7 @@ async function run(){
     console.log("TABLE \"users\" ADD");
 
 
-    
+    //Создание пользователя
     console.log("CREATE ROLE");
     await db.query(insert_role.sql, insert_role.args);
     
@@ -55,7 +58,23 @@ async function run(){
     console.log("CREATE USER");
     await db.query(insert_admin.sql, insert_admin.args);
 
+    
+    //Создание таблиц устройств и сессий
+    console.log("ADDING TABLE \"dev_sess\"");
+    await db.query(dev_sess_table.sql, dev_sess_table.args);
+    console.log("TABLE \"dev_sess\" ADD");
 
+    console.log("ADDING TABLE \"devs_groups\"");
+    await db.query(devs_groups_table.sql, devs_groups_table.args);
+    console.log("TABLE \"devs_groups\" ADD");
+
+    console.log("ADDING TABLE \"devs\"");
+    await db.query(devs_table.sql, devs_table.args);
+    console.log("TABLE \"devs\" ADD");
+
+    console.log("ADDING TABLE \"info_log\"");
+    await db.query(info_log_table.sql, info_log_table.args);
+    console.log("TABLE \"info_log\" ADD");
 
     endDB();
     console.log("END INSTALLER");

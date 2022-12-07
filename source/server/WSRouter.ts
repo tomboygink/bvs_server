@@ -22,8 +22,9 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
     // обработка данных
     switch (q.cmd) {
+
+        //------------------------------------------------------------------------АВТОРИЗАЦИЯ
         // Авторизация по коду сессии
-        // Возвращает пользователя и код сессии
         case 'get_UserBySessionCode': {
             var st = new SessionsTable(q.args);
             var ut = new UserTable(q.args, q.sess_code);
@@ -39,15 +40,13 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.data = data;
             }
         } break;
-
         // Авторизация по логину и паролю 
-        // Создается код сессии записывается в бд 
-        // Возвращает пользователя и код сессии
         case 'get_UserByAuth': {
             var ut = new UserTable(q.args, q.sess_code);
             var st = new SessionsTable(q.args);
             // Авторизация по логину и паролю
             sess_code = await st.insertSess();
+           
             //Генерация кода сессии, запись в бд
             data = await ut.selectUser();
 
@@ -59,6 +58,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
         } break;
 
+        //------------------------------------------------------------------------ИЗМЕНЕНИЕ ДАННЫХ ПОЛЬЗОВАТЕЛЕМ
         //Смена данных пользователя
         case 'set_CUserData': {
             ut = new UserTable(q.args, q.sess_code);
@@ -66,7 +66,6 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             if (data[0] === undefined) { wsres.error = "Пользователя не существует"; }
             else { wsres.data = data; wsres.code = q.sess_code }
         } break;
-
         //Смена пароля пользователя
         case 'set_ChangePass': {
             if (q.args.new_password === q.args.old_password) {
@@ -95,7 +94,35 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
 
         } break;
+        //------------------------------------------------------------------------АКТИВАЦИЯ ПОЧТЫ
+        //отправка сообщения на почту с кодом
+        case 'set_ActMail': {
+            if (q.args.email !== '') {
+                var sendMail = new SendMail(q.args, q.sess_code);
+                sendMail.sendConfirmMail();
+            } else { wsres.error = "Введите email"; }
+        } break;
+        //Обновление данных пользователя о email
+        case 'set_MailCode': {
+            ut = new UserTable(q.args, q.sess_code);
+            data = await ut.updateMail();
+            //Получаем пользователя
+            if (data[0] === undefined) { wsres.error = "Введен неверный код" }
+            else {
+                wsres.data = await ut.updateMail();
+                wsres.code = q.sess_code;
+            }
+        } break;
+        //------------------------------------------------------------------------ЗАБЫЛИ ПАРОЛЬ
+        //обновление пароля и кода для именения пароля
+        //case 'set_NewPass': { 
+        case 'set_ForgPass': {
+            ut = new UserTable(q.args, q.sess_code);
+            ut.forgPass();
+        } break;
 
+
+        //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
         case 'deleteCookie': {
             st = new SessionsTable(q.args);
             st.deleteSess();
@@ -103,31 +130,10 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             wsres.data = [];
         } break;
 
-        //отправка сообщения на почту с кодом
-        case 'set_ActMail': {
-            if (q.args.email !== '') {
-                var sendMail = new SendMail(q.args, q.sess_code);
-                sendMail.send();
-            } else { wsres.error = "Введите email"; }
-        } break;
-
-        //Обновление данных пользователя о email
-        case 'set_MailCode': {
-            ut = new UserTable(q.args, q.sess_code);
-            data = await ut.updateMail();
-            if (data[0] === undefined) { wsres.error = "Введен неверный код" }
-            else {
-                wsres.data = await ut.updateMail();
-                wsres.code = q.sess_code;
-            }
-        }
-            break;
-
-        //другие коды которые не описаны 
+        //------------------------------------------------------------------------ДРУГИЕ КОДЫ КОТОРЫЕ НЕ ПРОПИСАННЫ
         default: {
             wsres.error = `Команда "${q.cmd}" не распознана`;
         } break;
-
     }
 
     // финал - отправка ответа

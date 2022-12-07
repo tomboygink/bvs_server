@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.sqlToDateTime = exports.strToDateTime = exports.strToDate = exports.dateTimeToSQL = exports.dateTimeToStr = exports.dateToStr = void 0;
+exports.time_to_datetime = exports.sqlToDateTime = exports.strToDateTime = exports.strToDate = exports.dateTimeToSQL = exports.dateTimeToStr = exports.dateToStr = void 0;
 function dateToStr(dt) {
     var reti = '';
     if (dt.getDate() < 10) {
@@ -124,4 +124,44 @@ function sqlToDateTime(str_dt) {
     return ret_dt;
 }
 exports.sqlToDateTime = sqlToDateTime;
+function time_to_datetime(times) {
+    var tarr = times.split("/");
+    if (tarr.length < 2) {
+        return;
+    }
+    var tmarr = tarr[0].split(":");
+    if (tmarr.length < 3) {
+        return;
+    }
+    var dtarr = tarr[1].split(":");
+    if (dtarr.length < 3) {
+        return;
+    }
+    var YYYY = "20" + dtarr[2];
+    if (isNaN(parseInt(YYYY))) {
+        return null;
+    }
+    var MM = dtarr[1];
+    if (isNaN(parseInt(MM))) {
+        return null;
+    }
+    var DD = dtarr[0];
+    if (isNaN(parseInt(DD))) {
+        return null;
+    }
+    var hh = tmarr[0];
+    if (isNaN(parseInt(hh))) {
+        return null;
+    }
+    var mm = tmarr[1];
+    if (isNaN(parseInt(mm))) {
+        return null;
+    }
+    var ss = tmarr[2];
+    if (isNaN(parseInt(ss))) {
+        return null;
+    }
+    return YYYY + "-" + MM + '-' + DD + ' ' + hh + ':' + mm + ':' + ss;
+}
+exports.time_to_datetime = time_to_datetime;
 //# sourceMappingURL=DateStr.js.map

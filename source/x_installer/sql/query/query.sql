@@ -58,7 +58,7 @@ COMMENT ON COLUMN sessions.sess_data IS 'Данные сессии в форма
 
 DROP FUNCTION IF EXISTS AddUserSession;
 -- Функция сессий пользователя
-create function AddUserSession 
+create or replace function AddUserSession 
 (
  c_Uid BIGINT,
  c_Expires TIMESTAMP,
@@ -164,7 +164,7 @@ COMMENT ON COLUMN users.info IS 'дополнительное описание';
 
 DROP FUNCTION IF EXISTS AddUser;
 --Функция добавления пользователя 
-create function AddUser
+create or replace function AddUser
 (
 	c_login VARCHAR(250), 
 	c_password VARCHAR(250), 
@@ -277,7 +277,7 @@ $$ LANGUAGE sql;
 
 --Обновление данных пользователя 
 DROP FUNCTION IF EXISTS UpdateUser;
-create function UpdateUser(
+create or replace function UpdateUser(
 	c_sess_code VARCHAR(250),
 	c_login VARCHAR(250),
 	--c_password VARCHAR(250),
@@ -327,7 +327,7 @@ $$ LANGUAGE sql;
 
 --Обновление пароля пользователя
 DROP FUNCTION IF EXISTS ChangePass;
-create function ChangePass(
+create or replace function ChangePass(
 	c_sess_code VARCHAR(250),
 	c_login VARCHAR(250),
 	c_new_password VARCHAR(250),
@@ -364,7 +364,7 @@ $$ LANGUAGE sql;
 
 --Обновление и подтверждение email 
 DROP FUNCTION IF EXISTS UpdateUserEmail;
-create function UpdateUserEmail
+create or replace function UpdateUserEmail
 (c_mail_code VARCHAR(250),
  c_sess_code VARCHAR(250))
 RETURNS VOID AS $$
@@ -375,3 +375,28 @@ RETURNS VOID AS $$
 	WHERE login = (select login from users inner join sessions on sessions.uid = users.id where sess_code = c_sess_code)
 
 $$ LANGUAGE sql;
+
+-- Обновление кода для пароля 
+DROP FUNCTION IF EXISTS UpdateRePassCode;
+create or replace function UpdateRePassCode(
+	c_login VARCHAR(250),
+	c_re_password_code VARCHAR(250))
+RETURNS VOID AS $$
+	UPDATE users
+	SET re_password_code = c_re_password_code
+	WHERE login = c_login
+$$ LANGUAGE sql;
+
+--Забыли пароль 
+DROP FUNCTION IF EXISTS ForgPass;
+create or replace function ForgPass(
+	c_email VARCHAR(150),
+	c_login VARCHAR(250),
+	c_password VARCHAR(250),
+	c_re_password_code VARCHAR(250))
+RETURNS VOID AS $$
+	UPDATE users
+	SET re_password_code = c_re_password_code,
+	password = c_password
+	WHERE login = c_login AND email = c_email
+$$ LANGUAGE sql; 
