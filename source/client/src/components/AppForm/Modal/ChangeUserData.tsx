@@ -125,6 +125,8 @@ export class ChangeUserData extends React.Component<IProps> {
                                           error={APP_STORAGE.modal.getError_emain()}
                                           helperText={APP_STORAGE.modal.getEmail_message() || APP_STORAGE.modal.getCmdErrData()}
                                           fullWidth
+                                          color="success"
+                                          focused = {APP_STORAGE.modal.get_emain()}
                                           size='small'
                                           type='email'
                                           required

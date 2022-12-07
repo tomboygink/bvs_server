@@ -16,6 +16,7 @@ export class PersonalAccauntStorage{
   
     @observable PersonalAccaunt: boolean = false; 
     @observable alert_message : string = '';
+    @observable act_mail_message : boolean = false;
 
     @observable family:string = '';
     @observable name:string = '';
@@ -90,6 +91,9 @@ export class PersonalAccauntStorage{
     /////////////Проверка формы перед отправкой на сервер (Валидация формы)
     @action setError_emain(val:boolean){ this.email_err = val; }
     @computed getError_emain():boolean{ return this.email_err; }  /////передаем ошибку 
+
+    @action set_emain(val:boolean){ this.act_mail_message = val; }  /// если почта не подтверждена, то передаем сообщение пользователю
+    @computed get_emain():boolean{ return this.act_mail_message; }  /////передаем ошибку 
 
     @action setEmail_message(val:string){ this.email_err_mess = val; } //////передаем сообщение об ошибке
     @computed getEmail_message():string{ return this.email_err_mess; }
@@ -182,9 +186,6 @@ export class PersonalAccauntStorage{
           q.sess_code = sess_code;
          (await WSocket.get()).send(q);
 
-         this.setError_emain(true);
-         this.setEmail_message('На указанный email отправлен код подтверждения')
-
     }
 
 
@@ -210,6 +211,8 @@ export class PersonalAccauntStorage{
         }
 
         if (matches !== null && this.getActMail() === false){
+            this.set_emain(true);
+            this.setEmail_message('На указанный email отправлен код подтверждения')
             this.set_ActMail('sess_id', value )  
         }
 
