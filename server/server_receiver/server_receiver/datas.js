@@ -50,75 +50,157 @@ var ServerData = (function () {
         return __awaiter(this, void 0, void 0, function () {
             var dt_arr_0, d, TIME, NUMBER, NUMBER_I, AKB, AKB_I, SENSORS, SENSORS_I, d, errors, info_err;
             return __generator(this, function (_a) {
-                console.log(this.s_ind, "\x1b[0m >> " + this.data_str);
-                dt_arr_0 = this.data_str.split(",");
-                for (d in dt_arr_0) {
-                    if (dt_arr_0[d].trim() != '') {
-                        this.data_arr.push(dt_arr_0[d].trim());
-                    }
-                }
-                if (this.data_arr.length < 2) {
-                    console.log(this.s_ind, "\x1b[31m >>", this.data_str);
-                    return [2];
-                }
-                TIME = (0, DateStr_1.time_to_datetime)(this.data_arr[1]);
-                this.data_arr[0] = "-";
-                this.data_arr[1] = "-";
-                NUMBER = null;
-                NUMBER_I = this.data_arr.indexOf("Number");
-                this.data_arr[NUMBER_I] = "-";
-                if (NUMBER_I > 0) {
-                    NUMBER = (this.data_arr[NUMBER_I + 1]).trim();
-                }
-                this.data_arr[NUMBER_I + 1] = "-";
-                AKB = null;
-                AKB_I = this.data_arr.indexOf("AKB");
-                this.data_arr[AKB_I] = "-";
-                if (AKB_I > 0) {
-                    AKB = (this.data_arr[AKB_I + 1]).trim();
-                }
-                this.data_arr[AKB_I + 1] = "-";
-                SENSORS = [];
-                SENSORS_I = this.data_arr.indexOf("Sensors");
-                this.data_arr[SENSORS_I] = "-";
-                if (SENSORS_I > 0) {
-                    for (d in this.data_arr) {
-                        if (this.data_arr[d].trim() !== '-' && !isNaN(Number(this.data_arr[d].trim()))) {
-                            SENSORS.push(Number(this.data_arr[d].trim()));
+                switch (_a.label) {
+                    case 0:
+                        console.log(this.s_ind, "\x1b[0m >> " + this.data_str);
+                        dt_arr_0 = this.data_str.split(",");
+                        for (d in dt_arr_0) {
+                            if (dt_arr_0[d].trim() != '') {
+                                this.data_arr.push(dt_arr_0[d].trim());
+                            }
                         }
-                        else {
-                            if (this.data_arr[d].trim() !== '-')
-                                SENSORS.push("---");
+                        if (this.data_arr.length < 2) {
+                            console.log(this.s_ind, "\x1b[31m >>", this.data_str);
+                            return [2];
                         }
-                    }
+                        TIME = (0, DateStr_1.time_to_datetime)(this.data_arr[1]);
+                        this.data_arr[0] = "-";
+                        this.data_arr[1] = "-";
+                        NUMBER = null;
+                        NUMBER_I = this.data_arr.indexOf("Number");
+                        this.data_arr[NUMBER_I] = "-";
+                        if (NUMBER_I > 0) {
+                            NUMBER = (this.data_arr[NUMBER_I + 1]).trim();
+                        }
+                        this.data_arr[NUMBER_I + 1] = "-";
+                        AKB = null;
+                        AKB_I = this.data_arr.indexOf("AKB");
+                        this.data_arr[AKB_I] = "-";
+                        if (AKB_I > 0) {
+                            AKB = (this.data_arr[AKB_I + 1]).trim();
+                        }
+                        this.data_arr[AKB_I + 1] = "-";
+                        SENSORS = [];
+                        SENSORS_I = this.data_arr.indexOf("Sensors");
+                        this.data_arr[SENSORS_I] = "-";
+                        if (SENSORS_I > 0) {
+                            for (d in this.data_arr) {
+                                if (this.data_arr[d].trim() !== '-' && !isNaN(Number(this.data_arr[d].trim()))) {
+                                    SENSORS.push(Number(this.data_arr[d].trim()));
+                                }
+                                else {
+                                    if (this.data_arr[d].trim() !== '-')
+                                        SENSORS.push("---");
+                                }
+                            }
+                        }
+                        errors = false;
+                        info_err = "";
+                        if (TIME == null) {
+                            info_err += "ВРЕМЯ НЕ СООТВЕТСВУЕТ ФОРМАТУ";
+                            errors = true;
+                        }
+                        if (NUMBER == null) {
+                            info_err += "ДАННОГО УСТРОЙСТВА НЕТ В БАЗЕ ДАННЫХ";
+                            errors = true;
+                        }
+                        if (SENSORS.length < 1) {
+                            info_err += "ДАННЫХ ПО СЕНСЕРАМ НА УСТРОЙСТВЕ НЕТ";
+                            errors = true;
+                        }
+                        if (SENSORS.indexOf("---") >= 0) {
+                            info_err += " ОШИБКА ДАННЫХ НА СЕНСОРАХ (ПРОВЕРЬТЕ КАК ПЕРЕДАЕТ УСТРОЙСТВО);";
+                            errors = true;
+                        }
+                        if (NUMBER == "1111") {
+                            info_err += "УСТРОЙСТВО РАБОТАЕТ НЕ ИСПРАВНО";
+                            errors = true;
+                        }
+                        if (errors) {
+                            console.log(this.s_ind, "\x1b[35m", this.data_str, info_err);
+                            return [2];
+                        }
+                        return [4, this.saveSqlData(TIME, NUMBER, SENSORS, AKB, this.data_str)];
+                    case 1:
+                        _a.sent();
+                        return [2];
                 }
-                errors = false;
-                info_err = "";
-                if (TIME == null) {
-                    info_err += "ВРЕМЯ НЕ СООТВЕТСВУЕТ ФОРМАТУ";
-                    errors = true;
+            });
+        });
+    };
+    ServerData.prototype.saveSqlData = function (time, number, sensors, akb, data_str) {
+        return __awaiter(this, void 0, void 0, function () {
+            var errors, err_info, query_devs, srv_time, obj, s, i, sess_data_sql;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        errors = false;
+                        err_info = '';
+                        return [4, this.db.query("SELECT * FROM devs WHERE number = '" + number + "'")];
+                    case 1:
+                        query_devs = _a.sent();
+                        if (!(query_devs.rows.length === 0)) return [3, 3];
+                        console.log("ДАННОЕ УСТРОЙСТВО ОТСУТСВУЕТ В БАЗЕ ДАННЫХ");
+                        return [4, this.db.query("INSERT INTO info_log (msg_type, log, info) VALUES ('ERROR', '" + data_str + "', 'ДАННОЕ УСТРОЙСТВО ОТСУТСВУЕТ В БАЗЕ ДАННЫХ')")];
+                    case 2:
+                        _a.sent();
+                        errors = true;
+                        _a.label = 3;
+                    case 3:
+                        if (!(errors == false)) return [3, 10];
+                        if (!(query_devs.rows[0].sensors["s"].length < sensors.length)) return [3, 5];
+                        err_info = "ПРИНЯТО БОЛЬШЕ ДАННЫХ С СЕНСЕРОВ, ЧЕМ В БАЗЕ ДАННЫХ(ВОЗМОЖНА ПОТЕРЯ ДАННЫХ)";
+                        return [4, this.db.query("INSERT INTO info_log (msg_type, log, info) VALUES ('WARNING', '" + data_str + "', 'ПРИНЯТО БОЛЬШЕ ДАННЫХ С СЕНСЕРОВ, ЧЕМ В БАЗЕ ДАННЫХ(ВОЗМОЖНА ПОТЕРЯ ДАННЫХ)')")];
+                    case 4:
+                        _a.sent();
+                        errors = true;
+                        _a.label = 5;
+                    case 5:
+                        if (!(query_devs.rows[0].sensors["s"].length > sensors.length)) return [3, 7];
+                        err_info = "ПРИНЯТО МЕНЬШЕ ДАННЫХ С СЕНСЕРОВ, ЧЕМ В БАЗЕ ДАННЫХ";
+                        return [4, this.db.query("INSERT INTO info_log (msg_type, log, info) VALUES ('WARNING', '" + data_str + "', 'ПРИНЯТО МЕНЬШЕ ДАННЫХ С СЕНСЕРОВ, ЧЕМ В БАЗЕ ДАННЫХ')")];
+                    case 6:
+                        _a.sent();
+                        errors = true;
+                        _a.label = 7;
+                    case 7:
+                        if (errors) {
+                            console.log(err_info);
+                            console.log("\x1b[33m", data_str, err_info);
+                        }
+                        srv_time = (0, DateStr_1.dateTimeToSQL)(new Date(Date.now()));
+                        obj = query_devs.rows[0].sensors["s"];
+                        s = '{"s":[';
+                        for (i = 0; i < obj.length; i++) {
+                            if (i !== obj.length - 1) {
+                                if (sensors.length > i) {
+                                    s += '{"depth":"' + obj[i].depth + '", "data":"' + sensors[i] + '"},';
+                                }
+                                else {
+                                    s += '{"depth":"' + obj[i].depth + '", "data":"0.0"},';
+                                }
+                            }
+                            else {
+                                if (sensors.length > i) {
+                                    s += '{"depth":"' + obj[i].depth + '", "data":"' + sensors[i] + '"}';
+                                }
+                                else {
+                                    s += '{"depth":"' + obj[i].depth + '", "data":"0.0"}';
+                                }
+                            }
+                        }
+                        s += ']}';
+                        return [4, this.db.query("INSERT INTO dev_sess (time_dev, time_srv, dev_number, dev_id, level_akb, sess_data) VALUES ('" + time + "', '" + srv_time + "', '" + query_devs.rows[0].number + "', " + query_devs.rows[0].id + ", " + akb + ", '" + s + "') RETURNING id")];
+                    case 8:
+                        sess_data_sql = _a.sent();
+                        if (!(sess_data_sql.rows[0].id == 0 || sess_data_sql == null || sess_data_sql == undefined)) return [3, 10];
+                        return [4, this.db.query("INSERT INTO info_log (msg_type, log, info) VALUES ('WARNING', '" + data_str + "', 'НЕ МОГУ СОЗДАТЬ СЕСИИЮ ДЛЯ ПРИЕМА ДАННЫХ')")];
+                    case 9:
+                        _a.sent();
+                        console.log("\x1b[33m", data_str, 'НЕ МОГУ СОЗДАТЬ СЕСИИЮ ДЛЯ ПРИЕМА ДАННЫХ');
+                        _a.label = 10;
+                    case 10: return [2];
                 }
-                if (NUMBER == null) {
-                    info_err += "ДАННОГО УСТРОЙСТВА НЕТ В БАЗЕ ДАННЫХ";
-                    errors = true;
-                }
-                if (SENSORS.length < 1) {
-                    info_err += "ДАННЫХ ПО СЕНСЕРАМ НА УСТРОЙСТВЕ НЕТ";
-                    errors = true;
-                }
-                if (SENSORS.indexOf("---") >= 0) {
-                    info_err += " ОШИБКА ДАННЫХ НА СЕНСОРАХ (ПРОВЕРЬТЕ КАК ПЕРЕДАЕТ УСТРОЙСТВО);";
-                    errors = true;
-                }
-                if (NUMBER == "1111") {
-                    info_err += "УСТРОЙСТВО РАБОТАЕТ НЕ ИСПРАВНО";
-                    errors = true;
-                }
-                if (errors) {
-                    console.log(this.s_ind, "\x1b[35m", this.data_str, info_err);
-                    return [2];
-                }
-                return [2];
             });
         });
     };
