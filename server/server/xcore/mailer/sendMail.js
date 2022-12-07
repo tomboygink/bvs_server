@@ -79,9 +79,34 @@ var SendMail = (function () {
         });
     };
     SendMail.prototype.sendRePassword = function () {
-        return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
-            return [2];
-        }); });
+        return __awaiter(this, void 0, void 0, function () {
+            var a, transporter;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        a = '';
+                        a = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + this.args.new_password).digest('hex');
+                        transporter = nodemailer_1["default"].createTransport({
+                            host: "smtp.yandex.ru",
+                            port: 465,
+                            secure: true,
+                            auth: {
+                                user: 'noreplay@bvs45.ru',
+                                pass: 'f2R2Ny8P'
+                            }
+                        });
+                        return [4, transporter.sendMail({
+                                from: 'noreplay@bvs45.ru',
+                                to: this.args.email,
+                                subject: 'Forgot password',
+                                html: 'This message was sent from bvs_server to reset your password, paste this code <b>' + a + '</b>'
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2];
+                }
+            });
+        });
     };
     return SendMail;
 }());

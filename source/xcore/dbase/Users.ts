@@ -110,6 +110,16 @@ export class UserTable {
     }
 
     //Забыли пароль
+
+    async SelectUserLoginEmail():Promise<UsersEntity[]>{
+        var db_res = await this.db.query("SELECT * FROM SelectUserLoginEmail ('" + this.args.login + "', '" + this.args.email + "')");
+        var result: UsersEntity[] = new Array();
+        for (var r in db_res.rows) {
+            result.push(db_res.rows[r]);
+        }
+        return result;
+    }
+
     async forgPass(): Promise<UsersEntity[]> {
         //обновление пароля шифрование нового пароля
         //получение актуальных данных
