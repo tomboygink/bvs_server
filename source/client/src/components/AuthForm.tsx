@@ -74,10 +74,7 @@ export class AuthForm extends React.Component<IProps> {
                         onChange={ (e)=>{ APP_STORAGE.auth_form.setPassword(e.target.value); } }
                         value={ APP_STORAGE.auth_form.getPassword() }
                     />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Запомнить меня"
-                    />
+                    
                     <Button
                         type="button"
                         fullWidth

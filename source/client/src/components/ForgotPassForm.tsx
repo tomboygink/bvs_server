@@ -3,11 +3,11 @@ import { observer } from 'mobx-react';
 
 import { APP_STORAGE } from '../storage/AppStorage';
 
-import {Avatar, Button, TextField, Box, Container, CssBaseline, Typography } from '@mui/material';
+import {Avatar, Button, TextField, Box, Container, CssBaseline, Typography, Divider } from '@mui/material';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 
 interface IProps{}
@@ -24,12 +24,17 @@ export class ForgotPass extends React.Component<IProps> {
         return (
             <React.Fragment>
             <ThemeProvider theme={theme}>
-                <Container component="main" maxWidth="xs" sx ={{border: '1px solid #eeeeee;' , padding: '20px' , mt: '10%'}}>
+                <Container component="main" maxWidth="xs" sx ={{border: '1px solid #eeeeee;' , padding: '20px' , mt: '5%'}}>
             <CssBaseline />
-              
-                <Typography component="h1" variant="h5">
+                 <Box sx= {{display: 'flex' , justifyContent: 'space-between'}}> 
+                 <Typography component="h1" variant="h5">
                      Сброс пароля
                 </Typography>
+                    <ArrowRightAltIcon
+                    onClick={ ()=>{   window.location.href = 'http://127.0.0.1:3040' }}/>
+                 </Box>
+             
+                
                 <Typography sx={{fontSize: '12px', color: 'grey'}}>
                 Забыли пароль? Пожалуйста, введите логин, адрес электронной почты и новый пароль. Вы получите код подтверждения по электронной почте.
                 </Typography>
@@ -41,6 +46,8 @@ export class ForgotPass extends React.Component<IProps> {
                         margin="normal"
                         required
                         fullWidth
+                        error = { APP_STORAGE.auth_form.getError_login()}
+                        helperText = { APP_STORAGE.auth_form.getLogin_message() }
                         id="email"
                         label="Логин"
                         name="login"
@@ -69,6 +76,8 @@ export class ForgotPass extends React.Component<IProps> {
                         required
                         fullWidth
                         name="password"
+                        error={APP_STORAGE.auth_form.getErrr_new_pass()}
+                        helperText= {APP_STORAGE.auth_form.getError_new_message()}
                         label="Новый пароль"
                         type="password"
                         id="password"
@@ -82,6 +91,8 @@ export class ForgotPass extends React.Component<IProps> {
                         margin="normal"
                         required
                         fullWidth
+                        error = {APP_STORAGE.auth_form.getError_repeat_pass()}
+                        helperText = {APP_STORAGE.auth_form.getError_repeat_message()}
                         name="password"
                         label="Повторите пароль"
                         type="password"
@@ -94,18 +105,26 @@ export class ForgotPass extends React.Component<IProps> {
                     <Button sx= {{background: '#edf2ff', color: '#1976d2;' , mt : '12px' , mb: '12px'}}
                         type="button"
                         fullWidth
-                        onClick={ ()=>{  APP_STORAGE.auth_form.get_ForgPass();}}
+                        onClick={ ()=>{  APP_STORAGE.auth_form.set_ForgPass();}}
                     >
-                        Сохранить
+                        Получить код
                     </Button>
-                    <div>
-        <TextField
-          label="Код"
-          id="outlined-size-small"
-          defaultValue="  "
-          size="small"
-        />
-      </div>
+                  <Divider sx ={{mb: '12px', mt: '12px'}} />
+                    <TextField
+                        label="Код подтверждения"
+                        id="outlined-size-small"
+                        defaultValue="  "
+                        size="small"
+                    />
+    
+                    
+                     <Button sx= {{background: '#edf2ff', color: '#1976d2;' , mt : '12px' , mb: '12px'}}
+                        type="button"
+                        fullWidth
+                       // onClick={ ()=>{  APP_STORAGE.auth_form.set_ForgPass();}}
+                     >
+                       Сохранить
+                    </Button>
 
                 </Box>
             

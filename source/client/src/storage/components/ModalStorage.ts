@@ -27,6 +27,7 @@ export class PersonalAccauntStorage{
     @observable repeat_password:string = '';
     @observable email:string='';
     @observable info:string='';
+    @observable act_mail:boolean = false;
 
     @observable error_pass:boolean= false;
     @observable error_message:string=null;
@@ -156,6 +157,9 @@ export class PersonalAccauntStorage{
     @action setInfo(val:string){ this.info = val; }
     @computed getInfo():string{ return this.info; }
 
+    @action setActMail(val:boolean) { this.act_mail = val}
+    @computed getActMail():boolean {return this.act_mail; } // подтверждение почты
+
     @action setCode(u:any){ this.code = u; } 
     @computed getCode():any{ return this.code; } 
 
@@ -168,7 +172,20 @@ export class PersonalAccauntStorage{
     @computed getErorMass():string {return this.error_mass; } 
 
 
-   
+    async  set_ActMail (name: string, value: any, _options?: any) {
+        var sess_code = value;
+        var q:IWSQuery = new WSQuery("set_ActMail");
+        q.args = {
+            login:this.getLogin(),
+            email:this.getEmail(),
+         }; 
+          q.sess_code = sess_code;
+         (await WSocket.get()).send(q);
+
+         this.setError_emain(true);
+         this.setEmail_message('На указанный email отправлен код подтверждения')
+
+    }
 
 
     async set_CUserData(name: string, value: any, _options?: any){
@@ -190,6 +207,10 @@ export class PersonalAccauntStorage{
         else  {
            this.setError_emain(false);
            this.setEmail_message('')
+        }
+
+        if (matches !== null && this.getActMail() === false){
+            this.set_ActMail('sess_id', value )  
         }
 
         if(matchesnum === null){
@@ -214,7 +235,7 @@ export class PersonalAccauntStorage{
          q.sess_code = sess_code;
 
          
-      (await WSocket.get()).send(q);  this.setPersonalAccaunt(false);
+      (await WSocket.get()).send(q);  ;
        }
     }
     
@@ -268,38 +289,6 @@ export class PersonalAccauntStorage{
           q.sess_code = sess_code;
          (await WSocket.get()).send(q);  this.setPersonalAccaunt(false);
        }
-    }
-
-    async  set_ActMail (name: string, value: any, _options?: any) {
-        var sess_code = value;
-        var q:IWSQuery = new WSQuery("set_ActMail");
-        q.args = {
-            login:this.getLogin(),
-            email:this.getEmail(),
-         }; 
-          q.sess_code = sess_code;
-         (await WSocket.get()).send(q);  this.setPersonalAccaunt(false);
-
-    }
-
- 
-    async set_SendCode () {
-        var ss_code = getCookie('sess_id');
-        var q:IWSQuery = new WSQuery("set_MailCode");
-        if (this.getCode()[1] === null) {
-            this.setError(true);
-            this.setErrorMass('Введите код подтверждения')
-        }
-        else {
-            this.setError(false);
-            this.setErrorMass('')
-            q.args = { 
-                code: this.getCode()[1]
-            };
-            q.sess_code = ss_code;
-            (await WSocket.get()).send(q);
-            window.location.assign('http://127.0.0.1:3040/');
-        }
     }
 
 

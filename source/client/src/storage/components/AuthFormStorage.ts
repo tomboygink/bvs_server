@@ -26,8 +26,17 @@ export class AuthFormStorage{
 
     @observable forgot_pass:boolean = false;
 
-     @observable email_err:boolean=false; ///ошибка при вводе адреса электронной почты
+    @observable email_err:boolean=false; ///ошибка при вводе адреса электронной почты
     @observable email_err_mess:string = '';///сообщение об ошибке адреса электронной почты
+
+    @observable login_err:boolean=false; ///ошибка при вводе адреса электронной почты
+    @observable login_err_mess:string = '';///сообщение об ошибке адреса электронной почты
+
+    @observable errr_new_pass:boolean=false;
+    @observable error_new_message:string=null;
+
+    @observable errr_repeat_pass:boolean=false;
+    @observable error_repeat_message:string=null;
 
 
     constructor(){
@@ -64,11 +73,29 @@ export class AuthFormStorage{
     @action setRepeatPass(val:string){ this.repeat_password = val; }
     @computed getRepeatPass():string{ return this.repeat_password; } 
 
+    @action setError_login(val:boolean){ this.login_err = val; }
+    @computed getError_login():boolean{ return this.login_err; }  /////передаем ошибку 
+
+    @action setLogin_message(val:string){ this.login_err_mess = val; } //////передаем сообщение об ошибке
+    @computed getLogin_message():string{ return this.login_err_mess; }
+
     @action setError_emain(val:boolean){ this.email_err = val; }
     @computed getError_emain():boolean{ return this.email_err; }  /////передаем ошибку 
 
     @action setEmail_message(val:string){ this.email_err_mess = val; } //////передаем сообщение об ошибке
     @computed getEmail_message():string{ return this.email_err_mess; }
+
+    @action setErrr_new_pass(val:boolean){ this.errr_new_pass = val; }
+    @computed getErrr_new_pass():boolean{ return this.errr_new_pass; }
+
+    @action setError_new_message(val:string){ this.error_new_message = val; }
+    @computed getError_new_message():string{ return this.error_new_message; }
+
+    @action setError_repeat_pass(val:boolean){ this.errr_repeat_pass = val; }
+    @computed getError_repeat_pass():boolean{ return this.errr_repeat_pass; }
+
+    @action setError_repeat_message(val:string){ this.error_repeat_message = val; }
+    @computed getError_repeat_message():string{ return this.error_repeat_message; }
 
 
  
@@ -78,14 +105,21 @@ export class AuthFormStorage{
         q.args = { login: this.getLogin(), password:this.getPassword() };
         (await WSocket.get()).send(q);
     }
-
-
-
-    async get_ForgPass(){   // Функция восстановления пароля
-        console.log('Забыпи пароль');
+    
+    async set_ForgPass(){   // Функция восстановления пароля
         const email = this.getEmail();
         const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         const matches = email.match(regexp);
+
+        if(this.getLogin() === ''){
+            this.setError_login(true);
+            this.setLogin_message('Поле не должно быть пустым ')
+        }
+
+        if(this.getLogin() !== ''){
+            this.setError_login(false);
+            this.setLogin_message('')
+        }
 
         if ( matches === null) {
             this.setError_emain(true);
@@ -96,10 +130,31 @@ export class AuthFormStorage{
             this.setEmail_message('')
          }
 
-        if ( this.getEmail() !== '' && this.getNewPass() !== '' && this.getRepeatPass() !== '' ) {
-            var q:IWSQuery = new WSQuery("get_ForgPass");
-            q.args = { login: this.getLogin(), new_password:this.getNewPass(), repeat_password : this.getRepeatPass()  };
+         if(this.getNewPass().length < 6){
+            this.setErrr_new_pass(true);
+            this.setError_new_message('Пароль не должен быть короче 6 символов.')
+        }
+        else {
+            this.setErrr_new_pass(false);
+            this.setError_new_message('')
+        }
+
+        if(this.getNewPass() !==  this.getRepeatPass()) {
+            this.setError_repeat_pass(true);
+            this.setError_repeat_message('Пароли не совпадают. Повторите попытку.')
+        }
+        else{
+            this.setError_repeat_pass(false);
+            this.setError_repeat_message('')
+        }
+
+        if ( this.getEmail() !== '' && this.getNewPass() !== '' && this.getRepeatPass() !== ''  && this.getNewPass() === this.getRepeatPass()) {
+            var q:IWSQuery = new WSQuery("set_ForgPass");
+            q.args = { login: this.getLogin(), email : this.getEmail(), new_password:this.getNewPass(), repeat_password : this.getRepeatPass()  };
             (await WSocket.get()).send(q); 
+           
+             
+
         }
         
     }

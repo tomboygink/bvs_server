@@ -26,7 +26,7 @@ export default function CustomizedTooltips() {
   
   return (
     <div>
-      <HtmlTooltip
+      {/* <HtmlTooltip
         title={
           <React.Fragment>
             <Typography color="inherit">Необходимо подтвердить почту</Typography>
@@ -36,11 +36,12 @@ export default function CustomizedTooltips() {
        <Button 
               variant="outlined" 
               endIcon={<EmailIcon />} 
-              onClick={(e) => {APP_STORAGE.modal.set_ActMail('sess_id', APP_STORAGE.auth_form.getdt())}}>
-              Подтвердить почту
+              onClick={(e) => {APP_STORAGE.modal.set_ActMail('sess_id', APP_STORAGE.auth_form.getdt())}}
+              >
+              Подтвердить почту111
        </Button>
     
-      </HtmlTooltip>
+      </HtmlTooltip> */}
     </div>
   );
 }
