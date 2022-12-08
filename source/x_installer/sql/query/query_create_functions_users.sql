@@ -97,7 +97,6 @@ $$ LANGUAGE sql;
 --------------------------------------------------------------------------------------------Функция забыли пароль 
 DROP FUNCTION IF EXISTS ForgPass;
 create or replace function ForgPass(
-	c_email VARCHAR(150),
 	c_login VARCHAR(250),
 	c_password VARCHAR(250),
 	c_re_password_code VARCHAR(250))
@@ -105,7 +104,7 @@ RETURNS VOID AS $$
 	UPDATE users
 	SET re_password_code = c_re_password_code,
 	password = c_password
-	WHERE login = c_login AND email = c_email
+	WHERE login = c_login
 $$ LANGUAGE sql; 
 
 --------------------------------------------------------------------------------------------Функция добавления сессии при авторизации
@@ -170,11 +169,10 @@ $$ LANGUAGE sql;
 
 
 
---------------------------------------------------------------------------------------------Функция получения данных по логину и email
+--------------------------------------------------------------------------------------------Функция получения данных по email
 DROP FUNCTION IF EXISTS SelectUserLoginEmail;
 CREATE OR REPLACE FUNCTION SelectUserLoginEmail(
-    c_login VARCHAR(250), 
-    c_email VARCHAR(250)
+    c_data VARCHAR(250)
 )
 RETURNS table(
     id BIGINT, 
@@ -200,9 +198,8 @@ RETURNS table(
 as $$
     SELECT users
     FROM users 
-    WHERE login = c_login and email = c_email
+    WHERE login = c_data OR email = c_data
 $$ LANGUAGE sql;
-
 
 --------------------------------------------------------------------------------------------Функция получения данных по коду сессии
 DROP FUNCTION IF EXISTS SelectUserBySessCode;
