@@ -297,6 +297,7 @@ export class PersonalAccauntStorage{
             this.setPersonalAccaunt(false); 
          }
          else if (this.getCmdErrPass().length > 0 ){
+            this.setErrr_old_pass(true);
             this.setPersonalAccaunt(true); 
          }
         

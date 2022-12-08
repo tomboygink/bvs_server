@@ -35,7 +35,7 @@ export class ChangePassword extends React.Component<IProps> {
                         name="password"
                         autoComplete='on'
                         error={APP_STORAGE.modal.getErrr_old_pass()}
-                        helperText= {APP_STORAGE.modal.getError_old_message()}
+                        helperText= {APP_STORAGE.modal.getError_old_message() || APP_STORAGE.modal.getCmdErrPass() }
                         type="password"
                         onChange={ (e)=>{ APP_STORAGE.modal.setOld_Pass(e.target.value); } }
                         value={ APP_STORAGE.modal.getOld_Pass() || '' } />
@@ -62,7 +62,7 @@ export class ChangePassword extends React.Component<IProps> {
                     name="password"
                     autoComplete="on"
                     error={APP_STORAGE.modal.getError_pass()}
-                    helperText= {APP_STORAGE.modal.getError_message()|| APP_STORAGE.modal.getCmdErrPass()}
+                    helperText= {APP_STORAGE.modal.getError_message()}
                     size='small' 
                     type="password"
                     onChange={ (e)=>{ APP_STORAGE.modal.setRepeat_password(e.target.value); } }
