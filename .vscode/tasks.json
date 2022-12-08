@@ -34,6 +34,17 @@
 				"isDefault": true
 			}
 		},
+		{
+			"type": "npm",
+			"script": "build_forgot_pass",
+			"problemMatcher": [],
+			"label": "npm: build_forgot_pass",
+			"detail": "компиляция отладочной версии клиента",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
         {
 			"type": "npm",
 			"script": "build_client",

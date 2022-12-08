@@ -7,6 +7,7 @@
     "build_server": "npx tsc -w -p source/server",
     "build_client_dev": "npx webpack --config source/client/webpack.dev.js  --watch",
     "build_email_dev": "npx webpack --config source/email/webpack.dev.js  --watch",
+    "build_forgot_pass": "npx webpack --config source/forgot_pass/webpack.dev.js  --watch",
     "build_client": "npx webpack --config source/client/webpack.prod.js",
     "run_server": "node ./server/server/server/main.js",
     "build_installer": "npx tsc -w -p source/x_installer",

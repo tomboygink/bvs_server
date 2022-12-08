@@ -110,20 +110,28 @@ var UserTable = (function () {
     };
     UserTable.prototype.updateMail = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var db_res, result, r;
+            var db_res, code, db_res, result, r;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT * FROM UpdateUserEmail('" + this.args.code + "', '" + this.sess_code + "')")];
+                    case 0: return [4, this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')")];
                     case 1:
-                        _a.sent();
+                        db_res = _a.sent();
+                        code = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(db_res.rows[0].login + "_" + db_res.rows[0].email).digest('hex');
+                        if (!(code !== this.args.code)) return [3, 2];
+                        result = [];
+                        return [3, 5];
+                    case 2: return [4, this.db.query("SELECT * FROM UpdateUserEmail('" + this.args.code + "', '" + this.sess_code + "')")];
+                    case 3:
+                        db_res = _a.sent();
                         return [4, this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')")];
-                    case 2:
+                    case 4:
                         db_res = _a.sent();
                         result = new Array();
                         for (r in db_res.rows) {
                             result.push(db_res.rows[r]);
                         }
-                        return [2, result];
+                        _a.label = 5;
+                    case 5: return [2, result];
                 }
             });
         });
@@ -201,13 +209,12 @@ var UserTable = (function () {
     };
     UserTable.prototype.forgPass = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var pass, re_pass_code, result;
+            var pass, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.new_password).digest('hex');
-                        re_pass_code = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + pass).digest('hex');
-                        return [4, this.db.query("SELECT * FROM ForgPass ('" + this.args.email + "','" + this.args.login + "','" + pass + "','" + re_pass_code + "')")];
+                        return [4, this.db.query("SELECT * FROM ForgPass ('" + this.args.email + "','" + this.args.login + "','" + pass + "','" + this.args.code + "')")];
                     case 1:
                         _a.sent();
                         result = new Array();
