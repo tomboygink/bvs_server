@@ -77,6 +77,10 @@ class AppServer{
             res.render('confirm_mail.hbs', {title:"Подтверждение почты"});
         });
 
+        this.app.all("/forgot_pass", (req:express.Request, res:express.Response)=>{
+            res.render('forgot_pass.hbs', {title:"Восстановление пароля"});
+        });
+
         this.app.all('/quit', (req:express.Request, res:express.Response)=>{ res.send('QUIT SERVER'); this.server.close(); });
     }
     

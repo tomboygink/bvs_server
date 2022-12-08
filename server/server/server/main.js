@@ -97,6 +97,9 @@ var AppServer = (function () {
         this.app.all("/confirm_mail", function (req, res) {
             res.render('confirm_mail.hbs', { title: "Подтверждение почты" });
         });
+        this.app.all("/forgot_pass", function (req, res) {
+            res.render('forgot_pass.hbs', { title: "Восстановление пароля" });
+        });
         this.app.all('/quit', function (req, res) { res.send('QUIT SERVER'); _this.server.close(); });
     };
     AppServer.prototype.onCloseServer = function () {
