@@ -192,10 +192,18 @@ var UserTable = (function () {
     };
     UserTable.prototype.SelectUserLoginEmail = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var db_res, result, r;
+            var data, db_res, result, r;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT * FROM SelectUserLoginEmail ('" + this.args.login + "', '" + this.args.email + "')")];
+                    case 0:
+                        data = '';
+                        if (this.args.email !== undefined) {
+                            data = this.args.email;
+                        }
+                        if (this.args.login !== undefined) {
+                            data = this.args.login;
+                        }
+                        return [4, this.db.query("SELECT * FROM SelectUserLoginEmail ('" + data + "')")];
                     case 1:
                         db_res = _a.sent();
                         result = new Array();
@@ -209,12 +217,13 @@ var UserTable = (function () {
     };
     UserTable.prototype.forgPass = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var pass, result;
+            var pass, re_pass_code, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.new_password).digest('hex');
-                        return [4, this.db.query("SELECT * FROM ForgPass ('" + this.args.email + "','" + this.args.login + "','" + pass + "','" + this.args.code + "')")];
+                        re_pass_code = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + this.args.new_password).digest('hex');
+                        return [4, this.db.query("SELECT * FROM ForgPass ('" + this.args.login + "','" + pass + "','" + re_pass_code + "')")];
                     case 1:
                         _a.sent();
                         result = new Array();

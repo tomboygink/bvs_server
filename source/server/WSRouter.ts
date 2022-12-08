@@ -119,18 +119,20 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                         
             if(data[0] == undefined)
             {
-                wsres.error = 'Данные введены неверно или пользователя с такими данными не существует, обращайтесь к администратору системы';
+                wsres.error = 'Такого email не существует, проверте введенные данные или обратитесть к администратору системы';
             }
             else{
                 if(data[0].act_mail === true){sendMail.sendRePassword();}
                 else {wsres.error = 'Данный email не был подтвержден, обращайтесь к администратору системы'}
             }
+            
 
         } break;
 
         case 'set_SaveNewPass':{
-            let a = crypto.createHmac('sha256', CONFIG.key_code).update(q.args.login+"_"+q.args.new_password).digest('hex');
-            if(q.args.code!==a)
+            ut = new UserTable(q.args, q.sess_code);
+            data = await ut.SelectUserLoginEmail();
+            if(q.args.code!==data[0].re_password_code)
             {
                 wsres.error = 'Код подтверждения неверен, проверте правильность введеного кода'
             }

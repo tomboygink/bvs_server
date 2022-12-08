@@ -122,7 +122,16 @@ export class UserTable {
 
     //Забыли пароль
     async SelectUserLoginEmail(): Promise<UsersEntity[]> {
-        var db_res = await this.db.query("SELECT * FROM SelectUserLoginEmail ('" + this.args.login + "', '" + this.args.email + "')");
+        var data = '';
+        if (this.args.email !== undefined ){
+            data = this.args.email;
+        }
+        if (this.args.login !== undefined ){
+            data = this.args.login;
+        }
+        
+        
+        var db_res = await this.db.query("SELECT * FROM SelectUserLoginEmail ('" + data + "')");
         var result: UsersEntity[] = new Array();
         for (var r in db_res.rows) {
             result.push(db_res.rows[r]);
@@ -137,8 +146,10 @@ export class UserTable {
 
         //Генерация пароля
         var pass = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.new_password).digest('hex');
+        //генерация нового кода re_pass_code
+        var re_pass_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login+"_"+this.args.new_password).digest('hex');
         //Изменение re_pass_code и пароля
-        await this.db.query("SELECT * FROM ForgPass ('" + this.args.email + "','" + this.args.login + "','" + pass + "','" + this.args.code + "')");
+        await this.db.query("SELECT * FROM ForgPass ('" + this.args.login + "','" + pass + "','" + re_pass_code + "')");
 
         var result: UsersEntity[] = new Array();
         return result;
