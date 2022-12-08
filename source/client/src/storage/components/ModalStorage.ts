@@ -290,9 +290,14 @@ export class PersonalAccauntStorage{
             repeat_password:this.getRepeat_password()
          }; 
           q.sess_code = sess_code;
-         (await WSocket.get()).send(q);  
-         if(this.getCmdErrPass() !== null && this.getCmdErrPass() !== '' ) {
+         (await WSocket.get()).send(q); 
+        
+
+         if(this.getCmdErrPass() === null && this.getCmdErrPass()=== '' ) {
             this.setPersonalAccaunt(false); 
+         }
+         else if (this.getCmdErrPass().length > 0 ){
+            this.setPersonalAccaunt(true); 
          }
         
        }
