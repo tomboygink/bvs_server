@@ -293,12 +293,13 @@ export class PersonalAccauntStorage{
          (await WSocket.get()).send(q); 
         
 
-         if(this.getCmdErrPass() === null && this.getCmdErrPass()=== '' ) {
-            this.setPersonalAccaunt(false); 
-         }
-         else if (this.getCmdErrPass().length > 0 ){
+         if (this.getCmdErrPass().length > 0 ){
             this.setErrr_old_pass(true);
             this.setPersonalAccaunt(true); 
+         }
+         else if(this.getCmdErrPass() === '') {
+            this.setPersonalAccaunt(false); 
+            this.setErrr_old_pass(false);
          }
         
        }
