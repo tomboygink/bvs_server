@@ -128,18 +128,6 @@ export class AuthFormStorage{
         const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         const matches = email.match(regexp);
 
-        if(this.getLogin() === ''){
-            this.setError_login(true);
-            this.setLogin_message('Поле не должно быть пустым ')
-            this.setAlertForgPass('');
-        }
-    
-        
-
-        if(this.getLogin() !== ''){
-            this.setError_login(false);
-        }
-
         if ( matches === null) {
             this.setError_emain(true);
             this.setEmail_message('Адрес электронной почты должен содержать символ "@"')
@@ -149,7 +137,23 @@ export class AuthFormStorage{
             this.setEmail_message('')
          }
 
-         if(this.getNewPass().length < 6){
+       
+        if ( this.getEmail() !== '') {
+            var q:IWSQuery = new WSQuery("set_ForgPass");
+            q.args = {  
+                email : this.getEmail(), };
+            (await WSocket.get()).send(q); 
+        }
+    }
+
+    async set_SaveNewPass() {
+        
+        if (this.getCode() === ''){
+             this.setError_code(true);
+             this.setError_code_mess('Повторите попытку.')
+        }
+
+        if(this.getNewPass().length < 6){
             this.setErrr_new_pass(true);
             this.setError_new_message('Пароль не должен быть короче 6 символов.')
         }
@@ -172,30 +176,10 @@ export class AuthFormStorage{
             this.setError_repeat_message('')
         }
 
-        if ( this.getEmail() !== '' && this.getNewPass() !== '' && this.getRepeatPass() !== ''  && this.getNewPass() === this.getRepeatPass()) {
-            var q:IWSQuery = new WSQuery("set_ForgPass");
-            q.args = { 
-                login: this.getLogin(), 
-                email : this.getEmail(), 
-                new_password:this.getNewPass(), 
-                repeat_password : this.getRepeatPass()  };
-                this.setAlertForgPass('На указанную почту отправлен код подтверждения.');
-            (await WSocket.get()).send(q); 
-        }
-    }
-
-    async set_SaveNewPass() {
-        
-        if (this.getCode() === ''){
-             this.setError_code(true);
-             this.setError_code_mess('Повторите попытку.')
-        }
-
-        if ( this.getEmail() !== '' && this.getNewPass() !== '' && this.getRepeatPass() !== ''  && this.getNewPass() === this.getRepeatPass() && this.getCode() !== '') {
+        if (this.getNewPass() !== '' && this.getRepeatPass() !== ''  && this.getNewPass() === this.getRepeatPass() && this.getCode() !== '') {
             var q:IWSQuery = new WSQuery("set_SaveNewPass");
             q.args = { 
                 login: this.getLogin(), 
-                email : this.getEmail(), 
                 new_password:this.getNewPass(), 
                 repeat_password : this.getRepeatPass(),
                 code : this.getCode()  };
