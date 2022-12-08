@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 
 import { TextField, Box, Button, Divider, Typography, Checkbox, Alert, } from '@mui/material';
 import { APP_STORAGE } from '../../../storage/AppStorage';
-import Tooltip from '../Tooltip/Tooltip';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import SaveIcon from '@mui/icons-material/Save';
 
@@ -67,15 +66,9 @@ export class ChangeUserData extends React.Component<IProps> {
             
 
             var act_mail:React.ReactNode = <></>; ////Для кнопки подтверждения почты
-            const checked = APP_STORAGE.auth_form.getUser().act_mail;
-            if (checked === false) {
-                  act_mail = <Tooltip />
-            }
-            if (checked === true) {
-                  act_mail = <></>
-            }
-           
-             
+        
+            
+
 
             return (
                   <React.Fragment>
