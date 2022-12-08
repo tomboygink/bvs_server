@@ -61,15 +61,26 @@ export class UserTable {
 
     //Обновление данных по email
     async updateMail(): Promise<UsersEntity[]> {
-        //обновление email
-        await this.db.query("SELECT * FROM UpdateUserEmail('" + this.args.code + "', '" + this.sess_code + "')");
-        //Получение актуальных данных
+        //Получаем актуальные данные
         var db_res = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
-        var result: UsersEntity[] = new Array();
-        for (var r in db_res.rows) {
-            result.push(db_res.rows[r]);
+        //генерируем код из бд
+        var code = crypto.createHmac('sha256', CONFIG.key_code).update(db_res.rows[0].login + "_" + db_res.rows[0].email).digest('hex');
+        //Проверяем код с полученным
+        if (code !== this.args.code) {
+            result = [];
+        }
+        else {
+            //обновление email
+            var db_res = await this.db.query("SELECT * FROM UpdateUserEmail('" + this.args.code + "', '" + this.sess_code + "')");
+            //Получение актуальных данных
+            db_res = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
+            var result: UsersEntity[] = new Array();
+            for (var r in db_res.rows) {
+                result.push(db_res.rows[r]);
+            }
         }
         return result
+
     }
 
     //Изменение данных пользователя 
@@ -77,7 +88,7 @@ export class UserTable {
         var db_res = await this.db.query("SELECT * FROM UpdateUser('" + this.args.login + "','" +
             this.args.family + "','" + this.args.name + "','" + this.args.father + "','" + this.args.telephone + "','" + this.args.email + "','" + this.args.info + "')");
         db_res = await this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')");
-    
+
         var result: UsersEntity[] = new Array();
         for (var r in db_res.rows) {
             result.push(db_res.rows[r]);
@@ -92,7 +103,7 @@ export class UserTable {
         var old_pass = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.old_password).digest('hex');
         //генерация нового пароля 
         var pass = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.new_password).digest('hex');
-        var re_pass_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login+"_"+pass).digest('hex');
+        var re_pass_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + pass).digest('hex');
         //изменение re_pass_code
         await this.db.query("SELECT * FROM UpdateRePassCode ('" + this.args.login + "','" + re_pass_code + "')");
         //изменение пароля 
@@ -110,7 +121,7 @@ export class UserTable {
     }
 
     //Забыли пароль
-    async SelectUserLoginEmail():Promise<UsersEntity[]>{
+    async SelectUserLoginEmail(): Promise<UsersEntity[]> {
         var db_res = await this.db.query("SELECT * FROM SelectUserLoginEmail ('" + this.args.login + "', '" + this.args.email + "')");
         var result: UsersEntity[] = new Array();
         for (var r in db_res.rows) {
@@ -127,7 +138,7 @@ export class UserTable {
         //Генерация пароля
         var pass = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.new_password).digest('hex');
         //Изменение re_pass_code и пароля
-        await this.db.query("SELECT * FROM ForgPass ('"+this.args.email+"','"+this.args.login+"','"+pass+"','"+this.args.code+"')");
+        await this.db.query("SELECT * FROM ForgPass ('" + this.args.email + "','" + this.args.login + "','" + pass + "','" + this.args.code + "')");
 
         var result: UsersEntity[] = new Array();
         return result;
