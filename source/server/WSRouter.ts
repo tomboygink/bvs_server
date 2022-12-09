@@ -43,7 +43,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             var st = new SessionsTable(q.args);
             // Авторизация по логину и паролю
             sess_code = await st.insertSess();
-           
+
             //Генерация кода сессии, запись в бд
             data = await ut.selectUser();
             if (sess_code === '' && data[0] === undefined) { wsres.error = "Пользователя не существует или введены не верные данные"; }
@@ -64,31 +64,36 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         } break;
         //Смена пароля пользователя
         case 'set_ChangePass': {
-            if (q.args.new_password === q.args.old_password) {
+            ut = new UserTable(q.args, q.sess_code);
+            data = await ut.SelectUserLoginEmail();
+
+            //console.log(data);
+            var old_pass = crypto.createHmac('sha256', CONFIG.key_code).update(q.args.old_password).digest('hex');
+            var pass = crypto.createHmac('sha256', CONFIG.key_code).update(q.args.new_password).digest('hex');
+
+            if (data[0].password === pass) {
                 wsres.error = 'Новый пароль не должен повторять старый';
                 wsres.data = [];
                 wsres.code = q.sess_code;
+                break;
             }
-            else if (q.args.login === q.args.new_password) {
+            if (q.args.login === q.args.new_password) {
                 wsres.error = 'Пароль не должен совпадать с логином';
                 wsres.data = [];
                 wsres.code = q.sess_code;
+                break;
             }
-            else {
-                ut = new UserTable(q.args, q.sess_code);
-                data = await ut.changePass();
-                if (data[0] === undefined) {
-                    wsres.error = 'Старый пароль не верен';
-                    wsres.code = q.sess_code;
-                    wsres.data = []
-                }
-                else {
-                    wsres.data = data;
-                    wsres.code = q.sess_code;
-                    wsres.error = null;
-                }
-            }
+            if (data[0].password !== old_pass) {
+                wsres.error = 'Старый пароль не верен';
+                wsres.code = q.sess_code;
+                wsres.data = [];
+                break;
 
+            }
+            data = await ut.changePass();
+            wsres.data = data;
+            wsres.code = q.sess_code;
+            wsres.error = null;
         } break;
         //------------------------------------------------------------------------АКТИВАЦИЯ ПОЧТЫ
         //отправка сообщения на почту с кодом
@@ -115,31 +120,29 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             ut = new UserTable(q.args, q.sess_code);
             sendMail = new SendMail(q.args, q.sess_code);
             data = await ut.SelectUserLoginEmail();
-                        
-            if(data[0] == undefined)
-            {
+
+            if (data[0] == undefined) {
                 wsres.error = 'Такого email не существует, проверте введенные данные или обратитесть к администратору системы';
             }
-            else{
-                if(data[0].act_mail === true){sendMail.sendRePassword();}
-                else {wsres.error = 'Данный email не был подтвержден, обращайтесь к администратору системы'}
+            else {
+                if (data[0].act_mail === true) { sendMail.sendRePassword(); }
+                else { wsres.error = 'Данный email не был подтвержден, обращайтесь к администратору системы' }
             }
-            
+
 
         } break;
         //Обновление пароля и смена кода re_pass_code
-        case 'set_SaveNewPass':{
+        case 'set_SaveNewPass': {
             ut = new UserTable(q.args, q.sess_code);
             data = await ut.SelectUserLoginEmail();
-            if(q.args.code!==data[0].re_password_code)
-            {
+            if (q.args.code !== data[0].re_password_code) {
                 wsres.error = 'Код подтверждения неверен, проверте правильность введеного кода'
             }
-            else{
+            else {
                 ut = new UserTable(q.args, q.sess_code);
                 ut.forgPass();
             }
-        }break;
+        } break;
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
         case 'deleteCookie': {

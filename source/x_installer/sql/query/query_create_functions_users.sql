@@ -69,17 +69,15 @@ $$ LANGUAGE sql;
 --------------------------------------------------------------------------------------------Функция обновления пароля пользователем
 DROP FUNCTION IF EXISTS ChangePass;
 CREATE OR REPLACE FUNCTION ChangePass(
-    c_sess_code VARCHAR(250),
     c_login VARCHAR(250),
-    c_new_password VARCHAR(250),
-    c_old_password VARCHAR(250)
+    c_new_password VARCHAR(250)
 )
 RETURNS VOID
 as $$
 UPDATE users
 SET
-    password = CASE WHEN ((SELECT password FROM users WHERE login=c_login AND password=c_old_password) <> c_new_password) THEN (c_new_password) ELSE (SELECT password FROM users WHERE login=c_login) END
-WHERE login=c_login;
+    password = c_new_password
+	WHERE login=c_login;
 $$ LANGUAGE sql;
 
 --------------------------------------------------------------------------------------------Функция создания/обновления кода для восстановления пароля 
@@ -172,15 +170,15 @@ CREATE OR REPLACE FUNCTION SelectUserLoginEmail(
     c_data VARCHAR(250)
 )
 RETURNS table(
+    password VARCHAR(250),
     act_mail BOOLEAN, 
     re_password_code VARCHAR(250) 
 )
 as $$
-    SELECT act_mail, re_password_code
+    SELECT password, act_mail, re_password_code
     FROM users 
     WHERE login = c_data OR email = c_data
 $$ LANGUAGE sql;
-
 --------------------------------------------------------------------------------------------Функция получения данных по коду сессии
 DROP FUNCTION IF EXISTS SelectUserBySessCode;
 CREATE OR REPLACE FUNCTION SelectUserBySessCode(
