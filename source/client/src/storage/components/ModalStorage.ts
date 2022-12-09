@@ -291,22 +291,32 @@ export class PersonalAccauntStorage{
          }; 
           q.sess_code = sess_code;
          (await WSocket.get()).send(q); 
-        
-
-         if (this.getCmdErrPass().length > 0 ){
-            this.setErrr_old_pass(true);
-            this.setPersonalAccaunt(true); 
-         }
-         else if(this.getCmdErrPass() === '') {
-            this.setPersonalAccaunt(false); 
-            this.setErrr_old_pass(false);
-         }
-        
+       
        }
     }
 
     onGetChangePass(dt: IWSResult){
-        this.setCmdErrPass(dt.error);  
+        this.setCmdErrPass(dt.error);
+        console.log('dt.error')
+        if (dt.error === 'Старый пароль не верен'){
+            this.setErrr_old_pass(true);
+            this.setError_old_message(dt.error)
+        }
+        if (dt.error === 'Новый пароль не должен повторять старый'){
+            this.setError_pass(true);
+            this.setError_message(dt.error)
+        }
+        else if (dt.error === null || dt.error === ''){  
+            this.setErrr_old_pass(false);
+            this.setError_old_message('') 
+            this.setError_pass(false);
+            this.setError_message('')
+            this.setCmdErrPass('');
+            setTimeout(() => {
+                this.setPersonalAccaunt(false);
+              }, 2000)
+
+        }
     }
 
     onGetCUserData(dt: IWSResult){
