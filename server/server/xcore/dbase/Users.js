@@ -159,19 +159,18 @@ var UserTable = (function () {
     };
     UserTable.prototype.changePass = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var old_pass, pass, re_pass_code, db_res, result, r;
+            var pass, re_pass_code, db_res, result, r;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        old_pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.old_password).digest('hex');
                         pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.new_password).digest('hex');
                         re_pass_code = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + pass).digest('hex');
                         return [4, this.db.query("SELECT * FROM UpdateRePassCode ('" + this.args.login + "','" + re_pass_code + "')")];
                     case 1:
                         _a.sent();
-                        return [4, this.db.query("SELECT * FROM ChangePass('" + this.sess_code + "', '" + this.args.login + "','" + pass + "','" + old_pass + "')")];
+                        return [4, this.db.query("SELECT * FROM ChangePass('" + this.args.login + "','" + pass + "')")];
                     case 2:
-                        db_res = _a.sent();
+                        _a.sent();
                         return [4, this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')")];
                     case 3:
                         db_res = _a.sent();
@@ -179,13 +178,7 @@ var UserTable = (function () {
                         for (r in db_res.rows) {
                             result.push(db_res.rows[r]);
                         }
-                        if (crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.new_password).digest('hex') === result[0].password) {
-                            return [2, result];
-                        }
-                        else {
-                            return [2, []];
-                        }
-                        return [2];
+                        return [2, result];
                 }
             });
         });
