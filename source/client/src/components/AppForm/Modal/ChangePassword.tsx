@@ -25,11 +25,19 @@ export class ChangePassword extends React.Component<IProps> {
         }
     
         var alert:React.ReactNode = <></>;
-        if(APP_STORAGE.modal.getCmdErrPass() === null && APP_STORAGE.modal.getCmdErrPass() === ''){
+        if(APP_STORAGE.modal.getCmdErrPass() === null ){
             alert = <Alert sx={{mt: '12px'}} severity="success">Пароль успешно сохранен.</Alert>;
+            setTimeout(() => {
+                APP_STORAGE.modal.setPersonalAccaunt(false);
+                APP_STORAGE.modal.setOld_Pass(''), 
+                APP_STORAGE.modal.setNew_Pass(''),
+                APP_STORAGE.modal.setRepeat_password('')
+                APP_STORAGE.modal.setCmdErrPass('')
+              }, 2000)
+
         }
         else if (APP_STORAGE.modal.getCmdErrPass() !== null && APP_STORAGE.modal.getCmdErrPass() !== ''){
-            alert = <Alert sx={{mt: '12px'}} severity="error">Необходимо проверить правильность вводимых данных.</Alert>;
+            alert = <Alert sx={{mt: '12px'}} severity="error">Необходимо проверить правильность введенных данных.</Alert>;
         }
      
         return (

@@ -42,8 +42,8 @@ export class PersonalAccauntStorage{
     @observable modal:number=null;
     @observable alert_dialog:boolean=false;
 
-    @observable cmd_error_pass: string = null;
-    @observable cmd_error_data: string = null;
+    @observable cmd_error_pass: string = '';
+    @observable cmd_error_data: string = '';
   
     @observable checked_email: boolean = false; /// потдверждение  пароля
     ////////////////////////////////////валидация формы
@@ -212,7 +212,6 @@ export class PersonalAccauntStorage{
 
         if (matches !== null && this.getActMail() === false){
             this.set_emain(true);
-            this.setEmail_message('На указанный email отправлен код подтверждения')
             this.set_ActMail('sess_id', value )  
         }
 
@@ -238,7 +237,14 @@ export class PersonalAccauntStorage{
          q.sess_code = sess_code;
 
          
-      (await WSocket.get()).send(q);  this.setPersonalAccaunt(false); 
+      (await WSocket.get()).send(q);
+       
+      if(this.getActMail() === true){     
+        setTimeout(() => {
+            this.setPersonalAccaunt(false);
+          }, 1000)
+        this.setCmdErrData('')
+    }
        }
     }
     
@@ -291,13 +297,11 @@ export class PersonalAccauntStorage{
          }; 
           q.sess_code = sess_code;
          (await WSocket.get()).send(q); 
-       
        }
     }
 
     onGetChangePass(dt: IWSResult){
         this.setCmdErrPass(dt.error);
-        console.log('dt.error')
         if (dt.error === 'Старый пароль не верен'){
             this.setErrr_old_pass(true);
             this.setError_old_message(dt.error)
@@ -310,12 +314,6 @@ export class PersonalAccauntStorage{
             this.setErrr_old_pass(false);
             this.setError_old_message('') 
             this.setError_pass(false);
-            this.setError_message('')
-            this.setCmdErrPass('');
-            setTimeout(() => {
-                this.setPersonalAccaunt(false);
-              }, 2000)
-
         }
     }
 

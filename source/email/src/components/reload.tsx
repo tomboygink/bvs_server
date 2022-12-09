@@ -53,8 +53,8 @@ export default function CircularIntegration() {
       </Box>
       <Box sx={{ m: 1, position: 'relative' }}>
         <Button
-          variant="outlined"
-          sx={buttonSx}
+           fullWidth
+           sx={{mt:'14px', mb: '14px' ,background: '#edf2ff', color: '#1976d2;' }}
           disabled={loading}
           onClick={set_sendCode}
         >

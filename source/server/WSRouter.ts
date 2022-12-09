@@ -86,7 +86,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 else {
                     wsres.data = data;
                     wsres.code = q.sess_code;
-                    wsres.error = '';
+                    wsres.error = null;
                 }
             }
 

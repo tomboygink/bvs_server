@@ -25,7 +25,7 @@ export class ChangeUserData extends React.Component<IProps> {
       async saveСhanges() {
             APP_STORAGE.modal.set_CUserData('sess_id', APP_STORAGE.auth_form.getdt()); 
       }
-
+        
 
       componentDidMount(): void {
             let user = APP_STORAGE.auth_form.getUser();
@@ -61,15 +61,15 @@ export class ChangeUserData extends React.Component<IProps> {
 
 
       render(): React.ReactNode {
-         
-                  APP_STORAGE.modal.setActMail(APP_STORAGE.auth_form.getUser().act_mail)
-            
-
-            var act_mail:React.ReactNode = <></>; ////Для кнопки подтверждения почты
+          APP_STORAGE.modal.setActMail(APP_STORAGE.auth_form.getUser().act_mail)
         
-            
-
-
+          var alert:React.ReactNode = <></>;
+          var alert_save_change:React.ReactNode = <></>;
+          if(APP_STORAGE.modal.getActMail() === false){
+              alert = <Alert sx = {{mt: '12px'}} severity="warning">На указанный email отправлен код подтверждения.</Alert>;
+          }
+         
+        
             return (
                   <React.Fragment>
                         <Box>
@@ -135,10 +135,9 @@ export class ChangeUserData extends React.Component<IProps> {
                                           //onChange = { () => {this.confirmEmail}}
                                           inputProps={{ 'aria-label': 'controlled' }}
                                     />
+                              </Box>  
                               </Box>
-                              
-                              </Box>
-                              {act_mail}
+                              {alert}
                               <Divider sx ={{padding : '12px'}}/>
                               <Typography variant="caption">ПРИМЕЧАНИЕ:</Typography>
                               {/* <TextField
@@ -166,7 +165,7 @@ export class ChangeUserData extends React.Component<IProps> {
                                     Сохранить
                               </Button>
                  
-
+                        {alert_save_change}
                   </React.Fragment>
             );
       }
