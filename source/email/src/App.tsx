@@ -12,7 +12,7 @@ import  CircularIntegration  from './components/reload'
 
 import { TextField, Box, Typography, Alert, } from '@mui/material';
 
-import Tooltip from '../../client/src/components/AppForm/Tooltip/Tooltip'
+
 //  import {ConfirmMail} from '../../client/src/components/AppForm/ConfirmMail/ConfirmMail'
 
 

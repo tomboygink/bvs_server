@@ -9,16 +9,8 @@ import { AuthFormStorage } from '../../../client/src/storage/components/AuthForm
 // ХРАНИЛИЩЕ
 
 class FORGOTPASS {
-    @observable code: string = null;
 
-   
 
-    @action setCode(u:string){ this.code = u; } 
-    @computed getCode():string{ return this.code; } 
-    
-
-    
-     
     constructor() {
         makeAutoObservable(this);
         

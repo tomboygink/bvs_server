@@ -135,7 +135,7 @@ function WSRoute(_ws, q) {
                     else {
                         wsres.data = data;
                         wsres.code = q.sess_code;
-                        wsres.error = '';
+                        wsres.error = null;
                     }
                     _c.label = 13;
                 case 13: return [3, 26];

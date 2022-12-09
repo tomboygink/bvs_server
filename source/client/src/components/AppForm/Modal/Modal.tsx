@@ -21,6 +21,10 @@ export class Modal extends React.Component<IProps> {
 
     async closeModal( ) {
         APP_STORAGE.modal.setPersonalAccaunt(false);
+        APP_STORAGE.modal.setErrr_old_pass(false);
+        APP_STORAGE.modal.setError_old_message('');
+        APP_STORAGE.modal.setError_pass(false);
+        APP_STORAGE.modal.setError_message('')
         let user =  APP_STORAGE.auth_form.getUser();
         if(APP_STORAGE.modal.getFamily() !== ''){
               
@@ -84,7 +88,7 @@ export class Modal extends React.Component<IProps> {
           { APP_STORAGE.modal.getModalTitle()}
       </Typography>
 
-      <CloseIcon  
+      <CloseIcon  sx={{color: '#1976D2'}}
            onClick={ ()=>{this.closeModal();}}/>
       </Box>  
       

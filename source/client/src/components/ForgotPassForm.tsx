@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import { APP_STORAGE } from '../storage/AppStorage';
 
-import {Avatar, Button, TextField, Box, Container, CssBaseline, Typography, Divider, Alert  } from '@mui/material';
+import {Avatar, Button, TextField, Box, Container, CssBaseline, Typography, Divider, Alert , Link } from '@mui/material';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -21,9 +21,12 @@ export class ForgotPass extends React.Component<IProps> {
     }
 
     render(): React.ReactNode {
-        var error_alert:React.ReactNode = <></>;
-        if(APP_STORAGE.auth_form.getAlertForgPass() !== ''){
-            error_alert =   <Alert sx={{display: 'flex' , position: 'absolute', right: 0, bottom: 0, mb: '15px'}} severity="success">{APP_STORAGE.auth_form.getAlertForgPass()}</Alert>
+        var alert:React.ReactNode = <></>;
+        if(APP_STORAGE.auth_form.get_forgPass() === null ){
+            alert = <Alert severity="success">Код подтверждения отправлен на электронную почту</Alert>;
+        }
+        else if (APP_STORAGE.auth_form.get_forgPass() !== null && APP_STORAGE.auth_form.get_forgPass() !== ''){
+            alert = <Alert severity="error">{APP_STORAGE.auth_form.get_forgPass()}</Alert>;
         }
 
         return (
@@ -35,8 +38,8 @@ export class ForgotPass extends React.Component<IProps> {
                  <Typography component="h1" variant="h5">
                      Сброс пароля
                 </Typography>
-                    <ArrowRightAltIcon
-                    onClick={ ()=>{   window.location.href = 'http://127.0.0.1:3040' }}/>
+                    <ArrowRightAltIcon sx={{color: '#1976D2'}}
+                    onClick={ ()=>{   APP_STORAGE.auth_form.setForgotPass(false) }}/>
                  </Box>
              
                 
@@ -69,12 +72,19 @@ export class ForgotPass extends React.Component<IProps> {
                     >
                         Получить код
                     </Button>
-        
+                     
                     </Box>
-            
+                    {alert}
+                    <Link 
+                        href="#" 
+                        variant="body2"
+                        onClick={ () => { APP_STORAGE.auth_form.setForgotPass(false)}}>
+                    
+                    Вернуться на форму авторизации
+                    </Link>
                 </Container> 
+              
             </ThemeProvider>
-              {error_alert}
             </React.Fragment>
         );
     }

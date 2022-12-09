@@ -71,7 +71,7 @@ export class AuthFormStorage{
                                             
     ///////////////////////Если пользователь забыл пароль
 
-    @action set_forgPass(val:string){ this.dt_set_forgPass = val; }
+    @action set_forgPass(val:string){ this.dt_set_forgPass = val; }  // помещаем описание ошибки от сервера - cmd set_ForgPass
     @computed get_forgPass():string{ return this.dt_set_forgPass; } 
 
     @action setEmail(val:string){ this.email = val; }
@@ -84,9 +84,9 @@ export class AuthFormStorage{
     @computed getRepeatPass():string{ return this.repeat_password; } 
 
     @action setError_login(val:boolean){ this.login_err = val; }
-    @computed getError_login():boolean{ return this.login_err; }  /////передаем ошибку 
+    @computed getError_login():boolean{ return this.login_err; }  /////передаем ошибку - поле Логин
 
-    @action setLogin_message(val:string){ this.login_err_mess = val; } //////передаем сообщение об ошибке
+    @action setLogin_message(val:string){ this.login_err_mess = val; } //////передаем сообщение об ошибке - поле Логин
     @computed getLogin_message():string{ return this.login_err_mess; }
 
     @action setError_emain(val:boolean){ this.email_err = val; }
@@ -147,46 +147,15 @@ export class AuthFormStorage{
     }
 
     async set_SaveNewPass() {
-        
-        if (this.getCode() === ''){
-             this.setError_code(true);
-             this.setError_code_mess('Повторите попытку.')
-        }
-
-        if(this.getNewPass().length < 6){
-            this.setErrr_new_pass(true);
-            this.setError_new_message('Пароль не должен быть короче 6 символов.')
-        }
-        else {
-            this.setErrr_new_pass(false);
-            this.setError_new_message('')
-        }
-
-        if(this.getLogin() === this.getNewPass() ){
-            this.setErrr_new_pass(true);
-            this.setError_new_message('Пароль не должен совпадать с логином')
-        }
-
-        if(this.getNewPass() !==  this.getRepeatPass()) {
-            this.setError_repeat_pass(true);
-            this.setError_repeat_message('Пароли не совпадают. Повторите попытку.')
-        }
-        else{
-            this.setError_repeat_pass(false);
-            this.setError_repeat_message('')
-        }
-
-        if (this.getNewPass() !== '' && this.getRepeatPass() !== ''  && this.getNewPass() === this.getRepeatPass() && this.getCode() !== '') {
+        if ( this.getLogin() !== '' && this.getNewPass() !== '' && this.getRepeatPass() !== ''  && this.getNewPass() === this.getRepeatPass() && this.getCode() !== '') {
             var q:IWSQuery = new WSQuery("set_SaveNewPass");
             q.args = { 
                 login: this.getLogin(), 
                 new_password:this.getNewPass(), 
                 repeat_password : this.getRepeatPass(),
                 code : this.getCode()  };
-                
             (await WSocket.get()).send(q); 
         }
-       
     }
 
     setUserWS(dt: IWSResult){
@@ -213,8 +182,11 @@ export class AuthFormStorage{
         this.setUserWS(dt);
     }
 
-    onSaveNewPass(dt: IWSResult){
+    onSaveNewPass(dt: IWSResult){    //////////// Socket result cmd - set_ForgPass
         this.set_forgPass(dt.error)
+        if (this.get_forgPass() !== null) {
+            this.set_forgPass(dt.error)
+           }
     }
 
 }

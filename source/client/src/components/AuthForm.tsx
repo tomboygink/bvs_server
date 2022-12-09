@@ -30,24 +30,22 @@ export class AuthForm extends React.Component<IProps> {
  
         return (
             <React.Fragment>
-            <ThemeProvider theme={theme}>
-                <Container component="main" maxWidth="xs">
+             <Container component="main" maxWidth="xs" sx ={{border: '1px solid #eeeeee;' , padding: '20px' , mt: '5%'}}>
+             
             <CssBaseline />
-                <Box
-                sx={{
-                mt: '10%',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                }}
-                >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                   Авторизация
+            <Box sx= {{display: 'flex' , justifyContent: 'space-between'}}> 
+                 <Typography component="h1" variant="h5">
+                     Авторизация
                 </Typography>
-                <Box component="form" noValidate sx={{ mt: 1 }}>
+                    
+                 </Box>
+             
+                
+                <Typography sx={{fontSize: '12px', color: 'grey'}}>
+                Пожалуйста, введите ваш логин и пароль.
+                </Typography>
+
+                <Box component="form">
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -75,20 +73,17 @@ export class AuthForm extends React.Component<IProps> {
                         value={ APP_STORAGE.auth_form.getPassword() }
                     />
                     
-                    <Button
+                    <Button sx= {{background: '#edf2ff', color: '#1976d2;' , mt : '12px'}}
                         type="button"
                         fullWidth
-                        variant="contained"
-                        color="primary"
                         onClick={ ()=>{  APP_STORAGE.auth_form.get_UserByAuth();}}
                     >
                         Войти
                     </Button>
-                    </Box>
                         {error_alert}
                     </Box>
                     <Grid container sx= {{mt: '12px'}}>
-                    <Grid item xs>
+                   
                     <Link 
                         href="#" 
                         variant="body2"
@@ -96,13 +91,11 @@ export class AuthForm extends React.Component<IProps> {
                     
                   Забыли пароль?
                     </Link>
-                    </Grid>
                     <Grid item>
              
                     </Grid>
                     </Grid>
                 </Container> 
-            </ThemeProvider>
             </React.Fragment>
         );
     }
