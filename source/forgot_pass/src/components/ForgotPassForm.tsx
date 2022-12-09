@@ -4,9 +4,11 @@ import { observer } from 'mobx-react';
 import { APP_STORAGE } from '../../../../source/client/src/storage/AppStorage';
 import {Button, TextField, Box, Container, CssBaseline, Typography, Divider, Alert  } from '@mui/material';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme} from '@mui/material/styles';
 
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+
+import  CircularIntegration  from './reload'
 
 
 interface IProps{}
@@ -20,7 +22,21 @@ export class ForgotPass extends React.Component<IProps> {
     }
 
     render(): React.ReactNode {
+        let splArr = window.location.search.replace(/%20/g, "");
+        let splArr1 = splArr.split('=')
+        APP_STORAGE.auth_form.setCode((splArr1[1]))
 
+
+        var alert:React.ReactNode = <></>;
+
+        if(APP_STORAGE.auth_form.get_forgPass() === null ){
+            alert = <Alert severity="success">Пароль успешно изменен</Alert>;
+        }
+
+        else if (APP_STORAGE.auth_form.get_forgPass() !== null && APP_STORAGE.auth_form.get_forgPass() !== ''){
+            alert = <Alert severity="error">{APP_STORAGE.auth_form.get_forgPass()}</Alert>;
+        }  
+        
         return (
             <React.Fragment>
                 <Container component="main" maxWidth="xs" sx ={{border: '1px solid #eeeeee;' , padding: '20px' , mt: '5%'}}>
@@ -87,27 +103,22 @@ export class ForgotPass extends React.Component<IProps> {
                     />    
              
                     <TextField
+                        fullWidth
+                        disabled = {true}
+                        margin="normal"
                         label="Код подтверждения"
                         id="outlined-size-small"
                         error= { APP_STORAGE.auth_form.getError_code()}
                         helperText= {APP_STORAGE.auth_form.getError_code_mess()}
-                        size="small"
                         onChange={ (e)=>{ APP_STORAGE.auth_form.setCode(e.target.value); } }
                         value={ APP_STORAGE.auth_form.getCode() || '' }
                     />
     
-                    
-                     <Button sx= {{background: '#edf2ff', color: '#1976d2;' , mt : '12px' , mb: '12px'}}
-                        type="button"
-                        fullWidth
-                       onClick={ ()=>{  APP_STORAGE.auth_form.set_SaveNewPass();}}
-                     >
-                       Сохранить
-                    </Button>
-
-
+                   
+                     <CircularIntegration />
+                     
                     </Box>
-            
+                    {alert}
                 </Container> 
             </React.Fragment>
         );

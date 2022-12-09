@@ -21,9 +21,12 @@ export class ForgotPass extends React.Component<IProps> {
     }
 
     render(): React.ReactNode {
-        var error_alert:React.ReactNode = <></>;
-        if(APP_STORAGE.auth_form.getAlertForgPass() !== ''){
-            error_alert =   <Alert sx={{display: 'flex' , position: 'absolute', right: 0, bottom: 0, mb: '15px'}} severity="success">{APP_STORAGE.auth_form.getAlertForgPass()}</Alert>
+        var alert:React.ReactNode = <></>;
+        if(APP_STORAGE.auth_form.get_forgPass() === null ){
+            alert = <Alert severity="success">Код подтверждения отправлен на электронную почту</Alert>;
+        }
+        else if (APP_STORAGE.auth_form.get_forgPass() !== null && APP_STORAGE.auth_form.get_forgPass() !== ''){
+            alert = <Alert severity="error">{APP_STORAGE.auth_form.get_forgPass()}</Alert>;
         }
 
         return (
@@ -69,12 +72,11 @@ export class ForgotPass extends React.Component<IProps> {
                     >
                         Получить код
                     </Button>
-        
+                     
                     </Box>
-            
+                    {alert}
                 </Container> 
             </ThemeProvider>
-              {error_alert}
             </React.Fragment>
         );
     }
