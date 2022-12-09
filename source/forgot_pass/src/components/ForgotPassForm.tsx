@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import { APP_STORAGE } from '../../../../source/client/src/storage/AppStorage';
-import {Button, TextField, Box, Container, CssBaseline, Typography, Divider, Alert  } from '@mui/material';
+import {Button, TextField, Box, Container, CssBaseline, Typography, Divider, Alert, Link  } from '@mui/material';
 
 import { createTheme} from '@mui/material/styles';
 
@@ -45,13 +45,13 @@ export class ForgotPass extends React.Component<IProps> {
                  <Typography component="h1" variant="h5">
                      Сброс пароля
                 </Typography>
-                    <ArrowRightAltIcon
+                    <ArrowRightAltIcon sx={{color: '#1976D2'}}
                     onClick={ ()=>{   window.location.href = 'http://127.0.0.1:3040' }}/>
                  </Box>
              
                 
                 <Typography sx={{fontSize: '12px', color: 'grey'}}>
-               
+                Для сброса пароля , пожалуйста, укажите ваш логин и новый пароль. <Typography sx={{fontSize: '12px', color: '#1976d2'}}>(код подтверждения - введен автоматически)</Typography>
                 </Typography>
              
                 <Box component="form" noValidate sx={{ mt: 1 }}>
@@ -119,6 +119,13 @@ export class ForgotPass extends React.Component<IProps> {
                      
                     </Box>
                     {alert}
+                    <Link 
+                        href="#" 
+                        variant="body2"
+                        onClick={ () => { window.location.href = 'http://127.0.0.1:3040'}}>
+                    
+                    Вернуться на форму авторизации
+                    </Link>
                 </Container> 
             </React.Fragment>
         );
