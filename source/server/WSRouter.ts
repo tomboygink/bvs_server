@@ -5,7 +5,6 @@ import { UserTable } from '../xcore/dbase/Users';
 import { SendMail } from '../xcore/mailer/sendMail';
 
 import crypto from 'crypto';
-//import { CONFIG } from '../../xcore/config';
 import { CONFIG } from '../xcore/config'
 
 
@@ -111,7 +110,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
         } break;
         //------------------------------------------------------------------------ЗАБЫЛИ ПАРОЛЬ
-        //обновление пароля и кода для именения пароля
+        //Отправка на почту кода re_pass_code
         case 'set_ForgPass': {
             ut = new UserTable(q.args, q.sess_code);
             sendMail = new SendMail(q.args, q.sess_code);
@@ -128,7 +127,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             
 
         } break;
-
+        //Обновление пароля и смена кода re_pass_code
         case 'set_SaveNewPass':{
             ut = new UserTable(q.args, q.sess_code);
             data = await ut.SelectUserLoginEmail();
@@ -141,7 +140,6 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 ut.forgPass();
             }
         }break;
-
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
         case 'deleteCookie': {
