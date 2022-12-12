@@ -3,11 +3,6 @@ import { observable, action, computed, makeAutoObservable } from 'mobx';
 import { IWSQuery, WSQuery, IWSResult } from '../../../../xcore/WSQuery';
 import { WSocket } from '../WSocket';
 
-import { configure } from "mobx"
-
-configure({
-    enforceActions: "never",
-})
 
 export class ModalStorage{
 

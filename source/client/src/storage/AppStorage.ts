@@ -4,6 +4,7 @@ import { PageStorage } from './PageStorage';
 import { AuthFormStorage } from './components/AuthFormStorage';
 import { AppBarStorage } from './components/AppBarStorage';
 import { ModalStorage } from './components/ModalStorage';
+import { UserRegistrationStorage } from './components/UserRegistrationStorage';
 import { WSocket } from './WSocket';
 import {getCookie , setCookie, deleteCookie }  from './browserCookes'
 import { UsersEntity } from '../../../xcore/dbase/Users';
@@ -16,6 +17,7 @@ class AppStorage {
     @observable auth_form: AuthFormStorage = null;
     @observable app_bar:  AppBarStorage = null;
     @observable modal: ModalStorage = null;
+    @observable reg_user: UserRegistrationStorage = null;
     
 
     @observable dt:any = null;
@@ -32,6 +34,7 @@ class AppStorage {
         this.auth_form = new AuthFormStorage();
         this.app_bar = new AppBarStorage();
         this.modal = new ModalStorage();
+        this.reg_user = new UserRegistrationStorage();
         makeAutoObservable(this);
 
         // WSocket.get();

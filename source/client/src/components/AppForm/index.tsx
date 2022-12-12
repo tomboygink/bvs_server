@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 
 import {AppBarPanel} from './AppBarPanel/AppBarPanel'
 import {Modal} from './Modal/Modal'
+import {ModalLeftPanel} from './AppBarPanel/LeftPanel/NewUserRegistratiom/ModalLeftPanel'
 import {Box} from '@mui/material';
 import { APP_STORAGE } from '../../storage/AppStorage';
 
@@ -25,6 +26,7 @@ export class AppForm extends React.Component<IProps> {
                 <Box className='1111' style={{display : 'flex'}}> 
                 <AppBarPanel/>
                  <Modal/>
+                 <ModalLeftPanel/>
                 <Box sx = {{mt : '20%'}}></Box>
                 </Box>
                
