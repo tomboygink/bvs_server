@@ -3,20 +3,20 @@ import { observable, action, computed, makeAutoObservable } from 'mobx';
 import { IWSQuery, WSQuery, IWSResult } from '../../../../xcore/WSQuery';
 import { WSocket } from '../WSocket';
 
-import { UsersEntity } from '../../../../xcore/dbase/Users';
-import {getCookie , setCookie, deleteCookie }  from '../browserCookes';
+import { configure } from "mobx"
 
+configure({
+    enforceActions: "never",
+})
 
-
-
-
-
-export class PersonalAccauntStorage{
+export class ModalStorage{
 
   
     @observable PersonalAccaunt: boolean = false; 
     @observable alert_message : string = '';
     @observable act_mail_message : boolean = false;
+
+    @observable spawn_alert: boolean = null;   /// создаем алерт для формы редактирования (ChangeUserData)
 
     @observable family:string = '';
     @observable name:string = '';
@@ -67,6 +67,10 @@ export class PersonalAccauntStorage{
     constructor(){
         makeAutoObservable(this);
     }
+    
+    @action setSpawnAlert(val: boolean) {this.spawn_alert = val}
+    @computed getSpawnAlert():boolean { return this.spawn_alert}
+
     @action setChecked(val:boolean) { this.checked_email = val}
     @computed getChecked():boolean { return this.checked_email; }
      
@@ -194,8 +198,8 @@ export class PersonalAccauntStorage{
         var q:IWSQuery = new WSQuery("set_CUserData");
         
        
-         const email = this.getEmail();
-         const phone =  this.getTelephone();
+        const email = this.getEmail();
+        const phone =  this.getTelephone();
         const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         const regexp_ph = /^((\+7|7|8)+([0-9]){10})$/;
         const matches = email.match(regexp);
@@ -239,11 +243,11 @@ export class PersonalAccauntStorage{
          
       (await WSocket.get()).send(q);
        
-      if(this.getActMail() === true){     
+      if(this.getActMail() === true && this.getSpawnAlert() === false){     
         setTimeout(() => {
             this.setPersonalAccaunt(false);
           }, 1000)
-        this.setCmdErrData('')
+       
     }
        }
     }

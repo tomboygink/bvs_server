@@ -64,7 +64,6 @@ export class ForgotPass extends React.Component<IProps> {
                     />
                     
                   
-                  
                     <Button sx= {{background: '#edf2ff', color: '#1976d2;' , mt : '12px' , mb: '12px'}}
                         type="button"
                         fullWidth
