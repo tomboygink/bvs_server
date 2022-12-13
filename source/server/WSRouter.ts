@@ -66,7 +66,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         //Смена пароля пользователя
         case 'set_ChangePass': {
             ut = new UserTable(q.args, q.sess_code);
-            data = await ut.SelectUserLoginEmail();
+            data = await ut.selectUserLoginEmail();
 
             //console.log(data);
             var old_pass = crypto.createHmac('sha256', CONFIG.key_code).update(q.args.old_password).digest('hex');
@@ -120,7 +120,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         case 'set_ForgPass': {
             ut = new UserTable(q.args, q.sess_code);
             sendMail = new SendMail(q.args, q.sess_code);
-            data = await ut.SelectUserLoginEmail();
+            data = await ut.selectUserLoginEmail();
 
             if (data[0] == undefined) {
                 wsres.error = 'Такого email не существует, проверте введенные данные или обратитесть к администратору системы';
@@ -135,7 +135,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         //Обновление пароля и смена кода re_pass_code
         case 'set_SaveNewPass': {
             ut = new UserTable(q.args, q.sess_code);
-            data = await ut.SelectUserLoginEmail();
+            data = await ut.selectUserLoginEmail();
             if (q.args.code !== data[0].re_password_code) {
                 wsres.error = 'Код подтверждения неверен, проверте правильность введеного кода'
             }
@@ -144,16 +144,32 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 ut.forgPass();
             }
         } break;
-        //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ВСЕХ ОРГАНИЗАЦИЙ
+        //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ОРГАНИЗАЦИЙ
         //получение организаций
-        case 'set_Orgs':{
-            var org = new OrgsTable(q.args, q.sess_code);
+        case 'get_Org': {
+            var orgs = new OrgsTable(q.args, q.sess_code);
+            data = await orgs.selectOrgs();
+            if (data.length > 0) {
+                wsres.code = q.sess_code;
+                wsres.data = data;
+                wsres.error = null;
+            }
+            else{wsres.code = q.sess_code; wsres.data = [], wsres.error = 'Организации отсутвуют'}
 
-        }break;
 
-        case 'get_NewOrgs':{
+        } break;
 
-        }break;
+        case 'set_NewOrgs': {
+
+        } break;
+
+        //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЕЙ
+        case 'set_NewUser': {
+            var ut = new UserTable(q.args, q.sess_code);
+            await ut.insertUser();
+
+        } break;
+
 
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА

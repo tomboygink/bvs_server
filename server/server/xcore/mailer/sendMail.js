@@ -86,7 +86,7 @@ var SendMail = (function () {
                 switch (_a.label) {
                     case 0:
                         ut = new Users_1.UserTable(this.args, this.sess_code);
-                        return [4, ut.SelectUserLoginEmail()];
+                        return [4, ut.selectUserLoginEmail()];
                     case 1:
                         data = _a.sent();
                         transporter = nodemailer_1["default"].createTransport({
