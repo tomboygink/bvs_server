@@ -137,9 +137,9 @@ export class NewUserRegistration extends React.Component<IProps> {
     label="организация"
     //onChange={handleChange}
   >
-    <MenuItem sx={{fontSize: '12px'}} value={10}>ООО СЕВЕРБУРИНСТРУМЕНТ</MenuItem>
-    <MenuItem sx={{fontSize: '12px'}} value={20}>ООО СЕВЕРБУРИНСТРУМЕНТ</MenuItem>
-    <MenuItem sx={{fontSize: '12px'}} value={30}>ООО СЕВЕРБУРИНСТРУМЕНТ</MenuItem>
+    <MenuItem sx={{fontSize: '12px'}}>ООО СЕВЕРБУРИНСТРУМЕНТ</MenuItem>
+    <MenuItem sx={{fontSize: '12px'}} >ООО СЕВЕРБУРИНСТРУМЕНТ</MenuItem>
+    <MenuItem sx={{fontSize: '12px'}} >ООО СЕВЕРБУРИНСТРУМЕНТ</MenuItem>
   </Select>
 </FormControl>
 
