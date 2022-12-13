@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import { CONFIG } from '../../xcore/config';
 
 import { SessionsTable } from '../dbase/Sessions';
+import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 
 
 export class UsersEntity {
@@ -116,19 +117,18 @@ export class UserTable {
         }
         return result;
     }
-    
 
-    //Забыли пароль
-    async SelectUserLoginEmail(): Promise<UsersEntity[]> {
+    //Получение пользователя для смены пароля "Забыли пароль"
+    async selectUserLoginEmail(): Promise<UsersEntity[]> {
         var data = '';
-        if (this.args.email !== undefined ){
+        if (this.args.email !== undefined) {
             data = this.args.email;
         }
-        if (this.args.login !== undefined ){
+        if (this.args.login !== undefined) {
             data = this.args.login;
         }
-        
-        
+
+
         var db_res = await this.db.query("SELECT * FROM SelectUserLoginEmail ('" + data + "')");
         var result: UsersEntity[] = new Array();
         for (var r in db_res.rows) {
@@ -137,6 +137,7 @@ export class UserTable {
         return result;
     }
 
+    //Забыли пароль
     async forgPass(): Promise<UsersEntity[]> {
         //обновление пароля шифрование нового пароля
         //получение актуальных данных
@@ -145,12 +146,31 @@ export class UserTable {
         //Генерация пароля
         var pass = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.new_password).digest('hex');
         //генерация нового кода re_pass_code
-        var re_pass_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login+"_"+this.args.new_password).digest('hex');
+        var re_pass_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + pass).digest('hex');
         //Изменение re_pass_code и пароля
         await this.db.query("SELECT * FROM ForgPass ('" + this.args.login + "','" + pass + "','" + re_pass_code + "')");
 
         var result: UsersEntity[] = new Array();
         return result;
+    }
+
+    //Добавление нового пользователя 
+    async insertUser() {
+        var pass = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.password).digest('hex');
+        var re_pass_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + pass).digest('hex');
+        var mail_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex');
+
+        await this.db.query("SELECT AddUser(CAST ('" + this.args.login + "' AS VARCHAR(250)), " +
+            "CAST ('" + pass + "' AS VARCHAR(250)), CAST ('" + this.args.family + "' AS VARCHAR(150)), " +
+            "CAST ('" + this.args.name + "' AS VARCHAR(150)), CAST ('" + this.args.father + "' AS VARCHAR(150)), " +
+            "CAST ('" + this.args.telephone + "' AS VARCHAR(50)), CAST ('" + this.args.email + "' AS VARCHAR(150)), " +
+            "CAST ('" + this.args.org_id + "' AS BIGINT), CAST ('" + this.args.job_title_id + "' AS )), " +
+            "CAST ('{\"roles\":[1]}' AS JSON), CAST ('{\"user_data\":[]}' AS JSON))," +
+            "CAST ('" + mail_code + "' AS VARCHAR(250)), CAST ('false' AS BOOLEAN))," +
+            "CAST ('" + re_pass_code + "' AS VARCHAR(250)), CAST ('false' AS BOOLEAN))," +
+            "CAST ('NULL' AS TIMESTAMP), CAST('" + dateTimeToSQL(new Date(Date.now())) + "' AS TIMESTAMP)), " +
+            "CAST ('" + this.args.info + "' AS TEXT)");
+
     }
 
 }

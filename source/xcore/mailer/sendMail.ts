@@ -40,7 +40,7 @@ export class SendMail {
 
     async sendRePassword(){
         var ut = new UserTable(this.args, this.sess_code);
-        var data = await ut.SelectUserLoginEmail();
+        var data = await ut.selectUserLoginEmail();
 
         const transporter = nodemailer.createTransport({
             host: "smtp.yandex.ru",
