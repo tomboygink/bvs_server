@@ -36,7 +36,6 @@ export class UserTable {
         this.db = getDB();
         this.args = _args;
         this.sess_code = _sess_code;
-
     }
 
     //Поиск пользователя по логину и паролю

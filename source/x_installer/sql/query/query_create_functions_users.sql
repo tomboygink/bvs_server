@@ -232,3 +232,40 @@ as $$
     WHERE sess_code = c_sess_code
 $$ LANGUAGE sql;
 
+--------------------------------------------------------------------------------------------Функция добавления организации
+DROP FUNCTION IF EXISTS AddOrgs;
+CREATE OR REPLACE FUNCTION AddOrgs(
+	c_name VARCHAR(250),
+	c_full_name VARCHAR(400),
+	c_inn VARCHAR(50),
+	c_address VARCHAR(400),
+	c_latitude VARCHAR(60),
+	c_longitude VARCHAR(60),
+	c_created_at TIMESTAMP,
+	c_info TEXT)
+RETURNS VOID
+AS $$
+	INSERT INTO orgs (name, full_name, inn, address, latitude, longitude, created_at, info)
+	VALUES (c_name, c_full_name, c_inn, c_address, c_latitude, c_longitude, c_created_at, c_info)
+$$
+LANGUAGE SQL;
+
+--------------------------------------------------------------------------------------------Функция получения всех организаций
+DROP FUNCTION IF EXISTS SelectOrgs;
+CREATE OR REPLACE FUNCTION SelectOrgs()
+RETURNS TABLE (
+	idd BIGINT, 
+	name VARCHAR(250),
+	full_name VARCHAR(400),
+	inn VARCHAR(50),
+	address VARCHAR(400),
+	latitude VARCHAR(60),
+	longitude VARCHAR(60),
+	created_at TIMESTAMP,
+	info TEXT
+)
+AS $$
+SELECT * FROM orgs
+$$
+LANGUAGE SQL;
+

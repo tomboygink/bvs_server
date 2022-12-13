@@ -2,6 +2,7 @@ import WebSocket from 'ws';
 import { IWSQuery, IWSResult, WSResult, WSStr } from '../xcore/WSQuery';
 import { SessionsTable } from '../xcore/dbase/Sessions';
 import { UserTable } from '../xcore/dbase/Users';
+import { OrgsTable } from '../xcore/dbase/Orgs';
 import { SendMail } from '../xcore/mailer/sendMail';
 
 import crypto from 'crypto';
@@ -143,6 +144,17 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 ut.forgPass();
             }
         } break;
+        //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ВСЕХ ОРГАНИЗАЦИЙ
+        //получение организаций
+        case 'set_Orgs':{
+            var org = new OrgsTable(q.args, q.sess_code);
+
+        }break;
+
+        case 'get_NewOrgs':{
+
+        }break;
+
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
         case 'deleteCookie': {
