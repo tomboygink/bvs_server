@@ -232,15 +232,6 @@ export class ModalLeftPanel {
             this.setTextHelpPassword('')
          }
 
-         // if ( this.getPassword() !== '' && this.getPassword().length < 6 ) {
-         //    this.setErrorPassword(true);
-         //    this.setTextHelpPassword('используйте 6 или более символов')
-         // }
-         // else  {
-         //    this.setErrorPassword(false);
-         //    this.setTextHelpPassword('')
-         // }
-
          if ( this.getRepeatPassword() === '') {
             this.setErrorRepeatPassword(true);
             this.setTextHelpRepeatPassword('Заполните поле')
@@ -255,19 +246,14 @@ export class ModalLeftPanel {
             this.setErrorPassword(false);
             this.setTextHelpPassword('')
          }
-
-       
-        
-        if ( this.getFamily() ! == '' &&
-             this.getName() !== '' &&
-             this.getFather() !== '' &&
-             this.getEmail() !== '' &&
-             this.getTelephone() !== '' &&
-             this.getLogin() !== '' &&
-             this.getPassword() !== '' &&
-             this.getPassword().length > 6  &&
-             this.getRepeatPassword() !== '' &&
-             this.getRepeatPassword().length > 6 
+        if ( this.getFamily() && email !== null && telephone !== null && this.getPassword() === this.getRepeatPassword() && this.getPassword().length >= 6 &&
+             this.getName() &&
+             this.getFather()  &&
+             this.getEmail() && 
+             this.getTelephone()  &&
+             this.getLogin() &&
+             this.getPassword() &&
+             this.getRepeatPassword()
             ) {
         q.args = { 
             family: this.getFamily(),
@@ -280,12 +266,12 @@ export class ModalLeftPanel {
             repeat:this.getRepeatPassword(),
             info:this.getInfo()
          };
-  
-      (await WSocket.get()).send(q);
+        
+      (await WSocket.get()).send(q); console.log(q)
     
        }
-    }
-
+    
+      }
 }
 
 
