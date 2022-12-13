@@ -49,6 +49,9 @@ export class ModalLeftPanel {
    @observable name_org: string = '';
    @observable inn: string = '';
    @observable address : string = '';
+   @observable latitude : string = null;  /// широта
+   @observable longitude : string = null; /// долгота
+   @observable info_org : string = '';
 
 
     constructor (){
@@ -150,6 +153,15 @@ export class ModalLeftPanel {
 
    @action setAddress(val:string){this.address = val}
    @computed getAddress():string { return this.address}
+
+   @action setLatitude(val:string){this.latitude = val}
+   @computed getLatitude():string { return this.latitude}
+
+   @action setLongitude(val:string){this.longitude = val}
+   @computed getLongitude():string { return this.longitude}
+
+   @action setInfOrg(val:string) {this.info_org = val}
+   @computed getInfOrg():string { return this.info_org}
 
 
 
@@ -272,6 +284,27 @@ export class ModalLeftPanel {
        }
     
       }
+
+
+    async set_Org() {
+      var q:IWSQuery = new WSQuery("set_Org");
+      if (this.getFullNameOrg() && this.getNameOrg() && this.getInn() && this.getAddress()) {
+ q.args = { 
+     name: this.getNameOrg(),
+     full_name: this.getFullNameOrg(),
+     inn: this.getInn(),
+     address:this.getAddress(),
+     latitude: this.getLatitude(),
+     longitude: this.getLongitude(),
+     info: this.getInfOrg()
+
+  };
+ 
+(await WSocket.get()).send(q); console.log(q)
+
+}
+
+    }
 }
 
 

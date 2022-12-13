@@ -22,8 +22,8 @@ export class NewOrganization extends React.Component<IProps> {
     super(props);
   }
 
-  async AddNewUser() {
-    APP_STORAGE.reg_user.set_NewUser();
+  async AddNewOrg() {
+    APP_STORAGE.reg_user.set_Org();
   }
 
   render(): React.ReactNode {
@@ -45,7 +45,7 @@ export class NewOrganization extends React.Component<IProps> {
             onChange={(e) => {
               APP_STORAGE.reg_user.setFullNameOrg(e.target.value);
             }}
-            value={APP_STORAGE.reg_user.getFullNameOrg()}
+            value={APP_STORAGE.reg_user.getFullNameOrg() || ""}
           />
 
           <TextField
@@ -63,7 +63,7 @@ export class NewOrganization extends React.Component<IProps> {
             onChange={(e) => {
               APP_STORAGE.reg_user.setNameOrg(e.target.value);
             }}
-            value={APP_STORAGE.reg_user.getNameOrg()}
+            value={APP_STORAGE.reg_user.getNameOrg() || ""}
           />
 
           <TextField
@@ -81,7 +81,7 @@ export class NewOrganization extends React.Component<IProps> {
             onChange={(e) => {
               APP_STORAGE.reg_user.setInn(e.target.value);
             }}
-            value={APP_STORAGE.reg_user.getInn()}
+            value={APP_STORAGE.reg_user.getInn() || ""}
           />
         </Box>
 
@@ -101,7 +101,41 @@ export class NewOrganization extends React.Component<IProps> {
           onChange={(e) => {
             APP_STORAGE.reg_user.setAddress(e.target.value);
           }}
-          value={APP_STORAGE.reg_user.getAddress()}
+          value={APP_STORAGE.reg_user.getAddress() || "" }
+        />
+
+        <TextField
+          sx={{ mt: "12px" }}
+          inputProps={{ style: { fontSize: 12 } }} // font size of input text
+          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+          variant="outlined"
+          fullWidth
+          required
+          label="Широта"
+          autoComplete="широта"
+          autoFocus
+          size="small"
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setLatitude(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getLatitude() || ""}
+        />
+
+        <TextField
+          sx={{ mt: "12px" }}
+          inputProps={{ style: { fontSize: 12 } }} // font size of input text
+          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+          variant="outlined"
+          fullWidth
+          required
+          label="Долгота"
+          autoComplete="долгота"
+          autoFocus
+          size="small"
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setLongitude(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getLongitude() || ""}
         />
 
         <Divider sx={{ padding: "12px" }} />
@@ -115,9 +149,9 @@ export class NewOrganization extends React.Component<IProps> {
           minRows={4}
           style={{ width: "100%" }}
           onChange={(e) => {
-            APP_STORAGE.reg_user.setInfo(e.target.value);
+            APP_STORAGE.reg_user.setInfOrg(e.target.value);
           }}
-          value={APP_STORAGE.reg_user.getInfo() || ""}
+          value={APP_STORAGE.reg_user.getInfOrg() || ""}
         />
 
         <Box
@@ -137,7 +171,7 @@ export class NewOrganization extends React.Component<IProps> {
               fontSize: "12px",
             }}
             onClick={() => {
-              this.AddNewUser();
+              this.AddNewOrg();
             }}
           >
             Сохранить

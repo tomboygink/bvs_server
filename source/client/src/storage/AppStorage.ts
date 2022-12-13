@@ -66,6 +66,11 @@ class AppStorage {
         var q:IWSQuery = new WSQuery('get_UserBySessionCode', { code: ss_code });
         (await WSocket.get()).send(q);
     }
+
+    async get_Org(){
+        var q:IWSQuery = new WSQuery('get_Org');
+        (await WSocket.get()).send(q);
+    }
 };
 
 export const APP_STORAGE: AppStorage = new AppStorage();
