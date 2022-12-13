@@ -221,38 +221,42 @@ export class ModalLeftPanel {
             this.setErrorPassword(true);
             this.setTextHelpPassword('Заполните поле')
          }
-
-         else  {
-            this.setErrorPassword(false);
-            this.setTextHelpPassword('')
-         }
-
-         if ( this.getPassword() !== '' && this.getPassword().length < 6 ) {
+          
+         else if (this.getPassword().length < 6 ){
             this.setErrorPassword(true);
             this.setTextHelpPassword('используйте 6 или более символов')
          }
+
          else  {
             this.setErrorPassword(false);
             this.setTextHelpPassword('')
          }
+
+         // if ( this.getPassword() !== '' && this.getPassword().length < 6 ) {
+         //    this.setErrorPassword(true);
+         //    this.setTextHelpPassword('используйте 6 или более символов')
+         // }
+         // else  {
+         //    this.setErrorPassword(false);
+         //    this.setTextHelpPassword('')
+         // }
 
          if ( this.getRepeatPassword() === '') {
             this.setErrorRepeatPassword(true);
             this.setTextHelpRepeatPassword('Заполните поле')
          }
-         else  {
-            this.setErrorRepeatPassword(false);
-            this.setTextHelpRepeatPassword('')
-         }
-
-         if ( this.getPassword() !== '' && this.getPassword() !== this.getRepeatPassword()  ) {
+         else if ( this.getPassword() !== '' && this.getPassword() !== this.getRepeatPassword()  ) {
             this.setErrorRepeatPassword(true);
             this.setTextHelpRepeatPassword('Пароли не совпадают')
          }
          else  {
+            this.setErrorRepeatPassword(false);
+            this.setTextHelpRepeatPassword('')
             this.setErrorPassword(false);
             this.setTextHelpPassword('')
          }
+
+       
         
         if ( this.getFamily() ! == '' &&
              this.getName() !== '' &&
@@ -261,7 +265,9 @@ export class ModalLeftPanel {
              this.getTelephone() !== '' &&
              this.getLogin() !== '' &&
              this.getPassword() !== '' &&
-             this.getRepeatPassword() !== ''
+             this.getPassword().length > 6  &&
+             this.getRepeatPassword() !== '' &&
+             this.getRepeatPassword().length > 6 
             ) {
         q.args = { 
             family: this.getFamily(),
