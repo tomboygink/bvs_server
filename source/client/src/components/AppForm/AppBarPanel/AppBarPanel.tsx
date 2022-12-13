@@ -6,8 +6,8 @@ import { observer } from 'mobx-react';
 import {AppBar, Box, IconButton} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'; // иконка для меню
 
-import {AppBarLeftPanel} from './AppBarLeftPanel'
-import {AccountMenu} from './AppBarMenu'
+import {AppBarLeftPanel} from './LeftPanel/AppBarLeftPanel'
+import {AccountMenu} from './TopMenu/AppBarMenu'
 
 interface IProps{} 
 

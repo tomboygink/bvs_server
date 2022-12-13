@@ -63,7 +63,6 @@ export class ForgotPass extends React.Component<IProps> {
                         fullWidth
                         error = { APP_STORAGE.auth_form.getError_login()}
                         helperText = { APP_STORAGE.auth_form.getLogin_message() }
-                        id="email"
                         label="Логин"
                         name="login"
                         autoComplete="login"

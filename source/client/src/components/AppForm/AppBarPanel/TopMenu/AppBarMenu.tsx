@@ -7,12 +7,12 @@ import CreateIcon from '@mui/icons-material/Create';
 import Logout from '@mui/icons-material/Logout';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 
-import {getCookie , setCookie, deleteCookie }  from '../../../storage/browserCookes';
+import {getCookie , setCookie, deleteCookie }  from '../../../../storage/browserCookes';
 import { observer } from 'mobx-react';
-import { APP_STORAGE } from '../../../storage/AppStorage'
+import { APP_STORAGE } from '../../../../storage/AppStorage'
 
-import { IWSQuery, WSQuery, IWSResult } from '../../../../../xcore/WSQuery';
-import { WSocket } from '../../../storage/WSocket'; 
+import { IWSQuery, WSQuery, IWSResult } from '../../../../../../xcore/WSQuery';
+import { WSocket } from '../../../../storage/WSocket'; 
 interface IProps{} 
 
 
