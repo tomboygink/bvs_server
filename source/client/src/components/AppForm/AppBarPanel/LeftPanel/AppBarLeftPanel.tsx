@@ -1,73 +1,83 @@
-import * as React from 'react';
+import * as React from "react";
 
-import {Drawer, List , Divider, ListItemIcon, MenuItem} from '@mui/material';
+import { Drawer, List, Divider, ListItemIcon, MenuItem } from "@mui/material";
 
-import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import IconButton from "@mui/material/IconButton";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
-import { APP_STORAGE } from '../../../../storage/AppStorage'
-import { observer } from 'mobx-react';
+import { APP_STORAGE } from "../../../../storage/AppStorage";
+import { observer } from "mobx-react";
 
-import PersonAddAltSharpIcon from '@mui/icons-material/PersonAddAltSharp';
-import {NewUserRegistration} from './NewUserRegistratiom/NewUserRegistration'
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import BusinessIcon from "@mui/icons-material/Business";
 
-
-interface IProps{} 
-
+interface IProps {}
 
 @observer
 export class AppBarLeftPanel extends React.Component<IProps> {
-  
-    constructor(props:any){
-        super(props);     
-    }
+  constructor(props: any) {
+    super(props);
+  }
 
+  async OpenModalRegUser(e: any, tittle: string) {
+    APP_STORAGE.reg_user.setTakeModal(e);
+    APP_STORAGE.reg_user.setTittleModal(tittle);
+    APP_STORAGE.reg_user.setModalRegUser(true);
+    APP_STORAGE.app_bar.setSetOpenAppBar(false);
+  }
 
-    async OpenModalRegUser( ) {
-        APP_STORAGE.reg_user.setModalRegUser(true);
-        APP_STORAGE.app_bar.setSetOpenAppBar(false);
-        }
- 
-    render(): React.ReactNode {
-        return (
-            <React.Fragment>
-          <Drawer
-                sx={{
-                width: 250,
-                flexShrink: 0,
-                '& .MuiDrawer-paper': {
-                width: 250,
-                },
-                }}
-                anchor="left"
-                open={APP_STORAGE.app_bar.getSetOpenAppBar()}
-                >
-          <IconButton sx={{color : '#1976D2'}}
-                aria-label="open drawer"
-                onClick={()=>{ APP_STORAGE.app_bar.setSetOpenAppBar(false); }}
-                edge="start" 
-                >
-                <ChevronLeftIcon  sx={{ marginLeft: 28}}/>
+  render(): React.ReactNode {
+    return (
+      <React.Fragment>
+        <Drawer
+          sx={{
+            width: 250,
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: 250,
+            },
+          }}
+          anchor="left"
+          open={APP_STORAGE.app_bar.getSetOpenAppBar()}
+        >
+          <IconButton
+            sx={{ color: "#1976D2" }}
+            aria-label="open drawer"
+            onClick={() => {
+              APP_STORAGE.app_bar.setSetOpenAppBar(false);
+            }}
+            edge="start"
+          >
+            <ChevronLeftIcon sx={{ marginLeft: 28 }} />
           </IconButton>
-            
-            <MenuItem onClick={ () => this.OpenModalRegUser()}>
-            <ListItemIcon>
-            <PersonAddAltSharpIcon fontSize="small" />
-            </ListItemIcon>Добавить пользователя
-            </MenuItem>
-            
 
-            <MenuItem>
+          <MenuItem>
             <ListItemIcon>
-            <PersonAddAltSharpIcon fontSize="small" />
-            </ListItemIcon>Текст
-            </MenuItem>
+              <PeopleOutlineIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            Пользователи
+          </MenuItem>
 
-            </Drawer>
-            </React.Fragment>
-        );
-    }
+          <MenuItem
+            onClick={() => this.OpenModalRegUser(1, "Добавить пользователя")}
+          >
+            <ListItemIcon>
+              <PersonAddAltIcon fontSize="small" />
+            </ListItemIcon>
+            Добавить пользователя
+          </MenuItem>
+
+          <MenuItem
+            onClick={() => this.OpenModalRegUser(2, "Добавить организацию")}
+          >
+            <ListItemIcon>
+              <BusinessIcon fontSize="small" />
+            </ListItemIcon>
+            Добавить организацию
+          </MenuItem>
+        </Drawer>
+      </React.Fragment>
+    );
+  }
 }
-
-
-

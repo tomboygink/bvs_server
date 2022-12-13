@@ -84,7 +84,7 @@ export class Modal extends React.Component<IProps> {
 
       <Box className='ModalTitle' sx = { {display: 'flex' , justifyContent: 'space-between', mb: '12px'}}> 
        
-      <Typography> 
+      <Typography >  
           { APP_STORAGE.modal.getModalTitle()}
       </Typography>
 
