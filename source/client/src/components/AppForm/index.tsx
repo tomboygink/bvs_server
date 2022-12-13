@@ -23,13 +23,23 @@ export class AppForm extends React.Component<IProps> {
      
         return (
             <React.Fragment>
-                <Box className='1111' style={{display : 'flex'}}> 
+                <Box style={{display : 'flex'}}> 
                 <AppBarPanel/>
                  <Modal/>
                  <ModalLeftPanel/>
-                <Box sx = {{mt : '20%'}}></Box>
+                <Box sx = {{mt : '8%'}}></Box>
                 </Box>
-               
+                <Box className='wrapper' sx={{display: 'flex', justifyContent: 'space-between'}} >
+                <Box className='appform'>
+                1
+               </Box>
+               <Box className='appform'>
+                2
+               </Box>
+               <Box className='appform'>
+                3
+               </Box>
+               </Box>
             </React.Fragment> 
         );
     

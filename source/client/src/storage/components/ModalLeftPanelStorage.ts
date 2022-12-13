@@ -4,10 +4,13 @@ import { IWSQuery, WSQuery, IWSResult } from '../../../../xcore/WSQuery';
 import { WSocket } from '../WSocket';
 
 
-export class UserRegistrationStorage {
+export class ModalLeftPanel {
+   @observable modal_registration_user: boolean = false;
+   @observable take_data: any = null; /// пушим в модальное окно форму, в зависимоти от выбора пользователя 
+   @observable modal_tittle: string = ''; 
     
-
-    @observable modal_registration_user: boolean = false;
+/////////////////////регистрация пользователя
+ 
 
     @observable family:string = '';
     @observable name:string = '';
@@ -20,7 +23,7 @@ export class UserRegistrationStorage {
     @observable info:string='';
 
 
-    ///////////////проверка формы на правильность ввода данных
+    ///////////////проверка формы (регистрация пользователя) на правильность ввода данных
      
     @observable error_family: boolean= false;
     @observable texthelp_family:string='';
@@ -40,12 +43,28 @@ export class UserRegistrationStorage {
     @observable texthelp_repeat_password:string='';
     
 
+   //////////////////////добавление организации
+
+   @observable full_name_org: string = '';
+   @observable name_org: string = '';
+   @observable inn: string = '';
+   @observable address : string = '';
+
+
     constructor (){
         makeAutoObservable(this)
     }
 
     @action setModalRegUser(val:boolean){this.modal_registration_user = val} /// Для открытия модального окна 
     @computed getModalRegUser():boolean { return this.modal_registration_user}
+
+    @action setTakeModal(val:any){this.take_data = val} /// пушим в модальное окно форму, в зависимоти от выбора пользователя  
+    @computed getTakeModal():any { return this.take_data}
+
+    @action setTittleModal(val:string){this.modal_tittle = val} /// пушим в модальное окно форму, в зависимоти от выбора пользователя  
+    @computed getTittleModal():string { return this.modal_tittle}
+     
+    ////////////////////////////////////////////регистрация пользователя
 
     @action setFamily(val:string){this.family = val}
     @computed getFamily():string { return this.family}
@@ -117,13 +136,25 @@ export class UserRegistrationStorage {
     @action setTextHelpRepeatPassword(val:string) { this.texthelp_repeat_password = val}
     @computed getTextHelpRepeatPassword():string { return this.texthelp_repeat_password}
 
+     
+   //////////////////////добавление организации
+   
+   @action setFullNameOrg(val:string){this.full_name_org = val}
+   @computed getFullNameOrg():string { return this.full_name_org}
+
+   @action setNameOrg(val:string){this.name_org = val}
+   @computed getNameOrg():string { return this.name_org}
+
+   @action setInn(val:string){this.inn = val}
+   @computed getInn():string { return this.inn}
+
+   @action setAddress(val:string){this.address = val}
+   @computed getAddress():string { return this.address}
 
 
 
     async set_NewUser(){
-        alert('dfhud')
-        var q:IWSQuery = new WSQuery("set_CUserData");
-        
+        var q:IWSQuery = new WSQuery("set_NewUser");
         const regexp_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         const regexp_ph = /^((\+7|7|8)+([0-9]){10})$/;
         const email = this.getEmail().match(regexp_email);
@@ -133,7 +164,7 @@ export class UserRegistrationStorage {
             this.setErrorFamily(true);
             this.setTextHelpFamily('Заполните поле')
          }
-         else  {
+         else {
             this.setErrorFamily(false);
             this.setTextHelpFamily('')
          }
@@ -142,9 +173,9 @@ export class UserRegistrationStorage {
             this.setErrorName(true);
             this.setTextHelpName('Заполните поле')
          }
-         else  {
-            this.setErrorFamily(false);
-            this.setTextHelpFamily('')
+         else {
+            this.setErrorName(false);
+            this.setTextHelpName('')
          }
 
 
@@ -190,6 +221,16 @@ export class UserRegistrationStorage {
             this.setErrorPassword(true);
             this.setTextHelpPassword('Заполните поле')
          }
+
+         else  {
+            this.setErrorPassword(false);
+            this.setTextHelpPassword('')
+         }
+
+         if ( this.getPassword() !== '' && this.getPassword().length < 6 ) {
+            this.setErrorPassword(true);
+            this.setTextHelpPassword('используйте 6 или более символов')
+         }
          else  {
             this.setErrorPassword(false);
             this.setTextHelpPassword('')
@@ -202,6 +243,15 @@ export class UserRegistrationStorage {
          else  {
             this.setErrorRepeatPassword(false);
             this.setTextHelpRepeatPassword('')
+         }
+
+         if ( this.getPassword() !== '' && this.getPassword() !== this.getRepeatPassword()  ) {
+            this.setErrorRepeatPassword(true);
+            this.setTextHelpRepeatPassword('Пароли не совпадают')
+         }
+         else  {
+            this.setErrorPassword(false);
+            this.setTextHelpPassword('')
          }
         
         if ( this.getFamily() ! == '' &&
