@@ -15,18 +15,34 @@ export class OrgsEntity{
     constructor(){}
 }
 
-/*
-export class OrgsTable{
-    constructor(){}
 
-    async selectAll():Promise<OrgsEntity[]>{
-        var db:DBase = getDB();
-        var db_res = await db.query("SELECT * FROM orgs");
+export class OrgsTable{
+    db: DBase;
+    args: any;
+    sess_code: string;
+
+    constructor(_args: any, _sess_code: string){
+        this.db = getDB();
+        this.args = _args;
+        this.sess_code = _sess_code;
+    }
+
+    //Добавление организации
+    async isertOrgs(): Promise<OrgsEntity[]>{
+        await this.db.query("SELECT AddOrgs()");
+
+        var result:OrgsEntity[] = new Array();
+        return result;
+    }
+
+    //Получение всех организаций 
+    async selectOrgs():Promise<OrgsEntity[]>{
+        var db_res = await this.db.query("SELECT * FROM SelectOrgs()");
         var result:OrgsEntity[] = new Array();
         for(var p in db_res.rows){ result.push(db_res.rows[p]); }
         return result;
     }
     
 }
-*/
+
 
