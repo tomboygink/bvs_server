@@ -159,8 +159,14 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
         } break;
 
-        case 'set_NewOrgs': {
-
+        //case 'set_NewOrgs': {
+        case 'set_Org':{
+            var orgs = new OrgsTable(q.args, q.sess_code);
+            data =  await orgs.isertOrgs();
+            console.log(data[0])
+            //if(sess_data_sql.rows[0].id==0|| sess_data_sql==null|| sess_data_sql==undefined)
+            //if(data )
+            //data = await orgs.selectOrgs();
         } break;
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЕЙ
