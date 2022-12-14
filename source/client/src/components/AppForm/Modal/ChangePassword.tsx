@@ -122,42 +122,6 @@ export class ChangePassword extends React.Component<IProps> {
               }}
               value={APP_STORAGE.modal.getRepeat_password() || ""}
             />
-
-            {/* <Typography variant="caption" sx = {{color: '#0D80D8'}}>Старый пароль:</Typography>
-                <TextField 
-                        fullWidth 
-                        size='small'
-                        name="password"
-                        autoComplete='on'
-                        error={APP_STORAGE.modal.getErrr_old_pass()}
-                        helperText= {APP_STORAGE.modal.getError_old_message()}
-                        type="password"
-                        onChange={ (e)=>{ APP_STORAGE.modal.setOld_Pass(e.target.value); } }
-                        value={ APP_STORAGE.modal.getOld_Pass() || '' } /> */}
-
-            {/* <Typography variant="caption" sx = {{color: '#0D80D8'}}>Новый пароль:</Typography>
-                <TextField 
-                        fullWidth
-                        size='small' 
-                        name="password"
-                        autoComplete='on'
-                        error={APP_STORAGE.modal.getErrr_new_pass()}
-                        type="password"
-                        helperText= {APP_STORAGE.modal.getError_new_message()}
-                        onChange={ (e)=>{ APP_STORAGE.modal.setNew_Pass(e.target.value); } }
-                        value={ APP_STORAGE.modal.getNew_Pass() || '' }  /> */}
-
-            {/* <Typography variant="caption" sx = {{color: '#0D80D8'}}>Подтверждение пароля:</Typography>
-                <TextField
-                    fullWidth
-                    name="password"
-                    autoComplete='on'
-                    error={APP_STORAGE.modal.getError_pass()}
-                    helperText= {APP_STORAGE.modal.getError_message()}
-                    size='small' 
-                    type="password"
-                    onChange={ (e)=>{ APP_STORAGE.modal.setRepeat_password(e.target.value); } }
-                    value={ APP_STORAGE.modal.getRepeat_password() || ''} /> */}
           </Box>
 
           <Box

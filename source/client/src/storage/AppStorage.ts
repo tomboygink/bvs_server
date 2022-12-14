@@ -28,6 +28,7 @@ class AppStorage {
 
     @action setdtUser(val :any) {this.dtUser = val }
     @computed getdtUser() : any { return this.dtUser}
+
  
     constructor() {
         this.main = new PageStorage();
