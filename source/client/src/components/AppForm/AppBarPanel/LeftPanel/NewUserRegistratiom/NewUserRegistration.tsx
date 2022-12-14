@@ -17,6 +17,7 @@ import {
 import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
+import AddIcon from '@mui/icons-material/Add';
 
 interface IProps {}
 
@@ -29,8 +30,18 @@ export class NewUserRegistration extends React.Component<IProps> {
   async AddNewUser() {
     APP_STORAGE.reg_user.set_NewUser();
   }
-  async A(a:any) {
+  async SelectedOrg(a:any) {
    APP_STORAGE.reg_user.setKeyOrg(a)
+  }
+
+  async OpenModalRegUser(e: any, tittle: string) {
+    APP_STORAGE.reg_user.get_Org();
+    APP_STORAGE.reg_user.get_Jobs()
+
+    APP_STORAGE.reg_user.setTakeModal(e);
+    APP_STORAGE.reg_user.setTittleModal(tittle);
+    APP_STORAGE.reg_user.setModalRegUser(true);
+    APP_STORAGE.app_bar.setSetOpenAppBar(false);
   }
   
   render(): React.ReactNode {
@@ -137,18 +148,74 @@ export class NewUserRegistration extends React.Component<IProps> {
         </FormHelperText>
 
         <FormControl fullWidth size="small" sx={{mt: "14px"}} >
+        <InputLabel sx={{fontSize: '12px'}}>Организация</InputLabel>
+            <Select 
+                sx={{fontSize: '12px'}}
+                value={ APP_STORAGE.reg_user.getKeyOrg() || ''}
+                label="организация"
+                onChange={(e) => {this.SelectedOrg(e.target.value);}}
+              >
+                <MenuItem 
+                key={org.idd || ''} 
+                sx={{fontSize: '12px'}} 
+                value = {org.idd || ''}>{org.full_name || ''}
+            </MenuItem> 
+            <Divider />
 
+             <Box 
+                sx ={{ display: 'flex', justifyContent: 'flex-end', background: '#F1F5FC', m: 1, borderRadius: '4px'}}>
+                  <MenuItem onClick={() => this.OpenModalRegUser(2, "Добавить организацию")}> 
+                    <AddIcon sx = {{fontSize: '17px', mt: 1, color: '#266BF1'}}/> 
+                    <Typography sx={{fontSize: '12px', mt: 1}}>Добавить организацию</Typography> 
+                  </MenuItem>  
+             </Box>  
+            </Select>
+        </FormControl>
 
-  <InputLabel sx={{fontSize: '12px'}}>Организация</InputLabel>
-  <Select sx={{fontSize: '12px'}}
-    value={ APP_STORAGE.reg_user.getKeyOrg() || ''}
-    label="организация"
-    onChange={(e) => {this.A(e.target.value);}}
-  >
-     <MenuItem key={org.idd || ''} sx={{fontSize: '12px'}} value = {org.idd || ''}>{org.full_name || ''}
-     </MenuItem>   
-  </Select>
-</FormControl>
+        <FormControl fullWidth size="small" sx={{mt: "14px"}} >
+        <InputLabel sx={{fontSize: '12px'}}>Должность</InputLabel>
+            <Select 
+                sx={{fontSize: '12px'}}
+                value={ APP_STORAGE.reg_user.getKeyOrg() || ''}
+                label="должность"
+              >
+                <MenuItem 
+                key={org.idd || ''} 
+                sx={{fontSize: '12px'}} 
+                value = {org.idd || ''}>{org.full_name || ''}
+            </MenuItem> 
+              <Divider />
+
+              <Box 
+                 sx ={{ display: 'flex', justifyContent: 'flex-end', background: '#F1F5FC', m: 1, borderRadius: '4px'}}>
+              <MenuItem > 
+              <AddIcon sx = {{fontSize: '17px', mt: 1, color: '#266BF1'}}/> 
+              <Typography sx={{fontSize: '12px', mt: 1}}>Добавить должность</Typography> 
+              </MenuItem>  
+              </Box>  
+            </Select>
+        </FormControl>
+
+        <FormControl fullWidth size="small" sx={{mt: "14px", background: '#F1F5FC'}} >
+        <InputLabel sx={{fontSize: '12px'}}>Группы доступа</InputLabel>
+            <Select 
+                sx={{fontSize: '12px'}}
+                value={ APP_STORAGE.reg_user.getKeyOrg() || ''}
+                label="группы доступа"
+                
+              >
+            <MenuItem  
+                sx={{fontSize: '12px'}} 
+                value = "1">разрешить редактирование
+            </MenuItem> 
+
+              <MenuItem 
+                sx={{fontSize: '12px'}} 
+                value = "2"> только чтение
+            </MenuItem>   
+            </Select>
+        </FormControl>
+
 
         <TextField
           sx={{ mt: "14px" }}
@@ -169,6 +236,7 @@ export class NewUserRegistration extends React.Component<IProps> {
           value={APP_STORAGE.reg_user.getLogin()}
         />
 
+
         <TextField
           sx={{ mt: "14px" }}
           inputProps={{ style: { fontSize: 12 } }} // font size of input text
@@ -188,6 +256,7 @@ export class NewUserRegistration extends React.Component<IProps> {
           }}
           value={APP_STORAGE.reg_user.getPassword()}
         />
+
 
         <FormHelperText sx={{ ml: "12px" }}>
           используйте 6 или более символов, сочетая буквы, цифры и символы.
@@ -212,10 +281,12 @@ export class NewUserRegistration extends React.Component<IProps> {
           value={APP_STORAGE.reg_user.getRepeatPassword()}
         />
 
+
         <Divider sx={{ padding: "12px" }} />
         <Typography sx={{ color: "#999999" }} variant="caption">
           Информация:
         </Typography>
+
 
         <TextareaAutosize
           className="info"
@@ -228,6 +299,7 @@ export class NewUserRegistration extends React.Component<IProps> {
           value={APP_STORAGE.reg_user.getInfo() || ""}
         />
 
+
         <Box
           sx={{
             display: "flex",
@@ -235,6 +307,7 @@ export class NewUserRegistration extends React.Component<IProps> {
             justifyContent: "flex-end",
           }}
         >
+
           <Button
             sx={{
               background: "#266BF1",
@@ -250,13 +323,6 @@ export class NewUserRegistration extends React.Component<IProps> {
             Сохранить
           </Button>
         </Box>
-        {/* <Link 
-                        href="#" 
-                        variant="body2"
-                        onClick={ () => { APP_STORAGE.reg_user.setModalRegUser(false)}}>
-                    
-                    Закрыть 
-                    </Link> */}
       </React.Fragment>
     );
   }
