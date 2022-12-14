@@ -1,4 +1,5 @@
 import { DBase, getDB } from "./DBase";
+import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 
 
 export class OrgsEntity {
@@ -29,9 +30,18 @@ export class OrgsTable {
 
     //Добавление организации
     async isertOrgs(): Promise<OrgsEntity[]> {
-        await this.db.query("SELECT AddOrgs()");
-
+        var db_res = await this.db.query("SELECT AddOrgs(CAST ('" + this.args.name + "' AS VARCHAR(250)), "+
+        "CAST ('" + this.args.full_name + "' AS VARCHAR(400)), "+
+        "CAST ('" + this.args.inn + "' AS VARCHAR(50)), "+
+        "CAST ('" + this.args.address + "' AS VARCHAR(400)), "+
+        "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), "+
+        "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), "+
+        "CAST ('" + dateTimeToSQL(new Date(Date.now())) + "' AS TIMESTAMP),"+
+        "CAST ('" + this.args.info + "' AS TEXT))");
         var result: OrgsEntity[] = new Array();
+        for (var r in db_res.rows) {
+            result.push(db_res.rows[r]);
+        }
         return result;
     }
 

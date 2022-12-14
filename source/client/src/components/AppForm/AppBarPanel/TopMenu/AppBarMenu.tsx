@@ -53,7 +53,7 @@ export class AccountMenu extends React.Component<IProps> {
             <React.Fragment>
                 <IconButton id = 'btnPerfil'onClick={()=>{ APP_STORAGE.app_bar.setAppBarUser(true);  }}>
                 <Avatar sx={{ width: 32, height: 32 }}></Avatar>
-                <Typography sx={{  pl: '1rem', color : 'white'}} > {user.family} {user.name} {user.father}  </Typography>
+                <Typography sx={{  pl: '1rem', color : 'white'}} > {user.family} {APP_STORAGE.auth_form.getUser().name} {user.father}  </Typography>
                 </IconButton>
             <Menu
                 anchorEl={document.getElementById('btnPerfil')}
