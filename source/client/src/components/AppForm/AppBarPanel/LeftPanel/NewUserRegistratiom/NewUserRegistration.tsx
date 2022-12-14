@@ -144,11 +144,9 @@ export class NewUserRegistration extends React.Component<IProps> {
     value={ APP_STORAGE.reg_user.getKeyOrg() || ''}
     label="организация"
     onChange={(e) => {this.A(e.target.value);}}
-    
   >
      <MenuItem key={org.idd || ''} sx={{fontSize: '12px'}} value = {org.idd || ''}>{org.full_name || ''}
-     </MenuItem>
-    
+     </MenuItem>   
   </Select>
 </FormControl>
 

@@ -192,62 +192,6 @@ export class ChangeUserData extends React.Component<IProps> {
               alignItems: "center",
             }}
           >
-            {/* <Typography variant="caption" sx={{ color: '#0D80D8' }}>Фамилия: </Typography>
-                              <TextField
-                                    fullWidth
-                                    size='small'
-                                    onChange={(e) => { APP_STORAGE.modal.setFamily(e.target.value);; }}
-                                    value={APP_STORAGE.modal.getFamily() || ''} /> */}
-
-            {/* <Typography variant="caption" sx={{ color: '#0D80D8' }}>Имя:</Typography>
-                              <TextField
-                                    fullWidth
-                                    size='small'
-                                    onChange={(e) => { APP_STORAGE.modal.setName(e.target.value); }}
-                                    value={APP_STORAGE.modal.getName() || ''} /> */}
-
-            {/* <Typography variant="caption" sx={{ color: '#0D80D8' }}>Отчество:</Typography>
-                              <TextField
-                                    fullWidth
-                                    size='small'
-                                    onChange={(e) => { APP_STORAGE.modal.setFather(e.target.value); }}
-                                    value={APP_STORAGE.modal.getFather() || ''} /> */}
-
-            {/* <Typography variant="caption" sx={{ color: '#0D80D8' }}>Телефон:</Typography>
-                              <TextField
-                                    error={APP_STORAGE.modal.getError_phone()}
-                                    helperText={APP_STORAGE.modal.getPhone_message()}
-                                    fullWidth
-                                    size='small'
-                                    type="tel"
-                                    required
-                                    onChange={(e) => { APP_STORAGE.modal.setTelephone(e.target.value); }}
-                                    value={APP_STORAGE.modal.getTelephone()} /> */}
-
-            {/* <Typography variant="caption" sx={{ color: '#0D80D8' }}>E-mail:</Typography>
-                              <Box sx={{ display: 'flex' }}>
-                                    <TextField
-                                          error={APP_STORAGE.modal.getError_emain()}
-                                          helperText={APP_STORAGE.modal.getEmail_message() || APP_STORAGE.modal.getCmdErrData()}
-                                          fullWidth
-                                          color="success"
-                                          focused = {APP_STORAGE.modal.get_emain()}
-                                          size='small'
-                                          type='email'
-                                          required
-                                          onChange={(e) => { APP_STORAGE.modal.setEmail(e.target.value); }}
-                                          value={APP_STORAGE.modal.getEmail() || ''} />
-
-                             
-                              
-                              <Checkbox
-                                          checked={APP_STORAGE.auth_form.getUser().act_mail}
-                                          id="myCheck"
-                                          color="success"
-                                          //onChange = { () => {this.confirmEmail}}
-                                          inputProps={{ 'aria-label': 'controlled' }}
-                                    />
-                              </Box>   */}
           </Box>
 
           <Divider sx={{ padding: "12px" }} />
