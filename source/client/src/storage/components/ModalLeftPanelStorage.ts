@@ -8,6 +8,9 @@ export class ModalLeftPanel {
    @observable modal_registration_user: boolean = false;
    @observable take_data: any = null; /// пушим в модальное окно форму, в зависимоти от выбора пользователя 
    @observable modal_tittle: string = ''; 
+
+   @observable organization: Array<string> = [];
+   @observable key: any = null;
     
 /////////////////////регистрация пользователя
  
@@ -56,7 +59,14 @@ export class ModalLeftPanel {
 
     constructor (){
         makeAutoObservable(this)
+        Map<string, string>
     }
+
+    @action setKeyOrg(val:any){this.key = val}  
+    @computed getKeyOrg():any { return this.key}
+
+    @action setOrgAll(val:Array<string>){this.organization = val}  
+    @computed getOrgAll():Array<string> { return this.organization}
 
     @action setModalRegUser(val:boolean){this.modal_registration_user = val} /// Для открытия модального окна 
     @computed getModalRegUser():boolean { return this.modal_registration_user}
@@ -97,7 +107,7 @@ export class ModalLeftPanel {
     @computed getInfo():string { return this.info}
 
 
-    /////проверка формы
+    /////проверка формы (user)
     
     @action setErrorFamily(val:boolean){this.error_family = val} 
     @computed getErrorFamily():boolean { return this.error_family}
@@ -164,6 +174,18 @@ export class ModalLeftPanel {
    @computed getInfOrg():string { return this.info_org}
 
 
+   async get_Org(){
+      var q:IWSQuery = new WSQuery('get_Org');
+      (await WSocket.get()).send(q);
+  }
+
+  setAllOrganization(dt: IWSResult){    //////////// Socket result cmd - set_ForgPass
+  this.setOrgAll(dt.data[0]);
+  
+  let selblock = JSON.parse(JSON.stringify (this.getOrgAll()))
+ 
+}
+     /////проверка формы (org)
 
     async set_NewUser(){
         var q:IWSQuery = new WSQuery("set_NewUser");
@@ -273,6 +295,7 @@ export class ModalLeftPanel {
             father: this.getFather(),
             email:this.getEmail(), 
             telephone:this.getTelephone(),
+            id_org: this.getKeyOrg(), 
             login:this.getLogin(),
             password:this.getPassword(),
             repeat:this.getRepeatPassword(),
@@ -286,8 +309,11 @@ export class ModalLeftPanel {
       }
 
 
-    async set_Org() {
-      var q:IWSQuery = new WSQuery("set_Org");
+    async set_NewOrg() {
+      const regexp_inn = /^[0-9]+$/;
+      const inn = this.getInn().match(regexp_inn);
+      console.log(inn);
+      var q:IWSQuery = new WSQuery("set_NewOrg");
       if (this.getFullNameOrg() && this.getNameOrg() && this.getInn() && this.getAddress()) {
  q.args = { 
      name: this.getNameOrg(),
@@ -297,7 +323,6 @@ export class ModalLeftPanel {
      latitude: this.getLatitude(),
      longitude: this.getLongitude(),
      info: this.getInfOrg()
-
   };
  
 (await WSocket.get()).send(q); console.log(q)

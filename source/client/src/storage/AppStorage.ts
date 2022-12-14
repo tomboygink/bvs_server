@@ -51,6 +51,7 @@ class AppStorage {
             case ('set_CUserData') : { this.modal.onGetCUserData(dt); } break;
             case ('set_ForgPass') : { this.auth_form.onSaveNewPass(dt); } break;
             case ('set_SaveNewPass') : {this.auth_form.onSaveNewPass(dt)} break;
+            case ('get_Org') : {this.reg_user.setAllOrganization(dt)} break;
             default: { } break;
         }
     }
@@ -64,11 +65,6 @@ class AppStorage {
         if(ss_code === undefined) return;
 
         var q:IWSQuery = new WSQuery('get_UserBySessionCode', { code: ss_code });
-        (await WSocket.get()).send(q);
-    }
-
-    async get_Org(){
-        var q:IWSQuery = new WSQuery('get_Org');
         (await WSocket.get()).send(q);
     }
 };
