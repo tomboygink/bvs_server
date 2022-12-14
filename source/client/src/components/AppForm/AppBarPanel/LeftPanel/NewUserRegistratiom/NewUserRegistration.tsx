@@ -29,8 +29,14 @@ export class NewUserRegistration extends React.Component<IProps> {
   async AddNewUser() {
     APP_STORAGE.reg_user.set_NewUser();
   }
-
+  async A(a:any) {
+   APP_STORAGE.reg_user.setKeyOrg(a)
+  }
+  
   render(): React.ReactNode {
+  let org = JSON.parse(JSON.stringify (APP_STORAGE.reg_user.getOrgAll()))
+  var options:React.ReactNode = <></>;
+
     return (
       <React.Fragment>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -131,15 +137,18 @@ export class NewUserRegistration extends React.Component<IProps> {
         </FormHelperText>
 
         <FormControl fullWidth size="small" sx={{mt: "14px"}} >
+
+
   <InputLabel sx={{fontSize: '12px'}}>Организация</InputLabel>
   <Select sx={{fontSize: '12px'}}
-    //value={age}
+    value={ APP_STORAGE.reg_user.getKeyOrg() || ''}
     label="организация"
-    //onChange={handleChange}
+    onChange={(e) => {this.A(e.target.value);}}
+    
   >
-    <MenuItem sx={{fontSize: '12px'}}>ООО СЕВЕРБУРИНСТРУМЕНТ</MenuItem>
-    <MenuItem sx={{fontSize: '12px'}} >ООО СЕВЕРБУРИНСТРУМЕНТ</MenuItem>
-    <MenuItem sx={{fontSize: '12px'}} >ООО СЕВЕРБУРИНСТРУМЕНТ</MenuItem>
+     <MenuItem key={org.idd || ''} sx={{fontSize: '12px'}} value = {org.idd || ''}>{org.full_name || ''}
+     </MenuItem>
+    
   </Select>
 </FormControl>
 

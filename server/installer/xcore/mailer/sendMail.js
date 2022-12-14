@@ -43,6 +43,7 @@ exports.SendMail = void 0;
 var nodemailer_1 = __importDefault(require("nodemailer"));
 var crypto_1 = __importDefault(require("crypto"));
 var config_1 = require("../../xcore/config");
+var Users_1 = require("../dbase/Users");
 var SendMail = (function () {
     function SendMail(_args, _sess_code) {
         this.args = _args;
@@ -80,12 +81,14 @@ var SendMail = (function () {
     };
     SendMail.prototype.sendRePassword = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var a, transporter;
+            var ut, data, transporter;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        a = '';
-                        a = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + this.args.new_password).digest('hex');
+                        ut = new Users_1.UserTable(this.args, this.sess_code);
+                        return [4, ut.selectUserLoginEmail()];
+                    case 1:
+                        data = _a.sent();
                         transporter = nodemailer_1["default"].createTransport({
                             host: "smtp.yandex.ru",
                             port: 465,
@@ -99,9 +102,9 @@ var SendMail = (function () {
                                 from: 'noreplay@bvs45.ru',
                                 to: this.args.email,
                                 subject: 'Forgot password',
-                                html: 'This message was sent from bvs_server to reset your password, paste this code <b>' + a + '</b>'
+                                html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://127.0.0.1:3040/forgot_pass?code= ' + data[0].re_password_code + '">Click this link</a></h1>'
                             })];
-                    case 1:
+                    case 2:
                         _a.sent();
                         return [2];
                 }

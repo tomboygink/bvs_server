@@ -43,6 +43,7 @@ exports.UserTable = exports.UsersEntity = void 0;
 var DBase_1 = require("./DBase");
 var crypto_1 = __importDefault(require("crypto"));
 var config_1 = require("../../xcore/config");
+var DateStr_1 = require("../../xcore/dbase/DateStr");
 var UsersEntity = (function () {
     function UsersEntity() {
         this.id = 0;
@@ -159,19 +160,18 @@ var UserTable = (function () {
     };
     UserTable.prototype.changePass = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var old_pass, pass, re_pass_code, db_res, result, r;
+            var pass, re_pass_code, db_res, result, r;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        old_pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.old_password).digest('hex');
                         pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.new_password).digest('hex');
                         re_pass_code = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + pass).digest('hex');
                         return [4, this.db.query("SELECT * FROM UpdateRePassCode ('" + this.args.login + "','" + re_pass_code + "')")];
                     case 1:
                         _a.sent();
-                        return [4, this.db.query("SELECT * FROM ChangePass('" + this.sess_code + "', '" + this.args.login + "','" + pass + "','" + old_pass + "')")];
+                        return [4, this.db.query("SELECT * FROM ChangePass('" + this.args.login + "','" + pass + "')")];
                     case 2:
-                        db_res = _a.sent();
+                        _a.sent();
                         return [4, this.db.query("SELECT * FROM SelectUserBySessCode ('" + this.sess_code + "')")];
                     case 3:
                         db_res = _a.sent();
@@ -179,23 +179,25 @@ var UserTable = (function () {
                         for (r in db_res.rows) {
                             result.push(db_res.rows[r]);
                         }
-                        if (crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.new_password).digest('hex') === result[0].password) {
-                            return [2, result];
-                        }
-                        else {
-                            return [2, []];
-                        }
-                        return [2];
+                        return [2, result];
                 }
             });
         });
     };
-    UserTable.prototype.SelectUserLoginEmail = function () {
+    UserTable.prototype.selectUserLoginEmail = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var db_res, result, r;
+            var data, db_res, result, r;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT * FROM SelectUserLoginEmail ('" + this.args.login + "', '" + this.args.email + "')")];
+                    case 0:
+                        data = '';
+                        if (this.args.email !== undefined) {
+                            data = this.args.email;
+                        }
+                        if (this.args.login !== undefined) {
+                            data = this.args.login;
+                        }
+                        return [4, this.db.query("SELECT * FROM SelectUserLoginEmail ('" + data + "')")];
                     case 1:
                         db_res = _a.sent();
                         result = new Array();
@@ -209,16 +211,43 @@ var UserTable = (function () {
     };
     UserTable.prototype.forgPass = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var pass, result;
+            var pass, re_pass_code, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.new_password).digest('hex');
-                        return [4, this.db.query("SELECT * FROM ForgPass ('" + this.args.email + "','" + this.args.login + "','" + pass + "','" + this.args.code + "')")];
+                        re_pass_code = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + pass).digest('hex');
+                        return [4, this.db.query("SELECT * FROM ForgPass ('" + this.args.login + "','" + pass + "','" + re_pass_code + "')")];
                     case 1:
                         _a.sent();
                         result = new Array();
                         return [2, result];
+                }
+            });
+        });
+    };
+    UserTable.prototype.insertUser = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var pass, re_pass_code, mail_code;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.password).digest('hex');
+                        re_pass_code = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + pass).digest('hex');
+                        mail_code = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex');
+                        return [4, this.db.query("SELECT AddUser(CAST ('" + this.args.login + "' AS VARCHAR(250)), " +
+                                "CAST ('" + pass + "' AS VARCHAR(250)), CAST ('" + this.args.family + "' AS VARCHAR(150)), " +
+                                "CAST ('" + this.args.name + "' AS VARCHAR(150)), CAST ('" + this.args.father + "' AS VARCHAR(150)), " +
+                                "CAST ('" + this.args.telephone + "' AS VARCHAR(50)), CAST ('" + this.args.email + "' AS VARCHAR(150)), " +
+                                "CAST ('" + this.args.org_id + "' AS BIGINT), CAST ('" + this.args.job_title_id + "' AS )), " +
+                                "CAST ('{\"roles\":[1]}' AS JSON), CAST ('{\"user_data\":[]}' AS JSON))," +
+                                "CAST ('" + mail_code + "' AS VARCHAR(250)), CAST ('false' AS BOOLEAN))," +
+                                "CAST ('" + re_pass_code + "' AS VARCHAR(250)), CAST ('false' AS BOOLEAN))," +
+                                "CAST ('NULL' AS TIMESTAMP), CAST('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP)), " +
+                                "CAST ('" + this.args.info + "' AS TEXT)")];
+                    case 1:
+                        _a.sent();
+                        return [2];
                 }
             });
         });

@@ -23,7 +23,7 @@ export class NewOrganization extends React.Component<IProps> {
   }
 
   async AddNewOrg() {
-    APP_STORAGE.reg_user.set_Org();
+    APP_STORAGE.reg_user.set_NewOrg();
   }
 
   render(): React.ReactNode {
