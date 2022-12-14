@@ -317,7 +317,11 @@ export class ModalStorage{
     }
 
     onGetCUserData(dt: IWSResult){
-        this.setCmdErrData(dt.error); 
+        this.setCmdErrData(dt.error);
+        if(this.getCmdErrData() === null) {
+           alert('хорошо');
+           this.setModal(null)
+        }
     }
 
 }

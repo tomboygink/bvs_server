@@ -9,7 +9,7 @@ import { APP_STORAGE } from '../../../storage/AppStorage';
 
 import {ChangePassword} from './ChangePassword'
 import {ChangeUserData} from './ChangeUserData'
-
+import { Saveresult } from './saveresult';
 interface IProps{}
 
 
@@ -23,6 +23,7 @@ export class Modal extends React.Component<IProps> {
         APP_STORAGE.modal.setPersonalAccaunt(false);
         APP_STORAGE.modal.setErrr_old_pass(false);
         APP_STORAGE.modal.setError_old_message('');
+        APP_STORAGE.modal.setCmdErrData("");
         APP_STORAGE.modal.setError_pass(false);
         APP_STORAGE.modal.setError_message('')
         let user =  APP_STORAGE.auth_form.getUser();
@@ -74,6 +75,9 @@ export class Modal extends React.Component<IProps> {
             modal_date = <ChangeUserData/>} 
        else if (APP_STORAGE.modal.getModal() === 2 ) { 
             modal_date = <ChangePassword/>;}
+        if(APP_STORAGE.modal.getCmdErrData() === null){
+            modal_date = <Saveresult/>
+        }
 
       return (
       <React.Fragment>
