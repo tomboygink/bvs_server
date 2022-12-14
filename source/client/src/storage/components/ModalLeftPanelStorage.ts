@@ -178,12 +178,20 @@ export class ModalLeftPanel {
       var q:IWSQuery = new WSQuery('get_Org');
       (await WSocket.get()).send(q);
   }
+   async get_Jobs(){
+      var q:IWSQuery = new WSQuery('get_Jobs');
+   (await WSocket.get()).send(q);
+   }
+
+   async get_UserRoles() {
+      var q:IWSQuery = new WSQuery('get_Jobs');
+   (await WSocket.get()).send(q);
+   }
+
+
 
   setAllOrganization(dt: IWSResult){    //////////// Socket result cmd - set_ForgPass
   this.setOrgAll(dt.data[0]);
-  
-  let selblock = JSON.parse(JSON.stringify (this.getOrgAll()))
- 
 }
      /////проверка формы (org)
 

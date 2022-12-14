@@ -22,6 +22,9 @@ export class AppBarLeftPanel extends React.Component<IProps> {
 
   async OpenModalRegUser(e: any, tittle: string) {
     APP_STORAGE.reg_user.get_Org();
+    APP_STORAGE.reg_user.get_Jobs();
+    APP_STORAGE.reg_user.get_UserRoles()
+
     APP_STORAGE.reg_user.setTakeModal(e);
     APP_STORAGE.reg_user.setTittleModal(tittle);
     APP_STORAGE.reg_user.setModalRegUser(true);
