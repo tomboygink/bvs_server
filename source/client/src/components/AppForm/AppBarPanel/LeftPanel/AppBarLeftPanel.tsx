@@ -22,7 +22,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
   }
 
   async OpenModalRegUser(e: any, tittle: string) {
-    APP_STORAGE.reg_user.get_Org(); /// получаем все организации
+    APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
 
     APP_STORAGE.reg_user.setTakeModal(e); // идентификатор модального окна
     APP_STORAGE.reg_user.setTittleModal(tittle); // заголовок модального окна

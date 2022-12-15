@@ -174,17 +174,23 @@ export class ModalLeftPanel {
    @computed getInfOrg():string { return this.info_org}
 
 
-   async get_Org(){
+   async get_Org(name: string, value: any, _options?: any){
+      var sess_code = value;
       var q:IWSQuery = new WSQuery('get_Org');
+      q.sess_code = sess_code;
       (await WSocket.get()).send(q);
   }
-   async get_Jobs(){
+   async get_Jobs(name: string, value: any, _options?: any){
+      var sess_code = value;
       var q:IWSQuery = new WSQuery('get_Jobs');
+      q.sess_code = sess_code;
    (await WSocket.get()).send(q);
    }
 
-   async get_UserRoles() {
+   async get_UserRoles(name: string, value: any, _options?: any) {
+      var sess_code = value;
       var q:IWSQuery = new WSQuery('get_UsersRoles');
+      q.sess_code = sess_code;
    (await WSocket.get()).send(q);
    }
 

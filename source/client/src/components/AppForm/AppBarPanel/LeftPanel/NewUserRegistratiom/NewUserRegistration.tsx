@@ -32,12 +32,12 @@ export class NewUserRegistration extends React.Component<IProps> {
   }
   async SelectedOrg(a:any) {
    APP_STORAGE.reg_user.setKeyOrg(a)
-   APP_STORAGE.reg_user.get_Jobs(); // должность
-   APP_STORAGE.reg_user.get_UserRoles(); // роли
+   APP_STORAGE.reg_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
+   APP_STORAGE.reg_user.get_UserRoles("sess_id", APP_STORAGE.auth_form.getdt()); // роли
   }
 
   async OpenModalRegUser(e: any, tittle: string) {
-    APP_STORAGE.reg_user.get_Org();
+    APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());
 
     APP_STORAGE.reg_user.setTakeModal(e);
     APP_STORAGE.reg_user.setTittleModal(tittle);
