@@ -150,15 +150,26 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         case 'get_Org': {
             var orgs = new OrgsTable(q.args, q.sess_code);
             data = await orgs.selectOrgs();
+            //console.log(data)
+            wsres.code=q.sess_code;
+            wsres.error = null;
+            wsres.data = await orgs.selectOrgs();
+
             if (data.length > 0) {
                 wsres.code = q.sess_code;
                 wsres.data = data;
                 wsres.error = null;
             }
+
             else{wsres.code = q.sess_code; 
                 wsres.data = [], 
                 wsres.error = 'Организации отсутвуют'
             }
+
+            
+
+
+
         } break;
 
         //Добавление новой организации
