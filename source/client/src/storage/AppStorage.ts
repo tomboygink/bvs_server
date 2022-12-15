@@ -28,7 +28,6 @@ class AppStorage {
 
     @action setdtUser(val :any) {this.dtUser = val }
     @computed getdtUser() : any { return this.dtUser}
-
  
     constructor() {
         this.main = new PageStorage();
@@ -43,7 +42,7 @@ class AppStorage {
 
     @action async onWSData(dt: IWSResult) {
         console.log("SOCKET RESULT", dt); 
-        this.auth_form.setUserWS(dt);
+        // this.auth_form.setUserWS(dt);
         this.setdtUser(dt.data)
         switch (dt.cmd) {
             case ('get_UserByAuth'): { this.auth_form.onGetUserByAuth(dt); } break;
@@ -56,6 +55,9 @@ class AppStorage {
             default: { } break;
         }
     }
+
+
+    
 
     /**
      * Получить пользователя по коду сессии из куков (пользователь уже заходил с этого браузера)

@@ -325,7 +325,7 @@ export class ModalLeftPanel {
 
 
     async set_NewOrg(name: string, value: any, _options?: any) {
-      var sess_code = value;
+      var sess_code = value;   
       const regexp_inn = /^[0-9]+$/;
       const inn = this.getInn().match(regexp_inn);
       console.log(inn);
