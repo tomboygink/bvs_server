@@ -145,7 +145,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
         } break;
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ОРГАНИЗАЦИЙ
-        //получение организаций
+        //Получение всех организаций
         case 'get_Org': {
             var orgs = new OrgsTable(q.args, q.sess_code);
             data = await orgs.selectOrgs();
@@ -158,15 +158,16 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
 
         } break;
-
-        //case 'set_NewOrgs': {
-        case 'set_Org':{
+        //Добавление новой организации
+        case 'set_NewOrg': {
             var orgs = new OrgsTable(q.args, q.sess_code);
-            data =  await orgs.isertOrgs();
-            console.log(data[0])
-            //if(sess_data_sql.rows[0].id==0|| sess_data_sql==null|| sess_data_sql==undefined)
-            //if(data )
-            //data = await orgs.selectOrgs();
+            data = await orgs.isertOrgs();
+            
+            if(data[0].id==0|| data==null|| data==undefined)
+            {
+                wsres.data = [];
+                wsres.error = "Ошибка добавления организации"
+            }
         } break;
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЕЙ

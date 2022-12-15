@@ -72,7 +72,7 @@ var OrgsTable = (function () {
                             "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
                             "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
                             "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP)," +
-                            "CAST ('" + this.args.info + "' AS TEXT))")];
+                            "CAST ('" + this.args.info + "' AS TEXT)) as id")];
                     case 1:
                         db_res = _a.sent();
                         result = new Array();

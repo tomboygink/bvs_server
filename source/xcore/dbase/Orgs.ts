@@ -37,7 +37,7 @@ export class OrgsTable {
         "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), "+
         "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), "+
         "CAST ('" + dateTimeToSQL(new Date(Date.now())) + "' AS TIMESTAMP),"+
-        "CAST ('" + this.args.info + "' AS TEXT))");
+        "CAST ('" + this.args.info + "' AS TEXT)) as id");
         var result: OrgsEntity[] = new Array();
         for (var r in db_res.rows) {
             result.push(db_res.rows[r]);
@@ -50,7 +50,6 @@ export class OrgsTable {
         var db_res = await this.db.query("SELECT * FROM SelectOrgs()");
         var result: OrgsEntity[] = new Array();
         for (var p in db_res.rows) { result.push(db_res.rows[p]); }
-        //console.log(result);
         return result;
     }
 
