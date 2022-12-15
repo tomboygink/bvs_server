@@ -155,7 +155,6 @@ export class NewOrganization extends React.Component<IProps> {
         />
 
         <Box
-          className="wwwww"
           sx={{
             display: "flex",
             alignItems: "baseline",
@@ -177,13 +176,6 @@ export class NewOrganization extends React.Component<IProps> {
             Сохранить
           </Button>
         </Box>
-        {/* <Link 
-        href="#" 
-        variant="body2"
-        onClick={ () => { APP_STORAGE.reg_user.setModalRegUser(false)}}>
-
-        Закрыть 
-        </Link> */}
       </React.Fragment>
     );
   }
