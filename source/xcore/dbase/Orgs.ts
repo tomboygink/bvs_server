@@ -37,7 +37,7 @@ export class OrgsTable {
         "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), "+
         "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), "+
         "CAST ('" + dateTimeToSQL(new Date(Date.now())) + "' AS TIMESTAMP),"+
-        "CAST ('" + this.args.info + "' AS TEXT)) as id");
+        "CAST ('" + this.args.info + "' AS TEXT)) AS id");
         var result: OrgsEntity[] = new Array();
         for (var r in db_res.rows) {
             result.push(db_res.rows[r]);
