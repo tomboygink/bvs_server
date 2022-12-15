@@ -11,6 +11,7 @@ import { observer } from "mobx-react";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import BusinessIcon from "@mui/icons-material/Business";
+import WorkIcon from '@mui/icons-material/Work';
 
 interface IProps {}
 
@@ -21,12 +22,10 @@ export class AppBarLeftPanel extends React.Component<IProps> {
   }
 
   async OpenModalRegUser(e: any, tittle: string) {
-    APP_STORAGE.reg_user.get_Org();
-    APP_STORAGE.reg_user.get_Jobs();
-    APP_STORAGE.reg_user.get_UserRoles()
+    APP_STORAGE.reg_user.get_Org(); /// получаем все организации
 
-    APP_STORAGE.reg_user.setTakeModal(e);
-    APP_STORAGE.reg_user.setTittleModal(tittle);
+    APP_STORAGE.reg_user.setTakeModal(e); // идентификатор модального окна
+    APP_STORAGE.reg_user.setTittleModal(tittle); // заголовок модального окна
     APP_STORAGE.reg_user.setModalRegUser(true);
     APP_STORAGE.app_bar.setSetOpenAppBar(false);
   }
@@ -79,6 +78,15 @@ export class AppBarLeftPanel extends React.Component<IProps> {
               <BusinessIcon fontSize="small" />
             </ListItemIcon>
             Добавить организацию
+          </MenuItem>
+
+          <MenuItem
+            onClick={() => this.OpenModalRegUser(3, "Добавить должность")}
+          >
+            <ListItemIcon>
+              <WorkIcon fontSize="small" />
+            </ListItemIcon>
+            Добавить должность
           </MenuItem>
         </Drawer>
       </React.Fragment>

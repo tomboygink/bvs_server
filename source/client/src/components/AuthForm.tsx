@@ -82,6 +82,16 @@ export class AuthForm extends React.Component<IProps> {
                     </Button>
                         {error_alert}
                     </Box>
+                    <FormControlLabel
+                    control={
+                    <Checkbox
+                        name="checkedB"
+                        color="primary"
+                        size='small'
+                    />
+                    }
+                    label="Запомнить меня"
+                 />
                     <Grid container sx= {{mt: '12px'}}>
                    
                     <Link 

@@ -184,7 +184,7 @@ export class ModalLeftPanel {
    }
 
    async get_UserRoles() {
-      var q:IWSQuery = new WSQuery('get_Jobs');
+      var q:IWSQuery = new WSQuery('get_UsersRoles');
    (await WSocket.get()).send(q);
    }
 
