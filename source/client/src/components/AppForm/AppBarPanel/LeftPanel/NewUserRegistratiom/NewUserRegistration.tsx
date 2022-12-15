@@ -28,7 +28,7 @@ export class NewUserRegistration extends React.Component<IProps> {
   }
 
   async AddNewUser() {
-    APP_STORAGE.reg_user.set_NewUser();
+    APP_STORAGE.reg_user.set_NewUser("sess_id", APP_STORAGE.auth_form.getdt());
   }
   async SelectedOrg(a:any) {
    APP_STORAGE.reg_user.setKeyOrg(a)

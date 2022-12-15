@@ -195,8 +195,9 @@ export class ModalLeftPanel {
 }
      /////проверка формы (org)
 
-    async set_NewUser(){
+    async set_NewUser(name: string, value: any, _options?: any){
         var q:IWSQuery = new WSQuery("set_NewUser");
+        var sess_code = value;
         const regexp_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         const regexp_ph = /^((\+7|7|8)+([0-9]){10})$/;
         const email = this.getEmail().match(regexp_email);
@@ -309,15 +310,16 @@ export class ModalLeftPanel {
             repeat:this.getRepeatPassword(),
             info:this.getInfo()
          };
-        
-      (await WSocket.get()).send(q); console.log(q)
+         q.sess_code = sess_code;
+        (await WSocket.get()).send(q); console.log(q)
     
        }
     
       }
 
 
-    async set_NewOrg() {
+    async set_NewOrg(name: string, value: any, _options?: any) {
+      var sess_code = value;
       const regexp_inn = /^[0-9]+$/;
       const inn = this.getInn().match(regexp_inn);
       console.log(inn);
@@ -332,7 +334,7 @@ export class ModalLeftPanel {
      longitude: this.getLongitude(),
      info: this.getInfOrg()
   };
- 
+  q.sess_code = sess_code;
 (await WSocket.get()).send(q); console.log(q)
 
 }
