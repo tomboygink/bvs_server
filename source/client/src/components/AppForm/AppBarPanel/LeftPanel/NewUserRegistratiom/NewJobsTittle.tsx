@@ -28,14 +28,11 @@ export class NewJobsTittle extends React.Component<IProps> {
   }
 
   async AddNewUser() {
-    APP_STORAGE.reg_user.set_NewUser();
-  }
-  async SelectedOrg(a:any) {
-   APP_STORAGE.reg_user.setKeyOrg(a)
+    APP_STORAGE.reg_user.set_NewUser("sess_id", APP_STORAGE.auth_form.getdt());
   }
 
   async OpenModalRegUser(e: any, tittle: string) {
-    APP_STORAGE.reg_user.get_Org();
+    APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());
     APP_STORAGE.reg_user.setTakeModal(e);
     APP_STORAGE.reg_user.setTittleModal(tittle);
     APP_STORAGE.reg_user.setModalRegUser(true);
@@ -55,7 +52,7 @@ export class NewJobsTittle extends React.Component<IProps> {
                 sx={{fontSize: '12px'}}
                 value={ APP_STORAGE.reg_user.getKeyOrg() || ''}
                 label="организация"
-                onChange={(e) => {this.SelectedOrg(e.target.value);}}
+               
               >
                 <MenuItem 
                 key={org.idd || ''} 

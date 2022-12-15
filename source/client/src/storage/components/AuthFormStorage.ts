@@ -158,6 +158,7 @@ export class AuthFormStorage{
         }
     }
 
+    
     setUserWS(dt: IWSResult){
         if(dt.error !== null && dt.error.trim() !== ''){}
         var data:UsersEntity[] = new Array();
