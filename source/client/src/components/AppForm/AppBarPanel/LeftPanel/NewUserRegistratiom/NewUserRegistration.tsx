@@ -31,6 +31,8 @@ export class NewUserRegistration extends React.Component<IProps> {
     APP_STORAGE.reg_user.set_NewUser("sess_id", APP_STORAGE.auth_form.getdt());
   }
   async SelectedOrg(a:any) {
+    alert('yutytyr')
+  console.log(a)
    APP_STORAGE.reg_user.setKeyOrg(a)
    APP_STORAGE.reg_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
    APP_STORAGE.reg_user.get_UserRoles("sess_id", APP_STORAGE.auth_form.getdt()); // роли
@@ -152,7 +154,7 @@ export class NewUserRegistration extends React.Component<IProps> {
         <InputLabel sx={{fontSize: '12px'}}>Организация</InputLabel>
             <Select 
                 sx={{fontSize: '12px'}}
-                value={ APP_STORAGE.reg_user.getKeyOrg() || ''}
+                value= '1123'
                 label="организация"
                 onChange={(e) => {this.SelectedOrg(e.target.value);}}
               >
