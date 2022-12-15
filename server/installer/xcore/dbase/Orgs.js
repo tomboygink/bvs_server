@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.OrgsTable = exports.OrgsEntity = void 0;
 var DBase_1 = require("./DBase");
+var DateStr_1 = require("../../xcore/dbase/DateStr");
 var OrgsEntity = (function () {
     function OrgsEntity() {
         this.id = 0;
@@ -61,13 +62,23 @@ var OrgsTable = (function () {
     }
     OrgsTable.prototype.isertOrgs = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var result;
+            var db_res, result, r;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT AddOrgs()")];
+                    case 0: return [4, this.db.query("SELECT AddOrgs(CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
+                            "CAST ('" + this.args.full_name + "' AS VARCHAR(400)), " +
+                            "CAST ('" + this.args.inn + "' AS VARCHAR(50)), " +
+                            "CAST ('" + this.args.address + "' AS VARCHAR(400)), " +
+                            "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
+                            "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
+                            "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP)," +
+                            "CAST ('" + this.args.info + "' AS TEXT))")];
                     case 1:
-                        _a.sent();
+                        db_res = _a.sent();
                         result = new Array();
+                        for (r in db_res.rows) {
+                            result.push(db_res.rows[r]);
+                        }
                         return [2, result];
                 }
             });

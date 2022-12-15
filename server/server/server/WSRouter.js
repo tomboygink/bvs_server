@@ -66,7 +66,7 @@ function WSRoute(_ws, q) {
                         case 'set_ForgPass': return [3, 18];
                         case 'set_SaveNewPass': return [3, 20];
                         case 'get_Org': return [3, 22];
-                        case 'set_Org': return [3, 24];
+                        case 'set_NewOrg': return [3, 24];
                         case 'set_NewUser': return [3, 26];
                         case 'deleteCookie': return [3, 28];
                     }
@@ -229,7 +229,10 @@ function WSRoute(_ws, q) {
                     return [4, orgs.isertOrgs()];
                 case 25:
                     data = _c.sent();
-                    console.log(data[0]);
+                    if (data[0].id == 0 || data == null || data == undefined) {
+                        wsres.data = [];
+                        wsres.error = "Ошибка добавления организации";
+                    }
                     return [3, 30];
                 case 26:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
