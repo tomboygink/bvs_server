@@ -144,6 +144,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 ut.forgPass();
             }
         } break;
+       
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ОРГАНИЗАЦИЙ
         //Получение всех организаций
         case 'get_Org': {
@@ -154,19 +155,27 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.data = data;
                 wsres.error = null;
             }
-            else{wsres.code = q.sess_code; wsres.data = [], wsres.error = 'Организации отсутвуют'}
-
-
+            else{wsres.code = q.sess_code; 
+                wsres.data = [], 
+                wsres.error = 'Организации отсутвуют'
+            }
         } break;
+
         //Добавление новой организации
         case 'set_NewOrg': {
             var orgs = new OrgsTable(q.args, q.sess_code);
             data = await orgs.isertOrgs();
-            
             if(data[0].id==0|| data==null|| data==undefined)
             {
+                wsres.code = q.sess_code;
                 wsres.data = [];
                 wsres.error = "Ошибка добавления организации"
+            }
+            else {
+                data = await orgs.selectOrgs();
+                wsres.code = q.sess_code;
+                wsres.data = data;
+                wsres.error = null;
             }
         } break;
 

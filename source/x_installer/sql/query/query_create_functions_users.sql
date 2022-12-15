@@ -243,12 +243,14 @@ CREATE OR REPLACE FUNCTION AddOrgs(
 	c_longitude VARCHAR(60),
 	c_created_at TIMESTAMP,
 	c_info TEXT)
-RETURNS VOID
+RETURNS BIGINT
 AS $$
 	INSERT INTO orgs (name, full_name, inn, address, latitude, longitude, created_at, info)
 	VALUES (c_name, c_full_name, c_inn, c_address, c_latitude, c_longitude, c_created_at, c_info)
+	RETURNING id
 $$
-LANGUAGE SQL;
+LANGUAGE SQL
+
 
 --------------------------------------------------------------------------------------------Функция получения всех организаций
 DROP FUNCTION IF EXISTS SelectOrgs;
