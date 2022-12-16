@@ -137,7 +137,6 @@ export class ChangeUserData extends React.Component<IProps> {
             checked={APP_STORAGE.auth_form.getUser().act_mail}
             id="myCheck"
             color="success"
-            //onChange = { () => {this.confirmEmail}}
             inputProps={{ "aria-label": "controlled" }}
           />
         </Box>

@@ -11,13 +11,19 @@ import {
   Select,
   MenuItem,
   FormControl,
-  InputLabel
+  InputLabel,
+  Checkbox
 } from "@mui/material";
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import Stack from '@mui/material/Stack';
 
 import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import AddIcon from '@mui/icons-material/Add';
+import {AntSwitch} from './switch'
 
 interface IProps {}
 
@@ -31,10 +37,19 @@ export class NewUserRegistration extends React.Component<IProps> {
     APP_STORAGE.reg_user.set_NewUser("sess_id", APP_STORAGE.auth_form.getdt());
   }
 
+  async ChekedForEdit (editing:any) {
+   alert(editing.target.checked)
+   APP_STORAGE.reg_user.setCheckboxEd(editing.target.checked)
+  }
+
+  async ChekedForRead (readind:any) {
+    alert(readind.target.checked)
+    APP_STORAGE.reg_user.setCheckboxRead(readind.target.checked)
+   }
+
   async SelectedOrg(a:any) {
    APP_STORAGE.reg_user.setKeyOrg(a)
    APP_STORAGE.reg_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
-   APP_STORAGE.reg_user.get_UserRoles("sess_id", APP_STORAGE.auth_form.getdt()); // роли
   }
 
   async OpenModalRegUser(e: any, tittle: string) {
@@ -171,16 +186,14 @@ export class NewUserRegistration extends React.Component<IProps> {
         </FormHelperText>
 
         <FormControl fullWidth size="small" sx={{mt: "14px"}} >
-        <InputLabel sx={{fontSize: '12px'}}>Организация</InputLabel>
+        <InputLabel className="org" sx={{fontSize: '12px'}}>Организация</InputLabel>
             <Select 
                 sx={{fontSize: '12px'}}
                 value={APP_STORAGE.reg_user.getKeyOrg() || ''}
                 label="организация"
                 onChange={(e) => {this.SelectedOrg(e.target.value)}}
-              >
-             
+              > 
             {options}
-
             <Divider />
 
              <Box 
@@ -218,27 +231,6 @@ export class NewUserRegistration extends React.Component<IProps> {
             </Select>
         </FormControl>
 
-        <FormControl fullWidth size="small" sx={{mt: "14px", background: '#F1F5FC'}} >
-        <InputLabel sx={{fontSize: '12px'}}>Группы доступа</InputLabel>
-            <Select 
-                sx={{fontSize: '12px'}}
-                value={ APP_STORAGE.reg_user.getKeyOrg() || ''}
-                label="группы доступа"
-                
-              >
-            <MenuItem  
-                sx={{fontSize: '12px'}} 
-                value = "1">разрешить редактирование
-            </MenuItem> 
-
-              <MenuItem 
-                sx={{fontSize: '12px'}} 
-                value = "2"> только чтение
-            </MenuItem>   
-            </Select>
-        </FormControl>
-
-
         <TextField
           sx={{ mt: "14px" }}
           inputProps={{ style: { fontSize: 12 } }} // font size of input text
@@ -257,7 +249,7 @@ export class NewUserRegistration extends React.Component<IProps> {
           }}
           value={APP_STORAGE.reg_user.getLogin()}
         />
-
+<form> 
 
         <TextField
           sx={{ mt: "14px" }}
@@ -303,8 +295,47 @@ export class NewUserRegistration extends React.Component<IProps> {
           value={APP_STORAGE.reg_user.getRepeatPassword()}
         />
 
-
+</form>
         <Divider sx={{ padding: "12px" }} />
+             
+              <FormControl fullWidth size="small" sx={{mt: "14px", background: '#F1F5FC'}} >
+        <InputLabel sx={{fontSize: '12px'}}>Группы доступа</InputLabel>
+            <Select 
+                sx={{fontSize: '12px'}}
+                value={ APP_STORAGE.reg_user.getKeyOrg() || ''}
+                label="группы доступа"
+                
+              >
+            <MenuItem  
+                sx={{fontSize: '12px'}} 
+                value = "1">разрешить редактирование
+            </MenuItem> 
+
+              <MenuItem 
+                sx={{fontSize: '12px'}} 
+                value = "2"> только чтение
+            </MenuItem>   
+            </Select>
+        </FormControl>
+       
+        <FormGroup>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Typography sx={{ ml: "12px" }}>Разрешить редактирование:</Typography>
+        <AntSwitch 
+        checked = {APP_STORAGE.reg_user.getCheckboxEd()}
+        onChange={(editing) => {this.ChekedForEdit(editing)}} />
+      </Stack>
+    
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Typography sx={{ ml: "12px" }}>Только чтение:</Typography>
+        <AntSwitch 
+        checked = {APP_STORAGE.reg_user.getCheckboxRead()}
+        onChange={(readind) => {this.ChekedForRead(readind)}}  />
+      </Stack>
+       
+    </FormGroup>
+
+
         <Typography sx={{ color: "#999999" }} variant="caption">
           Информация:
         </Typography>

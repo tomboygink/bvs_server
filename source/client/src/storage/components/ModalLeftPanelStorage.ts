@@ -11,6 +11,8 @@ export class ModalLeftPanel {
 
    @observable organization: Array<string> = [];
    @observable key: any = null;
+   @observable checkbox_editing: boolean = false; /// разрешить редактирование пользователю
+   @observable checkbox_reading : boolean = false; /// только чтение 
     
 /////////////////////регистрация пользователя
  
@@ -61,6 +63,12 @@ export class ModalLeftPanel {
         makeAutoObservable(this)
         Map<string, string>
     }
+
+   @action setCheckboxEd(val:boolean) {this.checkbox_editing = val}
+   @action getCheckboxEd():boolean {return this.checkbox_editing}
+
+   @action setCheckboxRead(val:boolean) {this.checkbox_reading = val}
+   @action getCheckboxRead():boolean {return this.checkbox_reading}
 
     @action setKeyOrg(val:any){this.key = val}  
     @computed getKeyOrg():any { return this.key}
@@ -183,17 +191,12 @@ export class ModalLeftPanel {
    async get_Jobs(name: string, value: any, _options?: any){
       var sess_code = value;
       var q:IWSQuery = new WSQuery('get_Jobs');
+      q.args = { 
+         id_org: this.getKeyOrg() || ''
+      };
       q.sess_code = sess_code;
    (await WSocket.get()).send(q);
    }
-
-   async get_UserRoles(name: string, value: any, _options?: any) {
-      var sess_code = value;
-      var q:IWSQuery = new WSQuery('get_UsersRoles');
-      q.sess_code = sess_code;
-   (await WSocket.get()).send(q);
-   }
-
 
 
   setAllOrganization(dt: IWSResult){    //////////// Socket result cmd - set_ForgPass
