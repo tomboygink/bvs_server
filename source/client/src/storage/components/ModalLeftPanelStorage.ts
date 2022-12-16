@@ -197,7 +197,7 @@ export class ModalLeftPanel {
 
 
   setAllOrganization(dt: IWSResult){    //////////// Socket result cmd - set_ForgPass
-  this.setOrgAll(dt.data[0]);
+  this.setOrgAll(dt.data);
 }
      /////проверка формы (org)
 
@@ -332,13 +332,13 @@ export class ModalLeftPanel {
       var q:IWSQuery = new WSQuery("set_NewOrg");
       if (this.getFullNameOrg() && this.getNameOrg() && this.getInn() && this.getAddress()) {
  q.args = { 
-     name: this.getNameOrg(),
-     full_name: this.getFullNameOrg(),
-     inn: this.getInn(),
-     address:this.getAddress(),
-     latitude: this.getLatitude(),
-     longitude: this.getLongitude(),
-     info: this.getInfOrg()
+     name: this.getNameOrg() || '',
+     full_name: this.getFullNameOrg() || '',
+     inn: this.getInn() || '',
+     address:this.getAddress() || '',
+     latitude: this.getLatitude() || '',
+     longitude: this.getLongitude() || '',
+     info: this.getInfOrg() || ''
   };
   q.sess_code = sess_code;
 (await WSocket.get()).send(q); console.log(q)

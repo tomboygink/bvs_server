@@ -30,9 +30,8 @@ export class NewUserRegistration extends React.Component<IProps> {
   async AddNewUser() {
     APP_STORAGE.reg_user.set_NewUser("sess_id", APP_STORAGE.auth_form.getdt());
   }
+
   async SelectedOrg(a:any) {
-    alert('yutytyr')
-  console.log(a)
    APP_STORAGE.reg_user.setKeyOrg(a)
    APP_STORAGE.reg_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
    APP_STORAGE.reg_user.get_UserRoles("sess_id", APP_STORAGE.auth_form.getdt()); // роли
@@ -48,8 +47,29 @@ export class NewUserRegistration extends React.Component<IProps> {
   }
   
   render(): React.ReactNode {
-  let org = JSON.parse(JSON.stringify (APP_STORAGE.reg_user.getOrgAll()))
-  var options:React.ReactNode = <></>;
+    let org = null;
+    if(APP_STORAGE.reg_user.getOrgAll()){
+      org = JSON.parse(JSON.stringify (APP_STORAGE.reg_user.getOrgAll()))
+    }
+  console.log(org[0])
+  var options = [];
+  
+  for (var key in org) {
+    if (org.hasOwnProperty(key)) {
+       let a = org[key]
+
+           options.push(
+            
+                <MenuItem 
+                key={a.id || ''} 
+                sx={{fontSize: '12px'}}
+                value={a.id || ''}
+                >
+                {a.full_name}
+            </MenuItem>
+              );
+    }
+  }
 
     return (
       <React.Fragment>
@@ -154,15 +174,13 @@ export class NewUserRegistration extends React.Component<IProps> {
         <InputLabel sx={{fontSize: '12px'}}>Организация</InputLabel>
             <Select 
                 sx={{fontSize: '12px'}}
-                value= '1123'
+                value={APP_STORAGE.reg_user.getKeyOrg() || ''}
                 label="организация"
-                onChange={(e) => {this.SelectedOrg(e.target.value);}}
+                onChange={(e) => {this.SelectedOrg(e.target.value)}}
               >
-                <MenuItem 
-                key={org.idd || ''} 
-                sx={{fontSize: '12px'}} 
-                value = {org.idd || ''}>{org.full_name || ''}
-            </MenuItem> 
+             
+            {options}
+
             <Divider />
 
              <Box 
@@ -174,6 +192,7 @@ export class NewUserRegistration extends React.Component<IProps> {
              </Box>  
             </Select>
         </FormControl>
+
 
         <FormControl fullWidth size="small" sx={{mt: "14px"}} >
         <InputLabel sx={{fontSize: '12px'}}>Должность</InputLabel>

@@ -164,7 +164,7 @@ export class AuthFormStorage{
         var data:UsersEntity[] = new Array();
         for(var key in dt.data) data.push( dt.data[key] );
 
-        if(data.length > 0){
+        if(data.length > 0 && dt.cmd){
             if(data[0].id > 0){
                 // СОХРАНИТЬ ПОЛЬЗОВАТЕЛЯ В ХРАНИЛИЩЕ ДАННЫХ КАК ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ СИСТЕМЫ !!!!!!!
                 setCookie('sess_id', dt.code);
