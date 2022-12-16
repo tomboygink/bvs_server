@@ -265,7 +265,17 @@ function WSRoute(_ws, q) {
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, ut.insertUser()];
                 case 32:
-                    _c.sent();
+                    data = _c.sent();
+                    if (data[0].id == 0 || data == null || data == undefined) {
+                        wsres.code = q.sess_code;
+                        wsres.data = [];
+                        wsres.error = "Ошибка добавления пользователя";
+                    }
+                    else {
+                        wsres.code = q.sess_code;
+                        wsres.data = [];
+                        wsres.error = null;
+                    }
                     return [3, 35];
                 case 33:
                     {
