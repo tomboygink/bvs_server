@@ -29,7 +29,7 @@ export class OrgsTable {
     }
 
     //Добавление организации
-    async isertOrgs(): Promise<OrgsEntity[]> {
+    async insertOrgs(): Promise<OrgsEntity[]> {
         var db_res = await this.db.query("SELECT AddOrgs(CAST ('" + this.args.name + "' AS VARCHAR(250)), "+
         "CAST ('" + this.args.full_name + "' AS VARCHAR(400)), "+
         "CAST ('" + this.args.inn + "' AS VARCHAR(50)), "+

@@ -44,14 +44,15 @@ var WSQuery_1 = require("../xcore/WSQuery");
 var Sessions_1 = require("../xcore/dbase/Sessions");
 var Users_1 = require("../xcore/dbase/Users");
 var Orgs_1 = require("../xcore/dbase/Orgs");
+var Jobs_titles_1 = require("../xcore/dbase/Jobs_titles");
 var sendMail_1 = require("../xcore/mailer/sendMail");
 var crypto_1 = __importDefault(require("crypto"));
 var config_1 = require("../xcore/config");
 function WSRoute(_ws, q) {
     return __awaiter(this, void 0, void 0, function () {
-        var wsres, sess_code, data, _a, st, ut, code, ut, st, old_pass, pass, sendMail, _b, orgs, _c, orgs, ut;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        var wsres, sess_code, data, _a, st, ut, code, ut, st, old_pass, pass, sendMail, _b, orgs, orgs, jobs, ut;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
                     wsres = new WSQuery_1.WSResult(q.cmd);
                     console.log(q);
@@ -66,20 +67,21 @@ function WSRoute(_ws, q) {
                         case 'set_ForgPass': return [3, 18];
                         case 'set_SaveNewPass': return [3, 20];
                         case 'get_Org': return [3, 22];
-                        case 'set_NewOrg': return [3, 25];
-                        case 'set_NewUser': return [3, 30];
-                        case 'deleteCookie': return [3, 32];
+                        case 'set_NewOrg': return [3, 24];
+                        case 'get_Jobs': return [3, 29];
+                        case 'set_NewUser': return [3, 31];
+                        case 'deleteCookie': return [3, 33];
                     }
-                    return [3, 33];
+                    return [3, 34];
                 case 1:
                     st = new Sessions_1.SessionsTable(q.args);
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, st.selectSessCode()];
                 case 2:
-                    code = _d.sent();
+                    code = _c.sent();
                     return [4, ut.selectUserBySessCode()];
                 case 3:
-                    data = _d.sent();
+                    data = _c.sent();
                     if (code[0] == undefined) {
                         wsres.error = "Данного кода сессии не существует";
                     }
@@ -88,16 +90,16 @@ function WSRoute(_ws, q) {
                         wsres.code = sess_code;
                         wsres.data = data;
                     }
-                    return [3, 34];
+                    return [3, 35];
                 case 4:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     st = new Sessions_1.SessionsTable(q.args);
                     return [4, st.insertSess()];
                 case 5:
-                    sess_code = _d.sent();
+                    sess_code = _c.sent();
                     return [4, ut.selectUser()];
                 case 6:
-                    data = _d.sent();
+                    data = _c.sent();
                     if (sess_code === '' && data[0] === undefined) {
                         wsres.error = "Пользователя не существует или введены не верные данные";
                     }
@@ -105,12 +107,12 @@ function WSRoute(_ws, q) {
                         wsres.code = sess_code;
                         wsres.data = data;
                     }
-                    return [3, 34];
+                    return [3, 35];
                 case 7:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, ut.updateUser()];
                 case 8:
-                    data = _d.sent();
+                    data = _c.sent();
                     if (data[0] === undefined) {
                         wsres.error = "Пользователя не существует";
                     }
@@ -118,39 +120,39 @@ function WSRoute(_ws, q) {
                         wsres.data = data;
                         wsres.code = q.sess_code;
                     }
-                    return [3, 34];
+                    return [3, 35];
                 case 9:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, ut.selectUserLoginEmail()];
                 case 10:
-                    data = _d.sent();
+                    data = _c.sent();
                     old_pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(q.args.old_password).digest('hex');
                     pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(q.args.new_password).digest('hex');
                     if (data[0].password === pass) {
                         wsres.error = 'Новый пароль не должен повторять старый';
                         wsres.data = [];
                         wsres.code = q.sess_code;
-                        return [3, 34];
+                        return [3, 35];
                     }
                     if (q.args.login === q.args.new_password) {
                         wsres.error = 'Пароль не должен совпадать с логином';
                         wsres.data = [];
                         wsres.code = q.sess_code;
-                        return [3, 34];
+                        return [3, 35];
                     }
                     if (data[0].password !== old_pass) {
                         wsres.error = 'Старый пароль не верен';
                         wsres.code = q.sess_code;
                         wsres.data = [];
-                        return [3, 34];
+                        return [3, 35];
                     }
                     return [4, ut.changePass()];
                 case 11:
-                    data = _d.sent();
+                    data = _c.sent();
                     wsres.data = data;
                     wsres.code = q.sess_code;
                     wsres.error = null;
-                    return [3, 34];
+                    return [3, 35];
                 case 12:
                     {
                         if (q.args.email !== '') {
@@ -161,12 +163,12 @@ function WSRoute(_ws, q) {
                             wsres.error = "Введите email";
                         }
                     }
-                    return [3, 34];
+                    return [3, 35];
                 case 13:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, ut.updateMail()];
                 case 14:
-                    data = _d.sent();
+                    data = _c.sent();
                     if (!(data[0] === undefined)) return [3, 15];
                     wsres.error = "Введен неверный код";
                     return [3, 17];
@@ -174,16 +176,16 @@ function WSRoute(_ws, q) {
                     _b = wsres;
                     return [4, ut.updateMail()];
                 case 16:
-                    _b.data = _d.sent();
+                    _b.data = _c.sent();
                     wsres.code = q.sess_code;
-                    _d.label = 17;
-                case 17: return [3, 34];
+                    _c.label = 17;
+                case 17: return [3, 35];
                 case 18:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     sendMail = new sendMail_1.SendMail(q.args, q.sess_code);
                     return [4, ut.selectUserLoginEmail()];
                 case 19:
-                    data = _d.sent();
+                    data = _c.sent();
                     if (data[0] == undefined) {
                         wsres.error = 'Такого email не существует, проверте введенные данные или обратитесть к администратору системы';
                     }
@@ -195,12 +197,12 @@ function WSRoute(_ws, q) {
                             wsres.error = 'Данный email не был подтвержден, обращайтесь к администратору системы';
                         }
                     }
-                    return [3, 34];
+                    return [3, 35];
                 case 20:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, ut.selectUserLoginEmail()];
                 case 21:
-                    data = _d.sent();
+                    data = _c.sent();
                     if (q.args.code !== data[0].re_password_code) {
                         wsres.error = 'Код подтверждения неверен, проверте правильность введеного кода';
                     }
@@ -208,67 +210,77 @@ function WSRoute(_ws, q) {
                         ut = new Users_1.UserTable(q.args, q.sess_code);
                         ut.forgPass();
                     }
-                    return [3, 34];
+                    return [3, 35];
                 case 22:
                     orgs = new Orgs_1.OrgsTable(q.args, q.sess_code);
                     return [4, orgs.selectOrgs()];
                 case 23:
-                    data = _d.sent();
-                    wsres.code = q.sess_code;
-                    wsres.error = null;
-                    _c = wsres;
-                    return [4, orgs.selectOrgs()];
-                case 24:
-                    _c.data = _d.sent();
+                    data = _c.sent();
                     if (data.length > 0) {
                         wsres.code = q.sess_code;
-                        wsres.data = data;
                         wsres.error = null;
+                        wsres.data = data;
                     }
                     else {
                         wsres.code = q.sess_code;
                         wsres.data = [],
                             wsres.error = 'Организации отсутвуют';
                     }
-                    return [3, 34];
-                case 25:
+                    return [3, 35];
+                case 24:
                     orgs = new Orgs_1.OrgsTable(q.args, q.sess_code);
-                    return [4, orgs.isertOrgs()];
-                case 26:
-                    data = _d.sent();
-                    if (!(data[0].id == 0 || data == null || data == undefined)) return [3, 27];
+                    return [4, orgs.insertOrgs()];
+                case 25:
+                    data = _c.sent();
+                    if (!(data[0].id == 0 || data == null || data == undefined)) return [3, 26];
                     wsres.code = q.sess_code;
                     wsres.data = [];
                     wsres.error = "Ошибка добавления организации";
-                    return [3, 29];
-                case 27: return [4, orgs.selectOrgs()];
-                case 28:
-                    data = _d.sent();
+                    return [3, 28];
+                case 26: return [4, orgs.selectOrgs()];
+                case 27:
+                    data = _c.sent();
                     wsres.code = q.sess_code;
                     wsres.data = data;
                     wsres.error = null;
-                    _d.label = 29;
-                case 29: return [3, 34];
+                    _c.label = 28;
+                case 28: return [3, 35];
+                case 29:
+                    jobs = new Jobs_titles_1.Jobs_titlesTable(q.args, q.sess_code);
+                    return [4, jobs.selectJobs_title()];
                 case 30:
+                    data = _c.sent();
+                    if (data.length > 0) {
+                        wsres.code = q.sess_code;
+                        wsres.error = null;
+                        wsres.data = data;
+                    }
+                    else {
+                        wsres.code = q.sess_code;
+                        wsres.data = [],
+                            wsres.error = 'У организации отсутствуют должности';
+                    }
+                    return [3, 35];
+                case 31:
                     ut = new Users_1.UserTable(q.args, q.sess_code);
                     return [4, ut.insertUser()];
-                case 31:
-                    _d.sent();
-                    return [3, 34];
                 case 32:
+                    _c.sent();
+                    return [3, 35];
+                case 33:
                     {
                         st = new Sessions_1.SessionsTable(q.args);
                         st.deleteSess();
                         wsres.code = '';
                         wsres.data = [];
                     }
-                    return [3, 34];
-                case 33:
+                    return [3, 35];
+                case 34:
                     {
                         wsres.error = "\u041A\u043E\u043C\u0430\u043D\u0434\u0430 \"".concat(q.cmd, "\" \u043D\u0435 \u0440\u0430\u0441\u043F\u043E\u0437\u043D\u0430\u043D\u0430");
                     }
-                    return [3, 34];
-                case 34:
+                    return [3, 35];
+                case 35:
                     _ws.send((0, WSQuery_1.WSStr)(wsres));
                     return [2];
             }

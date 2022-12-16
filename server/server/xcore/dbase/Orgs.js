@@ -60,7 +60,7 @@ var OrgsTable = (function () {
         this.args = _args;
         this.sess_code = _sess_code;
     }
-    OrgsTable.prototype.isertOrgs = function () {
+    OrgsTable.prototype.insertOrgs = function () {
         return __awaiter(this, void 0, void 0, function () {
             var db_res, result, r;
             return __generator(this, function (_a) {
