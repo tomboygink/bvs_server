@@ -201,7 +201,18 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЕЙ
         case 'set_NewUser': {
             var ut = new UserTable(q.args, q.sess_code);
-            await ut.insertUser();
+            data = await ut.insertUser();
+            if(data[0].id==0|| data==null|| data==undefined)
+            {
+                wsres.code = q.sess_code;
+                wsres.data = [];
+                wsres.error = "Ошибка добавления пользователя"
+            }
+            else {
+                wsres.code = q.sess_code;
+                wsres.data = [];
+                wsres.error = null;
+            }
 
         } break;
 

@@ -228,26 +228,43 @@ var UserTable = (function () {
     };
     UserTable.prototype.insertUser = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var pass, re_pass_code, mail_code;
+            var pass, re_pass_code, mail_code, access, db_res, result, p;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.password).digest('hex');
                         re_pass_code = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + pass).digest('hex');
                         mail_code = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex');
+                        access = '';
+                        if (this.args.users_r === false && this.args.users_w === false) {
+                            access = '{\"roles\":[1]}';
+                        }
+                        if (this.args.users_r === true && this.args.users_w === false) {
+                            access = '{\"roles\":[1]}';
+                        }
+                        if (this.args.users_r === false && this.args.users_w === true) {
+                            access = '{\"roles\":[1,2]}';
+                        }
+                        if (this.args.users_r === true && this.args.users_w === true) {
+                            access = '{\"roles\":[1,2]}';
+                        }
                         return [4, this.db.query("SELECT AddUser(CAST ('" + this.args.login + "' AS VARCHAR(250)), " +
                                 "CAST ('" + pass + "' AS VARCHAR(250)), CAST ('" + this.args.family + "' AS VARCHAR(150)), " +
                                 "CAST ('" + this.args.name + "' AS VARCHAR(150)), CAST ('" + this.args.father + "' AS VARCHAR(150)), " +
                                 "CAST ('" + this.args.telephone + "' AS VARCHAR(50)), CAST ('" + this.args.email + "' AS VARCHAR(150)), " +
-                                "CAST ('" + this.args.org_id + "' AS BIGINT), CAST ('" + this.args.job_title_id + "' AS )), " +
-                                "CAST ('{\"roles\":[1]}' AS JSON), CAST ('{\"user_data\":[]}' AS JSON))," +
-                                "CAST ('" + mail_code + "' AS VARCHAR(250)), CAST ('false' AS BOOLEAN))," +
-                                "CAST ('" + re_pass_code + "' AS VARCHAR(250)), CAST ('false' AS BOOLEAN))," +
-                                "CAST ('NULL' AS TIMESTAMP), CAST('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP)), " +
-                                "CAST ('" + this.args.info + "' AS TEXT)")];
+                                "CAST ('" + this.args.id_org + "' AS BIGINT), CAST ('" + this.args.id_job + "' AS BIGINT), " +
+                                "CAST ('" + access + "' AS JSON), CAST ('{\"user_data\":[]}' AS JSON)," +
+                                "CAST ('" + mail_code + "' AS VARCHAR(250)), CAST ('false' AS BOOLEAN)," +
+                                "CAST ('" + re_pass_code + "' AS VARCHAR(250)), CAST ('false' AS BOOLEAN)," +
+                                "CAST (null AS TIMESTAMP), CAST('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP), " +
+                                "CAST ('" + this.args.info + "' AS TEXT)) as id")];
                     case 1:
-                        _a.sent();
-                        return [2];
+                        db_res = _a.sent();
+                        result = new Array();
+                        for (p in db_res.rows) {
+                            result.push(db_res.rows[p]);
+                        }
+                        return [2, result];
                 }
             });
         });

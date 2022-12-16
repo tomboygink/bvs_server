@@ -155,22 +155,43 @@ export class UserTable {
     }
 
     //Добавление нового пользователя 
-    async insertUser() {
+    async insertUser(): Promise<UsersEntity[]> {
         var pass = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.password).digest('hex');
         var re_pass_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + pass).digest('hex');
         var mail_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex');
-
-        await this.db.query("SELECT AddUser(CAST ('" + this.args.login + "' AS VARCHAR(250)), " +
-            "CAST ('" + pass + "' AS VARCHAR(250)), CAST ('" + this.args.family + "' AS VARCHAR(150)), " +
-            "CAST ('" + this.args.name + "' AS VARCHAR(150)), CAST ('" + this.args.father + "' AS VARCHAR(150)), " +
-            "CAST ('" + this.args.telephone + "' AS VARCHAR(50)), CAST ('" + this.args.email + "' AS VARCHAR(150)), " +
-            "CAST ('" + this.args.org_id + "' AS BIGINT), CAST ('" + this.args.job_title_id + "' AS )), " +
-            "CAST ('{\"roles\":[1]}' AS JSON), CAST ('{\"user_data\":[]}' AS JSON))," +
-            "CAST ('" + mail_code + "' AS VARCHAR(250)), CAST ('false' AS BOOLEAN))," +
-            "CAST ('" + re_pass_code + "' AS VARCHAR(250)), CAST ('false' AS BOOLEAN))," +
-            "CAST ('NULL' AS TIMESTAMP), CAST('" + dateTimeToSQL(new Date(Date.now())) + "' AS TIMESTAMP)), " +
-            "CAST ('" + this.args.info + "' AS TEXT)");
-
+        var access = '';
+        //users_r = 1
+        //users_w = 2
+        if(this.args.users_r === false && this.args.users_w === false)
+        {
+            access = '{\"roles\":[1]}';
+        }
+        if(this.args.users_r === true && this.args.users_w === false)
+        {
+            access = '{\"roles\":[1]}';
+        }
+        if(this.args.users_r === false && this.args.users_w === true)
+        {
+            access = '{\"roles\":[1,2]}';
+        }
+        if(this.args.users_r === true && this.args.users_w === true)
+        {
+            access = '{\"roles\":[1,2]}';
+        }
+        
+        var db_res = await this.db.query("SELECT AddUser(CAST ('" + this.args.login + "' AS VARCHAR(250)), " +
+        "CAST ('" + pass + "' AS VARCHAR(250)), CAST ('" + this.args.family + "' AS VARCHAR(150)), " +
+        "CAST ('" + this.args.name + "' AS VARCHAR(150)), CAST ('" + this.args.father + "' AS VARCHAR(150)), " +
+        "CAST ('" + this.args.telephone + "' AS VARCHAR(50)), CAST ('" + this.args.email + "' AS VARCHAR(150)), " +
+        "CAST ('" + this.args.id_org + "' AS BIGINT), CAST ('" + this.args.id_job + "' AS BIGINT), " +
+        "CAST ('"+access+"' AS JSON), CAST ('{\"user_data\":[]}' AS JSON)," +
+        "CAST ('" + mail_code + "' AS VARCHAR(250)), CAST ('false' AS BOOLEAN)," +
+        "CAST ('" + re_pass_code + "' AS VARCHAR(250)), CAST ('false' AS BOOLEAN)," +
+        "CAST (null AS TIMESTAMP), CAST('" + dateTimeToSQL(new Date(Date.now())) + "' AS TIMESTAMP), " +
+        "CAST ('" + this.args.info + "' AS TEXT)) as id");
+        var result: UsersEntity[] = new Array();
+        for (var p in db_res.rows) { result.push(db_res.rows[p]); }
+        return result;
     }
 
 }

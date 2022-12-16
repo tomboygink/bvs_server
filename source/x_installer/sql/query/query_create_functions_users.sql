@@ -20,13 +20,13 @@ CREATE OR REPLACE FUNCTION AddUser
     c_deleted_date TIMESTAMP, 
     c_created_at TIMESTAMP, 
     c_info TEXT
-) RETURNS VOID AS $$
-BEGIN 
+) RETURNS BIGINT 
+AS $$
     INSERT INTO users(login, password, family, name, father, telephone, email, org_id, job_title_id, roles_ids, user_data, mail_code, act_mail, re_password_code, deleted, deleted_date, created_at, info)
-    VALUES(c_login, c_password, c_family, c_name, c_father, c_telephone, c_email, c_org_id, c_job_title_id, c_roles_ids, c_user_data, c_mail_code, c_act_mail, c_re_password_code, c_deleted, c_deleted_date, c_created_at, c_info);
-END
+    VALUES(c_login, c_password, c_family, c_name, c_father, c_telephone, c_email, c_org_id, c_job_title_id, c_roles_ids, c_user_data, c_mail_code, c_act_mail, c_re_password_code, c_deleted, c_deleted_date, c_created_at, c_info)
+    RETURNING id
 $$
-LANGUAGE 'plpgsql';
+LANGUAGE SQL;
 
 --------------------------------------------------------------------------------------------Функция обновления данных пользователя 
 DROP FUNCTION IF EXISTS UpdateUser;
