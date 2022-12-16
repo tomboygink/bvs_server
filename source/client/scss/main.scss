@@ -1,29 +1,37 @@
+.Box-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.info {
+  border-color: #c7bcbcd6;
+  border-radius: 4px;
+}
+.css-i4bv87-MuiSvgIcon-root {
+  padding-top: 8px;
+}
+.css-vr2p86-MuiButtonBase-root-MuiButton-root:hover {
+  color: #266bf1;
+}
+ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list {
+  max-height: 200px;
+  overflow-y: scroll;
+}
+ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar {
+  width: 1px;
+  background-color: #fff;
+}
+ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: #1890ff;
+}
 
-    .Box-login {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .info {
-        border-color: #c7bcbcd6;
-        border-radius: 4px;
-    }
-    .css-i4bv87-MuiSvgIcon-root{
-        padding-top: 8px;
-    }
-    .css-vr2p86-MuiButtonBase-root-MuiButton-root:hover{
-        color: #266bf1;
-    }
-    ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list {
-        max-height: 200px;
-        overflow-y: scroll;
-    }
-    ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar {
-        width: 1px;
-        background-color: #fff;
-    }
-    ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar-thumb {
-        width: 1px;
-        background-color: #1890FF;
-    }
-    
+.css-tlc64q-MuiPaper-root-MuiDialog-paper::-webkit-scrollbar {
+  width: 1px;
+  background-color: #fff;
+}
+
+.css-tlc64q-MuiPaper-root-MuiDialog-paper::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: #1890ff;
+}

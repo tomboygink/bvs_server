@@ -11,13 +11,13 @@ import {
   Select,
   MenuItem,
   FormControl,
-  InputLabel
+  InputLabel,
 } from "@mui/material";
 
 import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 
 interface IProps {}
 
@@ -38,37 +38,48 @@ export class NewJobsTittle extends React.Component<IProps> {
     APP_STORAGE.reg_user.setModalRegUser(true);
     APP_STORAGE.app_bar.setSetOpenAppBar(false);
   }
-  
+
   render(): React.ReactNode {
-  let org = JSON.parse(JSON.stringify (APP_STORAGE.reg_user.getOrgAll()))
-  var options:React.ReactNode = <></>;
+    let org = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll()));
+    var options: React.ReactNode = <></>;
 
     return (
       <React.Fragment>
-
-        <FormControl fullWidth size="small" sx={{mt: "14px"}} >
-        <InputLabel sx={{fontSize: '12px'}}>Организация</InputLabel>
-            <Select 
-                sx={{fontSize: '12px'}}
-                value={ APP_STORAGE.reg_user.getKeyOrg() || ''}
-                label="организация"
-               
-              >
-                <MenuItem 
-                key={org.idd || ''} 
-                sx={{fontSize: '12px'}} 
-                value = {org.idd || ''}>{org.full_name || ''}
-            </MenuItem> 
+        <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+          <InputLabel sx={{ fontSize: "12px" }}>Организация</InputLabel>
+          <Select
+            sx={{ fontSize: "12px" }}
+            value={APP_STORAGE.reg_user.getKeyOrg() || ""}
+            label="организация"
+          >
+            <MenuItem
+              key={org.idd || ""}
+              sx={{ fontSize: "12px" }}
+              value={org.idd || ""}
+            >
+              {org.full_name || ""}
+            </MenuItem>
             <Divider />
 
-             <Box 
-                sx ={{ display: 'flex', justifyContent: 'flex-end', background: '#F1F5FC', m: 1, borderRadius: '4px'}}>
-                  <MenuItem onClick={() => this.OpenModalRegUser(2, "Добавить организацию")}> 
-                    <AddIcon sx = {{fontSize: '17px', mt: 1, color: '#266BF1'}}/> 
-                    <Typography sx={{fontSize: '12px', mt: 1}}>Добавить организацию</Typography> 
-                  </MenuItem>  
-             </Box>  
-            </Select>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                background: "#F1F5FC",
+                m: 1,
+                borderRadius: "4px",
+              }}
+            >
+              <MenuItem
+                onClick={() => this.OpenModalRegUser(2, "Добавить организацию")}
+              >
+                <AddIcon sx={{ fontSize: "17px", mt: 1, color: "#266BF1" }} />
+                <Typography sx={{ fontSize: "12px", mt: 1 }}>
+                  Добавить организацию
+                </Typography>
+              </MenuItem>
+            </Box>
+          </Select>
         </FormControl>
 
         <TextField
@@ -84,7 +95,6 @@ export class NewJobsTittle extends React.Component<IProps> {
           size="small"
         />
 
-       
         <Box
           sx={{
             display: "flex",
@@ -92,7 +102,6 @@ export class NewJobsTittle extends React.Component<IProps> {
             justifyContent: "flex-end",
           }}
         >
-
           <Button
             sx={{
               background: "#266BF1",
