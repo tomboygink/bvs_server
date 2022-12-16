@@ -271,3 +271,34 @@ SELECT * FROM orgs
 $$
 LANGUAGE SQL;
 
+--------------------------------------------------------------------------------------------Функция получения должностей организации
+DROP FUNCTION IF EXISTS SelectJobs_titles;
+CREATE OR REPLACE FUNCTION SelectJobs_titles(
+	c_org_id BIGINT
+)
+RETURNS table (
+	id BIGINT,
+	org_id BIGINT,
+	name VARCHAR(250),
+	created_at TIMESTAMP,
+	info TEXT
+)AS $$
+	SELECT * FROM jobs_titles WHERE org_id = c_org_id
+$$ 
+LANGUAGE SQL;
+
+--------------------------------------------------------------------------------------------Функция добавления должности
+DROP FUNCTION IF EXISTS addJobs_titles;
+CREATE OR REPLACE FUNCTION addJobs_titles(
+	c_org_id BIGINT,
+	c_name VARCHAR(250),
+	c_created_at TIMESTAMP,
+	c_info TEXT
+)
+RETURNS BIGINT
+AS $$
+	INSERT INTO jobs_titles (org_id, name, created_at, info)
+	VALUES (c_org_id, c_name, c_created_at, c_info)
+	RETURNING id
+$$ 
+LANGUAGE SQL;

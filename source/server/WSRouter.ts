@@ -3,6 +3,7 @@ import { IWSQuery, IWSResult, WSResult, WSStr } from '../xcore/WSQuery';
 import { SessionsTable } from '../xcore/dbase/Sessions';
 import { UserTable } from '../xcore/dbase/Users';
 import { OrgsTable } from '../xcore/dbase/Orgs';
+import { Jobs_titlesTable } from '../xcore/dbase/Jobs_titles';
 import { SendMail } from '../xcore/mailer/sendMail';
 
 import crypto from 'crypto';
@@ -150,13 +151,10 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         case 'get_Org': {
             var orgs = new OrgsTable(q.args, q.sess_code);
             data = await orgs.selectOrgs();
-            wsres.code=q.sess_code;
-            wsres.error = null;
-            wsres.data = await orgs.selectOrgs();
             if (data.length > 0) {
                 wsres.code = q.sess_code;
-                wsres.data = data;
                 wsres.error = null;
+                wsres.data = data;
             }
             else{wsres.code = q.sess_code; 
                 wsres.data = [], 
@@ -167,7 +165,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         //Добавление новой организации
         case 'set_NewOrg': {
             var orgs = new OrgsTable(q.args, q.sess_code);
-            data = await orgs.isertOrgs();
+            data = await orgs.insertOrgs();
             if(data[0].id==0|| data==null|| data==undefined)
             {
                 wsres.code = q.sess_code;
@@ -181,6 +179,24 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.error = null;
             }
         } break;
+
+        //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ДОЛЖНОСТЕЙ ОПРЕДЕЛЕННОЙ ОРГАНИЗАЦИИ
+        //Получение должностей организации 
+        case 'get_Jobs':{
+            var jobs = new Jobs_titlesTable(q.args, q.sess_code);
+            data = await jobs.selectJobs_title();
+            if (data.length > 0) {
+                wsres.code = q.sess_code;
+                wsres.error = null;
+                wsres.data = data;
+            }
+            else{wsres.code = q.sess_code; 
+                wsres.data = [], 
+                wsres.error = 'У организации отсутствуют должности'
+            }
+            
+        }break;
+
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЕЙ
         case 'set_NewUser': {
