@@ -38,18 +38,20 @@ export class NewUserRegistration extends React.Component<IProps> {
   }
 
   async ChekedForEdit (editing:any) {
-   alert(editing.target.checked)
    APP_STORAGE.reg_user.setCheckboxEd(editing.target.checked)
   }
 
   async ChekedForRead (readind:any) {
-    alert(readind.target.checked)
     APP_STORAGE.reg_user.setCheckboxRead(readind.target.checked)
    }
 
   async SelectedOrg(a:any) {
    APP_STORAGE.reg_user.setKeyOrg(a)
    APP_STORAGE.reg_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
+  }
+  
+  async SelectedJobs(a:any) {
+    APP_STORAGE.reg_user.setKeyJobs(a)
   }
 
   async OpenModalRegUser(e: any, tittle: string) {
@@ -63,28 +65,46 @@ export class NewUserRegistration extends React.Component<IProps> {
   
   render(): React.ReactNode {
     let org = null;
+    let jobs = null; 
+    var options_org = [];
+    var options_jobs = [];
     if(APP_STORAGE.reg_user.getOrgAll()){
       org = JSON.parse(JSON.stringify (APP_STORAGE.reg_user.getOrgAll()))
+      for (var key in org) {
+        if (org.hasOwnProperty(key)) {
+           let a = org[key]
+    
+           options_org.push(
+                    <MenuItem 
+                    key={a.id} 
+                    sx={{fontSize: '12px'}}
+                    value={a.id}
+                    >
+                    {a.full_name}
+                </MenuItem>
+                  );
+        }
+      }
     }
-  console.log(org[0])
-  var options = [];
-  
-  for (var key in org) {
-    if (org.hasOwnProperty(key)) {
-       let a = org[key]
 
-           options.push(
-            
-                <MenuItem 
-                key={a.id || ''} 
-                sx={{fontSize: '12px'}}
-                value={a.id || ''}
-                >
-                {a.full_name}
-            </MenuItem>
-              );
+    if(APP_STORAGE.reg_user.getJobsAll()){
+      jobs = JSON.parse(JSON.stringify (APP_STORAGE.reg_user.getJobsAll()))
+      for (var key in org) {
+        if (jobs.hasOwnProperty(key)) {
+           let a = jobs[key]
+    
+           options_jobs.push(
+                    <MenuItem 
+                    key={a.id} 
+                    sx={{fontSize: '12px'}}
+                    value={a.id}
+                    >
+                    {a.name}
+                </MenuItem>
+                  );
+        }
+      }
     }
-  }
 
     return (
       <React.Fragment>
@@ -193,7 +213,7 @@ export class NewUserRegistration extends React.Component<IProps> {
                 label="организация"
                 onChange={(e) => {this.SelectedOrg(e.target.value)}}
               > 
-            {options}
+            {options_org}
             <Divider />
 
              <Box 
@@ -211,14 +231,11 @@ export class NewUserRegistration extends React.Component<IProps> {
         <InputLabel sx={{fontSize: '12px'}}>Должность</InputLabel>
             <Select 
                 sx={{fontSize: '12px'}}
-                value={ APP_STORAGE.reg_user.getKeyOrg() || ''}
+                value={ APP_STORAGE.reg_user.getKeyJobs() || ''}
                 label="должность"
+                onChange={(e) => {this.SelectedJobs(e.target.value)}}
               >
-                <MenuItem 
-                key={org.idd || ''} 
-                sx={{fontSize: '12px'}} 
-                value = {org.idd || ''}>{org.full_name || ''}
-            </MenuItem> 
+                {options_jobs}
               <Divider />
 
               <Box 
@@ -298,25 +315,7 @@ export class NewUserRegistration extends React.Component<IProps> {
 </form>
         <Divider sx={{ padding: "12px" }} />
              
-              <FormControl fullWidth size="small" sx={{mt: "14px", background: '#F1F5FC'}} >
-        <InputLabel sx={{fontSize: '12px'}}>Группы доступа</InputLabel>
-            <Select 
-                sx={{fontSize: '12px'}}
-                value={ APP_STORAGE.reg_user.getKeyOrg() || ''}
-                label="группы доступа"
-                
-              >
-            <MenuItem  
-                sx={{fontSize: '12px'}} 
-                value = "1">разрешить редактирование
-            </MenuItem> 
-
-              <MenuItem 
-                sx={{fontSize: '12px'}} 
-                value = "2"> только чтение
-            </MenuItem>   
-            </Select>
-        </FormControl>
+  
        
         <FormGroup>
       <Stack direction="row" spacing={1} alignItems="center">

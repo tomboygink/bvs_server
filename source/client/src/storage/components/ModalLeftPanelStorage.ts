@@ -10,9 +10,11 @@ export class ModalLeftPanel {
    @observable modal_tittle: string = ''; 
 
    @observable organization: Array<string> = [];
-   @observable key: any = null;
+   @observable jobs_titles: Array<string> = [];
+   @observable key_org: any = null;
+   @observable key_jobs: any = null;
    @observable checkbox_editing: boolean = false; /// разрешить редактирование пользователю
-   @observable checkbox_reading : boolean = false; /// только чтение 
+   @observable checkbox_reading : boolean = true; /// только чтение 
     
 /////////////////////регистрация пользователя
  
@@ -70,11 +72,17 @@ export class ModalLeftPanel {
    @action setCheckboxRead(val:boolean) {this.checkbox_reading = val}
    @action getCheckboxRead():boolean {return this.checkbox_reading}
 
-    @action setKeyOrg(val:any){this.key = val}  
-    @computed getKeyOrg():any { return this.key}
+    @action setKeyOrg(val:any){this.key_org = val}  
+    @computed getKeyOrg():any { return this.key_org}
+
+    @action setKeyJobs(val:any){this.key_jobs = val}  
+    @computed getKeyJobs():any { return this.key_jobs}
 
     @action setOrgAll(val:Array<string>){this.organization = val}  
     @computed getOrgAll():Array<string> { return this.organization}
+
+    @action setJobsAll(val:Array<string>){this.jobs_titles = val}  
+    @computed getJobsAll():Array<string> { return this.jobs_titles}
 
     @action setModalRegUser(val:boolean){this.modal_registration_user = val} /// Для открытия модального окна 
     @computed getModalRegUser():boolean { return this.modal_registration_user}
@@ -202,6 +210,17 @@ export class ModalLeftPanel {
   setAllOrganization(dt: IWSResult){    //////////// Socket result cmd - set_ForgPass
   this.setOrgAll(dt.data);
 }
+  setAllJobsTitle (dt: IWSResult){
+   if (dt.error === null){
+      this.setJobsAll(dt.data);
+   }
+   else{
+      alert('jib,rfr')
+   }
+   
+  }
+
+
      /////проверка формы (org)
 
     async set_NewUser(name: string, value: any, _options?: any){
@@ -308,16 +327,19 @@ export class ModalLeftPanel {
              this.getRepeatPassword()
             ) {
         q.args = { 
-            family: this.getFamily(),
-            name: this.getName(),
-            father: this.getFather(),
-            email:this.getEmail(), 
-            telephone:this.getTelephone(),
-            id_org: this.getKeyOrg(), 
-            login:this.getLogin(),
-            password:this.getPassword(),
-            repeat:this.getRepeatPassword(),
-            info:this.getInfo()
+            family: this.getFamily() || '',
+            name: this.getName() || '',
+            father: this.getFather() || '',
+            email:this.getEmail() || '', 
+            telephone:this.getTelephone() || '',
+            id_org: this.getKeyOrg() || '', 
+            id_job: this.getKeyJobs() || '',
+            login:this.getLogin() || '',
+            password:this.getPassword() || '',
+            repeat:this.getRepeatPassword() || '',
+            users_r: this.getCheckboxEd() ,
+            users_w: this.getCheckboxRead() || '',
+            info:this.getInfo() 
          };
          q.sess_code = sess_code;
         (await WSocket.get()).send(q); console.log(q)
