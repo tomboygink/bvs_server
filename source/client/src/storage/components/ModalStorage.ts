@@ -3,6 +3,8 @@ import { observable, action, computed, makeAutoObservable } from 'mobx';
 import { IWSQuery, WSQuery, IWSResult } from '../../../../xcore/WSQuery';
 import { WSocket } from '../WSocket';
 
+import { APP_STORAGE } from '../AppStorage';
+
 
 export class ModalStorage{
 
@@ -301,6 +303,7 @@ export class ModalStorage{
 
     onGetChangePass(dt: IWSResult){
         this.setCmdErrPass(dt.error);
+        APP_STORAGE.auth_form.setUserWS(dt);
         if (dt.error === 'Старый пароль не верен'){
             this.setErrr_old_pass(true);
             this.setError_old_message(dt.error)
@@ -318,8 +321,8 @@ export class ModalStorage{
 
     onGetCUserData(dt: IWSResult){
         this.setCmdErrData(dt.error);
+        APP_STORAGE.auth_form.setUserWS(dt);
         if(this.getCmdErrData() === null) {
-           alert('хорошо');
            this.setModal(null)
         }
     }

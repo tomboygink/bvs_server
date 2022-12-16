@@ -59,24 +59,6 @@ export class ChangeUserData extends React.Component<IProps> {
   render(): React.ReactNode {
     APP_STORAGE.modal.setActMail(APP_STORAGE.auth_form.getUser().act_mail);
 
-    var alert: React.ReactNode = <></>;
-
-    if (APP_STORAGE.modal.getActMail() === false) {
-      APP_STORAGE.modal.setSpawnAlert(true);
-    }
-    var alert_save_change: React.ReactNode = <></>;
-    if (
-      APP_STORAGE.modal.getActMail() === false &&
-      APP_STORAGE.modal.getEmail() !== "" &&
-      APP_STORAGE.modal.getSpawnAlert() === true
-    ) {
-      alert = (
-        <Alert sx={{ mt: "12px" }} severity="warning">
-          На указанный email отправлен код подтверждения.
-        </Alert>
-      );
-    }
-
     return (
       <React.Fragment>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -233,9 +215,6 @@ export class ChangeUserData extends React.Component<IProps> {
             Сохранить
           </Button>
         </Box>
-
-        {/* {alert}
-                        {alert_save_change} */}
       </React.Fragment>
     );
   }

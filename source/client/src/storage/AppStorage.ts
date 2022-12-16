@@ -42,7 +42,6 @@ class AppStorage {
 
     @action async onWSData(dt: IWSResult) {
         console.log("SOCKET RESULT", dt); 
-        //this.setdtUser(dt.data)
         switch (dt.cmd) {
             case ('get_UserByAuth'): { this.auth_form.onGetUserByAuth(dt); } break;
             case ('get_UserBySessionCode'): { this.auth_form.onGetUserBySessionCode(dt); } break;
