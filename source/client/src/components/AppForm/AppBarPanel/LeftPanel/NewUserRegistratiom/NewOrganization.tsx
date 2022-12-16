@@ -72,8 +72,8 @@ export class NewOrganization extends React.Component<IProps> {
             variant="outlined"
             margin="normal"
             required
-            //  error ={APP_STORAGE.reg_user.getErrorFather()}
-            //  helperText = {APP_STORAGE.reg_user.getTextHelpFather()}
+             error ={APP_STORAGE.reg_user.getErrorInn()}
+             helperText = {APP_STORAGE.reg_user.getTextHelpInn()}
             label="ИНН"
             autoComplete="инн"
             autoFocus

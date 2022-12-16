@@ -13,6 +13,7 @@ import {
   FormControl,
   InputLabel,
   Checkbox,
+  Alert
 } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -217,7 +218,6 @@ export class NewUserRegistration extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 justifyContent: "flex-end",
-                background: "#F1F5FC",
                 m: 1,
                 borderRadius: "4px",
               }}
@@ -394,6 +394,7 @@ export class NewUserRegistration extends React.Component<IProps> {
             Сохранить
           </Button>
         </Box>
+        <Alert sx= {{position: 'absolute', top: '44px', right: '12px'}} severity="warning" icon={false}>{APP_STORAGE.reg_user.getJobsAllError()}</Alert> 
       </React.Fragment>
     );
   }

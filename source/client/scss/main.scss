@@ -16,5 +16,14 @@
     }
     ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list {
         max-height: 200px;
-        overflow: scroll;
+        overflow-y: scroll;
     }
+    ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar {
+        width: 1px;
+        background-color: #fff;
+    }
+    ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar-thumb {
+        width: 1px;
+        background-color: #1890FF;
+    }
+    

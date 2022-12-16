@@ -11,6 +11,7 @@ export class ModalLeftPanel {
 
    @observable organization: Array<string> = [];
    @observable jobs_titles: Array<string> = [];
+   @observable jobs_titles_error: string = '';
    @observable key_org: any = null;
    @observable key_jobs: any = null;
    @observable checkbox_editing: boolean = false; /// разрешить редактирование пользователю
@@ -60,6 +61,10 @@ export class ModalLeftPanel {
    @observable longitude : string = null; /// долгота
    @observable info_org : string = '';
 
+   ///////////////проверка формы (добавление организации) на правильность ввода данных
+   
+   @observable error_inn: boolean= false;
+   @observable texthelp_inn:string='';
 
     constructor (){
         makeAutoObservable(this)
@@ -81,8 +86,10 @@ export class ModalLeftPanel {
     @action setOrgAll(val:Array<string>){this.organization = val}  
     @computed getOrgAll():Array<string> { return this.organization}
 
-    @action setJobsAll(val:Array<string>){this.jobs_titles = val}  
+    @action setJobsAll(val:Array<string>){this.jobs_titles = val} 
     @computed getJobsAll():Array<string> { return this.jobs_titles}
+    @action setJobsAllError(val:string){this.jobs_titles_error = val}  
+    @computed getJobsAllError():string { return this.jobs_titles_error}
 
     @action setModalRegUser(val:boolean){this.modal_registration_user = val} /// Для открытия модального окна 
     @computed getModalRegUser():boolean { return this.modal_registration_user}
@@ -189,6 +196,14 @@ export class ModalLeftPanel {
    @action setInfOrg(val:string) {this.info_org = val}
    @computed getInfOrg():string { return this.info_org}
 
+   /////проверка формы (addOrg)
+   @action setErrorInn(val:boolean){this.error_inn = val} 
+   @computed getErrorInn():boolean { return this.error_inn}
+   @action setTextHelpInn(val:string) { this.texthelp_inn = val}
+   @computed getTextHelpInn():string { return this.texthelp_inn}
+
+
+
 
    async get_Org(name: string, value: any, _options?: any){
       var sess_code = value;
@@ -214,15 +229,15 @@ export class ModalLeftPanel {
    if (dt.error === null){
       this.setJobsAll(dt.data);
    }
+   else if (dt.error) {
+      this.setJobsAllError(dt.error);
+   }
    else{
-      alert('jib,rfr')
+      this.setJobsAllError('');
    }
    
   }
-
-
      /////проверка формы (org)
-
     async set_NewUser(name: string, value: any, _options?: any){
         var q:IWSQuery = new WSQuery("set_NewUser");
         var sess_code = value;
@@ -354,8 +369,27 @@ export class ModalLeftPanel {
       const regexp_inn = /^[0-9]+$/;
       const inn = this.getInn().match(regexp_inn);
       console.log(inn);
+
+      if ( inn === null ) {
+         this.setErrorInn(true);
+         this.setTextHelpInn('Только цифры')
+      }
+      else {
+         this.setErrorInn(false);
+         this.setTextHelpInn('')
+      }
+
+      if ( inn !== null && inn[0].length < 10) {
+         this.setErrorInn(true);
+         this.setTextHelpInn('инн должен содержать 10 символов')
+      }
+      else {
+         this.setErrorInn(false);
+         this.setTextHelpInn('')
+      }
+      
       var q:IWSQuery = new WSQuery("set_NewOrg");
-      if (this.getFullNameOrg() && this.getNameOrg() && this.getInn() && this.getAddress()) {
+      if (this.getFullNameOrg() && this.getNameOrg() && this.getInn() && this.getAddress() && inn !== null) {
  q.args = { 
      name: this.getNameOrg() || '',
      full_name: this.getFullNameOrg() || '',
