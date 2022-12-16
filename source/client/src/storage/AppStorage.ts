@@ -50,6 +50,7 @@ class AppStorage {
             case ('set_ForgPass') : { this.auth_form.onSaveNewPass(dt); } break;
             case ('set_SaveNewPass') : {this.auth_form.onSaveNewPass(dt)} break;
             case ('get_Org') : {this.reg_user.setAllOrganization(dt)} break;
+            case ('get_Jobs') : {this.reg_user.setAllJobsTitle(dt)} break;
             default: { } break;
         }
     }
