@@ -12,18 +12,18 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Checkbox
+  Checkbox,
 } from "@mui/material";
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import Stack from '@mui/material/Stack';
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import Stack from "@mui/material/Stack";
 
 import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
-import AddIcon from '@mui/icons-material/Add';
-import {AntSwitch} from './switch'
+import AddIcon from "@mui/icons-material/Add";
+import { AntSwitch } from "./switch";
 
 interface IProps {}
 
@@ -37,21 +37,21 @@ export class NewUserRegistration extends React.Component<IProps> {
     APP_STORAGE.reg_user.set_NewUser("sess_id", APP_STORAGE.auth_form.getdt());
   }
 
-  async ChekedForEdit (editing:any) {
-   APP_STORAGE.reg_user.setCheckboxEd(editing.target.checked)
+  async ChekedForEdit(editing: any) {
+    APP_STORAGE.reg_user.setCheckboxEd(editing.target.checked);
   }
 
-  async ChekedForRead (readind:any) {
-    APP_STORAGE.reg_user.setCheckboxRead(readind.target.checked)
-   }
-
-  async SelectedOrg(a:any) {
-   APP_STORAGE.reg_user.setKeyOrg(a)
-   APP_STORAGE.reg_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
+  async ChekedForRead(readind: any) {
+    APP_STORAGE.reg_user.setCheckboxRead(readind.target.checked);
   }
-  
-  async SelectedJobs(a:any) {
-    APP_STORAGE.reg_user.setKeyJobs(a)
+
+  async SelectedOrg(a: any) {
+    APP_STORAGE.reg_user.setKeyOrg(a);
+    APP_STORAGE.reg_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
+  }
+
+  async SelectedJobs(a: any) {
+    APP_STORAGE.reg_user.setKeyJobs(a);
   }
 
   async OpenModalRegUser(e: any, tittle: string) {
@@ -62,46 +62,38 @@ export class NewUserRegistration extends React.Component<IProps> {
     APP_STORAGE.reg_user.setModalRegUser(true);
     APP_STORAGE.app_bar.setSetOpenAppBar(false);
   }
-  
+
   render(): React.ReactNode {
     let org = null;
-    let jobs = null; 
+    let jobs = null;
     var options_org = [];
     var options_jobs = [];
-    if(APP_STORAGE.reg_user.getOrgAll()){
-      org = JSON.parse(JSON.stringify (APP_STORAGE.reg_user.getOrgAll()))
+    if (APP_STORAGE.reg_user.getOrgAll()) {
+      org = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll()));
       for (var key in org) {
         if (org.hasOwnProperty(key)) {
-           let a = org[key]
-    
-           options_org.push(
-                    <MenuItem 
-                    key={a.id} 
-                    sx={{fontSize: '12px'}}
-                    value={a.id}
-                    >
-                    {a.full_name}
-                </MenuItem>
-                  );
+          let a = org[key];
+
+          options_org.push(
+            <MenuItem key={a.id} sx={{ fontSize: "12px" }} value={a.id}>
+              {a.full_name}
+            </MenuItem>
+          );
         }
       }
     }
 
-    if(APP_STORAGE.reg_user.getJobsAll()){
-      jobs = JSON.parse(JSON.stringify (APP_STORAGE.reg_user.getJobsAll()))
+    if (APP_STORAGE.reg_user.getJobsAll()) {
+      jobs = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getJobsAll()));
       for (var key in org) {
         if (jobs.hasOwnProperty(key)) {
-           let a = jobs[key]
-    
-           options_jobs.push(
-                    <MenuItem 
-                    key={a.id} 
-                    sx={{fontSize: '12px'}}
-                    value={a.id}
-                    >
-                    {a.name}
-                </MenuItem>
-                  );
+          let a = jobs[key];
+
+          options_jobs.push(
+            <MenuItem key={a.id} sx={{ fontSize: "12px" }} value={a.id}>
+              {a.name}
+            </MenuItem>
+          );
         }
       }
     }
@@ -201,51 +193,77 @@ export class NewUserRegistration extends React.Component<IProps> {
           }}
           value={APP_STORAGE.reg_user.getTelephone()}
         />
+
         <FormHelperText sx={{ ml: "12px" }}>
           номер телефона должен содержать 10 символов.
         </FormHelperText>
 
-        <FormControl fullWidth size="small" sx={{mt: "14px"}} >
-        <InputLabel className="org" sx={{fontSize: '12px'}}>Организация</InputLabel>
-            <Select 
-                sx={{fontSize: '12px'}}
-                value={APP_STORAGE.reg_user.getKeyOrg() || ''}
-                label="организация"
-                onChange={(e) => {this.SelectedOrg(e.target.value)}}
-              > 
+        <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+          <InputLabel className="org" sx={{ fontSize: "12px" }}>
+            Организация
+          </InputLabel>
+          <Select
+            sx={{ fontSize: "12px" }}
+            value={APP_STORAGE.reg_user.getKeyOrg() || ""}
+            label="организация"
+            onChange={(e) => {
+              this.SelectedOrg(e.target.value);
+            }}
+          >
             {options_org}
             <Divider />
 
-             <Box 
-                sx ={{ display: 'flex', justifyContent: 'flex-end', background: '#F1F5FC', m: 1, borderRadius: '4px'}}>
-                  <MenuItem onClick={() => this.OpenModalRegUser(2, "Добавить организацию")}> 
-                    <AddIcon sx = {{fontSize: '17px', mt: 1, color: '#266BF1'}}/> 
-                    <Typography sx={{fontSize: '12px', mt: 1}}>Добавить организацию</Typography> 
-                  </MenuItem>  
-             </Box>  
-            </Select>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                background: "#F1F5FC",
+                m: 1,
+                borderRadius: "4px",
+              }}
+            >
+              <MenuItem
+                onClick={() => this.OpenModalRegUser(2, "Добавить организацию")}
+              >
+                <AddIcon sx={{ fontSize: "17px", mt: 1, color: "#266BF1" }} />
+                <Typography sx={{ fontSize: "12px", mt: 1 }}>
+                  Добавить организацию
+                </Typography>
+              </MenuItem>
+            </Box>
+          </Select>
         </FormControl>
 
+        <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+          <InputLabel sx={{ fontSize: "12px" }}>Должность</InputLabel>
+          <Select
+            sx={{ fontSize: "12px" }}
+            value={APP_STORAGE.reg_user.getKeyJobs() || ""}
+            label="должность"
+            onChange={(e) => {
+              this.SelectedJobs(e.target.value);
+            }}
+          >
+            {options_jobs}
+            <Divider />
 
-        <FormControl fullWidth size="small" sx={{mt: "14px"}} >
-        <InputLabel sx={{fontSize: '12px'}}>Должность</InputLabel>
-            <Select 
-                sx={{fontSize: '12px'}}
-                value={ APP_STORAGE.reg_user.getKeyJobs() || ''}
-                label="должность"
-                onChange={(e) => {this.SelectedJobs(e.target.value)}}
-              >
-                {options_jobs}
-              <Divider />
-
-              <Box 
-                 sx ={{ display: 'flex', justifyContent: 'flex-end', background: '#F1F5FC', m: 1, borderRadius: '4px'}}>
-              <MenuItem > 
-              <AddIcon sx = {{fontSize: '17px', mt: 1, color: '#266BF1'}}/> 
-              <Typography sx={{fontSize: '12px', mt: 1}}>Добавить должность</Typography> 
-              </MenuItem>  
-              </Box>  
-            </Select>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                background: "#F1F5FC",
+                m: 1,
+                borderRadius: "4px",
+              }}
+            >
+              <MenuItem>
+                <AddIcon sx={{ fontSize: "17px", mt: 1, color: "#266BF1" }} />
+                <Typography sx={{ fontSize: "12px", mt: 1 }}>
+                  Добавить должность
+                </Typography>
+              </MenuItem>
+            </Box>
+          </Select>
         </FormControl>
 
         <TextField
@@ -266,79 +284,82 @@ export class NewUserRegistration extends React.Component<IProps> {
           }}
           value={APP_STORAGE.reg_user.getLogin()}
         />
-<form> 
+        <form>
+          <TextField
+            sx={{ mt: "14px" }}
+            inputProps={{ style: { fontSize: 12 } }} // font size of input text
+            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+            variant="outlined"
+            required
+            error={APP_STORAGE.reg_user.getErrorPassword()}
+            helperText={APP_STORAGE.reg_user.getTextHelpPassword()}
+            fullWidth
+            label="Пароль"
+            autoComplete="пароль"
+            autoFocus
+            type="password"
+            size="small"
+            onChange={(e) => {
+              APP_STORAGE.reg_user.setPassword(e.target.value);
+            }}
+            value={APP_STORAGE.reg_user.getPassword()}
+          />
 
-        <TextField
-          sx={{ mt: "14px" }}
-          inputProps={{ style: { fontSize: 12 } }} // font size of input text
-          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-          variant="outlined"
-          required
-          error={APP_STORAGE.reg_user.getErrorPassword()}
-          helperText={APP_STORAGE.reg_user.getTextHelpPassword()}
-          fullWidth
-          label="Пароль"
-          autoComplete="пароль"
-          autoFocus
-          type="password"
-          size="small"
-          onChange={(e) => {
-            APP_STORAGE.reg_user.setPassword(e.target.value);
-          }}
-          value={APP_STORAGE.reg_user.getPassword()}
-        />
+          <FormHelperText sx={{ ml: "12px" }}>
+            используйте 6 или более символов, сочетая буквы, цифры и символы.
+          </FormHelperText>
 
-
-        <FormHelperText sx={{ ml: "12px" }}>
-          используйте 6 или более символов, сочетая буквы, цифры и символы.
-        </FormHelperText>
-        <TextField
-          sx={{ mt: "14px" }}
-          inputProps={{ style: { fontSize: 12 } }} // font size of input text
-          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-          variant="outlined"
-          required
-          error={APP_STORAGE.reg_user.getErrorRepeatPassword()}
-          helperText={APP_STORAGE.reg_user.getTextHelpRepeatPassword()}
-          fullWidth
-          label="Повторите пароль"
-          autoComplete="повторите пароль"
-          autoFocus
-          type="password"
-          size="small"
-          onChange={(e) => {
-            APP_STORAGE.reg_user.setRepeatPassword(e.target.value);
-          }}
-          value={APP_STORAGE.reg_user.getRepeatPassword()}
-        />
-
-</form>
+          <TextField
+            sx={{ mt: "14px" }}
+            inputProps={{ style: { fontSize: 12 } }} // font size of input text
+            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+            variant="outlined"
+            required
+            error={APP_STORAGE.reg_user.getErrorRepeatPassword()}
+            helperText={APP_STORAGE.reg_user.getTextHelpRepeatPassword()}
+            fullWidth
+            label="Повторите пароль"
+            autoComplete="повторите пароль"
+            autoFocus
+            type="password"
+            size="small"
+            onChange={(e) => {
+              APP_STORAGE.reg_user.setRepeatPassword(e.target.value);
+            }}
+            value={APP_STORAGE.reg_user.getRepeatPassword()}
+          />
+        </form>
         <Divider sx={{ padding: "12px" }} />
-             
-  
-       
-        <FormGroup>
-      <Stack direction="row" spacing={1} alignItems="center">
-        <Typography sx={{ ml: "12px" }}>Разрешить редактирование:</Typography>
-        <AntSwitch 
-        checked = {APP_STORAGE.reg_user.getCheckboxEd()}
-        onChange={(editing) => {this.ChekedForEdit(editing)}} />
-      </Stack>
-    
-      <Stack direction="row" spacing={1} alignItems="center">
-        <Typography sx={{ ml: "12px" }}>Только чтение:</Typography>
-        <AntSwitch 
-        checked = {APP_STORAGE.reg_user.getCheckboxRead()}
-        onChange={(readind) => {this.ChekedForRead(readind)}}  />
-      </Stack>
-       
-    </FormGroup>
 
+        <FormGroup sx={{ mt: "12px" }}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Typography sx={{ ml: "12px", fontSize: "12px", color: "#266bf1" }}>
+              Разрешить редактирование -{" "}
+            </Typography>
+            <AntSwitch
+              checked={APP_STORAGE.reg_user.getCheckboxEd()}
+              onChange={(editing) => {
+                this.ChekedForEdit(editing);
+              }}
+            />
+          </Stack>
+
+          <Stack direction="row" spacing={1} alignItems="center" sx={{mt: 1, mb: 1}}>
+            <Typography sx={{ ml: "12px", fontSize: "12px", color: "#266bf1" }}>
+              Только чтение -{" "}
+            </Typography>
+            <AntSwitch
+              checked={APP_STORAGE.reg_user.getCheckboxRead()}
+              onChange={(readind) => {
+                this.ChekedForRead(readind);
+              }}
+            />
+          </Stack>
+        </FormGroup>
 
         <Typography sx={{ color: "#999999" }} variant="caption">
           Информация:
         </Typography>
-
 
         <TextareaAutosize
           className="info"
@@ -351,7 +372,6 @@ export class NewUserRegistration extends React.Component<IProps> {
           value={APP_STORAGE.reg_user.getInfo() || ""}
         />
 
-
         <Box
           sx={{
             display: "flex",
@@ -359,7 +379,6 @@ export class NewUserRegistration extends React.Component<IProps> {
             justifyContent: "flex-end",
           }}
         >
-
           <Button
             sx={{
               background: "#266BF1",
