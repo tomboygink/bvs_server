@@ -1,3 +1,33 @@
+--------------------------------------------------------------------------------------------Функция получения всех пользователей
+DROP FUNCTION IF EXISTS SelectAllUsers;
+CREATE OR REPLACE FUNCTION SelectAllUsers()
+RETURNS table 
+(
+	id BIGINT, 
+    login VARCHAR(250), 
+    password VARCHAR(250), 
+    family VARCHAR(150), 
+    name VARCHAR(150), 
+    father VARCHAR(150), 
+    telephone VARCHAR(50), 
+    email VARCHAR(150), 
+    org_id BIGINT, 
+    job_title_id BIGINT, 
+    roles_ids JSON,
+    user_data JSON, 
+    mail_code VARCHAR(250), 
+    act_mail BOOLEAN, 
+    re_password_code VARCHAR(250), 
+    deleted BOOLEAN, 
+    deleted_date TIMESTAMP, 
+    created_at TIMESTAMP, 
+    info TEXT
+)
+AS $$
+SELECT * FROM users
+$$
+LANGUAGE SQL;
+
 --------------------------------------------------------------------------------------------Функция добавления пользователя
 DROP FUNCTION IF EXISTS AddUser;
 CREATE OR REPLACE FUNCTION AddUser
@@ -249,7 +279,7 @@ AS $$
 	VALUES (c_name, c_full_name, c_inn, c_address, c_latitude, c_longitude, c_created_at, c_info)
 	RETURNING id
 $$
-LANGUAGE SQL
+LANGUAGE SQL;
 
 
 --------------------------------------------------------------------------------------------Функция получения всех организаций
@@ -302,3 +332,4 @@ AS $$
 	RETURNING id
 $$ 
 LANGUAGE SQL;
+

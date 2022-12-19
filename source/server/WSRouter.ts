@@ -234,6 +234,14 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
         } break;
 
+        case 'get_AllUser':{
+            var ut = new UserTable(q.args, q.sess_code);
+            data = await ut.selectAllUsers();
+            wsres.code = q.sess_code;
+            wsres.data = data;
+            wsres.error = null;
+        }
+
 
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА

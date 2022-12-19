@@ -154,6 +154,16 @@ export class UserTable {
         return result;
     }
 
+    //Получение всех пользователей 
+    async selectAllUsers():Promise<UsersEntity[]>{
+        var db_res = await this.db.query("SELECT * FROM SelectAllUsers()");
+        var result:UsersEntity[] = new Array();
+        for (var r in db_res.rows){
+            result.push(db_res.rows[r]);
+        }
+        return result;
+    }
+
     //Добавление нового пользователя 
     async insertUser(): Promise<UsersEntity[]> {
         var pass = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.password).digest('hex');
