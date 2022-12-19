@@ -197,6 +197,24 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             
         }break;
 
+        case 'set_NewJobTitle':{
+            var jobs = new Jobs_titlesTable(q.args, q.sess_code);
+            data = await jobs.insertJobs_title();
+            if(data[0].id==0|| data==null|| data==undefined)
+            {
+                wsres.code = q.sess_code;
+                wsres.data = [];
+                wsres.error = "Ошибка добавления должности"
+            }
+            else {
+                data = await jobs.selectJobs_title();
+                wsres.code = q.sess_code;
+                wsres.data = data;
+                wsres.error = null;
+            }
+            
+        }break;
+
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЕЙ
         case 'set_NewUser': {

@@ -78,8 +78,8 @@ var Jobs_titlesTable = (function () {
             var db_res, result, p;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT addJobs_titles(CAST (" + this.args.org_id + " AS BIGINT), " +
-                            "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
+                    case 0: return [4, this.db.query("SELECT addJobs_titles(CAST (" + this.args.id_org + " AS BIGINT), " +
+                            "CAST ('" + this.args.job_title + "' AS VARCHAR(250)), " +
                             "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP), " +
                             "CAST ('" + this.args.info + "' AS TEXT)) AS id")];
                     case 1:
