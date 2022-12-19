@@ -251,15 +251,16 @@ export class NewUserRegistration extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 justifyContent: "flex-end",
-                background: "#F1F5FC",
                 m: 1,
                 borderRadius: "4px",
               }}
             >
-              <MenuItem>
+              <MenuItem
+                onClick={() => this.OpenModalRegUser(3, "Добавить должность")}
+              >
                 <AddIcon sx={{ fontSize: "17px", mt: 1, color: "#266BF1" }} />
                 <Typography sx={{ fontSize: "12px", mt: 1 }}>
-                  Добавить должность
+                  Добавить организацию
                 </Typography>
               </MenuItem>
             </Box>
