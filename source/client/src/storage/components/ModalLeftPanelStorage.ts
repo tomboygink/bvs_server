@@ -413,12 +413,12 @@ export class ModalLeftPanel {
       var q:IWSQuery = new WSQuery("set_NewJobTitle");
   q.args = { 
      id_org: this.getKeyOrg() || '', 
-     job_title : this.getNewJobsTitles() || ''
+     job_title : this.getNewJobsTitles() || '',
+     info : this.getInfo() || ''
   };
   q.sess_code = sess_code;
 (await WSocket.get()).send(q); console.log(q)
-    
-
+   
     }
 }
 

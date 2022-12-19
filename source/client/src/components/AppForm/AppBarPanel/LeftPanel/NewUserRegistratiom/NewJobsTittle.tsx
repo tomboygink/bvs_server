@@ -28,7 +28,10 @@ export class NewJobsTittle extends React.Component<IProps> {
   }
 
   async AddNewJobTitle() {
-    APP_STORAGE.reg_user.set_NewJobTitle("sess_id", APP_STORAGE.auth_form.getdt());
+    APP_STORAGE.reg_user.set_NewJobTitle(
+      "sess_id",
+      APP_STORAGE.auth_form.getdt()
+    );
   }
 
   async SelectedOrg(a: any) {
@@ -65,7 +68,7 @@ export class NewJobsTittle extends React.Component<IProps> {
 
     return (
       <React.Fragment>
-     <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+        <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
           <InputLabel className="org" sx={{ fontSize: "12px" }}>
             Организация
           </InputLabel>
@@ -100,9 +103,8 @@ export class NewJobsTittle extends React.Component<IProps> {
           </Select>
         </FormControl>
 
-
         <TextField
-          sx={{ mt: "12px" }}
+          sx={{ mt: "12px" , mb: '12px'}}
           inputProps={{ style: { fontSize: 12 } }} // font size of input text
           InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
           variant="outlined"
@@ -116,6 +118,21 @@ export class NewJobsTittle extends React.Component<IProps> {
             APP_STORAGE.reg_user.setNewJobsTitles(e.target.value);
           }}
           value={APP_STORAGE.reg_user.getNewJobsTitles()}
+        />
+
+        <Typography sx={{ color: "#999999" }} variant="caption">
+          Информация:
+        </Typography>
+
+        <TextareaAutosize
+          className="info"
+          aria-label="minimum height"
+          minRows={4}
+          style={{ width: "100%" }}
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setInfo(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getInfo() || ""}
         />
 
         <Box
