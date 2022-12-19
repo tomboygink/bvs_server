@@ -61,6 +61,11 @@ export class ModalLeftPanel {
    @observable longitude : string = null; /// долгота
    @observable info_org : string = '';
 
+      //////////////////////добавление должности
+
+      @observable jobs_titles_new: string = '';
+   
+
    ///////////////проверка формы (добавление организации) на правильность ввода данных
    
    @observable error_inn: boolean= false;
@@ -203,6 +208,8 @@ export class ModalLeftPanel {
    @computed getTextHelpInn():string { return this.texthelp_inn}
 
 
+   @action setNewJobsTitles(val:string) {this.jobs_titles_new = val}
+   @computed getNewJobsTitles():string { return this.jobs_titles_new}
 
 
    async get_Org(name: string, value: any, _options?: any){
@@ -382,7 +389,7 @@ export class ModalLeftPanel {
       
       var q:IWSQuery = new WSQuery("set_NewOrg");
       if (this.getFullNameOrg() && this.getNameOrg() && this.getInn() && this.getAddress() && inn !== null) {
- q.args = { 
+  q.args = { 
      name: this.getNameOrg() || '',
      full_name: this.getFullNameOrg() || '',
      inn: this.getInn() || '',
@@ -395,6 +402,22 @@ export class ModalLeftPanel {
 (await WSocket.get()).send(q); console.log(q)
 
 }
+
+    }
+
+
+    async set_NewJobTitle(name: string, value: any, _options?: any) {
+      var sess_code = value;   
+      
+
+      var q:IWSQuery = new WSQuery("set_NewJobTitle");
+  q.args = { 
+     id_org: this.getKeyOrg() || '', 
+     job_title : this.getNewJobsTitles() || ''
+  };
+  q.sess_code = sess_code;
+(await WSocket.get()).send(q); console.log(q)
+    
 
     }
 }

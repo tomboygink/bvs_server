@@ -27,8 +27,8 @@ export class NewJobsTittle extends React.Component<IProps> {
     super(props);
   }
 
-  async AddNewUser() {
-    APP_STORAGE.reg_user.set_NewUser("sess_id", APP_STORAGE.auth_form.getdt());
+  async AddNewJobTitle() {
+    APP_STORAGE.reg_user.set_NewJobTitle("sess_id", APP_STORAGE.auth_form.getdt());
   }
 
   async SelectedOrg(a: any) {
@@ -112,6 +112,10 @@ export class NewJobsTittle extends React.Component<IProps> {
           autoComplete="должность"
           autoFocus
           size="small"
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setNewJobsTitles(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getNewJobsTitles()}
         />
 
         <Box
@@ -130,7 +134,7 @@ export class NewJobsTittle extends React.Component<IProps> {
               fontSize: "12px",
             }}
             onClick={() => {
-              this.AddNewUser();
+              this.AddNewJobTitle();
             }}
           >
             Сохранить
