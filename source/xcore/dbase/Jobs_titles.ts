@@ -32,8 +32,8 @@ export class Jobs_titlesTable{
 
     //Добавление должности в организацию 
     async insertJobs_title():Promise<Jobs_titlesEntity[]>{
-        var db_res = await this.db.query("SELECT addJobs_titles(CAST ("+this.args.org_id+" AS BIGINT), "+
-        "CAST ('"+this.args.name+"' AS VARCHAR(250)), "+
+        var db_res = await this.db.query("SELECT addJobs_titles(CAST ("+this.args.id_org+" AS BIGINT), "+
+        "CAST ('"+this.args.job_title+"' AS VARCHAR(250)), "+
         "CAST ('" + dateTimeToSQL(new Date(Date.now())) + "' AS TIMESTAMP), "+
         "CAST ('"+this.args.info+"' AS TEXT)) AS id");
         var result: Jobs_titlesEntity[] = new Array();
