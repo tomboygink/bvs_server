@@ -48,6 +48,8 @@ export class NewUserRegistration extends React.Component<IProps> {
 
   async SelectedOrg(a: any) {
     APP_STORAGE.reg_user.setKeyOrg(a);
+    APP_STORAGE.reg_user.setKeyJobs(null);
+    APP_STORAGE.reg_user.setJobsAll([])
     APP_STORAGE.reg_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
   }
 
