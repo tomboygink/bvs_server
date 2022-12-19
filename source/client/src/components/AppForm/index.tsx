@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import {AppBarPanel} from './AppBarPanel/AppBarPanel'
 import {Modal} from './Modal/Modal'
 import {ModalLeftPanel} from './AppBarPanel/LeftPanel/NewUserRegistratiom/ModalLeftPanel'
-import {Box} from '@mui/material';
+import {Box, Alert} from '@mui/material';
 import { APP_STORAGE } from '../../storage/AppStorage';
 
 interface IProps{}
