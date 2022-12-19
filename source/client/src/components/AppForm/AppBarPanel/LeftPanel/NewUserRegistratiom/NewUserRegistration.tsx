@@ -394,7 +394,7 @@ export class NewUserRegistration extends React.Component<IProps> {
             Сохранить
           </Button>
         </Box>
-        <Alert sx= {{position: 'absolute', top: '44px', right: '12px'}} severity="warning" icon={false}>{APP_STORAGE.reg_user.getJobsAllError()}</Alert> 
+        {/* <Alert sx= {{position: 'absolute', top: '44px', right: '12px'}} severity="warning" icon={false}>{APP_STORAGE.reg_user.getJobsAllError()}</Alert>  */}
       </React.Fragment>
     );
   }

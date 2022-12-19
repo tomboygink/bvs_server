@@ -11,7 +11,8 @@ import { observer } from "mobx-react";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import BusinessIcon from "@mui/icons-material/Business";
-import WorkIcon from "@mui/icons-material/Work";
+import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+
 
 interface IProps {}
 
@@ -80,7 +81,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
             onClick={() => this.OpenModalRegUser(3, "Добавить должность")}
           >
             <ListItemIcon>
-              <WorkIcon fontSize="small" />
+              <WorkOutlineIcon fontSize="small" />
             </ListItemIcon>
             Добавить должность
           </MenuItem>

@@ -31,6 +31,11 @@ export class NewJobsTittle extends React.Component<IProps> {
     APP_STORAGE.reg_user.set_NewUser("sess_id", APP_STORAGE.auth_form.getdt());
   }
 
+  async SelectedOrg(a: any) {
+    APP_STORAGE.reg_user.setKeyOrg(a);
+    APP_STORAGE.reg_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
+  }
+
   async OpenModalRegUser(e: any, tittle: string) {
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());
     APP_STORAGE.reg_user.setTakeModal(e);
@@ -41,31 +46,44 @@ export class NewJobsTittle extends React.Component<IProps> {
 
   render(): React.ReactNode {
     let org = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll()));
-    var options: React.ReactNode = <></>;
+
+    var options_org = [];
+    if (APP_STORAGE.reg_user.getOrgAll()) {
+      org = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll()));
+      for (var key in org) {
+        if (org.hasOwnProperty(key)) {
+          let a = org[key];
+
+          options_org.push(
+            <MenuItem key={a.id} sx={{ fontSize: "12px" }} value={a.id}>
+              {a.full_name}
+            </MenuItem>
+          );
+        }
+      }
+    }
 
     return (
       <React.Fragment>
-        <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
-          <InputLabel sx={{ fontSize: "12px" }}>Организация</InputLabel>
+     <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+          <InputLabel className="org" sx={{ fontSize: "12px" }}>
+            Организация
+          </InputLabel>
           <Select
             sx={{ fontSize: "12px" }}
             value={APP_STORAGE.reg_user.getKeyOrg() || ""}
             label="организация"
+            onChange={(e) => {
+              this.SelectedOrg(e.target.value);
+            }}
           >
-            <MenuItem
-              key={org.idd || ""}
-              sx={{ fontSize: "12px" }}
-              value={org.idd || ""}
-            >
-              {org.full_name || ""}
-            </MenuItem>
+            {options_org}
             <Divider />
 
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "flex-end",
-                background: "#F1F5FC",
                 m: 1,
                 borderRadius: "4px",
               }}
@@ -81,6 +99,7 @@ export class NewJobsTittle extends React.Component<IProps> {
             </Box>
           </Select>
         </FormControl>
+
 
         <TextField
           sx={{ mt: "12px" }}
