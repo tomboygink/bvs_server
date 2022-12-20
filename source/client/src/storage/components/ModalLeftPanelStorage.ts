@@ -8,7 +8,9 @@ import { WSocket } from "../WSocket";
 export class ModalLeftPanel {
   @observable modal_registration_user: boolean = false;
   @observable take_data: any = null; /// пушим в модальное окно форму, в зависимоти от выбора пользователя
-  @observable modal_tittle: string = "";
+  @observable modal_tittle: string = " ";
+
+  @observable result_save:string = '';
 
   @observable organization: Array<string> = [];
   @observable jobs_titles: Array<string> = [];
@@ -474,22 +476,16 @@ export class ModalLeftPanel {
   @action setErrorAddress(val: boolean) {
     this.error_address = val;
   } /// проверка адреса на ввод данных (только цифры)
-  @computed getErrorAddress(): boolean {
-    return this.error_address;
-  }
-  @action setTextHelpAddress(val: string) {
-    this.texthelp_address = val;
-  }
-  @computed getTextHelpAddress(): string {
-    return this.texthelp_address;
-  }
+  @computed getErrorAddress(): boolean {return this.error_address;}
+  @action setTextHelpAddress(val: string) {this.texthelp_address = val; }
+  @computed getTextHelpAddress(): string {return this.texthelp_address;}
 
-  @action setNewJobsTitles(val: string) {
-    this.jobs_titles_new = val;
-  }
-  @computed getNewJobsTitles(): string {
-    return this.jobs_titles_new;
-  }
+  @action setNewJobsTitles(val: string) {this.jobs_titles_new = val;}
+  @computed getNewJobsTitles(): string {return this.jobs_titles_new;}
+
+  @action setResulSave(val: string) {this.result_save = val;}
+  @computed getResulSave(): string {return this.result_save;}
+
 
   async get_AllUsers(name: string, value: any, _options?: any) {
     /* -----  Отправляем запрос на получение всех пользователей   */
@@ -553,12 +549,14 @@ export class ModalLeftPanel {
           user_login = a.login;
           this.setErrorLoginDouble(true);
           this.setTextHelpLoginDouble("Такой логин уже есть");
-        } else {
-          this.setErrorLoginDouble(false);
-          this.setTextHelpLoginDouble("");
-        }
+        } 
       }
     }
+
+    if (user_login !== this.getLogin()) {
+      this.setErrorLoginDouble(false);
+      this.setTextHelpLoginDouble("");
+    } 
     /// Проверка на пустые значения формы
     if (this.getFamily() === "") {
       this.setErrorFamily(true);
@@ -576,14 +574,7 @@ export class ModalLeftPanel {
       this.setTextHelpName("");
     }
 
-    if (this.getFather() === "") {
-      this.setErrorFather(true);
-      this.setTextHelpFather("Заполните поле");
-    } else {
-      this.setErrorFather(false);
-      this.setTextHelpFather("");
-    }
-
+  
     if (email === null) {
       this.setErrorEmail(true);
       this.setTextHelpEmail(
@@ -642,7 +633,6 @@ export class ModalLeftPanel {
       this.getPassword() === this.getRepeatPassword() &&
       this.getPassword().length >= 6 &&
       this.getName() &&
-      this.getFather() &&
       this.getEmail() &&
       this.getTelephone() &&
       this.getLogin() &&
@@ -668,7 +658,12 @@ export class ModalLeftPanel {
       };
       q.sess_code = sess_code;
       (await WSocket.get()).send(q);
-      console.log(q);
+      this.get_AllUsers("sess_id", value)
+      this.setResulSave('Данные успешно сохранены')
+      
+      setTimeout(() => {
+        this.setResulSave('')
+      }, 2000)
     }
   }
 
@@ -690,6 +685,7 @@ export class ModalLeftPanel {
       var full_name = "";
       var name_double = "";
       var inn_double = "";
+      
       let org = JSON.parse(JSON.stringify(this.getOrgAll())); /// получаем все организации
       // разделяем обьект на ключ значение и проверяем,  есть ли уже такая организация в бд
       for (var key in org) {
@@ -698,40 +694,44 @@ export class ModalLeftPanel {
           full_name = a.full_name;
           this.setErrorFullNameDouble(true);
           this.setTextHelpFullNameDouble("Такая организация уже есть");
-        } else {
-          full_name = "";
-          this.setErrorFullNameDouble(false);
-          this.setTextHelpFullNameDouble("");
         }
 
         if (a.name === this.getNameOrg()) {
           name_double = a.name;
           this.setErrorNameDouble(true);
           this.setTextHelpNameDouble("Такая организация уже есть");
-        } else {
-          name_double = "";
-          this.setErrorNameDouble(false);
-          this.setTextHelpNameDouble("");
-        }
+        } 
 
         if (a.inn === this.getInn()) {
           inn_double = a.inn;
           this.setErrorInnDouble(true);
           this.setTextHelpInnDouble("Такой инн уже есть");
-        } else {
-          inn_double = "";
-          this.setErrorInnDouble(false);
-          this.setTextHelpInnDouble("");
-        }
+        } 
       }
     }
+
+    if (full_name !== this.getFullNameOrg()) {
+      this.setErrorFullNameDouble(false);
+      this.setTextHelpFullNameDouble("");
+    }
+
+    if (name_double !== this.getNameOrg()) {
+      this.setErrorNameDouble(false);
+      this.setTextHelpNameDouble("");
+    }
+
+    if (inn_double !== this.getInn()) {
+      this.setErrorInnDouble(false);
+      this.setTextHelpInnDouble("");
+    }
+
     ////// проверка на пустые значения
     if (this.getFullNameOrg() === "") {
       this.setErrorFullName(true);
       this.setTextHelpFullName("Поле не может быть пустым");
     } else {
       this.setErrorFullName(false);
-      this.setTextHelpFullName("");
+      this.setTextHelpFullName(null);
     }
 
     if (this.getNameOrg() === "") {
@@ -739,7 +739,7 @@ export class ModalLeftPanel {
       this.setTextHelpNameOrg("Поле не может быть пустым");
     } else {
       this.setErrorNameOrg(false);
-      this.setTextHelpNameOrg("");
+      this.setTextHelpNameOrg(null);
     }
 
     if (inn === null) {
@@ -747,7 +747,7 @@ export class ModalLeftPanel {
       this.setTextHelpInn("Только цифры");
     } else {
       this.setErrorInn(false);
-      this.setTextHelpInn("");
+      this.setTextHelpInn(null);
     }
 
     if (this.getAddress() === "") {
@@ -755,7 +755,7 @@ export class ModalLeftPanel {
       this.setTextHelpAddress("Поле не может быть пустым");
     } else {
       this.setErrorAddress(false);
-      this.setTextHelpAddress("");
+      this.setTextHelpAddress(null);
     }
     //// Отправляем данные с формы на сервер
     var q: IWSQuery = new WSQuery("set_NewOrg");
@@ -779,6 +779,13 @@ export class ModalLeftPanel {
       };
       q.sess_code = sess_code;
       (await WSocket.get()).send(q);
+      this.get_Org("sess_id", value); 
+       
+      this.setResulSave('Данные успешно сохранены')
+      
+      setTimeout(() => {
+        this.setResulSave('')
+      }, 2000)
     }
   }
 

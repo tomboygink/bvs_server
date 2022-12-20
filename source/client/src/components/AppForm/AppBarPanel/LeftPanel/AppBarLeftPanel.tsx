@@ -48,8 +48,14 @@ export class AppBarLeftPanel extends React.Component<IProps> {
         }
       }
     }
+    
+      /* ----- разграничение прав доступа --------------------
+                user_r === 1 Только чтение 
+                user_w === 2 Разрегить редактирование
+               */
 
-    if (user_r === 1) {
+     
+    if (user_w === 2 && user_r === 1) {  
       menu = (
         <>
           <MenuItem>
@@ -87,6 +93,18 @@ export class AppBarLeftPanel extends React.Component<IProps> {
           </MenuItem>
         </>
       );
+    }
+    else if (user_r === 1) {
+      menu = (
+        <>
+          <MenuItem>
+            <ListItemIcon>
+            </ListItemIcon>{" "}
+            Только чтение
+          </MenuItem>
+          </>
+      )
+
     }
 
     return (

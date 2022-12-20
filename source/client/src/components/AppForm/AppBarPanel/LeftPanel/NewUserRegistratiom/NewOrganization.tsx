@@ -11,8 +11,11 @@ import {
 import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
+import { Padding } from "@mui/icons-material";
 
 interface IProps {}
+
+
 
 @observer
 export class NewOrganization extends React.Component<IProps> {
@@ -34,14 +37,8 @@ export class NewOrganization extends React.Component<IProps> {
             variant="outlined"
             margin="normal"
             required
-            error={
-              APP_STORAGE.reg_user.getErrorFullName() ||
-              APP_STORAGE.reg_user.getErrorFullNameDouble()
-            }
-            helperText={
-              APP_STORAGE.reg_user.getTextHelpFullName() ||
-              APP_STORAGE.reg_user.getTextHelpFullNameDouble()
-            }
+            error={APP_STORAGE.reg_user.getErrorFullName() || APP_STORAGE.reg_user.getErrorFullNameDouble() }
+            helperText={APP_STORAGE.reg_user.getTextHelpFullName() || APP_STORAGE.reg_user.getTextHelpFullNameDouble()}
             label="Полное наименование"
             autoComplete="полное наименование"
             autoFocus
@@ -58,14 +55,8 @@ export class NewOrganization extends React.Component<IProps> {
             variant="outlined"
             margin="normal"
             required
-            error={
-              APP_STORAGE.reg_user.getErrorNameOrg() ||
-              APP_STORAGE.reg_user.getErrorNameDouble()
-            }
-            helperText={
-              APP_STORAGE.reg_user.getTextHelpNameOrg() ||
-              APP_STORAGE.reg_user.getTextHelpNameDouble()
-            }
+            error={APP_STORAGE.reg_user.getErrorNameOrg() || APP_STORAGE.reg_user.getErrorNameDouble()}
+            helperText={APP_STORAGE.reg_user.getTextHelpNameDouble()}
             label="Наименование"
             autoComplete="наименование"
             autoFocus
@@ -192,6 +183,11 @@ export class NewOrganization extends React.Component<IProps> {
             Сохранить
           </Button>
         </Box>
+        {APP_STORAGE.reg_user.getResulSave().length > 0 &&
+       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> {APP_STORAGE.reg_user.getResulSave()}</Typography>
+      }
+        
+     
       </React.Fragment>
     );
   }

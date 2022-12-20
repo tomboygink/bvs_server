@@ -64,8 +64,8 @@ export class ChangePassword extends React.Component<IProps> {
           >
             {/* ---------------------------------------смена пароля */}
             <TextField
-              inputProps={{ style: { fontSize: 12 } }} // font size of input text
-              InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+              inputProps={{ style: { fontSize: 12 } }} // размер текста для text
+              InputLabelProps={{ style: { fontSize: 12 } }} // размер текста для label
               variant="outlined"
               margin="normal"
               fullWidth
@@ -84,8 +84,8 @@ export class ChangePassword extends React.Component<IProps> {
             />
 
             <TextField
-              inputProps={{ style: { fontSize: 12 } }} // font size of input text
-              InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+              inputProps={{ style: { fontSize: 12 } }} // размер текста для text
+              InputLabelProps={{ style: { fontSize: 12 } }} // размер текста для label
               variant="outlined"
               margin="normal"
               fullWidth
@@ -104,8 +104,8 @@ export class ChangePassword extends React.Component<IProps> {
             />
 
             <TextField
-              inputProps={{ style: { fontSize: 12 } }} // font size of input text
-              InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+              inputProps={{ style: { fontSize: 12 } }} 
+              InputLabelProps={{ style: { fontSize: 12 } }} 
               variant="outlined"
               margin="normal"
               fullWidth

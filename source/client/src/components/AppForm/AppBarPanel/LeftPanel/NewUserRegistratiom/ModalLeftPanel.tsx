@@ -9,7 +9,6 @@ import { NewUserRegistration } from "./NewUserRegistration";
 import { NewOrganization } from "./NewOrganization";
 import { NewJobsTittle } from "./NewJobsTittle";
 
-
 import CloseIcon from "@mui/icons-material/Close";
 
 interface IProps {}
@@ -22,36 +21,36 @@ export class ModalLeftPanel extends React.Component<IProps> {
 
   async closeModal() {
     APP_STORAGE.reg_user.setModalRegUser(false);
-    APP_STORAGE.reg_user.setFamily('');
-    APP_STORAGE.reg_user.setName('');
-    APP_STORAGE.reg_user.setFather('');
-    APP_STORAGE.reg_user.setEmail('');
-    APP_STORAGE.reg_user.setTelephone('');
-    APP_STORAGE.reg_user.setLogin('');
-    APP_STORAGE.reg_user.setPassword('');
-    APP_STORAGE.reg_user.setRepeatPassword('');
-    APP_STORAGE.reg_user.setKeyOrg('');
-    APP_STORAGE.reg_user.setKeyJobs('');
+    APP_STORAGE.reg_user.setFamily("");
+    APP_STORAGE.reg_user.setName("");
+    APP_STORAGE.reg_user.setFather("");
+    APP_STORAGE.reg_user.setEmail("");
+    APP_STORAGE.reg_user.setTelephone("");
+    APP_STORAGE.reg_user.setLogin("");
+    APP_STORAGE.reg_user.setPassword("");
+    APP_STORAGE.reg_user.setRepeatPassword("");
+    APP_STORAGE.reg_user.setKeyOrg("");
+    APP_STORAGE.reg_user.setKeyJobs("");
     APP_STORAGE.reg_user.setErrorFamily(false);
-    APP_STORAGE.reg_user.setTextHelpFamily('');
+    APP_STORAGE.reg_user.setTextHelpFamily("");
     APP_STORAGE.reg_user.setErrorName(false);
-    APP_STORAGE.reg_user.setTextHelpName('');
+    APP_STORAGE.reg_user.setTextHelpName("");
     APP_STORAGE.reg_user.setErrorFather(false);
-    APP_STORAGE.reg_user.setTextHelpFather('')
+    APP_STORAGE.reg_user.setTextHelpFather("");
     APP_STORAGE.reg_user.setErrorEmail(false);
-    APP_STORAGE.reg_user.setTextHelpEmail('');
+    APP_STORAGE.reg_user.setTextHelpEmail("");
     APP_STORAGE.reg_user.setErrorTelephone(false);
-    APP_STORAGE.reg_user.setTextHelpTelephone('')
+    APP_STORAGE.reg_user.setTextHelpTelephone("");
     APP_STORAGE.reg_user.setErrorLogin(false);
-    APP_STORAGE.reg_user.setTextHelpLogin('');
+    APP_STORAGE.reg_user.setTextHelpLogin("");
     APP_STORAGE.reg_user.setErrorPassword(false);
-    APP_STORAGE.reg_user.setTextHelpPassword('')
+    APP_STORAGE.reg_user.setTextHelpPassword("");
     APP_STORAGE.reg_user.setErrorPassword(false);
-    APP_STORAGE.reg_user.setTextHelpPassword('');
+    APP_STORAGE.reg_user.setTextHelpPassword("");
     APP_STORAGE.reg_user.setErrorRepeatPassword(false);
-    APP_STORAGE.reg_user.setTextHelpRepeatPassword('');
+    APP_STORAGE.reg_user.setTextHelpRepeatPassword("");
     APP_STORAGE.reg_user.setErrorInn(false);
-    APP_STORAGE.reg_user.setTextHelpInn('');
+    APP_STORAGE.reg_user.setTextHelpInn("");
   }
 
   render(): React.ReactNode {

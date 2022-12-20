@@ -274,14 +274,8 @@ export class NewUserRegistration extends React.Component<IProps> {
           InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
           variant="outlined"
           required
-          error={
-            APP_STORAGE.reg_user.getErrorLogin() ||
-            APP_STORAGE.reg_user.getErrorLoginDouble()
-          }
-          helperText={
-            APP_STORAGE.reg_user.getTextHelpLogin() ||
-            APP_STORAGE.reg_user.getTextHelpLoginDouble()
-          }
+          error={APP_STORAGE.reg_user.getErrorLogin() || APP_STORAGE.reg_user.getErrorLoginDouble() }
+          helperText={APP_STORAGE.reg_user.getTextHelpLogin() || APP_STORAGE.reg_user.getTextHelpLoginDouble()}
           fullWidth
           label="Логин"
           autoComplete="логин"
@@ -407,6 +401,9 @@ export class NewUserRegistration extends React.Component<IProps> {
             Сохранить
           </Button>
         </Box>
+        {APP_STORAGE.reg_user.getResulSave().length > 0 &&
+       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> смсммчс{APP_STORAGE.reg_user.getResulSave()}</Typography>
+      }
       </React.Fragment>
     );
   }
