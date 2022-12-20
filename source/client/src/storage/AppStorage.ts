@@ -41,7 +41,7 @@ class AppStorage {
     }
 
     @action async onWSData(dt: IWSResult) {
-        console.log("SOCKET RESULT", dt); 
+        console.log("SOCKET RESULT1", dt); 
         switch (dt.cmd) {
             case ('get_UserByAuth'): { this.auth_form.onGetUserByAuth(dt); } break;
             case ('get_UserBySessionCode'): { this.auth_form.onGetUserBySessionCode(dt); } break;
@@ -51,6 +51,7 @@ class AppStorage {
             case ('set_SaveNewPass') : {this.auth_form.onSaveNewPass(dt)} break;
             case ('get_Org') : {this.reg_user.setAllOrganization(dt)} break;
             case ('get_Jobs') : {this.reg_user.setAllJobsTitle(dt)} break;
+            case ('get_AllUser') : {this.reg_user.setUsersAll(dt)} break;
             default: { } break;
         }
     }

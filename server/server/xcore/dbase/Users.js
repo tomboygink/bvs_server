@@ -226,6 +226,23 @@ var UserTable = (function () {
             });
         });
     };
+    UserTable.prototype.selectAllUsers = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var db_res, result, r;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.db.query("SELECT * FROM SelectAllUsers()")];
+                    case 1:
+                        db_res = _a.sent();
+                        result = new Array();
+                        for (r in db_res.rows) {
+                            result.push(db_res.rows[r]);
+                        }
+                        return [2, result];
+                }
+            });
+        });
+    };
     UserTable.prototype.insertUser = function () {
         return __awaiter(this, void 0, void 0, function () {
             var pass, re_pass_code, mail_code, access, db_res, result, p;

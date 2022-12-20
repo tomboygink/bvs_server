@@ -1,10 +1,8 @@
 import * as React from "react";
 import {
   Box,
-  Link,
   TextField,
   Button,
-  FormHelperText,
   TextareaAutosize,
   Typography,
   Divider,
@@ -29,15 +27,21 @@ export class NewOrganization extends React.Component<IProps> {
   render(): React.ReactNode {
     return (
       <React.Fragment>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
           <TextField
             inputProps={{ style: { fontSize: 12 } }} // font size of input text
             InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
             variant="outlined"
             margin="normal"
             required
-            // error ={APP_STORAGE.reg_user.getErrorFamily()}
-            // helperText = {APP_STORAGE.reg_user.getTextHelpFamily()}
+            error={
+              APP_STORAGE.reg_user.getErrorFullName() ||
+              APP_STORAGE.reg_user.getErrorFullNameDouble()
+            }
+            helperText={
+              APP_STORAGE.reg_user.getTextHelpFullName() ||
+              APP_STORAGE.reg_user.getTextHelpFullNameDouble()
+            }
             label="Полное наименование"
             autoComplete="полное наименование"
             autoFocus
@@ -54,8 +58,14 @@ export class NewOrganization extends React.Component<IProps> {
             variant="outlined"
             margin="normal"
             required
-            //  error ={APP_STORAGE.reg_user.getErrorName()}
-            //  helperText = {APP_STORAGE.reg_user.getTextHelpName()}
+            error={
+              APP_STORAGE.reg_user.getErrorNameOrg() ||
+              APP_STORAGE.reg_user.getErrorNameDouble()
+            }
+            helperText={
+              APP_STORAGE.reg_user.getTextHelpNameOrg() ||
+              APP_STORAGE.reg_user.getTextHelpNameDouble()
+            }
             label="Наименование"
             autoComplete="наименование"
             autoFocus
@@ -65,25 +75,31 @@ export class NewOrganization extends React.Component<IProps> {
             }}
             value={APP_STORAGE.reg_user.getNameOrg() || ""}
           />
-
-          <TextField
-            inputProps={{ style: { fontSize: 12 } }} // font size of input text
-            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-            variant="outlined"
-            margin="normal"
-            required
-             error ={APP_STORAGE.reg_user.getErrorInn()}
-             helperText = {APP_STORAGE.reg_user.getTextHelpInn()}
-            label="ИНН"
-            autoComplete="инн"
-            autoFocus
-            size="small"
-            onChange={(e) => {
-              APP_STORAGE.reg_user.setInn(e.target.value);
-            }}
-            value={APP_STORAGE.reg_user.getInn() || ""}
-          />
         </Box>
+
+        <TextField
+          inputProps={{ style: { fontSize: 12 } }} // font size of input text
+          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+          variant="outlined"
+          margin="normal"
+          required
+          error={
+            APP_STORAGE.reg_user.getErrorInn() ||
+            APP_STORAGE.reg_user.getErrorInnDouble()
+          }
+          helperText={
+            APP_STORAGE.reg_user.getTextHelpInn() ||
+            APP_STORAGE.reg_user.getTextHelpInnDouble()
+          }
+          label="ИНН"
+          autoComplete="инн"
+          autoFocus
+          size="small"
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setInn(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getInn() || ""}
+        />
 
         <TextField
           sx={{ mt: "12px" }}
@@ -92,8 +108,8 @@ export class NewOrganization extends React.Component<IProps> {
           variant="outlined"
           fullWidth
           required
-          //  error ={APP_STORAGE.reg_user.getErrorEmail()}
-          //  helperText = {APP_STORAGE.reg_user.getTextHelpEmail()}
+          error={APP_STORAGE.reg_user.getErrorAddress()}
+          helperText={APP_STORAGE.reg_user.getTextHelpAddress()}
           label="Адрес"
           autoComplete="адрес"
           autoFocus
@@ -101,7 +117,7 @@ export class NewOrganization extends React.Component<IProps> {
           onChange={(e) => {
             APP_STORAGE.reg_user.setAddress(e.target.value);
           }}
-          value={APP_STORAGE.reg_user.getAddress() || "" }
+          value={APP_STORAGE.reg_user.getAddress() || ""}
         />
 
         <TextField

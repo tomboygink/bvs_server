@@ -95,8 +95,8 @@ export class ChangeUserData extends React.Component<IProps> {
           />
 
           <TextField
-            inputProps={{ style: { fontSize: 12 } }} // font size of input text
-            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+            inputProps={{ style: { fontSize: 12 } }} 
+            InputLabelProps={{ style: { fontSize: 12 } }}
             variant="outlined"
             margin="normal"
             required
@@ -114,8 +114,8 @@ export class ChangeUserData extends React.Component<IProps> {
         <Box sx={{ display: "flex" }}>
           <TextField
             sx={{ mt: "12px" }}
-            inputProps={{ style: { fontSize: 12 } }} // font size of input text
-            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+            inputProps={{ style: { fontSize: 12 } }} 
+            InputLabelProps={{ style: { fontSize: 12 } }} 
             variant="outlined"
             fullWidth
             required
@@ -143,8 +143,8 @@ export class ChangeUserData extends React.Component<IProps> {
 
         <TextField
           sx={{ mt: "14px" }}
-          inputProps={{ style: { fontSize: 12 } }} // font size of input text
-          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+          inputProps={{ style: { fontSize: 12 } }} 
+          InputLabelProps={{ style: { fontSize: 12 } }} 
           variant="outlined"
           fullWidth
           required
@@ -172,8 +172,7 @@ export class ChangeUserData extends React.Component<IProps> {
               gap: "8px",
               alignItems: "center",
             }}
-          >
-          </Box>
+          ></Box>
 
           <Divider sx={{ padding: "12px" }} />
           <Typography sx={{ color: "#999999" }} variant="caption">
@@ -193,7 +192,7 @@ export class ChangeUserData extends React.Component<IProps> {
         </Box>
 
         <Box
-      sx={{
+          sx={{
             display: "flex",
             alignItems: "baseline",
             justifyContent: "flex-end",

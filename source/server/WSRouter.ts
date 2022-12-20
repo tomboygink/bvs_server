@@ -8,6 +8,7 @@ import { SendMail } from '../xcore/mailer/sendMail';
 
 import crypto from 'crypto';
 import { CONFIG } from '../xcore/config'
+import { Console } from 'console';
 
 
 export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
@@ -160,7 +161,8 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.data = [], 
                 wsres.error = 'Организации отсутвуют'
             }
-        } break;
+        } 
+        break;
 
         //Добавление новой организации
         case 'set_NewOrg': {
@@ -239,9 +241,8 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             data = await ut.selectAllUsers();
             wsres.code = q.sess_code;
             wsres.data = data;
-            wsres.error = null;
-        }
-
+            wsres.error = '';
+        } break;
 
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
