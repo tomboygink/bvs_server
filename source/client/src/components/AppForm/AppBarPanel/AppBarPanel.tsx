@@ -18,6 +18,11 @@ export class AppBarPanel extends React.Component<IProps> {
         super(props);   
     }
 
+    async OpenLeftMenu() {
+        APP_STORAGE.app_bar.setSetOpenAppBar(true);
+        APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt()); // должность 
+      }
+
     render(): React.ReactNode {
         return (
             <React.Fragment>
@@ -29,7 +34,7 @@ export class AppBarPanel extends React.Component<IProps> {
                     pr: '2rem'}} >
                     <IconButton
                     color="inherit"
-                    onClick={()=>{ APP_STORAGE.app_bar.setSetOpenAppBar(true); }}           
+                    onClick={()=>{ this.OpenLeftMenu()}}           
                     edge="start">
                 <MenuIcon />
                 </IconButton>

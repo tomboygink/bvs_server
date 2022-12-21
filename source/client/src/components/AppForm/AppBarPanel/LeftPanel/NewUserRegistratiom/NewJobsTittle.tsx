@@ -104,7 +104,7 @@ export class NewJobsTittle extends React.Component<IProps> {
         </FormControl>
 
         <TextField
-          sx={{ mt: "12px" , mb: '12px'}}
+          sx={{ mt: "12px", mb: "12px" }}
           inputProps={{ style: { fontSize: 12 } }} // font size of input text
           InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
           variant="outlined"

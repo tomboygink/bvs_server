@@ -81,20 +81,24 @@ export class Saveresult extends React.Component<IProps> {
 
   render(): React.ReactNode {
     APP_STORAGE.modal.setActMail(APP_STORAGE.auth_form.getUser().act_mail);
-    
+
     var form_code: React.ReactNode = <></>;
-    var button : React.ReactNode = <></>
-     if ( APP_STORAGE.modal.getActMail() === false){ 
-      form_code = <>
-             <Typography>
-          Код подтверждения отправлен на {APP_STORAGE.modal.getEmail()} почту
-        </Typography>
-        <Typography sx={{ fontSize: "12px", color: "#1976d2" }}>
-          Перед повторной отправкой кода убедитесь, что почта введена корректно
-        </Typography>
-          </>
-          button = <>
-              <Button
+    var button: React.ReactNode = <></>;
+    if (APP_STORAGE.modal.getActMail() === false) {
+      form_code = (
+        <>
+          <Typography>
+            Код подтверждения отправлен на {APP_STORAGE.modal.getEmail()} почту
+          </Typography>
+          <Typography sx={{ fontSize: "12px", color: "#1976d2" }}>
+            Перед повторной отправкой кода убедитесь, что почта введена
+            корректно
+          </Typography>
+        </>
+      );
+      button = (
+        <>
+          <Button
             sx={{
               background: "#F1F5FC",
               color: "#266BF1",
@@ -107,17 +111,17 @@ export class Saveresult extends React.Component<IProps> {
           >
             Отправить код еще раз
           </Button>
-          </>
-     }
+        </>
+      );
+    }
 
     return (
       <React.Fragment>
         <Box>Данные успешно изменены.</Box>
 
-
-       {form_code}
+        {form_code}
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-         {button}
+          {button}
           <Button
             sx={{
               background: "#266BF1",
