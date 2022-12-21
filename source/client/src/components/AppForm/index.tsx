@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 
 import { AppBarPanel } from "./AppBarPanel/AppBarPanel";
 import { Modal } from "./Modal/Modal";
-import { ModalLeftPanel } from "./AppBarPanel/LeftPanel/NewUserRegistratiom/ModalLeftPanel";
+import { ModalLeftPanel } from "./AppBarPanel/LeftPanel/RegistationUsers/ModalLeftPanel";
 import { Box, Alert } from "@mui/material";
 import { APP_STORAGE } from "../../storage/AppStorage";
 import {TableUser} from '../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser'
@@ -43,7 +43,11 @@ export class AppForm extends React.Component<IProps> {
  
            
 
-            <Box className="appform">3</Box>
+            <Box className="appform">
+              
+              3
+              
+              </Box>
           </Box>
         </React.Fragment>
       );

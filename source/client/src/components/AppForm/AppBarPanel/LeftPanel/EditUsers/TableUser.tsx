@@ -13,6 +13,8 @@ import NativeSelect from '@mui/material/NativeSelect';
 
 import { observer } from "mobx-react";
 
+import {EditUser} from "./EditUser"
+
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined';
 
@@ -39,14 +41,17 @@ export class TableUser extends React.Component<IProps> {
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >                
-                <TableCell > {row.family} </TableCell>
-              <TableCell align="center">{row.name}</TableCell>
+              <TableCell > {row.family} </TableCell>
+              <TableCell align="center" > {row.name} </TableCell>
               <TableCell align="center">{row.father}</TableCell>
               <TableCell align="center">{row.login}</TableCell>
               <TableCell align="center">{row.telephone}</TableCell>
               <TableCell align="center">{row.email}</TableCell>
               <TableCell align="center">{row.info}</TableCell>
-              <TableCell align="center"><DriveFileRenameOutlineOutlinedIcon/></TableCell>
+              <TableCell align="center"
+                 onClick={(e) => {APP_STORAGE.edit_user.setModalEditUser(true)}}>
+                <DriveFileRenameOutlineOutlinedIcon/>
+             </TableCell>
               <TableCell>   <FormControl fullWidth>
       
         <NativeSelect
@@ -63,12 +68,8 @@ export class TableUser extends React.Component<IProps> {
               </TableRow>
 
             )
-          
         }
       }
-
-
-
 
     return (
       <React.Fragment>
@@ -89,23 +90,13 @@ export class TableUser extends React.Component<IProps> {
           </TableRow>
         </TableHead>
         <TableBody>
-            {/* <TableRow
-              key={subjects[item]}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))} */}
           {table_rows}
         </TableBody>
       </Table>
     </TableContainer>
+
+     
+     <EditUser/>
        
       </React.Fragment>
     );

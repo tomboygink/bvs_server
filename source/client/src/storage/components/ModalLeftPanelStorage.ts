@@ -116,8 +116,9 @@ export class ModalLeftPanel {
   @action setAllUsers(val: Array<string>) {this.users = val;}
   @computed getAllUsers(): Array<string> {return this.users;}
 
-  @action setModalRegUser(val: boolean) {this.modal_registration_user = val;} /// Для открытия модального окна
+  @action setModalRegUser(val: boolean) {this.modal_registration_user = val;} /// Для открытия модального окна (Регистрация пользователя)
   @computed getModalRegUser(): boolean {return this.modal_registration_user;}
+  
 
   @action setTakeModal(val: any) {this.take_data = val;} /// пушим в модальное окно форму, в зависимоти от выбора пользователя
   @computed getTakeModal(): any { return this.take_data;}

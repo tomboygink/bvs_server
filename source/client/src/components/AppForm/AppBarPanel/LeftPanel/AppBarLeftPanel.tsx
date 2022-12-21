@@ -34,6 +34,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
   async OpenTableUser() {  /// рисуем таблицу пользователей
    APP_STORAGE.reg_user.setOpenTableUsers(true);
    APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt()); // все пользователи
+   APP_STORAGE.app_bar.setSetOpenAppBar(false);/// закрываем
   }
 
   render(): React.ReactNode {
