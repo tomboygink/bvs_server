@@ -16,6 +16,7 @@ CREATE TABLE users (
     mail_code VARCHAR(250) DEFAULT(''),
     act_mail BOOLEAN DEFAULT(false),
     re_password_code VARCHAR(250) DEFAULT(''),
+    --devs_groups_id BIGINT DEFAULT(0),
     deleted BOOLEAN DEFAULT(false),
     deleted_date TIMESTAMP DEFAULT(null),
     created_at TIMESTAMP DEFAULT(CURRENT_TIMESTAMP),
@@ -37,6 +38,7 @@ COMMENT ON COLUMN users.user_data IS 'json объукт дополнительн
 COMMENT ON COLUMN users.mail_code IS 'код подтверждения емаил';
 COMMENT ON COLUMN users.act_mail IS 'фиксация подтвержденного кода';
 COMMENT ON COLUMN users.re_password_code IS 'код смены пароля по ссылке';
+--COMMENT ON COLUMN users.devs_groups_id IS 'Id группы устройств';
 COMMENT ON COLUMN users.deleted IS 'блокировка пользователя';
 COMMENT ON COLUMN users.deleted_date IS 'дата блокировки пользователя';
 COMMENT ON COLUMN users.created_at IS 'дата создания записи';

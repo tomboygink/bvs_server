@@ -7,6 +7,7 @@ CREATE TABLE devs_groups
     "g_name" CHARACTER VARYING(250) NOT NULL DEFAULT(''),
     "latitude" CHARACTER VARYING(60) NOT NULL DEFAULT('0.0'),
     "longitude" CHARACTER VARYING(60) NOT NULL DEFAULT('0.0'),
+    --"org_id" BIGINT DEFAULT(0),
     "ord_num" INTEGER NOT NULL DEFAULT(0),
     "g_info" TEXT NOT NULL DEFAULT(''),
 	"deleted" BOOL NOT NULL DEFAULT(FALSE)
@@ -16,6 +17,7 @@ COMMENT ON COLUMN devs_groups.parent_id IS 'Родительская групп�
 COMMENT ON COLUMN devs_groups.g_name IS 'Наименование группы (отображается в дереве)';
 COMMENT ON COLUMN devs_groups.latitude IS 'Географическая широта';
 COMMENT ON COLUMN devs_groups.longitude IS 'Географическая долгота';
+--COMMENT ON COLUMN devs_groups.org_id IS 'Группа устройств для организации';
 COMMENT ON COLUMN devs_groups.ord_num IS 'Порядок следования групп';
 COMMENT ON COLUMN devs_groups.g_info IS 'Информация о группе';
 COMMENT ON COLUMN devs_groups.deleted IS 'Группа удалена';
@@ -31,6 +33,7 @@ CREATE TABLE devs
     "latitude" CHARACTER VARYING(60) NOT NULL DEFAULT('0.0'),
     "longitude" CHARACTER VARYING(60) NOT NULL DEFAULT('0.0'),
     "sensors" JSON NOT NULL DEFAULT('{"s":[]}'),
+    "deleted" BOOLEAN DEFAULT (false),
     "info" TEXT NOT NULL DEFAULT('')
 );
 COMMENT ON TABLE devs IS 'Устройства по группам';
@@ -40,6 +43,7 @@ COMMENT ON COLUMN devs.name IS 'Наименование устройства';
 COMMENT ON COLUMN devs.latitude IS 'Географическая широта';
 COMMENT ON COLUMN devs.longitude IS 'Географическая долгота';
 COMMENT ON COLUMN devs.sensors IS 'Сенсоры на устройстве';
+COMMENT ON COLUMN devs.deleted IS 'Удаление утройства';
 COMMENT ON COLUMN devs.info IS 'Информация об устройстве';
 
 --------------------------------------------------------------------------------------------Таблица сессий устройств
