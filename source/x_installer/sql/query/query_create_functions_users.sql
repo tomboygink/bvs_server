@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------------------Функция получения всех пользователей
-DROP FUNCTION IF EXISTS SelectAllUsers;
+/*DROP FUNCTION IF EXISTS SelectAllUsers;
 CREATE OR REPLACE FUNCTION SelectAllUsers()
 RETURNS table 
 (
@@ -25,6 +25,41 @@ RETURNS table
 )
 AS $$
 SELECT * FROM users
+$$
+LANGUAGE SQL;*/
+
+DROP FUNCTION IF EXISTS SelectAllUsers;
+CREATE OR REPLACE FUNCTION SelectAllUsers()
+RETURNS table 
+(
+	u_id BIGINT, 
+    u_login VARCHAR(250), 
+    u_password VARCHAR(250), 
+    u_family VARCHAR(150), 
+    u_name VARCHAR(150), 
+    u_father VARCHAR(150), 
+    u_telephone VARCHAR(50), 
+    u_email VARCHAR(150), 
+    --u_org_id BIGINT, 
+    --u_job_title_id BIGINT, 
+    u_roles_ids JSON,
+    u_user_data JSON, 
+    u_mail_code VARCHAR(250), 
+    u_act_mail BOOLEAN, 
+    u_re_password_code VARCHAR(250), 
+    u_deleted BOOLEAN, 
+    u_deleted_date TIMESTAMP, 
+    u_created_at TIMESTAMP, 
+    u_info TEXT,
+	jt_name VARCHAR (250), 
+	orgs_full_name VARCHAR(400)
+)
+AS $$
+SELECT users.id, users.login, users.password, users.family, users.name, users.father, users.telephone, users.email, 
+users.roles_ids, users.user_data, users.mail_code, users.act_mail, users.re_password_code, users.deleted, 
+users.deleted_date, users.created_at, users.info, jobs_titles.name, orgs.full_name FROM users 
+JOIN jobs_titles on jobs_titles.id = users.job_title_id
+JOIN orgs on orgs.id = users.org_id
 $$
 LANGUAGE SQL;
 
