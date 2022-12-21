@@ -31,6 +31,11 @@ export class AppBarLeftPanel extends React.Component<IProps> {
     APP_STORAGE.app_bar.setSetOpenAppBar(false);
   }
 
+  async OpenTableUser() {  /// рисуем таблицу пользователей
+   APP_STORAGE.reg_user.setOpenTableUsers(true);
+   APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt()); // все пользователи
+  }
+
   render(): React.ReactNode {
     let user_r = null;
     let user_w = null;
@@ -58,12 +63,15 @@ export class AppBarLeftPanel extends React.Component<IProps> {
     if (user_w === 2 && user_r === 1) {  
       menu = (
         <>
-          <MenuItem>
+          <MenuItem
+           onClick={() => this.OpenTableUser()}
+          >
             <ListItemIcon>
               <PeopleOutlineIcon fontSize="small" />
             </ListItemIcon>{" "}
             Пользователи
           </MenuItem>
+
 
           <MenuItem
             onClick={() => this.OpenModalRegUser(1, "Добавить пользователя")}

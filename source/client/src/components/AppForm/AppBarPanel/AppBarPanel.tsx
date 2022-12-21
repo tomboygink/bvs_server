@@ -20,7 +20,6 @@ export class AppBarPanel extends React.Component<IProps> {
 
     async OpenLeftMenu() {
         APP_STORAGE.app_bar.setSetOpenAppBar(true);
-        APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt()); // должность 
       }
 
     render(): React.ReactNode {
