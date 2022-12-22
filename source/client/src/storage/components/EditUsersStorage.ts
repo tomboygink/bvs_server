@@ -23,13 +23,14 @@ export class EditUsersStorage {
   @observable repeat_password: string = "";
   @observable info: string = "";
 
+
   
   @observable key_org: any = "";
   @observable key_jobs: any = "";
 
   @observable active_user: boolean = true;
   @observable active_user_id: any = "";
-  @observable deactive_user_id: any = "";
+  @observable u_act_mail: boolean = false;
 
 
   constructor() {
@@ -85,15 +86,17 @@ export class EditUsersStorage {
   @action setActive(val: any) {this.active_user_id = val;}
   @action getActive(): any {return this.active_user_id;} 
   
-  @action setDeactiv(val: any) {this.deactive_user_id = val;}
-  @action getDeactiv(): any {return this.deactive_user_id;}
-
+  @action setActMail(val: any) {this.u_act_mail = val;}
+  @action getActMail(): any {return this.u_act_mail;}
 
   @action setInfo(val: string) {this.info = val;}
   @computed getInfo(): string {return this.info;}
 
-  async get_Jobs(name: string, value: any, _options?: any) {
-    /* -----  Отправляем запрос на получение всех должностей   */
+
+
+
+  
+  async get_Jobs(name: string, value: any, _options?: any) {/* -----  Открываем модальное  (Редактировать пользователя)  */
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_Jobs");
     q.args = {
@@ -131,7 +134,9 @@ export class EditUsersStorage {
 
       this.setKeyOrg(user_selected[0].u_org_id);
       this.setKeyJobs(user_selected[0].u_job_title_id);
-      this.setStateActive(user_selected[0].u_deleted)
+      this.setStateActive(user_selected[0].u_deleted);
+      this.setActMail(user_selected[0].u_act_mail)
+      
 
       let role = user_selected[0].u_roles_ids;
       for (var key in role) {
@@ -158,10 +163,30 @@ export class EditUsersStorage {
       }
 
       this.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
-      this.setModalEditUser(true);
+
+      setTimeout(() => {
+        this.setModalEditUser(true);
+    }, 100)
     }
   }
 
+
+   
+  async  set_ActMail (name: string, value: any, _options?: any) {
+    var sess_code = value;
+    var q:IWSQuery = new WSQuery("set_ActMail");
+    q.args = {
+        login:this.getLogin(),
+        email:this.getEmail(),
+     }; 
+      q.sess_code = sess_code;
+     (await WSocket.get()).send(q);
+
+}
+
+
+
+  
   async set_ChangeUser(name: string, value: any, _options?: any) {
     
     if(this.getActive() === 1){
@@ -179,6 +204,7 @@ export class EditUsersStorage {
         name: this.getName() || "",
         father: this.getFather() || "",
         email: this.getEmail() || "",
+        act_mail : this.getActMail(),
         telephone: this.getTelephone() || "",
         id_org: this.getKeyOrg() || "",
         id_job: this.getKeyJobs() || "",
