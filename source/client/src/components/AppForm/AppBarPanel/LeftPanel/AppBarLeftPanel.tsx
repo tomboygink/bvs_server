@@ -29,6 +29,8 @@ export class AppBarLeftPanel extends React.Component<IProps> {
     APP_STORAGE.reg_user.setTittleModal(tittle); // заголовок модального окна
     APP_STORAGE.reg_user.setModalRegUser(true);
     APP_STORAGE.app_bar.setSetOpenAppBar(false);
+    APP_STORAGE.reg_user.setOpenTableUsers(false);
+    APP_STORAGE.reg_user.setOpenTableUsers(false);
   }
 
   async OpenTableUser() {  /// рисуем таблицу пользователей
@@ -127,6 +129,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
               width: 250,
             },
           }}
+          // variant="persistent"
           anchor="left"
           open={APP_STORAGE.app_bar.getSetOpenAppBar()}
         >

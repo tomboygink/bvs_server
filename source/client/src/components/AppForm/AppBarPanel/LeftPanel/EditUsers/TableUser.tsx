@@ -27,11 +27,6 @@ export class TableUser extends React.Component<IProps> {
     super(props);
   }
 
-  async setModalEditUser(a:any) {  
-    APP_STORAGE.edit_user.setModalEditUser(true);
-    APP_STORAGE.edit_user.setIdRows(a);
-   }
-
 
   render(): React.ReactNode {
     let table_rows = []
