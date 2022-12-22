@@ -40,8 +40,8 @@ RETURNS table
     u_father VARCHAR(150), 
     u_telephone VARCHAR(50), 
     u_email VARCHAR(150), 
-    --u_org_id BIGINT, 
-    --u_job_title_id BIGINT, 
+    u_org_id BIGINT, 
+    u_job_title_id BIGINT, 
     u_roles_ids JSON,
     u_user_data JSON, 
     u_mail_code VARCHAR(250), 
@@ -55,8 +55,8 @@ RETURNS table
 	orgs_full_name VARCHAR(400)
 )
 AS $$
-SELECT users.id, users.login, users.password, users.family, users.name, users.father, users.telephone, users.email, 
-users.roles_ids, users.user_data, users.mail_code, users.act_mail, users.re_password_code, users.deleted, 
+SELECT users.id, users.login, users.password, users.family, users.name, users.father, users.telephone, users.email,
+users.org_id, users.job_title_id, users.roles_ids, users.user_data, users.mail_code, users.act_mail, users.re_password_code, users.deleted, 
 users.deleted_date, users.created_at, users.info, jobs_titles.name, orgs.full_name FROM users 
 JOIN jobs_titles on jobs_titles.id = users.job_title_id
 JOIN orgs on orgs.id = users.org_id
