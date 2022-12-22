@@ -32,8 +32,12 @@ export class NewUserRegistration extends React.Component<IProps> {
     super(props);
   }
 
-  async AddNewUser() {  /// передаем данные с формы на сервер  (ДОБАВЛЯЕМ ПОЛЬЗОВАТЕЛЯ)
-    APP_STORAGE.reg_user.set_NewUser("sess_id", APP_STORAGE.auth_form.getdt());
+  async AddNewUser() {  
+    APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());/// передаем данные с формы на сервер  (ДОБАВЛЯЕМ ПОЛЬЗОВАТЕЛЯ)
+   
+    setTimeout(() => {
+      APP_STORAGE.reg_user.set_NewUser("sess_id", APP_STORAGE.auth_form.getdt());
+    }, 1000)
   }
 
   async ChekedForEdit(editing: any) { /// Переключатель (разрешить редактирование)
@@ -46,12 +50,13 @@ export class NewUserRegistration extends React.Component<IProps> {
 
   async SelectedOrg(a: any) {    //// Сохраняем , то что выбрал пользователь из выпадающего списка Организации
     APP_STORAGE.reg_user.setKeyOrg(a);
-    APP_STORAGE.reg_user.setKeyJobs(null);
+    APP_STORAGE.reg_user.setKeyJobs(null); 
     APP_STORAGE.reg_user.setJobsAll([]);
     APP_STORAGE.reg_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
   }
 
-  async SelectedJobs(a: any) {
+  async SelectedJobs(a: any) 
+  { 
     APP_STORAGE.reg_user.setKeyJobs(a);
   }
 
@@ -402,7 +407,7 @@ export class NewUserRegistration extends React.Component<IProps> {
           </Button>
         </Box>
         {APP_STORAGE.reg_user.getResulSave().length > 0 &&
-       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> смсммчс{APP_STORAGE.reg_user.getResulSave()}</Typography>
+       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> {APP_STORAGE.reg_user.getResulSave()}</Typography>
       }
       </React.Fragment>
     );

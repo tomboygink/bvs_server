@@ -1,10 +1,12 @@
 import { observable, action, computed, makeAutoObservable } from 'mobx';
 import { IWSQuery, IWSResult, WSQuery } from '../../../xcore/WSQuery';
+
 import { PageStorage } from './PageStorage';
 import { AuthFormStorage } from './components/AuthFormStorage';
 import { AppBarStorage } from './components/AppBarStorage';
 import { ModalStorage } from './components/ModalStorage';
 import { ModalLeftPanel } from './components/ModalLeftPanelStorage';
+import { EditUsersStorage } from './components/EditUsersStorage'
 import { WSocket } from './WSocket';
 import {getCookie , setCookie, deleteCookie }  from './browserCookes'
 import { UsersEntity } from '../../../xcore/dbase/Users';
@@ -18,6 +20,7 @@ class AppStorage {
     @observable app_bar:  AppBarStorage = null;
     @observable modal: ModalStorage = null;
     @observable reg_user: ModalLeftPanel = null;
+    @observable edit_user: EditUsersStorage = null;
     
 
     @observable dt:any = null;
@@ -35,6 +38,7 @@ class AppStorage {
         this.app_bar = new AppBarStorage();
         this.modal = new ModalStorage();
         this.reg_user = new ModalLeftPanel();
+        this.edit_user = new EditUsersStorage();
         makeAutoObservable(this);
 
         // WSocket.get();

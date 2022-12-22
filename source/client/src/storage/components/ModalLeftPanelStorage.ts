@@ -6,6 +6,8 @@ import { IWSQuery, WSQuery, IWSResult } from "../../../../xcore/WSQuery";
 import { WSocket } from "../WSocket";
 
 export class ModalLeftPanel {
+  @observable table_user: boolean = false;  //// открываем таблицу пользователей
+
   @observable modal_registration_user: boolean = false;
   @observable take_data: any = null; /// пушим в модальное окно форму, в зависимоти от выбора пользователя
   @observable modal_tittle: string = " ";
@@ -89,207 +91,95 @@ export class ModalLeftPanel {
     Map<string, string>;
   }
 
+  @action setOpenTableUsers(val: boolean) {this.table_user = val;} //// открываем таблицу пользователей
+  @action getOpenTableUsers(): boolean {return this.table_user;}
+
   @action setCheckboxEd(val: boolean) {this.checkbox_editing = val;}
   @action getCheckboxEd(): boolean {return this.checkbox_editing;}
 
-  @action setCheckboxRead(val: boolean) { this.checkbox_reading = val;
-  }
-  @action getCheckboxRead(): boolean {
-    return this.checkbox_reading;
-  }
+  @action setCheckboxRead(val: boolean) { this.checkbox_reading = val;}
+  @action getCheckboxRead(): boolean {return this.checkbox_reading;}
 
-  @action setKeyOrg(val: any) {
-    this.key_org = val;
-  }
-  @computed getKeyOrg(): any {
-    return this.key_org;
-  }
+  @action setKeyOrg(val: any) { this.key_org = val;}
+  @computed getKeyOrg(): any {return this.key_org;}
 
-  @action setKeyJobs(val: any) {
-    this.key_jobs = val;
-  }
-  @computed getKeyJobs(): any {
-    return this.key_jobs;
-  }
+  @action setKeyJobs(val: any) {this.key_jobs = val;}
+  @computed getKeyJobs(): any {return this.key_jobs;}
 
-  @action setOrgAll(val: Array<string>) {
-    this.organization = val;
-  }
-  @computed getOrgAll(): Array<string> {
-    return this.organization;
-  }
+  @action setOrgAll(val: Array<string>) {this.organization = val;}
+  @computed getOrgAll(): Array<string> {return this.organization;}
 
-  @action setJobsAll(val: Array<string>) {
-    this.jobs_titles = val;
-  }
-  @computed getJobsAll(): Array<string> {
-    return this.jobs_titles;
-  }
-  @action setJobsAllError(val: string) {
-    this.jobs_titles_error = val;
-  }
-  @computed getJobsAllError(): string {
-    return this.jobs_titles_error;
-  }
-  @action setAllUsers(val: Array<string>) {
-    this.users = val;
-  }
-  @computed getAllUsers(): Array<string> {
-    return this.users;
-  }
+  @action setJobsAll(val: Array<string>) {this.jobs_titles = val;}
+  @computed getJobsAll(): Array<string> {return this.jobs_titles;}
+  @action setJobsAllError(val: string) {this.jobs_titles_error = val;}
+  @computed getJobsAllError(): string {return this.jobs_titles_error;}
+  @action setAllUsers(val: Array<string>) {this.users = val;}
+  @computed getAllUsers(): Array<string> {return this.users;}
 
-  @action setModalRegUser(val: boolean) {
-    this.modal_registration_user = val;
-  } /// Для открытия модального окна
-  @computed getModalRegUser(): boolean {
-    return this.modal_registration_user;
-  }
+  @action setModalRegUser(val: boolean) {this.modal_registration_user = val;} /// Для открытия модального окна (Регистрация пользователя)
+  @computed getModalRegUser(): boolean {return this.modal_registration_user;}
+  
 
-  @action setTakeModal(val: any) {
-    this.take_data = val;
-  } /// пушим в модальное окно форму, в зависимоти от выбора пользователя
-  @computed getTakeModal(): any {
-    return this.take_data;
-  }
+  @action setTakeModal(val: any) {this.take_data = val;} /// пушим в модальное окно форму, в зависимоти от выбора пользователя
+  @computed getTakeModal(): any { return this.take_data;}
 
-  @action setTittleModal(val: string) {
-    this.modal_tittle = val;
-  } /// пушим в модальное окно форму, в зависимоти от выбора пользователя
-  @computed getTittleModal(): string {
-    return this.modal_tittle;
-  }
+  @action setTittleModal(val: string) {this.modal_tittle = val;} /// пушим в модальное окно форму, в зависимоти от выбора пользователя
+  @computed getTittleModal(): string {return this.modal_tittle;}
 
   ////////////////////////////////////////////регистрация пользователя
 
-  @action setFamily(val: string) {
-    this.family = val;
-  }
-  @computed getFamily(): string {
-    return this.family;
-  }
+  @action setFamily(val: string) {this.family = val;}
+  @computed getFamily(): string {return this.family;}
 
-  @action setName(val: string) {
-    this.name = val;
-  }
-  @computed getName(): string {
-    return this.name;
-  }
+  @action setName(val: string) {this.name = val;}
+  @computed getName(): string {return this.name;}
+  @action setFather(val: string) {this.father = val;}
+  @computed getFather(): string {return this.father;}
 
-  @action setFather(val: string) {
-    this.father = val;
-  }
-  @computed getFather(): string {
-    return this.father;
-  }
+  @action setEmail(val: string) {this.email = val;}
+  @computed getEmail(): string {return this.email;}
 
-  @action setEmail(val: string) {
-    this.email = val;
-  }
-  @computed getEmail(): string {
-    return this.email;
-  }
+  @action setTelephone(val: string) {this.telephone = val;}
+  @computed getTelephone(): string {return this.telephone;}
 
-  @action setTelephone(val: string) {
-    this.telephone = val;
-  }
-  @computed getTelephone(): string {
-    return this.telephone;
-  }
+  @action setLogin(val: string) { this.login = val;}
+  @computed getLogin(): string {return this.login;}
 
-  @action setLogin(val: string) {
-    this.login = val;
-  }
-  @computed getLogin(): string {
-    return this.login;
-  }
+  @action setPassword(val: string) {this.password = val;}
+  @computed getPassword(): string {return this.password;}
 
-  @action setPassword(val: string) {
-    this.password = val;
-  }
-  @computed getPassword(): string {
-    return this.password;
-  }
+  @action setRepeatPassword(val: string) {this.repeat_password = val;}
+  @computed getRepeatPassword(): string {return this.repeat_password;}
 
-  @action setRepeatPassword(val: string) {
-    this.repeat_password = val;
-  }
-  @computed getRepeatPassword(): string {
-    return this.repeat_password;
-  }
-
-  @action setInfo(val: string) {
-    this.info = val;
-  }
-  @computed getInfo(): string {
-    return this.info;
-  }
+  @action setInfo(val: string) {this.info = val;}
+  @computed getInfo(): string {return this.info;}
 
   /////проверка формы (user)
 
-  @action setErrorFamily(val: boolean) {
-    this.error_family = val;
-  }
-  @computed getErrorFamily(): boolean {
-    return this.error_family;
-  }
-  @action setTextHelpFamily(val: string) {
-    this.texthelp_family = val;
-  }
-  @computed getTextHelpFamily(): string {
-    return this.texthelp_family;
-  }
+  @action setErrorFamily(val: boolean) {this.error_family = val;}
+  @computed getErrorFamily(): boolean {return this.error_family;}
+  @action setTextHelpFamily(val: string) {this.texthelp_family = val;}
+  @computed getTextHelpFamily(): string {return this.texthelp_family;}
 
-  @action setErrorName(val: boolean) {
-    this.error_name = val;
-  }
-  @computed getErrorName(): boolean {
-    return this.error_name;
-  }
-  @action setTextHelpName(val: string) {
-    this.texthelp_name = val;
-  }
-  @computed getTextHelpName(): string {
-    return this.texthelp_name;
-  }
+  @action setErrorName(val: boolean) {this.error_name = val;}
+  @computed getErrorName(): boolean {return this.error_name;}
+  @action setTextHelpName(val: string) {this.texthelp_name = val;}
+  @computed getTextHelpName(): string {return this.texthelp_name;}
 
-  @action setErrorFather(val: boolean) {
-    this.error_father = val;
-  }
-  @computed getErrorFather(): boolean {
-    return this.error_father;
-  }
-  @action setTextHelpFather(val: string) {
-    this.texthelp_father = val;
-  }
-  @computed getTextHelpFather(): string {
-    return this.texthelp_father;
-  }
+  @action setErrorFather(val: boolean) {this.error_father = val;}
+  @computed getErrorFather(): boolean {return this.error_father;}
+  @action setTextHelpFather(val: string) {this.texthelp_father = val;}
+  @computed getTextHelpFather(): string {return this.texthelp_father;}
 
-  @action setErrorEmail(val: boolean) {
-    this.error_email = val;
-  }
-  @computed getErrorEmail(): boolean {
-    return this.error_email;
-  }
-  @action setTextHelpEmail(val: string) {
-    this.texthelp_email = val;
-  }
-  @computed getTextHelpEmail(): string {
-    return this.texthelp_email;
-  }
+  @action setErrorEmail(val: boolean) {this.error_email = val;}
+  @computed getErrorEmail(): boolean {return this.error_email;}
+  @action setTextHelpEmail(val: string) {this.texthelp_email = val;}
+  @computed getTextHelpEmail(): string {return this.texthelp_email;}
 
-  @action setErrorTelephone(val: boolean) {
-    this.error_telephone = val;
-  }
-  @computed getErrorTelephone(): boolean {
-    return this.error_telephone;
-  }
-  @action setTextHelpTelephone(val: string) {
-    this.texthelp_telephone = val;
-  }
-  @computed getTextHelpTelephone(): string {
-    return this.texthelp_telephone;
-  }
+  @action setErrorTelephone(val: boolean) {this.error_telephone = val;}
+  @computed getErrorTelephone(): boolean {return this.error_telephone;}
+  @action setTextHelpTelephone(val: string) {this.texthelp_telephone = val;}
+  @computed getTextHelpTelephone(): string {return this.texthelp_telephone;}
 
   @action setErrorLogin(val: boolean) {
     this.error_login = val;
@@ -487,33 +377,29 @@ export class ModalLeftPanel {
   @computed getResulSave(): string {return this.result_save;}
 
 
-  async get_AllUsers(name: string, value: any, _options?: any) {
-    /* -----  Отправляем запрос на получение всех пользователей   */
+  async get_AllUsers(name: string, value: any, _options?: any) {/* -----  Отправляем запрос на получение всех пользователей   */
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_AllUser");
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);
   }
-  setUsersAll(dt: IWSResult) {
-    /* -----  Получаем всех пользователей   */
+  
+  setUsersAll(dt: IWSResult) { /* -----  Получаем всех пользователей   */
     this.setAllUsers(dt.data);
   }
 
-  async get_Org(name: string, value: any, _options?: any) {
-    /* -----  Отправляем запрос на получение всех организаций   */
+  async get_Org(name: string, value: any, _options?: any) { /* -----  Отправляем запрос на получение всех организаций   */
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_Org");
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);
   }
 
-  setAllOrganization(dt: IWSResult) {
-    /* -----  Получаем всех пользователей   */
+  setAllOrganization(dt: IWSResult) { /* -----  Получаем всех пользователей   */
     this.setOrgAll(dt.data);
   }
 
-  async get_Jobs(name: string, value: any, _options?: any) {
-    /* -----  Отправляем запрос на получение всех должностей   */
+  async get_Jobs(name: string, value: any, _options?: any) {/* -----  Отправляем запрос на получение всех должностей   */
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_Jobs");
     q.args = {
@@ -544,9 +430,9 @@ export class ModalLeftPanel {
       let users = JSON.parse(JSON.stringify(this.getAllUsers()));
       for (var key in users) {
         let a = users[key];
-        if (a.login === this.getLogin()) {
+        if (a.u_login === this.getLogin()) {
           /// если такой логин уже есть, то выводим сообщение об ошибке
-          user_login = a.login;
+          user_login = a.u_login;
           this.setErrorLoginDouble(true);
           this.setTextHelpLoginDouble("Такой логин уже есть");
         } 
@@ -658,9 +544,9 @@ export class ModalLeftPanel {
       };
       q.sess_code = sess_code;
       (await WSocket.get()).send(q);
-      this.get_AllUsers("sess_id", value)
+     
+
       this.setResulSave('Данные успешно сохранены')
-      
       setTimeout(() => {
         this.setResulSave('')
       }, 2000)
