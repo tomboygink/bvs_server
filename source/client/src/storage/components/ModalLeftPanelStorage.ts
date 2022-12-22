@@ -377,33 +377,29 @@ export class ModalLeftPanel {
   @computed getResulSave(): string {return this.result_save;}
 
 
-  async get_AllUsers(name: string, value: any, _options?: any) {
-    /* -----  Отправляем запрос на получение всех пользователей   */
+  async get_AllUsers(name: string, value: any, _options?: any) {/* -----  Отправляем запрос на получение всех пользователей   */
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_AllUser");
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);
   }
-  setUsersAll(dt: IWSResult) {
-    /* -----  Получаем всех пользователей   */
+  
+  setUsersAll(dt: IWSResult) { /* -----  Получаем всех пользователей   */
     this.setAllUsers(dt.data);
   }
 
-  async get_Org(name: string, value: any, _options?: any) {
-    /* -----  Отправляем запрос на получение всех организаций   */
+  async get_Org(name: string, value: any, _options?: any) { /* -----  Отправляем запрос на получение всех организаций   */
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_Org");
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);
   }
 
-  setAllOrganization(dt: IWSResult) {
-    /* -----  Получаем всех пользователей   */
+  setAllOrganization(dt: IWSResult) { /* -----  Получаем всех пользователей   */
     this.setOrgAll(dt.data);
   }
 
-  async get_Jobs(name: string, value: any, _options?: any) {
-    /* -----  Отправляем запрос на получение всех должностей   */
+  async get_Jobs(name: string, value: any, _options?: any) {/* -----  Отправляем запрос на получение всех должностей   */
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_Jobs");
     q.args = {
@@ -434,9 +430,9 @@ export class ModalLeftPanel {
       let users = JSON.parse(JSON.stringify(this.getAllUsers()));
       for (var key in users) {
         let a = users[key];
-        if (a.login === this.getLogin()) {
+        if (a.u_login === this.getLogin()) {
           /// если такой логин уже есть, то выводим сообщение об ошибке
-          user_login = a.login;
+          user_login = a.u_login;
           this.setErrorLoginDouble(true);
           this.setTextHelpLoginDouble("Такой логин уже есть");
         } 

@@ -27,6 +27,10 @@ export class TableUser extends React.Component<IProps> {
     super(props);
   }
 
+  async setModalEditUser(a:any) {  
+    APP_STORAGE.edit_user.setModalEditUser(true);
+    APP_STORAGE.edit_user.setIdRows(a);
+   }
 
 
   render(): React.ReactNode {
@@ -38,21 +42,23 @@ export class TableUser extends React.Component<IProps> {
             
             table_rows.push(
                 <TableRow
-                key={row.id}
+                key={row.u_id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >                
-              <TableCell > {row.family} </TableCell>
-              <TableCell align="center" > {row.name} </TableCell>
-              <TableCell align="center">{row.father}</TableCell>
-              <TableCell align="center">{row.login}</TableCell>
-              <TableCell align="center">{row.telephone}</TableCell>
-              <TableCell align="center">{row.email}</TableCell>
-              <TableCell align="center">{row.info}</TableCell>
+           <TableCell > {row.u_family} </TableCell>
+              <TableCell  align="center" > {row.u_name} </TableCell>
+              <TableCell  align="center">{row.u_father}</TableCell>
+              <TableCell  align="center">{row.u_login}</TableCell>
+              <TableCell  align="center">{row.u_telephone}</TableCell>
+              <TableCell  align="center">{row.u_email}</TableCell>
+              <TableCell align="center">{row.u_info}</TableCell>
               <TableCell align="center"
-                 onClick={(e) => {APP_STORAGE.edit_user.setModalEditUser(true)}}>
-                <DriveFileRenameOutlineOutlinedIcon/>
-             </TableCell>
-              <TableCell>   <FormControl fullWidth>
+                 onClick={(e) => {APP_STORAGE.edit_user.set_IdRows(row.u_id)}}>
+                <DriveFileRenameOutlineOutlinedIcon fontSize="small"/>
+             </TableCell> 
+        
+{/* 
+                <FormControl fullWidth>
       
         <NativeSelect
           defaultValue={30}
@@ -61,10 +67,11 @@ export class TableUser extends React.Component<IProps> {
             id: 'uncontrolled-native',
           }}
         >
-          <option value={1}>Действующая</option>
-          <option value={2}>Закрытая</option>
+          <option key = '1' value={1}>Действующая</option>
+          <option key = '2'  value={2}>Закрытая</option>
         </NativeSelect>
-      </FormControl></TableCell>
+      </FormControl> */}
+    
               </TableRow>
 
             )
@@ -77,7 +84,7 @@ export class TableUser extends React.Component<IProps> {
 <TableContainer component={Paper}>
       <Table  aria-label="simple table">
         <TableHead>
-          <TableRow>
+          <TableRow key={110}>
             <TableCell align="center">Фамилия</TableCell>
             <TableCell align="center">Имя</TableCell>
             <TableCell align="center">Отчество</TableCell>
@@ -90,7 +97,11 @@ export class TableUser extends React.Component<IProps> {
           </TableRow>
         </TableHead>
         <TableBody>
+
           {table_rows}
+
+          <TableRow>
+             </TableRow>
         </TableBody>
       </Table>
     </TableContainer>

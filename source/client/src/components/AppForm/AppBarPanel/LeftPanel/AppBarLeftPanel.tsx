@@ -35,6 +35,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
    APP_STORAGE.reg_user.setOpenTableUsers(true);
    APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt()); // все пользователи
    APP_STORAGE.app_bar.setSetOpenAppBar(false);/// закрываем
+   APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());  // как только модальное окно открылось, отправляем запрос на получение всех организаций
   }
 
   render(): React.ReactNode {
