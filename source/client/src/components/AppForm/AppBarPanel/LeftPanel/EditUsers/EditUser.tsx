@@ -66,10 +66,6 @@ export class EditUser extends React.Component<IProps> {
     APP_STORAGE.edit_user.setCheckboxRead(readind.target.checked);
   }
 
-  async set_ActMail() {
-    APP_STORAGE.edit_user.set_ActMail("sess_id", APP_STORAGE.auth_form.getdt());
-  }
-
   render(): React.ReactNode {
     let options_org = [];
     let options_jobs = [];
@@ -110,10 +106,11 @@ export class EditUser extends React.Component<IProps> {
 
     return (
       <React.Fragment>
-        <Dialog
+        <Dialog className="wrapper_modal"
           BackdropProps={{ style: { background: "rgba(0 0 0 / 12%)" } }}
           open={APP_STORAGE.edit_user.getModalEditUser()}
           fullWidth
+          PaperProps={{ sx: { justifyContent: 'flex-end'} }}
         >
           <Box sx={{ p: 2 }}>
             <Box
@@ -140,6 +137,8 @@ export class EditUser extends React.Component<IProps> {
                 variant="outlined"
                 margin="normal"
                 required
+                error={APP_STORAGE.edit_user.getErrorFamily()}
+                helperText={APP_STORAGE.edit_user.getTextHelpFamily()}
                 label="Фамилия"
                 autoComplete="фамилия"
                 autoFocus
@@ -158,6 +157,8 @@ export class EditUser extends React.Component<IProps> {
                 variant="outlined"
                 margin="normal"
                 required
+                error={APP_STORAGE.edit_user.getErrorName()}
+                helperText={APP_STORAGE.edit_user.getTextHelpName()}
                 label="Имя"
                 autoComplete="имя"
                 autoFocus
@@ -214,19 +215,6 @@ export class EditUser extends React.Component<IProps> {
               />
             </Box>
               
-          {APP_STORAGE.edit_user.getActMail() === false &&
-            <Link
-          href="#"
-          variant="body2"
-          sx={{fontSize : '12px'}}
-          onClick={() => {
-            this.set_ActMail();
-          }}
-        >
-          Отправить код подтверждения на почту?
-        </Link>
-          }
-            
             <TextField
               sx={{ mt: "14px" }}
               inputProps={{ style: { fontSize: 12 } }} // font size of input text
@@ -316,12 +304,12 @@ export class EditUser extends React.Component<IProps> {
             <form>
               <TextField
                 sx={{ mt: "14px" }}
-                inputProps={{ style: { fontSize: 12 } }} // font size of input text
-                InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+                inputProps={{ style: { fontSize: 12 } }} 
+                InputLabelProps={{ style: { fontSize: 12 } }} 
                 variant="outlined"
                 required
-                // error={APP_STORAGE.reg_user.getErrorPassword()}
-                // helperText={APP_STORAGE.reg_user.getTextHelpPassword()}
+                error={APP_STORAGE.edit_user.getErrorPassword()}
+                helperText={APP_STORAGE.edit_user.getTextHelpPassword()}
                 fullWidth
                 label="Новый пароль"
                 autoComplete="Новый пароль"
@@ -345,8 +333,8 @@ export class EditUser extends React.Component<IProps> {
                 InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
                 variant="outlined"
                 required
-                error={APP_STORAGE.reg_user.getErrorRepeatPassword()}
-                helperText={APP_STORAGE.reg_user.getTextHelpRepeatPassword()}
+                error={APP_STORAGE.edit_user.getErrorRepeatPassword()}
+                helperText={APP_STORAGE.edit_user.getTextHelpRepeatPassword()}
                 fullWidth
                 label="Повторите пароль"
                 autoComplete="повторите пароль"
@@ -375,7 +363,7 @@ export class EditUser extends React.Component<IProps> {
                   this.ActivityState(e.target.value);
                 }}
               >
-                <MenuItem key={1} sx={{ fontSize: "12px" }} value={1}>
+                <MenuItem key={1} sx={{ fontSize: "12px"}} value={1}>
                   Действующая
                 </MenuItem>
 

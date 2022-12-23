@@ -1,6 +1,8 @@
 import React from "react";
 import { observer } from "mobx-react";
 
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+
 import {
   TextField,
   Box,
@@ -87,16 +89,33 @@ export class Saveresult extends React.Component<IProps> {
     if (APP_STORAGE.modal.getActMail() === false) {
       form_code = (
         <>
-          <Typography>
-            Код подтверждения отправлен на {APP_STORAGE.modal.getEmail()} почту
+
+          <Typography sx= {{fontSize: '22px', fontWeight: '500', pb: '18px'}}>
+           Проверьте свою электронную почту
           </Typography>
-          <Typography sx={{ fontSize: "12px", color: "#1976d2" }}>
+          <Box> 
+          <Typography>
+          Для продолжения работы необходимо подтвердите свою учетную запись.
+          Код подтверждения отправлен на адрес <Typography sx={{fontWeight: '500'}}> «{APP_STORAGE.modal.getEmail()}» .</Typography> Если вы не получили письмо, пожалуйста, проверьте папку со спамом.
+          </Typography>
+          </Box>
+          {/* <Typography sx={{ fontSize: "12px", color: "#1976d2" }}>
             Перед повторной отправкой кода убедитесь, что почта введена
             корректно
-          </Typography>
+          </Typography> */}
+             
+            {/* <EmailOutlinedIcon/>  */}
+<Box sx={{display:'flex', justifyContent: 'center', pt: 5, pb: 5}}> 
+            <svg width="64" height="51" viewBox="0 0 64 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.0347222 3.5604C0.0347222 1.59405 1.6266 0 3.59028 0H60.4444C62.4081 0 64 1.59405 64 3.5604V43.8792C64 47.8119 60.8163 51 56.8889 51H7.11111C3.18375 51 0 47.8119 0 43.8792V4.71475C0 4.54521 0.0118349 4.37843 0.0347222 4.2152V3.5604ZM7.11111 11.4779V43.8792H56.8889V11.4791L39.5431 28.8485C35.3775 33.0198 28.6237 33.0198 24.4581 28.8485L7.11111 11.4779ZM12.7016 7.00563H51.2996L34.5148 23.8134C33.1262 25.2038 30.875 25.2038 29.4865 23.8134L12.7016 7.00563Z" fill="#E6EAF1"/>
+</svg>
+</Box>
+
+
         </>
       );
       button = (
+
         <>
           <Button
             sx={{
@@ -115,9 +134,28 @@ export class Saveresult extends React.Component<IProps> {
       );
     }
 
+    else {
+        form_code = (
+          <>
+          <Typography sx= {{fontSize: '22px', fontWeight: '500', pb: '18px'}}>
+           Успешно сохранено
+         </Typography>
+
+<Box sx={{display:'flex', justifyContent: 'center', pt: 5, pb: 5}}> 
+<svg width="100" height="69" viewBox="0 0 100 69" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M65.9962 0H0V10.9868H65.9962V0Z" fill="#E6EAF1"/>
+<path d="M65.9962 21.9735H0V32.9603H65.9962V21.9735Z" fill="#E6EAF1"/>
+<path d="M0 43.9471H43.9975V54.9338H0V43.9471Z" fill="#E6EAF1"/>
+<path d="M49.4448 49.578L57.2239 41.8077L68.8891 53.4624L92.2223 30.1559L100 37.9247L68.8891 69L49.4448 49.578Z" fill="#E6EAF1"/>
+</svg>
+</Box>
+</>
+        ) 
+    }
+
     return (
       <React.Fragment>
-        <Box>Данные успешно изменены.</Box>
+        {/* <Box>Данные успешно изменены.</Box> */}
 
         {form_code}
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
@@ -137,7 +175,7 @@ export class Saveresult extends React.Component<IProps> {
             Закрыть
           </Button>
         </Box>
-
+        <Divider light sx={{pb: 1}} />
         <Link
           href="#"
           variant="body2"

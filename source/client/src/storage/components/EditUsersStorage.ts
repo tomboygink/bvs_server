@@ -32,6 +32,18 @@ export class EditUsersStorage {
   @observable active_user_id: any = "";
   @observable u_act_mail: boolean = false;
 
+  
+  @observable error_family: boolean = false;
+  @observable texthelp_family: string = "";
+  @observable error_name: boolean = false;
+  @observable texthelp_name: string = "";
+  @observable error_father: boolean = false;
+  @observable texthelp_father: string = "";
+  @observable error_password: boolean = false;
+  @observable texthelp_password: string = "";
+  @observable error_repeat_password: boolean = false;
+  @observable texthelp_repeat_password: string = "";
+
 
   constructor() {
     makeAutoObservable(this);
@@ -93,6 +105,33 @@ export class EditUsersStorage {
   @computed getInfo(): string {return this.info;}
 
 
+  @action setErrorFamily(val: boolean) {this.error_family = val;}
+  @computed getErrorFamily(): boolean {return this.error_family;}
+  @action setTextHelpFamily(val: string) {this.texthelp_family = val;}
+  @computed getTextHelpFamily(): string {return this.texthelp_family;}
+
+  @action setErrorName(val: boolean) {this.error_name = val;}
+  @computed getErrorName(): boolean {return this.error_name;}
+  @action setTextHelpName(val: string) {this.texthelp_name = val;}
+  @computed getTextHelpName(): string {return this.texthelp_name;}
+
+  @action setErrorFather(val: boolean) {this.error_father = val;}
+  @computed getErrorFather(): boolean {return this.error_father;}
+  @action setTextHelpFather(val: string) {this.texthelp_father = val;}
+  @computed getTextHelpFather(): string {return this.texthelp_father;}
+
+
+  @action setErrorPassword(val: boolean) {this.error_password = val;}
+  @computed getErrorPassword(): boolean {return this.error_password;}
+  @action setTextHelpPassword(val: string) {this.texthelp_password = val;}
+  @computed getTextHelpPassword(): string {return this.texthelp_password;}
+
+  @action setErrorRepeatPassword(val: boolean) {this.error_repeat_password = val;}
+  @computed getErrorRepeatPassword(): boolean {return this.error_repeat_password;}
+  @action setTextHelpRepeatPassword(val: string) {this.texthelp_repeat_password = val;}
+  @computed getTextHelpRepeatPassword(): string {return this.texthelp_repeat_password;}
+
+
 
 
   
@@ -136,6 +175,7 @@ export class EditUsersStorage {
       this.setKeyJobs(user_selected[0].u_job_title_id);
       this.setStateActive(user_selected[0].u_deleted);
       this.setActMail(user_selected[0].u_act_mail)
+      
       
 
       let role = user_selected[0].u_roles_ids;
@@ -184,8 +224,6 @@ export class EditUsersStorage {
 
 }
 
-
-
   
   async set_ChangeUser(name: string, value: any, _options?: any) {
     
@@ -196,8 +234,57 @@ export class EditUsersStorage {
         this.setStateActive(true)
     }
 
+        /// Проверка на пустые значения формы
+        if (this.getFamily() === "") {
+          this.setErrorFamily(true);
+          this.setTextHelpFamily("Заполните поле");
+        } else {
+          this.setErrorFamily(false);
+          this.setTextHelpFamily("");
+        }
+
+        if (this.getName() === "") {
+          this.setErrorName(true);
+          this.setTextHelpName("Заполните поле");
+        } else {
+          this.setErrorName(false);
+          this.setTextHelpName("");
+        }
+
+       
+
+        if (this.getPassword().length < 6) {
+          this.setErrorPassword(true);
+          this.setTextHelpPassword("используйте 6 или более символов");
+        }
+        else if (this.getPassword() === this.getLogin()){
+          this.setErrorPassword(true);
+          this.setTextHelpPassword("Пароль должен отличаться от логина");
+        }
+        else {
+          this.setErrorPassword(false);
+          this.setTextHelpPassword("");
+        }
+    
+      if (
+          this.getPassword() !== this.getRepeatPassword()
+        ) {
+          this.setErrorRepeatPassword(true);
+          this.setTextHelpRepeatPassword("Пароли не совпадают");
+        } else {
+          this.setErrorRepeatPassword(false);
+          this.setTextHelpRepeatPassword("");
+          this.setErrorPassword(false);
+          this.setTextHelpPassword("");
+        }
+    
      
     var sess_code = value;
+    if (
+      this.getFamily() &&
+      this.getPassword() === this.getRepeatPassword() &&
+      this.getName() 
+    ) { 
     var q: IWSQuery = new WSQuery("set_ChangeUser");
     q.args = {
         family: this.getFamily() || "",
@@ -216,8 +303,10 @@ export class EditUsersStorage {
         users_r: this.getCheckboxRead() ,
         info: this.getInfo(),
       };
+    }
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);
+    APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());
      
   }
 }
