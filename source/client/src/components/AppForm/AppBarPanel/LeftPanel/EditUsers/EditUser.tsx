@@ -46,10 +46,7 @@ export class EditUser extends React.Component<IProps> {
   }
 
   async ChangeUser() {
-    APP_STORAGE.edit_user.set_ChangeUser(
-      "sess_id",
-      APP_STORAGE.auth_form.getdt()
-    );
+    APP_STORAGE.edit_user.set_ChangeUser("sess_id",APP_STORAGE.auth_form.getdt());
   }
 
   async SelectedJobs(a: any) {

@@ -307,7 +307,7 @@ export class EditUsersStorage {
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);
     APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());
-     
+    this.setModalEditUser(false)
   }
 }
 

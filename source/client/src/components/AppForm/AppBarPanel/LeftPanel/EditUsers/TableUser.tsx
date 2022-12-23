@@ -29,8 +29,9 @@ export class TableUser extends React.Component<IProps> {
 
 
   render(): React.ReactNode {
-   
- 
+    let search_family = document.getElementById('search')
+    // let input = search_family.value.toUpperCase(); 
+
     let table_rows = []
     if (APP_STORAGE.reg_user.getAllUsers()) {
         let users = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getAllUsers()));
@@ -93,14 +94,12 @@ export class TableUser extends React.Component<IProps> {
       <React.Fragment>
 
 <TableContainer component={Paper}>
-  
-      <Table  aria-label="simple table" id = 'info-table'>
+<TextField id="search-family" label="Name" />
+
+      <Table  aria-label="simple table">
         <TableHead>
           <TableRow key={110}>
-            <TableCell align="center" > <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.2665 11.0277C14.303 8.41231 14.119 4.62842 11.7147 2.22411C9.1112 -0.37939 4.8901 -0.379389 2.28661 2.22411C-0.31689 4.8276 -0.31689 9.0487 2.28661 11.6522C4.69092 14.0565 8.47481 14.2405 11.0902 12.204C11.1015 12.2168 11.1132 12.2292 11.1254 12.2415L14.661 15.777C14.9864 16.1024 15.514 16.1024 15.8395 15.777C16.1649 15.4515 16.1649 14.9239 15.8395 14.5985L12.304 11.0629C12.2917 11.0507 12.2793 11.039 12.2665 11.0277ZM10.5362 3.40262C12.4888 5.35524 12.4888 8.52106 10.5362 10.4737C8.58356 12.4263 5.41774 12.4263 3.46512 10.4737C1.5125 8.52106 1.5125 5.35524 3.46512 3.40262C5.41774 1.45 8.58356 1.45 10.5362 3.40262Z" fill="#AAAAAA"/>
-            </svg>
-            </TableCell>    
+            <TableCell align="center" width={1}> <SearchOutlinedIcon fontSize="small" /></TableCell>    
             <TableCell align="center">Фамилия</TableCell>
             <TableCell align="center">Имя</TableCell>
             <TableCell align="center">Отчество</TableCell>
@@ -111,9 +110,6 @@ export class TableUser extends React.Component<IProps> {
             <TableCell align="center">Редактировать</TableCell>
             <TableCell align="center">Состояние</TableCell>
           </TableRow>
-
-       
-
         </TableHead>
         <TableBody>
 
