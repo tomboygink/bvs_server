@@ -147,6 +147,13 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
         } break;
        
+
+        //------------------------------------------------------------------------РЕДАКТИРОВАНИЕ ПОЛЬЗОВАТЕЛЕЙ АДМИНИСТРАТОРОМ 
+        case 'set_ChangeUser':{
+            ut = new UserTable(q.args, q.sess_code);
+            await ut.updateUserAdmin();
+        }break;
+
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ОРГАНИЗАЦИЙ
         //Получение всех организаций
         case 'get_Org': {

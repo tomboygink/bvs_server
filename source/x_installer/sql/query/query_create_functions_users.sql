@@ -119,6 +119,47 @@ SET
 WHERE login=c_login
 $$ LANGUAGE sql;
 
+--------------------------------------------------------------------------------------------Функция обновления данных пользователя администратором
+DROP FUNCTION IF EXISTS UpdateUserAdmin;
+CREATE OR REPLACE FUNCTION UpdateUserAdmin(
+	c_login VARCHAR(250),
+	c_password VARCHAR(250),
+	c_family VARCHAR(150),
+    c_name VARCHAR(150),
+    c_father VARCHAR(150),
+	c_telephone VARCHAR(50),
+    c_email VARCHAR(150),
+    c_id_org BIGINT,
+    c_id_job BIGINT,
+    c_roles_ids JSON,
+	c_mail_code VARCHAR(250),
+	c_re_password_code VARCHAR(250),
+	c_deleted BOOLEAN,
+    c_info TEXT
+	)
+RETURNS VOID
+AS $$
+	UPDATE users SET
+	password = c_password,
+	family = c_family,
+    name = c_name,
+    father = c_father,
+	telephone = c_telephone,
+    email = c_email,
+    org_id = c_id_org,
+    job_title_id = c_id_job,
+    roles_ids = c_roles_ids,
+	mail_code = c_mail_code,
+	act_mail = CASE WHEN ((SELECT email FROM users WHERE login=c_login) <> c_email) THEN (false) ELSE (SELECT act_mail FROM users WHERE login=c_login) END,
+	re_password_code = c_re_password_code,
+	deleted = c_deleted,
+	--deleted_date = CASE WHEN ((SELECT deleted FROM users WHERE login=c_login)<>c_deleted) then (CURRENT_TIMESTAMP) ELSE (SELECT deleted_date FROM users WHERE login=c_login) END,
+	deleted_date = CASE WHEN (c_deleted<>false) then (CURRENT_TIMESTAMP) ELSE (null) END,
+    info = c_info
+	WHERE login = c_login
+$$
+LANGUAGE SQL;
+
 --------------------------------------------------------------------------------------------Функция обновления и подтверждения email 
 DROP FUNCTION IF EXISTS UpdateUserEmail;
 CREATE OR REPLACE FUNCTION UpdateUserEmail
