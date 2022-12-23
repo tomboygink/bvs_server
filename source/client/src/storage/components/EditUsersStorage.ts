@@ -10,6 +10,9 @@ export class EditUsersStorage {
   @observable modal_edit_user: boolean = false;
   @observable id_rows: any = "";
 
+  @observable search_famaly: any = '';
+  @observable search_name: any = '';
+
   @observable checkbox_editing: boolean = false; /// разрешить редактирование пользователю
   @observable checkbox_reading: boolean = true; /// только чтение
 
@@ -48,9 +51,18 @@ export class EditUsersStorage {
   constructor() {
     makeAutoObservable(this);
   }
+  
+  /// поиск по пользователям
+
+  @action setSearchFamaly(val: any) {this.search_famaly = val}
+  @computed getSearchFamaly() : any {return this.search_famaly}
+
+  
+  @action setSearchName(val: any) {this.search_name = val}
+  @computed getSearchName() : any {return this.search_name}
+
 
   /////опции для организации
-
   @action setKeyOrg(val: any) {this.key_org = val;}
   @computed getKeyOrg(): any {return this.key_org;}
 

@@ -47,6 +47,12 @@ export class ForgotPass extends React.Component<IProps> {
       );
     }
 
+    if (APP_STORAGE.auth_form.getError_emain() === true){
+      alert = (
+        <></>
+      );
+    }
+
     return (
       <React.Fragment>
         <ThemeProvider theme={theme}>
