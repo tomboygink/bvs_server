@@ -205,4 +205,42 @@ export class UserTable {
         return result;
     }
 
+    //Обновление данных пользователя администратором
+    async updateUserAdmin()
+    {
+        
+        var pass = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.new_password).digest('hex');
+        var mail_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex');
+        var re_pass_code = crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login + "_" + pass).digest('hex');
+        var access = '';
+        //users_r = 1
+        //users_w = 2
+        if(this.args.users_r === false && this.args.users_w === false)
+        {
+            access = '{\"roles\":[1]}';
+        }
+        if(this.args.users_r === true && this.args.users_w === false)
+        {
+            access = '{\"roles\":[1]}';
+        }
+        if(this.args.users_r === false && this.args.users_w === true)
+        {
+            access = '{\"roles\":[1,2]}';
+        }
+        if(this.args.users_r === true && this.args.users_w === true)
+        {
+            access = '{\"roles\":[1,2]}';
+        }
+
+        await this.db.query("SELECT * FROM UpdateUserAdmin(CAST ('" + this.args.login + "' AS VARCHAR(250)), " +
+        "CAST ('" + pass + "' AS VARCHAR(250)), CAST ('" + this.args.family + "' AS VARCHAR(150)), " +
+        "CAST ('" + this.args.name + "' AS VARCHAR(150)), CAST ('" + this.args.father + "' AS VARCHAR(150)), " +
+        "CAST ('" + this.args.telephone + "' AS VARCHAR(50)), CAST ('" + this.args.email + "' AS VARCHAR(150)), " +
+        "CAST ('" + this.args.id_org + "' AS BIGINT), CAST ('" + this.args.id_job + "' AS BIGINT), " +
+        "CAST ('"+access+"' AS JSON), " +
+        "CAST ('" + mail_code + "' AS VARCHAR(250)), " +
+        "CAST ('" + re_pass_code + "' AS VARCHAR(250)), CAST ('"+this.args.deleted+"' AS BOOLEAN)," +
+        "CAST ('" + this.args.info + "' AS TEXT))");
+    }
+
 }

@@ -286,6 +286,44 @@ var UserTable = (function () {
             });
         });
     };
+    UserTable.prototype.updateUserAdmin = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var pass, mail_code, re_pass_code, access;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.new_password).digest('hex');
+                        mail_code = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex');
+                        re_pass_code = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + pass).digest('hex');
+                        access = '';
+                        if (this.args.users_r === false && this.args.users_w === false) {
+                            access = '{\"roles\":[1]}';
+                        }
+                        if (this.args.users_r === true && this.args.users_w === false) {
+                            access = '{\"roles\":[1]}';
+                        }
+                        if (this.args.users_r === false && this.args.users_w === true) {
+                            access = '{\"roles\":[1,2]}';
+                        }
+                        if (this.args.users_r === true && this.args.users_w === true) {
+                            access = '{\"roles\":[1,2]}';
+                        }
+                        return [4, this.db.query("SELECT * FROM UpdateUserAdmin(CAST ('" + this.args.login + "' AS VARCHAR(250)), " +
+                                "CAST ('" + pass + "' AS VARCHAR(250)), CAST ('" + this.args.family + "' AS VARCHAR(150)), " +
+                                "CAST ('" + this.args.name + "' AS VARCHAR(150)), CAST ('" + this.args.father + "' AS VARCHAR(150)), " +
+                                "CAST ('" + this.args.telephone + "' AS VARCHAR(50)), CAST ('" + this.args.email + "' AS VARCHAR(150)), " +
+                                "CAST ('" + this.args.id_org + "' AS BIGINT), CAST ('" + this.args.id_job + "' AS BIGINT), " +
+                                "CAST ('" + access + "' AS JSON), " +
+                                "CAST ('" + mail_code + "' AS VARCHAR(250)), " +
+                                "CAST ('" + re_pass_code + "' AS VARCHAR(250)), CAST ('" + this.args.deleted + "' AS BOOLEAN)," +
+                                "CAST ('" + this.args.info + "' AS TEXT))")];
+                    case 1:
+                        _a.sent();
+                        return [2];
+                }
+            });
+        });
+    };
     return UserTable;
 }());
 exports.UserTable = UserTable;

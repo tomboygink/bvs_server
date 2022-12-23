@@ -1,7 +1,10 @@
 --------------------------------------------------------------------------------------------Функция получения групп устройств по определенной 
 --------------------------------------------------------------------------------------------организации или для админа всех
 DROP FUNCTION IF EXISTS SelectDevs_Group_OrgId;
-CREATE OR REPLACE FUNCTION SelectDevs_Group_OrgId(c_org_id varchar(60))
+CREATE OR REPLACE FUNCTION SelectDevs_Group_OrgId(
+	c_org_id VARCHAR(60),
+	c_deleted VARCHAR(60)
+	)
 RETURNS TABLE
 (
 	id BIGINT,
@@ -15,7 +18,7 @@ RETURNS TABLE
 	g_info TEXT
 )
 AS $$
-	SELECT * FROM devs_groups WHERE CAST(org_id AS TEXT) LIKE c_org_id AND deleted=false;
+	SELECT * FROM devs_groups WHERE CAST(org_id AS TEXT) LIKE c_org_id AND CAST(deleted AS TEXT) = c_deleted;
 $$
 LANGUAGE SQL;
 --НЕОБХОДИМО УСЛОВИЯ WRITE В ДОСТУПЕ 
@@ -43,27 +46,9 @@ AS $$
 $$
 LANGUAGE SQL;
 
---------------------------------------------------------------------------------------------Функция добавления устройства
-DROP FUNCTION IF EXISTS AddDevs;
-CREATE OR REPLACE FUNCTION AddDevs(
-	c_group_dev_id BIGINT,
-	c_number VARCHAR(80), 
-	c_name VARCHAR(250), 
-	c_latitude VARCHAR(60),
-	c_longitude VARCHAR(60),
-	c_sensors JSON,
-	c_info TEXT
-)
-RETURNS VOID
-AS $$
-insert into devs (group_dev_id, number, name, latitude, longitude, sensors, info)
-values (c_group_dev_id, c_number, c_name, c_latitude, c_longitude, c_sensors, c_info)
-$$ LANGUAGE SQL;
 
-
-
---------------------------------------------------------------------------------------------Функция получения данных устройства по номеру устройства
-DROP FUNCTION IF EXISTS SelectDevs;
+--------------------------------------------------------------------------------------------Функция получения данных устройств по группе 
+/*DROP FUNCTION IF EXISTS SelectDevs;
 CREATE OR REPLACE FUNCTION SelectDevs(
 	c_number VARCHAR(80)
 )
@@ -79,4 +64,27 @@ RETURNS TABLE (
 )
 AS $$
 SELECT * FROM devs WHERE number = c_number
+$$ LANGUAGE SQL;*/
+
+
+--------------------------------------------------------------------------------------------Функция добавления устройства
+DROP FUNCTION IF EXISTS AddDevs;
+CREATE OR REPLACE FUNCTION AddDevs(
+	c_group_dev_id BIGINT,
+	c_number VARCHAR(80), 
+	c_name VARCHAR(250), 
+	c_latitude VARCHAR(60),
+	c_longitude VARCHAR(60),
+	c_sensors JSON,
+	c_deleted BOOLEAN,
+	c_info TEXT
+)
+RETURNS BIGINT
+AS $$
+	INSERT INTO devs (group_dev_id, number, name, latitude, longitude, sensors, deleted, info)
+	VALUES (c_group_dev_id, c_number, c_name, c_latitude, c_longitude, c_sensors, c_deleted, c_info)
+	RETURNING id
 $$ LANGUAGE SQL;
+
+
+
