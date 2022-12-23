@@ -31,11 +31,17 @@ export class ForgotPass extends React.Component<IProps> {
 
         if(APP_STORAGE.auth_form.get_forgPass() === null ){
             alert = <Alert severity="success">Пароль успешно изменен</Alert>;
+         
         }
 
         else if (APP_STORAGE.auth_form.get_forgPass() !== null && APP_STORAGE.auth_form.get_forgPass() !== ''){
             alert = <Alert severity="error">{APP_STORAGE.auth_form.get_forgPass()}</Alert>;
+          
         }  
+
+        if(APP_STORAGE.auth_form.getErrr_new_pass() === true || APP_STORAGE.auth_form.getError_repeat_pass() === true || APP_STORAGE.auth_form.getError_login() === true){
+            alert = <></>;
+        }
         
         return (
             <React.Fragment>
