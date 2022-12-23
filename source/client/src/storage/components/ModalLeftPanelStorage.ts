@@ -207,31 +207,15 @@ export class ModalLeftPanel {
     return this.texthelp_login_double;
   }
 
-  @action setErrorPassword(val: boolean) {
-    this.error_password = val;
-  }
-  @computed getErrorPassword(): boolean {
-    return this.error_password;
-  }
-  @action setTextHelpPassword(val: string) {
-    this.texthelp_password = val;
-  }
-  @computed getTextHelpPassword(): string {
-    return this.texthelp_password;
-  }
+  @action setErrorPassword(val: boolean) {this.error_password = val;}
+  @computed getErrorPassword(): boolean {return this.error_password;}
+  @action setTextHelpPassword(val: string) {this.texthelp_password = val;}
+  @computed getTextHelpPassword(): string {return this.texthelp_password;}
 
-  @action setErrorRepeatPassword(val: boolean) {
-    this.error_repeat_password = val;
-  }
-  @computed getErrorRepeatPassword(): boolean {
-    return this.error_repeat_password;
-  }
-  @action setTextHelpRepeatPassword(val: string) {
-    this.texthelp_repeat_password = val;
-  }
-  @computed getTextHelpRepeatPassword(): string {
-    return this.texthelp_repeat_password;
-  }
+  @action setErrorRepeatPassword(val: boolean) {this.error_repeat_password = val;}
+  @computed getErrorRepeatPassword(): boolean {return this.error_repeat_password;}
+  @action setTextHelpRepeatPassword(val: string) {this.texthelp_repeat_password = val;}
+  @computed getTextHelpRepeatPassword(): string {return this.texthelp_repeat_password;}
 
   //////////////////////добавление организации
 

@@ -22,32 +22,32 @@ export class AppForm extends React.Component<IProps> {
     if (APP_STORAGE.auth_form.getUser())
       return (
         <React.Fragment>
-          <Box style={{ display: "flex" }}>
+          <Box style={{ display: "flex"}}>
             <AppBarPanel />
             <Modal />
             <ModalLeftPanel />
-            <Box sx={{ mt: "8%" }}></Box>
+            <Box sx={{ mt: "2%" }}></Box>
           </Box>
           <Box
             className="wrapper"
-            sx={{ display: "flex", justifyContent: "space-between" }}
+            // sx={{ display: "flex", justifyContent: "space-between" }}
           >
-            <Box className="appform">1</Box>
+            {/* <Box className="appform">1</Box> */}
             
               
             {APP_STORAGE.reg_user.getOpenTableUsers() === true &&
-            <Box className="appform" sx= {{background: '#e7ebf0ab', p: '22px', borderRadius: '4px'}}>
+            <Box className="appform" sx= {{background: '#e7ebf0ab', p: '44px', borderRadius: '4px'}}>
       <TableUser/>
       </Box>
       } 
  
            
-
+{/* 
             <Box className="appform">
               
               3
               
-              </Box>
+              </Box> */}
           </Box>
         </React.Fragment>
       );

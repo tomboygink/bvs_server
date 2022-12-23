@@ -75,7 +75,8 @@ export class AppBarLeftPanel extends React.Component<IProps> {
             </ListItemIcon>{" "}
             Пользователи
           </MenuItem>
-
+  
+          <Divider light sx={{pb: 1, pt:1}} />
 
           <MenuItem
             onClick={() => this.OpenModalRegUser(1, "Добавить пользователя")}
