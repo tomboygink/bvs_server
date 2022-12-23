@@ -64,30 +64,85 @@ export class TableUser extends React.Component<IProps> {
     }
   }
 
+  async SeachFather(a: any) { 
+    APP_STORAGE.edit_user.setSearchFather(a);
+    let filter = (document.getElementById('search_father') as HTMLInputElement).value.toUpperCase();
+    let table = (document.getElementById('myTable') as HTMLInputElement);
+    let tr = table.getElementsByTagName("tr");
+    for (let i = 0; i < tr.length; i++) {
+     let td = tr[i].getElementsByTagName("td")[3];
+      if (td) {
+       let txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+
+  async SeachLogin(a: any) { 
+    APP_STORAGE.edit_user.setSearchLogin(a);
+    let filter = (document.getElementById('search_login') as HTMLInputElement).value.toUpperCase();
+    let table = (document.getElementById('myTable') as HTMLInputElement);
+    let tr = table.getElementsByTagName("tr");
+    for (let i = 0; i < tr.length; i++) {
+     let td = tr[i].getElementsByTagName("td")[4];
+      if (td) {
+       let txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+
+  async SeachTelephone(a: any) { 
+    APP_STORAGE.edit_user.setSearchTelephone(a);
+    let filter = (document.getElementById('search_telephone') as HTMLInputElement).value.toUpperCase();
+    let table = (document.getElementById('myTable') as HTMLInputElement);
+    let tr = table.getElementsByTagName("tr");
+    for (let i = 0; i < tr.length; i++) {
+     let td = tr[i].getElementsByTagName("td")[5];
+      if (td) {
+       let txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+
+  async SeachEmail(a: any) { 
+    APP_STORAGE.edit_user.setSearchEmail(a);
+    let filter = (document.getElementById('search_email') as HTMLInputElement).value.toUpperCase();
+    let table = (document.getElementById('myTable') as HTMLInputElement);
+    let tr = table.getElementsByTagName("tr");
+    for (let i = 0; i < tr.length; i++) {
+     let td = tr[i].getElementsByTagName("td")[6];
+      if (td) {
+       let txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+  
+  
+
+
   render(): React.ReactNode {  
 
     let table_rows = []
     if (APP_STORAGE.reg_user.getAllUsers()) {
-
-  
-      // let search_name = (document.getElementById('search_name') as HTMLInputElement).value.toUpperCase();
- 
-      // for (let i = 0; i < tr.length; i++) {
-      //  let td = tr[i].getElementsByTagName("td")[2];
-      //   if (td) {
-      //    let txtValue = td.textContent || td.innerText;
-      //     if (txtValue.toUpperCase().indexOf(search_name) > -1) {
-      //       tr[i].style.display = "";
-      //     } else {
-      //       tr[i].style.display = "none";
-      //     }
-      //   }       
-      // }
-
-
-
-
-
         let users = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getAllUsers()));
         for (var key in users) {
           let row = users[key];
@@ -166,7 +221,9 @@ export class TableUser extends React.Component<IProps> {
           </TableRow>
           <TableRow>
           <TableCell > </TableCell>    
-          <TableCell align="center">       <TextField
+          <TableCell align="center">      
+           <TextField
+               variant="standard"
                 size='small' 
                 id="search" 
                 onChange={(e) => {
@@ -175,8 +232,10 @@ export class TableUser extends React.Component<IProps> {
                 value ={APP_STORAGE.edit_user.getSearchFamaly()}
                 />
           </TableCell>
+
           <TableCell align="center">       
           <TextField
+                variant="standard"
                 size='small' 
                 id="search_name" 
                 onChange={(e) => {
@@ -185,10 +244,55 @@ export class TableUser extends React.Component<IProps> {
                 value ={APP_STORAGE.edit_user.getSearchName()}
                 />
           </TableCell>
-            <TableCell align="center"></TableCell>
-            <TableCell align="center"></TableCell>
-            <TableCell align="center"></TableCell>
-            <TableCell align="center"></TableCell>
+
+          <TableCell align="center">       
+          <TextField
+                variant="standard"
+                size='small' 
+                id="search_father" 
+                onChange={(e) => {
+                this.SeachFather(e.target.value);
+                }} 
+                value ={APP_STORAGE.edit_user.getSearchFather()}
+                />
+          </TableCell>
+            
+          <TableCell align="center">       
+          <TextField
+                variant="standard"
+                size='small' 
+                id="search_login" 
+                onChange={(e) => {
+                this.SeachLogin(e.target.value);
+                }} 
+                value ={APP_STORAGE.edit_user.getSearchLogin()}
+                />
+          </TableCell>
+
+          <TableCell align="center">       
+          <TextField
+                variant="standard"
+                size='small' 
+                id="search_telephone" 
+                onChange={(e) => {
+                this.SeachTelephone(e.target.value);
+                }} 
+                value ={APP_STORAGE.edit_user.getSearchTelephone()}
+                />
+          </TableCell>
+
+          <TableCell align="center">       
+          <TextField
+                size='small'
+                variant="standard" 
+                id="search_email" 
+                onChange={(e) => {
+                this.SeachEmail(e.target.value);
+                }} 
+                value ={APP_STORAGE.edit_user.getSearchEmail()}
+                />
+          </TableCell>
+
             <TableCell align="center"></TableCell>
             <TableCell align="center"></TableCell>
             <TableCell align="center"></TableCell>

@@ -12,6 +12,10 @@ export class EditUsersStorage {
 
   @observable search_famaly: any = '';
   @observable search_name: any = '';
+  @observable search_father : any = '';
+  @observable search_login : any = '';
+  @observable search_telephone: any = "";
+  @observable search_email: any = "";
 
   @observable checkbox_editing: boolean = false; /// разрешить редактирование пользователю
   @observable checkbox_reading: boolean = true; /// только чтение
@@ -57,9 +61,20 @@ export class EditUsersStorage {
   @action setSearchFamaly(val: any) {this.search_famaly = val}
   @computed getSearchFamaly() : any {return this.search_famaly}
 
-  
   @action setSearchName(val: any) {this.search_name = val}
   @computed getSearchName() : any {return this.search_name}
+
+  @action setSearchFather(val: any) {this.search_father = val}
+  @computed getSearchFather() : any {return this.search_father}
+
+  @action setSearchLogin(val: any) {this.search_login = val}
+  @computed getSearchLogin() : any {return this.search_login}
+
+  @action setSearchTelephone(val: any) {this.search_telephone = val}
+  @computed getSearchTelephone() : any {return this.search_telephone}
+
+  @action setSearchEmail(val: any) {this.search_email = val}
+  @computed getSearchEmail() : any {return this.search_email}
 
 
   /////опции для организации
