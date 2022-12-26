@@ -9,7 +9,9 @@ import { APP_STORAGE } from '../AppStorage';
 export class EditUsersStorage {
   @observable modal_edit_user: boolean = false;
   @observable id_rows: any = "";
-
+  
+  @observable open_search: boolean = false;  /// открываем строку поиска
+ 
   @observable search_famaly: any = '';
   @observable search_name: any = '';
   @observable search_father : any = '';
@@ -55,6 +57,10 @@ export class EditUsersStorage {
   constructor() {
     makeAutoObservable(this);
   }
+
+
+  @action setOpenSearch (val: boolean) {this.open_search = val}
+  @computed getOpenSearch() : boolean {return this.open_search}
   
   /// поиск по пользователям
 

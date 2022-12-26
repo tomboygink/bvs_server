@@ -5,7 +5,7 @@ import { PageStorage } from './PageStorage';
 import { AuthFormStorage } from './components/AuthFormStorage';
 import { AppBarStorage } from './components/AppBarStorage';
 import { ModalStorage } from './components/ModalStorage';
-import { ModalLeftPanel } from './components/ModalLeftPanelStorage';
+import { ModalLeftPanel } from './components/RegistationUsersStorage';
 import { EditUsersStorage } from './components/EditUsersStorage'
 import { WSocket } from './WSocket';
 import {getCookie , setCookie, deleteCookie }  from './browserCookes'

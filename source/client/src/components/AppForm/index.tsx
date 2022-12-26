@@ -2,11 +2,14 @@ import React from "react";
 import { observer } from "mobx-react";
 
 import { AppBarPanel } from "./AppBarPanel/AppBarPanel";
-import { Modal } from "./Modal/Modal";
+import { Modal } from "./AppBarPanel/TopMenu/Modal/Modal";
 import { ModalLeftPanel } from "./AppBarPanel/LeftPanel/RegistationUsers/ModalLeftPanel";
-import { Box, Alert } from "@mui/material";
+import { Box, Alert, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../storage/AppStorage";
-import {TableUser} from '../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser'
+import {TableUser} from '../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser';
+
+import {DevsGroups} from './Devs/DevsGroups';
+import {AdoutDevs} from './Devs/AdoutDevs'
 
 interface IProps {}
 
@@ -22,7 +25,7 @@ export class AppForm extends React.Component<IProps> {
     if (APP_STORAGE.auth_form.getUser())
       return (
         <React.Fragment>
-          <Box style={{ display: "flex"}}>
+          <Box style={{ display: "flex" , justifyContent: 'flex-start' }}>
             <AppBarPanel />
             <Modal />
             <ModalLeftPanel />
@@ -30,25 +33,29 @@ export class AppForm extends React.Component<IProps> {
           </Box>
           <Box
             className="wrapper"
-            // sx={{ display: "flex", justifyContent: "space-between" }}
+           sx={{ display: "flex", justifyContent: "flex-start" }}
           >
-            {/* <Box className="appform">1</Box> */}
+           <Box className="appform">
+           <DevsGroups />
+            </Box> 
             
               
             {APP_STORAGE.reg_user.getOpenTableUsers() === true &&
-            <Box className="appform" sx= {{background: '#e7ebf0ab', p: '44px', borderRadius: '4px'}}>
-      <TableUser/>
-      </Box>
-      } 
+            <Box className="appform" sx= {{ borderRadius: '4px'}}>
+            <TableUser/>
+            </Box>
+            } 
+             
+             <Box >
+             <AdoutDevs/>
+            </Box>
  
-           
-{/* 
-            <Box className="appform">
+            {/* <Box className="appform">
               
-              3
-              
-              </Box> */}
+            dsfdasydtrf
+              </Box>  */}
           </Box>
+
         </React.Fragment>
       );
   }

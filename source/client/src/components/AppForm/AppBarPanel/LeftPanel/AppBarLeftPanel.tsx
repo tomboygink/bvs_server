@@ -104,6 +104,15 @@ export class AppBarLeftPanel extends React.Component<IProps> {
             </ListItemIcon>
             Добавить должность
           </MenuItem>
+
+          <MenuItem
+            onClick={() => this.OpenModalRegUser(3, "Добавить должность")}
+          >
+            <ListItemIcon>
+              <WorkOutlineIcon fontSize="small" />
+            </ListItemIcon>
+            Расположение стройств
+          </MenuItem>
         </>
       );
     }
