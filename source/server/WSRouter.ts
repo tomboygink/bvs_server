@@ -9,6 +9,7 @@ import { SendMail } from '../xcore/mailer/sendMail';
 import crypto from 'crypto';
 import { CONFIG } from '../xcore/config'
 import { Console } from 'console';
+import { Devs_groupsTable } from '../xcore/dbase/Devs_groups';
 
 
 export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
@@ -250,7 +251,24 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             wsres.data = data;
             wsres.error = '';
         } break;
-
+        
+        //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ГРУПП УСТРОЙВ 
+        case 'set_NewDevGroup':{
+            var dg = new Devs_groupsTable(q.args, q.sess_code);
+            data = await dg.insertDevsGroups();
+            if(data[0].id==0|| data==null|| data==undefined)
+            {
+                wsres.code = q.sess_code;
+                wsres.data = [];
+                wsres.error = "Ошибка добавления должности"
+            }
+            else {
+                data = await dg.selectDevsGroups();
+                wsres.code = q.sess_code;
+                //wsres.data = data;
+                wsres.error = null;
+            }
+        }
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
         case 'deleteCookie': {

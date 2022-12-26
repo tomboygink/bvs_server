@@ -23,7 +23,7 @@ $$
 LANGUAGE SQL;
 --НЕОБХОДИМО УСЛОВИЯ WRITE В ДОСТУПЕ 
 --Для пользователя SELECT * FROM SelectDevs_Group_OrgId('2');
---Для адина SELECT * FROM SelectDevs_Group_OrgId('%');
+--Для админа SELECT * FROM SelectDevs_Group_OrgId('%');
 
 
 
@@ -48,9 +48,10 @@ LANGUAGE SQL;
 
 
 --------------------------------------------------------------------------------------------Функция получения данных устройств по группе 
-/*DROP FUNCTION IF EXISTS SelectDevs;
+DROP FUNCTION IF EXISTS SelectDevs;
 CREATE OR REPLACE FUNCTION SelectDevs(
-	c_number VARCHAR(80)
+	c_group_dev_id BIGINT,
+	c_deleted BOOLEAN
 )
 RETURNS TABLE (
 	id BIGINT,
@@ -60,11 +61,13 @@ RETURNS TABLE (
 	latitude VARCHAR(60),
 	longitude VARCHAR(60),
 	sensors JSON,
+	deleted BOOLEAN,
 	info TEXT
 )
 AS $$
-SELECT * FROM devs WHERE number = c_number
-$$ LANGUAGE SQL;*/
+SELECT * FROM devs WHERE group_dev_id = c_group_dev_id and deleted = c_deleted
+$$ LANGUAGE SQL;
+
 
 
 --------------------------------------------------------------------------------------------Функция добавления устройства

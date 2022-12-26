@@ -61,7 +61,7 @@ export class SendMail {
             //html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://127.0.0.1:3040/confirm_mail?code= '+ a +'">Click this link</a></h1> and paste this code <b>'+ crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login+"_"+this.args.email).digest('hex')+'</b>',
             //html: 'This message was sent from bvs_server to reset your password, paste this code <b>'+data+'</b>',
 
-            html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://127.0.0.1:3040/forgot_pass?code= '+ data[0].re_password_code +'">Click this link</a></h1>',
+            html: 'This message was sent from bvs_server to reset your password. <h1><a href="http://127.0.0.1:3040/forgot_pass?code= '+ data[0].re_password_code +'">Click this link</a></h1>',
         })
     }
 }
