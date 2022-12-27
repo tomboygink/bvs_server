@@ -86,6 +86,7 @@ export class ModalLeftPanel {
   @observable error_inn_double: boolean = false;
   @observable texthelp_inn_double: string = "";
 
+  
   constructor() {
     makeAutoObservable(this);
     Map<string, string>;
@@ -219,137 +220,60 @@ export class ModalLeftPanel {
 
   //////////////////////добавление организации
 
-  @action setFullNameOrg(val: string) {
-    this.full_name_org = val;
-  }
-  @computed getFullNameOrg(): string {
-    return this.full_name_org;
-  }
+  @action setFullNameOrg(val: string) {this.full_name_org = val;}
+  @computed getFullNameOrg(): string {return this.full_name_org;}
 
-  @action setNameOrg(val: string) {
-    this.name_org = val;
+  @action setNameOrg(val: string) {this.name_org = val;
   }
-  @computed getNameOrg(): string {
-    return this.name_org;
-  }
+  @computed getNameOrg(): string {return this.name_org;}
 
-  @action setInn(val: string) {
-    this.inn = val;
-  }
-  @computed getInn(): string {
-    return this.inn;
-  }
+  @action setInn(val: string) {this.inn = val;}
+  @computed getInn(): string {return this.inn;}
 
-  @action setAddress(val: string) {
-    this.address = val;
-  }
-  @computed getAddress(): string {
-    return this.address;
-  }
+  @action setAddress(val: string) {this.address = val;}
+  @computed getAddress(): string {return this.address;}
 
-  @action setLatitude(val: string) {
-    this.latitude = val;
-  }
-  @computed getLatitude(): string {
-    return this.latitude;
-  }
+  @action setLatitude(val: string) {this.latitude = val;}
+  @computed getLatitude(): string {return this.latitude;}
 
-  @action setLongitude(val: string) {
-    this.longitude = val;
-  }
-  @computed getLongitude(): string {
-    return this.longitude;
-  }
+  @action setLongitude(val: string) {this.longitude = val;}
+  @computed getLongitude(): string {return this.longitude;}
 
-  @action setInfOrg(val: string) {
-    this.info_org = val;
-  }
-  @computed getInfOrg(): string {
-    return this.info_org;
-  }
+  @action setInfOrg(val: string) {this.info_org = val}
+  @computed getInfOrg(): string {return this.info_org;}
 
   /////проверка формы (AddOrg)
-  @action setErrorFullName(val: boolean) {
-    this.error_full_name = val;
-  } /// проверка полного наименования организации
-  @computed getErrorFullName(): boolean {
-    return this.error_full_name;
-  }
-  @action setTextHelpFullName(val: string) {
-    this.texthelp_full_name = val;
-  }
-  @computed getTextHelpFullName(): string {
-    return this.texthelp_full_name;
-  }
+  @action setErrorFullName(val: boolean) {this.error_full_name = val;} /// проверка полного наименования организации
+  @computed getErrorFullName(): boolean {return this.error_full_name;}
+  @action setTextHelpFullName(val: string) {this.texthelp_full_name = val;}
+  @computed getTextHelpFullName(): string {return this.texthelp_full_name;}
 
-  @action setErrorFullNameDouble(val: boolean) {
-    this.error_full_name_double = val;
-  } /// проверка -  есть ли катакая организация (полное наименование )
-  @computed getErrorFullNameDouble(): boolean {
-    return this.error_full_name_double;
-  }
-  @action setTextHelpFullNameDouble(val: string) {
-    this.texthelp_full_name_double = val;
-  }
-  @computed getTextHelpFullNameDouble(): string {
-    return this.texthelp_full_name_double;
-  }
+  @action setErrorFullNameDouble(val: boolean) {this.error_full_name_double = val;} /// проверка -  есть ли катакая организация (полное наименование )
+  @computed getErrorFullNameDouble(): boolean {return this.error_full_name_double;}
+  @action setTextHelpFullNameDouble(val: string) {this.texthelp_full_name_double = val;}
+  @computed getTextHelpFullNameDouble(): string {return this.texthelp_full_name_double;}
 
-  @action setErrorNameOrg(val: boolean) {
-    this.error_name_org = val;
-  } /// проверка  наименования организации
-  @computed getErrorNameOrg(): boolean {
-    return this.error_name_org;
-  }
-  @action setTextHelpNameOrg(val: string) {
-    this.texthelp_name_org = val;
-  }
-  @computed getTextHelpNameOrg(): string {
-    return this.texthelp_name_org;
-  }
+  @action setErrorNameOrg(val: boolean) {this.error_name_org = val;} /// проверка  наименования организации
+  @computed getErrorNameOrg(): boolean {return this.error_name_org;}
+  @action setTextHelpNameOrg(val: string) {this.texthelp_name_org = val;}
+  @computed getTextHelpNameOrg(): string {return this.texthelp_name_org;}
 
-  @action setErrorNameDouble(val: boolean) {
-    this.error_name_double = val;
-  } /// проверка -  есть ли катакая организация
-  @computed getErrorNameDouble(): boolean {
-    return this.error_name_double;
-  }
-  @action setTextHelpNameDouble(val: string) {
-    this.texthelp_name_double = val;
-  }
-  @computed getTextHelpNameDouble(): string {
-    return this.texthelp_name_double;
-  }
+  @action setErrorNameDouble(val: boolean) {this.error_name_double = val;} /// проверка -  есть ли катакая организация
+  @computed getErrorNameDouble(): boolean {return this.error_name_double;}
+  @action setTextHelpNameDouble(val: string) {this.texthelp_name_double = val;}
+  @computed getTextHelpNameDouble(): string {return this.texthelp_name_double;}
 
-  @action setErrorInn(val: boolean) {
-    this.error_inn = val;
-  } /// проверка инн на ввод данных (только цифры)
-  @computed getErrorInn(): boolean {
-    return this.error_inn;
-  }
-  @action setTextHelpInn(val: string) {
-    this.texthelp_inn = val;
-  }
-  @computed getTextHelpInn(): string {
-    return this.texthelp_inn;
-  }
+  @action setErrorInn(val: boolean) {this.error_inn = val;} /// проверка инн на ввод данных (только цифры)
+  @computed getErrorInn(): boolean {return this.error_inn;}
+  @action setTextHelpInn(val: string) {this.texthelp_inn = val;}
+  @computed getTextHelpInn(): string {return this.texthelp_inn;}
 
-  @action setErrorInnDouble(val: boolean) {
-    this.error_inn_double = val;
-  } /// проверка -  есть ли катакая организация
-  @computed getErrorInnDouble(): boolean {
-    return this.error_inn_double;
-  }
-  @action setTextHelpInnDouble(val: string) {
-    this.texthelp_inn_double = val;
-  }
-  @computed getTextHelpInnDouble(): string {
-    return this.texthelp_inn_double;
-  }
+  @action setErrorInnDouble(val: boolean) {this.error_inn_double = val;} /// проверка -  есть ли катакая организация
+  @computed getErrorInnDouble(): boolean {return this.error_inn_double;}
+  @action setTextHelpInnDouble(val: string) {this.texthelp_inn_double = val;}
+  @computed getTextHelpInnDouble(): string {return this.texthelp_inn_double;}
 
-  @action setErrorAddress(val: boolean) {
-    this.error_address = val;
-  } /// проверка адреса на ввод данных (только цифры)
+  @action setErrorAddress(val: boolean) {this.error_address = val;} /// проверка адреса на ввод данных (только цифры)
   @computed getErrorAddress(): boolean {return this.error_address;}
   @action setTextHelpAddress(val: string) {this.texthelp_address = val; }
   @computed getTextHelpAddress(): string {return this.texthelp_address;}

@@ -5,7 +5,7 @@ import {TextField, Box, Dialog , Divider , Typography} from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
 
-import { APP_STORAGE } from '../../../storage/AppStorage';
+import { APP_STORAGE } from '../../../../../storage/AppStorage';
 
 import {ChangePassword} from './ChangePassword'
 import {ChangeUserData} from './ChangeUserData'

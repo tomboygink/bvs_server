@@ -5,11 +5,12 @@ import { PageStorage } from './PageStorage';
 import { AuthFormStorage } from './components/AuthFormStorage';
 import { AppBarStorage } from './components/AppBarStorage';
 import { ModalStorage } from './components/ModalStorage';
-import { ModalLeftPanel } from './components/ModalLeftPanelStorage';
+import { ModalLeftPanel } from './components/RegistationUsersStorage';
 import { EditUsersStorage } from './components/EditUsersStorage'
 import { WSocket } from './WSocket';
 import {getCookie , setCookie, deleteCookie }  from './browserCookes'
 import { UsersEntity } from '../../../xcore/dbase/Users';
+import { DevsGroupStorage } from './components/DevsGroupStorage'
 
 // ********************************************************************************************************************************************************
 // ХРАНИЛИЩЕ
@@ -21,6 +22,7 @@ class AppStorage {
     @observable modal: ModalStorage = null;
     @observable reg_user: ModalLeftPanel = null;
     @observable edit_user: EditUsersStorage = null;
+    @observable devs_groups: DevsGroupStorage = null;
     
 
     @observable dt:any = null;
@@ -39,6 +41,7 @@ class AppStorage {
         this.modal = new ModalStorage();
         this.reg_user = new ModalLeftPanel();
         this.edit_user = new EditUsersStorage();
+        this.devs_groups = new DevsGroupStorage();
         makeAutoObservable(this);
 
         // WSocket.get();

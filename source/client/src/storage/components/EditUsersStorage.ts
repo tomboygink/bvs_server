@@ -9,6 +9,15 @@ import { APP_STORAGE } from '../AppStorage';
 export class EditUsersStorage {
   @observable modal_edit_user: boolean = false;
   @observable id_rows: any = "";
+  
+  @observable open_search: boolean = false;  /// открываем строку поиска
+ 
+  @observable search_famaly: any = '';
+  @observable search_name: any = '';
+  @observable search_father : any = '';
+  @observable search_login : any = '';
+  @observable search_telephone: any = "";
+  @observable search_email: any = "";
 
   @observable checkbox_editing: boolean = false; /// разрешить редактирование пользователю
   @observable checkbox_reading: boolean = true; /// только чтение
@@ -49,8 +58,30 @@ export class EditUsersStorage {
     makeAutoObservable(this);
   }
 
-  /////опции для организации
 
+  @action setOpenSearch (val: boolean) {this.open_search = val}
+  @computed getOpenSearch() : boolean {return this.open_search} //// строка поиска (таблица пользователей)
+
+  @action setSearchFamaly(val: any) {this.search_famaly = val}
+  @computed getSearchFamaly() : any {return this.search_famaly}
+
+  @action setSearchName(val: any) {this.search_name = val}
+  @computed getSearchName() : any {return this.search_name}
+
+  @action setSearchFather(val: any) {this.search_father = val}
+  @computed getSearchFather() : any {return this.search_father}
+
+  @action setSearchLogin(val: any) {this.search_login = val}
+  @computed getSearchLogin() : any {return this.search_login}
+
+  @action setSearchTelephone(val: any) {this.search_telephone = val}
+  @computed getSearchTelephone() : any {return this.search_telephone}
+
+  @action setSearchEmail(val: any) {this.search_email = val}
+  @computed getSearchEmail() : any {return this.search_email}
+
+
+  /////опции для организации
   @action setKeyOrg(val: any) {this.key_org = val;}
   @computed getKeyOrg(): any {return this.key_org;}
 

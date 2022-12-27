@@ -266,7 +266,7 @@ export class NewUserRegistration extends React.Component<IProps> {
               >
                 <AddIcon sx={{ fontSize: "17px", mt: 1, color: "#266BF1" }} />
                 <Typography sx={{ fontSize: "12px", mt: 1 }}>
-                  Добавить организацию
+                  Добавить должность
                 </Typography>
               </MenuItem>
             </Box>

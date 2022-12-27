@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Drawer, List, Divider, ListItemIcon, MenuItem } from "@mui/material";
+import { Drawer, List, Divider, ListItemIcon, MenuItem, ListItemText } from "@mui/material";
 
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -13,6 +13,17 @@ import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import BusinessIcon from "@mui/icons-material/Business";
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 
+import ListItemButton from '@mui/material/ListItemButton';
+import Collapse from '@mui/material/Collapse';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import StarBorder from '@mui/icons-material/StarBorder';
+
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
+
+
 
 interface IProps {}
 
@@ -21,6 +32,17 @@ export class AppBarLeftPanel extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }
+  
+  async OpenListDev() {
+   
+    if(  APP_STORAGE.devs_groups.getOpenListDev() === false) {
+      APP_STORAGE.devs_groups.setOpenListDev(true); 
+    }
+    else {
+      APP_STORAGE.devs_groups.setOpenListDev(false); 
+    }
+  }
+
 
   async OpenModalRegUser(e: any, tittle: string) {
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
@@ -104,6 +126,48 @@ export class AppBarLeftPanel extends React.Component<IProps> {
             </ListItemIcon>
             Добавить должность
           </MenuItem>
+
+          <Divider light sx={{pb: 1, pt:1}} />
+
+          <List
+      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+     
+    >
+   
+     
+      <ListItemButton  onClick={() => this.OpenListDev()}>
+        <ListItemIcon>
+          <InboxIcon />
+        </ListItemIcon>
+        <ListItemText primary="Устройства" />
+        {APP_STORAGE.devs_groups.getOpenListDev() ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+
+      <Collapse in={APP_STORAGE.devs_groups.getOpenListDev()} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItemButton sx={{ pl: 4 }}>
+            <ListItemIcon>
+              <RoomOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Расположение" />
+          </ListItemButton>
+        </List>
+      </Collapse>
+
+      <Collapse in={APP_STORAGE.devs_groups.getOpenListDev()} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItemButton sx={{ pl: 4 }}>
+            <ListItemIcon>
+              <FormatListNumberedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Список" />
+          </ListItemButton>
+        </List>
+      </Collapse>
+      
+    </List>
         </>
       );
     }
