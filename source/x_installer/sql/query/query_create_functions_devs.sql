@@ -2,8 +2,7 @@
 --------------------------------------------------------------------------------------------организации или для админа всех
 DROP FUNCTION IF EXISTS SelectDevs_Group_OrgId;
 CREATE OR REPLACE FUNCTION SelectDevs_Group_OrgId(
-	c_org_id VARCHAR(60),
-	c_deleted VARCHAR(60)
+	c_org_id VARCHAR(60)
 	)
 RETURNS TABLE
 (
@@ -18,7 +17,7 @@ RETURNS TABLE
 	g_info TEXT
 )
 AS $$
-	SELECT * FROM devs_groups WHERE CAST(org_id AS TEXT) LIKE c_org_id AND CAST(deleted AS TEXT) = c_deleted;
+	SELECT * FROM devs_groups WHERE CAST(org_id AS TEXT) LIKE c_org_id
 $$
 LANGUAGE SQL;
 --НЕОБХОДИМО УСЛОВИЯ WRITE В ДОСТУПЕ 

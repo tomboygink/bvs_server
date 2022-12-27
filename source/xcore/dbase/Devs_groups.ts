@@ -39,9 +39,12 @@ export class Devs_groupsTable {
     }
 
     async selectDevsGroups(): Promise<Devs_groupsEntity[]> {
+        //Если администратор 
         if (this.args.users_w === true) {
-            var db_res = await this.db.query("SELECT * FROM SelectDevs_Group_OrgId('%', '"+this.args.deteled+"')");
-        } else {var db_res = await this.db.query("SELECT * FROM SelectDevs_Group_OrgId('" + this.args.org_id + "', '"+this.args.deleted+"')");}
+            var db_res = await this.db.query("SELECT * FROM SelectDevs_Group_OrgId('%')");
+        } 
+        //Обычный пользователь 
+        else {var db_res = await this.db.query("SELECT * FROM SelectDevs_Group_OrgId('" + this.args.org_id + "')");}
         var result: Devs_groupsEntity[] = new Array();
         for (var p in db_res.rows) { result.push(db_res.rows[p]); }
         return result;

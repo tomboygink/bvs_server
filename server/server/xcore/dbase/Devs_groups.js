@@ -90,11 +90,11 @@ var Devs_groupsTable = (function () {
                 switch (_a.label) {
                     case 0:
                         if (!(this.args.users_w === true)) return [3, 2];
-                        return [4, this.db.query("SELECT * FROM SelectDevs_Group_OrgId('%', '" + this.args.deteled + "')")];
+                        return [4, this.db.query("SELECT * FROM SelectDevs_Group_OrgId('%')")];
                     case 1:
                         db_res = _a.sent();
                         return [3, 4];
-                    case 2: return [4, this.db.query("SELECT * FROM SelectDevs_Group_OrgId('" + this.args.org_id + "', '" + this.args.deleted + "')")];
+                    case 2: return [4, this.db.query("SELECT * FROM SelectDevs_Group_OrgId('" + this.args.org_id + "')")];
                     case 3:
                         db_res = _a.sent();
                         _a.label = 4;
