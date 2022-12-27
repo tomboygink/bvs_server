@@ -14,11 +14,36 @@ export class DevsEntity {
 }
 
 export class DevsTable {
-    constructor(){}
+    db: DBase;
+    args: any;
+    sess_code: string;
+    constructor(_args: any, _sess_code: string) {
+        this.db = getDB();
+        this.args = _args;
+        this.sess_code = _sess_code;
+    }
+    //Добавление устройства
+    async insertDevs(): Promise<DevsEntity[]> {
+        var db_res = await this.db.query("SELECT AddDevs(CAST('"+this.args.group_dev_id+"' AS BIGINT), "+
+        "CAST('"+this.args.number+"' AS VARCHAR(80)),"+
+        "CAST('"+this.args.name+"' AS VARCHAR(250)),"+
+        "CAST('"+this.args.latitude+"' AS VARCHAR(60)),"+
+        "CAST('"+this.args.longitude+"' AS VARCHAR(60)),"+
+        "CAST('"+this.args.sensors+"' AS JSON),"+
+        "CAST('"+this.args.deleted+"' AS BOOLEAN),"+
+        "CAST('"+this.args.info+"' AS TEXT)) AS id");
+        var result: DevsEntity[] = new Array();
+        for (var p in db_res.rows) { result.push(db_res.rows[p]); }
+        return result;
+    };
 
-    //------------------------------------------------------Получение данных устройства по номеру устройства
-/*
-    async selectDevs() { 
-        var db_res = "SELECT * FROM SelectDevs('"++"')";        
-    }*/
+    //Получение устройств по группе устройства при нажатии 
+    async selectDevs(): Promise<DevsEntity[]>{
+        var db_res = await this.db.query("SELECT * FROM SelectDevs('"+this.args.org_id+"')");
+        var result: DevsEntity[] = new Array();
+        for (var p in db_res.rows) { result.push(db_res.rows[p]); }
+        return result;
+    }
+
+
 }

@@ -23,7 +23,7 @@ export class Devs_groupsTable {
         this.args = _args;
         this.sess_code = _sess_code;
     }
-
+    //Добавление группы устройства 
     async insertDevsGroups(): Promise<Devs_groupsEntity[]> {
         var db_res = await this.db.query("SELECT AddDevs_Group(CAST ('" + this.args.parent_id + "' AS BIGINT), " +
             "CAST('" + this.args.g_name + "' AS VARCHAR(250))," +
@@ -38,6 +38,7 @@ export class Devs_groupsTable {
         return result;
     }
 
+    //Получение группы устройства 
     async selectDevsGroups(): Promise<Devs_groupsEntity[]> {
         //Если администратор 
         if (this.args.users_w === true) {
