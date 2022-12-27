@@ -17,6 +17,8 @@ export class DevsGroupStorage{
     @observable latitude:string = '';
     @observable longitude: string = '';
     @observable info: string = '';
+
+    @observable devs_groups: Array<string> = []
     constructor(){
         makeAutoObservable(this);
     }
@@ -48,6 +50,10 @@ export class DevsGroupStorage{
     @computed getLongitude() : string {return this.longitude}
     
 
+    ///////////////////////////////////////////////Список расположений устройств
+    @action setDevsGroups(val: Array<string>) {this.devs_groups = val;}
+    @computed getDevsGroups() : Array<string> {return this.devs_groups}
+
     async set_NewDevGroup(name: string, value: any, _options?: any) {
         var sess_code = value;
         var q:IWSQuery = new WSQuery("set_NewDevGroup");
@@ -64,6 +70,23 @@ export class DevsGroupStorage{
           q.sess_code = sess_code;
          (await WSocket.get()).send(q); 
        }
+ 
+       async get_DevsGroups(name: string, value: any, _options?: any) {  //// Отправляем запрос на получение расположений устройств
+        var sess_code = value;
+        var q:IWSQuery = new WSQuery("get_DevsGroups");
+        q.args = {
+            users_w: true,
+            org_id: 1
+        }; 
+        q.sess_code = sess_code;
+         (await WSocket.get()).send(q);  
     }
+
+    setDevsGroupsAll(dt: IWSResult) { /* -----  Получаем всех пользователей   */
+      this.setDevsGroups(dt.data);
+     }
+
+    }
+
 
 

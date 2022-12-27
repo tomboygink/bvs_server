@@ -13,6 +13,7 @@ import {AdoutDevs} from './Devs/AdoutDevs'
 import {WorkingWithDev} from './Devs/WorkingWithDev'
 import {DevLocation} from './Devs/DevLocation'
 import {ModalDevs} from './Devs/ModalDevs'
+import {ModalDevsParent} from './Devs/ModalDevsParent'
 
 interface IProps {}
 
@@ -43,6 +44,7 @@ export class AppForm extends React.Component<IProps> {
             <Modal />
             <ModalLeftPanel />
             <ModalDevs />
+            <ModalDevsParent/>
             <Box sx={{ mt: "2%" }}></Box>
           </Box>
           <Box
