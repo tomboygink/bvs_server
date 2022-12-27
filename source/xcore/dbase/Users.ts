@@ -1,8 +1,6 @@
 import { DBase, getDB } from "./DBase";
 import crypto from 'crypto';
 import { CONFIG } from '../../xcore/config';
-
-import { SessionsTable } from '../dbase/Sessions';
 import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 
 
