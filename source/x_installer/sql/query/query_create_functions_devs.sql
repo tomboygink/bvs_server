@@ -49,8 +49,7 @@ LANGUAGE SQL;
 --------------------------------------------------------------------------------------------Функция получения данных устройств по группе 
 DROP FUNCTION IF EXISTS SelectDevs;
 CREATE OR REPLACE FUNCTION SelectDevs(
-	c_group_dev_id BIGINT,
-	c_deleted BOOLEAN
+	c_group_dev_id BIGINT
 )
 RETURNS TABLE (
 	id BIGINT,
@@ -64,7 +63,7 @@ RETURNS TABLE (
 	info TEXT
 )
 AS $$
-SELECT * FROM devs WHERE group_dev_id = c_group_dev_id and deleted = c_deleted
+SELECT * FROM devs WHERE group_dev_id = c_group_dev_id
 $$ LANGUAGE SQL;
 
 

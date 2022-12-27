@@ -10,6 +10,7 @@ import crypto from 'crypto';
 import { CONFIG } from '../xcore/config'
 import { Console } from 'console';
 import { Devs_groupsTable } from '../xcore/dbase/Devs_groups';
+import { DevsTable } from '../xcore/dbase/Devs';
 
 
 export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
@@ -206,7 +207,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
             
         }break;
-
+        //Добавление новой должности
         case 'set_NewJobTitle':{
             var jobs = new Jobs_titlesTable(q.args, q.sess_code);
             data = await jobs.insertJobs_title();
@@ -226,6 +227,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         }break;
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЕЙ
+        //Добавление пользователя
         case 'set_NewUser': {
             var ut = new UserTable(q.args, q.sess_code);
             data = await ut.insertUser();
@@ -242,7 +244,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
 
         } break;
-
+        //Получение всех пользователей 
         case 'get_AllUser':{
             var ut = new UserTable(q.args, q.sess_code);
             data = await ut.selectAllUsers();
@@ -251,7 +253,8 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             wsres.error = '';
         } break;
         
-        //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ГРУПП УСТРОЙВ 
+        //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ГРУПП УСТРОЙСТВ 
+        //Добавление новой группы устройства
         case 'set_NewDevGroup':{
             var dg = new Devs_groupsTable(q.args, q.sess_code);
             data = await dg.insertDevsGroups();
@@ -259,7 +262,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             {
                 wsres.code = q.sess_code;
                 wsres.data = [];
-                wsres.error = "Ошибка добавления должности"
+                wsres.error = "Ошибка добавления группы"
             }
             else {
                 data = await dg.selectDevsGroups();
@@ -268,7 +271,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.error = null;
             }
         }break;
-
+        //Получение групп устроств по id организации или всех для пользователя
         case 'get_DevsGroups':{
             var dg = new Devs_groupsTable(q.args, q.sess_code);
             data = await dg.selectDevsGroups();
@@ -284,14 +287,39 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         }break;
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ УСТРОЙСТВ ПО ГРУППЕ УСТРОЙСТВА
+        //Добавление нового устройства
         case 'set_NewDevs':{
+            var dev = new DevsTable(q.args, q.sess_code);
+            data = await dev.insertDevs();
+            if(data[0].id==0|| data==null|| data==undefined)
+            {
+                wsres.code = q.sess_code;
+                wsres.data = [];
+                wsres.error = "Ошибка добавления устройства"
+            }
+            else {
+                data = await dev.selectDevs();
+                wsres.code = q.sess_code;
+                //wsres.data = data;
+                wsres.error = null;
+            }
+
+        }break;
+        //Получение устройств по id группы 
+        case 'get_Devs':{
+            var devs = new DevsTable(q.args, q.sess_code);
+            data = await devs.selectDevs();
+            if (data.length > 0) {
+                wsres.code = q.sess_code;
+                wsres.error = null;
+                wsres.data = data;
+            }
+            else{wsres.code = q.sess_code; 
+                wsres.data = [], 
+                wsres.error = 'Список групп устройств отсутсвует';
+            }
             
         }break;
-
-        case 'get_Devs':{
-
-        }break;
-
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
         case 'deleteCookie': {
