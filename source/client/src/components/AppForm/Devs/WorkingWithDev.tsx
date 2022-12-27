@@ -19,7 +19,9 @@ export class WorkingWithDev extends React.Component<IProps> {
   }
 
   async DevLocation (e:any){
-    APP_STORAGE.devs_groups.setMiddleForm(e)
+    APP_STORAGE.devs_groups.setMiddleForm(e);
+    APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
+
   }
   render(): React.ReactNode {
     

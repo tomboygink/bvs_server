@@ -59,6 +59,7 @@ class AppStorage {
             case ('get_Org') : {this.reg_user.setAllOrganization(dt)} break;
             case ('get_Jobs') : {this.reg_user.setAllJobsTitle(dt)} break;
             case ('get_AllUser') : {this.reg_user.setUsersAll(dt)} break;
+            case ('get_DevsGroups') : {this.devs_groups.setDevsGroupsAll(dt)} break;
             default: { } break;
         }
     }
