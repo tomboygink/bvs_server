@@ -225,7 +225,6 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             
         }break;
 
-
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЕЙ
         case 'set_NewUser': {
             var ut = new UserTable(q.args, q.sess_code);
@@ -268,7 +267,31 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 //wsres.data = data;
                 wsres.error = null;
             }
-        }
+        }break;
+
+        case 'get_DevsGroups':{
+            var dg = new Devs_groupsTable(q.args, q.sess_code);
+            data = await dg.selectDevsGroups();
+            if (data.length > 0) {
+                wsres.code = q.sess_code;
+                wsres.error = null;
+                wsres.data = data;
+            }
+            else{wsres.code = q.sess_code; 
+                wsres.data = [], 
+                wsres.error = 'Список групп устройств отсутсвует';
+            }
+        }break;
+
+        //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ УСТРОЙСТВ ПО ГРУППЕ УСТРОЙСТВА
+        case 'set_NewDevs':{
+            
+        }break;
+
+        case 'get_Devs':{
+
+        }break;
+
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
         case 'deleteCookie': {
