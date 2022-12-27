@@ -10,6 +10,9 @@ import {TableUser} from '../../components/AppForm/AppBarPanel/LeftPanel/EditUser
 
 import {DevsGroups} from './Devs/DevsGroups';
 import {AdoutDevs} from './Devs/AdoutDevs'
+import {WorkingWithDev} from './Devs/WorkingWithDev'
+import {DevLocation} from './Devs/DevLocation'
+import {ModalDevs} from './Devs/ModalDevs'
 
 interface IProps {}
 
@@ -21,6 +24,16 @@ export class AppForm extends React.Component<IProps> {
   }
 
   render(): React.ReactNode {
+    var middle_form:React.ReactNode = <></>;
+
+    if(APP_STORAGE.devs_groups.getMiddleForm() === 1){
+      middle_form = <DevLocation />
+    }
+    if(APP_STORAGE.devs_groups.getMiddleForm() === ''){
+      middle_form = <AdoutDevs />
+    }
+
+
     
     if (APP_STORAGE.auth_form.getUser())
       return (
@@ -29,6 +42,7 @@ export class AppForm extends React.Component<IProps> {
             <AppBarPanel />
             <Modal />
             <ModalLeftPanel />
+            <ModalDevs />
             <Box sx={{ mt: "2%" }}></Box>
           </Box>
           <Box
@@ -37,6 +51,7 @@ export class AppForm extends React.Component<IProps> {
           >
            <Box className="appform">
            <DevsGroups />
+           <WorkingWithDev />
             </Box> 
             
               
@@ -47,7 +62,9 @@ export class AppForm extends React.Component<IProps> {
             } 
              
              <Box >
-             <AdoutDevs/>
+            
+              {middle_form}
+
             </Box>
  
             {/* <Box className="appform">

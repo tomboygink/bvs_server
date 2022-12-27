@@ -60,9 +60,7 @@ export class EditUsersStorage {
 
 
   @action setOpenSearch (val: boolean) {this.open_search = val}
-  @computed getOpenSearch() : boolean {return this.open_search}
-  
-  /// поиск по пользователям
+  @computed getOpenSearch() : boolean {return this.open_search} //// строка поиска (таблица пользователей)
 
   @action setSearchFamaly(val: any) {this.search_famaly = val}
   @computed getSearchFamaly() : any {return this.search_famaly}
