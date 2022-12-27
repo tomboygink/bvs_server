@@ -56,7 +56,8 @@ export class DevsGroupStorage{
             latitude:this.getLatitude() || '', 
             longitude:this.getLongitude() || '', 
             org_id:this.getKeyOrg() || '',
-            ord_num: '',
+            parent_id: 0,
+            ord_num: 0,
             deleted: false,
             g_info: this.getInfo() || ''
          }; 
