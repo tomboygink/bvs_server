@@ -26,8 +26,7 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
 
   render(): React.ReactNode {
     let org = null;
-    var options_org = [];
-///// разделяем обьект на ключ значение - Организации
+    var options_org = [];//// разделяем обьект на ключ значение - Организации
     if (APP_STORAGE.reg_user.getOrgAll()) {
       org = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll()));
       for (var key in org) {
@@ -53,7 +52,7 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
         <Box className='ModalTitle' sx = { {display: 'flex' , justifyContent: 'space-between', mb: '12px'}}> 
          
         <Typography >  
-            Добавить расположение устройства
+            Добавить расположение устройства66666
         </Typography>
   
         <CloseIcon  sx={{color: '#1976D2'}}
@@ -74,9 +73,6 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
           autoComplete="место расположения"
           autoFocus
           size="small"
-          onChange={(e) => {
-            APP_STORAGE.devs_groups.setName(e.target.value);
-          }}
           value= '000=Курган'
         />
          

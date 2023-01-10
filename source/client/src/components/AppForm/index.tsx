@@ -8,12 +8,14 @@ import { Box, Alert, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../storage/AppStorage";
 import {TableUser} from '../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser';
 
-import {DevsGroups} from './Devs/DevsGroups';
-import {AdoutDevs} from './Devs/AdoutDevs'
-import {WorkingWithDev} from './Devs/WorkingWithDev'
-import {DevLocation} from './Devs/DevLocation'
-import {ModalDevs} from './Devs/ModalDevs'
-import {ModalDevsParent} from './Devs/ModalDevsParent'
+import {DevsGroups} from './DevsGroups/DevsGroups';
+import {AdoutDevs} from './DevsGroups/AdoutDevs'
+import {WorkingWithDev} from './DevsGroups/WorkingWithDev'
+import {DevLocation} from './DevsGroups/DevLocation'
+import {ModalDevs} from './DevsGroups/ModalDevs';
+import {ModalDevs1} from './Devs/ModalDevs'
+import {ModalDevsParent} from './DevsGroups/ModalDevsParent'
+import {Devs}  from './Devs/Devs'
 
 interface IProps {}
 
@@ -30,6 +32,9 @@ export class AppForm extends React.Component<IProps> {
     if(APP_STORAGE.devs_groups.getMiddleForm() === 1){
       middle_form = <DevLocation />
     }
+      if(APP_STORAGE.devs_groups.getMiddleForm() === 2){
+      middle_form = <Devs />
+    }
     if(APP_STORAGE.devs_groups.getMiddleForm() === ''){
       middle_form = <AdoutDevs />
     }
@@ -45,6 +50,7 @@ export class AppForm extends React.Component<IProps> {
             <ModalLeftPanel />
             <ModalDevs />
             <ModalDevsParent/>
+            <ModalDevs1 />
             <Box sx={{ mt: "2%" }}></Box>
           </Box>
           <Box
@@ -53,7 +59,7 @@ export class AppForm extends React.Component<IProps> {
           >
            <Box className="appform">
            <DevsGroups />
-           <WorkingWithDev />
+           {/* <WorkingWithDev /> */}
             </Box> 
             
               

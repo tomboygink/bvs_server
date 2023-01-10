@@ -300,7 +300,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             else {
                 data = await dev.selectDevs();
                 wsres.code = q.sess_code;
-                //wsres.data = data;
+                wsres.data = data;
                 wsres.error = null;
             }
 
@@ -338,6 +338,3 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
     // финал - отправка ответа
     _ws.send(WSStr(wsres));
 }
-
-
-

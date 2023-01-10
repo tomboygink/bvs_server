@@ -42,7 +42,12 @@ export class AppBarLeftPanel extends React.Component<IProps> {
       APP_STORAGE.devs_groups.setOpenListDev(false); 
     }
   }
-
+  
+  async DevLocation (e:any){
+    APP_STORAGE.devs_groups.setMiddleForm(e);
+    APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
+    APP_STORAGE.devs.get_Devs("sess_id", APP_STORAGE.auth_form.getdt());
+  }
 
   async OpenModalRegUser(e: any, tittle: string) {
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
@@ -147,7 +152,11 @@ export class AppBarLeftPanel extends React.Component<IProps> {
 
       <Collapse in={APP_STORAGE.devs_groups.getOpenListDev()} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton sx={{ pl: 4 }}
+           onClick={() => {
+            this.DevLocation(1);
+          }}
+          >
             <ListItemIcon>
               <RoomOutlinedIcon />
             </ListItemIcon>
@@ -158,7 +167,10 @@ export class AppBarLeftPanel extends React.Component<IProps> {
 
       <Collapse in={APP_STORAGE.devs_groups.getOpenListDev()} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton sx={{ pl: 4 }}
+           onClick={() => {
+            this.DevLocation(2);
+          }}>
             <ListItemIcon>
               <FormatListNumberedIcon />
             </ListItemIcon>

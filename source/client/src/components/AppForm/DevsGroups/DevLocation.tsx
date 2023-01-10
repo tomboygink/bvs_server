@@ -18,6 +18,8 @@ export class DevLocation extends React.Component<IProps> {
   }
 
  async OpenModal(e:any) {
+  alert(e)
+  APP_STORAGE.devs_groups.setParentId(e)
   APP_STORAGE.devs_groups.setOpenModal(true);
   APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
  }
@@ -25,21 +27,26 @@ export class DevLocation extends React.Component<IProps> {
   render(): React.ReactNode {
     let devs = [];
     let dev_form = [];
+    //let parent_g = [];
     
     if (APP_STORAGE.devs_groups.getDevsGroups()) {
         devs = JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()));
         for (var key in devs) {
           if (devs.hasOwnProperty(key)) {
             let a = devs[key];
-              dev_form.push(
+
+            
+
+         dev_form.push(
         <Box key={a.id} sx = {{width: '790px', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
 
         <Box sx= {{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             
         <Typography>{a.g_name}</Typography>
+        {a.id} {a.parent_id}
         <Typography sx={{color: '#AAAAAA', fontSize: '12px'}}>место расположения устройства</Typography> 
         </Box>
-
+       
         <Box sx= {{display: 'flex'}}>
         <Box sx={{mb: '8px', mr: '14px'}}>
         <Typography sx={{fontWeight: '600'}}>  Долгота - {a.longitude} </Typography>
@@ -71,21 +78,17 @@ export class DevLocation extends React.Component<IProps> {
         <React.Fragment>
            
         <Box className="wrapper-devs" sx={{ mt: '44px', display: 'flex', flexDirection: 'column;', alignItems: 'flex-start;', ml: '1rem'}}> 
-          <Typography sx={{fontWeight: '500' , pb: '20px'}}>Расположение устройств</Typography>
+        <Typography sx={{fontWeight: '500' , pb: '20px'}}>Расположение устройств</Typography>
           {/* ******************************************************************************************************************************* */} 
 
            {dev_form}
         
-          
-
           </Box>
 
 
   {/* ******************************************************************************************************************************* */}
           <Box className="wrapper-devs" sx={{  display: 'flex', flexDirection: 'column;', alignItems: 'flex-end;', ml: '1rem'}}> 
-
           <Box sx = {{width: '790px', background: '#fff', pl: '25px',  pr: '25px', pt: '8px', pb: '8px',borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center',  alignItems: 'flex-end;', mb: '16px'}}>
-        
           <Box 
              sx={{background: '#F1F5FC',color: '#000', width: '180px', p: '3px', pl: '20px'  ,borderRadius: '4px'}}
              onClick={() => this.OpenModal(0)}
