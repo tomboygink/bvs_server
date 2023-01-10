@@ -24,13 +24,13 @@ export class DevsTable {
     }
     //Добавление устройства
     async insertDevs(): Promise<DevsEntity[]> {
-        var db_res = await this.db.query("SELECT AddDevs(CAST('"+this.args.group_dev_id+"' AS BIGINT), "+
+        var db_res = await this.db.query("SELECT AddDevs(CAST("+this.args.group_dev_id+" AS BIGINT), "+
         "CAST('"+this.args.number+"' AS VARCHAR(80)),"+
         "CAST('"+this.args.name+"' AS VARCHAR(250)),"+
         "CAST('"+this.args.latitude+"' AS VARCHAR(60)),"+
         "CAST('"+this.args.longitude+"' AS VARCHAR(60)),"+
         "CAST('"+this.args.sensors+"' AS JSON),"+
-        "CAST('"+this.args.deleted+"' AS BOOLEAN),"+
+        "CAST("+this.args.deleted+" AS BOOLEAN),"+
         "CAST('"+this.args.info+"' AS TEXT)) AS id");
         var result: DevsEntity[] = new Array();
         for (var p in db_res.rows) { result.push(db_res.rows[p]); }

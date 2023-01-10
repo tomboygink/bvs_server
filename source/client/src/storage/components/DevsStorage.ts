@@ -45,14 +45,14 @@ export class DevsStorage{
     var sess_code = value;
     var q:IWSQuery = new WSQuery("set_NewDevs");
     q.args = {
-        group_dev_id: '1',
+        group_dev_id: 1,
         number: '55544', 
         name: '1111', 
-        latitude: '',
-        longitude: '',
-        sensors: '',
+        latitude: '12123',
+        longitude: '11212',
+        sensors: '{\"s\":[1,2,3]}',
         deleted: false,
-        g_info: ''
+        info: ''
      }; 
       q.sess_code = sess_code;
      (await WSocket.get()).send(q); 
