@@ -11,6 +11,7 @@ export const devs_table = {
         "latitude" CHARACTER VARYING(60) NOT NULL DEFAULT('0.0'),
         "longitude" CHARACTER VARYING(60) NOT NULL DEFAULT('0.0'),
         "sensors" JSON NOT NULL DEFAULT('{"s":[]}'),
+        "deleted" BOOLEAN DEFAULT (false),
         "info" TEXT NOT NULL DEFAULT('')
     );
     COMMENT ON TABLE devs IS 'Устройства по группам';
@@ -20,6 +21,7 @@ export const devs_table = {
     COMMENT ON COLUMN devs.latitude IS 'Географическая широта';
     COMMENT ON COLUMN devs.longitude IS 'Географическая долгота';
     COMMENT ON COLUMN devs.sensors IS 'Сенсоры на устройстве';
+    COMMENT ON COLUMN devs.deleted IS 'Удаление утройства';
     COMMENT ON COLUMN devs.info IS 'Информация об устройстве';
     `,
     args: new Array()

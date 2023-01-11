@@ -318,7 +318,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
             else{wsres.code = q.sess_code; 
                 wsres.data = [], 
-                wsres.error = 'Список групп устройств отсутсвует';
+                wsres.error = 'Список устройств отсутсвует';
             }
             
         }break;

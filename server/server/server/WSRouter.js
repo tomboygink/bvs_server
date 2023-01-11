@@ -381,7 +381,7 @@ function WSRoute(_ws, q) {
                     else {
                         wsres.code = q.sess_code;
                         wsres.data = [],
-                            wsres.error = 'Список групп устройств отсутсвует';
+                            wsres.error = 'Список устройств отсутсвует';
                     }
                     return [3, 55];
                 case 53:
