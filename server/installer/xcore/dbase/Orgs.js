@@ -60,7 +60,7 @@ var OrgsTable = (function () {
         this.args = _args;
         this.sess_code = _sess_code;
     }
-    OrgsTable.prototype.isertOrgs = function () {
+    OrgsTable.prototype.insertOrgs = function () {
         return __awaiter(this, void 0, void 0, function () {
             var db_res, result, r;
             return __generator(this, function (_a) {
@@ -72,7 +72,7 @@ var OrgsTable = (function () {
                             "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
                             "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
                             "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP)," +
-                            "CAST ('" + this.args.info + "' AS TEXT))")];
+                            "CAST ('" + this.args.info + "' AS TEXT)) AS id")];
                     case 1:
                         db_res = _a.sent();
                         result = new Array();
