@@ -21,7 +21,7 @@ export class WorkingWithDev extends React.Component<IProps> {
   async DevLocation (e:any){
     APP_STORAGE.devs_groups.setMiddleForm(e);
     APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
-
+    APP_STORAGE.devs.get_Devs("sess_id", APP_STORAGE.auth_form.getdt());
   }
   render(): React.ReactNode {
     
@@ -41,7 +41,10 @@ export class WorkingWithDev extends React.Component<IProps> {
             <Typography >Расположение устройств</Typography>
           </Box>
 
-          <Box sx={{display: 'flex', alignItems: 'flex-start' }}>
+          <Box sx={{display: 'flex', alignItems: 'flex-start' }}
+            onClick={() => {
+              this.DevLocation(2);
+            }}>
             <FormatListNumberedIcon fontSize="small"  sx={{pr: '12px', color: '#266BF1'}}/>
             <Typography>Список устройств</Typography>
           </Box>

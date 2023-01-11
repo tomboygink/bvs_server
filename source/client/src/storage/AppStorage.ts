@@ -10,7 +10,8 @@ import { EditUsersStorage } from './components/EditUsersStorage'
 import { WSocket } from './WSocket';
 import {getCookie , setCookie, deleteCookie }  from './browserCookes'
 import { UsersEntity } from '../../../xcore/dbase/Users';
-import { DevsGroupStorage } from './components/DevsGroupStorage'
+import { DevsGroupStorage } from './components/DevsGroupStorage';
+import {DevsStorage} from './components/DevsStorage';
 
 // ********************************************************************************************************************************************************
 // ХРАНИЛИЩЕ
@@ -23,6 +24,7 @@ class AppStorage {
     @observable reg_user: ModalLeftPanel = null;
     @observable edit_user: EditUsersStorage = null;
     @observable devs_groups: DevsGroupStorage = null;
+    @observable devs : DevsStorage = null;
     
 
     @observable dt:any = null;
@@ -42,6 +44,7 @@ class AppStorage {
         this.reg_user = new ModalLeftPanel();
         this.edit_user = new EditUsersStorage();
         this.devs_groups = new DevsGroupStorage();
+        this.devs = new DevsStorage();
         makeAutoObservable(this);
 
         // WSocket.get();
@@ -60,6 +63,7 @@ class AppStorage {
             case ('get_Jobs') : {this.reg_user.setAllJobsTitle(dt)} break;
             case ('get_AllUser') : {this.reg_user.setUsersAll(dt)} break;
             case ('get_DevsGroups') : {this.devs_groups.setDevsGroupsAll(dt)} break;
+            case ('get_Devs') : {this.devs.setDevsAll(dt)} break;
             default: { } break;
         }
     }

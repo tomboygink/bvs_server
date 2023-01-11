@@ -1,8 +1,6 @@
 import { observable, action, computed, makeAutoObservable } from 'mobx';
-import { UsersEntity } from '../../../../xcore/dbase/Users';
 import { IWSQuery, WSQuery, IWSResult } from '../../../../xcore/WSQuery';
 import { WSocket } from '../WSocket';
-import {getCookie , setCookie, deleteCookie }  from '../browserCookes';
 
 
 export class DevsGroupStorage{
@@ -17,6 +15,7 @@ export class DevsGroupStorage{
     @observable latitude:string = '';
     @observable longitude: string = '';
     @observable info: string = '';
+    @observable parent_id : string = '';
 
     @observable devs_groups: Array<string> = []
     constructor(){
@@ -48,6 +47,10 @@ export class DevsGroupStorage{
 
     @action setLongitude (val: string) {this.longitude = val}
     @computed getLongitude() : string {return this.longitude}
+
+    @action setParentId (val : string) {this.parent_id = val}
+    @computed getParentId() : string {return this.parent_id} 
+
     
 
     ///////////////////////////////////////////////Список расположений устройств
@@ -62,7 +65,7 @@ export class DevsGroupStorage{
             latitude:this.getLatitude() || '', 
             longitude:this.getLongitude() || '', 
             org_id:this.getKeyOrg() || '',
-            parent_id: 0,
+            parent_id: this.getParentId(),
             ord_num: 0,
             deleted: false,
             g_info: this.getInfo() || ''

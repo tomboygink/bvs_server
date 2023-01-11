@@ -63,13 +63,13 @@ var DevsTable = (function () {
             var db_res, result, p;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT AddDevs(CAST('" + this.args.group_dev_id + "' AS BIGINT), " +
+                    case 0: return [4, this.db.query("SELECT AddDevs(CAST(" + this.args.group_dev_id + " AS BIGINT), " +
                             "CAST('" + this.args.number + "' AS VARCHAR(80))," +
                             "CAST('" + this.args.name + "' AS VARCHAR(250))," +
                             "CAST('" + this.args.latitude + "' AS VARCHAR(60))," +
                             "CAST('" + this.args.longitude + "' AS VARCHAR(60))," +
                             "CAST('" + this.args.sensors + "' AS JSON)," +
-                            "CAST('" + this.args.deleted + "' AS BOOLEAN)," +
+                            "CAST(" + this.args.deleted + " AS BOOLEAN)," +
                             "CAST('" + this.args.info + "' AS TEXT)) AS id")];
                     case 1:
                         db_res = _a.sent();

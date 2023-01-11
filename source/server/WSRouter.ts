@@ -291,16 +291,18 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         case 'set_NewDevs':{
             var dev = new DevsTable(q.args, q.sess_code);
             data = await dev.insertDevs();
-            if(data[0].id==0|| data==null|| data==undefined)
+
+            if(data[0].id===0|| data===null|| data===undefined)
             {
                 wsres.code = q.sess_code;
                 wsres.data = [];
                 wsres.error = "Ошибка добавления устройства"
             }
             else {
-                data = await dev.selectDevs();
+                //data = await dev.selectDevs();
                 wsres.code = q.sess_code;
                 //wsres.data = data;
+                wsres.data = [];
                 wsres.error = null;
             }
 
@@ -338,6 +340,3 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
     // финал - отправка ответа
     _ws.send(WSStr(wsres));
 }
-
-
-

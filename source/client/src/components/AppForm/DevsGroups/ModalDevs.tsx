@@ -11,7 +11,7 @@ interface IProps {}
 
 //Компонент формы приложения
 @observer
-export class ModalDevs1 extends React.Component<IProps> {
+export class ModalDevs extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }
@@ -20,20 +20,21 @@ export class ModalDevs1 extends React.Component<IProps> {
     APP_STORAGE.devs_groups.setOpenModal(false)
 }
 
-async SelectedOrg(a: any) { 
+async SelectedOrg(a: any) {    //// Сохраняем , то что выбрал пользователь из выпадающего списка Организации
     APP_STORAGE.devs_groups.setKeyOrg(a);
   }
 
   render(): React.ReactNode {
     let org = null;
     var options_org = [];
+///// разделяем обьект на ключ значение - Организации
     if (APP_STORAGE.reg_user.getOrgAll()) {
       org = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll()));
       for (var key in org) {
         if (org.hasOwnProperty(key)) {
           let a = org[key];
 
-          options_org.push(  
+          options_org.push(  /// создаем опции выбора для выпадающего списка - организации
             <MenuItem key={a.id} sx={{ fontSize: "12px" }} value={a.id}>
               {a.full_name}
             </MenuItem>
@@ -45,18 +46,18 @@ async SelectedOrg(a: any) {
     return (
         <React.Fragment>
 
-        <Dialog BackdropProps={{style:{background:'rgba(0, 0, 0, 0.75)'} } } open={APP_STORAGE.devs.getOpenModal()}  fullWidth >
+        <Dialog BackdropProps={{style:{background:'rgba(0, 0, 0, 0.75)'} } } open={APP_STORAGE.devs_groups.getOpenModal()}  fullWidth >
          
         <Box  sx={{p: 2}}>
   
         <Box className='ModalTitle' sx = { {display: 'flex' , justifyContent: 'space-between', mb: '12px'}}> 
          
         <Typography >  
-            Добавить устройство
+            Добавить расположение устройства 1111
         </Typography>
   
         <CloseIcon  sx={{color: '#1976D2'}}
-             onClick={ ()=>{APP_STORAGE.devs.setOpenModal(false)}}
+             onClick={ ()=>{this.closeModal();}}
              />
         </Box>  
         
@@ -70,8 +71,8 @@ async SelectedOrg(a: any) {
           variant="outlined"
           fullWidth
           required
-          label="Номер устройства"
-          autoComplete="Номер устройства"
+          label="Место расположения"
+          autoComplete="место расположения"
           autoFocus
           size="small"
           onChange={(e) => {
@@ -80,23 +81,33 @@ async SelectedOrg(a: any) {
           value={APP_STORAGE.devs_groups.getName()}
         />
 
-        <TextField
-          sx={{ mt: "14px" }}
-          inputProps={{ style: { fontSize: 12 } }} 
-          InputLabelProps={{ style: { fontSize: 12 } }} 
-          variant="outlined"
-          fullWidth
-          required
-          label="название устройства "
-          autoComplete="Название устройства"
-          autoFocus
-          size="small"
-          onChange={(e) => {
-            APP_STORAGE.devs_groups.setLongitude(e.target.value);
-          }}
-          value={APP_STORAGE.devs_groups.getLongitude()}
-        />
+        <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+          <InputLabel className="org" sx={{ fontSize: "12px" }}>
+            Организация
+          </InputLabel>
+          <Select
+            sx={{ fontSize: "12px" }}
+            value={APP_STORAGE.devs_groups.getKeyOrg() || ""}
+            label="организация"
+            onChange={(e) => {
+              this.SelectedOrg(e.target.value);
+            }}
+          >
+            {options_org}
+            <Divider />
 
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                m: 1,
+                borderRadius: "4px",
+              }}
+            >
+        
+            </Box>
+          </Select>
+        </FormControl>
 
          <TextField
           sx={{ mt: "14px" }}
@@ -163,7 +174,7 @@ async SelectedOrg(a: any) {
               fontSize: "12px",
             }}
              onClick={() => {
-              APP_STORAGE.devs.set_NewDevs("sess_id", APP_STORAGE.auth_form.getdt());
+              APP_STORAGE.devs_groups.set_NewDevGroup("sess_id", APP_STORAGE.auth_form.getdt());
             }}
           >
             Сохранить
