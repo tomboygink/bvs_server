@@ -27,10 +27,8 @@ export class AdoutDevs extends React.Component<IProps> {
         let a = devs[key];
 
         if (a.id === APP_STORAGE.devs.getIdDevs()) {
-          // APP_STORAGE.devs.setItem(a.g_name)
-          console.log(a.parent_id);
           devs_discripst.push(
-            <Box sx = {{width: '790px', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
+            <Box key = {a.id} sx = {{width: '990px', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
           <Box sx= {{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <Typography>{a.g_name}</Typography>
             <Typography sx={{color: '#AAAAAA', fontSize: '12px'}}>Заводской номер - 5005</Typography> 

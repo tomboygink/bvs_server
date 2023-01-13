@@ -39,7 +39,7 @@ export class DevsTable {
 
     //Получение устройств по группе устройства при нажатии 
     async selectDevs(): Promise<DevsEntity[]>{
-        var db_res = await this.db.query("SELECT * FROM SelectDevs('"+this.args.org_id+"')");
+        var db_res = await this.db.query("SELECT * FROM SelectDevs('"+this.args.dev_group_id+"')");
         var result: DevsEntity[] = new Array();
         for (var p in db_res.rows) { result.push(db_res.rows[p]); }
         return result;

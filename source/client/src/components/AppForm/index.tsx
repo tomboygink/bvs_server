@@ -14,8 +14,8 @@ import {WorkingWithDev} from './DevsGroups/WorkingWithDev'
 import {DevLocation} from './DevsGroups/DevLocation'
 import {ModalDevs} from './DevsGroups/ModalDevs';
 import {ModalDevs1} from './Devs/ModalDevs'
-import {ModalDevsParent} from './DevsGroups/ModalDevsParent'
-import {Devs}  from './Devs/Devs'
+import {Devs}  from './Devs/Devs';
+import {Sensors} from './Sensors/Sensors'
 
 interface IProps {}
 
@@ -27,6 +27,34 @@ export class AppForm extends React.Component<IProps> {
   }
 
   render(): React.ReactNode {
+    let user_r = null;
+    let user_w = null;
+    var roles = null;
+    if (APP_STORAGE.auth_form.getUser().roles_ids) {
+      APP_STORAGE.devs_groups.setOrgId(APP_STORAGE.auth_form.getUser().org_id);
+      APP_STORAGE.devs.setOrgId(APP_STORAGE.auth_form.getUser().org_id);
+      roles = JSON.parse(
+        JSON.stringify(APP_STORAGE.auth_form.getUser().roles_ids)
+      );
+      for (var key in roles) {
+        if (roles.hasOwnProperty(key)) {
+          let a = roles[key];
+          user_r = a[0];
+          user_w = a[1];
+
+          console.log('user_w', user_w)
+        }
+      }
+    }
+    if (user_w === 2 && user_r === 1) { 
+      APP_STORAGE.devs.setUserRole(true)
+     }
+     if (user_r === 1 && !user_w) { 
+      APP_STORAGE.devs.setUserRole(false)
+     }
+
+   
+
     var middle_form:React.ReactNode = <></>;
 
     if(APP_STORAGE.devs_groups.getMiddleForm() === 1){
@@ -49,13 +77,12 @@ export class AppForm extends React.Component<IProps> {
             <Modal />
             <ModalLeftPanel />
             <ModalDevs />
-            <ModalDevsParent/>
             <ModalDevs1 />
             <Box sx={{ mt: "2%" }}></Box>
           </Box>
           <Box
             className="wrapper"
-           sx={{ display: "flex", justifyContent: "flex-start" }}
+           sx={{ display: "flex", justifyContent: "space-between"}}
           >
            <Box className="appform">
            <DevsGroups />
@@ -75,10 +102,9 @@ export class AppForm extends React.Component<IProps> {
 
             </Box>
  
-            {/* <Box className="appform">
-              
-            dsfdasydtrf
-              </Box>  */}
+            <Box className="appform">
+          <Sensors/>
+              </Box>  
           </Box>
 
         </React.Fragment>

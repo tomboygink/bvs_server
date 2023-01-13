@@ -46,7 +46,6 @@ export class AppBarLeftPanel extends React.Component<IProps> {
   async DevLocation (e:any){
     APP_STORAGE.devs_groups.setMiddleForm(e);
     APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
-    APP_STORAGE.devs.get_Devs("sess_id", APP_STORAGE.auth_form.getdt());
   }
 
   async OpenModalRegUser(e: any, tittle: string) {
@@ -137,9 +136,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
           <List
       sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
       component="nav"
-      aria-labelledby="nested-list-subheader"
-     
-    >
+      aria-labelledby="nested-list-subheader">
    
      
       <ListItemButton  onClick={() => this.OpenListDev()}>
