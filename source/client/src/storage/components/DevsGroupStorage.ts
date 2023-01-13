@@ -9,6 +9,8 @@ export class DevsGroupStorage{
     @observable open_modal: boolean = false;
     @observable middle_form: any = '';
 
+    @observable org_id: number = null;
+
 
     @observable name:string = '';
     @observable key_org: any= ''
@@ -17,10 +19,15 @@ export class DevsGroupStorage{
     @observable info: string = '';
     @observable parent_id : string = '';
 
+
     @observable devs_groups: Array<string> = []
     constructor(){
         makeAutoObservable(this);
     }
+
+    @action setOrgId(val : number ) { this.org_id = val};
+    @computed getOrgId () : number { return this.org_id}
+
 
     @action setOpenListDev (val: boolean) {this.open_devs_list = val}
     @computed getOpenListDev() : boolean {return this.open_devs_list}
@@ -78,8 +85,9 @@ export class DevsGroupStorage{
         var sess_code = value;
         var q:IWSQuery = new WSQuery("get_DevsGroups");
         q.args = {
+            //Пофикситть, порлучить инфу из запроса с данными пользователя 
             users_w: true,
-            org_id: 1
+            org_id: this.getOrgId() || ''
         }; 
         q.sess_code = sess_code;
          (await WSocket.get()).send(q);  

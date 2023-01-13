@@ -42,6 +42,24 @@ async SelectedOrg(a: any) {
       }
     }
 
+
+    let group_devs = [];
+    let devs = JSON.parse(
+      JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
+    );
+
+    for (var key in devs) {
+      if (devs.hasOwnProperty(key)) {
+        let a = devs[key];
+
+        if (a.id === APP_STORAGE.devs.getIdChild()) {
+          group_devs.push(
+            <Typography > Родитель - {a.g_name} </Typography>
+          );
+        }
+      }
+    }
+
     return (
         <React.Fragment>
 
@@ -56,12 +74,12 @@ async SelectedOrg(a: any) {
         </Typography>
   
         <CloseIcon  sx={{color: '#1976D2'}}
-             onClick={ ()=>{APP_STORAGE.devs.setOpenModal(false)}}
-             />
+             onClick={ ()=>{APP_STORAGE.devs.setOpenModal(false)}}/>
         </Box>  
         
         <Divider sx = {{marginBottom: '20px'}}/>
-
+        
+        {group_devs}
          
         <TextField
           sx={{ mt: "14px" }}
@@ -75,9 +93,9 @@ async SelectedOrg(a: any) {
           autoFocus
           size="small"
           onChange={(e) => {
-            APP_STORAGE.devs_groups.setName(e.target.value);
+            APP_STORAGE.devs.setNumber(e.target.value);
           }}
-          value={APP_STORAGE.devs_groups.getName()}
+          value={APP_STORAGE.devs.getNumber()}
         />
 
         <TextField
@@ -92,9 +110,9 @@ async SelectedOrg(a: any) {
           autoFocus
           size="small"
           onChange={(e) => {
-            APP_STORAGE.devs_groups.setLongitude(e.target.value);
+            APP_STORAGE.devs.setName(e.target.value);
           }}
-          value={APP_STORAGE.devs_groups.getLongitude()}
+          value={APP_STORAGE.devs.getName()}
         />
 
 
@@ -110,9 +128,9 @@ async SelectedOrg(a: any) {
           autoFocus
           size="small"
           onChange={(e) => {
-            APP_STORAGE.devs_groups.setLongitude(e.target.value);
+            APP_STORAGE.devs.setLongitude(e.target.value);
           }}
-          value={APP_STORAGE.devs_groups.getLongitude()}
+          value={APP_STORAGE.devs.getLongitude()}
         />
 
           <TextField
@@ -127,9 +145,9 @@ async SelectedOrg(a: any) {
           autoFocus
           size="small"
           onChange={(e) => {
-            APP_STORAGE.devs_groups.setLatitude(e.target.value);
+            APP_STORAGE.devs.setLatitude(e.target.value);
           }}
-          value={APP_STORAGE.devs_groups.getLatitude()}
+          value={APP_STORAGE.devs.getLatitude()}
         />
          <Divider sx={{ padding: "12px" }} />
           <Typography sx={{ color: "#999999" }} variant="caption">
@@ -142,9 +160,9 @@ async SelectedOrg(a: any) {
             minRows={4}
             style={{ width: "100%" }}
             onChange={(e) => {
-                APP_STORAGE.devs_groups.setInfo(e.target.value);
+                APP_STORAGE.devs.setInfo(e.target.value);
             }}
-            value={APP_STORAGE.devs_groups.getInfo()}
+            value={APP_STORAGE.devs.getInfo()}
           />
 
           <Box

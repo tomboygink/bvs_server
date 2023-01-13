@@ -27,7 +27,7 @@ export class DevsGroups extends React.Component<IProps> {
 
   componentDidMount(): void {
     APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
-    APP_STORAGE.devs.get_Devs("sess_id", APP_STORAGE.auth_form.getdt());
+   // APP_STORAGE.devs.get_Devs("sess_id", APP_STORAGE.auth_form.getdt());
 }
 
 
@@ -78,10 +78,6 @@ export class DevsGroups extends React.Component<IProps> {
     }
 });
 const filtered = uniqueChars.sort((a:any, b:any) => a !== b);
-
-              console.log('filtered',filtered);
-              console.log('b.parent_id', b.parent_id)
-             
               if(uniqueChars[0] === a.id){
                 id = b.parent_id;
                 child.push(
