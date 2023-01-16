@@ -37,7 +37,7 @@ export class DevLocation extends React.Component<IProps> {
             
 
          dev_form.push(
-        <Box key={a.id} sx = {{width: '790px', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
+        <Box key={a.id} sx = {{width: '1100px;', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
 
         <Box sx= {{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             

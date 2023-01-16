@@ -28,29 +28,30 @@ export class WorkingWithDev extends React.Component<IProps> {
     if (APP_STORAGE.auth_form.getUser())
       return (
         <React.Fragment>
-    <> 
+          <Box className="wrapper-devs" sx={{ mt: '44px', display: 'flex', flexDirection: 'column;', alignItems: 'flex-start;', ml: '1rem', mr: '32px'}}> 
+          <Typography sx={{fontWeight: '500' , pb: '20px'}}>Работа с утройствами</Typography>
           
           <Box sx = {{ borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center'}}>
 
-          <Box sx={{display: 'flex', alignItems: 'flex-start', pb: '12px'}}
+          <Box sx={{display: 'flex', alignItems: 'flex-start', pb: '31px'}}
            onClick={() => {
             this.DevLocation(1);
           }}>
-            {/* <RoomOutlinedIcon fontSize="small"  sx={{pr: '12px', color: '#266BF1'}}/> */}
-            <Typography sx ={{color: '#646464'}} >Расположение устройств</Typography>
+            <RoomOutlinedIcon fontSize="small"  sx={{pr: '12px', color: '#266BF1'}}/>
+            <Typography >Расположение устройств</Typography>
           </Box>
 
           <Box sx={{display: 'flex', alignItems: 'flex-start' }}
             onClick={() => {
               this.DevLocation(2);
             }}>
-            {/* <FormatListNumberedIcon fontSize="small"  sx={{pr: '12px', color: '#266BF1'}}/> */}
-            <Typography sx ={{color: '#646464'}}> Список устройств</Typography>
+            <FormatListNumberedIcon fontSize="small"  sx={{pr: '12px', color: '#266BF1'}}/>
+            <Typography>Список устройств</Typography>
           </Box>
             
           </Box>
 
-          </>
+          </Box>
          
         </React.Fragment>
       );

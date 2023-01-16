@@ -101,7 +101,6 @@ export class Sensors extends React.Component<IProps> {
       </IconButton>
     </Paper>
         </Box>
-
         <Box
           sx={{
             width: "290px",
@@ -126,31 +125,31 @@ export class Sensors extends React.Component<IProps> {
               <TableCell align="left" sx = {{ color : '#1976D2'}}><ModeEditOutlineOutlinedIcon fontSize="small"/></TableCell>
               <TableCell align="left" sx ={{color : '#FF4848'}}><DeleteOutlineOutlinedIcon fontSize="small" /></TableCell>
             </TableRow>
-            <TableRow key= '1'>
+            <TableRow key= '2'>
             <TableCell sx={{display: 'flex', fontWeight: '700'}} align="left"><SensorsIcon fontSize="small" sx={{pr: '9px', color: '#5be95b'}} /> [001]</TableCell>
               <TableCell align="left" sx= {{color: '#038F54'}}><AddIcon fontSize="small"/></TableCell>
               <TableCell align="left" sx = {{ color : '#1976D2'}}><ModeEditOutlineOutlinedIcon fontSize="small"/></TableCell>
               <TableCell align="left" sx ={{color : '#FF4848'}}><DeleteOutlineOutlinedIcon fontSize="small" /></TableCell>
             </TableRow>
-            <TableRow key= '1'>
+            <TableRow key= '3'>
             <TableCell sx={{display: 'flex', fontWeight: '700'}} align="left"><SensorsIcon fontSize="small" sx={{pr: '9px', color: '#5be95b'}} /> [001]</TableCell>
               <TableCell align="left" sx= {{color: '#038F54'}}><AddIcon fontSize="small"/></TableCell>
               <TableCell align="left" sx = {{ color : '#1976D2'}}><ModeEditOutlineOutlinedIcon fontSize="small"/></TableCell>
               <TableCell align="left" sx ={{color : '#FF4848'}}><DeleteOutlineOutlinedIcon fontSize="small" /></TableCell>
             </TableRow>
-            <TableRow key= '1'>
+            <TableRow key= '4'>
             <TableCell sx={{display: 'flex', fontWeight: '700'}} align="left"><SensorsIcon fontSize="small" sx={{pr: '9px', color: '#5be95b'}} /> [001]</TableCell>
               <TableCell align="left" sx= {{color: '#038F54'}}><AddIcon fontSize="small"/></TableCell>
               <TableCell align="left" sx = {{ color : '#1976D2'}}><ModeEditOutlineOutlinedIcon fontSize="small"/></TableCell>
               <TableCell align="left" sx ={{color : '#FF4848'}}><DeleteOutlineOutlinedIcon fontSize="small" /></TableCell>
             </TableRow>
-            <TableRow key= '1'>
+            <TableRow key= '5'>
             <TableCell sx={{display: 'flex', fontWeight: '700'}} align="left"><SensorsIcon fontSize="small" sx={{pr: '9px', color: '#5be95b'}} /> [001]</TableCell>
               <TableCell align="left" sx= {{color: '#038F54'}}><AddIcon fontSize="small"/></TableCell>
               <TableCell align="left" sx = {{ color : '#1976D2'}}><ModeEditOutlineOutlinedIcon fontSize="small"/></TableCell>
               <TableCell align="left" sx ={{color : '#FF4848'}}><DeleteOutlineOutlinedIcon fontSize="small" /></TableCell>
             </TableRow>
-            <TableRow key= '1'>
+            <TableRow key= '6'>
             <TableCell sx={{display: 'flex', fontWeight: '700'}} align="left"><SensorsIcon fontSize="small" sx={{pr: '9px', color: '#5be95b'}} /> [001]</TableCell>
               <TableCell align="left" sx= {{color: '#038F54'}}><AddIcon fontSize="small"/></TableCell>
               <TableCell align="left" sx = {{ color : '#1976D2'}}><ModeEditOutlineOutlinedIcon fontSize="small"/></TableCell>

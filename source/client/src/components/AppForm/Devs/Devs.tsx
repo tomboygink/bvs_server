@@ -133,7 +133,11 @@ export class Devs extends React.Component<IProps> {
              );
           }
           else if (APP_STORAGE.devs.getIdDev() === '') {
-            <Typography>Необходимо выбрать устройство</Typography>
+            devs_form.push(
+              <>
+              <Typography>Необходимо выбрать устройство</Typography>
+              </>)
+            
           }
         }
       }
@@ -159,7 +163,7 @@ export class Devs extends React.Component<IProps> {
             <Box
             sx={{
               boxShadow: "4px 6px 14px 2px rgb(0 0 0 / 4%);",
-              width: "990px",
+              width: "1100px",
               background: "#fff",
               p: "25px",
               borderRadius: "4px",
@@ -195,7 +199,7 @@ export class Devs extends React.Component<IProps> {
                   this.OpenModal();
                 }}
               >
-                <Typography> Добавить устройство</Typography>
+              <Typography> Добавить устройство</Typography>
               </Box>
     </Box>
 
