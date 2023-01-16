@@ -20,6 +20,9 @@ export class DevsGroupStorage{
     @observable parent_id : string = '';
 
 
+    @observable defaultExpanded_devs_froups : Array<string> = [];
+
+
     @observable devs_groups: Array<string> = []
     constructor(){
         makeAutoObservable(this);
@@ -63,6 +66,9 @@ export class DevsGroupStorage{
     ///////////////////////////////////////////////Список расположений устройств
     @action setDevsGroups(val: Array<string>) {this.devs_groups = val;}
     @computed getDevsGroups() : Array<string> {return this.devs_groups}
+
+    @action setDefaultExpandedDevsGroups(val: Array<string>) {this.defaultExpanded_devs_froups = val;}
+    @computed getDefaultExpandedDevsGroups() : Array<string> {return this.defaultExpanded_devs_froups}
 
     async set_NewDevGroup(name: string, value: any, _options?: any) {
         var sess_code = value;
