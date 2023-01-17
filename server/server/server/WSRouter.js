@@ -341,16 +341,9 @@ function WSRoute(_ws, q) {
                     return [4, dg.selectDevsGroups()];
                 case 48:
                     data = _c.sent();
-                    if (data.length > 0) {
-                        wsres.code = q.sess_code;
-                        wsres.error = null;
-                        wsres.data = data;
-                    }
-                    else {
-                        wsres.code = q.sess_code;
-                        wsres.data = [],
-                            wsres.error = 'Список групп устройств отсутсвует';
-                    }
+                    wsres.code = q.sess_code;
+                    wsres.error = null;
+                    wsres.data = data;
                     return [3, 55];
                 case 49:
                     dev = new Devs_1.DevsTable(q.args, q.sess_code);

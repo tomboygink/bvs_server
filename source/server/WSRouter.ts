@@ -148,13 +148,13 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 ut.forgPass();
             }
         } break;
-       
+
 
         //------------------------------------------------------------------------РЕДАКТИРОВАНИЕ ПОЛЬЗОВАТЕЛЕЙ АДМИНИСТРАТОРОМ 
-        case 'set_ChangeUser':{
+        case 'set_ChangeUser': {
             ut = new UserTable(q.args, q.sess_code);
             await ut.updateUserAdmin();
-        }break;
+        } break;
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ОРГАНИЗАЦИЙ
         //Получение всех организаций
@@ -166,19 +166,19 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.error = null;
                 wsres.data = data;
             }
-            else{wsres.code = q.sess_code; 
-                wsres.data = [], 
-                wsres.error = 'Организации отсутвуют'
+            else {
+                wsres.code = q.sess_code;
+                wsres.data = [],
+                    wsres.error = 'Организации отсутвуют'
             }
-        } 
-        break;
+        }
+            break;
 
         //Добавление новой организации
         case 'set_NewOrg': {
             var orgs = new OrgsTable(q.args, q.sess_code);
             data = await orgs.insertOrgs();
-            if(data[0].id==0|| data==null|| data==undefined)
-            {
+            if (data[0].id == 0 || data == null || data == undefined) {
                 wsres.code = q.sess_code;
                 wsres.data = [];
                 wsres.error = "Ошибка добавления организации"
@@ -193,7 +193,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ДОЛЖНОСТЕЙ ОПРЕДЕЛЕННОЙ ОРГАНИЗАЦИИ
         //Получение должностей организации 
-        case 'get_Jobs':{
+        case 'get_Jobs': {
             var jobs = new Jobs_titlesTable(q.args, q.sess_code);
             data = await jobs.selectJobs_title();
             if (data.length > 0) {
@@ -201,18 +201,18 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.error = null;
                 wsres.data = data;
             }
-            else{wsres.code = q.sess_code; 
-                wsres.data = [], 
-                wsres.error = 'У организации отсутствуют должности'
+            else {
+                wsres.code = q.sess_code;
+                wsres.data = [],
+                    wsres.error = 'У организации отсутствуют должности'
             }
-            
-        }break;
+
+        } break;
         //Добавление новой должности
-        case 'set_NewJobTitle':{
+        case 'set_NewJobTitle': {
             var jobs = new Jobs_titlesTable(q.args, q.sess_code);
             data = await jobs.insertJobs_title();
-            if(data[0].id==0|| data==null|| data==undefined)
-            {
+            if (data[0].id == 0 || data == null || data == undefined) {
                 wsres.code = q.sess_code;
                 wsres.data = [];
                 wsres.error = "Ошибка добавления должности"
@@ -223,16 +223,15 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.data = data;
                 wsres.error = null;
             }
-            
-        }break;
+
+        } break;
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЕЙ
         //Добавление пользователя
         case 'set_NewUser': {
             var ut = new UserTable(q.args, q.sess_code);
             data = await ut.insertUser();
-            if(data[0].id==0|| data==null|| data==undefined)
-            {
+            if (data[0].id == 0 || data == null || data == undefined) {
                 wsres.code = q.sess_code;
                 wsres.data = [];
                 wsres.error = "Ошибка добавления пользователя"
@@ -245,21 +244,20 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
         } break;
         //Получение всех пользователей 
-        case 'get_AllUser':{
+        case 'get_AllUser': {
             var ut = new UserTable(q.args, q.sess_code);
             data = await ut.selectAllUsers();
             wsres.code = q.sess_code;
             wsres.data = data;
             wsres.error = '';
         } break;
-        
+
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ГРУПП УСТРОЙСТВ 
         //Добавление новой группы устройства
-        case 'set_NewDevGroup':{
+        case 'set_NewDevGroup': {
             var dg = new Devs_groupsTable(q.args, q.sess_code);
             data = await dg.insertDevsGroups();
-            if(data[0].id==0|| data==null|| data==undefined)
-            {
+            if (data[0].id == 0 || data == null || data == undefined) {
                 wsres.code = q.sess_code;
                 wsres.data = [];
                 wsres.error = "Ошибка добавления группы"
@@ -270,11 +268,16 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 //wsres.data = data;
                 wsres.error = null;
             }
-        }break;
+        } break;
         //Получение групп устроств по id организации или всех для пользователя
-        case 'get_DevsGroups':{
+        case 'get_DevsGroups': {
             var dg = new Devs_groupsTable(q.args, q.sess_code);
             data = await dg.selectDevsGroups();
+            //console.log(data.length);
+            wsres.code = q.sess_code;
+            wsres.error = null;
+            wsres.data = data;
+            /*
             if (data.length > 0) {
                 wsres.code = q.sess_code;
                 wsres.error = null;
@@ -284,16 +287,16 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.data = [], 
                 wsres.error = 'Список групп устройств отсутсвует';
             }
-        }break;
+            */
+        } break;
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ УСТРОЙСТВ ПО ГРУППЕ УСТРОЙСТВА
         //Добавление нового устройства
-        case 'set_NewDevs':{
+        case 'set_NewDevs': {
             var dev = new DevsTable(q.args, q.sess_code);
             data = await dev.insertDevs();
 
-            if(data[0].id===0|| data===null|| data===undefined)
-            {
+            if (data[0].id === 0 || data === null || data === undefined) {
                 wsres.code = q.sess_code;
                 wsres.data = [];
                 wsres.error = "Ошибка добавления устройства"
@@ -306,9 +309,9 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.error = null;
             }
 
-        }break;
+        } break;
         //Получение устройств по id группы 
-        case 'get_Devs':{
+        case 'get_Devs': {
             var devs = new DevsTable(q.args, q.sess_code);
             data = await devs.selectDevs();
             if (data.length > 0) {
@@ -316,12 +319,13 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.error = null;
                 wsres.data = data;
             }
-            else{wsres.code = q.sess_code; 
-                wsres.data = [], 
-                wsres.error = 'Список устройств отсутсвует';
+            else {
+                wsres.code = q.sess_code;
+                wsres.data = [],
+                    wsres.error = 'Список устройств отсутсвует';
             }
-            
-        }break;
+
+        } break;
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
         case 'deleteCookie': {
