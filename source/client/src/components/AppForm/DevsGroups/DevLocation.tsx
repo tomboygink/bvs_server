@@ -6,6 +6,8 @@ import { Box, Alert, Typography , TextField, Divider,  TextareaAutosize} from "@
 import { APP_STORAGE } from "../../../storage/AppStorage";
 import { WidthFull } from "@mui/icons-material";
 
+import LongMenu from './Menu'
+
 // import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 interface IProps {}
@@ -34,14 +36,14 @@ export class DevLocation extends React.Component<IProps> {
           if (devs.hasOwnProperty(key)) {
             let a = devs[key];
 
-          if( APP_STORAGE.devs.getIdDevs() === a.id) { 
+          if(  APP_STORAGE.devs.getIdChild() === a.id) { 
 
          dev_form.push(
         <Box key={a.id} sx = {{width: '1100px;', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
 
         <Box sx= {{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>  
         <Typography>{a.g_name}</Typography>
-        <Typography sx={{color: '#AAAAAA', fontSize: '12px'}}>место расположения устройства</Typography> 
+        <LongMenu/>
         </Box>
        
         {/* <Box sx= {{display: 'flex'}}>
@@ -58,7 +60,6 @@ export class DevLocation extends React.Component<IProps> {
                 display: "flex",
                 borderRadius: "4px",
                 flexDirection: 'column',
-                borderLeft: '1px solid #087ef3',
                 p: "18px",
               }}
             >
@@ -75,10 +76,9 @@ export class DevLocation extends React.Component<IProps> {
                         label="Наименование"
                         autoFocus  
                         ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
-                        value={a.name}
+                        value={a.g_name}
                     />
-ы
-<TextField
+    <TextField
                         variant="outlined"
                         margin="normal"
                         size="small"

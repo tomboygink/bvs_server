@@ -57,141 +57,141 @@ export class DevsGroups extends React.Component<IProps> {
   }
 
   render(): React.ReactNode {
-    let devs1 = [];
-    let devs2 = [];
-    let devs_form = [];
-    let devs_form1212 = [];
+  //   let devs1 = [];
+  //   let devs2 = [];
+  //   let devs_form = [];
+  //   let devs_form1212 = [];
 
 
-    ////////////////////////////// Получаем список устройств
-    if (APP_STORAGE.devs.getDevs() &&  APP_STORAGE.devs.getParent() !== 0) {
-      devs2 = JSON.parse(JSON.stringify(APP_STORAGE.devs.getDevs()));
-      for (var key in devs2) {
-        if (devs2.hasOwnProperty(key)) {
-          let a = devs2[key];
-         if (APP_STORAGE.devs.getIdChild() === a.group_dev_id) {
-          devs_form.push(
-            <TreeItem  onClick={() => {this.setIdDev(a.id); }} sx = {{color : '#1976D2'}}  
-            icon={<CrisisAlertIcon />}
-            key= {a.id}
-            nodeId={a.name}
-            label= {a.name}>
-          </TreeItem>
-           )
-         }
-        }
-      };
-    }
+  //   ////////////////////////////// Получаем список устройств
+  //   if (APP_STORAGE.devs.getDevs() &&  APP_STORAGE.devs.getParent() !== 0) {
+  //     devs2 = JSON.parse(JSON.stringify(APP_STORAGE.devs.getDevs()));
+  //     for (var key in devs2) {
+  //       if (devs2.hasOwnProperty(key)) {
+  //         let a = devs2[key];
+  //        if (APP_STORAGE.devs.getIdChild() === a.group_dev_id) {
+  //         devs_form.push(
+  //           <TreeItem  onClick={() => {this.setIdDev(a.id); }} sx = {{color : '#1976D2'}}  
+  //           icon={<CrisisAlertIcon />}
+  //           key= {a.id}
+  //           nodeId={a.name}
+  //           label= {a.name}>
+  //         </TreeItem>
+  //          )
+  //        }
+  //       }
+  //     };
+  //   }
 
-  if (APP_STORAGE.devs.getParent1() === 0 ) {
-      devs1 = JSON.parse(JSON.stringify(APP_STORAGE.devs.getDevs()));
+  // if (APP_STORAGE.devs.getParent1() === 0 ) {
+  //     devs1 = JSON.parse(JSON.stringify(APP_STORAGE.devs.getDevs()));
 
-      for (var key in devs1) {
-        if (devs1.hasOwnProperty(key)) {
-          let a = devs1[key];
-          if (APP_STORAGE.devs.getIdDevs() === a.group_dev_id) {
-         devs_form1212.push(
-          <TreeItem  onClick={() => {this.setIdDev(a.id); }} 
-          sx = {{color : '#1976D2'}} 
-          icon={<CrisisAlertIcon />}
-          key= {a.id}
-          nodeId={a.name}
-          label= {a.name}
-        >
-        </TreeItem>
-        )
-          }
-        }
-      };
-    }
-
-
-
-    ///////////////////////////////////////////////////// Получаем список групп устройств
-
-    let devs = [];
-    let dev_form = [];
-    let dev_item = [];
-    let id = [];
-    let parent_id = [];
-
-    let filterB = [];
-
-    let child = [];
-
-    let uniqueChars: any = [];
+  //     for (var key in devs1) {
+  //       if (devs1.hasOwnProperty(key)) {
+  //         let a = devs1[key];
+  //         if (APP_STORAGE.devs.getIdDevs() === a.group_dev_id) {
+  //        devs_form1212.push(
+  //         <TreeItem  onClick={() => {this.setIdDev(a.id); }} 
+  //         sx = {{color : '#1976D2'}} 
+  //         icon={<CrisisAlertIcon />}
+  //         key= {a.id}
+  //         nodeId={a.name}
+  //         label= {a.name}
+  //       >
+  //       </TreeItem>
+  //       )
+  //         }
+  //       }
+  //     };
+  //   }
 
 
-    if (APP_STORAGE.devs_groups.getDevsGroups()) {
-      devs = JSON.parse(
-        JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
-      );
-      dev_item = JSON.parse(
-        JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
-      );
 
-      for (var key in devs) {
-        if (devs.hasOwnProperty(key)) {
-          let a = devs[key];
+  //   ///////////////////////////////////////////////////// Получаем список групп устройств
 
-          for (var i in dev_item) {
-            if (dev_item.hasOwnProperty(i)) {
-              let b = dev_item[i];
+  //   let devs = [];
+  //   let dev_form = [];
+  //   let dev_item = [];
+  //   let id = [];
+  //   let parent_id = [];
 
-              if (b.parent_id === a.id) {
-                filterB.push(b.parent_id);
+  //   let filterB = [];
+
+  //   let child = [];
+
+  //   let uniqueChars: any = [];
+
+
+  //   if (APP_STORAGE.devs_groups.getDevsGroups()) {
+  //     devs = JSON.parse(
+  //       JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
+  //     );
+  //     dev_item = JSON.parse(
+  //       JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
+  //     );
+
+  //     for (var key in devs) {
+  //       if (devs.hasOwnProperty(key)) {
+  //         let a = devs[key];
+
+  //         for (var i in dev_item) {
+  //           if (dev_item.hasOwnProperty(i)) {
+  //             let b = dev_item[i];
+
+  //             if (b.parent_id === a.id) {
+  //               filterB.push(b.parent_id);
                
                
-                if (APP_STORAGE.devs.getIdDevs() === a.id) {
-                  id = b.parent_id;
-                  child.push(
-                    <>
-                    <TreeItem onClick={() => {this.TreeSensors( b.id, b.parent_id); }}
-                      key={b.number}
-                      nodeId={b.id}
-                      label={b.id}
-                    >
-                      {devs_form}
-                    </TreeItem></>
+  //               if (APP_STORAGE.devs.getIdDevs() === a.id) {
+  //                 id = b.parent_id;
+  //                 child.push(
+  //                   <>
+  //                   <TreeItem onClick={() => {this.TreeSensors( b.id, b.parent_id); }}
+  //                     key={b.number}
+  //                     nodeId={b.id}
+  //                     label={b.id}
+  //                   >
+  //                     {devs_form}
+  //                   </TreeItem></>
              
-                  );
-                }
-              }
-            }
-          }
+  //                 );
+  //               }
+  //             }
+  //           }
+  //         }
 
-          if (id !== "" && a.id === id) {
-            dev_form.push(
-              <TreeItem sx ={{fontWeight: '700'}}
-                onClick={() => {
-                  this.Treeitems(a.id, a.parent_id);
-                }}
-                key={a.id}
-                nodeId={a.id}
-                label={a.g_name}
-              >
-                {devs_form1212}
-                {child}
-              </TreeItem>
-            );
-          }
+  //         if (id !== "" && a.id === id) {
+  //           dev_form.push(
+  //             <TreeItem sx ={{fontWeight: '700'}}
+  //               onClick={() => {
+  //                 this.Treeitems(a.id, a.parent_id);
+  //               }}
+  //               key={a.id}
+  //               nodeId={a.id}
+  //               label={a.g_name}
+  //             >
+  //               {devs_form1212}
+  //               {child}
+  //             </TreeItem>
+  //           );
+  //         }
 
-          if (a.id !== id && a.parent_id < 1) {
-            dev_form.push(
-              <TreeItem sx ={{fontWeight: '700'}}
-                onClick={() => {
-                  this.Treeitems(a.id, a.parent_id);
-                }}
-                key={a.id}
-                nodeId={a.id}
-                label={a.g_name}></TreeItem>
-            );
-          }
-        }
-      }
-    }
+  //         if (a.id !== id && a.parent_id < 1) {
+  //           dev_form.push(
+  //             <TreeItem sx ={{fontWeight: '700'}}
+  //               onClick={() => {
+  //                 this.Treeitems(a.id, a.parent_id);
+  //               }}
+  //               key={a.id}
+  //               nodeId={a.id}
+  //               label={a.g_name}></TreeItem>
+  //           );
+  //         }
+  //       }
+  //     }
+  //   }
 
-    if (APP_STORAGE.auth_form.getUser())
+  //   if (APP_STORAGE.auth_form.getUser())
       return (
         <React.Fragment>
           <Box
@@ -224,7 +224,7 @@ export class DevsGroups extends React.Component<IProps> {
                 defaultExpandIcon={<FolderOpenIcon />}
                 defaultEndIcon={<FolderOpenIcon />}
                 sx={{ flexGrow: 1, maxWidth: 400, p: '25px' }}>
-                {dev_form}
+                {/* {dev_form} */}
               </TreeView>
               <Box sx ={{background: '#d5e3fda6', height: '80vh', borderTopRightRadius: '48px', p: '25px'}}>
               <WorkingWithDev/>
