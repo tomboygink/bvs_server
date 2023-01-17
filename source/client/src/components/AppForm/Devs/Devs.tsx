@@ -33,15 +33,29 @@ export class Devs extends React.Component<IProps> {
     let name_group_dev = []; /// контейнер для списка устройств
 
     let devs = [];
+    let sensors:Array<string> = [];
     let devs_form = [];
 
      if (APP_STORAGE.devs.getDevs()) {
-      devs = JSON.parse(
-        JSON.stringify(APP_STORAGE.devs.getDevs())
-      );
+
+      devs = JSON.parse(JSON.stringify(APP_STORAGE.devs.getDevs()));
+   
+      
       for (var key in devs) {
         if (devs.hasOwnProperty(key)) {
           let a = devs[key];
+
+          
+         
+        
+
+        //   for (var key in JSON.parse(JSON.stringify(sensors))) {
+        //     if (JSON.parse(JSON.stringify(sensors)).hasOwnProperty(key)) {
+        //       let s = JSON.parse(JSON.stringify(sensors))[key];
+        //      console.log('s', s.s[0]);
+        //          ///sensors.push(a.sensors)
+        //  }
+        // }
               
           if (a.id === APP_STORAGE.devs.getIdDev()) {
             devs_form.push(
@@ -203,10 +217,7 @@ export class Devs extends React.Component<IProps> {
               </Box>
     </Box>
 
-           )
-             
-  
-            
+           )  
          }
         }
       }

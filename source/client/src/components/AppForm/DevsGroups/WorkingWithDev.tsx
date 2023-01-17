@@ -47,7 +47,12 @@ export class WorkingWithDev extends React.Component<IProps> {
             {/* <FormatListNumberedIcon fontSize="small"  sx={{pr: '12px', color: '#266BF1'}}/> */}
             <Typography sx ={{color: '#646464'}}> Список устройств</Typography>
           </Box>
-            
+             
+          <Box className="exit" sx={{display: 'flex', alignItems: 'flex-start', mt : '210%' , justifyContent: 'center'}}>
+            {/* <FormatListNumberedIcon fontSize="small"  sx={{pr: '12px', color: '#266BF1'}}/> */}
+            <Typography sx ={{color: '#000000', fontSize: '20px', lineHeight: '28px'}}> Выход</Typography>
+          </Box>
+
           </Box>
 
           </>
