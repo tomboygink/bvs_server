@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 
 
-import { Box, Alert, Typography  } from "@mui/material";
+import { Box, Alert, Typography , TextField, Divider,  TextareaAutosize} from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 import { WidthFull } from "@mui/icons-material";
 
@@ -34,26 +34,99 @@ export class DevLocation extends React.Component<IProps> {
           if (devs.hasOwnProperty(key)) {
             let a = devs[key];
 
-            
+          if( APP_STORAGE.devs.getIdDevs() === a.id) { 
 
          dev_form.push(
-        <Box key={a.id} sx = {{width: '790px', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
+        <Box key={a.id} sx = {{width: '1100px;', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
 
-        <Box sx= {{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-            
+        <Box sx= {{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>  
         <Typography>{a.g_name}</Typography>
-        {a.id} {a.parent_id}
         <Typography sx={{color: '#AAAAAA', fontSize: '12px'}}>место расположения устройства</Typography> 
         </Box>
        
-        <Box sx= {{display: 'flex'}}>
+        {/* <Box sx= {{display: 'flex'}}>
         <Box sx={{mb: '8px', mr: '14px'}}>
         <Typography sx={{fontWeight: '600'}}>  Долгота - {a.longitude} </Typography>
         </Box>
         <Box sx={{mb: '8px'}}>
         <Typography sx={{fontWeight: '600'}}>  Широта - {a.latitude}</Typography>
         </Box>
-        </Box>
+        </Box> */}
+            
+            <Box
+              sx={{
+                display: "flex",
+                borderRadius: "4px",
+                flexDirection: 'column',
+                borderLeft: '1px solid #087ef3',
+                p: "18px",
+              }}
+            >
+     
+
+                    
+          <TextField
+                        variant="outlined"
+                        margin="normal"
+                        size="small"
+                        required
+                        fullWidth
+                        id="Наименование"
+                        label="Наименование"
+                        autoFocus  
+                        ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
+                        value={a.name}
+                    />
+ы
+<TextField
+                        variant="outlined"
+                        margin="normal"
+                        size="small"
+                        required
+                        fullWidth
+                        id="Долгота"
+                        label="Долгота"
+                        autoFocus  
+                        ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
+                        value={a.longitude}
+                    />
+
+<TextField
+                        variant="outlined"
+                        margin="normal"
+                        size="small"
+                        required
+                        fullWidth
+                        id="Широта"
+                        label="Широта"
+                        autoFocus  
+                        ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
+                        value={a.latitude}
+                    />
+
+<Divider sx={{ padding: "12px" }} />
+          <Typography sx={{ color: "#999999" }} variant="caption">
+            Информация:
+          </Typography>
+
+          <TextareaAutosize
+            className="info"
+            aria-label="minimum height"
+            minRows={4}
+            style={{ width: "100%" }}
+         
+            value={a.info}
+          />
+        {/* <Typography>Название устройства - {a.name}</Typography>
+        <Typography>Долгота - {a.latitude}</Typography> 
+        <Typography>Широта - {a.longitude}</Typography>
+        <Typography>Информация - {a.info}</Typography>  */}
+        
+          </Box>
+
+          
+
+
 
   <Box sx={{display: 'flex'}}> 
         <Box sx={{background: '#F1F5FC', width: '180px', color: '#000', p: '8px', pl: '20px' , mr: '20px', borderRadius: '4px'}}
@@ -67,8 +140,10 @@ export class DevLocation extends React.Component<IProps> {
         </Box> */}
   </Box>
         </Box>
+
+        
               )
-            
+      }
           }
         }
       }
@@ -87,7 +162,7 @@ export class DevLocation extends React.Component<IProps> {
 
   {/* ******************************************************************************************************************************* */}
           <Box className="wrapper-devs" sx={{  display: 'flex', flexDirection: 'column;', alignItems: 'flex-end;', ml: '1rem'}}> 
-          <Box sx = {{width: '790px', background: '#fff', pl: '25px',  pr: '25px', pt: '8px', pb: '8px',borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center',  alignItems: 'flex-end;', mb: '16px'}}>
+          <Box sx = {{width: '1100px', background: '#fff', pl: '25px',  pr: '25px', pt: '8px', pb: '8px',borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center',  alignItems: 'flex-end;', mb: '16px'}}>
           <Box 
              sx={{background: '#F1F5FC',color: '#000', width: '180px', p: '3px', pl: '20px'  ,borderRadius: '4px'}}
              onClick={() => this.OpenModal(0)}

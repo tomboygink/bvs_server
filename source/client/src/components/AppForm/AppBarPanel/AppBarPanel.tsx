@@ -25,7 +25,7 @@ export class AppBarPanel extends React.Component<IProps> {
     render(): React.ReactNode {
         return (
             <React.Fragment>
-           <AppBar >
+           <AppBar sx={{background: '#266BF1'}}>
                 <Box 
                     sx={{ display: 'flex' ,
                     justifyContent: 'space-between' , 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {MenuItem, IconButton , Divider, Menu , Avatar, Typography , Link } from '@mui/material';
+import {MenuItem, IconButton , Divider, Menu , Avatar, Typography , Link, Box } from '@mui/material';
 
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Settings from '@mui/icons-material/Settings';
@@ -55,6 +55,7 @@ export class AccountMenu extends React.Component<IProps> {
                 <Avatar sx={{ width: 32, height: 32 }}></Avatar>
                 <Typography sx={{  pl: '1rem', color : 'white'}} > {user.family} {user.name} {user.father}  </Typography>
                 </IconButton>
+                
             <Menu
                 anchorEl={document.getElementById('btnPerfil')}
                 open={APP_STORAGE.app_bar.getAppBarUser()}

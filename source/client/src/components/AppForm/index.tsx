@@ -86,6 +86,8 @@ export class AppForm extends React.Component<IProps> {
           >
            <Box className="appform">
            <DevsGroups />
+
+
            {/* <WorkingWithDev /> */}
             </Box> 
             
@@ -97,9 +99,7 @@ export class AppForm extends React.Component<IProps> {
             } 
              
              <Box >
-            
               {middle_form}
-
             </Box>
  
             <Box className="appform">
