@@ -23,6 +23,7 @@ export class Devs_groupsTable {
         this.args = _args;
         this.sess_code = _sess_code;
     }
+
     //Добавление группы устройства 
     async insertDevsGroups(): Promise<Devs_groupsEntity[]> {
         var db_res = await this.db.query("SELECT AddDevs_Group(CAST ('" + this.args.parent_id + "' AS BIGINT), " +
@@ -39,15 +40,76 @@ export class Devs_groupsTable {
     }
 
     //Получение группы устройства 
-    async selectDevsGroups(): Promise<Devs_groupsEntity[]> {
-        //Если администратор 
+    async selectDevsGroups() {
+        var groups: any = {
+            group: {},
+            id: 0,
+            p_id: 0,
+            childs: new Array(),
+            devs: new Array(),
+            update: false
+        }
+
+
         if (this.args.users_w === true) {
-            var db_res = await this.db.query("SELECT * FROM SelectDevs_Group_OrgId('%')");
-        } 
-        //Обычный пользователь 
-        else {var db_res = await this.db.query("SELECT * FROM SelectDevs_Group_OrgId('" + this.args.org_id + "')");}
-        var result: Devs_groupsEntity[] = new Array();
-        for (var p in db_res.rows) { result.push(db_res.rows[p]); }
-        return result;
+            var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ");
+            for (var i in roots_gr.rows) {
+                var dev = await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id);
+                groups.childs.push({
+                    group: roots_gr.rows[i],
+                    id: roots_gr.rows[i].id,
+                    p_id: roots_gr.rows[i].parent_id,
+                    childs: new Array(),
+                    devs: dev.rows,
+                    update: false
+
+                })
+            }
+        }
+        else{
+            var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id="+this.args.org_id);
+            for (var i in roots_gr.rows) {
+                var dev = await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id);
+                groups.childs.push({
+                    group: roots_gr.rows[i],
+                    id: roots_gr.rows[i].id,
+                    p_id: roots_gr.rows[i].parent_id,
+                    childs: new Array(),
+                    devs: dev.rows,
+                    update: false
+
+                })
+            }
+        }
+
+
+
+        for (var i in groups.childs) {
+            groups.childs[i].childs = await this._d_tree(groups.childs[i]);
+        }
+
+
+        return groups;
+
+    }
+
+    async _d_tree(childs: any) {
+
+        var reti = new Array();
+        var grs = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=" + childs.id);
+
+        for (var i in grs.rows) {
+            reti.push({
+                group: grs.rows[i],
+                id: grs.rows[i].id,
+                pid: grs.rows[i].parent_id,
+                childs: await this._d_tree(grs.rows[i]),
+                devs: await this.db.query("SELECT * FROM devs WHERE group_dev_id=" + grs.rows[i].id),
+                updated: false
+            });
+        }
+
+        return reti;
+
     }
 }

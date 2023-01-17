@@ -88,7 +88,7 @@ var DevsTable = (function () {
             var db_res, result, p;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT * FROM SelectDevs('" + this.args.org_id + "')")];
+                    case 0: return [4, this.db.query("SELECT * FROM SelectDevs('" + this.args.dev_group_id + "')")];
                     case 1:
                         db_res = _a.sent();
                         result = new Array();

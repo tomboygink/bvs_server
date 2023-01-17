@@ -85,14 +85,25 @@ var Devs_groupsTable = (function () {
     };
     Devs_groupsTable.prototype.selectDevsGroups = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var db_res, db_res, result, p;
+            var allDevs_Groups, db_res, i, j, db_res, result, p;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        allDevs_Groups = '';
                         if (!(this.args.users_w === true)) return [3, 2];
                         return [4, this.db.query("SELECT * FROM SelectDevs_Group_OrgId('%')")];
                     case 1:
                         db_res = _a.sent();
+                        allDevs_Groups += "{\"data\":[";
+                        for (i = 0; i < db_res.rows.length; i++) {
+                            for (j = 0; j < db_res.rows.length; j++) {
+                                if (db_res.rows[i].id == db_res.rows[j].parent_id) {
+                                    console.log("id=" + db_res.rows[i].id + " parent_id=" + db_res.rows[j].parent_id);
+                                }
+                            }
+                        }
+                        allDevs_Groups += "]}";
+                        console.log(allDevs_Groups);
                         return [3, 4];
                     case 2: return [4, this.db.query("SELECT * FROM SelectDevs_Group_OrgId('" + this.args.org_id + "')")];
                     case 3:
