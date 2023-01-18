@@ -60,7 +60,7 @@ export class Devs_groupsTable {
                     id: roots_gr.rows[i].id,
                     p_id: roots_gr.rows[i].parent_id,
                     childs: new Array(),
-                    devs: dev.rows,
+                    devs: dev.rows[i],
                     update: false
 
                 })
@@ -75,7 +75,7 @@ export class Devs_groupsTable {
                     id: roots_gr.rows[i].id,
                     p_id: roots_gr.rows[i].parent_id,
                     childs: new Array(),
-                    devs: dev.rows,
+                    devs: dev.rows[i],
                     update: false
 
                 })
@@ -88,7 +88,11 @@ export class Devs_groupsTable {
             groups.childs[i].childs = await this._d_tree(groups.childs[i]);
         }
 
-        return JSON.stringify(groups);
+
+        var result = this.objToString(groups);
+
+//        console.log(result);
+        return result
 
     }
 
@@ -97,19 +101,66 @@ export class Devs_groupsTable {
 
         var reti = new Array();
         var grs = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=" + childs.id);
-
         for (var i in grs.rows) {
+            var dev = await this.db.query("SELECT * FROM devs WHERE group_dev_id=" + grs.rows[i].id);
             reti.push({
                 group: grs.rows[i],
                 id: grs.rows[i].id,
                 pid: grs.rows[i].parent_id,
                 childs: await this._d_tree(grs.rows[i]),
-                devs: await this.db.query("SELECT * FROM devs WHERE group_dev_id=" + grs.rows[i].id),
+                devs: dev.rows[i],
                 updated: false
             });
         }
 
         return reti;
 
+    }
+
+
+    objToString (obj:any, isArray?:boolean){
+        var isArray = isArray || false; // что нужно вернуть - массив или объект
+    
+        var sstr = "";
+        if(isArray){sstr += "[";}else{sstr += "{";}
+    
+        var first = true;
+        for(var k in obj){
+    
+            if(typeof obj[k] == 'function') continue; // не включает методы - только JSON для переноса данных
+    
+            if(first){
+                first = false;
+            }else{
+                sstr += ',';
+            }
+            
+    
+            if(!isArray){ sstr += `"${k}":`; } // ключи для объекта
+    
+            // значения
+            if(obj[k] === null){
+                sstr += 'null'
+            }else if(Array.isArray(obj[k])){
+                sstr += this.objToString(obj[k], true)
+            }else if('object' == typeof obj[k]){
+                sstr += this.objToString(obj[k], false)
+            }else if('undefined'== typeof obj[k]){
+                sstr += 'null'; //'undefined'
+            }else if('string'== typeof obj[k]){
+                sstr += `"${this.escStr(obj[k])}"`;
+            }else{
+                sstr += obj[k]
+            }
+    
+        }
+        if(isArray){sstr += "]";}else{sstr += "}";}
+        return sstr;
+    }
+
+    escStr(str:string):string{
+        var reti = str.replace(/[\\]/g, "\\\\");
+        reti = reti.replace(/["]/g, '\\"');
+        return reti;
     }
 }
