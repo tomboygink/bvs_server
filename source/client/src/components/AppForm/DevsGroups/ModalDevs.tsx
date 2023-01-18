@@ -53,7 +53,7 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
         <Box className='ModalTitle' sx = { {display: 'flex' , justifyContent: 'space-between', mb: '12px'}}> 
          
         <Typography >  
-            Добавить расположение устройства 1111
+            Добавить расположение устройства
         </Typography>
   
         <CloseIcon  sx={{color: '#1976D2'}}
