@@ -85,7 +85,7 @@ var Devs_groupsTable = (function () {
     };
     Devs_groupsTable.prototype.selectDevsGroups = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var groups, roots_gr, _a, _b, _c, _i, i, dev, roots_gr, _d, _e, _f, _g, i, dev, _h, _j, _k, _l, i, _m;
+            var groups, roots_gr, _a, _b, _c, _i, i, dev, roots_gr, _d, _e, _f, _g, i, dev, _h, _j, _k, _l, i, _m, result;
             return __generator(this, function (_o) {
                 switch (_o.label) {
                     case 0:
@@ -120,7 +120,7 @@ var Devs_groupsTable = (function () {
                             id: roots_gr.rows[i].id,
                             p_id: roots_gr.rows[i].parent_id,
                             childs: new Array(),
-                            devs: dev.rows,
+                            devs: dev.rows[i],
                             update: false
                         });
                         _o.label = 4;
@@ -150,7 +150,7 @@ var Devs_groupsTable = (function () {
                             id: roots_gr.rows[i].id,
                             p_id: roots_gr.rows[i].parent_id,
                             childs: new Array(),
-                            devs: dev.rows,
+                            devs: dev.rows[i],
                             update: false
                         });
                         _o.label = 10;
@@ -177,14 +177,16 @@ var Devs_groupsTable = (function () {
                     case 14:
                         _l++;
                         return [3, 12];
-                    case 15: return [2, JSON.stringify(groups)];
+                    case 15:
+                        result = this.objToString(groups);
+                        return [2, result];
                 }
             });
         });
     };
     Devs_groupsTable.prototype._d_tree = function (childs) {
         return __awaiter(this, void 0, void 0, function () {
-            var reti, grs, _a, _b, _c, _i, i, _d, _e;
+            var reti, grs, _a, _b, _c, _i, i, dev, _d, _e;
             var _f;
             return __generator(this, function (_g) {
                 switch (_g.label) {
@@ -204,6 +206,9 @@ var Devs_groupsTable = (function () {
                         _c = _b[_i];
                         if (!(_c in _a)) return [3, 5];
                         i = _c;
+                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id=" + grs.rows[i].id)];
+                    case 3:
+                        dev = _g.sent();
                         _e = (_d = reti).push;
                         _f = {
                             group: grs.rows[i],
@@ -211,11 +216,9 @@ var Devs_groupsTable = (function () {
                             pid: grs.rows[i].parent_id
                         };
                         return [4, this._d_tree(grs.rows[i])];
-                    case 3:
-                        _f.childs = _g.sent();
-                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id=" + grs.rows[i].id)];
                     case 4:
-                        _e.apply(_d, [(_f.devs = _g.sent(),
+                        _e.apply(_d, [(_f.childs = _g.sent(),
+                                _f.devs = dev.rows[i],
                                 _f.updated = false,
                                 _f)]);
                         _g.label = 5;
@@ -226,6 +229,60 @@ var Devs_groupsTable = (function () {
                 }
             });
         });
+    };
+    Devs_groupsTable.prototype.objToString = function (obj, isArray) {
+        var isArray = isArray || false;
+        var sstr = "";
+        if (isArray) {
+            sstr += "[";
+        }
+        else {
+            sstr += "{";
+        }
+        var first = true;
+        for (var k in obj) {
+            if (typeof obj[k] == 'function')
+                continue;
+            if (first) {
+                first = false;
+            }
+            else {
+                sstr += ',';
+            }
+            if (!isArray) {
+                sstr += "\"".concat(k, "\":");
+            }
+            if (obj[k] === null) {
+                sstr += 'null';
+            }
+            else if (Array.isArray(obj[k])) {
+                sstr += this.objToString(obj[k], true);
+            }
+            else if ('object' == typeof obj[k]) {
+                sstr += this.objToString(obj[k], false);
+            }
+            else if ('undefined' == typeof obj[k]) {
+                sstr += 'null';
+            }
+            else if ('string' == typeof obj[k]) {
+                sstr += "\"".concat(this.escStr(obj[k]), "\"");
+            }
+            else {
+                sstr += obj[k];
+            }
+        }
+        if (isArray) {
+            sstr += "]";
+        }
+        else {
+            sstr += "}";
+        }
+        return sstr;
+    };
+    Devs_groupsTable.prototype.escStr = function (str) {
+        var reti = str.replace(/[\\]/g, "\\\\");
+        reti = reti.replace(/["]/g, '\\"');
+        return reti;
     };
     return Devs_groupsTable;
 }());

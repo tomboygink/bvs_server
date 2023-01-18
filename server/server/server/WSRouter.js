@@ -343,7 +343,7 @@ function WSRoute(_ws, q) {
                     data = _c.sent();
                     wsres.code = q.sess_code;
                     wsres.error = null;
-                    wsres.data = data;
+                    wsres.data = [data];
                     return [3, 55];
                 case 49:
                     dev = new Devs_1.DevsTable(q.args, q.sess_code);
