@@ -177,7 +177,7 @@ var Devs_groupsTable = (function () {
                     case 14:
                         _l++;
                         return [3, 12];
-                    case 15: return [2, groups];
+                    case 15: return [2, JSON.stringify(groups)];
                 }
             });
         });

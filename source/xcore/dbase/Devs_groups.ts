@@ -66,8 +66,8 @@ export class Devs_groupsTable {
                 })
             }
         }
-        else{
-            var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id="+this.args.org_id);
+        else {
+            var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id);
             for (var i in roots_gr.rows) {
                 var dev = await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id);
                 groups.childs.push({
@@ -88,10 +88,10 @@ export class Devs_groupsTable {
             groups.childs[i].childs = await this._d_tree(groups.childs[i]);
         }
 
-
-        return groups;
+        return JSON.stringify(groups);
 
     }
+
 
     async _d_tree(childs: any) {
 
