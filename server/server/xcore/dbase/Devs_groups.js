@@ -85,9 +85,10 @@ var Devs_groupsTable = (function () {
     };
     Devs_groupsTable.prototype.selectDevsGroups = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var groups, roots_gr, _a, _b, _c, _i, i, dev, roots_gr, _d, _e, _f, _g, i, dev, _h, _j, _k, _l, i, _m, result;
-            return __generator(this, function (_o) {
-                switch (_o.label) {
+            var groups, d, roots_gr, _a, _b, _c, _i, i, _d, _e, roots_gr, _f, _g, _h, _j, i, _k, _l, _m, _o, _p, _q, i, _r, result;
+            var _s, _t;
+            return __generator(this, function (_u) {
+                switch (_u.label) {
                     case 0:
                         groups = {
                             group: {},
@@ -97,87 +98,91 @@ var Devs_groupsTable = (function () {
                             devs: new Array(),
                             update: false
                         };
-                        if (!(this.args.users_w === true)) return [3, 6];
+                        if (!(this.args.users_w === true)) return [3, 7];
                         return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ")];
                     case 1:
-                        roots_gr = _o.sent();
+                        roots_gr = _u.sent();
                         _a = roots_gr.rows;
                         _b = [];
                         for (_c in _a)
                             _b.push(_c);
                         _i = 0;
-                        _o.label = 2;
+                        _u.label = 2;
                     case 2:
-                        if (!(_i < _b.length)) return [3, 5];
+                        if (!(_i < _b.length)) return [3, 6];
                         _c = _b[_i];
-                        if (!(_c in _a)) return [3, 4];
+                        if (!(_c in _a)) return [3, 5];
                         i = _c;
-                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)];
-                    case 3:
-                        dev = _o.sent();
-                        groups.childs.push({
+                        _e = (_d = groups.childs).push;
+                        _s = {
                             group: roots_gr.rows[i],
                             id: roots_gr.rows[i].id,
                             p_id: roots_gr.rows[i].parent_id,
-                            childs: new Array(),
-                            devs: dev.rows[i],
-                            update: false
-                        });
-                        _o.label = 4;
+                            childs: new Array()
+                        };
+                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)];
+                    case 3: return [4, (_u.sent()).rows];
                     case 4:
+                        _e.apply(_d, [(_s.devs = _u.sent(),
+                                _s.update = false,
+                                _s)]);
+                        _u.label = 5;
+                    case 5:
                         _i++;
                         return [3, 2];
-                    case 5: return [3, 11];
-                    case 6: return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id)];
-                    case 7:
-                        roots_gr = _o.sent();
-                        _d = roots_gr.rows;
-                        _e = [];
-                        for (_f in _d)
-                            _e.push(_f);
-                        _g = 0;
-                        _o.label = 8;
+                    case 6: return [3, 13];
+                    case 7: return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id)];
                     case 8:
-                        if (!(_g < _e.length)) return [3, 11];
-                        _f = _e[_g];
-                        if (!(_f in _d)) return [3, 10];
-                        i = _f;
-                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)];
+                        roots_gr = _u.sent();
+                        _f = roots_gr.rows;
+                        _g = [];
+                        for (_h in _f)
+                            _g.push(_h);
+                        _j = 0;
+                        _u.label = 9;
                     case 9:
-                        dev = _o.sent();
-                        groups.childs.push({
+                        if (!(_j < _g.length)) return [3, 13];
+                        _h = _g[_j];
+                        if (!(_h in _f)) return [3, 12];
+                        i = _h;
+                        _l = (_k = groups.childs).push;
+                        _t = {
                             group: roots_gr.rows[i],
                             id: roots_gr.rows[i].id,
                             p_id: roots_gr.rows[i].parent_id,
-                            childs: new Array(),
-                            devs: dev.rows[i],
-                            update: false
-                        });
-                        _o.label = 10;
-                    case 10:
-                        _g++;
-                        return [3, 8];
+                            childs: new Array()
+                        };
+                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)];
+                    case 10: return [4, (_u.sent()).rows];
                     case 11:
-                        _h = groups.childs;
-                        _j = [];
-                        for (_k in _h)
-                            _j.push(_k);
-                        _l = 0;
-                        _o.label = 12;
+                        _l.apply(_k, [(_t.devs = _u.sent(),
+                                _t.update = false,
+                                _t)]);
+                        _u.label = 12;
                     case 12:
-                        if (!(_l < _j.length)) return [3, 15];
-                        _k = _j[_l];
-                        if (!(_k in _h)) return [3, 14];
-                        i = _k;
-                        _m = groups.childs[i];
-                        return [4, this._d_tree(groups.childs[i])];
+                        _j++;
+                        return [3, 9];
                     case 13:
-                        _m.childs = _o.sent();
-                        _o.label = 14;
+                        _m = groups.childs;
+                        _o = [];
+                        for (_p in _m)
+                            _o.push(_p);
+                        _q = 0;
+                        _u.label = 14;
                     case 14:
-                        _l++;
-                        return [3, 12];
+                        if (!(_q < _o.length)) return [3, 17];
+                        _p = _o[_q];
+                        if (!(_p in _m)) return [3, 16];
+                        i = _p;
+                        _r = groups.childs[i];
+                        return [4, this._d_tree(groups.childs[i])];
                     case 15:
+                        _r.childs = _u.sent();
+                        _u.label = 16;
+                    case 16:
+                        _q++;
+                        return [3, 14];
+                    case 17:
                         result = this.objToString(groups);
                         return [2, result];
                 }
@@ -186,7 +191,7 @@ var Devs_groupsTable = (function () {
     };
     Devs_groupsTable.prototype._d_tree = function (childs) {
         return __awaiter(this, void 0, void 0, function () {
-            var reti, grs, _a, _b, _c, _i, i, dev, _d, _e;
+            var d, reti, grs, _a, _b, _c, _i, i, _d, _e;
             var _f;
             return __generator(this, function (_g) {
                 switch (_g.label) {
@@ -202,13 +207,10 @@ var Devs_groupsTable = (function () {
                         _i = 0;
                         _g.label = 2;
                     case 2:
-                        if (!(_i < _b.length)) return [3, 6];
+                        if (!(_i < _b.length)) return [3, 7];
                         _c = _b[_i];
-                        if (!(_c in _a)) return [3, 5];
+                        if (!(_c in _a)) return [3, 6];
                         i = _c;
-                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id=" + grs.rows[i].id)];
-                    case 3:
-                        dev = _g.sent();
                         _e = (_d = reti).push;
                         _f = {
                             group: grs.rows[i],
@@ -216,16 +218,19 @@ var Devs_groupsTable = (function () {
                             pid: grs.rows[i].parent_id
                         };
                         return [4, this._d_tree(grs.rows[i])];
-                    case 4:
-                        _e.apply(_d, [(_f.childs = _g.sent(),
-                                _f.devs = dev.rows[i],
+                    case 3:
+                        _f.childs = _g.sent();
+                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id=" + grs.rows[i].id)];
+                    case 4: return [4, (_g.sent()).rows];
+                    case 5:
+                        _e.apply(_d, [(_f.devs = _g.sent(),
                                 _f.updated = false,
                                 _f)]);
-                        _g.label = 5;
-                    case 5:
+                        _g.label = 6;
+                    case 6:
                         _i++;
                         return [3, 2];
-                    case 6: return [2, reti];
+                    case 7: return [2, reti];
                 }
             });
         });

@@ -50,17 +50,18 @@ export class Devs_groupsTable {
             update: false
         }
 
+        var d:any[];
 
         if (this.args.users_w === true) {
             var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ");
             for (var i in roots_gr.rows) {
-                var dev = await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id);
                 groups.childs.push({
                     group: roots_gr.rows[i],
                     id: roots_gr.rows[i].id,
                     p_id: roots_gr.rows[i].parent_id,
                     childs: new Array(),
-                    devs: dev.rows[i],
+                    //devs: dev.rows[i],
+                    devs: await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)).rows,
                     update: false
 
                 })
@@ -69,13 +70,13 @@ export class Devs_groupsTable {
         else {
             var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id);
             for (var i in roots_gr.rows) {
-                var dev = await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id);
+
                 groups.childs.push({
                     group: roots_gr.rows[i],
                     id: roots_gr.rows[i].id,
                     p_id: roots_gr.rows[i].parent_id,
                     childs: new Array(),
-                    devs: dev.rows[i],
+                    devs: await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)).rows,
                     update: false
 
                 })
@@ -91,7 +92,7 @@ export class Devs_groupsTable {
 
         var result = this.objToString(groups);
 
-//        console.log(result);
+        //console.log(result);
         return result
 
     }
@@ -99,22 +100,21 @@ export class Devs_groupsTable {
 
     async _d_tree(childs: any) {
 
+        var d:any[];
+
         var reti = new Array();
         var grs = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=" + childs.id);
         for (var i in grs.rows) {
-            var dev = await this.db.query("SELECT * FROM devs WHERE group_dev_id=" + grs.rows[i].id);
             reti.push({
                 group: grs.rows[i],
                 id: grs.rows[i].id,
                 pid: grs.rows[i].parent_id,
                 childs: await this._d_tree(grs.rows[i]),
-                devs: dev.rows[i],
+                devs: await (await this.db.query("SELECT * FROM devs WHERE group_dev_id=" + grs.rows[i].id)).rows,
                 updated: false
             });
         }
-
         return reti;
-
     }
 
 
