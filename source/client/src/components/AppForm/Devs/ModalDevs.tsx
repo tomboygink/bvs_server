@@ -25,6 +25,8 @@ async SelectedOrg(a: any) {
   }
 
   render(): React.ReactNode {
+   
+
     let org = null;
     var options_org = [];
     if (APP_STORAGE.reg_user.getOrgAll()) {
@@ -189,11 +191,7 @@ async SelectedOrg(a: any) {
         </Box>
              
         </Box>
-     
-  
         </Dialog>
-    
-    
         </React.Fragment>
     );
   }

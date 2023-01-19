@@ -20,29 +20,159 @@ export class DevLocation extends React.Component<IProps> {
   }
 
  async OpenModal(e:any) {
+  alert(e)
   APP_STORAGE.devs_groups.setParentId(e)
   APP_STORAGE.devs_groups.setOpenModal(true);
   APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
  }
  
   render(): React.ReactNode {
-    let devs = [];
+    let devs_g = [];
     let dev_form = [];
-    //let parent_g = [];
     
-    if (APP_STORAGE.devs_groups.getDevsGroups()) {
-        devs = JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()));
-        for (var key in devs) {
-          if (devs.hasOwnProperty(key)) {
-            let a = devs[key];
+//     if (APP_STORAGE.devs_groups.getDevsGroups()) {
+//         devs = JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()));
+//         for (var key in devs) {
+//           if (devs.hasOwnProperty(key)) {
+//             let a = devs[key];
 
-          if(  APP_STORAGE.devs.getIdChild() === a.id) { 
+//           if(  APP_STORAGE.devs.getIdChild() === a.id) { 
 
-         dev_form.push(
-        <Box key={a.id} sx = {{width: '1100px;', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
+//          dev_form.push(
+//         <Box key={a.id} sx = {{width: '1100px;', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
+
+//         <Box sx= {{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>  
+//         <Typography>{a.g_name}</Typography>
+//         <LongMenu/>
+//         </Box>
+       
+//         {/* <Box sx= {{display: 'flex'}}>
+//         <Box sx={{mb: '8px', mr: '14px'}}>
+//         <Typography sx={{fontWeight: '600'}}>  Долгота - {a.longitude} </Typography>
+//         </Box>
+//         <Box sx={{mb: '8px'}}>
+//         <Typography sx={{fontWeight: '600'}}>  Широта - {a.latitude}</Typography>
+//         </Box>
+//         </Box> */}
+            
+//             <Box
+//               sx={{
+//                 display: "flex",
+//                 borderRadius: "4px",
+//                 flexDirection: 'column',
+//                 p: "18px",
+//               }}
+//             >
+     
+
+                    
+//           <TextField
+//                         variant="outlined"
+//                         margin="normal"
+//                         size="small"
+//                         required
+//                         fullWidth
+//                         id="Наименование"
+//                         label="Наименование"
+//                         autoFocus  
+//                         ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
+//                         value={a.g_name}
+//                     />
+//     <TextField
+//                         variant="outlined"
+//                         margin="normal"
+//                         size="small"
+//                         required
+//                         fullWidth
+//                         id="Долгота"
+//                         label="Долгота"
+//                         autoFocus  
+//                         ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
+//                         value={a.longitude}
+//                     />
+
+// <TextField
+//                         variant="outlined"
+//                         margin="normal"
+//                         size="small"
+//                         required
+//                         fullWidth
+//                         id="Широта"
+//                         label="Широта"
+//                         autoFocus  
+//                         ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
+//                         value={a.latitude}
+//                     />
+
+// <Divider sx={{ padding: "12px" }} />
+//           <Typography sx={{ color: "#999999" }} variant="caption">
+//             Информация:
+//           </Typography>
+
+//           <TextareaAutosize
+//             className="info"
+//             aria-label="minimum height"
+//             minRows={4}
+//             style={{ width: "100%" }}
+         
+//             value={a.info}
+//           />
+//         {/* <Typography>Название устройства - {a.name}</Typography>
+//         <Typography>Долгота - {a.latitude}</Typography> 
+//         <Typography>Широта - {a.longitude}</Typography>
+//         <Typography>Информация - {a.info}</Typography>  */}
+        
+//           </Box>
+
+          
+
+
+
+//   <Box sx={{display: 'flex'}}> 
+//         <Box sx={{background: '#F1F5FC', width: '180px', color: '#000', p: '8px', pl: '20px' , mr: '20px', borderRadius: '4px'}}
+//         onClick={() => this.OpenModal(a.id)}>
+//         <Typography> Добавить</Typography>
+//         </Box>
+
+//         {/* <Box sx={{background: '#eee', width: '180px', color: '#787878', p: '8px', pl: '20px' , borderRadius: '4px'}}
+//         onClick={() => this.OpenModal()}>
+//         <Typography> Изменить</Typography>
+//         </Box> */}
+//   </Box>
+//         </Box>
+
+        
+//               )
+//       }
+//           }
+//         }
+//       }
+
+
+
+
+
+if (APP_STORAGE.devs_groups.getDevsGroups()) {
+  devs_g = JSON.parse(
+    JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
+  );
+
+  for (var key in devs_g) {
+    if (devs_g.hasOwnProperty(key)) {
+      let a = devs_g[key];
+      let b = JSON.parse(a)
+      console.log('group_devs', b);
+
+      for (let i=0; i < b.childs.length; i++){
+      console.log('121212',i)
+      
+      console.log('parent ',b.childs[i].group);
+      if( APP_STORAGE.devs.getIdChild() === b.childs[i].group.id) { 
+      dev_form.push(
+        <Box key={b.childs[i].group.id} sx = {{width: '1100px;', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
 
         <Box sx= {{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>  
-        <Typography>{a.g_name}</Typography>
+        <Typography>{b.childs[i].group.g_name}</Typography>
         <LongMenu/>
         </Box>
        
@@ -76,7 +206,7 @@ export class DevLocation extends React.Component<IProps> {
                         label="Наименование"
                         autoFocus  
                         ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
-                        value={a.g_name}
+                        value={b.childs[i].group.g_name}
                     />
     <TextField
                         variant="outlined"
@@ -88,7 +218,7 @@ export class DevLocation extends React.Component<IProps> {
                         label="Долгота"
                         autoFocus  
                         ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
-                        value={a.longitude}
+                        value={b.childs[i].group.longitude}
                     />
 
 <TextField
@@ -101,7 +231,7 @@ export class DevLocation extends React.Component<IProps> {
                         label="Широта"
                         autoFocus  
                         ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
-                        value={a.latitude}
+                        value={b.childs[i].group.latitude}
                     />
 
 <Divider sx={{ padding: "12px" }} />
@@ -115,7 +245,7 @@ export class DevLocation extends React.Component<IProps> {
             minRows={4}
             style={{ width: "100%" }}
          
-            value={a.info}
+            value={b.childs[i].group.info}
           />
         {/* <Typography>Название устройства - {a.name}</Typography>
         <Typography>Долгота - {a.latitude}</Typography> 
@@ -130,7 +260,7 @@ export class DevLocation extends React.Component<IProps> {
 
   <Box sx={{display: 'flex'}}> 
         <Box sx={{background: '#F1F5FC', width: '180px', color: '#000', p: '8px', pl: '20px' , mr: '20px', borderRadius: '4px'}}
-        onClick={() => this.OpenModal(a.id)}>
+        onClick={() => this.OpenModal(b.childs[i].group.id)}>
         <Typography> Добавить</Typography>
         </Box>
 
@@ -144,9 +274,21 @@ export class DevLocation extends React.Component<IProps> {
         
               )
       }
-          }
-        }
+  
+      console.log('child ',b.childs[i].childs);
+        
       }
+      
+
+    }
+  }
+}
+
+
+
+
+
+
 
       return (
         <React.Fragment>

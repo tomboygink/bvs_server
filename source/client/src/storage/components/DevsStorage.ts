@@ -111,6 +111,7 @@ export class DevsStorage{
 
 
    async set_NewDevs(name: string, value: any, _options?: any) {
+    alert(this.getIdDevs())
     var sess_code = value;
     var q:IWSQuery = new WSQuery("set_NewDevs");
     q.args = {
