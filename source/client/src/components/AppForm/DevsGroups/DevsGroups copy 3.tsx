@@ -69,7 +69,7 @@ export class DevsGroups extends React.Component<IProps> {
 
     let dev = [];
 
-    let devs: Array<any> = [];
+    let devs = [];
     
 
 
@@ -83,8 +83,10 @@ export class DevsGroups extends React.Component<IProps> {
           console.log('group_devs', b);
 
           for (let i=0; i < b.childs.length; i++){
-         
           
+            devs.push(b.childs[i].devs);
+
+            console.log('devs', devs)
           parent.push(  
             <> 
           <TreeItem  id={b.childs[i].group.id} onClick={() => {this.Treeitems(b.childs[i].group.id); }}  
@@ -100,16 +102,8 @@ export class DevsGroups extends React.Component<IProps> {
        key= {row.group.id}
        nodeId={row.group.id}
        label= {row.group.g_name}>
-                               {/* {devs.push(b.childs[i].devs)} */}
-                               {devs.map((cell:any, i:any) => 
-                                  <TreeItem   sx = {{color : '#1976D2'}}
-                                  icon={<CrisisAlertIcon />}  
-                                  key= {cell.id}
-                                  nodeId={cell.number}
-                                  label= {cell.name}
-                                   >
-                                </TreeItem>)}
-                           
+                               
+                               {Array(10).map((cell, i) => <td key={i}>&nbsp;</td>)}
 
      </TreeItem>
 
