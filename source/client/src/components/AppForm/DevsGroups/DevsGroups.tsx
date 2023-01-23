@@ -20,6 +20,8 @@ import { TDevsGroup } from "../../../storage/components/DevEntityes";
 import { TDGroup } from "../../../storage/components/DevEntityes";
 import { TDevice } from "../../../storage/components/DevEntityes";
 
+import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
+
 interface IProps {
   devs_tree: TDevsGroup;
   onSelect: (dev: TDevice) => void;
@@ -44,16 +46,7 @@ export class DevsGroups extends React.Component<IProps> {
     );
   }
 
-  // async Treeitems(e: any) {
-  //   if(e){
-  //     let number = Number(e);
-  //     APP_STORAGE.devs.setIdDevs(e);
-  //     APP_STORAGE.devs.setParent1(number)
-  //     APP_STORAGE.devs.setIdChild(e);
-  //     APP_STORAGE.devs.get_Devs("sess_id", APP_STORAGE.auth_form.getdt());
-  //   }
 
-  // }
 
   async handleSelect(event: React.SyntheticEvent, nodeIds: string[]) {
     alert(nodeIds);
@@ -65,8 +58,8 @@ export class DevsGroups extends React.Component<IProps> {
         <TreeItem
           nodeId={"_dev_id_" + dev.id}
           label={dev.name}
-          icon={<SensorsIcon />}
-          sx={{ color: "#000088" }}
+          icon={<CrisisAlertIcon fontSize="small"/>}
+          sx={{ color: "#266BF1" }}
         ></TreeItem>
       </React.Fragment>
     );
@@ -139,7 +132,7 @@ export class DevsGroups extends React.Component<IProps> {
         }
       }
     }
-
+     console.log('DevGr', DevGr)
     return this.drawDevGroup(DevGr);
   }
 

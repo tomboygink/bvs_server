@@ -4,7 +4,9 @@ import { Box,Typography, TextField, TextareaAutosize, Divider} from "@mui/materi
 
 import { observer } from "mobx-react";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-
+import { TDevsGroup } from "../../../storage/components/DevEntityes";
+import { TDGroup } from "../../../storage/components/DevEntityes";
+import { TDevice } from "../../../storage/components/DevEntityes";
 
 
 interface IProps {}
@@ -28,83 +30,121 @@ export class Devs extends React.Component<IProps> {
     APP_STORAGE.devs.setOpenModal(true);
   }
 
-  render(): React.ReactNode {
-    let devs_g = [];
-    let parent = [];
-    let child = [];
-    let tree = [];
-
-    let name_group_dev = []
+  drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
+    var parent: React.ReactNode[] = new Array();
+    var ch: React.ReactNode[] = new Array();
+    for (var ii in dgrs) {
+      var dgr: TDevsGroup = dgrs[ii];
+      var gr: TDGroup = dgr.group;
+      var gr_childs = dgr.childs;
+      var gr_devs = dgr.devs;
+      
+      var childs: React.ReactNode[] = new Array();
+      if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
+      
+       
+      
+     
+        parent.push(
+          <React.Fragment key={"_gr_id_key_" + gr.id}>
+            <Box sx={{ display: "flex" }}>
+              <Box
+                id={String(gr.id)} >
+               
+                {childs}
+              </Box>
+            </Box>
+          </React.Fragment>
+        );
+  
+        if (APP_STORAGE.devs.getIdDevs() === String(gr.id)){
+          
+          parent.push(
+            <React.Fragment key={String(gr.id)}>
+            <Box sx = {{width: '1100px;', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
+  
+            <Box sx= {{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}> 
+            <Box>
+            <Typography sx = {{fontWeight: '500', fontSize: '22px'}}>{gr.g_name}</Typography>
+            <Typography sx={{fontSize: '12px', color: 'grey'}}>
+                    Место расположения устройства
+             </Typography>  
+            </Box>
+           
+           
     
+            </Box>    
+         {gr_devs.map((row : any, i : any) => (
+         <Box key={'_key_dev_' + gr.id}>{row.name}</Box> 
+               
+        ))}
+        
+             
 
+             <Box
+                sx={{
+                  background: "#F1F5FC",
+                  width: "180px",
+                  color: "#000",
+                  p: "8px",
+                  borderRadius: "4px",
+                  mt: '12px'
+                }}
+                onClick={() => {
+                  this.OpenModal();
+                }}
+              >
+              <Typography> Добавить устройство</Typography>
+              </Box>
+    
+       
+       
+            </Box>
+            </React.Fragment>
+          )
+        }
+       
+    }
+    return parent;
+  }
 
-    if (APP_STORAGE.devs_groups.getDevsGroups()) {
+  drawDevLocation(): React.ReactNode {
+    let devs_g = [];
+    let DevGr = [];
+  
+    if (
+      Object.keys(
+        JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
+      ).length !== 0 &&
+      JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
+        .constructor === Object
+    ) {
       devs_g = JSON.parse(
         JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
       );
-
-      for (var key in devs_g) {
-        if (devs_g.hasOwnProperty(key)) {
-          let a = devs_g[key];
-          let b = JSON.parse(a)
-
-          for (let i=0; i < b.childs.length; i++){
-
-            name_group_dev.push(
-              
-              <Box
-              sx={{
-                boxShadow: "4px 6px 14px 2px rgb(0 0 0 / 4%);",
-                width: "1100px",
-                background: "#fff",
-                p: "25px",
-                borderRadius: "4px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                mb: "16px",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Typography sx={{fontWeight: '700'}}>{b.childs[i].group.g_name}</Typography>
-                <Typography sx={{}}>Заводской номер - 6666</Typography>
-              </Box>
+    }
   
+    for (var key in devs_g) {
+      if (devs_g.hasOwnProperty(key)) {
+        let a = devs_g[key];
+        let root = JSON.parse(a);
   
-              {/* {devs_form} */}
-              <Box
-                  sx={{
-                    background: "#F1F5FC",
-                    width: "180px",
-                    color: "#000",
-                    p: "8px",
-                    borderRadius: "4px",
-                    mt: '12px'
-                  }}
-                  onClick={() => {
-                    this.OpenModal();
-                  }}
-                >
-                <Typography> Добавить устройство</Typography>
-                </Box>
-      </Box>
-  
-             )
-         
-       
-            
+        if (root.childs.length > 0) {
+          for (let i = 0; i < root.childs.length; i++) {
+            DevGr.push(root.childs[i]);
           }
-          
-
         }
       }
     }
+  
+    return this.drawDevGroup(DevGr);
+  }
+
+
+
+
+  render(): React.ReactNode {
+ 
      
     return (
       <React.Fragment>
@@ -119,10 +159,11 @@ export class Devs extends React.Component<IProps> {
           }}
         >
           <Typography sx={{ fontWeight: "500", pb: "20px" }}>
-            Список устройств
+            Список устройствq
           </Typography>
 
-         {name_group_dev}
+         {/* {name_group_dev} */}
+         {this.drawDevLocation()}
           
         </Box>
       </React.Fragment>

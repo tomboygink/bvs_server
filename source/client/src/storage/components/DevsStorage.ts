@@ -28,6 +28,7 @@ export class DevsStorage{
     @observable longitude : string = ''
     @observable deleted: boolean = false;
     @observable info : string = '';
+    @observable sensors : Array<string> = null;
     @observable select_id_dev : string = '';
     constructor(){
         makeAutoObservable(this);
@@ -73,6 +74,9 @@ export class DevsStorage{
 
      @action setInfo ( val : string ) {this.info = val};
      @computed getInfo ():  string {return this.info};
+
+     @action setSensors ( val : Array<string> ) {this.sensors = val};
+     @computed getSensors ():  Array<string> {return this.sensors};
 
      @action setParent ( val : number ) {this.parent = val};
      @computed getParent ():  number {return this.parent};
@@ -120,7 +124,7 @@ export class DevsStorage{
         name: this.getName() || '', 
         latitude: this.getLatitude() || '',
         longitude: this.getLongitude() || '',
-        sensors: '{\"s\":[1,2,3]}',
+        sensors: '{\"s\":[' + this.getSensors() + ']}',
         deleted: this.getDeleted() || false,
         info: this.getDeleted() || ''
      }; 
