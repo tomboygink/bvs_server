@@ -47,7 +47,6 @@ export class Devs extends React.Component<IProps> {
         if (devs_g.hasOwnProperty(key)) {
           let a = devs_g[key];
           let b = JSON.parse(a)
-          console.log('group_devs', b);
 
           for (let i=0; i < b.childs.length; i++){
 

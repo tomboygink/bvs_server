@@ -61,13 +61,9 @@ export class Sensors extends React.Component<IProps> {
       for (var key in devs) {
         if (devs.hasOwnProperty(key)) {
           let a = devs[key];
-
-          console.log('sensors1', JSON.parse(JSON.stringify(a.sensors)) )
-
           for (var key in JSON.parse(JSON.stringify(a.sensors))) {
              if (JSON.parse(JSON.stringify(a.sensors)).hasOwnProperty(key)) {
            let s = JSON.parse(JSON.stringify(a.sensors))[key];
-              console.log('s1', s[0]);
               
                  sensors.push(
                   <TableRow key= {s[0]}>

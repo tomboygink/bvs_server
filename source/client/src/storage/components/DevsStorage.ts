@@ -129,8 +129,6 @@ export class DevsStorage{
    }
 
    async setDevsAll(dt: IWSResult){ 
-    this.setDevs(dt.data);
-    console.log('this.getDevs()', this.getDevs())
-    
+    this.setDevs(dt.data); 
    }
     }

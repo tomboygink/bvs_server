@@ -76,63 +76,53 @@ export class DevsGroups extends React.Component<IProps> {
           let a = devs_g[key];
           let root = JSON.parse(a)
           console.log('group_devs', root);
-          
 
-      if( root.childs.length > 0 ){  ///////////////////////////// Родительские элементы
+      if(root.childs.length> 0){
           for (let i=0; i < root.childs.length; i++){
-
+            
+          
+          
+          
           parent.push(  
             <> 
           <TreeItem   onClick={() => {this.Treeitems(root.childs[i].group.id); }}  
           key= {'qww' + root.childs[i].group.id}
           nodeId={'q1w' + root.childs[i].group.id}
-          label= {root.childs[i].group.g_name}>    
+          label= {root.childs[i].group.g_name}
+          
+        >    
 
-          {root.childs[i].devs.map((row : any, i : any) => ( 
-                  <TreeItem  sx={{borderLeft: '1px solid #266BF1', ml: '14px'}}  onClick={() => {this.Treeitems(row.group.id); }} 
-                  icon={<CrisisAlertIcon  sx = {{color: '#75A4FF'}}/>}
-                  key= {'qw' + row.id}
-                  nodeId={row.id}
-                  label= {row.name}>                     
-                  </TreeItem>
-
+{root.childs[i].devs.map((row : any, i : any) => ( 
+           <TreeItem  sx={{borderLeft: '1px solid #266BF1', ml: '14px'}}  onClick={() => {this.Treeitems(row.group.id); }} 
+           icon={<CrisisAlertIcon  sx = {{color: '#75A4FF'}}/>}
+           key= {'qw' + row.id}
+           nodeId={row.id}
+           label= {row.name}>                     
+         </TreeItem>
+    
           ))}
 
-          {root.childs[i].childs.map((row : any, i : any) => (
+         {root.childs[i].childs.map((row : any, i : any) => (
+       <TreeItem  sx={{color: '#000',  borderLeft: '1px solid #FD8A04'}}  onClick={() => {this.Treeitems(row.group.id); }} 
+       key= {'qw' + row.group.id}
+       nodeId={row.group.id}
+       label= {row.group.g_name}>
 
-            <TreeItem  sx={{color: '#000',  borderLeft: '1px solid #FD8A04'}}  onClick={() => {this.Treeitems(row.group.id); }} 
-            key= {'qw' + row.group.id}
-            nodeId={row.group.id}
-            label= {row.group.g_name}>
+                              {root.childs[i].childs.map((cell:any, i:any) =>
+                                 cell.devs.map((cell:any, i:any) => 
+                                 <TreeItem  sx={{borderLeft: '1px solid #266BF1', ml: '14px'}}  onClick={() => {this.Treeitems(cell.group.id); }} 
+                                 icon={<CrisisAlertIcon  sx = {{color: '#75A4FF'}}/>}
+                                 key= {'qw' + cell.id}
+                                 nodeId={cell.id}
+                                 label= {cell.name}>                     
+                               </TreeItem>
+                                 )
+                             )}  
+                            
+     </TreeItem>
 
-          {root.childs[i].childs.map((cell:any, i:any) =>
-           cell.devs.map((cell:any, i:any) => 
-          <TreeItem  sx={{borderLeft: '1px solid #266BF1', ml: '14px'}}  onClick={() => {this.Treeitems(cell.group.id); }} 
-          icon={<CrisisAlertIcon  sx = {{color: '#75A4FF'}}/>}
-          key= {'qw' + cell.id}
-          nodeId={cell.id}
-          label= {cell.name}>  
-          </TreeItem>          
-          )
-          )} 
-
-           {root.childs[i].childs.map((cell:any, i:any) =>
-           cell.childs.map((cell:any, i:any) => 
-          <TreeItem  sx={{borderLeft: '1px solid #266BF1', ml: '14px'}}  onClick={() => {this.Treeitems(cell.group.id); }} 
-          key= {'qw' + cell.group.id}
-          nodeId={cell.group.id}
-          label= {cell.group.g_name}>
-
-               
-
-          </TreeItem>          
-          )
-          )}   
-
-          </TreeItem>
-
-          ))}
-          </TreeItem>
+      ))}
+        </TreeItem>
              </> 
         )}}
 
