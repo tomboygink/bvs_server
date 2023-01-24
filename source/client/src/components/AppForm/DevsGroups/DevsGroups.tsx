@@ -1,26 +1,31 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Box, Alert, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-import TreeItem, { TreeItemProps, treeItemClasses } from "@mui/lab/TreeItem";
+import TreeItem from "@mui/lab/TreeItem";
 
 import TreeView from "@mui/lab/TreeView";
 
-import { StyledTreeItem } from "../Devs/StyledTreeItem";
+import { handleChange } from "../Devs/StyledTreeItem";
 
-import { MinusSquare } from "../Devs/StyledTreeItem";
-
-import FolderOpenIcon from "@mui/icons-material/FolderOpen";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SensorsIcon from "@mui/icons-material/Sensors";
 
+import { WorkingWithDev } from "./WorkingWithDev";
+import FolderIcon from "@mui/icons-material/Folder";
+
+import { TDevsGroup } from "../../../storage/components/DevEntityes";
+import { TDGroup } from "../../../storage/components/DevEntityes";
+import { TDevice } from "../../../storage/components/DevEntityes";
+
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
-import { color } from "@mui/system";
 
-import {WorkingWithDev} from './WorkingWithDev'
-
-interface IProps {}
+interface IProps {
+  devs_tree: TDevsGroup;
+  onSelect: (dev: TDevice) => void;
+}
 
 //Устройства
 @observer
@@ -29,6 +34,12 @@ export class DevsGroups extends React.Component<IProps> {
     super(props);
   }
 
+  static defaultProps: IProps = {
+    devs_tree: null,
+    onSelect: (dev: TDevice) => {},
+  };
+  
+
   componentDidMount(): void {
     APP_STORAGE.devs_groups.get_DevsGroups(
       "sess_id",
@@ -36,193 +47,139 @@ export class DevsGroups extends React.Component<IProps> {
     );
   }
 
-  async Treeitems(e: any) {
-    let number = Number(e);
-    APP_STORAGE.devs.setIdDevs(e);
-    APP_STORAGE.devs.setParent1(number)
-    APP_STORAGE.devs.setIdChild(e);
-    APP_STORAGE.devs.get_Devs("sess_id", APP_STORAGE.auth_form.getdt());
+
+
+  drawDeviceItem(dev: TDevice): React.ReactNode {
+    return (
+      <React.Fragment key={"_dev_id_key_" + dev.id}>
+        <TreeItem
+          nodeId={"_dev_id_" + dev.id}
+          label={dev.name}
+          icon={<CrisisAlertIcon fontSize="small"/>}
+          sx={{ color: "#266BF1" }}
+        ></TreeItem>
+      </React.Fragment>
+    );
   }
 
-  async TreeSensors(e: any, a: any) {
-    let number = Number(a);
-  // APP_STORAGE.devs.setIdDevs(e);
-   APP_STORAGE.devs.setIdChild(e);
-    APP_STORAGE.devs.setParent(number);
-    APP_STORAGE.devs.get_Devs11("sess_id", APP_STORAGE.auth_form.getdt());
-  }
+  drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
+    var parent: React.ReactNode[] = new Array();
+    for (var ii in dgrs) {
+      var dgr: TDevsGroup = dgrs[ii];
+      var gr: TDGroup = dgr.group;
+      var gr_childs = dgr.childs;
+      var gr_devs = dgr.devs;
 
-  async setIdDev(e:any){
-    alert(e)
-    APP_STORAGE.devs.setIdDev(e)
-  }
+      var childs: React.ReactNode[] = new Array();
+      if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
 
-  render(): React.ReactNode {
-  
-    ///////////////////////////////////////////////////// Получаем список групп устройств
-    let devs_g = [];
-    let parent = [];
-    let child = [];
-    let tree = [];
-
-    let array = [];
-
-    let dev = [];
-
-    let devs: Array<any> = [];
-    
-
-
-    if (APP_STORAGE.devs_groups.getDevsGroups()) 
-            {devs_g = JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()));
-
-      for (var key in devs_g) {
-        if (devs_g.hasOwnProperty(key)) {
-          let a = devs_g[key];
-          let b = JSON.parse(a)
-          console.log('group_devs', b);
-
-          for (let i=0; i < b.childs.length; i++){
-         
-          
-          parent.push(  
-            <> 
-          <TreeItem  id={b.childs[i].group.id} onClick={() => {this.Treeitems(b.childs[i].group.id); }}  
-          key= {b.childs[i].group.id}
-          nodeId={b.childs[i].group.id}
-          label= {b.childs[i].group.g_name}
-          sx={{color: '#266BF1'}}
-        >
-         {b.childs[i].childs.map((row : any, i : any) => (
-          
-      //  console.log(row.group.g_name,"i");
-       <TreeItem  sx={{color: '#000'}}  
-       key= {row.group.id}
-       nodeId={row.group.id}
-       label= {row.group.g_name}>
-                               {/* {devs.push(b.childs[i].devs)} */}
-                               {devs.map((cell:any, i:any) => 
-                                  <TreeItem   sx = {{color : '#1976D2'}}
-                                  icon={<CrisisAlertIcon />}  
-                                  key= {cell.id}
-                                  nodeId={cell.number}
-                                  label= {cell.name}
-                                   >
-                                </TreeItem>)}
-                           
-
-     </TreeItem>
-
-      ))}
-        </TreeItem>
-             </> 
-        )
-
-
-
-
-
-
-
-
-
-
-
-
-
-          if (b.childs[i].childs.length){
-             for (let a = 0; a<b.childs[i].childs.length ; a ++){
-                if (APP_STORAGE.devs.getIdDevs() === b.childs[i].childs[a].group.parent_id){
-                 child.push(
-                    <TreeItem    
-                    key= {b.childs[i].childs[a].group.id}
-                    nodeId={b.childs[i].childs[a].group.id}
-                    label= {b.childs[i].childs[a].group.g_name}>
-                      {dev}
-                  </TreeItem>
-                  )
-                  console.log('b.childs[i].childs', b.childs[i].childs[a].group)
-                }
-                if(b.childs[i].devs){ 
-                  dev.push(
-                    <TreeItem   sx = {{color : '#1976D2'}}
-                    icon={<CrisisAlertIcon />}  
-                    key= {b.childs[i].devs.id}
-                    nodeId={b.childs[i].devs.number}
-                    label= {b.childs[i].devs.name}
-                     >
-                  </TreeItem>
-                  )
-                }
-              // if(b.childs[i].devs){
-              //   for (let a = 0; a<b.childs[i].childs.length ; a ++){
-
-              //   }  
-              // }
-             
-             }
-          }
-
-
-
-        //   if (b.childs[i].devs.length){
-        //     for (let a = 0; a<b.childs[i].devs.length ; a ++){
-            
-        //     /// console.log('b.childs[i].devs.length',b.childs[i].devs.length)       
-        //     }
-        //  }
-       // console.log('b.childs[i].childs.devs',b.childs[i].childs[a].devs)
- 
-          }
-          
-
-        }
+      if (gr_devs.length > 0) {
+        for (var dii in gr_devs) childs.push(this.drawDeviceItem(gr_devs[dii]));
       }
-    }
 
+      var icon = <FolderIcon fontSize="small" sx={{ color: "#FFE2C0", borderLeft: '1px solid #eee' }} />;
+      if (gr_childs.length > 0) icon = <ExpandMoreIcon fontSize="small" />;
+      if (gr_devs.length > 0) icon = <FolderIcon fontSize="small" sx={{ color: "#FFE2C0" }} />;
+      if (gr_childs.length > 0 && gr_devs.length > 0)
+        icon = <FolderIcon fontSize="small" sx={{ color: "#FFE2C0" }} />;
 
-    
-      return (
-        <React.Fragment>
-          <Box
-            className="wrapper-devs"
-            sx={{
-              mt: "44px",
-              display: "flex",
-              flexDirection: "column;",
-              alignItems: "flex-start;",
-              ml: "1rem",
-            }}
-          >
-            <Typography sx={{ fontWeight: "500", pb: "20px" }}>
-              Список групп устройств
-            </Typography>
-            <Box
-              sx={{
-                width: "290px",
-                borderRadius: "4px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                background: '#fff'
-              }}
+      parent.push(
+        <React.Fragment key={"_gr_id_key_" + gr.id}>
+          <Box sx={{ display: "flex" }}>
+            <TreeItem
+              nodeId={String(gr.id)}
+              label={gr.g_name}
+              icon={icon}
+              sx={{ color: "#222", borderLeft: '1px solid #eee' }}
             >
-               <TreeView
-                defaultExpanded={["1", "2", "3" ]}
-                aria-label="customized"
-                defaultCollapseIcon={<MinusSquare />}
-                defaultExpandIcon={<FolderOpenIcon />}
-                defaultEndIcon={<FolderOpenIcon />}
-                sx={{ flexGrow: 1, maxWidth: 400, p: '25px' }}>
-                {parent}
-              </TreeView>
-              <Box sx ={{background: '#d5e3fda6', height: '80vh', borderTopRightRadius: '48px', p: '25px'}}>
-              <WorkingWithDev/>
-              </Box>
-              
-            </Box>
+              {childs}
+            </TreeItem>
           </Box>
         </React.Fragment>
       );
+    }
+    return parent;
+  }
+
+  drawDevsTree(): React.ReactNode {
+    let devs_g = [];
+    let DevGr = [];
+
+    if (
+      Object.keys(
+        JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
+      ).length !== 0 &&
+      JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
+        .constructor === Object
+    ) {
+      devs_g = JSON.parse(
+        JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
+      );
+    }
+
+    for (var key in devs_g) {
+      if (devs_g.hasOwnProperty(key)) {
+        let a = devs_g[key];
+        let root = JSON.parse(a);
+
+        if (root.childs.length > 0) {
+          for (let i = 0; i < root.childs.length; i++) {
+            DevGr.push(root.childs[i]);
+          }
+        }
+      }
+    }
+    return this.drawDevGroup(DevGr);
+  }
+
+  render(): React.ReactNode {
+    return (
+      <React.Fragment>
+        <Box
+          className="wrapper-devs"
+          sx={{
+            mt: "44px",
+            display: "flex",
+            flexDirection: "column;",
+            alignItems: "flex-start;",
+            ml: "1rem",
+          }}
+        >
+          <Typography sx={{ fontWeight: "500", pb: "20px" }}>
+            Список групп устройств
+          </Typography>
+          <Box
+            sx={{
+              width: "290px",
+              borderRadius: "4px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              background: "#fff",
+            }}
+          >
+            <TreeView
+              onNodeSelect={handleChange}
+              defaultExpanded={["1"]}
+              aria-label="customized"
+              sx={{ flexGrow: 1, maxWidth: 400, p: "25px" }}
+            >
+              {this.drawDevsTree()}
+
+            </TreeView>
+            <Box
+              sx={{
+                background: "#d5e3fda6",
+                borderTopRightRadius: "48px",
+                backgroundImage: 'linear-gradient(to bottom, #d5e3fd, #dce8fd, #e3ecfd, #eaf1fc, #f1f5fc);',
+                p: "25px",
+              }}
+            >
+              <WorkingWithDev />
+            </Box>
+          </Box>
+        </Box>
+      </React.Fragment>
+    );
   }
 }

@@ -62,6 +62,7 @@ async SelectedOrg(a: any) {
       }
     }
 
+
     return (
         <React.Fragment>
 
@@ -166,6 +167,24 @@ async SelectedOrg(a: any) {
             }}
             value={APP_STORAGE.devs.getInfo()}
           />
+<Box sx = {{border: '1px solid #eee' , p: '12px', borderRadius: '4px'}}>
+  <Box sx = {{pb: '12px'}}>Список сенсоров на устройстве</Box>
+    <TextField
+          size="small"
+          fullWidth
+          id="outlined-number"
+          label="Number"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={(e) => {
+            APP_STORAGE.devs.setSensors([e.target.value]);
+        }}
+        />
+           <Button>Добавить</Button>
+</Box>
+
 
           <Box
           sx={{
@@ -174,6 +193,7 @@ async SelectedOrg(a: any) {
             justifyContent: "flex-end",
           }}
         >
+        
           <Button
             sx={{
               background: "#266BF1",

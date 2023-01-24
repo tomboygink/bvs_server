@@ -41,8 +41,6 @@ export class AppForm extends React.Component<IProps> {
           let a = roles[key];
           user_r = a[0];
           user_w = a[1];
-
-          console.log('user_w', user_w)
         }
       }
     }

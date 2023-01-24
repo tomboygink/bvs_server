@@ -1,19 +1,13 @@
 import * as React from 'react';
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 import { alpha, styled } from '@mui/material/styles';
-import TreeView from '@mui/lab/TreeView';
 import TreeItem, { TreeItemProps, treeItemClasses } from '@mui/lab/TreeItem';
 import Collapse from '@mui/material/Collapse';
-// web.cjs is required for IE11 support
+
 import { useSpring, animated } from '@react-spring/web';
 import { TransitionProps } from '@mui/material/transitions';
-import { Box, Alert, Typography  } from "@mui/material";
 
-import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
-import SensorsIcon from '@mui/icons-material/Sensors';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-
+import { APP_STORAGE } from "../../../storage/AppStorage";
 
 
 export function MinusSquare(props: SvgIconProps) {
@@ -81,4 +75,19 @@ export const StyledTreeItem = styled((props: TreeItemProps) => (
     borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
   },
 }));
+
+export const handleChange = async (event: any, node: any) => {
+ 
+   console.log(node.includes('_dev_id_'))
+
+   if(node.includes('_dev_id_') === false){
+    APP_STORAGE.devs.setIdDevs(node);
+   }
+   
+   if(node.includes('_dev_id_') === true){
+    APP_STORAGE.devs.setIdChild(node);
+   }
+  
+}
+
 

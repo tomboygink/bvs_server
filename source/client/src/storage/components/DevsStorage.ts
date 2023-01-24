@@ -11,7 +11,7 @@ export class DevsStorage{
     @observable item :  Array<any> = [];
     @observable id_devs: string = '';
 
-    @observable id_devs_ch : number = null;
+    @observable id_devs_ch : string = null;
 
     @observable open_modal: boolean = false;
 
@@ -28,6 +28,7 @@ export class DevsStorage{
     @observable longitude : string = ''
     @observable deleted: boolean = false;
     @observable info : string = '';
+    @observable sensors : Array<string> = null;
     @observable select_id_dev : string = '';
     constructor(){
         makeAutoObservable(this);
@@ -48,8 +49,8 @@ export class DevsStorage{
     @action setIdDevs ( val : string ) {this.id_devs = val};
     @computed getIdDevs ():  string {return this.id_devs}; 
 
-    @action setIdChild ( val : number ) {this.id_devs_ch = val};
-    @computed getIdChild ():  number {return this.id_devs_ch};
+    @action setIdChild ( val : string ) {this.id_devs_ch = val};
+    @computed getIdChild ():  string {return this.id_devs_ch};
 
     @action setOpenModal ( val : boolean ) {this.open_modal = val};
     @computed getOpenModal ():  boolean {return this.open_modal};
@@ -73,6 +74,9 @@ export class DevsStorage{
 
      @action setInfo ( val : string ) {this.info = val};
      @computed getInfo ():  string {return this.info};
+
+     @action setSensors ( val : Array<string> ) {this.sensors = val};
+     @computed getSensors ():  Array<string> {return this.sensors};
 
      @action setParent ( val : number ) {this.parent = val};
      @computed getParent ():  number {return this.parent};
@@ -120,7 +124,7 @@ export class DevsStorage{
         name: this.getName() || '', 
         latitude: this.getLatitude() || '',
         longitude: this.getLongitude() || '',
-        sensors: '{\"s\":[1,2,3]}',
+        sensors: '{\"s\":[' + this.getSensors() + ']}',
         deleted: this.getDeleted() || false,
         info: this.getDeleted() || ''
      }; 
@@ -129,8 +133,6 @@ export class DevsStorage{
    }
 
    async setDevsAll(dt: IWSResult){ 
-    this.setDevs(dt.data);
-    console.log('this.getDevs()', this.getDevs())
-    
+    this.setDevs(dt.data); 
    }
     }
