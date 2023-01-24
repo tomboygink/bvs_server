@@ -12,7 +12,7 @@ import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import { TDevsGroup } from "../../../storage/components/DevEntityes";
 import { TDGroup } from "../../../storage/components/DevEntityes";
 import { TDevice } from "../../../storage/components/DevEntityes";
-import { stringify } from "querystring";
+
 
 // import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
@@ -100,7 +100,7 @@ export class DevLocation extends React.Component<IProps> {
                           value={gr.longitude}
                       />
   
-  <TextField
+                    <TextField
                           variant="outlined"
                           margin="normal"
                           size="small"
@@ -140,7 +140,7 @@ export class DevLocation extends React.Component<IProps> {
 }
  
 
- drawDevsTree(): React.ReactNode {
+drawDevLocation(): React.ReactNode {
   let devs_g = [];
   let DevGr = [];
 
@@ -183,7 +183,7 @@ export class DevLocation extends React.Component<IProps> {
         <Typography sx={{fontWeight: '500' , pb: '20px'}}>Расположение устройств</Typography>
           {/* ******************************************************************************************************************************* */} 
 
-          {this.drawDevsTree()}
+          {this.drawDevLocation()}
           </Box>
 
 

@@ -38,6 +38,7 @@ export class DevsGroups extends React.Component<IProps> {
     devs_tree: null,
     onSelect: (dev: TDevice) => {},
   };
+  
 
   componentDidMount(): void {
     APP_STORAGE.devs_groups.get_DevsGroups(
@@ -47,10 +48,6 @@ export class DevsGroups extends React.Component<IProps> {
   }
 
 
-
-  async handleSelect(event: React.SyntheticEvent, nodeIds: string[]) {
-    alert(nodeIds);
-  }
 
   drawDeviceItem(dev: TDevice): React.ReactNode {
     return (
@@ -93,7 +90,7 @@ export class DevsGroups extends React.Component<IProps> {
               nodeId={String(gr.id)}
               label={gr.g_name}
               icon={icon}
-              sx={{ color: "#222" }}
+              sx={{ color: "#222", borderLeft: '1px solid #eee' }}
             >
               {childs}
             </TreeItem>
@@ -132,7 +129,6 @@ export class DevsGroups extends React.Component<IProps> {
         }
       }
     }
-     console.log('DevGr', DevGr)
     return this.drawDevGroup(DevGr);
   }
 
@@ -169,13 +165,13 @@ export class DevsGroups extends React.Component<IProps> {
               sx={{ flexGrow: 1, maxWidth: 400, p: "25px" }}
             >
               {this.drawDevsTree()}
-            </TreeView>
 
+            </TreeView>
             <Box
               sx={{
                 background: "#d5e3fda6",
-                height: "80vh",
                 borderTopRightRadius: "48px",
+                backgroundImage: 'linear-gradient(to bottom, #d5e3fd, #dce8fd, #e3ecfd, #eaf1fc, #f1f5fc);',
                 p: "25px",
               }}
             >

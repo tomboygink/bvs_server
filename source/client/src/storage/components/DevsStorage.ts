@@ -11,7 +11,7 @@ export class DevsStorage{
     @observable item :  Array<any> = [];
     @observable id_devs: string = '';
 
-    @observable id_devs_ch : number = null;
+    @observable id_devs_ch : string = null;
 
     @observable open_modal: boolean = false;
 
@@ -49,8 +49,8 @@ export class DevsStorage{
     @action setIdDevs ( val : string ) {this.id_devs = val};
     @computed getIdDevs ():  string {return this.id_devs}; 
 
-    @action setIdChild ( val : number ) {this.id_devs_ch = val};
-    @computed getIdChild ():  number {return this.id_devs_ch};
+    @action setIdChild ( val : string ) {this.id_devs_ch = val};
+    @computed getIdChild ():  string {return this.id_devs_ch};
 
     @action setOpenModal ( val : boolean ) {this.open_modal = val};
     @computed getOpenModal ():  boolean {return this.open_modal};

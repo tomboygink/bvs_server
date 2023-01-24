@@ -167,23 +167,24 @@ async SelectedOrg(a: any) {
             }}
             value={APP_STORAGE.devs.getInfo()}
           />
-
-           <Box sx = {{pb: '12px'}}>Список сенсоров на устройстве</Box>
-
-           <TextField
-           fullWidth
-           size="small"
+<Box sx = {{border: '1px solid #eee' , p: '12px', borderRadius: '4px'}}>
+  <Box sx = {{pb: '12px'}}>Список сенсоров на устройстве</Box>
+    <TextField
+          size="small"
+          fullWidth
           id="outlined-number"
-          label="Введите глубину датчика"
-          type="Введите глубину датчика"
-        
+          label="Number"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
           onChange={(e) => {
             APP_STORAGE.devs.setSensors([e.target.value]);
         }}
-        value={APP_STORAGE.devs.getSensors()}
         />
-
            <Button>Добавить</Button>
+</Box>
+
 
           <Box
           sx={{
@@ -193,8 +194,6 @@ async SelectedOrg(a: any) {
           }}
         >
         
-
-
           <Button
             sx={{
               background: "#266BF1",
