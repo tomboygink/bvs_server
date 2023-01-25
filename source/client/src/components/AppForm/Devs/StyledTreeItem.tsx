@@ -77,17 +77,13 @@ export const StyledTreeItem = styled((props: TreeItemProps) => (
 }));
 
 export const handleChange = async (event: any, node: any) => {
- 
-   console.log(node.includes('_dev_id_'))
-
    if(node.includes('_dev_id_') === false){
     APP_STORAGE.devs.setIdDevs(node);
    }
    
    if(node.includes('_dev_id_') === true){
     APP_STORAGE.devs.setIdChild(node);
-   }
-  
+   }  
 }
 
 

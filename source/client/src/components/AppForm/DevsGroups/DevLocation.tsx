@@ -37,7 +37,7 @@ export class DevLocation extends React.Component<IProps> {
 
  drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
   var parent: React.ReactNode[] = new Array();
-  var ch: React.ReactNode[] = new Array();
+
   for (var ii in dgrs) {
     var dgr: TDevsGroup = dgrs[ii];
     var gr: TDGroup = dgr.group;
@@ -134,6 +134,14 @@ export class DevLocation extends React.Component<IProps> {
           </React.Fragment>
         )
       }
+
+      else{
+        parent.push(
+          <Box key={gr.id} sx = {{width: '1100px;', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
+
+          </Box>
+        )
+      }
      
   }
   return parent;
@@ -174,20 +182,14 @@ drawDevLocation(): React.ReactNode {
 
 
   render(): React.ReactNode {
-    let devs_g = [];
-    let ch:any = [];
       return (
         <React.Fragment>
            
         <Box className="wrapper-devs" sx={{ mt: '44px', display: 'flex', flexDirection: 'column;', alignItems: 'flex-start;', ml: '1rem'}}> 
         <Typography sx={{fontWeight: '500' , pb: '20px'}}>Расположение устройств</Typography>
-          {/* ******************************************************************************************************************************* */} 
-
+          
           {this.drawDevLocation()}
-          </Box>
 
-
-  {/* ******************************************************************************************************************************* */}
           <Box className="wrapper-devs" sx={{  display: 'flex', flexDirection: 'column;', alignItems: 'flex-end;', ml: '1rem', position: 'absolute', bottom : 0}}> 
           <Box sx = {{width: '1100px', background: '#fff', pl: '25px',  pr: '25px', pt: '8px', pb: '8px',borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center',  alignItems: 'flex-end;', mb: '16px'}}>
           <Box 
@@ -197,10 +199,19 @@ drawDevLocation(): React.ReactNode {
            <Typography> Добавить новое </Typography>  
           </Box>  
           </Box>
-          {/* ******************************************************************************************************************************* */}
-          
-
           </Box>
+          </Box>
+          <Box className="wrapper-devs" sx={{  display: 'flex', flexDirection: 'column;', alignItems: 'flex-end;', ml: '1rem', position: 'absolute', bottom : 0}}> 
+          <Box sx = {{width: '1100px', background: '#fff', pl: '25px',  pr: '25px', pt: '8px', pb: '8px',borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center',  alignItems: 'flex-end;', mb: '16px'}}>
+          <Box 
+             sx={{color: '#000', width: '180px', p: '3px', pl: '20px'  ,borderRadius: '4px'}}
+             onClick={() => this.OpenModal(0)}
+             >
+           <Typography> Добавить новое </Typography>  
+          </Box>  
+          </Box>
+          </Box>
+      
          
         </React.Fragment>
       );

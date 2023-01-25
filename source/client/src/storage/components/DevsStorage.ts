@@ -149,12 +149,8 @@ export class DevsStorage{
 
 
    async set_DevsDepth(value: number){
-    console.log('value1',  value)
-   
      this.array.push(value);
-    
      this.setArray(this.array)
-     console.log('dsadsad', JSON.stringify(this.getArray()));
    }
     }
  
