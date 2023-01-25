@@ -9,6 +9,9 @@ export class DevsStorage{
     @observable devs: Array<string> = [];
 
     @observable item :  Array<any> = [];
+
+    @observable array :  Array<number> = [];
+
     @observable id_devs: string = '';
 
     @observable id_devs_ch : string = null;
@@ -20,6 +23,8 @@ export class DevsStorage{
 
     @observable parent: number = null;
     @observable parent1: number = null;
+
+    @observable add_sensors: boolean = false; ///// модальное окно для добавления сенсоров
     ////// Добавление нового устройства
 
     @observable number : string = '';
@@ -28,8 +33,9 @@ export class DevsStorage{
     @observable longitude : string = ''
     @observable deleted: boolean = false;
     @observable info : string = '';
-    @observable sensors : Array<string> = null;
-    @observable select_id_dev : string = '';
+    @observable sensors : number = null;
+    @observable select_id_dev : string = ''; 
+
     constructor(){
         makeAutoObservable(this);
     }
@@ -45,6 +51,9 @@ export class DevsStorage{
 
     @action setItem ( val :  Array<any> ) {this.item = val};
     @computed getItem ():  Array<any> {return this.item};
+
+    @action setArray ( val :  Array<number> ) {this.array = val};
+    @computed getArray ():  Array<number> {return this.array};
 
     @action setIdDevs ( val : string ) {this.id_devs = val};
     @computed getIdDevs ():  string {return this.id_devs}; 
@@ -75,8 +84,8 @@ export class DevsStorage{
      @action setInfo ( val : string ) {this.info = val};
      @computed getInfo ():  string {return this.info};
 
-     @action setSensors ( val : Array<string> ) {this.sensors = val};
-     @computed getSensors ():  Array<string> {return this.sensors};
+     @action setSensors ( val : number ) {this.sensors = val};
+     @computed getSensors ():  number {return this.sensors};
 
      @action setParent ( val : number ) {this.parent = val};
      @computed getParent ():  number {return this.parent};
@@ -87,6 +96,8 @@ export class DevsStorage{
      @action setIdDev ( val : string ) {this.select_id_dev = val};
      @computed getIdDev ():  string {return this.select_id_dev};
 
+     @action setDepthSensors (val : boolean) {this.add_sensors = val}; /// Добавление сенсоров (модальное окно)
+     @computed getDepthSensors () : boolean {return this.add_sensors }
 
 
    async get_Devs (name: string, value: any, _options?: any){
@@ -124,7 +135,7 @@ export class DevsStorage{
         name: this.getName() || '', 
         latitude: this.getLatitude() || '',
         longitude: this.getLongitude() || '',
-        sensors: '{\"s\":[' + this.getSensors() + ']}',
+        sensors: '{\"s\":[' + this.getArray() + ']}',
         deleted: this.getDeleted() || false,
         info: this.getDeleted() || ''
      }; 
@@ -135,4 +146,15 @@ export class DevsStorage{
    async setDevsAll(dt: IWSResult){ 
     this.setDevs(dt.data); 
    }
+
+
+   async set_DevsDepth(value: number){
+    console.log('value1',  value)
+   
+     this.array.push(value);
+    
+     this.setArray(this.array)
+     console.log('dsadsad', JSON.stringify(this.getArray()));
+   }
     }
+ 

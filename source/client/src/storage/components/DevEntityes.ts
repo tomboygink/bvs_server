@@ -1,9 +1,10 @@
-
+/*
+Описание сенсора на устройстве
+*/
 export type TDSensor = {
     depth: number,
     value: number
 }
-
 
 
 /**
@@ -23,6 +24,8 @@ export class TDevice {
 export type TDSensorsList = {
     "s": TDSensor[]
 }
+
+
 
 export const SENSORS_LIST:TDSensorsList = {"s": []}
 
