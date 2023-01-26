@@ -12,8 +12,7 @@ export class ChangeDevsGroups {
     }
 
     @action setOpenModalChDevsGr(val : boolean) {this.open_modal_change = val};
-    @computed getOpenModalChDevsGr() : boolean {return this.open_modal_change}
-    
+    @computed getOpenModalChDevsGr() : boolean {return this.open_modal_change};
 
 }
 

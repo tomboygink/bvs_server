@@ -9,6 +9,8 @@ import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 import SaveIcon from "@mui/icons-material/Save";
 
+
+
 interface IProps {}
 
 //Компонент формы приложения
@@ -31,7 +33,6 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
   }
 
 async ChangeDevsGroups(){
-  alert('syudsay')
   APP_STORAGE.devs_groups.set_ChangeDevsGroups("sess_id", APP_STORAGE.auth_form.getdt())
 }
 
@@ -186,7 +187,7 @@ async ChangeDevsGroups(){
             }}
            
           >
-            save
+            Сохранить
           </Button>
         </Box>
              
