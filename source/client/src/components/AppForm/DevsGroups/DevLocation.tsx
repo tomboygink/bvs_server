@@ -15,9 +15,10 @@ import { WidthFull } from "@mui/icons-material";
 import LongMenu from "./Menu";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 
-import { TDevsGroup } from "../../../storage/components/DevEntityes";
-import { TDGroup } from "../../../storage/components/DevEntityes";
-import { TDevice } from "../../../storage/components/DevEntityes";
+import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
+import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
+import { TDevice } from "../../../storage/components/Devs/DevEntityes";
+import {ChangeDevsGroups} from './ChangeDevsGroups'
 
 // import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
@@ -31,7 +32,7 @@ export class DevLocation extends React.Component<IProps> {
   }
 
   async OpenModal(e: any) {
-    alert(e)
+
     APP_STORAGE.devs_groups.setParentId(e);
     APP_STORAGE.devs_groups.setOpenModal(true);
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
@@ -39,7 +40,7 @@ export class DevLocation extends React.Component<IProps> {
 
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
     var parent: React.ReactNode[] = new Array();
-
+    console.log('dgrs', dgrs)
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr: TDGroup = dgr.group;
@@ -57,7 +58,16 @@ export class DevLocation extends React.Component<IProps> {
         </React.Fragment>
       );
 
-      if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
+      if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) { 
+
+        APP_STORAGE.devs_groups.setName(String(gr.g_name)); //////////////исправить ощибку ( добавить функцию )
+        APP_STORAGE.devs_groups.setLongitude(String(gr.longitude));/////////////////
+        APP_STORAGE.devs_groups.setLatitude(String(gr.latitude));///////////////////
+        APP_STORAGE.devs_groups.setInfo(String(gr.g_info));////////////////////////
+        APP_STORAGE.devs_groups.setKeyOrg(String(gr.org_id))////////////////////////////////////////
+        APP_STORAGE.devs_groups.setParent(String(gr.parent_id))////////////////////////////////////////
+
+
         parent.push(
           <React.Fragment key={String(gr.id)}>
             <Box
@@ -158,6 +168,8 @@ export class DevLocation extends React.Component<IProps> {
           </React.Fragment>
         );
       }
+
+      
     }
     return parent;
   }

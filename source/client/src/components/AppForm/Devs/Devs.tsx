@@ -9,8 +9,8 @@ import {
 
 import { observer } from "mobx-react";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-import { TDevsGroup } from "../../../storage/components/DevEntityes";
-import { TDGroup } from "../../../storage/components/DevEntityes";
+import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
+import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 
 

@@ -1,14 +1,12 @@
-import React from "react";
 import { observer } from "mobx-react";
+import React from "react";
 
 
-import { Box, Alert, Typography, TextField} from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-import { WidthFull } from "@mui/icons-material";
 
 
-import { TDevsGroup } from "../../../storage/components/DevEntityes";
-import { TDGroup } from "../../../storage/components/DevEntityes";
+import { TDevsGroup, TDGroup } from "../../../storage/components/Devs/DevEntityes";
 
 // import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
@@ -25,7 +23,6 @@ export class AdoutDevs extends React.Component<IProps> {
     var devs: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
-      var gr: TDGroup = dgr.group;
       var gr_childs = dgr.childs;
       var gr_devs = dgr.devs;
               for ( var key in gr_devs ){

@@ -1,6 +1,6 @@
 import { observable, action, computed, makeAutoObservable } from 'mobx';
-import { IWSQuery, WSQuery, IWSResult } from '../../../../xcore/WSQuery';
-import { WSocket } from '../WSocket';
+import { IWSQuery, WSQuery, IWSResult } from '../../../../../xcore/WSQuery';
+import { WSocket } from '../../WSocket';
 
 
 export class DevsGroupStorage{
@@ -18,6 +18,8 @@ export class DevsGroupStorage{
     @observable longitude: string = '';
     @observable info: string = '';
     @observable parent_id : string = '';
+
+    @observable parent : string = '';
 
 
     @observable defaultExpanded_devs_froups : Array<string> = [];
@@ -60,6 +62,9 @@ export class DevsGroupStorage{
 
     @action setParentId (val : string) {this.parent_id = val}
     @computed getParentId() : string {return this.parent_id} 
+
+    @action setParent (val: string) {this.parent = val}
+    @computed getParent() : string {return this.parent}
 
     
 
@@ -108,6 +113,27 @@ export class DevsGroupStorage{
     setDevsGroupsAll(dt: IWSResult) { /* -----  Получаем всех пользователей   */
       this.setDevsGroups(dt.data);
      }
+
+     async set_ChangeDevsGroups(name: string, value: any, _options?: any) { 
+        var sess_code = value;
+        var q: IWSQuery = new WSQuery("set_ChangeDevsGroups");
+        q.args = {
+            id: this.getParentId() || "",
+            parent_id: this.getParent() || "",
+            name: this.getName() || "",
+            latitude: this.getLatitude() || "",
+            longitude: this.getLongitude() || "",
+            org_id : this.getKeyOrg(),
+            ord_id: 0,
+            deleted: false,
+            info: this.getInfo() || ""
+          };
+        
+        q.sess_code = sess_code;
+        (await WSocket.get()).send(q);
+       
+
+      }
 
     }
 

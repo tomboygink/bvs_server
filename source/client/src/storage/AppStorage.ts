@@ -10,10 +10,10 @@ import { EditUsersStorage } from './components/EditUsersStorage'
 import { WSocket } from './WSocket';
 import {getCookie , setCookie, deleteCookie }  from './browserCookes'
 import { UsersEntity } from '../../../xcore/dbase/Users';
-import { DevsGroupStorage } from './components/DevsGroupStorage';
-import {DevsStorage} from './components/DevsStorage';
-import {SensorsStorage} from './components/SensorsStorage';
-import {ChangeDevsGroups} from './components/ChangeDevsGroups'
+import { DevsGroupStorage } from './components/Devs/DevsGroupStorage';
+import {DevsStorage} from './components/Devs/DevsStorage';
+import {SensorsStorage} from './components/Devs/SensorsStorage';
+import {ChangeDevsGroups} from './components/Devs/ChangeDevsGrStorage'
 
 // ********************************************************************************************************************************************************
 // ХРАНИЛИЩЕ
