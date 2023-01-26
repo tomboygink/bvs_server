@@ -46,7 +46,7 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
     return (
         <React.Fragment>
 
-        <Dialog BackdropProps={{style:{background:'rgba(0, 0, 0, 0.75)'} } } open={APP_STORAGE.devs_groups.getOpenModal()}  fullWidth >
+        <Dialog BackdropProps={{style:{background:"rgba(0 0 0 / 12%)"} } } open={APP_STORAGE.devs_groups.getOpenModal()}  fullWidth >
          
         <Box  sx={{p: 2}}>
   
@@ -177,7 +177,7 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
               APP_STORAGE.devs_groups.set_NewDevGroup("sess_id", APP_STORAGE.auth_form.getdt());
             }}
           >
-            Сохранить1
+            Сохранить
           </Button>
         </Box>
              

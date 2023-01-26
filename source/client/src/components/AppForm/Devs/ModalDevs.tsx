@@ -96,13 +96,14 @@ async SelectedOrg(a: any) {
     return (
         <React.Fragment>
 
-        <Dialog BackdropProps={{style:{background:'rgba(0, 0, 0, 0.75)'} } } open={APP_STORAGE.devs.getOpenModal()}
+        <Dialog BackdropProps={{style:{background:'rgba(0 0 0 / 12%)'} } } open={APP_STORAGE.devs.getOpenModal()}
            PaperProps={{
             sx: {
               width: "100%",
               maxHeight: '100%'
             }
           }}
+
         >
          
         <Box  sx={{p: 2}}>

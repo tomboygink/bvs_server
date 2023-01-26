@@ -39,12 +39,17 @@ export class WorkingWithDev extends React.Component<IProps> {
             <Typography sx ={{color: {sx1}}} >Расположение устройств</Typography>
           </Box>
 
-          <Box sx={{display: 'flex', alignItems: 'flex-start' }}
+          <Box sx={{display: 'flex', alignItems: 'flex-start' ,  pb: '12px'}}
             onClick={() => {
               this.DevLocation(2);
             }}>
             {/* <FormatListNumberedIcon fontSize="small"  sx={{pr: '12px', color: '#266BF1'}}/> */}
             <Typography sx ={{color: {sx2}}}> Список устройств</Typography>
+          </Box>
+
+          <Box sx={{display: 'flex', alignItems: 'flex-start' }}>
+            {/* <FormatListNumberedIcon fontSize="small"  sx={{pr: '12px', color: '#266BF1'}}/> */}
+            <Typography sx ={{color: {sx2}}}> Пользователи</Typography>
           </Box>
              
           <Box className="exit" sx={{display: 'flex', alignItems: 'flex-start', mt : '210%' , justifyContent: 'center'}}>

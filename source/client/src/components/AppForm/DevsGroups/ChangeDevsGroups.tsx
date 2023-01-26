@@ -57,7 +57,7 @@ async ChangeDevsGroups(){
     return (
         <React.Fragment>
 
-        <Dialog BackdropProps={{style:{background:'rgba(0, 0, 0, 0.75)'} } } open={APP_STORAGE.change_devs_groups.getOpenModalChDevsGr()}  fullWidth >
+        <Dialog BackdropProps={{style:{background:"rgba(0 0 0 / 12%)"} } } open={APP_STORAGE.change_devs_groups.getOpenModalChDevsGr()}  fullWidth >
          
         <Box  sx={{p: 2}}>
   

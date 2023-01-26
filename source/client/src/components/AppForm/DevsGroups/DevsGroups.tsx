@@ -53,7 +53,7 @@ export class DevsGroups extends React.Component<IProps> {
     return (
       <React.Fragment key={"_dev_id_key_" + dev.id}>
         <TreeItem
-          nodeId={"_dev_id_" + dev.id}
+          nodeId={"_dev_id_key_" + dev.id}
           label={dev.name}
           icon={<CrisisAlertIcon fontSize="small"/>}
           sx={{ color: "#266BF1" }}
