@@ -73,8 +73,6 @@ export class AdoutDevs extends React.Component<IProps> {
            <Typography> Установить период</Typography>
           </Box> 
           </Box>
-                    
-                     
                         </React.Fragment>
                       );
                   } 

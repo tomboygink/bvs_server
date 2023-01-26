@@ -4,6 +4,11 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
+import {
+  Box,
+  Typography
+} from "@mui/material";
+
 const options = [
   'Редактировать',
   'Добавить в текущую '
@@ -48,11 +53,11 @@ export default function LongMenu() {
           },
         }}
       >
-        {options.map((option) => (
-          <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-            {option}
+       
+          <MenuItem  onClick={handleClose}>
+            <Typography >Редактировать</Typography>
           </MenuItem>
-        ))}
+        
       </Menu>
     </div>
   );

@@ -31,7 +31,7 @@ export class DevLocation extends React.Component<IProps> {
   }
 
   async OpenModal(e: any) {
-    alert(e);
+    alert(e)
     APP_STORAGE.devs_groups.setParentId(e);
     APP_STORAGE.devs_groups.setOpenModal(true);
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
@@ -133,7 +133,7 @@ export class DevLocation extends React.Component<IProps> {
                     p: "4px",
                     borderRadius: "4px",
                   }}
-                  onClick={() => this.OpenModal(gr.id)}
+                  onClick={() => this.OpenModal(APP_STORAGE.devs.getIdDevs())}
                 >
                   <Box sx={{ display: "flex" }}>
                     {" "}
@@ -230,7 +230,7 @@ export class DevLocation extends React.Component<IProps> {
                 pl: "20px",
                 borderRadius: "4px",
               }}
-              onClick={() => this.OpenModal(0)}
+              onClick={() => this.OpenModal('0')}
             >
               <Typography> Добавить новое </Typography>
             </Box>

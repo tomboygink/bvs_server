@@ -12,7 +12,8 @@ import {getCookie , setCookie, deleteCookie }  from './browserCookes'
 import { UsersEntity } from '../../../xcore/dbase/Users';
 import { DevsGroupStorage } from './components/DevsGroupStorage';
 import {DevsStorage} from './components/DevsStorage';
-import {SensorsStorage} from './components/SensorsStorage'
+import {SensorsStorage} from './components/SensorsStorage';
+import {ChangeDevsGroups} from './components/ChangeDevsGroups'
 
 // ********************************************************************************************************************************************************
 // ХРАНИЛИЩЕ
@@ -25,6 +26,7 @@ class AppStorage {
     @observable reg_user: ModalLeftPanel = null;
     @observable edit_user: EditUsersStorage = null;
     @observable devs_groups: DevsGroupStorage = null;
+    @observable change_devs_groups: ChangeDevsGroups = null;
     @observable devs : DevsStorage = null;
     @observable sensors : SensorsStorage = null;
     
@@ -48,6 +50,7 @@ class AppStorage {
         this.devs_groups = new DevsGroupStorage();
         this.devs = new DevsStorage();
         this.sensors = new SensorsStorage();
+        this.change_devs_groups = new ChangeDevsGroups();
         makeAutoObservable(this);
 
         // WSocket.get();
