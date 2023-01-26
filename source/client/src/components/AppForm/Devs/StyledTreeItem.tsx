@@ -77,12 +77,16 @@ export const StyledTreeItem = styled((props: TreeItemProps) => (
 }));
 
 export const handleChange = async (event: any, node: any) => {
+
    if(node.includes('_dev_id_') === false){
+    APP_STORAGE.devs_groups.setParentId(node);
     APP_STORAGE.devs.setIdDevs(node);
+    alert(node)
    }
    
-   if(node.includes('_dev_id_') === true){
+   if(node.includes('_dev_id_key_') === true){
     APP_STORAGE.devs.setIdChild(node);
+    alert(node)
    }  
 }
 

@@ -70,9 +70,13 @@ export class DevsGroupStorage{
     @action setDefaultExpandedDevsGroups(val: Array<string>) {this.defaultExpanded_devs_froups = val;}
     @computed getDefaultExpandedDevsGroups() : Array<string> {return this.defaultExpanded_devs_froups}
 
+    
     async set_NewDevGroup(name: string, value: any, _options?: any) {
         var sess_code = value;
         var q:IWSQuery = new WSQuery("set_NewDevGroup");
+
+        console.log('1121123123', this.getParentId())
+        
         q.args = {
             g_name: this.getName() || '',
             latitude:this.getLatitude() || '', 
@@ -86,6 +90,8 @@ export class DevsGroupStorage{
           q.sess_code = sess_code;
          (await WSocket.get()).send(q); 
        }
+
+
  
        async get_DevsGroups(name: string, value: any, _options?: any) {  //// Отправляем запрос на получение расположений устройств
         var sess_code = value;
