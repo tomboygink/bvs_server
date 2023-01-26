@@ -2,12 +2,9 @@ import React from "react";
 import { observer } from "mobx-react";
 
 
-import { Box, Alert, Typography  } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-import { WidthFull } from "@mui/icons-material";
 
-import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
-import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 
 interface IProps {}
 

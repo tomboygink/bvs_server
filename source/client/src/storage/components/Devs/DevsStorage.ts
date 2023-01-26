@@ -1,8 +1,8 @@
 import { observable, action, computed, makeAutoObservable } from 'mobx';
-import { UsersEntity } from '../../../../xcore/dbase/Users';
-import { IWSQuery, WSQuery, IWSResult } from '../../../../xcore/WSQuery';
-import { WSocket } from '../WSocket';
-import {getCookie , setCookie, deleteCookie }  from '../browserCookes';
+import { UsersEntity } from '../../../../../xcore/dbase/Users';
+import { IWSQuery, WSQuery, IWSResult } from '../../../../../xcore/WSQuery';
+import { WSocket } from '../../WSocket';
+import {getCookie , setCookie, deleteCookie }  from '../../browserCookes';
 import { info } from 'console';
 
 export class DevsStorage{

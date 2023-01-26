@@ -1,6 +1,6 @@
 import {observable, action, computed, makeAutoObservable } from "mobx";
-import { IWSQuery, WSQuery, IWSResult } from '../../../../xcore/WSQuery';
-import { WSocket } from '../WSocket';
+import { IWSQuery, WSQuery, IWSResult } from '../../../../../xcore/WSQuery';
+import { WSocket } from '../../WSocket';
 
 
 export class SensorsStorage {

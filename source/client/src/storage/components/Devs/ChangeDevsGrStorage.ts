@@ -1,6 +1,6 @@
 import {observable, action, computed, makeAutoObservable } from "mobx";
-import { IWSQuery, WSQuery, IWSResult } from '../../../../xcore/WSQuery';
-import { WSocket } from '../WSocket';
+import { IWSQuery, WSQuery, IWSResult } from '../../../../../xcore/WSQuery';
+import { WSocket } from '../../WSocket';
 
 
 export class ChangeDevsGroups {
@@ -13,6 +13,7 @@ export class ChangeDevsGroups {
 
     @action setOpenModalChDevsGr(val : boolean) {this.open_modal_change = val};
     @computed getOpenModalChDevsGr() : boolean {return this.open_modal_change}
+    
 
 }
 

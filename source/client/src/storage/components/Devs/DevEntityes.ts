@@ -53,6 +53,7 @@ export type TDGroup = {
     latitude:string,
     longitude:string,
     ord_num:string,
+    org_id:string,
     g_info:string,
 	deleted:boolean
 };
@@ -64,6 +65,7 @@ export const D_GROUP:TDGroup = {
     latitude:'',
     longitude:'',
     ord_num:'',
+    org_id: '',
     g_info:'',
 	deleted:false
 };

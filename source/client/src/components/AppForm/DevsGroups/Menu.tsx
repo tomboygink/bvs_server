@@ -8,13 +8,14 @@ import {
   Box,
   Typography
 } from "@mui/material";
+import { APP_STORAGE } from '../../../storage/AppStorage';
 
 const options = [
   'Редактировать',
   'Добавить в текущую '
 ];
 
-const ITEM_HEIGHT = 48;
+
 
 export default function LongMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -46,16 +47,11 @@ export default function LongMenu() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            
-          },
-        }}
+      
       >
        
           <MenuItem  onClick={handleClose}>
-            <Typography >Редактировать</Typography>
+            <Typography onClick = {()=> {APP_STORAGE.change_devs_groups.setOpenModalChDevsGr(true)}} > Редактировать</Typography>
           </MenuItem>
         
       </Menu>

@@ -24,7 +24,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import DirectionsIcon from "@mui/icons-material/Directions";
 
-import { TDevsGroup } from "../../../storage/components/DevEntityes";
+import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 
 interface IProps {}
 

@@ -16,9 +16,9 @@ import SensorsIcon from "@mui/icons-material/Sensors";
 import { WorkingWithDev } from "./WorkingWithDev";
 import FolderIcon from "@mui/icons-material/Folder";
 
-import { TDevsGroup } from "../../../storage/components/DevEntityes";
-import { TDGroup } from "../../../storage/components/DevEntityes";
-import { TDevice } from "../../../storage/components/DevEntityes";
+import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
+import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
+import { TDevice } from "../../../storage/components/Devs/DevEntityes";
 
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 
