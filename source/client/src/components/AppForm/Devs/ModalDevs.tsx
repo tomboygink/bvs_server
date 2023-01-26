@@ -7,6 +7,18 @@ import CloseIcon from '@mui/icons-material/Close';
 import { APP_STORAGE } from "../../../storage/AppStorage";
 import SaveIcon from "@mui/icons-material/Save";
 
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import { TableCell } from '@mui/material';
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
+
+import Paper from '@mui/material/Paper';
+
+import SensorsIcon from "@mui/icons-material/Sensors";
+
+import {ModalSensors} from './ModalSensors'
+
 interface IProps {}
 
 //Компонент формы приложения
@@ -25,7 +37,7 @@ async SelectedOrg(a: any) {
   }
 
   render(): React.ReactNode {
-   
+   let depth_sensors = [];
 
     let org = null;
     var options_org = [];
@@ -62,11 +74,36 @@ async SelectedOrg(a: any) {
       }
     }
 
+    if(JSON.stringify(APP_STORAGE.devs.getArray())){
+      var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getArray()));
+      for( var key in obj){
+        
+        depth_sensors.push(
+          <TableCell key ={obj[key]}
+          sx={{ display: "flex", fontWeight: "700", border: "none" , p: '4px'}}
+          align="left"
+        >
+          <SensorsIcon
+            fontSize="small"
+            sx={{ pr: "9px", color: "#5be95b" }}
+          />  {obj[key]}
+        </TableCell>
+        )
+      }
+    }
+
 
     return (
         <React.Fragment>
 
-        <Dialog BackdropProps={{style:{background:'rgba(0, 0, 0, 0.75)'} } } open={APP_STORAGE.devs.getOpenModal()}  fullWidth >
+        <Dialog BackdropProps={{style:{background:'rgba(0, 0, 0, 0.75)'} } } open={APP_STORAGE.devs.getOpenModal()}
+           PaperProps={{
+            sx: {
+              width: "100%",
+              maxHeight: '100%'
+            }
+          }}
+        >
          
         <Box  sx={{p: 2}}>
   
@@ -168,21 +205,22 @@ async SelectedOrg(a: any) {
             value={APP_STORAGE.devs.getInfo()}
           />
 <Box sx = {{border: '1px solid #eee' , p: '12px', borderRadius: '4px'}}>
-  <Box sx = {{pb: '12px'}}>Список сенсоров на устройстве</Box>
-    <TextField
-          size="small"
-          fullWidth
-          id="outlined-number"
-          label="Number"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          onChange={(e) => {
-            APP_STORAGE.devs.setSensors([e.target.value]);
-        }}
-        />
-           <Button>Добавить</Button>
+
+
+
+  <Box sx = {{pb: '12px'}}>Список сенсоров на устройстве :</Box>
+  <TableContainer  component={Paper}>
+              <Table aria-label="caption table">
+                <TableBody>
+                <TableRow key ='12121212'>
+                {depth_sensors}
+              </TableRow>
+                </TableBody>
+            
+              </Table>
+</TableContainer> 
+        <ModalSensors />
+        <Button onClick={() => {APP_STORAGE.devs.setDepthSensors(true)}}>Добавить</Button>
 </Box>
 
 
