@@ -39,11 +39,16 @@ export class DevsGroupStorage{
 
     @observable defaultExpanded_devs_froups : Array<string> = [];
 
+    @observable checkbox_editing: boolean = false; 
+
 
     @observable devs_groups: Array<string> = []
     constructor(){
         makeAutoObservable(this);
     }
+
+    @action setCheckboxEd(val: boolean) {this.checkbox_editing = val;}
+    @action getCheckboxEd(): boolean {return this.checkbox_editing;}
 
     @action setOpen_menu (val: boolean) {this.open_menu = val} //// открыть  меню редактирования
     @computed getOpen_menu() : boolean {return this.open_menu}
@@ -202,7 +207,7 @@ export class DevsGroupStorage{
             longitude: this.getLongitude() || "",
             org_id : this.getKeyOrg(),
             ord_id: 0,
-            deleted: false,
+            deleted: this.getCheckboxEd(),
             info: this.getInfo() || ""
           };
         

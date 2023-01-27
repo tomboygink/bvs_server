@@ -36,6 +36,8 @@ export class DevsStorage{
     @observable sensors : number = null;
     @observable select_id_dev : string = ''; 
 
+  
+
     constructor(){
         makeAutoObservable(this);
     }

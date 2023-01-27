@@ -241,18 +241,6 @@ export class DevLocation extends React.Component<IProps> {
                   </Box>
                 </Box>
               </Box>
-
-              {/* <Typography
-                sx={{ alignSelf: "center" }}
-                onClick={() => this.setValue()}
-              >
-                {" "}
-                Редактировать
-              </Typography> */}
-
-
-
-
             </Box>
           </React.Fragment>
         );
