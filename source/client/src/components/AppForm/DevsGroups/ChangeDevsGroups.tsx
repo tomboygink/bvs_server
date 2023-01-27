@@ -5,9 +5,12 @@ import {TextField, Box, Dialog , Divider , Typography, TextareaAutosize, Button,
 
 import CloseIcon from '@mui/icons-material/Close';
 import { APP_STORAGE } from "../../../storage/AppStorage";
-import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
-import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
-import SaveIcon from "@mui/icons-material/Save";
+import FormGroup from "@mui/material/FormGroup";
+import Stack from "@mui/material/Stack";
+
+import { AntSwitch } from "../../../components/AppForm/AppBarPanel/LeftPanel/RegistationUsers/switch";
+
+
 
 interface IProps {}
 
@@ -31,9 +34,13 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
   }
 
 async ChangeDevsGroups(){
-  alert('syudsay')
   APP_STORAGE.devs_groups.set_ChangeDevsGroups("sess_id", APP_STORAGE.auth_form.getdt())
 }
+
+async ChekedForEdit(editing: any) {
+  APP_STORAGE.devs_groups.setCheckboxEd(editing.target.checked);
+}
+
 
 
   render(): React.ReactNode {
@@ -56,7 +63,7 @@ async ChangeDevsGroups(){
     return (
         <React.Fragment>
 
-        <Dialog BackdropProps={{style:{background:'rgba(0, 0, 0, 0.75)'} } } open={APP_STORAGE.change_devs_groups.getOpenModalChDevsGr()}  fullWidth >
+        <Dialog BackdropProps={{style:{background:"rgba(0 0 0 / 12%)"} } } open={APP_STORAGE.change_devs_groups.getOpenModalChDevsGr()}  fullWidth >
          
         <Box  sx={{p: 2}}>
   
@@ -168,6 +175,22 @@ async ChangeDevsGroups(){
             value={APP_STORAGE.devs_groups.getInfo()}
           />
 
+<FormGroup sx={{ mt: "12px" }}>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography
+                  sx={{ ml: "12px", fontSize: "12px", color: "#266bf1" }}
+                >
+                 Заблокировать -{" "}
+                </Typography>
+                <AntSwitch
+                  checked={APP_STORAGE.devs_groups.getCheckboxEd()}
+                  onChange={(editing) => {
+                    this.ChekedForEdit(editing);
+                  }}
+                />
+              </Stack>
+            </FormGroup>
+
           <Box
           sx={{
             display: "flex",
@@ -186,7 +209,7 @@ async ChangeDevsGroups(){
             }}
            
           >
-            save
+            Сохранить
           </Button>
         </Box>
              

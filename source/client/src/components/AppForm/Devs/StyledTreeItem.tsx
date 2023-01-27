@@ -10,6 +10,8 @@ import { TransitionProps } from '@mui/material/transitions';
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
 
+
+
 export function MinusSquare(props: SvgIconProps) {
   return (
     <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
@@ -77,7 +79,6 @@ export const StyledTreeItem = styled((props: TreeItemProps) => (
 }));
 
 export const handleChange = async (event: any, node: any) => {
-
    if(node.includes('_dev_id_') === false){
     APP_STORAGE.devs_groups.setParentId(node);
     APP_STORAGE.devs.setIdDevs(node);
@@ -86,7 +87,6 @@ export const handleChange = async (event: any, node: any) => {
    
    if(node.includes('_dev_id_key_') === true){
     APP_STORAGE.devs.setIdChild(node);
-
    }  
 }
 

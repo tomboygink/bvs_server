@@ -7,7 +7,9 @@ import { APP_STORAGE } from './storage/AppStorage';
 
 import { AuthForm } from './components/AuthForm';
 import { AppForm } from './components/AppForm/index';
-import { ForgotPass } from './components/ForgotPassForm'
+import { ForgotPass } from './components/ForgotPassForm';
+
+import { Box, Typography } from "@mui/material";
 
 interface IProps {}
 
@@ -45,7 +47,10 @@ export class App extends React.Component<IProps>{
    
         return ( 
             <React.Fragment> 
-               {ret_dt}  
+                <Box  >
+                    <Box>{ret_dt}</Box> 
+                </Box>
+                 
             </React.Fragment>
         );
     }

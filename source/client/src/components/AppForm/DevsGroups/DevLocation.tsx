@@ -1,24 +1,19 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import {
-  Box,
-  Alert,
-  Typography,
-  TextField,
-  Divider,
-  TextareaAutosize,
-} from "@mui/material";
+import { Box, Typography, TextField } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-import { WidthFull } from "@mui/icons-material";
 
 import LongMenu from "./Menu";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
-import { TDevice } from "../../../storage/components/Devs/DevEntityes";
-import {ChangeDevsGroups} from './ChangeDevsGroups'
+
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
@@ -32,20 +27,79 @@ export class DevLocation extends React.Component<IProps> {
   }
 
   async OpenModal(e: any) {
-
     APP_STORAGE.devs_groups.setParentId(e);
     APP_STORAGE.devs_groups.setOpenModal(true);
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
   }
 
-  drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
+  async setValue() {
+  
+    let devs_g = [];
+    let DevGr = [];
+
+    if (
+      Object.keys(
+        JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
+      ).length !== 0 &&
+      JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
+        .constructor === Object
+    ) 
+    {
+      devs_g = JSON.parse(
+        JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
+      );
+    }
+
+    for (var key in devs_g) {
+      if (devs_g.hasOwnProperty(key)) {
+        let a = devs_g[key];
+        let root = JSON.parse(a);
+
+        if (root.childs.length > 0) {
+          for (let i = 0; i < root.childs.length; i++) {
+            DevGr.push(root.childs[i]);
+          }
+        }
+      }
+    }
+
+    return this.getValueCh(DevGr);
+  }
+
+  getValueCh(dgrs: TDevsGroup[]) {
     var parent: React.ReactNode[] = new Array();
-    console.log('dgrs', dgrs)
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr: TDGroup = dgr.group;
       var gr_childs = dgr.childs;
-      var gr_devs = dgr.devs;
+
+      var childs: React.ReactNode[] = new Array();
+      if (gr_childs.length > 0) childs = this.getValueCh(gr_childs);
+
+      parent.push(
+        childs
+        );
+    
+      if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
+        APP_STORAGE.devs_groups.setName(String(gr.g_name)); //////////////исправить ощибку ( добавить функцию )
+        APP_STORAGE.devs_groups.setLongitude(String(gr.longitude)); /////////////////
+        APP_STORAGE.devs_groups.setLatitude(String(gr.latitude)); ///////////////////
+        APP_STORAGE.devs_groups.setInfo(String(gr.g_info)); ////////////////////////
+        APP_STORAGE.devs_groups.setKeyOrg(String(gr.org_id)); ////////////////////////////////////////
+        APP_STORAGE.devs_groups.setParent(String(gr.parent_id)); ////////////////////////////////////////
+
+        APP_STORAGE.change_devs_groups.setOpenModalChDevsGr(true);
+      }
+    }
+    return parent;
+  }
+
+  drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
+    var parent: React.ReactNode[] = new Array();
+    for (var ii in dgrs) {
+      var dgr: TDevsGroup = dgrs[ii];
+      var gr: TDGroup = dgr.group;
+      var gr_childs = dgr.childs;
 
       var childs: React.ReactNode[] = new Array();
       if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
@@ -58,19 +112,12 @@ export class DevLocation extends React.Component<IProps> {
         </React.Fragment>
       );
 
-      if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) { 
-
-        APP_STORAGE.devs_groups.setName(String(gr.g_name)); //////////////исправить ощибку ( добавить функцию )
-        APP_STORAGE.devs_groups.setLongitude(String(gr.longitude));/////////////////
-        APP_STORAGE.devs_groups.setLatitude(String(gr.latitude));///////////////////
-        APP_STORAGE.devs_groups.setInfo(String(gr.g_info));////////////////////////
-        APP_STORAGE.devs_groups.setKeyOrg(String(gr.org_id))////////////////////////////////////////
-        APP_STORAGE.devs_groups.setParent(String(gr.parent_id))////////////////////////////////////////
-
+      if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
 
         parent.push(
           <React.Fragment key={String(gr.id)}>
             <Box
+            id="long-button"
               sx={{
                 width: "1100px;",
                 background: "#fff",
@@ -98,7 +145,37 @@ export class DevLocation extends React.Component<IProps> {
                   </Typography>
                 </Box>
 
-                <LongMenu />
+                
+              <div>
+      <IconButton
+        onClick={() => {APP_STORAGE.devs_groups.setOpen_menu(true)}}
+        id='long-button555'
+        aria-label="more"
+        aria-controls={open ? 'long-menu' : undefined}
+        aria-expanded={open ? 'true' : undefined}
+        aria-haspopup="true"
+        // onClick={handleClick}
+      >
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id="long-menu"
+        MenuListProps={{
+          'aria-labelledby': 'long-button',
+        }}
+        anchorEl={document.getElementById('long-button555')}
+        open={APP_STORAGE.devs_groups.getOpen_menu()}
+        onClose={() => {APP_STORAGE.devs_groups.setOpen_menu(false)}}
+      
+      >
+       
+          <MenuItem >
+            <Typography onClick={() => this.setValue()} > Редактировать</Typography>
+          </MenuItem>
+        
+      </Menu>
+    </div>
+
               </Box>
               <Box
                 sx={{
@@ -168,8 +245,6 @@ export class DevLocation extends React.Component<IProps> {
           </React.Fragment>
         );
       }
-
-      
     }
     return parent;
   }
@@ -242,7 +317,7 @@ export class DevLocation extends React.Component<IProps> {
                 pl: "20px",
                 borderRadius: "4px",
               }}
-              onClick={() => this.OpenModal('0')}
+              onClick={() => this.OpenModal("0")}
             >
               <Typography> Добавить новое </Typography>
             </Box>

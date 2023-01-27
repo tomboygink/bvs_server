@@ -44,7 +44,7 @@ export class Devs extends React.Component<IProps> {
       var gr_devs = dgr.devs;
               for ( var key in gr_devs ){
                 
-                  if ( ("_dev_id_" + gr_devs[key].id === APP_STORAGE.devs.getIdChild())){
+                  if ( ("_dev_id_key_" + gr_devs[key].id === APP_STORAGE.devs.getIdChild())){
                     
                     devs.push(
                         <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
