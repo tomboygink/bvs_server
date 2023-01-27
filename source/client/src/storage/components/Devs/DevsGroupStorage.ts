@@ -21,6 +21,21 @@ export class DevsGroupStorage{
 
     @observable parent : string = '';
 
+    
+    ////////////////////////////////////////////Проверка
+
+    @observable name_err: boolean = false;
+    @observable name_err_mess: string = '';
+
+    @observable org_err: boolean = false;
+    @observable org_err_mess: string = '';
+
+    @observable latitude_err:boolean = false;
+    @observable latitude_err_mess:string = '';
+    @observable longitude_err: boolean = false;
+    @observable longitude_err_mess: string = '';
+
+    @observable open_menu: boolean = false; ///// открыть меню редактирования
 
     @observable defaultExpanded_devs_froups : Array<string> = [];
 
@@ -29,6 +44,9 @@ export class DevsGroupStorage{
     constructor(){
         makeAutoObservable(this);
     }
+
+    @action setOpen_menu (val: boolean) {this.open_menu = val} //// открыть  меню редактирования
+    @computed getOpen_menu() : boolean {return this.open_menu}
 
     @action setOrgId(val : number ) { this.org_id = val};
     @computed getOrgId () : number { return this.org_id}
@@ -69,20 +87,78 @@ export class DevsGroupStorage{
     
 
     ///////////////////////////////////////////////Список расположений устройств
-    @action setDevsGroups(val: Array<string>) {this.devs_groups = val;}
+    @action setDevsGroups(val: Array<string>) {this.devs_groups = val}
     @computed getDevsGroups() : Array<string> {return this.devs_groups}
 
-    @action setDefaultExpandedDevsGroups(val: Array<string>) {this.defaultExpanded_devs_froups = val;}
+    @action setDefaultExpandedDevsGroups(val: Array<string>) {this.defaultExpanded_devs_froups = val}
     @computed getDefaultExpandedDevsGroups() : Array<string> {return this.defaultExpanded_devs_froups}
 
+
+
+  //////////////////////////////////////////////////////////////////////////Проверка
     
-    async set_NewDevGroup(name: string, value: any, _options?: any) {
+    @action setNameError(val : boolean) { this.name_err = val}
+    @computed getNamaError() : boolean { return this.name_err}
+    @action setNameError_mess(val : string) { this.name_err_mess = val}
+    @computed getNamaError_mess() : string { return this.name_err_mess}
+
+    @action setLatitudeError(val : boolean) { this.latitude_err = val}
+    @computed getLatitudeError() : boolean { return this.latitude_err}
+    @action setLatitudeError_mess(val : string) { this.latitude_err_mess = val}
+    @computed getLatitudeError_mess() : string { return this.latitude_err_mess}
+
+    @action setLongitudeError(val : boolean) { this.longitude_err = val}
+    @computed getLongitudeError() : boolean { return this.longitude_err}
+    @action setLongitudeError_mess(val : string) { this.longitude_err_mess = val}
+    @computed getLongitudeError_mess() : string { return this.longitude_err_mess}
+
+    @action setOrgError(val : boolean) { this.org_err = val}
+    @computed getOrgError() : boolean { return this.org_err} 
+
+    
+    async set_NewDevGroup(name: string, value: any, _options?: any) { ///////// Добавляем новое расположение устройств
         var sess_code = value;
         var q:IWSQuery = new WSQuery("set_NewDevGroup");
-
-        console.log('1121123123', this.getParentId())
         
-        q.args = {
+        if( this.getName() === ''){
+          this.setNameError(true);
+          this.setNameError_mess('Поле не может быть пустым')
+        }
+
+        if( this.getName() !== ''){
+          this.setNameError(false);
+          this.setNameError_mess('')
+        }
+
+
+        if( this.getKeyOrg() !== ''){
+          this.setOrgError(false);
+        }
+
+        if( this.getLatitude() === ''){
+          this.setLatitudeError(true);
+          this.setLatitudeError_mess('Поле не должно быть пустым')
+        }
+
+        if( this.getLatitude() !== ''){
+          this.setLatitudeError(false);
+          this.setLatitudeError_mess('')
+        }
+
+
+        if( this.getLongitude() === ''){
+          this.setLongitudeError(true);
+          this.setLongitudeError_mess('Поле не должно быть пустым')
+        }
+
+        if( this.getLongitude() !== ''){
+          this.setLongitudeError(false);
+          this.setLongitudeError_mess('')
+        }
+         
+
+        if(this.getName() !== '' && this.getLatitude() !== '' && this.getLongitude() !== '' && this.getKeyOrg() !== ''){
+          q.args = {
             g_name: this.getName() || '',
             latitude:this.getLatitude() || '', 
             longitude:this.getLongitude() || '', 
@@ -94,6 +170,8 @@ export class DevsGroupStorage{
          }; 
           q.sess_code = sess_code;
          (await WSocket.get()).send(q); 
+         }
+       
        }
 
 
@@ -102,7 +180,6 @@ export class DevsGroupStorage{
         var sess_code = value;
         var q:IWSQuery = new WSQuery("get_DevsGroups");
         q.args = {
-            //Пофикситть, порлучить инфу из запроса с данными пользователя 
             users_w: true,
             org_id: this.getOrgId() || ''
         }; 
@@ -110,7 +187,7 @@ export class DevsGroupStorage{
          (await WSocket.get()).send(q);  
     }
 
-    setDevsGroupsAll(dt: IWSResult) { /* -----  Получаем всех пользователей   */
+    setDevsGroupsAll(dt: IWSResult) { /* -----  Получаем все группы устройств   */
       this.setDevsGroups(dt.data);
      }
 

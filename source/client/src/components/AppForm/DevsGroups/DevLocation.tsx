@@ -10,6 +10,11 @@ import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 // import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 interface IProps {}
@@ -28,6 +33,7 @@ export class DevLocation extends React.Component<IProps> {
   }
 
   async setValue() {
+  
     let devs_g = [];
     let DevGr = [];
 
@@ -37,7 +43,8 @@ export class DevLocation extends React.Component<IProps> {
       ).length !== 0 &&
       JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
         .constructor === Object
-    ) {
+    ) 
+    {
       devs_g = JSON.parse(
         JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
       );
@@ -72,9 +79,8 @@ export class DevLocation extends React.Component<IProps> {
       parent.push(
         childs
         );
-
+    
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
-
         APP_STORAGE.devs_groups.setName(String(gr.g_name)); //////////////исправить ощибку ( добавить функцию )
         APP_STORAGE.devs_groups.setLongitude(String(gr.longitude)); /////////////////
         APP_STORAGE.devs_groups.setLatitude(String(gr.latitude)); ///////////////////
@@ -107,16 +113,11 @@ export class DevLocation extends React.Component<IProps> {
       );
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
-        // APP_STORAGE.devs_groups.name =(String(gr.g_name)); //////////////исправить ощибку ( добавить функцию )
-        // APP_STORAGE.devs_groups.setLongitude(String(gr.longitude));/////////////////
-        // APP_STORAGE.devs_groups.setLatitude(String(gr.latitude));///////////////////
-        // APP_STORAGE.devs_groups.setInfo(String(gr.g_info));////////////////////////
-        // APP_STORAGE.devs_groups.setKeyOrg(String(gr.org_id))////////////////////////////////////////
-        // APP_STORAGE.devs_groups.setParent(String(gr.parent_id))////////////////////////////////////////
 
         parent.push(
           <React.Fragment key={String(gr.id)}>
             <Box
+            id="long-button"
               sx={{
                 width: "1100px;",
                 background: "#fff",
@@ -144,7 +145,37 @@ export class DevLocation extends React.Component<IProps> {
                   </Typography>
                 </Box>
 
-                <LongMenu />
+                
+              <div>
+      <IconButton
+        onClick={() => {APP_STORAGE.devs_groups.setOpen_menu(true)}}
+        id='long-button555'
+        aria-label="more"
+        aria-controls={open ? 'long-menu' : undefined}
+        aria-expanded={open ? 'true' : undefined}
+        aria-haspopup="true"
+        // onClick={handleClick}
+      >
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id="long-menu"
+        MenuListProps={{
+          'aria-labelledby': 'long-button',
+        }}
+        anchorEl={document.getElementById('long-button555')}
+        open={APP_STORAGE.devs_groups.getOpen_menu()}
+        onClose={() => {APP_STORAGE.devs_groups.setOpen_menu(false)}}
+      
+      >
+       
+          <MenuItem >
+            <Typography onClick={() => this.setValue()} > Редактировать</Typography>
+          </MenuItem>
+        
+      </Menu>
+    </div>
+
               </Box>
               <Box
                 sx={{
@@ -211,13 +242,17 @@ export class DevLocation extends React.Component<IProps> {
                 </Box>
               </Box>
 
-              <Typography
+              {/* <Typography
                 sx={{ alignSelf: "center" }}
                 onClick={() => this.setValue()}
               >
                 {" "}
                 Редактировать
-              </Typography>
+              </Typography> */}
+
+
+
+
             </Box>
           </React.Fragment>
         );

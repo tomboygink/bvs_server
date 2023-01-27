@@ -12,12 +12,12 @@ import {DevsGroups} from './DevsGroups/DevsGroups';
 import {AdoutDevs} from './DevsGroups/AdoutDevs'
 import {WorkingWithDev} from './DevsGroups/WorkingWithDev'
 import {DevLocation} from './DevsGroups/DevLocation'
-import {ModalDevs} from './DevsGroups/ModalDevs';
+import {ModalDevsGroup} from './DevsGroups/ModalDevsGroup';
 import {ModalDevs1} from './Devs/ModalDevs'
 import {Devs}  from './Devs/Devs';
-import {Sensors} from './Sensors/Sensors';
+import {Sensors} from './Sensors/Sensors'
 import {ChangeDevsGroups} from './DevsGroups/ChangeDevsGroups'
- 
+
 interface IProps {}
 
 //Компонент формы приложения
@@ -75,9 +75,9 @@ export class AppForm extends React.Component<IProps> {
             <AppBarPanel />
             <Modal />
             <ModalLeftPanel />
-            <ModalDevs />
+            <ModalDevsGroup />
+            <ChangeDevsGroups />
             <ModalDevs1 />
-            <ChangeDevsGroups/>
             <Box sx={{ mt: "2%" }}></Box>
           </Box>
           <Box
@@ -98,7 +98,7 @@ export class AppForm extends React.Component<IProps> {
             </Box>
             } 
              
-             <Box >
+             <Box>
               {middle_form}
             </Box>
  

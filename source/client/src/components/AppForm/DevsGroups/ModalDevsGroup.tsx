@@ -11,13 +11,20 @@ interface IProps {}
 
 //Компонент формы приложения
 @observer
-export class ModalDevs extends React.Component<IProps> {
+export class ModalDevsGroup extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }
 
-  async closeModal() {
-    APP_STORAGE.devs_groups.setOpenModal(false)
+  async set_NewDevGroup() {
+    APP_STORAGE.devs_groups.set_NewDevGroup("sess_id", APP_STORAGE.auth_form.getdt());
+    setTimeout(() => {
+      APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
+    }, 1000)
+}
+
+async closeModal() {
+  APP_STORAGE.devs_groups.setOpenModal(false)
 }
 
 async SelectedOrg(a: any) {    //// Сохраняем , то что выбрал пользователь из выпадающего списка Организации
@@ -53,7 +60,7 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
         <Box className='ModalTitle' sx = { {display: 'flex' , justifyContent: 'space-between', mb: '12px'}}> 
          
         <Typography >  
-            Добавить расположение устройства
+            Добавить расположение устройств
         </Typography>
   
         <CloseIcon  sx={{color: '#1976D2'}}
@@ -69,6 +76,8 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
           inputProps={{ style: { fontSize: 12 } }} 
           InputLabelProps={{ style: { fontSize: 12 } }} 
           variant="outlined"
+          error = {APP_STORAGE.devs_groups.getNamaError()}
+          helperText= {APP_STORAGE.devs_groups.getNamaError_mess()}
           fullWidth
           required
           label="Место расположения"
@@ -81,7 +90,10 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
           value={APP_STORAGE.devs_groups.getName()}
         />
 
-        <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+        <FormControl fullWidth size="small" sx={{ mt: "14px" }}
+         error ={APP_STORAGE.devs_groups.getOrgError()}
+         
+        >
           <InputLabel className="org" sx={{ fontSize: "12px" }}>
             Организация
           </InputLabel>
@@ -114,6 +126,8 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
           inputProps={{ style: { fontSize: 12 } }} 
           InputLabelProps={{ style: { fontSize: 12 } }} 
           variant="outlined"
+          error = {APP_STORAGE.devs_groups.getLongitudeError()}
+          helperText = {APP_STORAGE.devs_groups.getLongitudeError_mess()}
           fullWidth
           required
           label="Долгота"
@@ -131,6 +145,8 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
           inputProps={{ style: { fontSize: 12 } }} 
           InputLabelProps={{ style: { fontSize: 12 } }} 
           variant="outlined"
+          error = {APP_STORAGE.devs_groups.getLatitudeError()}
+          helperText = {APP_STORAGE.devs_groups.getLatitudeError_mess()}
           fullWidth
           required
           label="Широта"
@@ -174,7 +190,7 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
               fontSize: "12px",
             }}
              onClick={() => {
-              APP_STORAGE.devs_groups.set_NewDevGroup("sess_id", APP_STORAGE.auth_form.getdt());
+             this.set_NewDevGroup();
             }}
           >
             Сохранить

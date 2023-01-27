@@ -1,11 +1,33 @@
 $blue: #266BF1;
+$font-color : #F1F5FC;
 $margin: 40px;
+$font-weights: (
+    'regular': 400,
+    'medium': 500,
+    'bold': 700
+);
 
 body {
-  background: #F1F5FC;
+  background: $font-color;
+  font-weight: map-get($font-weights , regular);
   margin: 0;
   padding: 0;
 }
+
+.wrapper__app{
+  height: 80vh;
+  margin: 80px 40px 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.active{
+  color: #080808;
+    font-weight: 600!important;
+    margin-left: 22px!important;
+}
+
+
 .Box-login {
   display: flex;
   align-items: center;
@@ -45,5 +67,11 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
 .css-1g86id8-MuiTreeItem-content.Mui-selected {
   background: #F1F5FC;
   border-radius: 5px;
+}
+
+.wrapper_app.MuiBox-root.css-0 {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 

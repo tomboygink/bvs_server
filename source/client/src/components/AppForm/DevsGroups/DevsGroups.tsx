@@ -136,7 +136,7 @@ export class DevsGroups extends React.Component<IProps> {
     return (
       <React.Fragment>
         <Box
-          className="wrapper-devs"
+          
           sx={{
             mt: "44px",
             display: "flex",

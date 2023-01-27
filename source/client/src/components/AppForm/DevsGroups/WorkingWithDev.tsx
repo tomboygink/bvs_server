@@ -16,14 +16,25 @@ export class WorkingWithDev extends React.Component<IProps> {
   }
 
   async DevLocation (e:any){
+
     
     APP_STORAGE.devs_groups.setMiddleForm(e);
+    APP_STORAGE.reg_user.setOpenTableUsers(false);
     APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
    /// APP_STORAGE.devs.get_Devs("sess_id", APP_STORAGE.auth_form.getdt());
   }
   render(): React.ReactNode {
-    let sx1: any = '';
-    let sx2: any = '';
+    let sx1: any;
+    let sx2: any;
+
+    
+    if(APP_STORAGE.devs_groups.getMiddleForm() === 1){
+      sx1 = "active"
+    }
+
+    if(APP_STORAGE.devs_groups.getMiddleForm() === 2){
+      sx2 = "active"
+    }
  
       return (
         <React.Fragment>
@@ -36,7 +47,7 @@ export class WorkingWithDev extends React.Component<IProps> {
             this.DevLocation(1);
           }}>
             {/* <RoomOutlinedIcon fontSize="small"  sx={{pr: '12px', color: '#266BF1'}}/> */}
-            <Typography sx ={{color: {sx1}}} >Расположение устройств</Typography>
+            <Typography className={sx1} sx ={{color: {sx1}}} >Расположение устройств</Typography>
           </Box>
 
           <Box sx={{display: 'flex', alignItems: 'flex-start' ,  pb: '12px'}}
@@ -44,7 +55,7 @@ export class WorkingWithDev extends React.Component<IProps> {
               this.DevLocation(2);
             }}>
             {/* <FormatListNumberedIcon fontSize="small"  sx={{pr: '12px', color: '#266BF1'}}/> */}
-            <Typography sx ={{color: {sx2}}}> Список устройств</Typography>
+            <Typography className={sx2}> Список устройств</Typography>
           </Box>
 
           <Box sx={{display: 'flex', alignItems: 'flex-start' }}>
