@@ -13,6 +13,11 @@ import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 
 interface IProps {}
 
@@ -43,18 +48,43 @@ export class Devs extends React.Component<IProps> {
       var gr_childs = dgr.childs;
       var gr_devs = dgr.devs;
               for ( var key in gr_devs ){
-                
                   if ( ("_dev_id_key_" + gr_devs[key].id === APP_STORAGE.devs.getIdChild())){
-                    
                     devs.push(
                         <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
+    <Box sx = {{display:'flex', justifyContent: 'space-between'}}>
+    <Typography fontSize='small' sx ={{color: '#645757'}}>Место расположения - {gr.g_name} </Typography> 
+    <div>
+      <IconButton
+        onClick={() => {APP_STORAGE.devs_groups.setOpen_menu(true)}}
+        id='long-button555'
+        aria-label="more"
+        aria-controls={open ? 'long-menu' : undefined}
+        aria-expanded={open ? 'true' : undefined}
+        aria-haspopup="true"
+        // onClick={handleClick}
+      >
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id="long-menu"
+        MenuListProps={{
+          'aria-labelledby': 'long-button',
+        }}
+        anchorEl={document.getElementById('long-button555')}
+        open={APP_STORAGE.devs_groups.getOpen_menu()}
+        onClose={() => {APP_STORAGE.devs_groups.setOpen_menu(false)}}
+      
+      >
+       
+          <MenuItem >
+            <Typography> Редактировать</Typography>
+          </MenuItem>
+        
+      </Menu>
+    </div>
 
-                        <Typography fontSize='small' sx ={{color: '#645757'}}>Место расположения - {gr.g_name} </Typography> 
-
+    </Box>
                         <Box sx ={{borderLeft: '1px solid #266bf18c', pl: '12px', borderRadius: '4px'}}>
-
-                       
-
                         <Box>
           <Typography sx ={{fontWeight: 500}}>{gr_devs[key].name}</Typography>
           <Typography sx={{fontSize: '12px', color: 'grey'}}>

@@ -86,6 +86,8 @@ async ChekedForEdit(editing: any) {
           inputProps={{ style: { fontSize: 12 } }} 
           InputLabelProps={{ style: { fontSize: 12 } }} 
           variant="outlined"
+          error = {APP_STORAGE.devs_groups.getNamaError()}
+          helperText= {APP_STORAGE.devs_groups.getNamaError_mess()}
           fullWidth
           required
           label="Место расположения"
@@ -98,7 +100,9 @@ async ChekedForEdit(editing: any) {
           value={APP_STORAGE.devs_groups.getName()}
         />
 
-        <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+        <FormControl fullWidth size="small" sx={{ mt: "14px" }}
+        error ={APP_STORAGE.devs_groups.getOrgError()}
+        >
           <InputLabel className="org" sx={{ fontSize: "12px" }}>
             Организация
           </InputLabel>
@@ -131,6 +135,8 @@ async ChekedForEdit(editing: any) {
           inputProps={{ style: { fontSize: 12 } }} 
           InputLabelProps={{ style: { fontSize: 12 } }} 
           variant="outlined"
+          error = {APP_STORAGE.devs_groups.getLongitudeError()}
+          helperText = {APP_STORAGE.devs_groups.getLongitudeError_mess()}
           fullWidth
           required
           label="Долгота"
@@ -148,6 +154,8 @@ async ChekedForEdit(editing: any) {
           inputProps={{ style: { fontSize: 12 } }} 
           InputLabelProps={{ style: { fontSize: 12 } }} 
           variant="outlined"
+          error = {APP_STORAGE.devs_groups.getLatitudeError()}
+          helperText = {APP_STORAGE.devs_groups.getLatitudeError_mess()}
           fullWidth
           required
           label="Широта"

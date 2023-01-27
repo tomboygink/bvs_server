@@ -102,8 +102,8 @@ export class AppForm extends React.Component<IProps> {
               {middle_form}
             </Box>
  
-            <Box className="appform">
-          <Sensors/>
+                 <Box className="appform">
+                <Sensors/>
               </Box>  
           </Box>
 

@@ -154,8 +154,7 @@ export class DevsGroups extends React.Component<IProps> {
               borderRadius: "4px",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
-              background: "#fff",
+              justifyContent: "center"
             }}
           >
             <TreeView
@@ -167,7 +166,7 @@ export class DevsGroups extends React.Component<IProps> {
               {this.drawDevsTree()}
 
             </TreeView>
-            <Box
+            {/* <Box
               sx={{
                 background: "#d5e3fda6",
                 borderTopRightRadius: "48px",
@@ -176,7 +175,7 @@ export class DevsGroups extends React.Component<IProps> {
               }}
             >
               <WorkingWithDev />
-            </Box>
+            </Box> */}
           </Box>
         </Box>
       </React.Fragment>
