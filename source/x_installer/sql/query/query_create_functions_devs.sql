@@ -71,8 +71,7 @@ AS $$
 	deleted=c_deleted,
 	g_info=c_g_info
 $$
-LANGUAGE SQL 
-
+LANGUAGE SQL;
 
 
 
