@@ -28,17 +28,77 @@ export class Devs extends React.Component<IProps> {
     super(props);
   }
 
+  async editDevice() {
+    let devs_g = [];
+    let DevGr = [];
+
+    if (
+      Object.keys(
+        JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
+      ).length !== 0 &&
+      JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
+        .constructor === Object
+    ) 
+    {
+      devs_g = JSON.parse(
+        JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
+      );
+    }
+
+    for (var key in devs_g) {
+      if (devs_g.hasOwnProperty(key)) {
+        let a = devs_g[key];
+        let root = JSON.parse(a);
+
+        if (root.childs.length > 0) {
+          for (let i = 0; i < root.childs.length; i++) {
+            DevGr.push(root.childs[i]);
+          }
+        }
+      }
+    }
+
+    return this.getValueCh(DevGr);
+  }
+
+  getValueCh(dgrs: TDevsGroup[]) {
+    var parent: React.ReactNode[] = new Array();
+    for (var ii in dgrs) {
+      var dgr: TDevsGroup = dgrs[ii];
+      var gr: TDGroup = dgr.group;
+      var gr_childs = dgr.childs;
+      var gr_devs = dgr.devs;
+      var childs: React.ReactNode[] = new Array();
+      if (gr_childs.length > 0) childs = this.getValueCh(gr_childs);
+
+      parent.push(
+        childs
+        );
+        for ( var key in gr_devs ){
+        if ( ("_dev_id_key_" + gr_devs[key].id === APP_STORAGE.devs.getIdChild())){
+          APP_STORAGE.devs.setNumber(String(gr_devs[key].number));
+          APP_STORAGE.devs.setName(String(gr_devs[key].name));
+          APP_STORAGE.devs.setLongitude(String(gr_devs[key].longitude));
+          APP_STORAGE.devs.setLatitude(String(gr_devs[key].latitude));
+          APP_STORAGE.devs.setInfo(String(gr_devs[key].info));
+          APP_STORAGE.devs.setChangeSensors(gr_devs[key].sensors.s);
+          APP_STORAGE.devs.setId(String(gr_devs[key].id));
+          APP_STORAGE.devs.setGroupDevId(String(gr_devs[key].group_dev_id))
+          
+          APP_STORAGE.devs.setOpenModalChange(true);
+      }
+    }
+    }
+    return parent;
+  }
 
   async closeModal() {
     APP_STORAGE.devs_groups.setOpenModal(false);
   }
 
-
   async SelectedOrg(a: any) {APP_STORAGE.devs_groups.setKeyOrg(a);}
 
-
   async OpenModal() {APP_STORAGE.devs.setOpenModal(true);}
-
 
   drawDevs(dgrs: TDevsGroup[]): React.ReactNode[] { //// отображаем выбранные устройства
     var devs: React.ReactNode[] = new Array();
@@ -77,7 +137,7 @@ export class Devs extends React.Component<IProps> {
       >
        
           <MenuItem >
-            <Typography onClick = { () => APP_STORAGE.devs.setOpenModal(true)}> Редактировать11</Typography>
+            <Typography onClick = { () => this.editDevice()}> Редактировать </Typography> 
           </MenuItem>
         
       </Menu>
@@ -171,13 +231,7 @@ export class Devs extends React.Component<IProps> {
   }
 
 
-
-
-
   render(): React.ReactNode {
-
-
-
     return (
       <React.Fragment>
         <Box
@@ -190,9 +244,9 @@ export class Devs extends React.Component<IProps> {
             ml: "1rem",
           }}
         >
-          <Typography sx={{ fontWeight: "500", pb: "20px" }}>
+          {/* <Typography sx={{ fontWeight: "500", pb: "20px" }}>
             Список устройств
-          </Typography>
+          </Typography> */}
 
           <Box
             sx={{
@@ -207,7 +261,6 @@ export class Devs extends React.Component<IProps> {
               mb: "16px",
             }}
           >
-            
           {this.drawDevLocation()}
         </Box>
         </Box>

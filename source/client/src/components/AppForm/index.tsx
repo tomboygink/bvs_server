@@ -10,13 +10,13 @@ import {TableUser} from '../../components/AppForm/AppBarPanel/LeftPanel/EditUser
 
 import {DevsGroups} from './DevsGroups/DevsGroups';
 import {AdoutDevs} from './DevsGroups/AdoutDevs'
-import {WorkingWithDev} from './DevsGroups/WorkingWithDev'
 import {DevLocation} from './DevsGroups/DevLocation'
 import {ModalDevsGroup} from './DevsGroups/ModalDevsGroup';
 import {ModalDevs1} from './Devs/ModalDevs'
 import {Devs}  from './Devs/Devs';
 import {Sensors} from './Sensors/Sensors'
 import {ChangeDevsGroups} from './DevsGroups/ChangeDevsGroups'
+import {ChangeDevs} from './Devs/ChangeDevs'
 
 interface IProps {}
 
@@ -75,6 +75,7 @@ export class AppForm extends React.Component<IProps> {
             <AppBarPanel />
             <Modal />
             <ModalLeftPanel />
+            <ChangeDevs />
             <ModalDevsGroup />
             <ChangeDevsGroups />
             <ModalDevs1 />

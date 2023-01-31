@@ -83,9 +83,11 @@ export class ChangeDevs extends React.Component<IProps> {
       }
     }
 
-    if (JSON.stringify(APP_STORAGE.devs.getArray())) {
-      var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getArray()));
+   
+    if (APP_STORAGE.devs.getChangeSensors()) {
+      var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
       for (var key in obj) {
+        console.log('obj[0]', obj[key])
         depth_sensors.push(
           <TableCell
             key={obj[key]}
@@ -104,14 +106,14 @@ export class ChangeDevs extends React.Component<IProps> {
             {obj[key]}
           </TableCell>
         );
-      }
+       }
     }
 
     return (
       <React.Fragment>
         <Dialog
           BackdropProps={{ style: { background: "rgba(0 0 0 / 12%)" } }}
-          open={APP_STORAGE.devs.getOpenModal()}
+          open={APP_STORAGE.devs.getOpenModalChange()}
           PaperProps={{
             sx: {
               width: "100%",
@@ -128,12 +130,12 @@ export class ChangeDevs extends React.Component<IProps> {
                 mb: "12px",
               }}
             >
-              <Typography>Редактирлвать</Typography>
+              <Typography>Редактировать устройство</Typography>
 
               <CloseIcon
                 sx={{ color: "#1976D2" }}
                 onClick={() => {
-                  APP_STORAGE.devs.setOpenModal(false);
+                  APP_STORAGE.devs.setOpenModalChange(false);
                 }}
               />
             </Box>
@@ -227,15 +229,18 @@ export class ChangeDevs extends React.Component<IProps> {
             <Box
               sx={{ border: "1px solid #eee", p: "12px", borderRadius: "4px" }}
             >
-              <Box sx={{ pb: "12px" }}>Список сенсоров на устройстве :</Box>
-              <TableContainer component={Paper}>
+              <Box sx={{ pb: "12px" }}>Список сенсоров на устройстве11111 :</Box>
+              <TableContainer  component={Paper} sx = {{maxHeight: '150px'}}>
                 <Table aria-label="caption table">
                   <TableBody>
-                    <TableRow key="12121212">{depth_sensors}</TableRow>
+                    <TableRow key="12121212">
+                      {depth_sensors}
+                      </TableRow>
                   </TableBody>
                 </Table>
               </TableContainer>
               <ModalSensors />
+
               <Button
                 onClick={() => {
                   APP_STORAGE.devs.setDepthSensors(true);
@@ -260,11 +265,8 @@ export class ChangeDevs extends React.Component<IProps> {
                   mb: "18px",
                   fontSize: "12px",
                 }}
-                onClick={() => {
-                  APP_STORAGE.devs.set_NewDevs(
-                    "sess_id",
-                    APP_STORAGE.auth_form.getdt()
-                  );
+                  onClick={() => {
+                  APP_STORAGE.devs.set_ChangeDevs("sess_id",APP_STORAGE.auth_form.getdt());
                 }}
               >
                 Сохранить
