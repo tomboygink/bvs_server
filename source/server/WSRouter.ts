@@ -289,6 +289,14 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
             */
         } break;
+        //редактирование группы по id
+        case 'set_ChangeDevsGroups':{
+            var dg = new Devs_groupsTable(q.args, q.sess_code);
+            data = await dg.updateDevsGroups();
+            wsres.code = q.sess_code;
+            wsres.error = null;
+            wsres.data = [];
+        }break;
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ УСТРОЙСТВ ПО ГРУППЕ УСТРОЙСТВА
         //Добавление нового устройства
@@ -311,7 +319,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
         } break;
         //Получение устройств по id группы 
-        case 'get_Devs': {
+   /*     case 'get_Devs': {
             var devs = new DevsTable(q.args, q.sess_code);
             data = await devs.selectDevs();
             if (data.length > 0) {
@@ -325,7 +333,19 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                     wsres.error = 'Список устройств отсутсвует';
             }
 
-        } break;
+        } break;*/
+
+        //Изменение устройства
+        case 'set_ChangeDevs':{
+            var dev = new DevsTable(q.args, q.sess_code);
+            dev.updateDevs();
+            wsres.error = null;
+            wsres.code=q.sess_code;
+            wsres.data=[];
+        }
+        break;
+            
+
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
         case 'deleteCookie': {

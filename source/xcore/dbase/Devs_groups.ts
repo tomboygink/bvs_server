@@ -97,7 +97,7 @@ export class Devs_groupsTable {
 
     }
 
-
+    //Преобразоватие в дерево 
     async _d_tree(childs: any) {
 
         var d:any[];
@@ -157,10 +157,23 @@ export class Devs_groupsTable {
         if(isArray){sstr += "]";}else{sstr += "}";}
         return sstr;
     }
-
     escStr(str:string):string{
         var reti = str.replace(/[\\]/g, "\\\\");
         reti = reti.replace(/["]/g, '\\"');
         return reti;
+    }
+
+    //Редактирование группы 
+    async updateDevsGroups(){
+        await this.db.query("SELECT * FROM UpdateDevs_Group("+
+        "CAST ("+this.args.id+" AS BIGINT), "+
+        "CAST ("+this.args.parent_id+" AS BIGINT), "+
+        "CAST ('"+this.args.name+"' AS VARCHAR(250)), "+
+        "CAST ('"+this.args.latitude+"' AS VARCHAR(60)), "+
+        "CAST ('"+this.args.longitude+"' AS VARCHAR(60)), "+
+        "CAST ("+this.args.org_id+" AS BIGINT), "+
+        "CAST ("+this.args.ord_id+" AS INTEGER), "+
+        "CAST ('"+this.args.deleted+"' AS BOOLEAN), "+
+        "CAST ('"+this.args.info+"' AS TEXT))");
     }
 }
