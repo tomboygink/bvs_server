@@ -52,7 +52,7 @@ var Devs_groups_1 = require("../xcore/dbase/Devs_groups");
 var Devs_1 = require("../xcore/dbase/Devs");
 function WSRoute(_ws, q) {
     return __awaiter(this, void 0, void 0, function () {
-        var wsres, sess_code, data, _a, st, ut, code, ut, st, old_pass, pass, sendMail, _b, orgs, orgs, jobs, jobs, ut, ut, dg, dg, dev, devs;
+        var wsres, sess_code, data, _a, st, ut, code, ut, st, old_pass, pass, sendMail, _b, orgs, orgs, jobs, jobs, ut, ut, dg, dg, dg, dev;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -77,8 +77,8 @@ function WSRoute(_ws, q) {
                         case 'get_AllUser': return [3, 40];
                         case 'set_NewDevGroup': return [3, 42];
                         case 'get_DevsGroups': return [3, 47];
-                        case 'set_NewDevs': return [3, 49];
-                        case 'get_Devs': return [3, 51];
+                        case 'set_ChangeDevsGroups': return [3, 49];
+                        case 'set_NewDevs': return [3, 51];
                         case 'deleteCookie': return [3, 53];
                     }
                     return [3, 54];
@@ -346,9 +346,18 @@ function WSRoute(_ws, q) {
                     wsres.data = [data];
                     return [3, 55];
                 case 49:
+                    dg = new Devs_groups_1.Devs_groupsTable(q.args, q.sess_code);
+                    return [4, dg.updateDevsGroups()];
+                case 50:
+                    data = _c.sent();
+                    wsres.code = q.sess_code;
+                    wsres.error = null;
+                    wsres.data = [];
+                    return [3, 55];
+                case 51:
                     dev = new Devs_1.DevsTable(q.args, q.sess_code);
                     return [4, dev.insertDevs()];
-                case 50:
+                case 52:
                     data = _c.sent();
                     if (data[0].id === 0 || data === null || data === undefined) {
                         wsres.code = q.sess_code;
@@ -359,22 +368,6 @@ function WSRoute(_ws, q) {
                         wsres.code = q.sess_code;
                         wsres.data = [];
                         wsres.error = null;
-                    }
-                    return [3, 55];
-                case 51:
-                    devs = new Devs_1.DevsTable(q.args, q.sess_code);
-                    return [4, devs.selectDevs()];
-                case 52:
-                    data = _c.sent();
-                    if (data.length > 0) {
-                        wsres.code = q.sess_code;
-                        wsres.error = null;
-                        wsres.data = data;
-                    }
-                    else {
-                        wsres.code = q.sess_code;
-                        wsres.data = [],
-                            wsres.error = 'Список устройств отсутсвует';
                     }
                     return [3, 55];
                 case 53:
