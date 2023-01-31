@@ -19,8 +19,8 @@ export class ModalDevsGroup extends React.Component<IProps> {
   async set_NewDevGroup() {
     APP_STORAGE.devs_groups.set_NewDevGroup("sess_id", APP_STORAGE.auth_form.getdt());
     setTimeout(() => {
-      APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
-    }, 1000)
+      APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt());
+    }, 1000);
 }
 
 async closeModal() {

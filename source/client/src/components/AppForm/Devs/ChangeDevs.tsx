@@ -128,7 +128,7 @@ export class ChangeDevs extends React.Component<IProps> {
                 mb: "12px",
               }}
             >
-              <Typography>Добавить устройство</Typography>
+              <Typography>Редактирлвать</Typography>
 
               <CloseIcon
                 sx={{ color: "#1976D2" }}

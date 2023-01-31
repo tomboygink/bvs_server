@@ -222,13 +222,7 @@ async ChekedForEdit(editing: any) {
         </Box>
              
         </Box>
-     
-              
-        
-  
         </Dialog>
-    
-    
         </React.Fragment>
     );
   }

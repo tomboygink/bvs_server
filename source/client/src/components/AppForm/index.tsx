@@ -56,15 +56,15 @@ export class AppForm extends React.Component<IProps> {
 
     var middle_form:React.ReactNode = <></>;
 
-    if(APP_STORAGE.devs_groups.getMiddleForm() === 1){
+    if(APP_STORAGE.devs_groups.getMiddleForm() === 1 || APP_STORAGE.devs_groups.getMiddleForm() ===  ''){
       middle_form = <DevLocation />
     }
       if(APP_STORAGE.devs_groups.getMiddleForm() === 2){
       middle_form = <Devs />
     }
-    if(APP_STORAGE.devs_groups.getMiddleForm() === ''){
-      middle_form = <AdoutDevs />
-    }
+    // if(APP_STORAGE.devs_groups.getMiddleForm() === ''){
+    //   middle_form = <AdoutDevs />
+    // }
 
 
     

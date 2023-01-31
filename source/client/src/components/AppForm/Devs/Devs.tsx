@@ -77,7 +77,7 @@ export class Devs extends React.Component<IProps> {
       >
        
           <MenuItem >
-            <Typography> Редактировать</Typography>
+            <Typography onClick = { () => APP_STORAGE.devs.setOpenModal(true)}> Редактировать11</Typography>
           </MenuItem>
         
       </Menu>
@@ -176,33 +176,7 @@ export class Devs extends React.Component<IProps> {
 
   render(): React.ReactNode {
 
-    let new_dev = [];
-   
-    if(APP_STORAGE.devs.getIdDevs() === ''){
-      new_dev.push(
-        <Typography key='5555'> Чтобы добавить устройство, необходимо выбрать расположение или добавить новое</Typography>
-      )
-    }
-    else{
-      new_dev.push(
-        <Box
-        key='55553434'
-        sx={{
-          background: "#F1F5FC",
-          width: "180px",
-          color: "#000",
-          p: "8px",
-          borderRadius: "4px",
-          mt: '12px'
-        }}
-        onClick={() => {
-          this.OpenModal();
-        }}
-      >
-      <Typography> Добавить устройство</Typography>
-      </Box>
-      )
-    }
+
 
     return (
       <React.Fragment>
@@ -235,8 +209,6 @@ export class Devs extends React.Component<IProps> {
           >
             
           {this.drawDevLocation()}
-
-           {new_dev}
         </Box>
         </Box>
       </React.Fragment>

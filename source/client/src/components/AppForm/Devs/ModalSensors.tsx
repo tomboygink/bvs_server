@@ -52,11 +52,12 @@ export class ModalSensors extends React.Component<IProps> {
                 size="small"
                 fullWidth
                 id="outlined-number"
-                label="Глубина"
-                type="Глубина"
+                label="Глубина2"
+                type="number"
                 InputLabelProps={{
                   shrink: true,
                 }}
+                inputProps={{ inputMode: 'decimal', step:0.1, pattern:'[0..9]*[\.][0..9]*' }} 
                 onChange={(e) => {
                   APP_STORAGE.devs.setSensors(Number(e.target.value));
                 }}

@@ -32,6 +32,14 @@ export class ModalDevs1 extends React.Component<IProps> {
     APP_STORAGE.devs_groups.setOpenModal(false)
 }
 
+async UpdateDate(){
+  alert('12123')
+  APP_STORAGE.devs.set_NewDevs("sess_id", APP_STORAGE.auth_form.getdt());
+  setTimeout(() => {
+    APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt());
+  }, 1000);
+}
+
 async SelectedOrg(a: any) { 
     APP_STORAGE.devs_groups.setKeyOrg(a);
   }
@@ -56,6 +64,8 @@ async SelectedOrg(a: any) {
       }
     }
 
+
+   
 
     let group_devs = [];
     let devs = JSON.parse(
@@ -209,8 +219,8 @@ async SelectedOrg(a: any) {
 
 
 
-  <Box sx = {{pb: '12px'}}>Список сенсоров на устройстве :</Box>
-  <TableContainer  component={Paper}>
+  <Box sx = {{pb: '12px'}}>Список сенсоров на устройстве : </Box>
+  <TableContainer  component={Paper} sx = {{maxHeight: '150px'}}>
               <Table aria-label="caption table">
                 <TableBody>
                 <TableRow key ='12121212'>
@@ -241,8 +251,8 @@ async SelectedOrg(a: any) {
               mb: "18px",
               fontSize: "12px",
             }}
-             onClick={() => {
-              APP_STORAGE.devs.set_NewDevs("sess_id", APP_STORAGE.auth_form.getdt());
+             onClick={() => {  
+              this.UpdateDate();
             }}
           >
             Сохранить
