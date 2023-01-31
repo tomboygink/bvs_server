@@ -13,7 +13,7 @@ import { handleChange } from "../Devs/StyledTreeItem";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SensorsIcon from "@mui/icons-material/Sensors";
 
-import { WorkingWithDev } from "./WorkingWithDev";
+
 import FolderIcon from "@mui/icons-material/Folder";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
@@ -21,6 +21,7 @@ import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDevice } from "../../../storage/components/Devs/DevEntityes";
 
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
+import FolderZipIcon from '@mui/icons-material/FolderZip';
 
 interface IProps {
   devs_tree: TDevsGroup;
@@ -55,7 +56,7 @@ export class DevsGroups extends React.Component<IProps> {
         <TreeItem
           nodeId={"_dev_id_key_" + dev.id}
           label={dev.name}
-          icon={<CrisisAlertIcon fontSize="small"/>}
+          icon={<CrisisAlertIcon fontSize="small" sx={{color: '#266BF1'}}/>}
           sx={{ color: "#266BF1" }}
         ></TreeItem>
       </React.Fragment>
@@ -77,8 +78,8 @@ export class DevsGroups extends React.Component<IProps> {
         for (var dii in gr_devs) childs.push(this.drawDeviceItem(gr_devs[dii]));
       }
 
-      var icon = <FolderIcon fontSize="small" sx={{ color: "#FFE2C0", borderLeft: '1px solid #eee' }} />;
-      if (gr_childs.length > 0) icon = <ExpandMoreIcon fontSize="small" />;
+      var icon = <FolderIcon fontSize="small" sx={{ color: "#FFE2C0"}} />;
+      if (gr_childs.length > 0) icon = <FolderZipIcon fontSize="small" sx ={{color: '#FFAD4E'}}/>;
       if (gr_devs.length > 0) icon = <FolderIcon fontSize="small" sx={{ color: "#FFE2C0" }} />;
       if (gr_childs.length > 0 && gr_devs.length > 0)
         icon = <FolderIcon fontSize="small" sx={{ color: "#FFE2C0" }} />;
@@ -90,7 +91,7 @@ export class DevsGroups extends React.Component<IProps> {
               nodeId={String(gr.id)}
               label={gr.g_name}
               icon={icon}
-              sx={{ color: "#222", borderLeft: '1px solid #eee' }}
+              sx={{ color: "#222", borderLeft: '1px solid #c1c1c1' }}
             >
               {childs}
             </TreeItem>
@@ -145,9 +146,10 @@ export class DevsGroups extends React.Component<IProps> {
             ml: "1rem",
           }}
         >
-          <Typography sx={{ fontWeight: "500", pb: "20px" }}>
+          {/* <Typography sx={{ fontWeight: "500", pb: "20px" }}>
             Список групп устройств
-          </Typography>
+          </Typography> */}
+
           <Box
             sx={{
               width: "290px",
@@ -159,15 +161,16 @@ export class DevsGroups extends React.Component<IProps> {
             }}
           >
             <TreeView
+            className="wrapper_treeviw"
               onNodeSelect={handleChange}
-              defaultExpanded={["1"]}
+              defaultExpanded={["1", '2', '3', '4', '5']}
               aria-label="customized"
-              sx={{ flexGrow: 1, maxWidth: 400, p: "25px" }}
+              sx={{ flexGrow: 1, maxWidth: 400, p: "25px" , height: "85vh", overflow: 'auto'}}
             >
               {this.drawDevsTree()}
 
             </TreeView>
-            <Box
+            {/* <Box
               sx={{
                 background: "#d5e3fda6",
                 borderTopRightRadius: "48px",
@@ -176,7 +179,7 @@ export class DevsGroups extends React.Component<IProps> {
               }}
             >
               <WorkingWithDev />
-            </Box>
+            </Box> */}
           </Box>
         </Box>
       </React.Fragment>

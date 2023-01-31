@@ -140,11 +140,12 @@ export class Sensors extends React.Component<IProps> {
             alignItems: "flex-start;",
             ml: "1rem",
             mr: "32px",
+            height: '90vh'
           }}
         >
-          <Typography sx={{ fontWeight: "500", pb: "20px" }}>
+          {/* <Typography sx={{ fontWeight: "500", pb: "20px" }}>
             Список сенсоров
-          </Typography>
+          </Typography> */}
 
           <Box
             sx={{
@@ -154,7 +155,7 @@ export class Sensors extends React.Component<IProps> {
               borderRadius: "4px",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
+              justifyContent: "center"
             }}
           >
             <Paper
@@ -198,6 +199,7 @@ export class Sensors extends React.Component<IProps> {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
+              overflow: 'auto'
             }}
           >
             <TableContainer>

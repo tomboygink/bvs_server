@@ -45,11 +45,12 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   max-height: 200px;
   overflow-y: scroll;
 }
-ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar {
+ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar , .css-ne4h0p-MuiPaper-root-MuiTableContainer-root::-webkit-scrollbar {
   width: 1px;
   background-color: #fff;
 }
-ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar-thumb {
+ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar-thumb,
+.css-ne4h0p-MuiPaper-root-MuiTableContainer-root::-webkit-scrollbar-thumb {
   width: 1px;
   background-color: #1890ff;
 }
@@ -75,3 +76,11 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+.css-g7pccu-MuiTreeView-root::-webkit-scrollbar {
+  width: 4px;
+  background-color: #fff;
+} 
+.css-g7pccu-MuiTreeView-root::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: #c8cdd3;
+}

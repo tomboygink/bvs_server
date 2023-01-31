@@ -199,6 +199,43 @@ export class DevsGroupStorage{
      async set_ChangeDevsGroups(name: string, value: any, _options?: any) { 
         var sess_code = value;
         var q: IWSQuery = new WSQuery("set_ChangeDevsGroups");
+
+        if( this.getName() === ''){
+          this.setNameError(true);
+          this.setNameError_mess('Поле не может быть пустым')
+        }
+
+        if( this.getName() !== ''){
+          this.setNameError(false);
+          this.setNameError_mess('')
+        }
+
+
+        if( this.getKeyOrg() !== ''){
+          this.setOrgError(false);
+        }
+
+        if( this.getLatitude() === ''){
+          this.setLatitudeError(true);
+          this.setLatitudeError_mess('Поле не должно быть пустым')
+        }
+
+        if( this.getLatitude() !== ''){
+          this.setLatitudeError(false);
+          this.setLatitudeError_mess('')
+        }
+
+
+        if( this.getLongitude() === ''){
+          this.setLongitudeError(true);
+          this.setLongitudeError_mess('Поле не должно быть пустым')
+        }
+
+        if( this.getLongitude() !== ''){
+          this.setLongitudeError(false);
+          this.setLongitudeError_mess('')
+        }
+        if(this.getName() !== '' && this.getLatitude() !== '' && this.getLongitude() !== '' && this.getKeyOrg() !== ''){
         q.args = {
             id: this.getParentId() || "",
             parent_id: this.getParent() || "",
@@ -213,9 +250,8 @@ export class DevsGroupStorage{
         
         q.sess_code = sess_code;
         (await WSocket.get()).send(q);
-       
-
       }
+    }
 
     }
 

@@ -31,9 +31,10 @@ export class DevLocation extends React.Component<IProps> {
     APP_STORAGE.devs_groups.setOpenModal(true);
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
   }
-
+  async UpdateDate(){
+    APP_STORAGE.devs.setOpenModal(true)
+  }
   async setValue() {
-  
     let devs_g = [];
     let DevGr = [];
 
@@ -170,7 +171,11 @@ export class DevLocation extends React.Component<IProps> {
       >
        
           <MenuItem >
-            <Typography onClick={() => this.setValue()} > Редактировать</Typography>
+            <Typography onClick={() => this.setValue()} > Редактировать</Typography><br/>
+          </MenuItem>
+          <MenuItem >
+            <Typography onClick={() => APP_STORAGE.devs.setOpenModal(true)} > Добавить устройство</Typography>
+         
           </MenuItem>
         
       </Menu>
@@ -238,6 +243,7 @@ export class DevLocation extends React.Component<IProps> {
                       {" "}
                       Добавить
                     </Typography>
+                   
                   </Box>
                 </Box>
               </Box>
@@ -294,9 +300,9 @@ export class DevLocation extends React.Component<IProps> {
             ml: "1rem",
           }}
         >
-          <Typography sx={{ fontWeight: "500", pb: "20px" }}>
+          {/* <Typography sx={{ fontWeight: "500", pb: "20px" }}>
             Расположение устройств
-          </Typography>
+          </Typography> */}
           <Box
             sx={{
               width: "1100px;",
@@ -319,7 +325,7 @@ export class DevLocation extends React.Component<IProps> {
               }}
               onClick={() => this.OpenModal("0")}
             >
-              <Typography> Добавить новое </Typography>
+              <Typography sx ={{display: 'flex'}}> Добавить новое расположение</Typography>
             </Box>
           </Box>
           {this.drawDevLocation()}
