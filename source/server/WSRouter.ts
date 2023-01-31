@@ -336,6 +336,16 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         } break;*/
 
         //Изменение устройства
+        case 'set_ChangeDevs':{
+            var dev = new DevsTable(q.args, q.sess_code);
+            dev.updateDevs();
+            wsres.error = null;
+            wsres.code=q.sess_code;
+            wsres.data=[];
+        }
+        break;
+            
+
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
         case 'deleteCookie': {
