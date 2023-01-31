@@ -34,7 +34,7 @@ export class DevLocation extends React.Component<IProps> {
   async UpdateDate(){
     APP_STORAGE.devs.setOpenModal(true)
   }
-  async setValue() {
+  async editDeviceLocation() {
     let devs_g = [];
     let DevGr = [];
 
@@ -171,7 +171,7 @@ export class DevLocation extends React.Component<IProps> {
       >
        
           <MenuItem >
-            <Typography onClick={() => this.setValue()} > Редактировать</Typography><br/>
+            <Typography onClick={() => this.editDeviceLocation()} > Редактировать</Typography><br/> 
           </MenuItem>
           <MenuItem >
             <Typography onClick={() => APP_STORAGE.devs.setOpenModal(true)} > Добавить устройство</Typography>

@@ -18,6 +18,8 @@ export class DevsStorage{
 
     @observable open_modal: boolean = false;
 
+    @observable open_modal_change: boolean = false;
+
     @observable user_role : boolean = null;
     @observable org_id: number = null; 
 
@@ -25,8 +27,10 @@ export class DevsStorage{
     @observable parent1: number = null;
 
     @observable add_sensors: boolean = false; ///// модальное окно для добавления сенсоров
+    @observable get_sensors: Array<any> = [];
     ////// Добавление нового устройства
-
+    @observable id :string = '';
+    @observable group_dev_id = '';
     @observable number : string = '';
     @observable name : string = '';
     @observable latitude : string = '';
@@ -35,9 +39,6 @@ export class DevsStorage{
     @observable info : string = '';
     @observable sensors : number = null;
     @observable select_id_dev : string = ''; 
-
-
-
     //////////////////////////////////////////// Проверка
    
   
@@ -69,7 +70,15 @@ export class DevsStorage{
     @action setOpenModal ( val : boolean ) {this.open_modal = val};
     @computed getOpenModal ():  boolean {return this.open_modal};
 
+    @action setOpenModalChange ( val : boolean ) {this.open_modal_change = val};
+    @computed getOpenModalChange (): boolean {return this.open_modal_change} /// открываем модальное окно редактирования
+
      ////// Добавление нового устройства
+     @observable setId(val : string ) { this.id = val};
+     @observable getId () : string { return this.id}
+
+     @observable setGroupDevId(val : string ) { this.group_dev_id = val};
+     @observable getGroupDevId () : string { return this.group_dev_id}
 
      @action setNumber ( val : string ) {this.number = val};
      @computed getNumber ():  string {return this.number};
@@ -103,6 +112,9 @@ export class DevsStorage{
 
      @action setDepthSensors (val : boolean) {this.add_sensors = val}; /// Добавление сенсоров (модальное окно)
      @computed getDepthSensors () : boolean {return this.add_sensors }
+
+     @action setChangeSensors (val : Array<any>) {this.get_sensors = val}
+     @computed getChangeSensors () : Array<any> {return this.get_sensors}
 
 
    async get_Devs (name: string, value: any, _options?: any){
@@ -156,5 +168,29 @@ export class DevsStorage{
      this.array.push(value);
      this.setArray(this.array)
    }
+
+
+   async set_ChangeDevs(name: string, value: any, _options?: any) { 
+    var sess_code = value;
+    var q: IWSQuery = new WSQuery("set_ChangeDevs");
+
+    if(this.getNumber() && this.getName() !== '' && this.getLatitude() !== '' && this.getLongitude() !== ''){
+
+    q.args = {
+        id: this.getId() || "",
+        group_dev_id: this.getGroupDevId() || '',
+        number: this.getNumber() || '',
+        name: this.getName() || "",
+        latitude: this.getLatitude() || "",
+        longitude: this.getLongitude() || "",
+        sensors: '{\"s\":[' + this.getChangeSensors() + ']}',
+        info: this.getInfo() || ""
+      };
+    
+    q.sess_code = sess_code;
+    (await WSocket.get()).send(q);
+  }
+}
+   
     }
  
