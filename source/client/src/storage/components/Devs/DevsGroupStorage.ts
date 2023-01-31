@@ -10,7 +10,7 @@ export class DevsGroupStorage{
     @observable middle_form: any = '';
 
     @observable org_id: number = null;
-
+    @observable set_org_id : number = 0;
 
     @observable name:string = '';
     @observable key_org: any= ''
@@ -54,8 +54,10 @@ export class DevsGroupStorage{
     @computed getOpen_menu() : boolean {return this.open_menu}
 
     @action setOrgId(val : number ) { this.org_id = val};
-    @computed getOrgId () : number { return this.org_id}
+    @computed getOrgId () : number { return this.org_id};
 
+    @action setOrg(val : number ) { this.set_org_id = val};
+    @computed getOrg () : number { return this.set_org_id}
 
     @action setOpenListDev (val: boolean) {this.open_devs_list = val}
     @computed getOpenListDev() : boolean {return this.open_devs_list}

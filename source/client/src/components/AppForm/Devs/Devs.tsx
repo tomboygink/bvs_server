@@ -112,7 +112,7 @@ export class Devs extends React.Component<IProps> {
                     devs.push(
                         <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
     <Box sx = {{display:'flex', justifyContent: 'space-between'}}>
-    <Typography fontSize='small' sx ={{color: '#645757'}}>Место расположения - {gr.g_name} </Typography> 
+    <Typography  sx ={{color: '#645757', fontWeight: '600'}}>Место расположения - {gr.g_name} </Typography> 
     <div>
       <IconButton
         onClick={() => {APP_STORAGE.devs_groups.setOpen_menu(true)}}
@@ -176,6 +176,20 @@ export class Devs extends React.Component<IProps> {
                           autoFocus  
                           ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
                           value={gr_devs[key].longitude}
+                          />
+
+                          
+                      <TextField
+                          variant="outlined"
+                          margin="normal"
+                          size="small"
+                          required
+                          fullWidth
+                          id="Информация"
+                          label="Информация"
+                          autoFocus  
+                          ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
+                          value={gr_devs[key].info}
                           />
                         </Box>
                      

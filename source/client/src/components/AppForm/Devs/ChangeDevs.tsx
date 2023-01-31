@@ -31,6 +31,10 @@ import SensorsIcon from "@mui/icons-material/Sensors";
 
 import { ModalSensors } from "./ModalSensors";
 
+import AddIcon from "@mui/icons-material/Add";
+import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+
 interface IProps {}
 
 //Компонент формы приложения
@@ -87,15 +91,14 @@ export class ChangeDevs extends React.Component<IProps> {
     if (APP_STORAGE.devs.getChangeSensors()) {
       var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
       for (var key in obj) {
-        console.log('obj[0]', obj[key])
         depth_sensors.push(
-          <TableCell
+          <TableRow key="12121212">
+            <TableCell
             key={obj[key]}
             sx={{
               display: "flex",
               fontWeight: "700",
               border: "none",
-              p: "4px",
             }}
             align="left"
           >
@@ -103,8 +106,20 @@ export class ChangeDevs extends React.Component<IProps> {
               fontSize="small"
               sx={{ pr: "9px", color: "#5be95b" }}
             />{" "}
-            {obj[key]}
+            {obj[key]} 
           </TableCell>
+
+<TableCell align="left" sx={{ color: "#038F54" }}>
+<AddIcon fontSize="small" />
+</TableCell>
+<TableCell align="left" sx={{ color: "#1976D2" }}>
+<ModeEditOutlineOutlinedIcon fontSize="small" />
+</TableCell>
+<TableCell align="left" sx={{ color: "#FF4848" }}>
+<DeleteOutlineOutlinedIcon fontSize="small" />
+</TableCell>
+          </TableRow>
+    
         );
        }
     }
@@ -233,9 +248,9 @@ export class ChangeDevs extends React.Component<IProps> {
               <TableContainer  component={Paper} sx = {{maxHeight: '150px'}}>
                 <Table aria-label="caption table">
                   <TableBody>
-                    <TableRow key="12121212">
+                
                       {depth_sensors}
-                      </TableRow>
+                     
                   </TableBody>
                 </Table>
               </TableContainer>
