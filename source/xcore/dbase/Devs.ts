@@ -49,7 +49,7 @@ export class DevsTable {
     async updateDevs(){
         await this.db.query("SELECT * FROM UpdateDevs("+
         "CAST ("+this.args.id+" AS BIGINT), "+
-        "CAST ("+this.args.dev_group_id+" AS BIGINT), "+
+        "CAST ("+this.args.group_dev_id+" AS BIGINT), "+
         "CAST ('"+this.args.number+"' AS VARCHAR(80)), "+
         "CAST ('"+this.args.name+"' AS VARCHAR(250)), "+
         "CAST ('"+this.args.latitude+"' AS VARCHAR(60)), "+
@@ -58,6 +58,4 @@ export class DevsTable {
         "CAST ('"+this.args.deleted+"' AS BOOLEAN), "+
         "CAST ('"+this.args.info+"' AS TEXT))");
     }
-
-
 }
