@@ -46,32 +46,32 @@ $$
 LANGUAGE SQL;
 
 --------------------------------------------------------------------------------------------Функция обновления группы устройства
-DROP FUNCTION IF EXISTS UpdateDevs;
-CREATE OR REPLACE FUNCTION UpdateDevs(
+DROP FUNCTION IF EXISTS UpdateDevs_Group;
+CREATE OR REPLACE FUNCTION UpdateDevs_Group(
 	c_id BIGINT,
-	c_group_dev_id BIGINT,
-	c_number VARCHAR(80),
-	c_name VARCHAR(250),
-	c_latitude VARCHAR(60),
-	c_longitude VARCHAR(60),
-	c_sensors JSON,
-	c_deleted BOOLEAN,
-	c_info TEXT
+	c_parent_id BIGINT,
+    c_g_name VARCHAR(250),
+    c_latitude VARCHAR(60),
+    c_longitude VARCHAR(60),
+    c_org_id BIGINT,
+	c_ord_num INTEGER,
+    c_deleted BOOLEAN,
+    c_g_info TEXT
 )
-RETURNS VOID 
-AS $$
-	UPDATE devs SET
-	group_dev_id=c_group_dev_id,
-	number=c_number,
-	name=c_name,
-	latitude=c_latitude,
-	longitude=c_longitude,
-	sensors=c_sensors,
-	deleted=c_deleted,
-	info = c_info 
-	WHERE id = c_id	
-$$
-LANGUAGE SQL; 
+RETURNS VOID
+as $$
+UPDATE Devs_Groups
+SET
+	parent_id = c_parent_id,
+	g_name = c_g_name,
+	latitude = c_latitude,
+	longitude = c_longitude,
+	org_id = c_org_id,
+	ord_num = c_ord_num,
+	deleted = c_deleted,
+    g_info = c_g_info
+WHERE id = c_id
+$$ LANGUAGE sql;
 
 
 
@@ -120,6 +120,7 @@ $$ LANGUAGE SQL;
 --------------------------------------------------------------------------------------------Функция обновления устройства
 DROP FUNCTION IF EXISTS UpdateDevs;
 CREATE OR REPLACE FUNCTION UpdateDevs(
+	c_id BIGINT,
 	c_group_dev_id BIGINT,
 	c_number VARCHAR(80),
 	c_name VARCHAR(250),
@@ -140,5 +141,6 @@ AS $$
 	sensors=c_sensors,
 	deleted=c_deleted,
 	info = c_info 
+	WHERE id = c_id	
 $$
 LANGUAGE SQL; 
