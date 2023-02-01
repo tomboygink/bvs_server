@@ -106,7 +106,7 @@ var DevsTable = (function () {
                 switch (_a.label) {
                     case 0: return [4, this.db.query("SELECT * FROM UpdateDevs(" +
                             "CAST (" + this.args.id + " AS BIGINT), " +
-                            "CAST (" + this.args.dev_group_id + " AS BIGINT), " +
+                            "CAST (" + this.args.group_dev_id + " AS BIGINT), " +
                             "CAST ('" + this.args.number + "' AS VARCHAR(80)), " +
                             "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
                             "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
