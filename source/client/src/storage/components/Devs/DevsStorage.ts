@@ -184,6 +184,7 @@ export class DevsStorage{
         latitude: this.getLatitude() || "",
         longitude: this.getLongitude() || "",
         sensors: '{\"s\":[' + this.getChangeSensors() + ']}',
+        deleted: false,
         info: this.getInfo() || ""
       };
     

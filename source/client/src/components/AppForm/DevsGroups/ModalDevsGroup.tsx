@@ -38,15 +38,27 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
     if (APP_STORAGE.reg_user.getOrgAll()) {
       org = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll()));
       for (var key in org) {
+        
+      
         if (org.hasOwnProperty(key)) {
           let a = org[key];
-
+          if(APP_STORAGE.devs_groups.getOrg() === Number(a.id)){
           options_org.push(  /// создаем опции выбора для выпадающего списка - организации
             <MenuItem key={a.id} sx={{ fontSize: "12px" }} value={a.id}>
               {a.full_name}
             </MenuItem>
           );
         }
+        
+        if(APP_STORAGE.devs_groups.getOrg() === 0){
+          options_org.push(  /// создаем опции выбора для выпадающего списка - организации
+            <MenuItem key={a.id} sx={{ fontSize: "12px" }} value={a.id}>
+              {a.full_name}
+            </MenuItem>
+          );
+        }
+
+       }
       }
     }
 

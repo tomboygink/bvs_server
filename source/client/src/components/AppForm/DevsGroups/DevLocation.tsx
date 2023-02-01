@@ -26,7 +26,7 @@ export class DevLocation extends React.Component<IProps> {
     super(props);
   }
 
-  async OpenModal(e: any) {
+  async OpenModal(e: any, org_id: any) { 
     APP_STORAGE.devs_groups.setParentId(e);
     APP_STORAGE.devs_groups.setOpenModal(true);
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
@@ -114,7 +114,7 @@ export class DevLocation extends React.Component<IProps> {
       );
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
-
+        APP_STORAGE.devs_groups.setOrg(Number(gr.org_id))
         parent.push(
           <React.Fragment key={String(gr.id)}>
             <Box
@@ -214,6 +214,7 @@ export class DevLocation extends React.Component<IProps> {
                   ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
                   value={gr.latitude}
                 />
+                <Box id={gr.org_id}></Box>
               </Box>
 
               <Box sx={{ display: "flex" }}>
@@ -225,7 +226,7 @@ export class DevLocation extends React.Component<IProps> {
                     p: "4px",
                     borderRadius: "4px",
                   }}
-                  onClick={() => this.OpenModal(APP_STORAGE.devs.getIdDevs())}
+                  onClick={() => this.OpenModal(APP_STORAGE.devs.getIdDevs(), Number(gr.org_id))}
                 >
                   <Box sx={{ display: "flex" }}>
                     {" "}
@@ -323,7 +324,7 @@ export class DevLocation extends React.Component<IProps> {
                 pl: "20px",
                 borderRadius: "4px",
               }}
-              onClick={() => this.OpenModal("0")}
+              onClick={() => this.OpenModal("0", 0)}
             >
               <Typography sx ={{display: 'flex'}}> Добавить новое расположение</Typography>
             </Box>

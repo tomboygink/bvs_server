@@ -57,8 +57,7 @@ export class DevsGroups extends React.Component<IProps> {
           nodeId={"_dev_id_key_" + dev.id}
           label={dev.name}
           icon={<CrisisAlertIcon fontSize="small" sx={{color: '#266BF1'}}/>}
-          sx={{ color: "#266BF1" }}
-        ></TreeItem>
+          sx={{ color: "#266BF1" }}></TreeItem>
       </React.Fragment>
     );
   }
@@ -165,7 +164,7 @@ export class DevsGroups extends React.Component<IProps> {
               onNodeSelect={handleChange}
               defaultExpanded={["1", '2', '3', '4', '5']}
               aria-label="customized"
-              sx={{ flexGrow: 1, maxWidth: 400, p: "25px" , height: "85vh", overflow: 'auto'}}
+              sx={{ flexGrow: 1, maxWidth: 400, p: "25px" , maxHeight: "85vh", height: '100',overflow: 'auto'}}
             >
               {this.drawDevsTree()}
 

@@ -29,7 +29,7 @@ class AppStorage {
     @observable change_devs_groups: ChangeDevsGroups = null;
     @observable devs : DevsStorage = null;
     @observable sensors : SensorsStorage = null;
-    
+
 
     @observable dt:any = null;
     @observable dtUser:any = null;

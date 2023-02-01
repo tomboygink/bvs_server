@@ -12,9 +12,8 @@ import { TableCell } from '@mui/material';
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 
-import AddIcon from "@mui/icons-material/Add";
-import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
@@ -56,8 +55,8 @@ export class Sensors extends React.Component<IProps> {
 
       for (var key1 in gr_devs) {
         if (
-          "_dev_id_key_" + gr_devs[key1].id === APP_STORAGE.devs.getIdChild() &&
-          APP_STORAGE.devs_groups.getMiddleForm() === 2
+          "_dev_id_key_" + gr_devs[key1].id === APP_STORAGE.devs.getIdChild() 
+          // &&  APP_STORAGE.devs_groups.getMiddleForm() === 2
         ) {
           for (var key in gr_devs[key1].sensors.s) {
             sensors.push(
@@ -72,15 +71,8 @@ export class Sensors extends React.Component<IProps> {
                   />
                   [{"" + gr_devs[key1].sensors.s[key]}]{" "}
                 </TableCell>
-                <TableCell align="left" sx={{ color: "#038F54" }}>
-                  <AddIcon fontSize="small" />
-                </TableCell>
-                <TableCell align="left" sx={{ color: "#1976D2" }}>
-                  <ModeEditOutlineOutlinedIcon fontSize="small" />
-                </TableCell>
-                <TableCell align="left" sx={{ color: "#FF4848" }}>
-                  <DeleteOutlineOutlinedIcon fontSize="small" />
-                </TableCell>
+                <TableCell><ExpandLessIcon/></TableCell>
+                <TableCell><ExpandMoreIcon/></TableCell>
               </TableRow>
             );
           }
@@ -147,53 +139,12 @@ export class Sensors extends React.Component<IProps> {
             Список сенсоров
           </Typography> */}
 
-          <Box
-            sx={{
-              width: "290px",
-              p: "25px",
-              background: "#fff",
-              borderRadius: "4px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center"
-            }}
-          >
-            <Paper
-              component="form"
-              sx={{
-                p: "2px 4px",
-                display: "flex",
-                alignItems: "center",
-                width: " 100%",
-              }}
-            >
-              <IconButton sx={{ p: "10px" }} aria-label="menu">
-                <MenuIcon />
-              </IconButton>
-              <InputBase
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="Поиск"
-                inputProps={{ "aria-label": "search google maps" }}
-              />
-              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-              <IconButton
-                color="primary"
-                sx={{ p: "10px" }}
-                aria-label="directions"
-              >
-                <DirectionsIcon />
-              </IconButton>
-            </Paper>
-          </Box>
+       
 
           <Box
             sx={{
               width: "290px",
               p: "25px",
-              mt: "22px",
               background: "#fff",
               borderRadius: "4px",
               display: "flex",
