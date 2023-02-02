@@ -27,7 +27,7 @@ export class DevsStorage{
     @observable parent1: number = null;
 
     @observable add_sensors: boolean = false; ///// модальное окно для добавления сенсоров
-    @observable get_sensors: Array<number> = [];
+    @observable get_sensors: Array<any> = [];
     @observable change_sensors: boolean = false; 
     ////// Добавление нового устройства
     @observable id :string = '';
@@ -117,8 +117,8 @@ export class DevsStorage{
      @action setDepthSensors_Ch (val : boolean) {this.change_sensors = val}; /// Добавление сенсоров (модальное окно)
      @computed getDepthSensors_Ch () : boolean {return this.change_sensors }
 
-     @action setChangeSensors (val : Array<number>) {this.get_sensors = val}
-     @computed getChangeSensors () : Array<number> {return this.get_sensors}
+     @action setChangeSensors (val : Array<any>) {this.get_sensors = val}
+     @computed getChangeSensors () : Array<any> {return this.get_sensors}
 
 
    async get_Devs (name: string, value: any, _options?: any){

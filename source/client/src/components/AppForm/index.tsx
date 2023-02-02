@@ -84,7 +84,7 @@ export class AppForm extends React.Component<IProps> {
             className="wrapper"
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
-            <Box className="appform">
+            <Box className="appform"> 
               <DevsGroupsTree />
 
               {/* <WorkingWithDev /> */}

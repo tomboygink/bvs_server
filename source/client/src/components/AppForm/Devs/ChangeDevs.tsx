@@ -49,7 +49,6 @@ export class ChangeDevs extends React.Component<IProps> {
   }
   
   async ChangeSensors (a:any) {
-    alert(a);
     APP_STORAGE.devs.setSensors(a);
     var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
     for (let i = 0; i < obj.length; i++){
@@ -59,7 +58,6 @@ export class ChangeDevs extends React.Component<IProps> {
       }
       const array = obj
       const array2 = array.filter((element: any) => element !== null);
-      console.log('array2',array2);
       APP_STORAGE.devs.setChangeSensors(array2)
     }
     APP_STORAGE.devs.setDepthSensors_Ch(true)
@@ -104,9 +102,7 @@ export class ChangeDevs extends React.Component<IProps> {
     if (APP_STORAGE.devs.getChangeSensors()) {
       const obj1:any = {};
       var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
-        
-      console.log('массив', JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors())))
-       
+     
         for (let i = 0; i < obj.length; i++) {
           obj1[i] = obj[i];
           depth_sensors.push(
@@ -133,8 +129,8 @@ export class ChangeDevs extends React.Component<IProps> {
                 variant="outlined"
                 fullWidth
                 required
-                label="Номер устройства"
-                autoComplete="Номер устройства"
+                label="Глубина"
+                autoComplete="Глубина"
                 autoFocus
                 size="small"
                 onChange={(e) => {
@@ -284,7 +280,7 @@ export class ChangeDevs extends React.Component<IProps> {
             <Box
               sx={{ border: "1px solid #eee", p: "12px", borderRadius: "4px" }}
             >
-              <Box sx={{ pb: "12px" }}>Список сенсоров на устройстве11111 :</Box>
+              <Box sx={{ pb: "12px" }}>Список сенсоров на устройстве11:</Box>
               <TableContainer  component={Paper} sx = {{maxHeight: '150px'}}>
                 <Table aria-label="caption table">
                   <TableBody>
