@@ -104,3 +104,19 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   width: 1px;
   background-color: #c8cdd3;
 } 
+
+.container {
+  width: 100%;
+  max-width: 1300px;
+  min-width: 200px;
+  box-sizing: 'border-box';
+  background: #fff;
+
+}
+
+.card {
+  width: 100%;
+  padding: 30px 20px;
+  border: 1px solid #d5d4d4;
+  margin-bottom: 20px;
+}

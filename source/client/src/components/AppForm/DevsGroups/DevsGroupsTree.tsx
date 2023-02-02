@@ -10,9 +10,6 @@ import TreeView from "@mui/lab/TreeView";
 
 import { handleChange } from "../Devs/StyledTreeItem";
 
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import SensorsIcon from "@mui/icons-material/Sensors";
-
 
 import FolderIcon from "@mui/icons-material/Folder";
 
@@ -30,7 +27,7 @@ interface IProps {
 
 //Устройства
 @observer
-export class DevsGroups extends React.Component<IProps> {
+export class DevsGroupsTree extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }

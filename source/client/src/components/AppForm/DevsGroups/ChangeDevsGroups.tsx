@@ -70,7 +70,7 @@ async ChekedForEdit(editing: any) {
         <Box className='ModalTitle' sx = { {display: 'flex' , justifyContent: 'space-between', mb: '12px'}}> 
          
         <Typography >  
-            Редактировать расположение
+            Редактировать расположение (компонент ChangeDevsGroups)
         </Typography>
   
         <CloseIcon  sx={{color: '#1976D2'}}

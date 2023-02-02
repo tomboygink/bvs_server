@@ -27,7 +27,8 @@ export class DevsStorage{
     @observable parent1: number = null;
 
     @observable add_sensors: boolean = false; ///// модальное окно для добавления сенсоров
-    @observable get_sensors: Array<any> = [];
+    @observable get_sensors: Array<number> = [];
+    @observable change_sensors: boolean = false; 
     ////// Добавление нового устройства
     @observable id :string = '';
     @observable group_dev_id = '';
@@ -111,10 +112,13 @@ export class DevsStorage{
      @computed getIdDev ():  string {return this.select_id_dev};
 
      @action setDepthSensors (val : boolean) {this.add_sensors = val}; /// Добавление сенсоров (модальное окно)
-     @computed getDepthSensors () : boolean {return this.add_sensors }
+     @computed getDepthSensors () : boolean {return this.add_sensors };
 
-     @action setChangeSensors (val : Array<any>) {this.get_sensors = val}
-     @computed getChangeSensors () : Array<any> {return this.get_sensors}
+     @action setDepthSensors_Ch (val : boolean) {this.change_sensors = val}; /// Добавление сенсоров (модальное окно)
+     @computed getDepthSensors_Ch () : boolean {return this.change_sensors }
+
+     @action setChangeSensors (val : Array<number>) {this.get_sensors = val}
+     @computed getChangeSensors () : Array<number> {return this.get_sensors}
 
 
    async get_Devs (name: string, value: any, _options?: any){
@@ -192,6 +196,6 @@ export class DevsStorage{
     (await WSocket.get()).send(q);
   }
 }
-   
+
     }
  

@@ -27,6 +27,7 @@ export class DevLocation extends React.Component<IProps> {
   }
 
   async OpenModal(e: any, org_id: any) { 
+    APP_STORAGE.devs_groups.setOrg(Number(org_id))
     APP_STORAGE.devs_groups.setParentId(e);
     APP_STORAGE.devs_groups.setOpenModal(true);
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
