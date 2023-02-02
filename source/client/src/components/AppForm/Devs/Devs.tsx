@@ -111,7 +111,7 @@ export class Devs extends React.Component<IProps> {
                   if ( ("_dev_id_key_" + gr_devs[key].id === APP_STORAGE.devs.getIdChild())){
                     devs.push(
                         <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
-    <Box sx = {{display:'flex', justifyContent: 'space-between'}}>
+    <Box sx = {{display:'flex', justifyContent: 'space-between', width: '100%', flexDirection: 'row' }}>
     <Typography  sx ={{color: '#645757', fontWeight: '600'}}>Место расположения - {gr.g_name} </Typography> 
     <div>
       <IconButton
@@ -251,11 +251,10 @@ export class Devs extends React.Component<IProps> {
         <Box
           className="wrapper-devs"
           sx={{
-            mt: "44px",
             display: "flex",
             flexDirection: "column;",
             alignItems: "flex-start;",
-            ml: "1rem",
+             width: '100%',
           }}
         >
           {/* <Typography sx={{ fontWeight: "500", pb: "20px" }}>
@@ -264,15 +263,15 @@ export class Devs extends React.Component<IProps> {
 
           <Box
             sx={{
-              boxShadow: "4px 6px 14px 2px rgb(0 0 0 / 4%);",
-              width: "1100px",
-              background: "#fff",
-              p: "25px",
-              borderRadius: "4px",
+              
+             // width: "1100px",
+              
+              
+              
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              mb: "16px",
+              width: '100%'
             }}
           >
           {this.drawDevLocation()}

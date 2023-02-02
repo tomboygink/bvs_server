@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import { Box, Typography, TextField } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-import LongMenu from "./Menu";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
@@ -15,7 +14,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-// import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+
 
 interface IProps {}
 
@@ -108,7 +107,7 @@ export class DevLocation extends React.Component<IProps> {
 
       parent.push(
         <React.Fragment key={"_gr_id_key_" + gr.id}>
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: "flex", width: '100%', flexDirection: 'column' }}>
             <Box id={String(gr.id)}>{childs}</Box>
           </Box>
         </React.Fragment>
@@ -116,19 +115,18 @@ export class DevLocation extends React.Component<IProps> {
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
         APP_STORAGE.devs_groups.setOrg(Number(gr.org_id))
+
         parent.push(
           <React.Fragment key={String(gr.id)}>
             <Box
             id="long-button"
               sx={{
-                width: "1100px;",
+                width: '100%',
                 background: "#fff",
-                p: "25px",
                 borderRadius: "4px",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                mb: "16px",
               }}
             >
               <Box
@@ -139,10 +137,14 @@ export class DevLocation extends React.Component<IProps> {
                 }}
               >
                 <Box>
-                  <Typography sx={{ fontWeight: "500", fontSize: "22px" }}>
+                  <Typography sx={{ 
+                    fontWeight: "500", 
+                    fontSize: "22px" }}>
                     {gr.g_name}
                   </Typography>
-                  <Typography sx={{ fontSize: "12px", color: "grey" }}>
+                  <Typography sx={{ 
+                    fontSize: "12px", 
+                    color: "grey" }}>
                     Место расположения устройства
                   </Typography>
                 </Box>
@@ -151,7 +153,7 @@ export class DevLocation extends React.Component<IProps> {
               <div>
       <IconButton
         onClick={() => {APP_STORAGE.devs_groups.setOpen_menu(true)}}
-        id='long-button555'
+        id='long-button_menu'
         aria-label="more"
         aria-controls={open ? 'long-menu' : undefined}
         aria-expanded={open ? 'true' : undefined}
@@ -165,7 +167,7 @@ export class DevLocation extends React.Component<IProps> {
         MenuListProps={{
           'aria-labelledby': 'long-button',
         }}
-        anchorEl={document.getElementById('long-button555')}
+        anchorEl={document.getElementById('long-button_menu')}
         open={APP_STORAGE.devs_groups.getOpen_menu()}
         onClose={() => {APP_STORAGE.devs_groups.setOpen_menu(false)}}
       
@@ -249,13 +251,16 @@ export class DevLocation extends React.Component<IProps> {
                   </Box>
                 </Box>
               </Box>
+              
             </Box>
           </React.Fragment>
         );
+
       }
     }
     return parent;
   }
+
 
   drawDevLocation(): React.ReactNode {
     let devs_g = [];
@@ -295,40 +300,31 @@ export class DevLocation extends React.Component<IProps> {
         <Box
           className="wrapper-devs"
           sx={{
-            mt: "44px",
+            width: '100%',
             display: "flex",
             flexDirection: "column;",
-            alignItems: "flex-start;",
-            ml: "1rem",
+            alignItems: "flex-start;" 
           }}
         >
-          {/* <Typography sx={{ fontWeight: "500", pb: "20px" }}>
-            Расположение устройств
-          </Typography> */}
+      
           <Box
             sx={{
-              width: "1100px;",
-              background: "#fff",
-              p: "25px",
-              borderRadius: "4px",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
-              mb: "16px",
+              justifyContent: "center"
             }}
           >
-            <Box
-              sx={{
+
+            <Box sx={{
                 color: "#000",
-                width: "180px",
-                p: "3px",
-                pl: "20px",
                 borderRadius: "4px",
               }}
               onClick={() => this.OpenModal("0", 0)}
             >
               <Typography sx ={{display: 'flex'}}> Добавить новое расположение</Typography>
+
             </Box>
+
           </Box>
           {this.drawDevLocation()}
         </Box>

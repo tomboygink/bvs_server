@@ -31,7 +31,7 @@ export class AdoutDevs extends React.Component<IProps> {
                     
                     devs.push(
                         <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
-                                <Box key = {gr_devs[key].id} sx = {{width: '1100px', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
+                                <Box key = {gr_devs[key].id} sx = {{ background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
           <Box sx= {{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <Typography>{gr_devs[key].name}</Typography>
             <Typography sx={{color: '#AAAAAA', fontSize: '12px'}}>Заводской номер - {gr_devs[key].number}</Typography> 
@@ -133,7 +133,7 @@ export class AdoutDevs extends React.Component<IProps> {
 
         if (a.id === APP_STORAGE.devs.getIdDevs()) {
           devs_discripst.push(
-            <Box key = {a.id} sx = {{width: '1100px', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
+            <Box key = {a.id} sx = {{background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
           <Box sx= {{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <Typography>{a.g_name}</Typography>
             <Typography sx={{color: '#AAAAAA', fontSize: '12px'}}>Заводской номер - 5005</Typography> 
@@ -182,7 +182,7 @@ export class AdoutDevs extends React.Component<IProps> {
     
   if (APP_STORAGE.devs.getIdDevs()===''){
     devs_discripst.push(
-      <Box key = '1' sx = {{width: '1100px', background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
+      <Box key = '1' sx = {{background: '#fff', p: '25px', borderRadius: '4px', display: 'flex', flexDirection: 'column', justifyContent:'center', mb: '16px'}}>
        <Typography> Необходимо выбрать устройство</Typography>
       </Box>
 
@@ -193,7 +193,7 @@ export class AdoutDevs extends React.Component<IProps> {
       return (
 
         <React.Fragment> 
-          <Box  sx={{ mt: '44px', display: 'flex', flexDirection: 'column;', alignItems: 'flex-start;', ml: '1rem'}}> 
+          <Box  sx={{ display: 'flex', flexDirection: 'column;', alignItems: 'flex-start;', ml: '1rem'}}> 
           <Typography sx={{fontWeight: '500' , pb: '20px'}}>Данные по устройствам</Typography>
           {/* ******************************************************************************************************************************* */}
           {this.drawDevLocation()}

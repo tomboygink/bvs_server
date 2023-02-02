@@ -134,26 +134,26 @@ export class DevsGroupsTree extends React.Component<IProps> {
       <React.Fragment>
         <Box
           
-          sx={{
-            mt: "44px",
-            display: "flex",
-            flexDirection: "column;",
-            alignItems: "flex-start;",
-            ml: "1rem",
-          }}
+          // sx={{
+          //   mt: "44px",
+          //   display: "flex",
+          //   flexDirection: "column;",
+          //   alignItems: "flex-start;",
+          //   ml: "1rem",
+          // }}
         >
           {/* <Typography sx={{ fontWeight: "500", pb: "20px" }}>
             Список групп устройств
           </Typography> */}
 
           <Box
-            sx={{
-              width: "290px",
-              borderRadius: "4px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              background: "#fff",
+           sx={{
+            //   width: "290px",
+            //   borderRadius: "4px",
+            //   display: "flex",
+            //   flexDirection: "column",
+            //   justifyContent: "center",
+              background: "#fff"
             }}
           >
             <TreeView
@@ -161,7 +161,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
               onNodeSelect={handleChange}
               defaultExpanded={["1", '2', '3', '4', '5']}
               aria-label="customized"
-              sx={{ flexGrow: 1, maxWidth: 400, p: "25px" , maxHeight: "85vh", height: '100',overflow: 'auto'}}
+              sx={{ flexGrow: 1, maxWidth: 400,overflow: 'auto'}}
             >
               {this.drawDevsTree()}
 

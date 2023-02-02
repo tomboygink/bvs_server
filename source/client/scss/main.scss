@@ -1,32 +1,84 @@
-$blue: #266BF1;
-$font-color : #F1F5FC;
-$margin: 40px;
-$font-weights: (
-    'regular': 400,
-    'medium': 500,
-    'bold': 700
-);
+$grid_color: #eee;
+$grid_margin: percentage(40 / 1920); // 40 / 1920 * 100%;
+$grid_width: percentage(157 / (1920 - 40 * 2));
+$grid_gutter: percentage(30 / (1920 - 40 * 2));
+$body_bgcolor: #F1F5FC;
 
+@mixin mq($from, $to: false) {
+    @if $to {
+        @media (min-width: #{$from}px) and (max-width: #{$to}px) {
+            @content;
+        }
+    } @else {
+        @media (max-width: #{$from}px) {
+            @content;
+        }
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
 body {
-  background: $font-color;
-  font-weight: map-get($font-weights , regular);
-  margin: 0;
-  padding: 0;
+  background: #f1f5fc;
+}
+.is-grid {
+    position: relative;
+    padding: 80px 0;
+    min-height: 100vh;
+    
+    &.is-grid::after {
+        content: '';
+        position: absolute;
+        z-index: 1000;
+        top: 0;
+        bottom: 0;
+        opacity: 0.15;
+        left: $grid_margin;
+        right: $grid_margin;
+        background: repeating-linear-gradient(90deg,
+                $grid_color 0,
+                $grid_color $grid_width,
+                transparent $grid_width,
+                transparent $grid_width + $grid_gutter);
+        pointer-events: none;
+    }
 }
 
-.wrapper__app{
-  height: 80vh;
-  margin: 80px 40px 40px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+.wrapper {
+    margin: 0 $grid_margin;
 }
 
-.active{
-  color: #080808;
-    font-weight: 600!important;
-    margin-left: 22px!important;
+.blocks {
+    display: grid;
+    align-items: start;
+    grid-template-columns: 1fr 4fr 1fr;
+    row-gap: 30px;
+    column-gap: percentage(30 / 1840);
+
+    @include mq(1023) {
+        grid-template-columns: 1fr;
+    }
+
+    > .block-wrapp {
+        ///padding: percentage(20 / (320 - 7 * 2));
+        padding: 20px;
+        font-size: 20px;
+        color: #fff;
+        background: #fff;
+        border-radius: 4px;
+
+        @include mq(1023) {
+            width: auto;
+            margin: 0 0 0px;
+        }
+    }
 }
 
+
+.css-rqglhn-MuiTable-root {
+  width: 100%;
+}
 
 .Box-login {
   display: flex;
@@ -70,11 +122,6 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   border-radius: 5px;
 }
 
-.wrapper_app.MuiBox-root.css-0 {
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
 
 .css-g7pccu-MuiTreeView-root::-webkit-scrollbar {
   width: 4px;
@@ -105,18 +152,3 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   background-color: #c8cdd3;
 } 
 
-.container {
-  width: 100%;
-  max-width: 1300px;
-  min-width: 200px;
-  box-sizing: 'border-box';
-  background: #fff;
-
-}
-
-.card {
-  width: 100%;
-  padding: 30px 20px;
-  border: 1px solid #d5d4d4;
-  margin-bottom: 20px;
-}
