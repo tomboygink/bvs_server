@@ -239,12 +239,12 @@ export class DevsGroupStorage{
         }
         if(this.getName() !== '' && this.getLatitude() !== '' && this.getLongitude() !== '' && this.getKeyOrg() !== ''){
         q.args = {
-            id: this.getParentId() || "",
-            parent_id: this.getParent() || "",
+            id: Number(this.getParentId()) || "",
+            parent_id: Number(this.getParent()) || 0,
             name: this.getName() || "",
             latitude: this.getLatitude() || "",
             longitude: this.getLongitude() || "",
-            org_id : this.getKeyOrg(),
+            org_id : Number(this.getKeyOrg()),
             ord_id: 0,
             deleted: this.getCheckboxEd(),
             info: this.getInfo() || ""

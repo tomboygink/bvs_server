@@ -9,15 +9,11 @@ import {
   Typography,
   TextareaAutosize,
   Button,
-  FormControl,
-  InputLabel,
-  Select,
   MenuItem,
 } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-import SaveIcon from "@mui/icons-material/Save";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -29,7 +25,7 @@ import Paper from "@mui/material/Paper";
 
 import SensorsIcon from "@mui/icons-material/Sensors";
 
-import { ModalSensors } from "./ModalSensors";
+import { Change_ModalSensors} from "./Change_ModalSensors";
 
 import AddIcon from "@mui/icons-material/Add";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
@@ -50,6 +46,23 @@ export class ChangeDevs extends React.Component<IProps> {
 
   async SelectedOrg(a: any) {
     APP_STORAGE.devs_groups.setKeyOrg(a);
+  }
+  
+  async ChangeSensors (a:any) {
+    alert(a);
+    APP_STORAGE.devs.setSensors(a);
+    var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
+    for (let i = 0; i < obj.length; i++){
+      
+      if( Number(APP_STORAGE.devs.getSensors()) === Number(obj[i]) ){
+        delete obj[i]; 
+      }
+      const array = obj
+      const array2 = array.filter((element: any) => element !== null);
+      console.log('array2',array2);
+      APP_STORAGE.devs.setChangeSensors(array2)
+    }
+    APP_STORAGE.devs.setDepthSensors_Ch(true)
   }
 
   render(): React.ReactNode {
@@ -89,39 +102,66 @@ export class ChangeDevs extends React.Component<IProps> {
 
    
     if (APP_STORAGE.devs.getChangeSensors()) {
+      const obj1:any = {};
       var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
-      for (var key in obj) {
-        depth_sensors.push(
-          <TableRow key="12121212">
-            <TableCell
-            key={obj[key]}
-            sx={{
-              display: "flex",
-              fontWeight: "700",
-              border: "none",
-            }}
-            align="left"
-          >
-            <SensorsIcon
-              fontSize="small"
-              sx={{ pr: "9px", color: "#5be95b" }}
-            />{" "}
-            {obj[key]} 
-          </TableCell>
-
-<TableCell align="left" sx={{ color: "#038F54" }}>
-<AddIcon fontSize="small" />
-</TableCell>
-<TableCell align="left" sx={{ color: "#1976D2" }}>
-<ModeEditOutlineOutlinedIcon fontSize="small" />
-</TableCell>
-<TableCell align="left" sx={{ color: "#FF4848" }}>
-<DeleteOutlineOutlinedIcon fontSize="small" />
-</TableCell>
-          </TableRow>
-    
-        );
-       }
+        
+      console.log('массив', JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors())))
+       
+        for (let i = 0; i < obj.length; i++) {
+          obj1[i] = obj[i];
+          depth_sensors.push(
+            <TableRow key= {obj1[i]}>
+              <TableCell
+              key={obj1[i]}
+              sx={{
+                display: "flex",
+                fontWeight: "700",
+                border: "none",
+              }}
+              align="left"
+            >
+              <SensorsIcon
+                fontSize="small"
+                sx={{ pr: "9px", color: "#5be95b" }}
+              />{" "}
+              
+              <TextField
+                 id = {"_id_s" + obj1[i]} 
+                sx={{ mt: "14px" }}
+                inputProps={{ style: { fontSize: 12 } }}
+                InputLabelProps={{ style: { fontSize: 12 } }}
+                variant="outlined"
+                fullWidth
+                required
+                label="Номер устройства"
+                autoComplete="Номер устройства"
+                autoFocus
+                size="small"
+                onChange={(e) => {
+                  APP_STORAGE.devs.setNumber(e.target.value);
+                }} 
+                value= {obj1[i]} 
+              />
+            </TableCell>
+  
+  <TableCell align="left" sx={{ color: "#038F54" }}>
+  <AddIcon fontSize="small" />
+  </TableCell>
+  <TableCell align="left" sx={{ color: "#1976D2" }} onClick = {(e)=> {this.ChangeSensors((document.getElementById("_id_s" + obj1[i]) as HTMLInputElement).value)}}>
+  
+  
+  <ModeEditOutlineOutlinedIcon fontSize="small" />
+  </TableCell>
+  <TableCell align="left" sx={{ color: "#FF4848" }}>
+  <DeleteOutlineOutlinedIcon fontSize="small" />
+  </TableCell>
+            </TableRow>
+      
+          );
+        }
+      
+       
+       
     }
 
     return (
@@ -254,7 +294,7 @@ export class ChangeDevs extends React.Component<IProps> {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <ModalSensors />
+              <Change_ModalSensors />
 
               <Button
                 onClick={() => {
