@@ -39,13 +39,18 @@ export class DevsStorage{
     @observable deleted: boolean = false;
     @observable info : string = '';
     @observable sensors : number = null;
-    @observable select_id_dev : string = ''; 
+    @observable select_id_dev : string = '';
+    
+    @observable checkbox_editing: boolean = false; 
     //////////////////////////////////////////// Проверка
    
   
     constructor(){
         makeAutoObservable(this);
     }
+
+    @action setCheckboxEd(val: boolean) {this.checkbox_editing = val;}
+    @action getCheckboxEd(): boolean {return this.checkbox_editing;}
 
     @observable setOrgId(val : number ) { this.org_id = val};
     @observable getOrgId () : number { return this.org_id}
@@ -188,7 +193,7 @@ export class DevsStorage{
         latitude: this.getLatitude() || "",
         longitude: this.getLongitude() || "",
         sensors: '{\"s\":[' + this.getChangeSensors() + ']}',
-        deleted: false,
+        deleted: this.getCheckboxEd(),
         info: this.getInfo() || ""
       };
     

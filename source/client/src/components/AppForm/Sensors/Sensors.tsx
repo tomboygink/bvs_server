@@ -71,7 +71,7 @@ export class Sensors extends React.Component<IProps> {
                   />
                   [{"" + gr_devs[key1].sensors.s[key]}]{" "}
                 </TableCell>
-                <TableCell><ExpandLessIcon/></TableCell>
+                <TableCell onClick={() =>{gr_devs[key1].sensors.s.sort()}}><ExpandLessIcon/></TableCell>
                 <TableCell><ExpandMoreIcon/></TableCell>
               </TableRow>
             );

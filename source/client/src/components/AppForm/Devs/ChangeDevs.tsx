@@ -12,6 +12,10 @@ import {
   MenuItem,
 } from "@mui/material";
 
+import FormGroup from "@mui/material/FormGroup";
+import Stack from "@mui/material/Stack";
+import { AntSwitch } from "../../../components/AppForm/AppBarPanel/LeftPanel/RegistationUsers/switch";
+
 import CloseIcon from "@mui/icons-material/Close";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
@@ -46,6 +50,10 @@ export class ChangeDevs extends React.Component<IProps> {
 
   async SelectedOrg(a: any) {
     APP_STORAGE.devs_groups.setKeyOrg(a);
+  }
+
+  async ChekedForEdit(editing: any) {
+    APP_STORAGE.devs.setCheckboxEd(editing.target.checked);
   }
   
   async ChangeSensors (a:any) {
@@ -140,9 +148,7 @@ export class ChangeDevs extends React.Component<IProps> {
               />
             </TableCell>
   
-  <TableCell align="left" sx={{ color: "#038F54" }}>
-  <AddIcon fontSize="small" />
-  </TableCell>
+
   <TableCell align="left" sx={{ color: "#1976D2" }} onClick = {(e)=> {this.ChangeSensors((document.getElementById("_id_s" + obj1[i]) as HTMLInputElement).value)}}>
   
   
@@ -151,13 +157,10 @@ export class ChangeDevs extends React.Component<IProps> {
   <TableCell align="left" sx={{ color: "#FF4848" }}>
   <DeleteOutlineOutlinedIcon fontSize="small" />
   </TableCell>
-            </TableRow>
+   </TableRow>
       
           );
-        }
-      
-       
-       
+        }  
     }
 
     return (
@@ -291,15 +294,23 @@ export class ChangeDevs extends React.Component<IProps> {
                 </Table>
               </TableContainer>
               <Change_ModalSensors />
-
-              <Button
-                onClick={() => {
-                  APP_STORAGE.devs.setDepthSensors(true);
-                }}
-              >
-                Добавить
-              </Button>
             </Box>
+
+            <FormGroup sx={{ mt: "12px" }}>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography
+                  sx={{ ml: "12px", fontSize: "12px", color: "#266bf1" }}
+                >
+                 Заблокировать -{" "}
+                </Typography>
+                <AntSwitch
+                  checked={APP_STORAGE.devs.getCheckboxEd()}
+                  onChange={(editing) => {
+                    this.ChekedForEdit(editing);
+                  }}
+                />
+              </Stack>
+            </FormGroup>
 
             <Box
               sx={{
