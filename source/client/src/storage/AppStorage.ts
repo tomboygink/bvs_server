@@ -33,12 +33,20 @@ class AppStorage {
 
     @observable dt:any = null;
     @observable dtUser:any = null;
+    @observable role_read: any = null;
+    @observable role_write:any = null;
     
     @action setdt(val:any){ this.dt = val; }
     @computed getdt():any{ return this.dt; }
 
     @action setdtUser(val :any) {this.dtUser = val }
     @computed getdtUser() : any { return this.dtUser}
+
+    @action setRoleRead(val :any) {this.role_read = val }
+    @computed getRoleRead() : any { return this.role_read}
+
+    @action setRoleWrite(val :any) {this.role_write = val }
+    @computed getRoleWrite() : any { return this.role_write}
  
     constructor() {
         this.main = new PageStorage();

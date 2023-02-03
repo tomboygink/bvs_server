@@ -77,7 +77,10 @@ export class AppBarLeftPanel extends React.Component<IProps> {
       );
       for (var key in roles) {
         if (roles.hasOwnProperty(key)) {
+
           let a = roles[key];
+          APP_STORAGE.setRoleRead(a[0]);
+          APP_STORAGE.setRoleWrite(a[1]);
           user_r = a[0];
           user_w = a[1];
         }

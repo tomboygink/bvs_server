@@ -66,9 +66,25 @@ export class ChangeDevs extends React.Component<IProps> {
       }
       const array = obj
       const array2 = array.filter((element: any) => element !== null);
+      console.log(array)
       APP_STORAGE.devs.setChangeSensors(array2)
     }
     APP_STORAGE.devs.setDepthSensors_Ch(true)
+  }
+
+  async DeleteSensors (a:any) {
+  alert(a);
+  var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
+  for (let i = 0; i < obj.length; i++){
+    
+    if( Number(a) === Number(obj[i]) ){
+      delete obj[i]; 
+    }
+    const array = obj
+    const array2 = array.filter((element: any) => element !== null);
+    console.log(array)
+    APP_STORAGE.devs.setChangeSensors(array2)
+  }
   }
 
   render(): React.ReactNode {
@@ -150,11 +166,10 @@ export class ChangeDevs extends React.Component<IProps> {
   
 
   <TableCell align="left" sx={{ color: "#1976D2" }} onClick = {(e)=> {this.ChangeSensors((document.getElementById("_id_s" + obj1[i]) as HTMLInputElement).value)}}>
-  
-  
   <ModeEditOutlineOutlinedIcon fontSize="small" />
   </TableCell>
-  <TableCell align="left" sx={{ color: "#FF4848" }}>
+
+  <TableCell align="left" sx={{ color: "#FF4848" }} onClick = {(e)=> {this.DeleteSensors((document.getElementById("_id_s" + obj1[i]) as HTMLInputElement).value)}}>
   <DeleteOutlineOutlinedIcon fontSize="small" />
   </TableCell>
    </TableRow>

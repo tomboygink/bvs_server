@@ -113,6 +113,7 @@ export class Devs extends React.Component<IProps> {
                         <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
     <Box sx = {{display:'flex', justifyContent: 'space-between', width: '100%', flexDirection: 'row' }}>
     <Typography  sx ={{color: '#645757', fontWeight: '600'}}>Место расположения - {gr.g_name} </Typography> 
+    {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 &&
     <div>
       <IconButton
         onClick={() => {APP_STORAGE.devs_groups.setOpen_menu(true)}}
@@ -142,7 +143,7 @@ export class Devs extends React.Component<IProps> {
         
       </Menu>
     </div>
-
+                  }
     </Box>
                         <Box sx ={{borderLeft: '1px solid #266bf18c', pl: '12px', borderRadius: '4px'}}>
                         <Box>
