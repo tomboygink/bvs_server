@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
 import TreeItem from "@mui/lab/TreeItem";
@@ -80,20 +80,41 @@ export class DevsGroupsTree extends React.Component<IProps> {
       if (gr_childs.length > 0 && gr_devs.length > 0)
         icon = <FolderIcon fontSize="small" sx={{ color: "#FFE2C0" }} />;
 
-      parent.push(
-        <React.Fragment key={"_gr_id_key_" + gr.id}>
-          <Box sx={{ display: "flex" }}>
-            <TreeItem
-              nodeId={String(gr.id)}
-              label={gr.g_name}
-              icon={icon}
-              sx={{ color: "#222", borderLeft: '1px solid #c1c1c1' }}
-            >
-              {childs}
-            </TreeItem>
-          </Box>
-        </React.Fragment>
-      );
+      if(Number(gr.org_id) === Number(APP_STORAGE.getIdOrgUser()) && APP_STORAGE.getRoleRead() === 1 && !APP_STORAGE.getRoleWrite() ) { ////// Условие для пользователя с правами "только чтение"
+        parent.push(
+          <React.Fragment key={"_gr_id_key_" + gr.id}>
+            <Box sx={{ display: "flex" }}>
+              <TreeItem
+                nodeId={String(gr.id)}
+                label={gr.g_name}
+                icon={icon}
+                sx={{ color: "#222", borderLeft: '1px solid #c1c1c1' }}
+              >
+                {childs}
+              </TreeItem>
+            </Box>
+          </React.Fragment>
+        );
+      }
+
+      if(APP_STORAGE.getRoleRead() === 1 && APP_STORAGE.getRoleWrite() === 2) { ////// Условие для пользователя с правами администратора
+        parent.push(
+          <React.Fragment key={"_gr_id_key_" + gr.id}>
+            <Box sx={{ display: "flex" }}>
+              <TreeItem
+                nodeId={String(gr.id)}
+                label={gr.g_name}
+                icon={icon}
+                sx={{ color: "#222", borderLeft: '1px solid #c1c1c1' }}
+              >
+                {childs}
+              </TreeItem>
+            </Box>
+          </React.Fragment>
+        );
+      }
+     
+
     }
     return parent;
   }
@@ -132,27 +153,8 @@ export class DevsGroupsTree extends React.Component<IProps> {
   render(): React.ReactNode {
     return (
       <React.Fragment>
-        <Box
-          
-          // sx={{
-          //   mt: "44px",
-          //   display: "flex",
-          //   flexDirection: "column;",
-          //   alignItems: "flex-start;",
-          //   ml: "1rem",
-          // }}
-        >
-          {/* <Typography sx={{ fontWeight: "500", pb: "20px" }}>
-            Список групп устройств
-          </Typography> */}
-
           <Box
            sx={{
-            //   width: "290px",
-            //   borderRadius: "4px",
-            //   display: "flex",
-            //   flexDirection: "column",
-            //   justifyContent: "center",
               background: "#fff"
             }}
           >
@@ -166,18 +168,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
               {this.drawDevsTree()}
 
             </TreeView>
-            {/* <Box
-              sx={{
-                background: "#d5e3fda6",
-                borderTopRightRadius: "48px",
-                backgroundImage: 'linear-gradient(to bottom, #d5e3fd, #dce8fd, #e3ecfd, #eaf1fc, #f1f5fc);',
-                p: "25px",
-              }}
-            >
-              <WorkingWithDev />
-            </Box> */}
           </Box>
-        </Box>
       </React.Fragment>
     );
   }

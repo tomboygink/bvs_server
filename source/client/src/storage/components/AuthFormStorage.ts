@@ -138,7 +138,7 @@ export class AuthFormStorage{
          }
 
        
-        if ( this.getEmail() !== '') {
+        if ( this.getEmail() !== '' ) {
             var q:IWSQuery = new WSQuery("set_ForgPass");
             q.args = {  
                 email : this.getEmail(), };

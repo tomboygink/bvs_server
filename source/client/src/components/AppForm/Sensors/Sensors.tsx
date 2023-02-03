@@ -136,8 +136,6 @@ export class Sensors extends React.Component<IProps> {
             Список сенсоров
           </Typography> */}
 
-       
-
           <Box
             sx={{
               width: '100%' ,

@@ -2,12 +2,9 @@ import React from "react";
 import { observer } from "mobx-react";
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
-
-
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
@@ -20,19 +17,11 @@ export class Change_ModalSensors extends React.Component<IProps> {
     super(props);
   }
 
-  async Change_sensors(){
-    var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
-    
-    console.log('the array' ,JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors())) );
-
-    for (let i = 0; i < obj.length; i++){
-      
-      if( Number(APP_STORAGE.devs.getSensors()) !== Number(obj[i]) ){
-        APP_STORAGE.devs.get_sensors.push(APP_STORAGE.devs.getSensors()); 
-      }
-    }
-    APP_STORAGE.devs.setDepthSensors_Ch(false)
-   
+  async Change_sensors() {
+  let a: Array<any> = []
+    a.push(APP_STORAGE.devs.getSensors());
+    APP_STORAGE.devs.get_sensors.push(APP_STORAGE.devs.getSensors());
+    APP_STORAGE.devs.setDepthSensors_Ch(false);
   }
 
   render(): React.ReactNode {
@@ -40,7 +29,7 @@ export class Change_ModalSensors extends React.Component<IProps> {
       <React.Fragment>
         <Box>
           <Modal
-            open={APP_STORAGE.devs.getDepthSensors_Ch()} 
+            open={APP_STORAGE.devs.getDepthSensors_Ch()}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
@@ -60,7 +49,7 @@ export class Change_ModalSensors extends React.Component<IProps> {
               }}
             >
               <Typography id="modal-modal-title">
-              Изменить глубину датчика
+                Изменить глубину датчика
               </Typography>
 
               <TextField
@@ -72,11 +61,15 @@ export class Change_ModalSensors extends React.Component<IProps> {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                inputProps = {{ inputMode: 'decimal', step:0.1, pattern:'[0..9]*[\.][0..9]*' }} 
+                inputProps={{
+                  inputMode: "decimal",
+                  step: 0.1,
+                  pattern: "[0..9]*[.][0..9]*",
+                }}
                 onChange={(e) => {
                   APP_STORAGE.devs.setSensors(Number(e.target.value));
                 }}
-                value = {APP_STORAGE.devs.getSensors()}
+                value={APP_STORAGE.devs.getSensors()}
                 sx={{ mt: 2 }}
               />
 
@@ -90,7 +83,13 @@ export class Change_ModalSensors extends React.Component<IProps> {
                 Сохранить
               </Typography>
 
-              <Typography onClick={() => {APP_STORAGE.devs.setDepthSensors_Ch(false)}}>close</Typography>
+              <Typography
+                onClick={() => {
+                  APP_STORAGE.devs.setDepthSensors_Ch(false);
+                }}
+              >
+                close
+              </Typography>
             </Box>
           </Modal>
         </Box>

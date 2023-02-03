@@ -33,12 +33,24 @@ class AppStorage {
 
     @observable dt:any = null;
     @observable dtUser:any = null;
+    @observable id_org_user: any = null;//// Определить ид организации пользователя для отображения устройств
+    @observable role_read: any = null;
+    @observable role_write:any = null;
     
     @action setdt(val:any){ this.dt = val; }
     @computed getdt():any{ return this.dt; }
 
+    @action setIdOrgUser(val :any) {this.id_org_user = val }
+    @computed getIdOrgUser() : any { return this.id_org_user}
+
     @action setdtUser(val :any) {this.dtUser = val }
     @computed getdtUser() : any { return this.dtUser}
+
+    @action setRoleRead(val :any) {this.role_read = val }
+    @computed getRoleRead() : any { return this.role_read}
+
+    @action setRoleWrite(val :any) {this.role_write = val }
+    @computed getRoleWrite() : any { return this.role_write}
  
     constructor() {
         this.main = new PageStorage();

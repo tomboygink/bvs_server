@@ -59,7 +59,8 @@ export class AppBarLeftPanel extends React.Component<IProps> {
     APP_STORAGE.reg_user.setOpenTableUsers(false);
   }
 
-  async OpenTableUser() {  /// рисуем таблицу пользователей
+  async OpenTableUser(a:any) {  /// рисуем таблицу пользователей
+    APP_STORAGE.devs_groups.setMiddleForm(a);
    APP_STORAGE.reg_user.setOpenTableUsers(true);
    APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt()); // все пользователи
    APP_STORAGE.app_bar.setSetOpenAppBar(false);/// закрываем
@@ -72,12 +73,17 @@ export class AppBarLeftPanel extends React.Component<IProps> {
     var menu: React.ReactNode = <></>;
     var roles = null;
     if (APP_STORAGE.auth_form.getUser().roles_ids) {
+
+    APP_STORAGE.setIdOrgUser(APP_STORAGE.auth_form.getUser().org_id);
       roles = JSON.parse(
         JSON.stringify(APP_STORAGE.auth_form.getUser().roles_ids)
       );
       for (var key in roles) {
         if (roles.hasOwnProperty(key)) {
+
           let a = roles[key];
+          APP_STORAGE.setRoleRead(a[0]);
+          APP_STORAGE.setRoleWrite(a[1]);
           user_r = a[0];
           user_w = a[1];
         }
@@ -94,7 +100,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
       menu = (
         <>
           <MenuItem
-           onClick={() => this.OpenTableUser()}
+           onClick={() => this.OpenTableUser(3)}
           >
             <ListItemIcon>
               <PeopleOutlineIcon fontSize="small" />

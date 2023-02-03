@@ -26,11 +26,11 @@ export class AppBarPanel extends React.Component<IProps> {
         return (
             <React.Fragment>
            <AppBar sx={{background: '#266BF1'}}>
-                <Box 
+                <Box className='icons-left'
                     sx={{ display: 'flex' ,
                     justifyContent: 'space-between' , 
-                    pl: '2rem' , 
-                    pr: '2rem'}} >
+                    pl: '2.2rem' , 
+                    pr: '2.2rem'}} >
                     <IconButton
                     color="inherit"
                     onClick={()=>{ this.OpenLeftMenu()}}           
