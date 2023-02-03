@@ -297,13 +297,11 @@ export class TableUser extends React.Component<IProps> {
       rows_search = <></>
     }
 
-    
-
     return (
       <React.Fragment>
 
-<Box  sx={{ display: 'flex', flexDirection: 'column;', alignItems: 'flex-start;', ml: '1rem'}}> 
-          <Typography sx={{fontWeight: '500' , pb: '20px'}}>Пользователи</Typography>
+<Box  sx={{ display: 'flex', flexDirection: 'column;', alignItems: 'flex-start;'}}> 
+         
 
 <TableContainer component={Paper}>
 

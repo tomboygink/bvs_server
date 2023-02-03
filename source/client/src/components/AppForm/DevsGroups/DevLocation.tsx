@@ -330,7 +330,8 @@ export class DevLocation extends React.Component<IProps> {
               justifyContent: "center",
             }}
           >
-            <Box
+            {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 
+           ? <Box
               sx={{
                 color: "#000",
                 borderRadius: "4px",
@@ -342,6 +343,20 @@ export class DevLocation extends React.Component<IProps> {
                 Добавить новое расположение
               </Typography>
             </Box>
+            : <Box
+            sx={{
+              color: "#000",
+              borderRadius: "4px",
+            }}
+           
+          >
+            <Typography sx={{ display: "flex" }}>
+              {" "}
+              Список пуст или ничего не выбрано
+            </Typography>
+          </Box>
+  }
+
           </Box>
           {this.drawDevLocation()}
         </Box>

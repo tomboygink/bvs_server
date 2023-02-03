@@ -57,10 +57,16 @@ export class AppForm extends React.Component<IProps> {
       APP_STORAGE.devs_groups.getMiddleForm() === 1 ||
       APP_STORAGE.devs_groups.getMiddleForm() === ""
     ) {
-      middle_form = <DevLocation />;
+      middle_form = <DevLocation />; 
+
+      
     }
     if (APP_STORAGE.devs_groups.getMiddleForm() === 2) {
       middle_form = <Devs />;
+    }
+
+    if (APP_STORAGE.devs_groups.getMiddleForm() === 3) {
+      middle_form = <TableUser />; 
     }
     // if(APP_STORAGE.devs_groups.getMiddleForm() === ''){
     //   middle_form = <AdoutDevs />
@@ -82,6 +88,7 @@ export class AppForm extends React.Component<IProps> {
            
           </Box>
           <Box className="is-grid"
+
             // sx={{ display: "flex", justifyContent: "space-between" }}
           >
             {/* <Box className="tree-div"> 
@@ -108,9 +115,11 @@ export class AppForm extends React.Component<IProps> {
     <Box className="block-wrapp">
     <DevsGroupsTree />     
         </Box>
+
         <Box className="block-wrapp">
         {middle_form}        
         </Box>
+
 
         <Box className="block-wrapp">
         <Sensors /> 
