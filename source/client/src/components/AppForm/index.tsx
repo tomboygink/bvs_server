@@ -9,7 +9,6 @@ import { APP_STORAGE } from "../../storage/AppStorage";
 import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser";
 
 import { DevsGroupsTree } from "./DevsGroups/DevsGroupsTree";
-import { AdoutDevs } from "./DevsGroups/AdoutDevs";
 import { DevLocation } from "./DevsGroups/DevLocation";
 import { ModalDevsGroup } from "./DevsGroups/ModalDevsGroup";
 import { ModalDevs1 } from "./Devs/ModalDevs";
@@ -70,7 +69,9 @@ export class AppForm extends React.Component<IProps> {
     if (APP_STORAGE.auth_form.getUser())
       return (
         <React.Fragment>
-          <Box style={{ display: "flex", justifyContent: "flex-start" }}>
+          <Box 
+           style={{ display: "flex", justifyContent: "flex-start" }} 
+         >
             <AppBarPanel />
             <Modal />
             <ModalLeftPanel />
@@ -78,16 +79,15 @@ export class AppForm extends React.Component<IProps> {
             <ModalDevsGroup />
             <ChangeDevsGroups />
             <ModalDevs1 />
-            <Box sx={{ mt: "2%" }}></Box>
+           
           </Box>
-          <Box
-            className="wrapper"
-            sx={{ display: "flex", justifyContent: "space-between" }}
+          <Box className="is-grid"
+            // sx={{ display: "flex", justifyContent: "space-between" }}
           >
-            <Box className="appform">
+            {/* <Box className="tree-div"> 
+
               <DevsGroupsTree />
 
-              {/* <WorkingWithDev /> */}
             </Box>
 
             {APP_STORAGE.reg_user.getOpenTableUsers() === true && (
@@ -98,9 +98,28 @@ export class AppForm extends React.Component<IProps> {
 
             <Box>{middle_form}</Box>
 
-            <Box className="appform">
+            <Box >
               <Sensors />
-            </Box>
+            </Box> */}
+
+     <Box className ="wrapper">
+    <Box className="blocks">
+
+    <Box className="block-wrapp">
+    <DevsGroupsTree />     
+        </Box>
+        <Box className="block-wrapp">
+        {middle_form}        
+        </Box>
+
+        <Box className="block-wrapp">
+        <Sensors /> 
+        </Box>
+    </Box>
+</Box>
+
+
+
           </Box>
         </React.Fragment>
       );

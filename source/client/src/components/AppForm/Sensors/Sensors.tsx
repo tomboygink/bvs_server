@@ -15,14 +15,6 @@ import TableRow from "@mui/material/TableRow";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import DirectionsIcon from "@mui/icons-material/Directions";
-
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 
 interface IProps {}
@@ -44,6 +36,10 @@ export class Sensors extends React.Component<IProps> {
 
   async OpenModal() {
     APP_STORAGE.devs.setOpenModal(true);
+  }
+
+  async sort_sensors(){
+
   }
 
   drawSensors(dgrs: TDevsGroup[]): React.ReactNode[] {
@@ -71,7 +67,7 @@ export class Sensors extends React.Component<IProps> {
                   />
                   [{"" + gr_devs[key1].sensors.s[key]}]{" "}
                 </TableCell>
-                <TableCell><ExpandLessIcon/></TableCell>
+                <TableCell onClick={() =>{this.sort_sensors()}}><ExpandLessIcon/></TableCell>
                 <TableCell><ExpandMoreIcon/></TableCell>
               </TableRow>
             );
@@ -126,13 +122,14 @@ export class Sensors extends React.Component<IProps> {
         <Box
           className="wrapper-devs"
           sx={{
-            mt: "44px",
+            //mt: "44px",
             display: "flex",
             flexDirection: "column;",
             alignItems: "flex-start;",
-            ml: "1rem",
-            mr: "32px",
-            height: '90vh'
+            width: '100%',
+            // ml: "1rem",
+            // mr: "32px",
+            // height: '90vh'
           }}
         >
           {/* <Typography sx={{ fontWeight: "500", pb: "20px" }}>
@@ -143,8 +140,8 @@ export class Sensors extends React.Component<IProps> {
 
           <Box
             sx={{
-              width: "290px",
-              p: "25px",
+              width: '100%' ,
+             /// p: "25px",
               background: "#fff",
               borderRadius: "4px",
               display: "flex",

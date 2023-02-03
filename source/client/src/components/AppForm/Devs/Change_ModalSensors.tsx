@@ -22,12 +22,17 @@ export class Change_ModalSensors extends React.Component<IProps> {
 
   async Change_sensors(){
     var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
-    console.log(obj);
-    console.log('APP_STORAGE.devs.getSensors()', APP_STORAGE.devs.getSensors());
-    APP_STORAGE.devs.get_sensors.push(APP_STORAGE.devs.getSensors());
-  
-
+    
     console.log('the array' ,JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors())) );
+
+    for (let i = 0; i < obj.length; i++){
+      
+      if( Number(APP_STORAGE.devs.getSensors()) !== Number(obj[i]) ){
+        APP_STORAGE.devs.get_sensors.push(APP_STORAGE.devs.getSensors()); 
+      }
+    }
+    APP_STORAGE.devs.setDepthSensors_Ch(false)
+   
   }
 
   render(): React.ReactNode {
