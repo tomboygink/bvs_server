@@ -50,9 +50,8 @@ export class Sensors extends React.Component<IProps> {
       var gr_devs = dgr.devs;
 
       for (var key1 in gr_devs) {
-        if (
-          "_dev_id_key_" + gr_devs[key1].id === APP_STORAGE.devs.getIdChild() 
-          // &&  APP_STORAGE.devs_groups.getMiddleForm() === 2
+        if ("_dev_id_key_" + gr_devs[key1].id === APP_STORAGE.devs.getIdChild() 
+           &&  APP_STORAGE.devs_groups.getMiddleForm() === 2
         ) {
           for (var key in gr_devs[key1].sensors.s) {
             sensors.push(

@@ -35,12 +35,8 @@ export class AppBarLeftPanel extends React.Component<IProps> {
   
   async OpenListDev() {
    
-    if(  APP_STORAGE.devs_groups.getOpenListDev() === false) {
-      APP_STORAGE.devs_groups.setOpenListDev(true); 
-    }
-    else {
-      APP_STORAGE.devs_groups.setOpenListDev(false); 
-    }
+    APP_STORAGE.devs_groups.setMiddleForm(1);
+    APP_STORAGE.app_bar.setSetOpenAppBar(false)
   }
   
   async DevLocation (e:any){
@@ -153,7 +149,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
         {APP_STORAGE.devs_groups.getOpenListDev() ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
 
-      <Collapse in={APP_STORAGE.devs_groups.getOpenListDev()} timeout="auto" unmountOnExit>
+      {/* <Collapse in={APP_STORAGE.devs_groups.getOpenListDev()} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItemButton sx={{ pl: 4 }}
            onClick={() => {
@@ -166,9 +162,9 @@ export class AppBarLeftPanel extends React.Component<IProps> {
             <ListItemText primary="Расположение" />
           </ListItemButton>
         </List>
-      </Collapse>
+      </Collapse> */}
 
-      <Collapse in={APP_STORAGE.devs_groups.getOpenListDev()} timeout="auto" unmountOnExit>
+      {/* <Collapse in={APP_STORAGE.devs_groups.getOpenListDev()} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItemButton sx={{ pl: 4 }}
            onClick={() => {
@@ -180,7 +176,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
             <ListItemText primary="Список" />
           </ListItemButton>
         </List>
-      </Collapse>
+      </Collapse> */}
       
     </List>
         </>

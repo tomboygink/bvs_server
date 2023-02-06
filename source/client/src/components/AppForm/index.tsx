@@ -52,21 +52,24 @@ export class AppForm extends React.Component<IProps> {
     }
 
     var middle_form: React.ReactNode = <></>;
+    var left_form: React.ReactNode = <></>;
 
     if (
       APP_STORAGE.devs_groups.getMiddleForm() === 1 ||
       APP_STORAGE.devs_groups.getMiddleForm() === ""
     ) {
       middle_form = <DevLocation />; 
-
+      left_form =  <DevsGroupsTree /> ;
       
     }
     if (APP_STORAGE.devs_groups.getMiddleForm() === 2) {
       middle_form = <Devs />;
+      left_form =  <DevsGroupsTree /> ;
     }
 
     if (APP_STORAGE.devs_groups.getMiddleForm() === 3) {
       middle_form = <TableUser />; 
+      left_form =  <></>;
     }
     // if(APP_STORAGE.devs_groups.getMiddleForm() === ''){
     //   middle_form = <AdoutDevs />
@@ -113,7 +116,9 @@ export class AppForm extends React.Component<IProps> {
     <Box className="blocks">
 
     <Box className="block-wrapp">
-    <DevsGroupsTree />     
+
+    {left_form}
+
         </Box>
 
         <Box className="block-wrapp">
