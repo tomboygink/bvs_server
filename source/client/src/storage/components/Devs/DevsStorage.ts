@@ -174,8 +174,16 @@ export class DevsStorage{
 
 
    async set_DevsDepth(value: number){
+    if(this.getArray()){
+      for (var key of this.getArray() ) {
+          console.log('321123', this.getArray()[key]);
+      }
+    }
+    this.setDepthSensors(false)
      this.array.push(value);
      this.setArray(this.array)
+
+    
    }
 
 

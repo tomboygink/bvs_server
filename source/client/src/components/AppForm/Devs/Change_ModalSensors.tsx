@@ -6,6 +6,9 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
 
+import CloseIcon from '@mui/icons-material/Close';
+
+
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
 interface IProps {}
@@ -33,6 +36,7 @@ export class Change_ModalSensors extends React.Component<IProps> {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
+           
             <Box
               sx={{
                 position: "absolute" as "absolute",
@@ -44,19 +48,24 @@ export class Change_ModalSensors extends React.Component<IProps> {
                 borderRadius: "4px",
                 border: "none",
                 boxShadow: 24,
-                p: 4,
+                p: '14px',
                 outline: "none",
               }}
             >
-              <Typography id="modal-modal-title">
-                Изменить глубину датчика
-              </Typography>
+              <Box sx ={{display: 'grid', justifyItems: 'end'}}>
+              <CloseIcon fontSize="small" 
+                 onClick={() => {
+                  APP_STORAGE.devs.setDepthSensors_Ch(false);
+                }}
+               />
+              </Box>
 
+             
               <TextField
                 size="small"
                 fullWidth
                 id="outlined-number"
-                label="Глубина2"
+                label="Глубина"
                 type="number"
                 InputLabelProps={{
                   shrink: true,
@@ -69,10 +78,12 @@ export class Change_ModalSensors extends React.Component<IProps> {
                 onChange={(e) => {
                   APP_STORAGE.devs.setSensors(Number(e.target.value));
                 }}
-                value={APP_STORAGE.devs.getSensors()}
+                value={APP_STORAGE.devs.getSensors() || ''}
                 sx={{ mt: 2 }}
               />
-
+                 <Typography sx={{fontSize: '12px', color: 'grey'}}>
+                Введите глубину датчика.
+                </Typography>
               <Typography
                 id="modal-modal-description"
                 sx={{ mt: 2 }}
@@ -83,13 +94,13 @@ export class Change_ModalSensors extends React.Component<IProps> {
                 Сохранить
               </Typography>
 
-              <Typography
+              {/* <Typography
                 onClick={() => {
                   APP_STORAGE.devs.setDepthSensors_Ch(false);
                 }}
               >
                 close
-              </Typography>
+              </Typography> */}
             </Box>
           </Modal>
         </Box>

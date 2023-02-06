@@ -113,7 +113,7 @@ export class Sensors extends React.Component<IProps> {
       }
     }
 
-    return this.drawSensors(DevGr);
+    return this.drawSensors(DevGr.sort());
   }
 
   render(): React.ReactNode {

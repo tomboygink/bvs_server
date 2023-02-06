@@ -70,7 +70,7 @@ async ChekedForEdit(editing: any) {
         <Box className='ModalTitle' sx = { {display: 'flex' , justifyContent: 'space-between', mb: '12px'}}> 
          
         <Typography >  
-            Редактировать расположение (компонент ChangeDevsGroups)
+            Редактировать расположение
         </Typography>
   
         <CloseIcon  sx={{color: '#1976D2'}}
@@ -132,7 +132,7 @@ async ChekedForEdit(editing: any) {
 
          <TextField
           sx={{ mt: "14px" }}
-          inputProps={{ style: { fontSize: 12 } }} 
+          inputProps={{ inputMode: 'decimal', step:0.1, pattern:'[0..9]*[\.][0..9]*', fontSize: 12 }} 
           InputLabelProps={{ style: { fontSize: 12 } }} 
           variant="outlined"
           error = {APP_STORAGE.devs_groups.getLongitudeError()}
@@ -151,7 +151,7 @@ async ChekedForEdit(editing: any) {
 
           <TextField
           sx={{ mt: "14px" }}
-          inputProps={{ style: { fontSize: 12 } }} 
+          inputProps={{ inputMode: 'decimal', step:0.1, pattern:'[0..9]*[\.][0..9]*', fontSize: 12 }}  
           InputLabelProps={{ style: { fontSize: 12 } }} 
           variant="outlined"
           error = {APP_STORAGE.devs_groups.getLatitudeError()}
@@ -188,7 +188,7 @@ async ChekedForEdit(editing: any) {
                 <Typography
                   sx={{ ml: "12px", fontSize: "12px", color: "#266bf1" }}
                 >
-                 Заблокировать -{" "}
+                 Заблокировать - {" "}
                 </Typography>
                 <AntSwitch
                   checked={APP_STORAGE.devs_groups.getCheckboxEd()}
