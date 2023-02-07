@@ -32,12 +32,12 @@ export class ModalDevs1 extends React.Component<IProps> {
     APP_STORAGE.devs_groups.setOpenModal(false)
 }
 
-async UpdateDate(){
-  alert('12123')
+async AddDevs(){
   APP_STORAGE.devs.set_NewDevs("sess_id", APP_STORAGE.auth_form.getdt());
   setTimeout(() => {
     APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt());
-  }, 1000);
+  }, 500);
+  APP_STORAGE.devs.setOpenModal(false)
 }
 
 async SelectedOrg(a: any) { 
@@ -223,10 +223,10 @@ async SelectedOrg(a: any) {
 <Box sx = {{border: '1px solid #eee' , p: '12px', borderRadius: '4px'}}>
 
 
-
-  <Box sx = {{pb: '12px'}}>Список сенсоров на устройстве: {count}</Box>
+{count && 
+  <Box sx = {{pb: '12px'}}>Список сенсоров на устройстве: {count}</Box> }
   <TableContainer  component={Paper} sx = {{maxHeight: '150px'}}>
-              <Table aria-label="caption table">
+              <Table >
                 <TableBody>
                 <TableRow key ='12121212'>
                 {depth_sensors}
@@ -236,7 +236,11 @@ async SelectedOrg(a: any) {
               </Table>
 </TableContainer> 
         <ModalSensors />
-        <Button onClick={() => {APP_STORAGE.devs.setDepthSensors(true)}}>Добавить</Button>
+       
+
+
+
+        <Button onClick={() => {APP_STORAGE.devs.setDepthSensors(true)}}>Добавить сенсоры</Button>
 </Box>
 
 
@@ -248,7 +252,7 @@ async SelectedOrg(a: any) {
           }}
         >
         
-          <Button
+          <Button 
             sx={{
               background: "#266BF1",
               color: "#fff;",
@@ -257,7 +261,7 @@ async SelectedOrg(a: any) {
               fontSize: "12px",
             }}
              onClick={() => {  
-              this.UpdateDate();
+              this.AddDevs();
             }}
           >
             Сохранить

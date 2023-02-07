@@ -89,6 +89,13 @@ export class ChangeDevs extends React.Component<IProps> {
     APP_STORAGE.devs.setDepthSensors_Ch(true) ;
   }
 
+  async ChangeDevs(){
+    APP_STORAGE.devs.set_ChangeDevs("sess_id",APP_STORAGE.auth_form.getdt());
+    setTimeout(() => {
+      APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt());
+    }, 500);
+  }
+
   render(): React.ReactNode {
     let depth_sensors = [];
     let count: any = '';
@@ -398,7 +405,7 @@ export class ChangeDevs extends React.Component<IProps> {
                   fontSize: "12px",
                 }}
                   onClick={() => {
-                  APP_STORAGE.devs.set_ChangeDevs("sess_id",APP_STORAGE.auth_form.getdt());
+                  this.ChangeDevs();  
                 }}
               >
                 Сохранить

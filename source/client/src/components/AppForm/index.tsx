@@ -108,7 +108,8 @@ export class AppForm extends React.Component<IProps> {
     </Box>
 
         <Box className="block-wrapp grid">
-        {middle_form}        
+        {middle_form} 
+        {new_group}      
         </Box>
 
 

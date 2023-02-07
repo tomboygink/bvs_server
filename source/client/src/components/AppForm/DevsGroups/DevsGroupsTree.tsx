@@ -48,15 +48,44 @@ export class DevsGroupsTree extends React.Component<IProps> {
 
 
   drawDeviceItem(dev: TDevice): React.ReactNode {
-    return (
-      <React.Fragment key={"_dev_id_key_" + dev.id}>
-        <TreeItem
-          nodeId={"_dev_id_key_" + dev.id}
-          label={dev.name}
-          icon={<CrisisAlertIcon fontSize="small" sx={{color: '#266BF1'}}/>}
-          sx={{ color: "#266BF1" }}></TreeItem>
-      </React.Fragment>
-    );
+    if(APP_STORAGE.getRoleRead() === 1 && APP_STORAGE.getRoleWrite() === 2){
+      if(dev.deleted === true){
+        return (
+          <React.Fragment key={"_dev_id_key_" + dev.id}>
+            <TreeItem
+              nodeId={"_dev_id_key_" + dev.id}
+              label={dev.name}
+              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#808080'}}/>}
+              sx={{ color: "#808080" }}></TreeItem>
+          </React.Fragment>
+        );
+      }
+      if(dev.deleted === false){
+        return (
+          <React.Fragment key={"_dev_id_key_" + dev.id}>
+            <TreeItem
+              nodeId={"_dev_id_key_" + dev.id}
+              label={dev.name}
+              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#4681F5'}}/>}
+              sx={{ color: "#266BF1" }}></TreeItem>
+          </React.Fragment>
+        );
+      }
+  
+    }
+
+    if(APP_STORAGE.getRoleRead() === 1 && !APP_STORAGE.getRoleWrite() && dev.deleted === false){
+      return (
+        <React.Fragment key={"_dev_id_key_" + dev.id}>
+          <TreeItem
+            nodeId={"_dev_id_key_" + dev.id}
+            label={dev.name}
+            icon={<CrisisAlertIcon fontSize="small" sx={{color: '#266BF1'}}/>}
+            sx={{ color: "#266BF1" }}></TreeItem>
+        </React.Fragment>
+      );
+    }
+   
   }
 
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
@@ -80,7 +109,8 @@ export class DevsGroupsTree extends React.Component<IProps> {
       if (gr_childs.length > 0 && gr_devs.length > 0)
         icon = <FolderIcon fontSize="small" sx={{ color: "#FFE2C0" }} />;
 
-      if(Number(gr.org_id) === Number(APP_STORAGE.getIdOrgUser()) && APP_STORAGE.getRoleRead() === 1 && !APP_STORAGE.getRoleWrite() ) { ////// Условие для пользователя с правами "только чтение"
+      if(Number(gr.org_id) === Number(APP_STORAGE.getIdOrgUser()) 
+      && APP_STORAGE.getRoleRead() === 1 && !APP_STORAGE.getRoleWrite() && gr.deleted === false ) { ////// Условие для пользователя с правами "только чтение"
         parent.push(
           <React.Fragment key={"_gr_id_key_" + gr.id}>
             <Box sx={{ display: "flex" }}>
@@ -97,23 +127,46 @@ export class DevsGroupsTree extends React.Component<IProps> {
         );
       }
 
-      if(APP_STORAGE.getRoleRead() === 1 && APP_STORAGE.getRoleWrite() === 2) { ////// Условие для пользователя с правами администратора
-        parent.push(
-          <React.Fragment key={"_gr_id_key_" + gr.id}>
-            <Box sx={{ display: "flex" }}>
-              <TreeItem
-                nodeId={String(gr.id)}
-                label={gr.g_name}
-                icon={icon}
-                sx={{ color: "#222", borderLeft: '1px solid #c1c1c1' }}
-              >
-                {childs}
-              </TreeItem>
-            </Box>
-          </React.Fragment>
-        );
+      if(APP_STORAGE.getRoleRead() === 1 && APP_STORAGE.getRoleWrite() === 2) 
+      { ////// Условие для пользователя с правами администратора
+
+        if(gr.deleted === false){
+          parent.push(
+            <React.Fragment key={"_gr_id_key_" + gr.id}>
+              <Box sx={{ display: "flex" }}>
+                <TreeItem
+                  nodeId={String(gr.id)}
+                  label={gr.g_name}
+                  icon={icon}
+                  sx={{ color: "#222", borderLeft: '1px solid #c1c1c1' }}
+                >
+                  {childs}
+                </TreeItem>
+              </Box>
+            </React.Fragment>
+          );
+        }
+
+        else {
+          parent.push(
+            <React.Fragment key={"_gr_id_key_" + gr.id}>
+              <Box sx={{ display: "flex" }}>
+                <TreeItem
+                  nodeId={String(gr.id)}
+                  label={gr.g_name}
+                  icon= {<FolderIcon fontSize="small" sx={{ color: "#808080"}} />}
+                  sx={{ color: "#808080", borderLeft: '1px solid #c1c1c1' }}
+                >
+                  {childs}
+                </TreeItem>
+              </Box>
+            </React.Fragment>
+          );
+        }
+ 
       }
-     
+
+    
 
     }
     return parent;
@@ -155,7 +208,8 @@ export class DevsGroupsTree extends React.Component<IProps> {
       <React.Fragment>
           <Box
            sx={{
-              background: "#fff"
+              background: "#fff",
+              p :'20px'
             }}
           >
             <TreeView

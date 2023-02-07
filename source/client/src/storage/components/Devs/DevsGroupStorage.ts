@@ -178,7 +178,6 @@ export class DevsGroupStorage{
           q.sess_code = sess_code;
          (await WSocket.get()).send(q); 
          }
-       
        }
 
 

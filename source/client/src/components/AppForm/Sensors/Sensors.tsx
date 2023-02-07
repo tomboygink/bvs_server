@@ -12,8 +12,12 @@ import { TableCell } from '@mui/material';
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+
+
+
+
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 
@@ -39,39 +43,41 @@ export class Sensors extends React.Component<IProps> {
   }
 
   async sort_sensors(){
-
   }
 
   drawSensors(dgrs: TDevsGroup[]): React.ReactNode[] {
-    var sensors: React.ReactNode[] = new Array();          ////// отображаем сенсоры 
+    var sensors: React.ReactNode[] = new Array();         ////// отображаем сенсоры 
+
+ 
+
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr_childs = dgr.childs;
       var gr_devs = dgr.devs;
-
+             
       for (var key1 in gr_devs) {
         if ("_dev_id_key_" + gr_devs[key1].id === APP_STORAGE.devs.getIdChild() 
            &&  APP_STORAGE.devs_groups.getMiddleForm() === 2
         ) {
           for (var key in gr_devs[key1].sensors.s) {
+            console.log('массив как  есть' , gr_devs[key1].sensors.s.sort((a:any, b:any) => b - a))
+
             sensors.push(
               <TableRow key={"sensors_id" + gr_devs[key1].sensors.s[key]}>
-                <TableCell
-                  sx={{ display: "flex", fontWeight: "700", border: "none" }}
-                  align="left"
-                >
-                  <SensorsIcon
+                 <TableCell ><SensorsIcon
                     fontSize="small"
-                    sx={{ pr: "9px", color: "#5be95b" }}
+                    sx={{  color: "#5be95b" }}
                   />
+                  </TableCell>
+                <TableCell >[00{key}]</TableCell>
+                <TableCell
+                  sx={{ fontWeight: "700" }}>
                   [{"" + gr_devs[key1].sensors.s[key]}]{" "}
                 </TableCell>
-                <TableCell onClick={() =>{this.sort_sensors()}}><ExpandLessIcon/></TableCell>
-                <TableCell><ExpandMoreIcon/></TableCell>
               </TableRow>
             );
           }
-        }
+        }  
       }
 
       var childs: React.ReactNode[] = new Array();
@@ -112,33 +118,26 @@ export class Sensors extends React.Component<IProps> {
       }
     }
 
-    return this.drawSensors(DevGr.sort());
+    return this.drawSensors(DevGr);
   }
 
   render(): React.ReactNode {
+    
     return (
       <>
         <Box
           className="wrapper-devs"
           sx={{
-            //mt: "44px",
             display: "flex",
             flexDirection: "column;",
             alignItems: "flex-start;",
             width: '100%',
-            // ml: "1rem",
-            // mr: "32px",
-            // height: '90vh'
           }}
         >
-          {/* <Typography sx={{ fontWeight: "500", pb: "20px" }}>
-            Список сенсоров
-          </Typography> */}
-
+          
           <Box
             sx={{
               width: '100%' ,
-             /// p: "25px",
               background: "#fff",
               borderRadius: "4px",
               display: "flex",
@@ -149,7 +148,20 @@ export class Sensors extends React.Component<IProps> {
           >
             <TableContainer>
               <Table aria-label="caption table">
-                <TableBody>{this.drawDevLocation()}</TableBody>
+                <TableBody>
+                  {(APP_STORAGE.devs_groups.getMiddleForm() === 2) && 
+                <TableRow key={"sensors_id" + 98}>
+                 <TableCell colSpan={2}>
+                  Список сенсоров: 
+                  </TableCell>
+               <TableCell sx={{width: '80px'}} onClick={() =>{this.sort_sensors()}}>
+                <ArrowDownwardIcon fontSize="small" sx={{p: '2px'}}/>
+                <ArrowUpwardIcon fontSize="small" sx={{p: '2px'}}/>
+               </TableCell>
+              </TableRow>}
+
+                  {this.drawDevLocation()}
+                  </TableBody>
               </Table>
             </TableContainer>
           </Box>

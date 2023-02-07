@@ -1,4 +1,4 @@
-$grid_color: rgb(255, 255, 255);
+$grid_color: #F1F5FC;
 $grid_margin: percentage(40 / 1920); // 40 / 1920 * 100%;
 $grid_width: percentage(157 / (1920 - 40 * 2));
 $grid_gutter: percentage(30 / (1920 - 40 * 2));
@@ -49,6 +49,11 @@ body {
     margin: 0 $grid_margin;
 }
 
+.wrappert-devs{
+  background: #fff;
+  padding: 20px;
+}
+
 .blocks {
     display: grid;
     align-items: start;
@@ -61,11 +66,8 @@ body {
     }
 
     > .block-wrapp {
-        ///padding: percentage(20 / (320 - 7 * 2));
-        padding: 20px;
         font-size: 20px;
         color: #fff;
-        background: #fff;
         border-radius: 4px;
 
         @include mq(1023) {
