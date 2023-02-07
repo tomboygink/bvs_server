@@ -21,6 +21,7 @@ export class ModalDevsGroup extends React.Component<IProps> {
     setTimeout(() => {
       APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt());
     }, 1000);
+    APP_STORAGE.devs_groups.setOpenModal(false)
 }
 
 async closeModal() {

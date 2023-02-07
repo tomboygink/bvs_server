@@ -182,8 +182,7 @@ export class DevsStorage{
     this.setDepthSensors(false)
      this.array.push(value);
      this.setArray(this.array)
-
-    
+ 
    }
 
 
@@ -207,6 +206,9 @@ export class DevsStorage{
     
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);
+    setTimeout(() => {
+      this.setOpenModalChange(false)
+    }, 1000)
   }
 }
 
