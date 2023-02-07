@@ -334,6 +334,9 @@ export class DevLocation extends React.Component<IProps> {
               sx={{
                 color: "#000",
                 borderRadius: "4px",
+                width: '100%',
+                background:'#E3EDFF',
+                p:2
               }}
               onClick={() => this.OpenModal("0", 0)}
             >
@@ -357,6 +360,7 @@ export class DevLocation extends React.Component<IProps> {
   }
 
           </Box>
+          
           {this.drawDevLocation()}
         </Box>
       </React.Fragment>

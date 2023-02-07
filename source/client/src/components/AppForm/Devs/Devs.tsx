@@ -83,7 +83,8 @@ export class Devs extends React.Component<IProps> {
           APP_STORAGE.devs.setInfo(String(gr_devs[key].info));
           APP_STORAGE.devs.setChangeSensors(gr_devs[key].sensors.s);
           APP_STORAGE.devs.setId(String(gr_devs[key].id));
-          APP_STORAGE.devs.setGroupDevId(String(gr_devs[key].group_dev_id))
+          APP_STORAGE.devs.setGroupDevId(String(gr_devs[key].group_dev_id));
+          APP_STORAGE.devs.setCheckboxEd(gr_devs[key].deleted)
           
           APP_STORAGE.devs.setOpenModalChange(true);
       }

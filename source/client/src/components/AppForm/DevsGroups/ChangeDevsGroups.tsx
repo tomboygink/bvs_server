@@ -41,7 +41,12 @@ async ChekedForEdit(editing: any) {
   APP_STORAGE.devs_groups.setCheckboxEd(editing.target.checked);
 }
 
-
+async SaveChangeDevsGroups(){
+  APP_STORAGE.devs_groups.set_ChangeDevsGroups("sess_id", APP_STORAGE.auth_form.getdt());
+  setTimeout(() => {
+    APP_STORAGE.change_devs_groups.setOpenModalChDevsGr(false)
+  }, 1000)
+}
 
   render(): React.ReactNode {
     let org = null;
@@ -205,7 +210,9 @@ async ChekedForEdit(editing: any) {
             alignItems: "baseline",
             justifyContent: "flex-end",
           }}
-          onClick = {()=> {APP_STORAGE.devs_groups.set_ChangeDevsGroups("sess_id", APP_STORAGE.auth_form.getdt())}} 
+          onClick = {()=> {
+            this.SaveChangeDevsGroups();
+          }} 
         >
           <Button
             sx={{

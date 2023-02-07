@@ -11,6 +11,7 @@ import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUs
 import { DevsGroupsTree } from "./DevsGroups/DevsGroupsTree";
 import { DevLocation } from "./DevsGroups/DevLocation";
 import { ModalDevsGroup } from "./DevsGroups/ModalDevsGroup";
+import {AddNewGroup} from './DevsGroups/AddNewGroup'
 import { ModalDevs1 } from "./Devs/ModalDevs";
 import { Devs } from "./Devs/Devs";
 import { Sensors } from "./Sensors/Sensors";
@@ -53,12 +54,16 @@ export class AppForm extends React.Component<IProps> {
 
     var middle_form: React.ReactNode = <></>;
     var left_form: React.ReactNode = <></>;
+    var new_group : React.ReactNode = <></>;
 
     if (
       APP_STORAGE.devs_groups.getMiddleForm() === 1 ||
       APP_STORAGE.devs_groups.getMiddleForm() === ""
     ) {
-      middle_form = <DevLocation />; 
+      middle_form = <DevLocation />
+      
+      new_group =  <AddNewGroup  />
+
       left_form =  <DevsGroupsTree /> ;
       
     }
@@ -90,38 +95,19 @@ export class AppForm extends React.Component<IProps> {
             <ModalDevs1 />
            
           </Box>
-          <Box className="is-grid"
+          <Box className="is-grid">
+  
 
-            // sx={{ display: "flex", justifyContent: "space-between" }}
-          >
-            {/* <Box className="tree-div"> 
-
-              <DevsGroupsTree />
-
-            </Box>
-
-            {APP_STORAGE.reg_user.getOpenTableUsers() === true && (
-              <Box className="appform" sx={{ borderRadius: "4px" }}>
-                <TableUser />
-              </Box>
-            )}
-
-            <Box>{middle_form}</Box>
-
-            <Box >
-              <Sensors />
-            </Box> */}
-
-     <Box className ="wrapper">
+    <Box className ="wrapper">
     <Box className="blocks">
 
     <Box className="block-wrapp">
 
     {left_form}
 
-        </Box>
+    </Box>
 
-        <Box className="block-wrapp">
+        <Box className="block-wrapp grid">
         {middle_form}        
         </Box>
 

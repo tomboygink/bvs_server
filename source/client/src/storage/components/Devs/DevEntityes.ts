@@ -19,6 +19,7 @@ export class TDevice {
     longitude: string = '';
     sensors: TDSensorsList = {"s": []};
     info: string = '';
+    deleted: boolean = false;
 };
 
 export type TDSensorsList = {
@@ -40,7 +41,8 @@ export const DEVICE:TDevice = {
     latitude:'0.0',
     longitude:'0.0',
     sensors: SENSORS_LIST,
-    info:''
+    info:'',
+    deleted: false
 };
 
 /**
