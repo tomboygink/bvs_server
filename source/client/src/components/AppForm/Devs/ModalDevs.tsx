@@ -46,6 +46,7 @@ async SelectedOrg(a: any) {
 
   render(): React.ReactNode {
    let depth_sensors = [];
+   let count: any = '';
 
     let org = null;
     var options_org = [];
@@ -86,17 +87,21 @@ async SelectedOrg(a: any) {
 
     if(JSON.stringify(APP_STORAGE.devs.getArray())){
       var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getArray()));
-      for( var key in obj){
-        
+      let uniqueChars = obj.filter((element: any, index: any) => {
+        return obj.indexOf(element) === index;
+    });
+      for( var key in uniqueChars){
+        count = uniqueChars.length
+
         depth_sensors.push(
-          <TableCell key ={obj[key]}
+          <TableCell key ={uniqueChars[key]}
           sx={{ display: "flex", fontWeight: "700", border: "none" , p: '4px'}}
           align="left"
         >
           <SensorsIcon
             fontSize="small"
             sx={{ pr: "9px", color: "#5be95b" }}
-          />  {obj[key]}
+          />  {uniqueChars[key]}
         </TableCell>
         )
       }
@@ -219,7 +224,7 @@ async SelectedOrg(a: any) {
 
 
 
-  <Box sx = {{pb: '12px'}}>Список сенсоров на устройстве : </Box>
+  <Box sx = {{pb: '12px'}}>Список сенсоров на устройстве: {count}</Box>
   <TableContainer  component={Paper} sx = {{maxHeight: '150px'}}>
               <Table aria-label="caption table">
                 <TableBody>

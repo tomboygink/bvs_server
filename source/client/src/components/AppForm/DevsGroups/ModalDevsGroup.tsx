@@ -135,13 +135,14 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
 
          <TextField
           sx={{ mt: "14px" }}
-          inputProps={{ style: { fontSize: 12 } }} 
+          inputProps={{ inputMode: 'decimal', step:0.1, pattern:'[0..9]*[\.][0..9]*', fontSize: 12 }}  
           InputLabelProps={{ style: { fontSize: 12 } }} 
           variant="outlined"
           error = {APP_STORAGE.devs_groups.getLongitudeError()}
           helperText = {APP_STORAGE.devs_groups.getLongitudeError_mess()}
           fullWidth
           required
+          type="number"
           label="Долгота"
           autoComplete="долгота"
           autoFocus
@@ -154,7 +155,7 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
 
           <TextField
           sx={{ mt: "14px" }}
-          inputProps={{ style: { fontSize: 12 } }} 
+          inputProps={{ inputMode: 'decimal', step:0.1, pattern:'[0..9]*[\.][0..9]*', fontSize: 12 }} 
           InputLabelProps={{ style: { fontSize: 12 } }} 
           variant="outlined"
           error = {APP_STORAGE.devs_groups.getLatitudeError()}
@@ -162,6 +163,7 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
           fullWidth
           required
           label="Широта"
+          type="number"
           autoComplete="широта"
           autoFocus
           size="small"

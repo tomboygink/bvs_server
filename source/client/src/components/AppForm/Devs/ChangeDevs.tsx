@@ -66,14 +66,12 @@ export class ChangeDevs extends React.Component<IProps> {
       }
       const array = obj
       const array2 = array.filter((element: any) => element !== null);
-      console.log(array)
       APP_STORAGE.devs.setChangeSensors(array2)
     }
     APP_STORAGE.devs.setDepthSensors_Ch(true)
   }
 
   async DeleteSensors (a:any) {
-  alert(a);
   var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
   for (let i = 0; i < obj.length; i++){
     
@@ -87,13 +85,17 @@ export class ChangeDevs extends React.Component<IProps> {
   }
   }
 
+  async AddSensors (a:any) {
+    APP_STORAGE.devs.setDepthSensors_Ch(true) ;
+  }
+
   render(): React.ReactNode {
     let depth_sensors = [];
-
+    let count: any = '';
     let org = null;
     var options_org = [];
     if (APP_STORAGE.reg_user.getOrgAll()) {
-      org = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll()));
+      org = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll())); 
       for (var key in org) {
         if (org.hasOwnProperty(key)) {
           let a = org[key];
@@ -126,9 +128,15 @@ export class ChangeDevs extends React.Component<IProps> {
     if (APP_STORAGE.devs.getChangeSensors()) {
       const obj1:any = {};
       var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
-     
-        for (let i = 0; i < obj.length; i++) {
-          obj1[i] = obj[i];
+
+
+      let uniqueChars = obj.filter((element: any, index: any) => {
+        return obj.indexOf(element) === index;
+    });
+        for (let i = 0; i < uniqueChars.length; i++) {
+
+          obj1[i] = uniqueChars[i];
+          count = uniqueChars.length
           depth_sensors.push(
             <TableRow key= {obj1[i]}>
               <TableCell
@@ -140,14 +148,9 @@ export class ChangeDevs extends React.Component<IProps> {
               }}
               align="left"
             >
-              <SensorsIcon
-                fontSize="small"
-                sx={{ pr: "9px", color: "#5be95b" }}
-              />{" "}
               
               <TextField
                  id = {"_id_s" + obj1[i]} 
-                sx={{ mt: "14px" }}
                 inputProps={{ style: { fontSize: 12 } }}
                 InputLabelProps={{ style: { fontSize: 12 } }}
                 variant="outlined"
@@ -164,6 +167,9 @@ export class ChangeDevs extends React.Component<IProps> {
               />
             </TableCell>
   
+  <TableCell align="left" sx={{ color: "#1976D2" }} onClick = {(e)=> {this.AddSensors((document.getElementById("_id_s" + obj1[i]) as HTMLInputElement).value)}}>
+    <AddIcon  fontSize="small" />
+  </TableCell>
 
   <TableCell align="left" sx={{ color: "#1976D2" }} onClick = {(e)=> {this.ChangeSensors((document.getElementById("_id_s" + obj1[i]) as HTMLInputElement).value)}}>
   <ModeEditOutlineOutlinedIcon fontSize="small" />
@@ -176,6 +182,55 @@ export class ChangeDevs extends React.Component<IProps> {
       
           );
         }  
+            
+
+        if (!obj.length){
+          depth_sensors.push(
+            <TableRow key = 'key_0'>
+              <TableCell
+            
+              sx={{
+                display: "flex",
+                fontWeight: "700",
+                border: "none",
+              }}
+              align="left"
+            >
+              
+              <TextField
+                 id = {"_id_s" + 7777} 
+                inputProps={{ style: { fontSize: 12 } }}
+                InputLabelProps={{ style: { fontSize: 12 } }}
+                variant="outlined"
+                fullWidth
+                required
+                label="Глубина"
+                autoComplete="Глубина"
+                autoFocus
+                size="small"
+                // onChange={(e) => {
+                //   APP_STORAGE.devs.setNumber(e.target.value);
+                // }} 
+                value= {''} 
+              />
+            </TableCell>
+  
+  <TableCell align="left" sx={{ color: "#1976D2" }} onClick = {(e)=> {this.AddSensors(1)}}>
+    <AddIcon  fontSize="small" />
+  </TableCell>
+
+  <TableCell align="left" sx={{ color: "#1976D2" }} >
+  {/* <ModeEditOutlineOutlinedIcon fontSize="small" /> */}
+  </TableCell>
+
+  <TableCell align="left" sx={{ color: "#FF4848" }} >
+  {/* <DeleteOutlineOutlinedIcon fontSize="small" /> */}
+  </TableCell>
+   </TableRow>
+      
+          );
+        }
+
     }
 
     return (
@@ -298,7 +353,7 @@ export class ChangeDevs extends React.Component<IProps> {
             <Box
               sx={{ border: "1px solid #eee", p: "12px", borderRadius: "4px" }}
             >
-              <Box sx={{ pb: "12px" }}>Список сенсоров на устройстве11:</Box>
+              <Box sx={{ pb: "12px" }}>Список сенсоров на устройстве  : {count}</Box>
               <TableContainer  component={Paper} sx = {{maxHeight: '150px'}}>
                 <Table aria-label="caption table">
                   <TableBody>

@@ -111,7 +111,10 @@ export class DevLocation extends React.Component<IProps> {
       );
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
-      //  APP_STORAGE.devs_groups.setOrg(Number(gr.org_id));
+        APP_STORAGE.devs_groups.setOrg(Number(gr.org_id));
+
+        console.log(gr.deleted, 'состояние устройства');
+        
         parent.push(
           <React.Fragment key={String(gr.id)}>
               <Box
