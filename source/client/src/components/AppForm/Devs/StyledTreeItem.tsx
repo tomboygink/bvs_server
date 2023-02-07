@@ -82,7 +82,7 @@ export const handleChange = async (event: any, node: any) => {
    if(node.includes('_dev_id_') === false){
     APP_STORAGE.devs_groups.setParentId(node);
     APP_STORAGE.devs.setIdDevs(node);
-    APP_STORAGE.devs_groups.setMiddleForm(1)
+    APP_STORAGE.devs_groups.setMiddleForm(1);
    }
    
    if(node.includes('_dev_id_key_') === true){

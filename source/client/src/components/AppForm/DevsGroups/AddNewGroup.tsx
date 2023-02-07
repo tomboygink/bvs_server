@@ -23,41 +23,34 @@ export class AddNewGroup extends React.Component<IProps> {
   render(): React.ReactNode {
     return (
       <React.Fragment>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
-        >
-          {APP_STORAGE.getRoleWrite() === 2 &&
-          APP_STORAGE.getRoleRead() === 1 ? (
-            <Box
+                  {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 
+           ? <Box
               sx={{
-                color: "#000",
                 borderRadius: "4px",
+                width: '100%',
+                background:'#E3EDFF',
+                p:2,
+                
               }}
               onClick={() => this.OpenModal("0", 0)}
             >
-              <Typography sx={{ display: "flex" }}>
+              <Typography sx={{ display: "flex", color:'#266BF1', justifyContent: 'center' }}>
                 {" "}
                 Добавить новое расположение
               </Typography>
             </Box>
-          ) : (
-            <Box
-              sx={{
-                color: "#000",
-                borderRadius: "4px",
-              }}
-            >
-              <Typography sx={{ display: "flex" }}>
-                {" "}
-                Список пуст или ничего не выбрано
-              </Typography>
-            </Box>
-          )}
-        </Box>
+            : <Box
+            sx={{
+              color: "#000",
+              borderRadius: "4px",
+            }}
+          >
+            <Typography sx={{ display: "flex" }}>
+              {" "}
+              Список пуст или ничего не выбрано
+            </Typography>
+          </Box>
+  }
       </React.Fragment>
     );
   }

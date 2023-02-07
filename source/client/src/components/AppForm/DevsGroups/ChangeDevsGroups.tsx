@@ -44,8 +44,9 @@ async ChekedForEdit(editing: any) {
 async SaveChangeDevsGroups(){
   APP_STORAGE.devs_groups.set_ChangeDevsGroups("sess_id", APP_STORAGE.auth_form.getdt());
   setTimeout(() => {
-    APP_STORAGE.change_devs_groups.setOpenModalChDevsGr(false)
-  }, 1000)
+    APP_STORAGE.change_devs_groups.setOpenModalChDevsGr(false);
+    APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt());
+  }, 500)
 }
 
   render(): React.ReactNode {

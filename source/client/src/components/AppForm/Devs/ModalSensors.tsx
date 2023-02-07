@@ -6,6 +6,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
+import {Divider} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 
@@ -40,19 +42,30 @@ export class ModalSensors extends React.Component<IProps> {
                 borderRadius: "4px",
                 border: "none",
                 boxShadow: 24,
-                p: 4,
+                p: '12px',
                 outline: "none",
               }}
             >
-              <Typography id="modal-modal-title">
-                Введите глубину датчика
-              </Typography>
+
+<Box className='ModalTitle' sx = { {display: 'flex' , justifyContent: 'space-between', mb: '12px'}}> 
+         
+         <Typography >  
+            Введите глубину датчика
+         </Typography>
+   
+         <CloseIcon  sx={{color: '#1976D2'}}
+              onClick={ ()=>{APP_STORAGE.devs.setDepthSensors(false)}}
+              />
+         </Box>  
+         
+         <Divider sx = {{marginBottom: '20px'}}/>
+
 
               <TextField
                 size="small"
                 fullWidth
                 id="outlined-number"
-                label="Глубина2"
+                label="Глубина"
                 type="number"
                 InputLabelProps={{
                   shrink: true,
@@ -64,17 +77,33 @@ export class ModalSensors extends React.Component<IProps> {
                 sx={{ mt: 2 }}
               />
 
-              <Typography
-                id="modal-modal-description"
-                sx={{ mt: 2 }}
-                onClick={() => {
-                  APP_STORAGE.devs.set_DevsDepth(APP_STORAGE.devs.getSensors());
-                }}
-              >
-                Сохранить
-              </Typography>
+           
+              
+              <Box
+          sx={{
+            display: "flex",
+            alignItems: "baseline",
+            justifyContent: "flex-end",
+          }}
+        >
+        
+          <Button className="button-save"
+            sx={{
+              background: "#266BF1",
+              color: "#fff;",
+              mt: "18px",
+              mb: "18px",
+              fontSize: "12px",
+            }}
+             onClick={() => {  
+              APP_STORAGE.devs.set_DevsDepth(APP_STORAGE.devs.getSensors());
+            }}
+          >
+            Сохранить
+          </Button>
+        </Box>
 
-              <Typography onClick={() => {APP_STORAGE.devs.setDepthSensors(false)}}>close</Typography>
+             
             </Box>
           </Modal>
         </Box>
