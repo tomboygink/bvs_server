@@ -85,7 +85,7 @@ var Devs_groupsTable = (function () {
     };
     Devs_groupsTable.prototype.selectDevsGroups = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var groups, d, roots_gr, _a, _b, _c, _i, i, _d, _e, roots_gr, _f, _g, _h, _j, i, _k, _l, _m, _o, _p, _q, i, _r, result;
+            var groups, roots_gr, _a, _b, _c, _i, i, _d, _e, roots_gr, _f, _g, _h, _j, i, _k, _l, _m, _o, _p, _q, i, _r, result;
             var _s, _t;
             return __generator(this, function (_u) {
                 switch (_u.label) {
@@ -191,7 +191,7 @@ var Devs_groupsTable = (function () {
     };
     Devs_groupsTable.prototype._d_tree = function (childs) {
         return __awaiter(this, void 0, void 0, function () {
-            var d, reti, grs, _a, _b, _c, _i, i, _d, _e;
+            var reti, grs, _a, _b, _c, _i, i, _d, _e;
             var _f;
             return __generator(this, function (_g) {
                 switch (_g.label) {
@@ -291,6 +291,7 @@ var Devs_groupsTable = (function () {
     };
     Devs_groupsTable.prototype.updateDevsGroups = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var data, i, data_dev, j;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, this.db.query("SELECT * FROM UpdateDevs_Group(" +
@@ -305,7 +306,40 @@ var Devs_groupsTable = (function () {
                             "CAST ('" + this.args.info + "' AS TEXT))")];
                     case 1:
                         _a.sent();
-                        return [2];
+                        return [4, this.db.query("with recursive temp1 (id, parent_id, g_name, latitude, longitude, org_id, ord_num, deleted, g_info, path) " +
+                                "as (select t1.id, t1.parent_id, t1.g_name, t1.latitude, t1.longitude, t1.org_id, t1.ord_num, t1.deleted, t1.g_info, cast (t1.g_name as varchar (50)) as path " +
+                                "from devs_groups t1 where id = " + this.args.id + " union " +
+                                "select t2.id, t2.parent_id, t2.g_name, t2.latitude, t2.longitude, t2.org_id, t2.ord_num, t2.deleted, t2.g_info, cast (temp1.path || '->'|| t2.g_name as varchar(50)) " +
+                                "from devs_groups t2 inner join temp1 on (temp1.id = t2.parent_id)) " +
+                                "select * from temp1")];
+                    case 2:
+                        data = _a.sent();
+                        i = 0;
+                        _a.label = 3;
+                    case 3:
+                        if (!(i < data.rows.length)) return [3, 10];
+                        return [4, this.db.query("update devs_groups set org_id = " + this.args.org_id + ", deleted = " + this.args.deleted + " where id = " + data.rows[i].id)];
+                    case 4:
+                        _a.sent();
+                        return [4, this.db.query("SELECT * FROM Devs WHERE group_dev_id=" + data.rows[i].id)];
+                    case 5:
+                        data_dev = _a.sent();
+                        j = 0;
+                        _a.label = 6;
+                    case 6:
+                        if (!(j < data_dev.rows.length)) return [3, 9];
+                        return [4, this.db.query("UPDATE Devs SET " +
+                                "deleted = " + this.args.deleted + " WHERE id=" + data_dev.rows[j].id)];
+                    case 7:
+                        _a.sent();
+                        _a.label = 8;
+                    case 8:
+                        j++;
+                        return [3, 6];
+                    case 9:
+                        i++;
+                        return [3, 3];
+                    case 10: return [2];
                 }
             });
         });
