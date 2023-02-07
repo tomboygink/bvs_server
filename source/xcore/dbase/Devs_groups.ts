@@ -50,8 +50,6 @@ export class Devs_groupsTable {
             update: false
         }
 
-        var d:any[];
-
         if (this.args.users_w === true) {
             var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ");
             for (var i in roots_gr.rows) {
@@ -83,15 +81,10 @@ export class Devs_groupsTable {
             }
         }
 
-
-
         for (var i in groups.childs) {
             groups.childs[i].childs = await this._d_tree(groups.childs[i]);
         }
-
-
         var result = this.objToString(groups);
-
         //console.log(result);
         return result
 
@@ -99,9 +92,6 @@ export class Devs_groupsTable {
 
     //Преобразоватие в дерево 
     async _d_tree(childs: any) {
-
-        var d:any[];
-
         var reti = new Array();
         var grs = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=" + childs.id);
         for (var i in grs.rows) {
@@ -118,62 +108,90 @@ export class Devs_groupsTable {
     }
 
 
-    objToString (obj:any, isArray?:boolean){
+    objToString(obj: any, isArray?: boolean) {
         var isArray = isArray || false; // что нужно вернуть - массив или объект
-    
+
         var sstr = "";
-        if(isArray){sstr += "[";}else{sstr += "{";}
-    
+        if (isArray) { sstr += "["; } else { sstr += "{"; }
+
         var first = true;
-        for(var k in obj){
-    
-            if(typeof obj[k] == 'function') continue; // не включает методы - только JSON для переноса данных
-    
-            if(first){
+        for (var k in obj) {
+
+            if (typeof obj[k] == 'function') continue; // не включает методы - только JSON для переноса данных
+
+            if (first) {
                 first = false;
-            }else{
+            } else {
                 sstr += ',';
             }
-            
-    
-            if(!isArray){ sstr += `"${k}":`; } // ключи для объекта
-    
+
+
+            if (!isArray) { sstr += `"${k}":`; } // ключи для объекта
+
             // значения
-            if(obj[k] === null){
+            if (obj[k] === null) {
                 sstr += 'null'
-            }else if(Array.isArray(obj[k])){
+            } else if (Array.isArray(obj[k])) {
                 sstr += this.objToString(obj[k], true)
-            }else if('object' == typeof obj[k]){
+            } else if ('object' == typeof obj[k]) {
                 sstr += this.objToString(obj[k], false)
-            }else if('undefined'== typeof obj[k]){
+            } else if ('undefined' == typeof obj[k]) {
                 sstr += 'null'; //'undefined'
-            }else if('string'== typeof obj[k]){
+            } else if ('string' == typeof obj[k]) {
                 sstr += `"${this.escStr(obj[k])}"`;
-            }else{
+            } else {
                 sstr += obj[k]
             }
-    
+
         }
-        if(isArray){sstr += "]";}else{sstr += "}";}
+        if (isArray) { sstr += "]"; } else { sstr += "}"; }
         return sstr;
     }
-    escStr(str:string):string{
+    escStr(str: string): string {
         var reti = str.replace(/[\\]/g, "\\\\");
         reti = reti.replace(/["]/g, '\\"');
         return reti;
     }
 
     //Редактирование группы 
-    async updateDevsGroups(){
-        await this.db.query("SELECT * FROM UpdateDevs_Group("+
-        "CAST ("+this.args.id+" AS BIGINT), "+
-        "CAST ("+this.args.parent_id+" AS BIGINT), "+
-        "CAST ('"+this.args.name+"' AS VARCHAR(250)), "+
-        "CAST ('"+this.args.latitude+"' AS VARCHAR(60)), "+
-        "CAST ('"+this.args.longitude+"' AS VARCHAR(60)), "+
-        "CAST ("+this.args.org_id+" AS BIGINT), "+
-        "CAST ("+this.args.ord_id+" AS INTEGER), "+
-        "CAST ('"+this.args.deleted+"' AS BOOLEAN), "+
-        "CAST ('"+this.args.info+"' AS TEXT))");
+    async updateDevsGroups() {
+        //КОСТЫЛЬ НО ПРИЯТНО КОГДА РАБОТАЕТ
+
+        //Редактирование основной группы пользователем 
+        await this.db.query("SELECT * FROM UpdateDevs_Group(" +
+            "CAST (" + this.args.id + " AS BIGINT), " +
+            "CAST (" + this.args.parent_id + " AS BIGINT), " +
+            "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
+            "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
+            "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
+            "CAST (" + this.args.org_id + " AS BIGINT), " +
+            "CAST (" + this.args.ord_id + " AS INTEGER), " +
+            "CAST ('" + this.args.deleted + "' AS BOOLEAN), " +
+            "CAST ('" + this.args.info + "' AS TEXT))");
+
+
+        //Рекурсивный запрос на получение подгрупп 
+        var data = await this.db.query("with recursive temp1 (id, parent_id, g_name, latitude, longitude, org_id, ord_num, deleted, g_info, path) " +
+            "as (select t1.id, t1.parent_id, t1.g_name, t1.latitude, t1.longitude, t1.org_id, t1.ord_num, t1.deleted, t1.g_info, cast (t1.g_name as varchar (50)) as path " +
+            "from devs_groups t1 where id = " + this.args.id + " union " +
+            "select t2.id, t2.parent_id, t2.g_name, t2.latitude, t2.longitude, t2.org_id, t2.ord_num, t2.deleted, t2.g_info, cast (temp1.path || '->'|| t2.g_name as varchar(50)) " +
+            "from devs_groups t2 inner join temp1 on (temp1.id = t2.parent_id)) " +
+            "select * from temp1");
+
+        //обновление данных подгрупп и устройств
+        for (var i = 0; i < data.rows.length; i++) {
+            await this.db.query("update devs_groups set org_id = " + this.args.org_id + ", deleted = " + this.args.deleted + " where id = " + data.rows[i].id);
+
+            var data_dev = await this.db.query("SELECT * FROM Devs WHERE group_dev_id=" + data.rows[i].id);
+            //console.log(data_devgroup);
+            //редактирование устройств
+            for (var j = 0; j < data_dev.rows.length; j++) {
+                await this.db.query("UPDATE Devs SET " +
+                    "deleted = " + this.args.deleted + " WHERE id=" + data_dev.rows[j].id);
+            }
+
+
+
+        }
     }
 }

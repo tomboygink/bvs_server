@@ -71,6 +71,7 @@ SET
 	deleted = c_deleted,
     g_info = c_g_info
 WHERE id = c_id
+
 $$ LANGUAGE sql;
 
 
