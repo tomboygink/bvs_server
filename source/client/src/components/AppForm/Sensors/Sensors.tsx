@@ -48,16 +48,15 @@ export class Sensors extends React.Component<IProps> {
   drawSensors(dgrs: TDevsGroup[]): React.ReactNode[] {
     var sensors: React.ReactNode[] = new Array();         ////// отображаем сенсоры 
 
- 
-
+  
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr_childs = dgr.childs;
       var gr_devs = dgr.devs;
-             
+              
       for (var key1 in gr_devs) {
         if ("_dev_id_key_" + gr_devs[key1].id === APP_STORAGE.devs.getIdChild() 
-           &&  APP_STORAGE.devs_groups.getMiddleForm() === 2
+            &&  APP_STORAGE.devs_groups.getMiddleForm() === 2
         ) {
           for (var key in gr_devs[key1].sensors.s) {
             console.log('массив' , gr_devs[key1].deleted)
@@ -81,7 +80,7 @@ export class Sensors extends React.Component<IProps> {
                 if(gr_devs[key1].deleted === false){
                   sensors.push(
                     <TableRow key={"sensors_id" + gr_devs[key1].sensors.s[key]}>
-                       <TableCell ><SensorsIcon
+                          <TableCell ><SensorsIcon
                           fontSize="small"
                           sx={{  color: "#5be95b" }}
                         />

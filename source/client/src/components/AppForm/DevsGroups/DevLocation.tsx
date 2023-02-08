@@ -344,8 +344,8 @@ export class DevLocation extends React.Component<IProps> {
                     size="small"
                     required
                     fullWidth
-                    id="Долгота"
-                    label="Долгота"
+                    id="Место расположения"
+                    label="Место расположения"
                     autoFocus
                     ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
                     value={gr.g_name}
