@@ -85,7 +85,7 @@ export class DevLocation extends React.Component<IProps> {
         APP_STORAGE.devs_groups.setParent(String(gr.parent_id));
         APP_STORAGE.devs_groups.setCheckboxEd(gr.deleted)
 
-        APP_STORAGE.change_devs_groups.setOpenModalChDevsGr(true);
+        APP_STORAGE.devs_groups.setOpenModalChDevsGr(true);
       }
     }
     return parent;
@@ -344,8 +344,8 @@ export class DevLocation extends React.Component<IProps> {
                     size="small"
                     required
                     fullWidth
-                    id="Долгота"
-                    label="Долгота"
+                    id="Место расположения"
+                    label="Место расположения"
                     autoFocus
                     ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
                     value={gr.g_name}

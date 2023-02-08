@@ -42,42 +42,161 @@ export class Sensors extends React.Component<IProps> {
     APP_STORAGE.devs.setOpenModal(true);
   }
 
-  async sort_sensors(){
+  async SortDescSensors(a: string){
+     if(a === '0'){
+      APP_STORAGE.sensors.setActiveButtonSort('sort-sensors');
+      APP_STORAGE.sensors.setActiveButtonSortDesc('sort');
+     }
+     if(a === '1'){
+      APP_STORAGE.sensors.setActiveButtonSortDesc('sort-sensors-desc');
+      APP_STORAGE.sensors.setActiveButtonSort('sort')
+     }
+     APP_STORAGE.sensors.setSortDesc(a);
+     this.drawDevLocation();
   }
 
   drawSensors(dgrs: TDevsGroup[]): React.ReactNode[] {
     var sensors: React.ReactNode[] = new Array();         ////// отображаем сенсоры 
 
- 
-
+  
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr_childs = dgr.childs;
       var gr_devs = dgr.devs;
-             
-      for (var key1 in gr_devs) {
-        if ("_dev_id_key_" + gr_devs[key1].id === APP_STORAGE.devs.getIdChild() 
-           &&  APP_STORAGE.devs_groups.getMiddleForm() === 2
-        ) {
-          for (var key in gr_devs[key1].sensors.s) {
-            console.log('массив как  есть' , gr_devs[key1].sensors.s.sort((a:any, b:any) => b - a))
+              
+      for (var i in gr_devs) {
 
-            sensors.push(
-              <TableRow key={"sensors_id" + gr_devs[key1].sensors.s[key]}>
-                 <TableCell ><SensorsIcon
-                    fontSize="small"
-                    sx={{  color: "#5be95b" }}
-                  />
-                  </TableCell>
-                <TableCell >[00{key}]</TableCell>
-                <TableCell
-                  sx={{ fontWeight: "700" }}>
-                  [{"" + gr_devs[key1].sensors.s[key]}]{" "}
-                </TableCell>
-              </TableRow>
-            );
+        if ("_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&  APP_STORAGE.devs_groups.getMiddleForm() === 2
+                 && APP_STORAGE.sensors.getSortDesc() === '') {
+
+          for (var key in gr_devs[i].sensors.s) {
+                if(gr_devs[i].deleted === true){
+                  sensors.push(
+                            <TableRow key={"sensors_id" + gr_devs[i].sensors.s[key]}>
+                                  <TableCell ><SensorsIcon
+                                        fontSize="small"
+                                        sx={{  color: "#808080" }}
+                                  />
+                                  </TableCell>
+                                  <TableCell >[00{key}]</TableCell>
+                                  <TableCell >
+                                        [{"" + gr_devs[i].sensors.s[key]}]{" "}
+                                    </TableCell>
+                            </TableRow>
+                  );
+                
+                }
+
+                if(gr_devs[i].deleted === false){
+                  sensors.push(
+                    <TableRow key={"sensors_id" + gr_devs[i].sensors.s[key]}>
+                          <TableCell ><SensorsIcon
+                          fontSize="small"
+                          sx={{  color: "#5be95b" }}
+                        />
+                        </TableCell>
+                      <TableCell >[00{key}]</TableCell>
+                      <TableCell
+                        sx={{ fontWeight: "700" }}>
+                        [{"" + gr_devs[i].sensors.s[key]}]{" "}
+                      </TableCell>
+                    </TableRow>
+                  );
+                
+                }
           }
         }  
+
+
+
+        //////////////////////////////Сортировка..................................................................
+
+        if ("_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&  APP_STORAGE.devs_groups.getMiddleForm() === 2
+        && APP_STORAGE.sensors.getSortDesc() === '1') {
+
+ for (var key in gr_devs[i].sensors.s.sort((a:any, b:any) => b - a)) {
+       if(gr_devs[i].deleted === true){
+         sensors.push(
+                   <TableRow key={"sensors_id" + gr_devs[i].sensors.s[key]}>
+                         <TableCell ><SensorsIcon
+                               fontSize="small"
+                               sx={{  color: "#808080" }}
+                         />
+                         </TableCell>
+                         <TableCell >[00{key}]</TableCell>
+                         <TableCell >
+                               [{"" + gr_devs[i].sensors.s[key]}]{" "}
+                           </TableCell>
+                   </TableRow>
+         );
+       
+       }
+
+       if(gr_devs[i].deleted === false){
+         sensors.push(
+           <TableRow key={"sensors_id" + gr_devs[i].sensors.s[key]}>
+                 <TableCell ><SensorsIcon
+                 fontSize="small"
+                 sx={{  color: "#5be95b" }}
+               />
+               </TableCell>
+             <TableCell >[00{key}]</TableCell>
+             <TableCell
+               sx={{ fontWeight: "700" }}>
+               [{"" + gr_devs[i].sensors.s[key]}]{" "}
+             </TableCell>
+           </TableRow>
+         );
+       
+       }
+ }
+}  
+
+
+if ("_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&  APP_STORAGE.devs_groups.getMiddleForm() === 2
+&& APP_STORAGE.sensors.getSortDesc() === '0') {
+
+for (var key in gr_devs[i].sensors.s.sort()) {
+if(gr_devs[i].deleted === true){
+ sensors.push(
+           <TableRow key={"sensors_id" + gr_devs[i].sensors.s[key]}>
+                 <TableCell ><SensorsIcon
+                       fontSize="small"
+                       sx={{  color: "#808080" }}
+                 />
+                 </TableCell>
+                 <TableCell >[00{key}]</TableCell>
+                 <TableCell >
+                       [{"" + gr_devs[i].sensors.s[key]}]{" "}
+                   </TableCell>
+           </TableRow>
+ );
+
+}
+
+if(gr_devs[i].deleted === false){
+ sensors.push(
+   <TableRow key={"sensors_id" + gr_devs[i].sensors.s[key]}>
+         <TableCell ><SensorsIcon
+         fontSize="small"
+         sx={{  color: "#5be95b" }}
+       />
+       </TableCell>
+     <TableCell >[00{key}]</TableCell>
+     <TableCell
+       sx={{ fontWeight: "700" }}>
+       [{"" + gr_devs[i].sensors.s[key]}]{" "}
+     </TableCell>
+   </TableRow>
+ );
+
+}
+}
+}  
+
+
+
+
       }
 
       var childs: React.ReactNode[] = new Array();
@@ -151,17 +270,16 @@ export class Sensors extends React.Component<IProps> {
                 <TableBody>
                   {(APP_STORAGE.devs_groups.getMiddleForm() === 2) && 
                 <TableRow key={"sensors_id" + 98}>
-                 <TableCell colSpan={2}>
+                  <TableCell colSpan={2}>
                   Список сенсоров: 
                   </TableCell>
-               <TableCell sx={{width: '80px'}} onClick={() =>{this.sort_sensors()}}>
-                <ArrowDownwardIcon fontSize="small" sx={{p: '2px'}}/>
-                <ArrowUpwardIcon fontSize="small" sx={{p: '2px'}}/>
-               </TableCell>
+                <TableCell sx={{width: '80px'}}>
+                <ArrowDownwardIcon className={APP_STORAGE.sensors.getActiveButtonSort()} fontSize="small" sx={{p: '2px'}}  onClick={() => {this.SortDescSensors('0')}} /> 
+                <ArrowUpwardIcon className={APP_STORAGE.sensors.getActiveButtonSortDesc()} fontSize="small" sx={{p: '2px'}}  onClick={() => {this.SortDescSensors('1')}}/> 
+              </TableCell>
               </TableRow>}
-
                   {this.drawDevLocation()}
-                  </TableBody>
+              </TableBody>
               </Table>
             </TableContainer>
           </Box>

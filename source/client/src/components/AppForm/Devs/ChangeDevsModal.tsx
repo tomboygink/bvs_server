@@ -14,7 +14,7 @@ import {
 
 import FormGroup from "@mui/material/FormGroup";
 import Stack from "@mui/material/Stack";
-import { AntSwitch } from "../../../components/AppForm/AppBarPanel/LeftPanel/RegistationUsers/switch";
+import { AntSwitch } from "../AppBarPanel/LeftPanel/RegistationUsers/switch";
 
 import CloseIcon from "@mui/icons-material/Close";
 import { APP_STORAGE } from "../../../storage/AppStorage";
@@ -29,7 +29,7 @@ import Paper from "@mui/material/Paper";
 
 import SensorsIcon from "@mui/icons-material/Sensors";
 
-import { Change_ModalSensors} from "./Change_ModalSensors";
+import { Change_ModalSensors} from "./AddSensorsModal";
 
 import AddIcon from "@mui/icons-material/Add";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
@@ -39,13 +39,29 @@ interface IProps {}
 
 //Компонент формы приложения
 @observer
-export class ChangeDevs extends React.Component<IProps> {
+export class ChangeDevsModal extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }
 
   async closeModal() {
-    APP_STORAGE.devs_groups.setOpenModal(false);
+    APP_STORAGE.devs.setOpenModalChange(false);
+
+    APP_STORAGE.devs.setNumberError(false);
+    APP_STORAGE.devs.setNumberError_mess('');
+    APP_STORAGE.devs.setNumber('');
+
+    APP_STORAGE.devs.setNameError(false);
+    APP_STORAGE.devs.setNameError_mess('');
+    APP_STORAGE.devs.setName('');
+
+    APP_STORAGE.devs.setLongitudeError(false);
+    APP_STORAGE.devs.setLongitudeError_mess('');
+    APP_STORAGE.devs.setLongitude('');
+
+    APP_STORAGE.devs.setLatitudeError(false);
+    APP_STORAGE.devs.setLatitudeError_mess('');
+    APP_STORAGE.devs.setLatitude('');
   }
 
   async SelectedOrg(a: any) {
@@ -131,7 +147,6 @@ export class ChangeDevs extends React.Component<IProps> {
       }
     }
 
-   
     if (APP_STORAGE.devs.getChangeSensors()) {
       const obj1:any = {};
       var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
@@ -157,7 +172,7 @@ export class ChangeDevs extends React.Component<IProps> {
             >
               
               <TextField
-                 id = {"_id_s" + obj1[i]} 
+                id = {"_id_s" + obj1[i]} 
                 inputProps={{ style: { fontSize: 12 } }}
                 InputLabelProps={{ style: { fontSize: 12 } }}
                 variant="outlined"
@@ -185,7 +200,7 @@ export class ChangeDevs extends React.Component<IProps> {
   <TableCell align="left" sx={{ color: "#FF4848" }} onClick = {(e)=> {this.DeleteSensors((document.getElementById("_id_s" + obj1[i]) as HTMLInputElement).value)}}>
   <DeleteOutlineOutlinedIcon fontSize="small" />
   </TableCell>
-   </TableRow>
+  </TableRow>
       
           );
         }  
@@ -205,7 +220,7 @@ export class ChangeDevs extends React.Component<IProps> {
             >
               
               <TextField
-                 id = {"_id_s" + 7777} 
+                id = {"_id_s" + 7777} 
                 inputProps={{ style: { fontSize: 12 } }}
                 InputLabelProps={{ style: { fontSize: 12 } }}
                 variant="outlined"
@@ -215,9 +230,6 @@ export class ChangeDevs extends React.Component<IProps> {
                 autoComplete="Глубина"
                 autoFocus
                 size="small"
-                // onChange={(e) => {
-                //   APP_STORAGE.devs.setNumber(e.target.value);
-                // }} 
                 value= {''} 
               />
             </TableCell>
@@ -233,7 +245,7 @@ export class ChangeDevs extends React.Component<IProps> {
   <TableCell align="left" sx={{ color: "#FF4848" }} >
   {/* <DeleteOutlineOutlinedIcon fontSize="small" /> */}
   </TableCell>
-   </TableRow>
+  </TableRow>
       
           );
         }
@@ -266,7 +278,7 @@ export class ChangeDevs extends React.Component<IProps> {
               <CloseIcon
                 sx={{ color: "#1976D2" }}
                 onClick={() => {
-                  APP_STORAGE.devs.setOpenModalChange(false);
+                 this.closeModal();
                 }}
               />
             </Box>
@@ -279,6 +291,8 @@ export class ChangeDevs extends React.Component<IProps> {
               sx={{ mt: "14px" }}
               inputProps={{ style: { fontSize: 12 } }}
               InputLabelProps={{ style: { fontSize: 12 } }}
+              error={APP_STORAGE.devs.getNumberError()}
+              helperText={APP_STORAGE.devs.getNumberError_mess()}
               variant="outlined"
               fullWidth
               required
@@ -297,6 +311,8 @@ export class ChangeDevs extends React.Component<IProps> {
               inputProps={{ style: { fontSize: 12 } }}
               InputLabelProps={{ style: { fontSize: 12 } }}
               variant="outlined"
+              error={APP_STORAGE.devs.getNameError()}
+              helperText={APP_STORAGE.devs.getNamaError_mess()}
               fullWidth
               required
               label="название устройства "
@@ -314,6 +330,8 @@ export class ChangeDevs extends React.Component<IProps> {
               inputProps={{ style: { fontSize: 12 } }}
               InputLabelProps={{ style: { fontSize: 12 } }}
               variant="outlined"
+              error={APP_STORAGE.devs.getLongitudeError()}
+              helperText={APP_STORAGE.devs.getLongitudeError_mess()}
               fullWidth
               required
               label="Долгота"
@@ -331,6 +349,8 @@ export class ChangeDevs extends React.Component<IProps> {
               inputProps={{ style: { fontSize: 12 } }}
               InputLabelProps={{ style: { fontSize: 12 } }}
               variant="outlined"
+              error={APP_STORAGE.devs.getLatitudeError()}
+              helperText={APP_STORAGE.devs.getLatitudeError_mess()}
               fullWidth
               required
               label="Широта"
@@ -366,7 +386,7 @@ export class ChangeDevs extends React.Component<IProps> {
                   <TableBody>
                 
                       {depth_sensors}
-                     
+
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -378,7 +398,7 @@ export class ChangeDevs extends React.Component<IProps> {
                 <Typography
                   sx={{ ml: "12px", fontSize: "12px", color: "#266bf1" }}
                 >
-                 Заблокировать -{" "}
+                  Заблокировать -{" "}
                 </Typography>
                 <AntSwitch
                   checked={APP_STORAGE.devs.getCheckboxEd()}

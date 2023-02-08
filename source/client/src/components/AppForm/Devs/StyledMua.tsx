@@ -63,7 +63,7 @@ export function TransitionComponent(props: TransitionProps) {
   );
 }
 
-export const StyledTreeItem = styled((props: TreeItemProps) => (
+export const StyledMua = styled((props: TreeItemProps) => (
   <TreeItem {...props} TransitionComponent={TransitionComponent} />
 ))(({ theme }) => ({
   [`& .${treeItemClasses.iconContainer}`]: {
@@ -79,6 +79,8 @@ export const StyledTreeItem = styled((props: TreeItemProps) => (
 }));
 
 export const handleChange = async (event: any, node: any) => {
+  APP_STORAGE.sensors.setActiveButtonSort('sort');
+  APP_STORAGE.sensors.setActiveButtonSortDesc('sort');
    if(node.includes('_dev_id_') === false){
     APP_STORAGE.devs_groups.setParentId(node);
     APP_STORAGE.devs.setIdDevs(node);

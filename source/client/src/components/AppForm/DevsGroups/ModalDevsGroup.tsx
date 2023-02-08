@@ -21,11 +21,19 @@ export class ModalDevsGroup extends React.Component<IProps> {
     setTimeout(() => {
       APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt());
     }, 500);
-    APP_STORAGE.devs_groups.setOpenModal(false)
 }
 
 async closeModal() {
-  APP_STORAGE.devs_groups.setOpenModal(false)
+  APP_STORAGE.devs_groups.setOpenModal(false);
+  APP_STORAGE.devs_groups.setName('');
+  APP_STORAGE.devs_groups.setNameError(false);
+  APP_STORAGE.devs_groups.setNameError_mess('');
+  APP_STORAGE.devs_groups.setLongitude('');
+  APP_STORAGE.devs_groups.setLongitudeError(false);
+  APP_STORAGE.devs_groups.setLongitudeError_mess('')
+  APP_STORAGE.devs_groups.setLatitude('');
+  APP_STORAGE.devs_groups.setLatitudeError(false);
+  APP_STORAGE.devs_groups.setLatitudeError_mess('')
 }
 
 async SelectedOrg(a: any) {    //// Сохраняем , то что выбрал пользователь из выпадающего списка Организации
@@ -89,7 +97,7 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
           inputProps={{ style: { fontSize: 12 } }} 
           InputLabelProps={{ style: { fontSize: 12 } }} 
           variant="outlined"
-          error = {APP_STORAGE.devs_groups.getNamaError()}
+          error = {APP_STORAGE.devs_groups.getNameError()}
           helperText= {APP_STORAGE.devs_groups.getNamaError_mess()}
           fullWidth
           required

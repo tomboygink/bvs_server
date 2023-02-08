@@ -6,10 +6,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
-import {Divider} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-
-
+import { Divider } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
@@ -27,7 +25,7 @@ export class ModalSensors extends React.Component<IProps> {
       <React.Fragment>
         <Box>
           <Modal
-            open={APP_STORAGE.devs.getDepthSensors()} 
+            open={APP_STORAGE.devs.getDepthSensors()}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
@@ -42,24 +40,29 @@ export class ModalSensors extends React.Component<IProps> {
                 borderRadius: "4px",
                 border: "none",
                 boxShadow: 24,
-                p: '12px',
+                p: "12px",
                 outline: "none",
               }}
             >
+              <Box
+                className="ModalTitle"
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  mb: "12px",
+                }}
+              >
+                <Typography>Введите глубину датчика</Typography>
 
-<Box className='ModalTitle' sx = { {display: 'flex' , justifyContent: 'space-between', mb: '12px'}}> 
-         
-         <Typography >  
-            Введите глубину датчика
-         </Typography>
-   
-         <CloseIcon  sx={{color: '#1976D2'}}
-              onClick={ ()=>{APP_STORAGE.devs.setDepthSensors(false)}}
-              />
-         </Box>  
-         
-         <Divider sx = {{marginBottom: '20px'}}/>
+                <CloseIcon
+                  sx={{ color: "#1976D2" }}
+                  onClick={() => {
+                    APP_STORAGE.devs.setDepthSensors(false);
+                  }}
+                />
+              </Box>
 
+              <Divider sx={{ marginBottom: "20px" }} />
 
               <TextField
                 size="small"
@@ -70,40 +73,42 @@ export class ModalSensors extends React.Component<IProps> {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                inputProps={{ inputMode: 'decimal', step:0.1, pattern:'[0..9]*[\.][0..9]*' }} 
+                inputProps={{
+                  inputMode: "decimal",
+                  step: 0.1,
+                  pattern: "[0..9]*[.][0..9]*",
+                }}
                 onChange={(e) => {
                   APP_STORAGE.devs.setSensors(Number(e.target.value));
                 }}
                 sx={{ mt: 2 }}
               />
 
-           
-              
               <Box
-          sx={{
-            display: "flex",
-            alignItems: "baseline",
-            justifyContent: "flex-end",
-          }}
-        >
-        
-          <Button className="button-save"
-            sx={{
-              background: "#266BF1",
-              color: "#fff;",
-              mt: "18px",
-              mb: "18px",
-              fontSize: "12px",
-            }}
-             onClick={() => {  
-              APP_STORAGE.devs.set_DevsDepth(APP_STORAGE.devs.getSensors());
-            }}
-          >
-            Сохранить
-          </Button>
-        </Box>
-
-             
+                sx={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Button
+                  className="button-save"
+                  sx={{
+                    background: "#266BF1",
+                    color: "#fff;",
+                    mt: "18px",
+                    mb: "18px",
+                    fontSize: "12px",
+                  }}
+                  onClick={() => {
+                    APP_STORAGE.devs.set_DevsDepth(
+                      APP_STORAGE.devs.getSensors()
+                    );
+                  }}
+                >
+                  Сохранить
+                </Button>
+              </Box>
             </Box>
           </Modal>
         </Box>

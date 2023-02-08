@@ -80,7 +80,7 @@ export class ModalLeftPanel extends React.Component<IProps> {
     return (
       <React.Fragment>
         <Dialog
-          BackdropProps={{ style: { background: "rgba(0, 0, 0, 0.75)" } }}
+          BackdropProps={{ style: { background: "rgba(0 0 0 / 12%)" } }}
           open={APP_STORAGE.reg_user.getModalRegUser()}
           fullWidth
         >

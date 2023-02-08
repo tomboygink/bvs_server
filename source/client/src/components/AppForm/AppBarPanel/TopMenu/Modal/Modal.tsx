@@ -82,7 +82,7 @@ export class Modal extends React.Component<IProps> {
       return (
       <React.Fragment>
 
-      <Dialog BackdropProps={{style:{background:'rgba(0, 0, 0, 0.75)'} } } open={APP_STORAGE.modal.getPersonalAccaunt()}  fullWidth >
+      <Dialog BackdropProps={{style:{background:"rgba(0 0 0 / 12%)"} } } open={APP_STORAGE.modal.getPersonalAccaunt()}  fullWidth >
        
       <Box  sx={{p: 2}}>
 
