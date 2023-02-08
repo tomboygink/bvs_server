@@ -147,37 +147,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
         </ListItemIcon>
         <ListItemText primary="Устройства" />
         {APP_STORAGE.devs_groups.getOpenListDev() ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-
-      {/* <Collapse in={APP_STORAGE.devs_groups.getOpenListDev()} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}
-           onClick={() => {
-            this.DevLocation(1);
-          }}
-          >
-            <ListItemIcon>
-              <RoomOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Расположение" />
-          </ListItemButton>
-        </List>
-      </Collapse> */}
-
-      {/* <Collapse in={APP_STORAGE.devs_groups.getOpenListDev()} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}
-           onClick={() => {
-            this.DevLocation(2);
-          }}>
-            <ListItemIcon>
-              <FormatListNumberedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Список" />
-          </ListItemButton>
-        </List>
-      </Collapse> */}
-      
+      </ListItemButton> 
     </List>
         </>
       );

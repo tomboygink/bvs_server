@@ -12,11 +12,11 @@ import { DevsGroupsTree } from "./DevsGroups/DevsGroupsTree";
 import { DevLocation } from "./DevsGroups/DevLocation";
 import { ModalDevsGroup } from "./DevsGroups/ModalDevsGroup";
 import {AddNewGroup} from './DevsGroups/AddNewGroup'
-import { ModalDevs1 } from "./Devs/ModalDevs";
+import { AddNewDevModal } from "./Devs/AddNewDevModal";
 import { Devs } from "./Devs/Devs";
 import { Sensors } from "./Sensors/Sensors";
 import { ChangeDevsGroups } from "./DevsGroups/ChangeDevsGroups";
-import { ChangeDevs } from "./Devs/ChangeDevs";
+import { ChangeDevsModal } from "./Devs/ChangeDevsModal";
 
 interface IProps {}
 
@@ -89,10 +89,11 @@ export class AppForm extends React.Component<IProps> {
             <AppBarPanel />
             <Modal />
             <ModalLeftPanel />
-            <ChangeDevs />
+            <ChangeDevsModal />  {/*-------------------------Модальное окно - редактировать уствройство */}
             <ModalDevsGroup />
             <ChangeDevsGroups />
-            <ModalDevs1 />
+
+            <AddNewDevModal />  {/*-------------------------Модальное окно - добавить устройство */}
            
           </Box>
           <Box className="is-grid">

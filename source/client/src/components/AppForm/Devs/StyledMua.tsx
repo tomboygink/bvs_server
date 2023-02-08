@@ -63,7 +63,7 @@ export function TransitionComponent(props: TransitionProps) {
   );
 }
 
-export const StyledTreeItem = styled((props: TreeItemProps) => (
+export const StyledMua = styled((props: TreeItemProps) => (
   <TreeItem {...props} TransitionComponent={TransitionComponent} />
 ))(({ theme }) => ({
   [`& .${treeItemClasses.iconContainer}`]: {

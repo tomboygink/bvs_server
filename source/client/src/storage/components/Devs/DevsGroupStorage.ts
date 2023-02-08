@@ -23,7 +23,7 @@ export class DevsGroupStorage{
 
     
     ////////////////////////////////////////////Проверка
-
+ 
     @observable name_err: boolean = false;
     @observable name_err_mess: string = '';
 
@@ -40,12 +40,16 @@ export class DevsGroupStorage{
     @observable defaultExpanded_devs_froups : Array<string> = [];
 
     @observable checkbox_editing: boolean = false; 
-
+ 
+    @observable open_modal_change: boolean= false; ////////////////меню редактировая (Редактировать расположение)
 
     @observable devs_groups: Array<string> = []
     constructor(){
         makeAutoObservable(this);
     }
+
+    @action setOpenModalChDevsGr(val : boolean) {this.open_modal_change = val}; 
+    @computed getOpenModalChDevsGr() : boolean {return this.open_modal_change};   
 
     @action setCheckboxEd(val: boolean) {this.checkbox_editing = val;}
     @action getCheckboxEd(): boolean {return this.checkbox_editing;}
@@ -103,9 +107,8 @@ export class DevsGroupStorage{
 
 
   //////////////////////////////////////////////////////////////////////////Проверка
-    
     @action setNameError(val : boolean) { this.name_err = val}
-    @computed getNamaError() : boolean { return this.name_err}
+    @computed getNameError() : boolean { return this.name_err}
     @action setNameError_mess(val : string) { this.name_err_mess = val}
     @computed getNamaError_mess() : string { return this.name_err_mess}
 
@@ -177,6 +180,8 @@ export class DevsGroupStorage{
          }; 
           q.sess_code = sess_code;
          (await WSocket.get()).send(q); 
+          this.setOpenModal(false)
+
          }
        }
 
@@ -251,6 +256,7 @@ export class DevsGroupStorage{
         
         q.sess_code = sess_code;
         (await WSocket.get()).send(q);
+        this.setOpenModalChDevsGr(false);
       }
     }
 

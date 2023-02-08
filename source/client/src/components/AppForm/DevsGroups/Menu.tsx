@@ -49,9 +49,9 @@ export default function LongMenu() {
         onClose={handleClose}
       
       >
-       
+
           <MenuItem  onClick={handleClose}>
-            <Typography onClick = {()=> {APP_STORAGE.change_devs_groups.setOpenModalChDevsGr(true)}} > Редактировать</Typography>
+            <Typography onClick = {()=> {APP_STORAGE.devs_groups.setOpenModalChDevsGr(true)}} > Редактировать</Typography>
           </MenuItem>
         
       </Menu>
