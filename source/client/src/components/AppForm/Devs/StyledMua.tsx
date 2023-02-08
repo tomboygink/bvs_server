@@ -79,6 +79,8 @@ export const StyledMua = styled((props: TreeItemProps) => (
 }));
 
 export const handleChange = async (event: any, node: any) => {
+  APP_STORAGE.sensors.setActiveButtonSort('sort');
+  APP_STORAGE.sensors.setActiveButtonSortDesc('sort');
    if(node.includes('_dev_id_') === false){
     APP_STORAGE.devs_groups.setParentId(node);
     APP_STORAGE.devs.setIdDevs(node);
