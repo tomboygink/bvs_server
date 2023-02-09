@@ -14,12 +14,11 @@ import TableRow from "@mui/material/TableRow";
 
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-
-
-
-
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
+
+import {SensorsMenu} from './SensorsMenu'
 
 interface IProps {}
 
@@ -40,6 +39,11 @@ export class Sensors extends React.Component<IProps> {
 
   async OpenModal() {
     APP_STORAGE.devs.setOpenModal(true);
+  }
+
+  setAnchorEl(a:string) {
+    alert(a)
+    APP_STORAGE.sensors.setAnchorEl(a)
   }
 
   async SortDescSensors(a: string){
@@ -72,6 +76,7 @@ export class Sensors extends React.Component<IProps> {
           for (var key in gr_devs[i].sensors.s) {
                 if(gr_devs[i].deleted === true){
                   sensors.push(
+                    <> 
                             <TableRow key={"sensors_id" + gr_devs[i].sensors.s[key]}>
                                   <TableCell ><SensorsIcon
                                         fontSize="small"
@@ -82,7 +87,14 @@ export class Sensors extends React.Component<IProps> {
                                   <TableCell >
                                         [{"" + gr_devs[i].sensors.s[key]}]{" "}
                                     </TableCell>
+
+                                    <TableCell  >
+                                        <ExpandMoreIcon onClick={() => {this.setAnchorEl("sensors_id" + gr_devs[i].sensors.s[key])}} />
+                                        
+                                    </TableCell>
                             </TableRow>
+                            <SensorsMenu/>
+                            </>
                   );
                 
                 }
@@ -283,6 +295,7 @@ if(gr_devs[i].deleted === false){
               </Table>
             </TableContainer>
           </Box>
+          
         </Box>
       </>
     );

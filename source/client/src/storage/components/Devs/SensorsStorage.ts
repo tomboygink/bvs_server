@@ -11,6 +11,8 @@ export class SensorsStorage {
     @observable active_button_sort: string = '';
     @observable active_button_sort_desc: string = '';
 
+    @observable anchorEl: string = '';
+
     constructor(){
         makeAutoObservable(this);
     }
@@ -26,6 +28,9 @@ export class SensorsStorage {
 
     @action setActiveButtonSortDesc(val : string) {this.active_button_sort_desc = val};
     @computed getActiveButtonSortDesc() : string {return this.active_button_sort_desc};
+
+    @action setAnchorEl(val : string) {this.anchorEl = val};
+    @computed getAnchorEl() : string {return this.anchorEl};
 
 }
 

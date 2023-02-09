@@ -96,7 +96,6 @@ export class ChangeDevsModal extends React.Component<IProps> {
     }
     const array = obj
     const array2 = array.filter((element: any) => element !== null);
-    console.log(array)
     APP_STORAGE.devs.setChangeSensors(array2)
   }
   }

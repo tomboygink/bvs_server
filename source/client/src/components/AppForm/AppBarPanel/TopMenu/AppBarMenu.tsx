@@ -32,7 +32,6 @@ export class AccountMenu extends React.Component<IProps> {
             APP_STORAGE.auth_form.setUser(null);
            
             deleteCookie('sess_id', APP_STORAGE.auth_form.getdt() ) 
-            console.log('Delete sess_id :', APP_STORAGE.auth_form.getdt() )
             }
 
     async ChangeCUserData( ) {

@@ -26,7 +26,9 @@ export class Devs extends React.Component<IProps> {
     super(props);
   }
 
-  async editDevice() {
+  async editDevice(a:any) {
+    APP_STORAGE.devs.setMenu_devs(a);
+    console.log(APP_STORAGE.devs.getMenu_devs())
     let devs_g = [];
     let DevGr = [];
 
@@ -83,8 +85,15 @@ export class Devs extends React.Component<IProps> {
           APP_STORAGE.devs.setId(String(gr_devs[key].id));
           APP_STORAGE.devs.setGroupDevId(String(gr_devs[key].group_dev_id));
           APP_STORAGE.devs.setCheckboxEd(gr_devs[key].deleted);
+            
 
-          APP_STORAGE.devs.setOpenModalChange(true);
+          if(APP_STORAGE.devs.getMenu_devs() === '1'){
+            APP_STORAGE.devs.setOpenModalChange(true);
+          }
+          if(APP_STORAGE.devs.getMenu_devs() === '2'){
+            APP_STORAGE.devs_groups.setOpenModalMoveDevsGr(true);
+          }
+          
         }
       }
     }
@@ -160,9 +169,16 @@ export class Devs extends React.Component<IProps> {
                             }}
                           >
                             <MenuItem>
-                              <Typography onClick={() => this.editDevice()}>
+                              <Typography onClick={() => this.editDevice('1')}>
                                 {" "}
                                 Редактировать{" "}
+                              </Typography>
+                            </MenuItem>
+
+                            <MenuItem>
+                              <Typography onClick={() => this.editDevice('2')}>
+                                {" "}
+                                Переместить{" "}
                               </Typography>
                             </MenuItem>
                           </Menu>
@@ -278,9 +294,15 @@ export class Devs extends React.Component<IProps> {
                             }}
                           >
                             <MenuItem>
-                              <Typography onClick={() => this.editDevice()}>
+                              <Typography onClick={() => this.editDevice('1')}>
                                 {" "}
                                 Редактировать{" "}
+                              </Typography>
+                            </MenuItem>
+                            <MenuItem>
+                              <Typography onClick={() => this.editDevice('2')}>
+                                {" "}
+                                Переместить{" "}
                               </Typography>
                             </MenuItem>
                           </Menu>
