@@ -195,7 +195,6 @@ export class AdoutDevs extends React.Component<IProps> {
         <React.Fragment> 
           <Box  sx={{ display: 'flex', flexDirection: 'column;', alignItems: 'flex-start;', ml: '1rem'}}> 
           <Typography sx={{fontWeight: '500' , pb: '20px'}}>Данные по устройствам</Typography>
-          {/* ******************************************************************************************************************************* */}
           {this.drawDevLocation()}
           {devs_discripst}
           </Box>

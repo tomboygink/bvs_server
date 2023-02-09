@@ -13,7 +13,8 @@ export class DevsGroupStorage{
     @observable set_org_id : number = 0;
 
     @observable name:string = '';
-    @observable key_org: any= ''
+    @observable key_org: any= '';
+    @observable key_devsgr: any = '';
     @observable latitude:string = '';
     @observable longitude: string = '';
     @observable info: string = '';
@@ -21,7 +22,7 @@ export class DevsGroupStorage{
 
     @observable parent : string = '';
 
-    
+     
     ////////////////////////////////////////////Проверка
  
     @observable name_err: boolean = false;
@@ -42,6 +43,7 @@ export class DevsGroupStorage{
     @observable checkbox_editing: boolean = false; 
  
     @observable open_modal_change: boolean= false; ////////////////меню редактировая (Редактировать расположение)
+    @observable open_modal_move: boolean = false; //////////////// (Переместить расположение)
 
     @observable devs_groups: Array<string> = []
     constructor(){
@@ -49,7 +51,10 @@ export class DevsGroupStorage{
     }
 
     @action setOpenModalChDevsGr(val : boolean) {this.open_modal_change = val}; 
-    @computed getOpenModalChDevsGr() : boolean {return this.open_modal_change};   
+    @computed getOpenModalChDevsGr() : boolean {return this.open_modal_change}; 
+    
+    @action setOpenModalMoveDevsGr(val : boolean) {this.open_modal_move = val}; //// открыть меню "переместить расположение" 
+    @computed getOpenModalMoveDevsGr() : boolean {return this.open_modal_move};///////////////////////////////////////////////////////////////////////
 
     @action setCheckboxEd(val: boolean) {this.checkbox_editing = val;}
     @action getCheckboxEd(): boolean {return this.checkbox_editing;}
@@ -67,7 +72,10 @@ export class DevsGroupStorage{
     @computed getOpenListDev() : boolean {return this.open_devs_list}
 
     @action setKeyOrg(val: any) { this.key_org = val;}
-    @computed getKeyOrg(): any {return this.key_org;}
+    @computed getKeyOrg(): any {return this.key_org;} 
+
+    @action setKeyDevsgr(val: any) { this.key_devsgr = val;}
+    @computed getKeyDevsgr(): any {return this.key_devsgr;}
 
     @action setOpenModal (val: boolean) {this.open_modal = val}
     @computed getOpenModal() : boolean {return this.open_modal}

@@ -16,6 +16,7 @@ import { AddNewDevModal } from "./Devs/AddNewDevModal";
 import { Devs } from "./Devs/Devs";
 import { Sensors } from "./Sensors/Sensors";
 import { ChangeDevsGroups } from "./DevsGroups/ChangeDevsGroups";
+import {MoveDevsGroups} from "./DevsGroups/MoveDevsGroups"
 import { ChangeDevsModal } from "./Devs/ChangeDevsModal";
 
 interface IProps {}
@@ -92,6 +93,7 @@ export class AppForm extends React.Component<IProps> {
             <ChangeDevsModal />  {/*-------------------------Модальное окно - редактировать уствройство */}
             <ModalDevsGroup />
             <ChangeDevsGroups />
+            <MoveDevsGroups/>
 
             <AddNewDevModal />  {/*-------------------------Модальное окно - добавить устройство */}
            

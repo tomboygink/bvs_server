@@ -64,6 +64,40 @@ export class DevLocation extends React.Component<IProps> {
     return this.getValueCh(DevGr);
   }
 
+  async moveDeviceLocation(a:any) {
+    APP_STORAGE.devs.setMenu_devs(a)
+    APP_STORAGE.devs_groups.setOpen_menu(false);
+    let devs_g = [];
+    let DevGr = [];
+
+    if (
+      Object.keys(
+        JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
+      ).length !== 0 &&
+      JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
+        .constructor === Object
+    ) {
+      devs_g = JSON.parse(
+        JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
+      );
+    }
+
+    for (var key in devs_g) {
+      if (devs_g.hasOwnProperty(key)) {
+        let a = devs_g[key];
+        let root = JSON.parse(a);
+
+        if (root.childs.length > 0) {
+          for (let i = 0; i < root.childs.length; i++) {
+            DevGr.push(root.childs[i]);
+          }
+        }
+      }
+    }
+
+    return this.getValueMove(DevGr);
+  }
+
   getValueCh(dgrs: TDevsGroup[]) {
     var parent: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
@@ -91,6 +125,32 @@ export class DevLocation extends React.Component<IProps> {
     return parent;
   }
 
+  getValueMove(dgrs: TDevsGroup[]) {
+    var parent: React.ReactNode[] = new Array();
+    for (var ii in dgrs) {
+      var dgr: TDevsGroup = dgrs[ii];
+      var gr: TDGroup = dgr.group;
+      var gr_childs = dgr.childs;
+
+      var childs: React.ReactNode[] = new Array();
+      if (gr_childs.length > 0) childs = this.getValueMove(gr_childs);
+
+      parent.push(childs);
+
+      if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
+        APP_STORAGE.devs_groups.setParentId(String(gr.id));
+        APP_STORAGE.devs_groups.setName(gr.g_name);
+        APP_STORAGE.devs_groups.setLatitude(gr.longitude);
+        APP_STORAGE.devs_groups.setLongitude(gr.longitude);
+        APP_STORAGE.devs.setCheckboxEd(gr.deleted);
+        APP_STORAGE.devs.setInfo(gr.g_info);
+
+        APP_STORAGE.devs_groups.setOpenModalMoveDevsGr(true);
+      }
+    }
+    return parent;
+  }
+
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
     let parent: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
@@ -109,8 +169,8 @@ export class DevLocation extends React.Component<IProps> {
         </React.Fragment>
       );
 
-      if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
-      //  APP_STORAGE.devs_groups.setOrg(Number(gr.org_id));
+      if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) { 
+      
          if(gr.deleted === true){
           parent.push(
             <React.Fragment key={String(gr.id)}>
@@ -174,12 +234,17 @@ export class DevLocation extends React.Component<IProps> {
                         APP_STORAGE.devs_groups.setOpen_menu(false);
                       }}
                     >
-                      <MenuItem>
+                        <MenuItem>
                         <Typography onClick={() => this.editDeviceLocation()}>
                           {" "}
                           Редактировать
                         </Typography>
-                        <br />
+                      </MenuItem>
+                      <MenuItem>
+                        <Typography onClick={() => this.moveDeviceLocation('3')}>
+                          {" "}
+                          Переместить
+                        </Typography>
                       </MenuItem>
                     </Menu>
                   </div>
@@ -300,17 +365,22 @@ export class DevLocation extends React.Component<IProps> {
                         APP_STORAGE.devs_groups.setOpen_menu(false);
                       }}
                     >
-                      <MenuItem>
+                         <MenuItem>
                         <Typography onClick={() => this.editDeviceLocation()}>
                           {" "}
                           Редактировать
                         </Typography>
                       </MenuItem>
+                      <MenuItem>
+                        <Typography onClick={() => this.moveDeviceLocation('3')}>
+                          {" "}
+                          Переместить
+                        </Typography>
+                      </MenuItem>
                       <Divider/>
                       <MenuItem>
                         <Typography
-                          onClick={() => APP_STORAGE.devs.setOpenModal(true)}
-                        >
+                          onClick={() => APP_STORAGE.devs.setOpenModal(true)}>
                           {" "}
                           Добавить устройство
                         </Typography>

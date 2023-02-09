@@ -58,11 +58,14 @@ export class DevsStorage {
   @observable longitude_err: boolean = false;
   @observable longitude_err_mess: string = '';
 
-
+  @observable menu_devs : string = '';
 
   constructor() {
     makeAutoObservable(this);
   }
+
+  @action setMenu_devs(val: string) { this.menu_devs = val };
+  @computed getMenu_devs(): string { return this.menu_devs };
 
   @action setCheckboxEd(val: boolean) { this.checkbox_editing = val; }
   @action getCheckboxEd(): boolean { return this.checkbox_editing; }
