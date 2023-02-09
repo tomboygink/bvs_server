@@ -18,7 +18,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 
-import {SensorsMenu} from './SensorsMenu'
+
 
 interface IProps {}
 
@@ -93,7 +93,6 @@ export class Sensors extends React.Component<IProps> {
                                         
                                     </TableCell>
                             </TableRow>
-                            <SensorsMenu/>
                             </>
                   );
                 

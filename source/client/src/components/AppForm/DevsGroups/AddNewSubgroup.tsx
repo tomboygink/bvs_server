@@ -11,7 +11,7 @@ interface IProps {}
 
 //Компонент формы приложения
 @observer
-export class ModalDevsGroup extends React.Component<IProps> {
+export class AddNewSubgroup extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }
@@ -81,7 +81,7 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
         <Box className='ModalTitle' sx = { {display: 'flex' , justifyContent: 'space-between', mb: '12px'}}> 
          
         <Typography >  
-            Добавить расположение устройств
+            Добавить расположение устройств1212
         </Typography>
   
         <CloseIcon  sx={{color: '#1976D2'}}

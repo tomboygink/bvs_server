@@ -48,7 +48,6 @@ export class MoveDevsGroups extends React.Component<IProps> {
   }
 
   async SelectedDevsGroups(a:any){
-    console.log(a)
     APP_STORAGE.devs_groups.setKeyDevsgr(a);
     APP_STORAGE.devs_groups.setParent(a);
     APP_STORAGE.devs.setGroupDevId(a);
@@ -98,17 +97,28 @@ export class MoveDevsGroups extends React.Component<IProps> {
       parent.push(
        childs
       );
+       
+      
+      
+      if(APP_STORAGE.getdevs_group_move()){
+        console.log('расположения устрйост' , APP_STORAGE.getdevs_group_move().length)
+      }
+
 
       if (Number(APP_STORAGE.devs_groups.getKeyOrg()) === Number(gr.org_id)) {
-      //  APP_STORAGE.devs_groups.setOrg(Number(gr.org_id));
-       
+        if(Number(APP_STORAGE.getdevs_group_move().length) === 1 && Number(0) ===  Number(APP_STORAGE.devs_groups.getParent())) {
           parent.push(
-                 <MenuItem key={gr.id} sx={{ fontSize: "12px" }} value={gr.id}>
-              {gr.g_name}
-            </MenuItem>
-          );
-         
-     
+            <MenuItem key='12123' sx={{ fontSize: "12px" }} value='123123'>
+           
+          </MenuItem>         
+     );
+        } else {
+          parent.push(
+            <MenuItem key={gr.id} sx={{ fontSize: "12px" }} value={gr.id}>
+           {gr.g_name}
+         </MenuItem>
+       );
+        }
       }
     }
     return parent;
@@ -121,7 +131,11 @@ export class MoveDevsGroups extends React.Component<IProps> {
     APP_STORAGE.devs_groups.setCheckboxEd(editing.target.checked);
   }
 
-  async SaveChangeDevsGroups() {
+  async SaveChangeDevsGroups(a:any) {
+
+    if(Number(0) === Number(a)){
+       APP_STORAGE.devs_groups.setParent(String(0))
+    }
       
     if(APP_STORAGE.devs.getMenu_devs() === '2'){
       APP_STORAGE.devs.set_ChangeDevs("sess_id",APP_STORAGE.auth_form.getdt());
@@ -238,7 +252,9 @@ export class MoveDevsGroups extends React.Component<IProps> {
                
                 {this.drawDevLocation()}
                 <Divider />
-
+                <MenuItem key='wsadas999' sx={{ fontSize: "12px" }} value={0}>
+                Переместить расположение корень
+         </MenuItem>
                 <Box
                   sx={{
                     display: "flex",
@@ -257,7 +273,7 @@ export class MoveDevsGroups extends React.Component<IProps> {
                 justifyContent: "flex-end",
               }}
               onClick={() => {
-                this.SaveChangeDevsGroups();
+                this.SaveChangeDevsGroups(1);
               }}
             >
 
@@ -273,6 +289,34 @@ export class MoveDevsGroups extends React.Component<IProps> {
               >
                 Сохранить
               </Button>
+              
+            </Box>
+
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "flex-end",
+              }}
+              onClick={() => {
+                this.SaveChangeDevsGroups(0);
+              }}
+            >
+
+
+              <Button
+                sx={{
+                  background: "#266BF1",
+                  color: "#fff;",
+                  mt: "18px",
+                  mb: "18px",
+                  fontSize: "12px",
+                }}
+              >
+                Переместить в корень
+              </Button>
+              
             </Box>
           </Box>
         </Dialog>

@@ -21,7 +21,8 @@ export class DevsGroupStorage{
     @observable parent_id : string = '';
 
     @observable parent : string = '';
-
+    
+    @observable select_parent_id : string = ''; ///перепроверить и переименовать элемент 
      
     ////////////////////////////////////////////Проверка
  
@@ -103,7 +104,8 @@ export class DevsGroupStorage{
     @action setParent (val: string) {this.parent = val}
     @computed getParent() : string {return this.parent}
 
-    
+    @action setSelectedParentId (val : string) {this.select_parent_id = val} /////// перепроверить элемент и переименовать, если
+    @computed getSelectedParentId() : string {return this.select_parent_id} 
 
     ///////////////////////////////////////////////Список расположений устройств
     @action setDevsGroups(val: Array<string>) {this.devs_groups = val}

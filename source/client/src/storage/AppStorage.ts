@@ -28,12 +28,16 @@ class AppStorage {
     @observable devs: DevsStorage = null;
     @observable sensors: SensorsStorage = null;
 
+    @observable devs_group_move: any; /////////////////////////////////////Тест(потом нужно удалить)
 
     @observable dt: any = null;
     @observable dtUser: any = null;
     @observable id_org_user: any = null;//// Определить ид организации пользователя для отображения устройств
     @observable role_read: any = null;
     @observable role_write: any = null;
+
+    @action setdevs_group_move(val: any) { this.devs_group_move = val; } ////////////Тест (потом удлаить )
+    @computed getdevs_group_move(): any { return this.devs_group_move; } ////////////Тест (потом удлаить )
 
     @action setdt(val: any) { this.dt = val; }
     @computed getdt(): any { return this.dt; }
