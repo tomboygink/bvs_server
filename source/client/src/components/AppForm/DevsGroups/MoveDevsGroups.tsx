@@ -233,6 +233,9 @@ export class MoveDevsGroups extends React.Component<IProps> {
                   background: "#f1f5fcad",
                   p: "20px",
                   borderRadius: "4px",
+                  maxHeight: '200px',
+                  overflow: 'auto'
+
                 }}
               >
                 <Typography sx={{}}>Переместить в: </Typography>
