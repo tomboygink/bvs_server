@@ -5,6 +5,9 @@ import { WSocket } from '../../WSocket';
 
 export class DevsGroupStorage{
 
+
+    @observable search: any;
+
     @observable open_devs_list: boolean = false;
     @observable open_modal: boolean = false;
     @observable middle_form: any = '';
@@ -50,6 +53,9 @@ export class DevsGroupStorage{
     constructor(){
         makeAutoObservable(this);
     }
+
+    @action setSearch (val: any) {this.search = val}
+    @computed getSearch(): any {return this.search}
 
     @action setOpenModalChDevsGr(val : boolean) {this.open_modal_change = val}; 
     @computed getOpenModalChDevsGr() : boolean {return this.open_modal_change}; 

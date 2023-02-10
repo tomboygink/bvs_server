@@ -1,11 +1,12 @@
 import * as React from 'react';
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
-import { alpha, styled } from '@mui/material/styles';
+import { alpha, styled,  lighten, darken  } from '@mui/material/styles';
 import TreeItem, { TreeItemProps, treeItemClasses } from '@mui/lab/TreeItem';
 import Collapse from '@mui/material/Collapse';
 
 import { useSpring, animated } from '@react-spring/web';
 import { TransitionProps } from '@mui/material/transitions';
+
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
@@ -92,5 +93,23 @@ export const handleChange = async (event: any, node: any) => {
     APP_STORAGE.devs_groups.setMiddleForm(2)
    }  
 }
+
+
+export const GroupHeader = styled('div')(({ theme }) => ({
+  position: 'sticky',
+  top: '-8px',
+  padding: '4px 10px',
+  color: theme.palette.primary.main,
+  backgroundColor:
+    theme.palette.mode === 'light'
+      ? lighten(theme.palette.primary.light, 0.85)
+      : darken(theme.palette.primary.main, 0.8),
+}));
+
+export const options = async (event: any, node: any) => {
+ APP_STORAGE.devs_groups.setParent(node);
+}
+
+
 
 

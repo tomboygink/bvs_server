@@ -14,6 +14,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
 
 import CloseIcon from "@mui/icons-material/Close";
 import { APP_STORAGE } from "../../../storage/AppStorage";
@@ -24,6 +25,12 @@ import { AntSwitch } from "../AppBarPanel/LeftPanel/RegistationUsers/switch";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
+import { options } from "../Devs/StyledMua";
+
+import TreeView from "@mui/lab/TreeView";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import TreeItem from "@mui/lab/TreeItem";
 
 interface IProps {}
 
@@ -42,12 +49,12 @@ export class MoveDevsGroups extends React.Component<IProps> {
     APP_STORAGE.devs_groups.setOpenModalMoveDevsGr(false);
   }
 
-
-  async SelectedOrg(a: any) {//// Сохраняем , то что выбрал пользователь из выпадающего списка Организации
+  async SelectedOrg(a: any) {
+    //// Сохраняем , то что выбрал пользователь из выпадающего списка Организации
     APP_STORAGE.devs_groups.setKeyOrg(a);
   }
 
-  async SelectedDevsGroups(a:any){
+  async SelectedDevsGroups(a: any) {
     APP_STORAGE.devs_groups.setKeyDevsgr(a);
     APP_STORAGE.devs_groups.setParent(a);
     APP_STORAGE.devs.setGroupDevId(a);
@@ -57,7 +64,8 @@ export class MoveDevsGroups extends React.Component<IProps> {
     let devs_g = [];
     let DevGr = [];
 
-    if (Object.keys(
+    if (
+      Object.keys(
         JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
       ).length !== 0 &&
       JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
@@ -83,69 +91,63 @@ export class MoveDevsGroups extends React.Component<IProps> {
     return this.drawDevGroup(DevGr);
   }
 
-
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
     let parent: React.ReactNode[] = new Array();
+
+    let options: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr: TDGroup = dgr.group;
       var gr_childs = dgr.childs;
 
-      var childs: React.ReactNode[] = new Array();
+      var childs = new Array();
       if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
 
-      parent.push(
-       childs
-      );
-       
-      
-      
-      if(APP_STORAGE.getdevs_group_move()){
-        console.log('расположения устрйост' , APP_STORAGE.getdevs_group_move().length)
-      }
-
-
       if (Number(APP_STORAGE.devs_groups.getKeyOrg()) === Number(gr.org_id)) {
-        if(Number(APP_STORAGE.getdevs_group_move().length) === 1 && Number(0) ===  Number(APP_STORAGE.devs_groups.getParent())) {
+        if (
+          Number(APP_STORAGE.devs_groups.getParentId()) !==
+            Number(gr.parent_id) &&
+          Number(APP_STORAGE.devs.getIdDevs()) !== Number(gr.id)
+        )
           parent.push(
-            <MenuItem key='12123' sx={{ fontSize: "12px" }} value='123123'>
-           
-          </MenuItem>         
-     );
-        } else {
-          parent.push(
-            <MenuItem key={gr.id} sx={{ fontSize: "12px" }} value={gr.id}>
-           {gr.g_name}
-         </MenuItem>
-       );
-        }
+            <React.Fragment key={"_gr_id_key_" + gr.id}>
+              <Box sx={{ display: "flex" }}>
+                <TreeItem nodeId={String(gr.id)} label={gr.g_name}>
+                  {childs}
+                </TreeItem>
+              </Box>
+            </React.Fragment>
+          );
       }
     }
     return parent;
   }
-   
-
-
 
   async ChekedForEdit(editing: any) {
     APP_STORAGE.devs_groups.setCheckboxEd(editing.target.checked);
   }
 
-  async SaveChangeDevsGroups(a:any) {
-
-    if(Number(0) === Number(a)){
-       APP_STORAGE.devs_groups.setParent(String(0))
-    }
-      
-    if(APP_STORAGE.devs.getMenu_devs() === '2'){
-      APP_STORAGE.devs.set_ChangeDevs("sess_id",APP_STORAGE.auth_form.getdt());
+  async SaveChangeDevsGroups(a: any) {
+    if (Number(0) === Number(a)) {
+      APP_STORAGE.devs_groups.setParent(String(0));
     }
 
-    if(APP_STORAGE.devs.getMenu_devs() === '3'){
-      APP_STORAGE.devs_groups.set_ChangeDevsGroups("sess_id",APP_STORAGE.auth_form.getdt());
+    if (APP_STORAGE.devs.getMenu_devs() === "2") {
+      APP_STORAGE.devs.set_ChangeDevs("sess_id", APP_STORAGE.auth_form.getdt());
     }
 
-    setTimeout(() => { APP_STORAGE.devs_groups.get_DevsGroups( "sess_id",APP_STORAGE.auth_form.getdt());
+    if (APP_STORAGE.devs.getMenu_devs() === "3") {
+      APP_STORAGE.devs_groups.set_ChangeDevsGroups(
+        "sess_id",
+        APP_STORAGE.auth_form.getdt()
+      );
+    }
+
+    setTimeout(() => {
+      APP_STORAGE.devs_groups.get_DevsGroups(
+        "sess_id",
+        APP_STORAGE.auth_form.getdt()
+      );
     }, 500);
   }
 
@@ -157,7 +159,8 @@ export class MoveDevsGroups extends React.Component<IProps> {
       for (var key in org) {
         if (org.hasOwnProperty(key)) {
           let a = org[key];
-          options_org.push(/// создаем опции выбора для выпадающего списка - организации
+          options_org.push(
+            /// создаем опции выбора для выпадающего списка - организации
             <MenuItem key={a.id} sx={{ fontSize: "12px" }} value={a.id}>
               {a.full_name}
             </MenuItem>
@@ -194,8 +197,6 @@ export class MoveDevsGroups extends React.Component<IProps> {
 
             <Divider sx={{ marginBottom: "20px" }} />
 
-       
-
             <FormControl
               fullWidth
               size="small"
@@ -226,97 +227,78 @@ export class MoveDevsGroups extends React.Component<IProps> {
                 ></Box>
               </Select>
             </FormControl>
+            {APP_STORAGE.devs_groups.getKeyOrg() && (
+              <Box
+                sx={{
+                  background: "#f1f5fcad",
+                  p: "20px",
+                  borderRadius: "4px",
+                  maxHeight: '200px',
+                  overflow: 'auto'
 
-
-
-
-
-
-            <FormControl
-              fullWidth
-              size="small"
-              sx={{ mt: "14px" }}
-              error={APP_STORAGE.devs_groups.getOrgError()}
-            >
-              <InputLabel className="org" sx={{ fontSize: "12px" }}>
-                Группы устройств
-              </InputLabel>
-              <Select
-                sx={{ fontSize: "12px" }}
-                value={APP_STORAGE.devs_groups.getKeyDevsgr() || ""}
-                label="Группы устройств"
-                onChange={(e) => {
-                  this.SelectedDevsGroups(e.target.value);
                 }}
               >
-               
-                {this.drawDevLocation()}
-                <Divider />
-                <MenuItem key='wsadas999' sx={{ fontSize: "12px" }} value={0}>
-                Переместить расположение корень
-         </MenuItem>
-                <Box
+                <Typography sx={{}}>Переместить в: </Typography>
+                <TreeView
+                  aria-label="multi-select"
+                  defaultCollapseIcon={<ExpandMoreIcon />}
+                  defaultExpandIcon={<ChevronRightIcon />}
+                  onNodeSelect={options}
+                  multiSelect
+                  sx={{ flexGrow: 1, maxWidth: "100%", overflowY: "auto" }}
+                >
+                  {this.drawDevLocation()}
+                </TreeView>
+              </Box>
+            )}
+
+            <Box sx={{ display: "flex" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  justifyContent: "flex-end",
+                  mr: "40px",
+                }}
+                onClick={() => {
+                  APP_STORAGE.devs_groups.setParent(String(0));
+                }}
+              >
+                <Button
                   sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    m: 1,
-                    borderRadius: "4px",
+                    background: "#F1F5FC",
+                    color: "#000;",
+                    mt: "18px",
+                    mb: "18px",
+                    fontSize: "12px",
                   }}
-                ></Box>
-              </Select>
-            </FormControl>
+                >
+                  Переместить в корень
+                </Button>
+              </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "baseline",
-                justifyContent: "flex-end",
-              }}
-              onClick={() => {
-                this.SaveChangeDevsGroups(1);
-              }}
-            >
-
-
-              <Button
+              <Box
                 sx={{
-                  background: "#266BF1",
-                  color: "#fff;",
-                  mt: "18px",
-                  mb: "18px",
-                  fontSize: "12px",
+                  display: "flex",
+                  alignItems: "baseline",
+                  justifyContent: "flex-end",
+                }}
+                onClick={() => {
+                  this.SaveChangeDevsGroups(1);
                 }}
               >
-                Сохранить
-              </Button>
-              
-            </Box>
-
-
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "baseline",
-                justifyContent: "flex-end",
-              }}
-              onClick={() => {
-                this.SaveChangeDevsGroups(0);
-              }}
-            >
-
-
-              <Button
-                sx={{
-                  background: "#266BF1",
-                  color: "#fff;",
-                  mt: "18px",
-                  mb: "18px",
-                  fontSize: "12px",
-                }}
-              >
-                Переместить в корень
-              </Button>
-              
+                <Button
+                  sx={{
+                    background: "#266BF1",
+                    color: "#fff;",
+                    mt: "18px",
+                    mb: "18px",
+                    fontSize: "12px",
+                  }}
+                >
+                  Сохранить
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Dialog>
