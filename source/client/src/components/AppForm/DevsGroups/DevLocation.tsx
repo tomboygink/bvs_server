@@ -14,6 +14,9 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import Divider from '@mui/material/Divider';
 
+////////////////////////////////////Импортируем функции
+  import drawDevLocation from './drawDevLocation'
+
 interface IProps {}
 
 //Устройства
@@ -33,6 +36,7 @@ export class DevLocation extends React.Component<IProps> {
     APP_STORAGE.devs.setOpenModal(true);
   }
   async editDeviceLocation() {
+    APP_STORAGE.devs_groups.setOpen_menu(false);
     let devs_g = [];
     let DevGr = [];
 
@@ -126,6 +130,7 @@ export class DevLocation extends React.Component<IProps> {
   }
 
   getValueMove(dgrs: TDevsGroup[]) {
+    let array = [];
     var parent: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
@@ -137,8 +142,15 @@ export class DevLocation extends React.Component<IProps> {
 
       parent.push(childs);
 
+      if(Number(gr.parent_id) === 0 ) {
+        array.push(gr.parent_id);
+      }
+
+      APP_STORAGE.setdevs_group_move(array);
+      
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
         APP_STORAGE.devs_groups.setParentId(String(gr.id));
+        APP_STORAGE.devs_groups.setParent(String(gr.parent_id))
         APP_STORAGE.devs_groups.setName(gr.g_name);
         APP_STORAGE.devs_groups.setLatitude(gr.longitude);
         APP_STORAGE.devs_groups.setLongitude(gr.longitude);
@@ -152,6 +164,7 @@ export class DevLocation extends React.Component<IProps> {
   }
 
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
+    let array_parentid = [];
     let parent: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
@@ -168,9 +181,14 @@ export class DevLocation extends React.Component<IProps> {
           </Box>
         </React.Fragment>
       );
+    
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) { 
+           if(Number(gr.parent_id) === 0 && array_parentid.length === 1){
+            
+           }
       
+
          if(gr.deleted === true){
           parent.push(
             <React.Fragment key={String(gr.id)}>
@@ -188,6 +206,7 @@ export class DevLocation extends React.Component<IProps> {
                 
                 }}
               >
+
                 <Box
                   sx={{
                     display: "flex",
@@ -370,13 +389,18 @@ export class DevLocation extends React.Component<IProps> {
                           {" "}
                           Редактировать
                         </Typography>
-                      </MenuItem>
-                      <MenuItem>
-                        <Typography onClick={() => this.moveDeviceLocation('3')}>
+                      </MenuItem> 
+                       <MenuItem>
+                          <Typography onClick={() => this.moveDeviceLocation('3')}>
                           {" "}
                           Переместить
-                        </Typography>
-                      </MenuItem>
+                          </Typography>
+                          </MenuItem>
+
+
+
+                
+
                       <Divider/>
                       <MenuItem>
                         <Typography
@@ -387,11 +411,7 @@ export class DevLocation extends React.Component<IProps> {
                       </MenuItem>
                       <MenuItem>
                         <Typography
-                          onClick={() =>  this.OpenModal(
-                            APP_STORAGE.devs.getIdDevs(),
-                            Number(gr.org_id)
-                          )}
-                        >
+                          onClick={() =>  this.OpenModal( APP_STORAGE.devs.getIdDevs(),Number(gr.org_id))}>
                           {" "}
                           Добавить подруппу
                         </Typography>
