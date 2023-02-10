@@ -100,22 +100,26 @@ export class MoveDevsGroups extends React.Component<IProps> {
        childs
       );
        
-     if (Number(APP_STORAGE.devs_groups.getKeyOrg()) === Number(gr.org_id)) {
+      
+      
+      if(APP_STORAGE.getdevs_group_move()){
+        console.log('расположения устрйост' , APP_STORAGE.getdevs_group_move().length)
+      }
+
+
+      if (Number(APP_STORAGE.devs_groups.getKeyOrg()) === Number(gr.org_id)) {
         if(Number(APP_STORAGE.getdevs_group_move().length) === 1 && Number(0) ===  Number(APP_STORAGE.devs_groups.getParent())) {
           parent.push(
-            <MenuItem key={gr.id} sx={{ fontSize: "12px" }} value={gr.id}>
-         
-          </MenuItem>      
-     )} 
-
-     else if(APP_STORAGE.devs.getIdDevs() !== String(gr.id) && Number(APP_STORAGE.devs.getIdDevs()) !==  Number(gr.parent_id)) {
+                 <></>        
+     );
+        } else {
           parent.push(
           <MenuItem key={gr.id} sx={{ fontSize: "12px" }} value={gr.id}>
            {gr.g_name}
          </MenuItem>
-       ); }
+       );
+        }
       }
-
     }
     return parent;
   }
@@ -247,14 +251,10 @@ export class MoveDevsGroups extends React.Component<IProps> {
               >
                
                 {this.drawDevLocation()}
-
                 <Divider />
              <MenuItem key='key07' sx={{ fontSize: "12px", color: '#266BF1' }} value={0}>
                 Переместить расположение в корень
             </MenuItem>
-
-
-
 
             <TextField
               sx={{ mt: "14px" , pl: '8px', pr: '8px'}}
@@ -270,9 +270,9 @@ export class MoveDevsGroups extends React.Component<IProps> {
               autoFocus
               size="small"
               onChange={(e) => {
-                APP_STORAGE.devs_groups.setSearch(e.target.value);
+                APP_STORAGE.devs_groups.setName(e.target.value);
               }}
-              value={APP_STORAGE.devs_groups.getSearch()}
+              value={APP_STORAGE.devs_groups.getName()}
             />
                 <Box
                   sx={{

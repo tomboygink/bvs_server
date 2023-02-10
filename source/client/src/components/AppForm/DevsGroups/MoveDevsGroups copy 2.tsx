@@ -25,7 +25,7 @@ import { AntSwitch } from "../AppBarPanel/LeftPanel/RegistationUsers/switch";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
-import { GroupHeader, GroupItems} from '../Devs/StyledMua'
+import { GroupHeader, GroupItems, top100Films} from '../Devs/StyledMua'
 
 interface IProps {}
 
@@ -47,6 +47,7 @@ export class MoveDevsGroups extends React.Component<IProps> {
 
   async SelectedOrg(a: any) {//// Сохраняем , то что выбрал пользователь из выпадающего списка Организации
     APP_STORAGE.devs_groups.setKeyOrg(a);
+    this.drawDevLocation()
   }
 
   async SelectedDevsGroups(a:any){
@@ -88,6 +89,8 @@ export class MoveDevsGroups extends React.Component<IProps> {
 
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
     let parent: React.ReactNode[] = new Array();
+    let options = [];
+    let options_id = [];
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr: TDGroup = dgr.group;
@@ -99,27 +102,31 @@ export class MoveDevsGroups extends React.Component<IProps> {
       parent.push(
        childs
       );
-       
-     if (Number(APP_STORAGE.devs_groups.getKeyOrg()) === Number(gr.org_id)) {
-        if(Number(APP_STORAGE.getdevs_group_move().length) === 1 && Number(0) ===  Number(APP_STORAGE.devs_groups.getParent())) {
-          parent.push(
-            <MenuItem key={gr.id} sx={{ fontSize: "12px" }} value={gr.id}>
-         
-          </MenuItem>      
-     )} 
-
-     else if(APP_STORAGE.devs.getIdDevs() !== String(gr.id) && Number(APP_STORAGE.devs.getIdDevs()) !==  Number(gr.parent_id)) {
-          parent.push(
-          <MenuItem key={gr.id} sx={{ fontSize: "12px" }} value={gr.id}>
-           {gr.g_name}
-         </MenuItem>
-       ); }
-      }
-
+      options.push(gr)
+     
+      
+      APP_STORAGE.devs_groups.setArray_options(options)
+      console.log('12312',APP_STORAGE.devs_groups.getArray_options());
+    //   if (Number(APP_STORAGE.devs_groups.getKeyOrg()) === Number(gr.org_id)) {
+    //     if(Number(APP_STORAGE.getdevs_group_move().length) === 1 && Number(0) ===  Number(APP_STORAGE.devs_groups.getParent())) {
+    //       parent.push(
+    //              <></>        
+    //  );
+    //     } else {
+    //       parent.push(
+    //       <MenuItem key={gr.id} sx={{ fontSize: "12px" }} value={gr.id}>
+    //        {gr.g_name}
+    //      </MenuItem>
+    //    );
+    //     }
+    //   }
     }
     return parent;
   }
    
+  async onTagsChange (event : any, values : any)  {
+  console.log('12132123', values )
+  }
 
 
 
@@ -145,6 +152,8 @@ export class MoveDevsGroups extends React.Component<IProps> {
     }, 500);
   }
 
+
+
   render(): React.ReactNode {
     let org = null;
     var options_org = [];
@@ -161,6 +170,7 @@ export class MoveDevsGroups extends React.Component<IProps> {
         }
       }
     }
+
 
     return (
       <React.Fragment>
@@ -223,68 +233,20 @@ export class MoveDevsGroups extends React.Component<IProps> {
               </Select>
             </FormControl>
 
+ { APP_STORAGE.devs_groups.getArray_options() && 
 
-
-
-
-
-            <FormControl
-              fullWidth
-              size="small"
-              sx={{ mt: "14px" }}
-              error={APP_STORAGE.devs_groups.getOrgError()}
-            >
-              <InputLabel className="org" sx={{ fontSize: "12px" }}>
-                Группы устройств
-              </InputLabel>
-              <Select
-                sx={{ fontSize: "12px" }}
-                value={APP_STORAGE.devs_groups.getKeyDevsgr() || ""}
-                label="Группы устройств"
-                onChange={(e) => {
-                  this.SelectedDevsGroups(e.target.value);
-                }}
-              >
-               
-                {this.drawDevLocation()}
-
-                <Divider />
-             <MenuItem key='key07' sx={{ fontSize: "12px", color: '#266BF1' }} value={0}>
-                Переместить расположение в корень
-            </MenuItem>
-
-
-
-
-            <TextField
-              sx={{ mt: "14px" , pl: '8px', pr: '8px'}}
-              inputProps={{ style: { fontSize: 12 } }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
-              error={APP_STORAGE.devs_groups.getNameError()}
-              helperText={APP_STORAGE.devs_groups.getNamaError_mess()}
-              fullWidth
-              required
-              label="Введите расположение"
-              autoComplete="Введите расположение"
-              autoFocus
-              size="small"
-              onChange={(e) => {
-                APP_STORAGE.devs_groups.setSearch(e.target.value);
-              }}
-              value={APP_STORAGE.devs_groups.getSearch()}
-            />
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    m: 1,
-                    borderRadius: "4px",
-                  }}
-                ></Box>
-              </Select>
-            </FormControl>
-
+      <Autocomplete
+      disablePortal
+      id="combo-box-demo"
+      options={APP_STORAGE.devs_groups.getArray_options().map((option: { g_name: any; }) => option.g_name)}
+      
+      
+      onChange={()=> {this.onTagsChange(APP_STORAGE.devs_groups.getArray_options().map((option: { g_name: any; }) => option.g_name),
+      APP_STORAGE.devs_groups.getArray_options().map((option: { id: any; }) => option.id))}}
+      sx={{ width: 300 }}
+      renderInput={(params) => <TextField {...params} label="Расположение устройств" />}
+    />
+  }
 
 
             <Box
