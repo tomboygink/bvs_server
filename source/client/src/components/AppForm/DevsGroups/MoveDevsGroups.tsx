@@ -46,7 +46,6 @@ export class MoveDevsGroups extends React.Component<IProps> {
   }
 
   async closeModal() {
-    alert('112')
     APP_STORAGE.devs_groups.setOpenModalMoveDevsGr(false);
      
     APP_STORAGE.devs_groups.setParentId('');
@@ -114,7 +113,6 @@ export class MoveDevsGroups extends React.Component<IProps> {
       if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
 
       if (Number(APP_STORAGE.devs_groups.getKeyOrg()) === Number(gr.org_id)) {
-        console.log( APP_STORAGE.devs_groups.getParentId());
         if (
           Number(APP_STORAGE.devs_groups.getParentId()) !==
             Number(gr.parent_id) &&
@@ -133,8 +131,7 @@ export class MoveDevsGroups extends React.Component<IProps> {
 
        else  if (
           String(APP_STORAGE.devs_groups.getParentId()) ===
-            String('key-09') &&
-          Number(APP_STORAGE.devs.getIdDevs()) !== Number(gr.id)
+            String('key-09') 
         ) {
           parent.push(
             <React.Fragment key={"_gr_id_key_" + gr.id}>
@@ -324,7 +321,7 @@ export class MoveDevsGroups extends React.Component<IProps> {
                     fontSize: "12px",
                   }}
                 >
-                  Сохранить/
+                  Сохранить
                 </Button>
               </Box>
             </Box>
