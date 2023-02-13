@@ -46,7 +46,17 @@ export class MoveDevsGroups extends React.Component<IProps> {
   }
 
   async closeModal() {
+    alert('112')
     APP_STORAGE.devs_groups.setOpenModalMoveDevsGr(false);
+     
+    APP_STORAGE.devs_groups.setParentId('');
+    APP_STORAGE.devs_groups.setParent('');
+    APP_STORAGE.devs_groups.setName('');
+    APP_STORAGE.devs_groups.setLatitude('');
+    APP_STORAGE.devs_groups.setLongitude('');
+    APP_STORAGE.devs.setInfo('');
+    APP_STORAGE.devs_groups.setKeyOrg('');
+    APP_STORAGE.devs_groups.setParentId('')
   }
 
   async SelectedOrg(a: any) {
@@ -104,11 +114,12 @@ export class MoveDevsGroups extends React.Component<IProps> {
       if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
 
       if (Number(APP_STORAGE.devs_groups.getKeyOrg()) === Number(gr.org_id)) {
+        console.log( APP_STORAGE.devs_groups.getParentId());
         if (
           Number(APP_STORAGE.devs_groups.getParentId()) !==
             Number(gr.parent_id) &&
           Number(APP_STORAGE.devs.getIdDevs()) !== Number(gr.id)
-        )
+        ) {
           parent.push(
             <React.Fragment key={"_gr_id_key_" + gr.id}>
               <Box sx={{ display: "flex" }}>
@@ -118,6 +129,24 @@ export class MoveDevsGroups extends React.Component<IProps> {
               </Box>
             </React.Fragment>
           );
+        }
+
+       else  if (
+          String(APP_STORAGE.devs_groups.getParentId()) ===
+            String('key-09') &&
+          Number(APP_STORAGE.devs.getIdDevs()) !== Number(gr.id)
+        ) {
+          parent.push(
+            <React.Fragment key={"_gr_id_key_" + gr.id}>
+              <Box sx={{ display: "flex" }}>
+                <TreeItem nodeId={String(gr.id)} label={gr.g_name}>
+                  {childs}
+                </TreeItem>
+              </Box>
+            </React.Fragment>
+          );
+        }
+        
       }
     }
     return parent;
@@ -200,7 +229,6 @@ export class MoveDevsGroups extends React.Component<IProps> {
             <FormControl
               fullWidth
               size="small"
-              sx={{ mt: "14px" }}
               error={APP_STORAGE.devs_groups.getOrgError()}
             >
               <InputLabel className="org" sx={{ fontSize: "12px" }}>
@@ -296,7 +324,7 @@ export class MoveDevsGroups extends React.Component<IProps> {
                     fontSize: "12px",
                   }}
                 >
-                  Сохранить
+                  Сохранить/
                 </Button>
               </Box>
             </Box>

@@ -28,7 +28,6 @@ export class Devs extends React.Component<IProps> {
 
   async editDevice(a:any) {
     APP_STORAGE.devs.setMenu_devs(a);
-    console.log(APP_STORAGE.devs.getMenu_devs())
     let devs_g = [];
     let DevGr = [];
 
@@ -61,6 +60,7 @@ export class Devs extends React.Component<IProps> {
   }
 
   getValueCh(dgrs: TDevsGroup[]) {
+     
     var parent: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
@@ -77,6 +77,7 @@ export class Devs extends React.Component<IProps> {
           APP_STORAGE.devs.getIdChild()
         ) {
           APP_STORAGE.devs.setNumber(String(gr_devs[key].number));
+          APP_STORAGE.devs_groups.setParentId('key-09');
           APP_STORAGE.devs.setName(String(gr_devs[key].name));
           APP_STORAGE.devs.setLongitude(String(gr_devs[key].longitude));
           APP_STORAGE.devs.setLatitude(String(gr_devs[key].latitude));
@@ -89,9 +90,11 @@ export class Devs extends React.Component<IProps> {
 
           if(APP_STORAGE.devs.getMenu_devs() === '1'){
             APP_STORAGE.devs.setOpenModalChange(true);
+            APP_STORAGE.devs_groups.setOpen_menu(false);
           }
           if(APP_STORAGE.devs.getMenu_devs() === '2'){
             APP_STORAGE.devs_groups.setOpenModalMoveDevsGr(true);
+            APP_STORAGE.devs_groups.setOpen_menu(false);
           }
           
         }
