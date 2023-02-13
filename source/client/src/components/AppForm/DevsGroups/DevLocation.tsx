@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Box, Typography, TextField } from "@mui/material";
+import { Box, Typography, TextField, ListItemIcon } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
@@ -12,12 +12,14 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 
-
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
+import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
 
 ////////////////////////////////////Импортируем функции
-  import drawDevLocation from './drawDevLocation'
+import drawDevLocation from "./drawDevLocation";
 
 interface IProps {}
 
@@ -70,8 +72,8 @@ export class DevLocation extends React.Component<IProps> {
     return this.getValueCh(DevGr);
   }
 
-  async moveDeviceLocation(a:any) {
-    APP_STORAGE.devs.setMenu_devs(a)
+  async moveDeviceLocation(a: any) {
+    APP_STORAGE.devs.setMenu_devs(a);
     APP_STORAGE.devs_groups.setOpen_menu(false);
     let devs_g = [];
     let DevGr = [];
@@ -117,13 +119,13 @@ export class DevLocation extends React.Component<IProps> {
       parent.push(childs);
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
-        APP_STORAGE.devs_groups.setName(String(gr.g_name)); 
-        APP_STORAGE.devs_groups.setLongitude(String(gr.longitude)); 
-        APP_STORAGE.devs_groups.setLatitude(String(gr.latitude)); 
-        APP_STORAGE.devs_groups.setInfo(String(gr.g_info)); 
+        APP_STORAGE.devs_groups.setName(String(gr.g_name));
+        APP_STORAGE.devs_groups.setLongitude(String(gr.longitude));
+        APP_STORAGE.devs_groups.setLatitude(String(gr.latitude));
+        APP_STORAGE.devs_groups.setInfo(String(gr.g_info));
         APP_STORAGE.devs_groups.setKeyOrg(String(gr.org_id));
         APP_STORAGE.devs_groups.setParent(String(gr.parent_id));
-        APP_STORAGE.devs_groups.setCheckboxEd(gr.deleted)
+        APP_STORAGE.devs_groups.setCheckboxEd(gr.deleted);
 
         APP_STORAGE.devs_groups.setOpenModalChDevsGr(true);
       }
@@ -144,15 +146,15 @@ export class DevLocation extends React.Component<IProps> {
 
       parent.push(childs);
 
-      if(Number(gr.parent_id) === 0 ) {
+      if (Number(gr.parent_id) === 0) {
         array.push(gr.parent_id);
       }
 
       APP_STORAGE.setdevs_group_move(array);
-      
+
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
         APP_STORAGE.devs_groups.setParentId(String(gr.id));
-        APP_STORAGE.devs_groups.setParent(String(gr.parent_id))
+        APP_STORAGE.devs_groups.setParent(String(gr.parent_id));
         APP_STORAGE.devs_groups.setName(gr.g_name);
         APP_STORAGE.devs_groups.setLatitude(gr.longitude);
         APP_STORAGE.devs_groups.setLongitude(gr.longitude);
@@ -183,18 +185,15 @@ export class DevLocation extends React.Component<IProps> {
           </Box>
         </React.Fragment>
       );
-    
 
-      if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) { 
-           if(Number(gr.parent_id) === 0 && array_parentid.length === 1){
-            
-           }
-      
+      if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
+        if (Number(gr.parent_id) === 0 && array_parentid.length === 1) {
+        }
 
-         if(gr.deleted === true){
+        if (gr.deleted === true) {
           parent.push(
             <React.Fragment key={String(gr.id)}>
-                <Box
+              <Box
                 id="long-button"
                 sx={{
                   width: "100%",
@@ -202,13 +201,11 @@ export class DevLocation extends React.Component<IProps> {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
-                  backgroundColor: '#fff',
-                  p: '20px',
-                  mb: '20px'
-                
+                  backgroundColor: "#fff",
+                  p: "20px",
+                  mb: "20px",
                 }}
               >
-
                 <Box
                   sx={{
                     display: "flex",
@@ -217,59 +214,62 @@ export class DevLocation extends React.Component<IProps> {
                   }}
                 >
                   <Box>
-           
                     <Typography
                       sx={{
                         fontWeight: "500",
                         fontSize: "16px",
-                        color: '#808080'
+                        color: "#808080",
                       }}
                     >
                       Место расположения устройства:
                     </Typography>
-                 
                   </Box>
-                  {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 &&
-                  <div>
-                    <IconButton
-                      onClick={() => {
-                        APP_STORAGE.devs_groups.setOpen_menu(true);
-                      }}
-                      id="long-button_menu"
-                      aria-label="more"
-                      aria-controls={open ? "long-menu" : undefined}
-                      aria-expanded={open ? "true" : undefined}
-                      aria-haspopup="true"
-                      // onClick={handleClick}
-                    >
-                      <MoreVertIcon />
-                    </IconButton>
-                    <Menu
-                      id="long-menu"
-                      MenuListProps={{
-                        "aria-labelledby": "long-button",
-                      }}
-                      anchorEl={document.getElementById("long-button_menu")}
-                      open={APP_STORAGE.devs_groups.getOpen_menu()}
-                      onClose={() => {
-                        APP_STORAGE.devs_groups.setOpen_menu(false);
-                      }}
-                    >
-                        <MenuItem>
-                        <Typography onClick={() => this.editDeviceLocation()}>
-                          {" "}
-                          Редактировать
-                        </Typography>
-                      </MenuItem>
-                      <MenuItem>
-                        <Typography onClick={() => this.moveDeviceLocation('3')}>
-                          {" "}
-                          Переместить
-                        </Typography>
-                      </MenuItem>
-                    </Menu>
-                  </div>
-        }
+                  {APP_STORAGE.getRoleWrite() === 2 &&
+                    APP_STORAGE.getRoleRead() === 1 && (
+                      <div>
+                        <IconButton
+                          onClick={() => {
+                            APP_STORAGE.devs_groups.setOpen_menu(true);
+                          }}
+                          id="long-button_menu"
+                          aria-label="more"
+                          aria-controls={open ? "long-menu" : undefined}
+                          aria-expanded={open ? "true" : undefined}
+                          aria-haspopup="true"
+                          // onClick={handleClick}
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
+                        <Menu
+                          id="long-menu"
+                          MenuListProps={{
+                            "aria-labelledby": "long-button",
+                          }}
+                          anchorEl={document.getElementById("long-button_menu")}
+                          open={APP_STORAGE.devs_groups.getOpen_menu()}
+                          onClose={() => {
+                            APP_STORAGE.devs_groups.setOpen_menu(false);
+                          }}
+                        >
+                          <MenuItem>
+                            <Typography
+                              onClick={() => this.editDeviceLocation()}
+                            >
+                              {" "}
+                              Редактировать
+                            </Typography>
+                          </MenuItem>
+                          <MenuItem>
+                            <Typography
+                              onClick={() => this.moveDeviceLocation("3")}
+                            >
+                              {" "}
+                              Переместить
+                            </Typography>
+                          </MenuItem>
+                        </Menu>
+                      </div>
+                    )}
                 </Box>
                 <Box
                   sx={{
@@ -278,7 +278,7 @@ export class DevLocation extends React.Component<IProps> {
                     flexDirection: "column",
                   }}
                 >
-                    <TextField
+                  <TextField
                     variant="outlined"
                     margin="normal"
                     size="small"
@@ -302,7 +302,7 @@ export class DevLocation extends React.Component<IProps> {
                     disabled={true}
                     value={gr.longitude}
                   />
-  
+
                   <TextField
                     variant="outlined"
                     margin="normal"
@@ -314,31 +314,26 @@ export class DevLocation extends React.Component<IProps> {
                     autoFocus
                     disabled={true}
                     value={gr.latitude}
-
                   />
                   <Box id={gr.org_id}></Box>
                 </Box>
-  
-          
-  
               </Box>
             </React.Fragment>
           );
-         }
-         else{
+        } else {
           parent.push(
             <React.Fragment key={String(gr.id)}>
-                <Box
+              <Box
                 id="long-button"
                 sx={{
                   width: "100%",
-                  background: '#fff',
+                  background: "#fff",
                   borderRadius: "4px",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
-                  p: '20px',
-                  mb: '20px'
+                  p: "20px",
+                  mb: "20px",
                 }}
               >
                 <Box
@@ -349,79 +344,86 @@ export class DevLocation extends React.Component<IProps> {
                   }}
                 >
                   <Box>
-           
-                  <Typography
+                    <Typography
                       sx={{
                         fontWeight: "500",
                         fontSize: "16px",
-                        color: '#000'
+                        color: "#000",
                       }}
                     >
                       Место расположения устройства:
                     </Typography>
-                  
                   </Box>
-                  {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 &&
-                  <div>
-                    <IconButton
-                      onClick={() => {
-                        APP_STORAGE.devs_groups.setOpen_menu(true);
-                      }}
-                      id="long-button_menu"
-                      aria-label="more"
-                      aria-controls={open ? "long-menu" : undefined}
-                      aria-expanded={open ? "true" : undefined}
-                      aria-haspopup="true"
-                    >
-                      <MoreVertIcon />
-                    </IconButton>
-                    <Menu
-                      id="long-menu"
-                      MenuListProps={{
-                        "aria-labelledby": "long-button",
-                      }}
-                      anchorEl={document.getElementById("long-button_menu")}
-                      open={APP_STORAGE.devs_groups.getOpen_menu()}
-                      onClose={() => {
-                        APP_STORAGE.devs_groups.setOpen_menu(false);
-                      }}
-                    >
-                         <MenuItem>
-                        <Typography onClick={() => this.editDeviceLocation()}>
-                          {" "}
-                          Редактировать
-                        </Typography>
-                      </MenuItem> 
-                       <MenuItem>
-                          <Typography onClick={() => this.moveDeviceLocation('3')}>
-                          {" "}
-                          Переместить
-                          </Typography>
+                  {APP_STORAGE.getRoleWrite() === 2 &&
+                    APP_STORAGE.getRoleRead() === 1 && (
+                      <div>
+                        <IconButton
+                          onClick={() => {
+                            APP_STORAGE.devs_groups.setOpen_menu(true);
+                          }}
+                          id="long-button_menu"
+                          aria-label="more"
+                          aria-controls={open ? "long-menu" : undefined}
+                          aria-expanded={open ? "true" : undefined}
+                          aria-haspopup="true"
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
+                        <Menu
+                          id="long-menu"
+                          MenuListProps={{
+                            "aria-labelledby": "long-button",
+                          }}
+                          anchorEl={document.getElementById("long-button_menu")}
+                          open={APP_STORAGE.devs_groups.getOpen_menu()}
+                          onClose={() => {
+                            APP_STORAGE.devs_groups.setOpen_menu(false);
+                          }}
+                        >
+                          <MenuItem onClick={() => this.editDeviceLocation()}>
+                            <ListItemIcon>
+                              <ModeEditRoundedIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                            Редактировать
                           </MenuItem>
 
+                          <MenuItem
+                            onClick={() => this.moveDeviceLocation("3")}
+                          >
+                            <ListItemIcon>
+                              <LogoutRoundedIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                            Переместить
+                          </MenuItem>
 
+                          <Divider />
+                          <MenuItem>
+                            <Typography
+                              onClick={() =>
+                                APP_STORAGE.devs.setOpenModal(true)
+                              }
+                            >
+                              {" "}
+                              Добавить устройство
+                            </Typography>
+                          </MenuItem>
 
-                
-
-                      <Divider/>
-                      <MenuItem>
-                        <Typography
-                          onClick={() => APP_STORAGE.devs.setOpenModal(true)}>
-                          {" "}
-                          Добавить устройство
-                        </Typography>
-                      </MenuItem>
-                      <MenuItem>
-                        <Typography
-                          onClick={() =>  this.OpenModal( APP_STORAGE.devs.getIdDevs(),Number(gr.org_id))}>
-                          {" "}
-                          Добавить подруппу
-                        </Typography>
-                      </MenuItem>
-                    </Menu>
-                
-                  </div>
-        }
+                          <MenuItem
+                            onClick={() =>
+                              this.OpenModal(
+                                APP_STORAGE.devs.getIdDevs(),
+                                Number(gr.org_id)
+                              )
+                            }
+                          >
+                            <ListItemIcon>
+                              <CreateNewFolderOutlinedIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                            Добавить подруппу
+                          </MenuItem>
+                        </Menu>
+                      </div>
+                    )}
                 </Box>
                 <Box
                   sx={{
@@ -430,7 +432,7 @@ export class DevLocation extends React.Component<IProps> {
                     flexDirection: "column",
                   }}
                 >
-                    <TextField
+                  <TextField
                     variant="outlined"
                     margin="normal"
                     size="small"
@@ -455,7 +457,7 @@ export class DevLocation extends React.Component<IProps> {
                     ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
                     value={gr.longitude}
                   />
-  
+
                   <TextField
                     variant="outlined"
                     margin="normal"
@@ -470,24 +472,21 @@ export class DevLocation extends React.Component<IProps> {
                   />
                   <Box id={gr.org_id}></Box>
                 </Box>
-  
               </Box>
             </React.Fragment>
           );
-         }
-     
+        }
       }
     }
     return parent;
   }
 
-
-  
   drawDevLocation(): React.ReactNode {
     let devs_g = [];
     let DevGr = [];
 
-    if (Object.keys(
+    if (
+      Object.keys(
         JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
       ).length !== 0 &&
       JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
@@ -512,15 +511,8 @@ export class DevLocation extends React.Component<IProps> {
     }
     return this.drawDevGroup(DevGr);
   }
-  
-  
-
 
   render(): React.ReactNode {
-    return (
-      <React.Fragment>
-          {this.drawDevLocation()}
-      </React.Fragment>
-    );
+    return <React.Fragment>{this.drawDevLocation()}</React.Fragment>;
   }
 }
