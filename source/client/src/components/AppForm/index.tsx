@@ -23,6 +23,8 @@ import { Sensors } from "./Sensors/Sensors"; ///////////////////////////////се
 import { ChangeDevsModal } from "./Devs/ChangeDevsModal";////////////////////////////Редактировать устройства
 import { AddNewDevModal } from "./Devs/AddNewDevModal"; //////////////Добавить новое устройство
 
+
+ 
 interface IProps {}
 
 //Компонент формы приложения

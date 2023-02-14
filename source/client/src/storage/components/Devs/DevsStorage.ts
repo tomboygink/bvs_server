@@ -5,12 +5,14 @@ import { WSocket } from '../../WSocket';
 import { getCookie, setCookie, deleteCookie } from '../../browserCookes';
 import { info } from 'console';
 
+
 export class DevsStorage {
+
   @observable devs: Array<string> = [];
 
   @observable item: Array<any> = [];
 
-  @observable array: Array<number> = [];
+  @observable array: Array<any> = [];
 
   @observable id_devs: string = '';
 
@@ -71,7 +73,7 @@ export class DevsStorage {
   @computed getMenu_devs(): string { return this.menu_devs };
 
   @action setCheckboxEd(val: boolean) { this.checkbox_editing = val; }
-  @action getCheckboxEd(): boolean { return this.checkbox_editing; }
+  @computed getCheckboxEd(): boolean { return this.checkbox_editing; }
 
   @observable setOrgId(val: number) { this.org_id = val };
   @observable getOrgId(): number { return this.org_id }
@@ -85,8 +87,8 @@ export class DevsStorage {
   @action setItem(val: Array<any>) { this.item = val };
   @computed getItem(): Array<any> { return this.item };
 
-  @action setArray(val: Array<number>) { this.array = val };
-  @computed getArray(): Array<number> { return this.array };
+  @action setArray(val: Array<any>) { this.array = val };
+  @computed getArray(): Array<any> { return this.array };
 
   @action setIdDevs(val: string) { this.id_devs = val };
   @computed getIdDevs(): string { return this.id_devs };
@@ -199,7 +201,8 @@ export class DevsStorage {
 
   async set_NewDevs(name: string, value: any, _options?: any) {
 
-    if (this.getNumber() === '') {
+    
+       if (this.getNumber() === '') {
       this.setNumberError(true);
       this.setNumberError_mess('Поле не может быть пустым');
     }
@@ -251,7 +254,7 @@ export class DevsStorage {
         name: this.getName() || '',
         latitude: this.getLatitude() || '',
         longitude: this.getLongitude() || '',
-        sensors: '{\"s\":[' + this.getArray() + ']}',
+        sensors: '{\"s\":' +  JSON.stringify(this.getArray()) + '}',
         deleted: this.getDeleted() || false,
         info: this.getDeleted() || ''
       };
@@ -268,12 +271,11 @@ export class DevsStorage {
 
 
   async set_DevsDepth(value: number) {
-    if (this.getArray()) {
-      for (var key of this.getArray()) {
-      }
-    }
-    this.setDepthSensors(false)
-    this.array.push(value);
+   let a = {"depth": value , "value" : 1 }
+
+    this.array.push(a);
+      
+
     this.setArray(this.array)
 
   }
@@ -321,7 +323,6 @@ export class DevsStorage {
 
 
     var q: IWSQuery = new WSQuery("set_ChangeDevs");
-
     if (this.getNumber() && this.getName() !== '' && this.getLatitude() !== '' && this.getLongitude() !== '') {
 
       q.args = {
@@ -331,7 +332,7 @@ export class DevsStorage {
         name: this.getName() || "",
         latitude: this.getLatitude() || "",
         longitude: this.getLongitude() || "",
-        sensors: '{\"s\":[' + this.getChangeSensors() + ']}',
+        sensors: '{\"s\":' + JSON.stringify(this.getChangeSensors()) + '}',
         deleted: this.getCheckboxEd(),
         info: this.getInfo() || ""
       };
@@ -339,8 +340,9 @@ export class DevsStorage {
       q.sess_code = sess_code;
       (await WSocket.get()).send(q);
       setTimeout(() => {
+      
       this.setOpenModalChange(false)
-      }, 1000);
+      }, 2000);
 
     }
   }

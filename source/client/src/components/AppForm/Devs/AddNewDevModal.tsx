@@ -28,6 +28,8 @@ import SensorsIcon from "@mui/icons-material/Sensors";
 
 import { ModalSensors } from "./ModalSensors";
 
+import {TDSensor} from '../../../storage/components/Devs/DevEntityes';
+
 interface IProps {}
 
 //Компонент формы приложения
@@ -98,6 +100,8 @@ export class AddNewDevModal extends React.Component<IProps> {
     }
 
     if (JSON.stringify(APP_STORAGE.devs.getArray())) {
+
+     
       var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getArray()));
       let uniqueChars = obj.filter((element: any, index: any) => {
         return obj.indexOf(element) === index;
@@ -107,7 +111,7 @@ export class AddNewDevModal extends React.Component<IProps> {
 
         depth_sensors.push(
           <TableCell
-            key={uniqueChars[key]}
+            key={uniqueChars[key].depth}
             sx={{
               display: "flex",
               fontWeight: "700",
@@ -120,7 +124,7 @@ export class AddNewDevModal extends React.Component<IProps> {
               fontSize="small"
               sx={{ pr: "9px", color: "#5be95b" }}
             />{" "}
-            {uniqueChars[key]}
+            {uniqueChars[key].depth}
           </TableCell>
         );
       }

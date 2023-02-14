@@ -142,11 +142,8 @@ export class AppBarLeftPanel extends React.Component<IProps> {
    
      
       <ListItemButton  onClick={() => this.OpenListDev()}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
+       
         <ListItemText primary="Устройства" />
-        {APP_STORAGE.devs_groups.getOpenListDev() ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton> 
     </List>
         </>
