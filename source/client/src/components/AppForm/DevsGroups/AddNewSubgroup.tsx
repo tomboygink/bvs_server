@@ -21,6 +21,15 @@ export class AddNewSubgroup extends React.Component<IProps> {
     setTimeout(() => {
       APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt());
     }, 500);
+    APP_STORAGE.devs_groups.setName('');
+  APP_STORAGE.devs_groups.setNameError(false);
+  APP_STORAGE.devs_groups.setNameError_mess('');
+  APP_STORAGE.devs_groups.setLongitude('');
+  APP_STORAGE.devs_groups.setLongitudeError(false);
+  APP_STORAGE.devs_groups.setLongitudeError_mess('')
+  APP_STORAGE.devs_groups.setLatitude('');
+  APP_STORAGE.devs_groups.setLatitudeError(false);
+  APP_STORAGE.devs_groups.setLatitudeError_mess('');
 }
 
 async closeModal() {
@@ -81,7 +90,7 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
         <Box className='ModalTitle' sx = { {display: 'flex' , justifyContent: 'space-between', mb: '12px'}}> 
          
         <Typography >  
-            Добавить расположение устройств1212
+            Добавить расположение устройств
         </Typography>
   
         <CloseIcon  sx={{color: '#1976D2'}}
@@ -218,14 +227,9 @@ async SelectedOrg(a: any) {    //// Сохраняем , то что выбра�
           >
             Сохранить
           </Button>
+        </Box>    
         </Box>
-             
-        </Box>
-     
-  
         </Dialog>
-    
-    
         </React.Fragment>
     );
   }

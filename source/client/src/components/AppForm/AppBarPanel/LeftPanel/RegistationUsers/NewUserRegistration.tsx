@@ -192,7 +192,7 @@ export class NewUserRegistration extends React.Component<IProps> {
           error={APP_STORAGE.reg_user.getErrorTelephone()}
           helperText={APP_STORAGE.reg_user.getTextHelpTelephone()}
           label="Телефон"
-          autoComplete="телефон"
+          autoComplete="89841797813"
           autoFocus
           size="small"
           onChange={(e) => {

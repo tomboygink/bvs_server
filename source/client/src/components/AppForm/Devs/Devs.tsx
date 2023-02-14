@@ -1,14 +1,8 @@
 import * as React from "react";
-import {
-  Box,
-  Typography,
-  TextField,
-  TextareaAutosize,
-  Divider,
-} from "@mui/material";
 
 import { observer } from "mobx-react";
 import { APP_STORAGE } from "../../../storage/AppStorage";
+import { Box, Typography, TextField, ListItemIcon } from "@mui/material";
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 
@@ -16,6 +10,9 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 
 interface IProps {}
 
@@ -171,19 +168,20 @@ export class Devs extends React.Component<IProps> {
                               APP_STORAGE.devs_groups.setOpen_menu(false);
                             }}
                           >
-                            <MenuItem>
-                              <Typography onClick={() => this.editDevice('1')}>
-                                {" "}
-                                Редактировать{" "}
-                              </Typography>
-                            </MenuItem>
+                            
+                            <MenuItem onClick={() => this.editDevice('1')}>
+                            <ListItemIcon>
+                              <ModeEditRoundedIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                            Редактировать
+                          </MenuItem>
 
-                            <MenuItem>
-                              <Typography onClick={() => this.editDevice('2')}>
-                                {" "}
-                                Переместить{" "}
-                              </Typography>
-                            </MenuItem>
+                            <MenuItem onClick={() => this.editDevice('2')} >
+                            <ListItemIcon>
+                              <LogoutRoundedIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                            Переместить
+                          </MenuItem>
                           </Menu>
                         </div>
                       )}
@@ -296,18 +294,19 @@ export class Devs extends React.Component<IProps> {
                               APP_STORAGE.devs_groups.setOpen_menu(false);
                             }}
                           >
-                            <MenuItem>
-                              <Typography onClick={() => this.editDevice('1')}>
-                                {" "}
-                                Редактировать{" "}
-                              </Typography>
-                            </MenuItem>
-                            <MenuItem>
-                              <Typography onClick={() => this.editDevice('2')}>
-                                {" "}
-                                Переместить{" "}
-                              </Typography>
-                            </MenuItem>
+                            <MenuItem onClick={() => this.editDevice('1')}>
+                            <ListItemIcon>
+                              <ModeEditRoundedIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                            Редактировать
+                          </MenuItem>
+
+                            <MenuItem onClick={() => this.editDevice('2')} >
+                            <ListItemIcon>
+                              <LogoutRoundedIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                            Переместить
+                          </MenuItem>
                           </Menu>
                         </div>
                       )}
@@ -387,8 +386,7 @@ export class Devs extends React.Component<IProps> {
     return devs;
   }
 
-  drawDevLocation(): React.ReactNode {
-    /// формируем массив
+  drawDevLocation(): React.ReactNode { /// формируем массив
     let devs_g = [];
     let DevGr = [];
 
@@ -419,6 +417,8 @@ export class Devs extends React.Component<IProps> {
 
     return this.drawDevs(DevGr); /// передаем сформированные данные
   }
+
+
 
   render(): React.ReactNode {
     return (

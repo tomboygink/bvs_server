@@ -28,6 +28,9 @@ export class DevsStorage {
 
   @observable add_sensors: boolean = false; ///// модальное окно для добавления сенсоров
   @observable get_sensors: Array<any> = [];
+
+  @observable array_sensors: Array<any> = []; ////////тестовый массив 
+  
   @observable change_sensors: boolean = false;
   ////// Добавление нового устройства
   @observable id: string = '';
@@ -142,6 +145,10 @@ export class DevsStorage {
 
   @action setChangeSensors(val: Array<any>) { this.get_sensors = val }
   @computed getChangeSensors(): Array<any> { return this.get_sensors }
+
+
+  @action setArray_sensors(val: Array<any>) { this.array_sensors = val }
+  @computed getArray_sensors(): Array<any> { return this.array_sensors }
 
   //////////////////////////////////////////////////////////////////////////Проверка
   @action setNumberError(val: boolean) { this.number_err = val } /// проверка формы добавления устройства
@@ -332,7 +339,7 @@ export class DevsStorage {
       q.sess_code = sess_code;
       (await WSocket.get()).send(q);
       setTimeout(() => {
-        this.setOpenModalChange(false)
+      this.setOpenModalChange(false)
       }, 1000);
 
     }

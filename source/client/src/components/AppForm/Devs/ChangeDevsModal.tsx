@@ -45,7 +45,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
   }
 
   async closeModal() {
-    APP_STORAGE.devs.setOpenModalChange(false);
+   APP_STORAGE.devs.setOpenModalChange(false);
 
     APP_STORAGE.devs.setNumberError(false);
     APP_STORAGE.devs.setNumberError_mess('');
@@ -101,10 +101,24 @@ export class ChangeDevsModal extends React.Component<IProps> {
   }
 
   async AddSensors (a:any) {
-    APP_STORAGE.devs.setDepthSensors_Ch(true) ;
+    APP_STORAGE.devs.setDepthSensors_Ch(true) ; 
   }
 
   async ChangeDevs(){
+    var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
+    let ssss = []
+    let uniqueChars = obj.filter((element: any, index: any) => {
+       
+      return obj.indexOf(element) === index;   
+  });
+  for (let i = 0; i < uniqueChars.length; i++) {
+    ssss.push(
+      uniqueChars[i]
+    )
+    APP_STORAGE.devs.setChangeSensors(ssss)
+};
+
+
     APP_STORAGE.devs.set_ChangeDevs("sess_id",APP_STORAGE.auth_form.getdt());
     setTimeout(() => {
       APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt());
@@ -148,16 +162,25 @@ export class ChangeDevsModal extends React.Component<IProps> {
 
     if (APP_STORAGE.devs.getChangeSensors()) {
       const obj1:any = {};
+      let ssss = [];
       var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
 
 
       let uniqueChars = obj.filter((element: any, index: any) => {
-        return obj.indexOf(element) === index;
+       
+        return obj.indexOf(element) === index; 
     });
+    
+    
         for (let i = 0; i < uniqueChars.length; i++) {
-
+          
           obj1[i] = uniqueChars[i];
+          
           count = uniqueChars.length
+         
+          ssss.push(
+            obj1[i]
+          )
           depth_sensors.push(
             <TableRow key= {obj1[i]}>
               <TableCell
@@ -199,11 +222,10 @@ export class ChangeDevsModal extends React.Component<IProps> {
   <TableCell align="left" sx={{ color: "#FF4848" }} onClick = {(e)=> {this.DeleteSensors((document.getElementById("_id_s" + obj1[i]) as HTMLInputElement).value)}}>
   <DeleteOutlineOutlinedIcon fontSize="small" />
   </TableCell>
-  </TableRow>
-      
-          );
-        }  
-            
+  </TableRow>) }  
+          
+          console.log(ssss);
+         
 
         if (!obj.length){
           depth_sensors.push(
@@ -248,9 +270,9 @@ export class ChangeDevsModal extends React.Component<IProps> {
       
           );
         }
-
+       
     }
-
+ 
     return (
       <React.Fragment>
         <Dialog
