@@ -23,8 +23,8 @@ export class AddNewGroup extends React.Component<IProps> {
   render(): React.ReactNode {
     return (
       <React.Fragment>
-                  {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 
-           ? <Box
+                  {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 &&
+            <Box
               sx={{
                 borderRadius: "4px",
                 width: '100%',
@@ -39,17 +39,7 @@ export class AddNewGroup extends React.Component<IProps> {
                 Добавить новое расположение
               </Typography>
             </Box>
-            : <Box
-            sx={{
-              color: "#000",
-              borderRadius: "4px",
-            }}
-          >
-            <Typography sx={{ display: "flex" }}>
-              {" "}
-              Список пуст или ничего не выбрано
-            </Typography>
-          </Box>
+           
   }
       </React.Fragment>
     );

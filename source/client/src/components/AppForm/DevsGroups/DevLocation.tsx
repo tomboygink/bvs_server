@@ -19,7 +19,6 @@ import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
 
 ////////////////////////////////////Импортируем функции
-import drawDevLocation from "./drawDevLocation";
 
 interface IProps {}
 
@@ -251,14 +250,14 @@ export class DevLocation extends React.Component<IProps> {
                             APP_STORAGE.devs_groups.setOpen_menu(false);
                           }}
                         >
-                          <MenuItem>
-                            <Typography
-                              onClick={() => this.editDeviceLocation()}
-                            >
-                              {" "}
-                              Редактировать
-                            </Typography>
+                          
+                          <MenuItem onClick={() => this.editDeviceLocation()}>
+                            <ListItemIcon>
+                              <ModeEditRoundedIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                            Редактировать
                           </MenuItem>
+
                           <MenuItem>
                             <Typography
                               onClick={() => this.moveDeviceLocation("3")}

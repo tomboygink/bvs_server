@@ -1,4 +1,5 @@
 import { Alert } from "@mui/material";
+import { fail } from "assert";
 import { observable, action, computed, makeAutoObservable } from "mobx";
 import { toJS } from "mobx";
 
@@ -456,7 +457,8 @@ export class ModalLeftPanel {
 
       this.setResulSave('Данные успешно сохранены')
       setTimeout(() => {
-        this.setResulSave('')
+        this.setResulSave('');
+        this.setModalRegUser(false);
       }, 2000)
     }
   }
@@ -578,13 +580,13 @@ export class ModalLeftPanel {
       this.setResulSave('Данные успешно сохранены')
       
       setTimeout(() => {
-        this.setResulSave('')
-      }, 2000)
+        this.setResulSave('');
+        this.setModalRegUser(false);
+      }, 2000);
     }
   }
-
-  /* ----- Добавляем должность
-                компонент NewJobsTittle.
+  /* ----- Добавляем должность 
+                компонент NewJobsTittle. 
                */
 
   async set_NewJobTitle(name: string, value: any, _options?: any) {
@@ -598,5 +600,6 @@ export class ModalLeftPanel {
     };
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);
+     this.setModalRegUser(false) 
   }
 }

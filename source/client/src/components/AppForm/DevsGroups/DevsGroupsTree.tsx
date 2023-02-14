@@ -165,9 +165,6 @@ export class DevsGroupsTree extends React.Component<IProps> {
         }
 
       }
-
-    
-
     }
     return parent;
   }
@@ -175,7 +172,6 @@ export class DevsGroupsTree extends React.Component<IProps> {
   drawDevsTree(): React.ReactNode {
     let devs_g = [];
     let DevGr = [];
-    console.log('APP_STORAGE.devs_groups.getDevsGroups()', APP_STORAGE.devs_groups.getDevsGroups())
     if (
       Object.keys(
         JSON.parse(JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups()))
@@ -214,7 +210,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
             }}
           >
             <TreeView
-            className="wrapper_treeviw"
+              className="wrapper_treeviw"
               onNodeSelect={handleChange}
               defaultExpanded={["1", '2', '3', '4', '5']}
               aria-label="customized"
