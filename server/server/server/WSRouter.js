@@ -360,7 +360,7 @@ function WSRoute(_ws, q) {
                     return [4, dev.insertDevs()];
                 case 52:
                     data = _c.sent();
-                    if (data[0].id === 0 || data === null || data === undefined) {
+                    if (data === null || data === undefined || data[0].id === 0) {
                         wsres.code = q.sess_code;
                         wsres.data = [];
                         wsres.error = "Ошибка добавления устройства";

@@ -304,7 +304,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             var dev = new DevsTable(q.args, q.sess_code);
             data = await dev.insertDevs();
 
-            if (data[0].id === 0 || data === null || data === undefined) {
+            if (data === null || data === undefined || data[0].id === 0 ) {
                 wsres.code = q.sess_code;
                 wsres.data = [];
                 wsres.error = "Ошибка добавления устройства"
