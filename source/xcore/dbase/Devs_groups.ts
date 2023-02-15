@@ -182,6 +182,7 @@ export class Devs_groupsTable {
         for (var i = 0; i < data.rows.length; i++) {
             await this.db.query("update devs_groups set org_id = " + this.args.org_id + ", deleted = " + this.args.deleted + " where id = " + data.rows[i].id);
 
+            //Получение устройств
             var data_dev = await this.db.query("SELECT * FROM Devs WHERE group_dev_id=" + data.rows[i].id);
             //console.log(data_devgroup);
             //редактирование устройств
