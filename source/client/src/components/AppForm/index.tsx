@@ -109,7 +109,7 @@ export class AppForm extends React.Component<IProps> {
                 </Box>
 
                 <Box className="block-wrapp">
-                  <Sensors />
+              <Sensors /> 
                 </Box>
               </Box>
             </Box>

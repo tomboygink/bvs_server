@@ -25,7 +25,7 @@ export class Devs extends React.Component<IProps> {
 
   async editDevice(a:any) {
     APP_STORAGE.devs.setMenu_devs(a);
-    let DevGr: any;
+  let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
 
     return this.getValueCh(DevGr);
@@ -45,8 +45,7 @@ export class Devs extends React.Component<IProps> {
       parent.push(childs);
       for (var key in gr_devs) {
         if (
-          "_dev_id_key_" + gr_devs[key].id ===
-          APP_STORAGE.devs.getIdChild()
+          "_dev_id_key_" + gr_devs[key].id === APP_STORAGE.devs.getIdChild()
         ) {
           APP_STORAGE.devs.setNumber(String(gr_devs[key].number));
           APP_STORAGE.devs_groups.setParentId('key-09');

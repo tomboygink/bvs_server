@@ -57,6 +57,7 @@ export class Sensors extends React.Component<IProps> {
   }
 
   drawSensors(dgrs: TDevsGroup[]): React.ReactNode[] {
+
     var sensors: React.ReactNode[] = new Array(); ////// отображаем сенсоры
     var sort_array: any = [];
     for (var ii in dgrs) {
@@ -69,6 +70,7 @@ export class Sensors extends React.Component<IProps> {
           "_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
           APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
           APP_STORAGE.sensors.getSortDesc() === ""
+          
         ) {
           for (var key in gr_devs[i].sensors.s) {
             if (gr_devs[i].sensors.s[key].depth) {
@@ -201,6 +203,7 @@ export class Sensors extends React.Component<IProps> {
   drawDevLocation(): React.ReactNode {
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
+    
     return this.drawSensors(DevGr);
   }
 
