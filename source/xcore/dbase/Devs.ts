@@ -24,38 +24,45 @@ export class DevsTable {
     }
     //Добавление устройства
     async insertDevs(): Promise<DevsEntity[]> {
-        var db_res = await this.db.query("SELECT AddDevs(CAST("+this.args.group_dev_id+" AS BIGINT), "+
-        "CAST('"+this.args.number+"' AS VARCHAR(80)),"+
-        "CAST('"+this.args.name+"' AS VARCHAR(250)),"+
-        "CAST('"+this.args.latitude+"' AS VARCHAR(60)),"+
-        "CAST('"+this.args.longitude+"' AS VARCHAR(60)),"+
-        "CAST('"+this.args.sensors+"' AS JSON),"+
-        "CAST("+this.args.deleted+" AS BOOLEAN),"+
-        "CAST('"+this.args.info+"' AS TEXT)) AS id");
-        var result: DevsEntity[] = new Array();
-        for (var p in db_res.rows) { result.push(db_res.rows[p]); }
-        return result;
+        var data = await this.db.query("SELECT number FROM devs");
+        
+
+        if (data.rows.some(e => e.number !== this.args.number) || data.rows.length === 0) {
+
+            var db_res = await this.db.query("SELECT AddDevs(CAST(" + this.args.group_dev_id + " AS BIGINT), " +
+                "CAST('" + this.args.number + "' AS VARCHAR(80))," +
+                "CAST('" + this.args.name + "' AS VARCHAR(250))," +
+                "CAST('" + this.args.latitude + "' AS VARCHAR(60))," +
+                "CAST('" + this.args.longitude + "' AS VARCHAR(60))," +
+                "CAST('" + this.args.sensors + "' AS JSON)," +
+                "CAST(" + this.args.deleted + " AS BOOLEAN)," +
+                "CAST('" + this.args.info + "' AS TEXT)) AS id");
+            var result: DevsEntity[] = new Array();
+            for (var p in db_res.rows) { result.push(db_res.rows[p]); }
+            return result;
+        }
+
     };
 
     //Получение устройств по группе устройства при нажатии 
-    async selectDevs(): Promise<DevsEntity[]>{
-        var db_res = await this.db.query("SELECT * FROM SelectDevs('"+this.args.dev_group_id+"')");
+    async selectDevs(): Promise<DevsEntity[]> {
+        var db_res = await this.db.query("SELECT * FROM SelectDevs('" + this.args.dev_group_id + "')");
         var result: DevsEntity[] = new Array();
         for (var p in db_res.rows) { result.push(db_res.rows[p]); }
         return result;
     }
 
     //Редактирование устройства
-    async updateDevs(){
-        await this.db.query("SELECT * FROM UpdateDevs("+
-        "CAST ("+this.args.id+" AS BIGINT), "+
-        "CAST ("+this.args.group_dev_id+" AS BIGINT), "+
-        "CAST ('"+this.args.number+"' AS VARCHAR(80)), "+
-        "CAST ('"+this.args.name+"' AS VARCHAR(250)), "+
-        "CAST ('"+this.args.latitude+"' AS VARCHAR(60)), "+
-        "CAST ('"+this.args.longitude+"' AS VARCHAR(60)), "+
-        "CAST ('"+this.args.sensors+"' AS JSON), "+
-        "CAST ('"+this.args.deleted+"' AS BOOLEAN), "+
-        "CAST ('"+this.args.info+"' AS TEXT))");
+    async updateDevs() {
+        await this.db.query("SELECT * FROM UpdateDevs(" +
+            "CAST (" + this.args.id + " AS BIGINT), " +
+            "CAST (" + this.args.group_dev_id + " AS BIGINT), " +
+            "CAST ('" + this.args.number + "' AS VARCHAR(80)), " +
+            "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
+            "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
+            "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
+            "CAST ('" + this.args.sensors + "' AS JSON), " +
+            "CAST ('" + this.args.deleted + "' AS BOOLEAN), " +
+            "CAST ('" + this.args.info + "' AS TEXT))");
     }
 }
