@@ -88,15 +88,8 @@ export class Change_ModalSensors extends React.Component<IProps> {
                   this.Change_sensors();
                 }}
               >
-                Сохранить
+                Сохранить1
               </Typography>
-              {/* <Typography
-                onClick={() => {
-                  APP_STORAGE.devs.setDepthSensors_Ch(false);
-                }}
-              >
-                close
-              </Typography> */}
             </Box>
           </Modal>
         </Box>

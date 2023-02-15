@@ -28,7 +28,7 @@ class AppStorage {
     @observable devs: DevsStorage = null;
     @observable sensors: SensorsStorage = null;
 
-    @observable devs_group_move: any; /////////////////////////////////////Тест(потом нужно удалить)
+    @observable devs_group_move: Array<any>; /////////////////////////////////////Тест(потом нужно удалить)
 
     @observable dt: any = null;
     @observable dtUser: any = null;
@@ -36,8 +36,8 @@ class AppStorage {
     @observable role_read: any = null;
     @observable role_write: any = null;
 
-    @action setdevs_group_move(val: any) { this.devs_group_move = val; } ////////////Тест (потом удлаить )
-    @computed getdevs_group_move(): any { return this.devs_group_move; } ////////////Тест (потом удлаить )
+    @action setdevs_group_move(val: Array<any>) { this.devs_group_move = val; } ////////////Тест (потом удлаить )
+    @computed getdevs_group_move(): Array<any> { return this.devs_group_move; } ////////////Тест (потом удлаить )
 
     @action setdt(val: any) { this.dt = val; }
     @computed getdt(): any { return this.dt; }
