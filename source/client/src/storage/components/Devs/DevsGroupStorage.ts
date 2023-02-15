@@ -8,7 +8,6 @@ export class DevsGroupStorage{
 
     @observable search: any;
 
-    @observable open_devs_list: boolean = false;
     @observable open_modal: boolean = false;
     @observable middle_form: any = '';
 
@@ -74,9 +73,6 @@ export class DevsGroupStorage{
 
     @action setOrg(val : number ) { this.set_org_id = val};
     @computed getOrg () : number { return this.set_org_id}
-
-    @action setOpenListDev (val: boolean) {this.open_devs_list = val}
-    @computed getOpenListDev() : boolean {return this.open_devs_list}
 
     @action setKeyOrg(val: any) { this.key_org = val;}
     @computed getKeyOrg(): any {return this.key_org;} 

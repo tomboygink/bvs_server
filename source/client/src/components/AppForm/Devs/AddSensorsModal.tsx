@@ -20,8 +20,9 @@ export class Change_ModalSensors extends React.Component<IProps> {
   }
 
   async Change_sensors() {
-    APP_STORAGE.devs.get_sensors.push(APP_STORAGE.devs.getSensors());
-    // APP_STORAGE.devs.setDepthSensors_Ch(false);
+    APP_STORAGE.devs.get_sensors.push(
+      {"depth": APP_STORAGE.devs.getSensors(), "value" : 0 }
+    );
   }
 
   render(): React.ReactNode {
@@ -89,7 +90,6 @@ export class Change_ModalSensors extends React.Component<IProps> {
               >
                 Сохранить
               </Typography>
-
               {/* <Typography
                 onClick={() => {
                   APP_STORAGE.devs.setDepthSensors_Ch(false);

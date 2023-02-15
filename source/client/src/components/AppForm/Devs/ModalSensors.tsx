@@ -106,7 +106,7 @@ export class ModalSensors extends React.Component<IProps> {
                     );
                   }}
                 >
-                  Сохранить
+                  Сохранить( Сенсоры)
                 </Button>
               </Box>
             </Box>
