@@ -1,38 +1,45 @@
 import * as React from "react";
-
 import { observer } from "mobx-react";
+
 import { APP_STORAGE } from "../../../storage/AppStorage";
-import { Box, Typography, TextField, ListItemIcon } from "@mui/material";
+
+import { Box, Typography, TextField, ListItemIcon, Menu , MenuItem} from "@mui/material";
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 
 import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 
-interface IProps {}
+import {DevSess} from './DevSess'
 
-//Устройства
+
+
+interface IProps {
+
+}
+
+
+
 @observer
 export class Devs extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }
 
-  async editDevice(a:any) {
+  async editDevice(a:any) { /////////////////////////////////////////Кнопка редактирования
     APP_STORAGE.devs.setMenu_devs(a);
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
-
-    return this.getValueCh(DevGr);
+    return this.PassValueEditForm(DevGr); 
   }
 
-  getValueCh(dgrs: TDevsGroup[]) {
-     
+
+
+  PassValueEditForm(dgrs: TDevsGroup[]) {
+    var dev = APP_STORAGE.devs;
+    var devGr = APP_STORAGE.devs_groups;
     var parent: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
@@ -40,33 +47,32 @@ export class Devs extends React.Component<IProps> {
       var gr_childs = dgr.childs;
       var gr_devs = dgr.devs;
       var childs: React.ReactNode[] = new Array();
-      if (gr_childs.length > 0) childs = this.getValueCh(gr_childs);
+      if (gr_childs.length > 0) childs = this.PassValueEditForm(gr_childs);
 
       parent.push(childs);
       for (var key in gr_devs) {
         if (
-          "_dev_id_key_" + gr_devs[key].id ===
-          APP_STORAGE.devs.getIdChild()
+          "_dev_id_key_" + gr_devs[key].id === APP_STORAGE.devs.getIdChild()
         ) {
-          APP_STORAGE.devs.setNumber(String(gr_devs[key].number));
-          APP_STORAGE.devs_groups.setParentId('key-09');
-          APP_STORAGE.devs.setName(String(gr_devs[key].name));
-          APP_STORAGE.devs.setLongitude(String(gr_devs[key].longitude));
-          APP_STORAGE.devs.setLatitude(String(gr_devs[key].latitude));
-          APP_STORAGE.devs.setInfo(String(gr_devs[key].info));
-          APP_STORAGE.devs.setChangeSensors(gr_devs[key].sensors.s);
-          APP_STORAGE.devs.setId(String(gr_devs[key].id));
-          APP_STORAGE.devs.setGroupDevId(String(gr_devs[key].group_dev_id));
-          APP_STORAGE.devs.setCheckboxEd(gr_devs[key].deleted);
+          dev.setNumber(String(gr_devs[key].number));
+          devGr.setParentId('key-09');
+          dev.setName(String(gr_devs[key].name));
+          dev.setLongitude(String(gr_devs[key].longitude));
+          dev.setLatitude(String(gr_devs[key].latitude));
+          dev.setInfo(String(gr_devs[key].info));
+          dev.setChangeSensors(gr_devs[key].sensors.s);
+          dev.setId(String(gr_devs[key].id));
+          dev.setGroupDevId(String(gr_devs[key].group_dev_id));
+          dev.setCheckboxEd(gr_devs[key].deleted);
             
 
-          if(APP_STORAGE.devs.getMenu_devs() === '1'){
-            APP_STORAGE.devs.setOpenModalChange(true);
-            APP_STORAGE.devs_groups.setOpen_menu(false);
+      if(dev.getMenu_devs() === '1')
+          {dev.setOpenModalChange(true);
+            devGr.setOpen_menu(false);
           }
-          if(APP_STORAGE.devs.getMenu_devs() === '2'){
-            APP_STORAGE.devs_groups.setOpenModalMoveDevsGr(true);
-            APP_STORAGE.devs_groups.setOpen_menu(false);
+      if(dev.getMenu_devs() === '2'){
+        devGr.setOpenModalMoveDevsGr(true);
+        devGr.setOpen_menu(false);
           }
           
         }
@@ -75,324 +81,268 @@ export class Devs extends React.Component<IProps> {
     return parent;
   }
 
-  async closeModal() {
-    APP_STORAGE.devs_groups.setOpenModal(false);
-  }
 
-  async SelectedOrg(a: any) {
-    APP_STORAGE.devs_groups.setKeyOrg(a);
-  }
-
-  async OpenModal() {
-    APP_STORAGE.devs.setOpenModal(true);
-  }
 
   drawDevs(dgrs: TDevsGroup[]): React.ReactNode[] {
-    //// отображаем выбранные устройства
+    var dev = APP_STORAGE.devs;
+    var devGr = APP_STORAGE.devs_groups;
     var devs: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr: TDGroup = dgr.group;
       var gr_childs = dgr.childs;
       var gr_devs = dgr.devs;
-      for (var key in gr_devs) {
-        if (
-          "_dev_id_key_" + gr_devs[key].id ===
-          APP_STORAGE.devs.getIdChild()
-        ) {
-          if (gr_devs[key].deleted === true) {
-            devs.push(
-              <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
-                <Box className="wrappert-devs">
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      width: "100%",
-                      flexDirection: "row",
-                      background: "#fff",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Typography sx={{ color: "#645757", fontWeight: "600" }}>
-                      Место расположения - {gr.g_name}{" "}
-                    </Typography>
-                    {APP_STORAGE.getRoleWrite() === 2 &&
-                      APP_STORAGE.getRoleRead() === 1 && (
-                        <div>
-                          <IconButton
-                            onClick={() => {
-                              APP_STORAGE.devs_groups.setOpen_menu(true);
-                            }}
-                            id="long-button555"
-                            aria-label="more"
-                            aria-controls={open ? "long-menu" : undefined}
-                            aria-expanded={open ? "true" : undefined}
-                            aria-haspopup="true"
-                          >
-                            <MoreVertIcon />
-                          </IconButton>
-                          <Menu
-                            id="long-menu"
-                            MenuListProps={{
-                              "aria-labelledby": "long-button",
-                            }}
-                            anchorEl={document.getElementById("long-button555")}
-                            open={APP_STORAGE.devs_groups.getOpen_menu()}
-                            onClose={() => {
-                              APP_STORAGE.devs_groups.setOpen_menu(false);
-                            }}
-                          >
-                            
-                            <MenuItem onClick={() => this.editDevice('1')}>
-                            <ListItemIcon>
-                              <ModeEditRoundedIcon fontSize="small" />
-                            </ListItemIcon>{" "}
-                            Редактировать
-                          </MenuItem>
 
-                            <MenuItem onClick={() => this.editDevice('2')} >
-                            <ListItemIcon>
-                              <LogoutRoundedIcon fontSize="small" />
-                            </ListItemIcon>{" "}
-                            Переместить
-                          </MenuItem>
-                          </Menu>
-                        </div>
-                      )}
-                  </Box>
-                  <Box
-                    sx={{
-                      borderLeft: "1px solid #808080",
-                      p: "12px",
-                      borderRadius: "4px",
-                      background: "#eeeeee5e",
-                    }}
-                  >
-                    <Box></Box>
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      required
-                      fullWidth
-                      id="Название устройства"
-                      label="Название устройства"
-                      autoFocus
-                      disabled={true}
-                      value={gr_devs[key].name}
-                    />
 
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      required
-                      fullWidth
-                      id="Долгота"
-                      label="Долгота"
-                      autoFocus
-                      disabled={true}
-                      value={gr_devs[key].longitude}
-                    />
+      for (var key in gr_devs) { ////////////////////////////////// Все устройства
 
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      required
-                      fullWidth
-                      id="Долгота"
-                      label="Долгота"
-                      autoFocus
-                      disabled={true}
-                      value={gr_devs[key].longitude}
-                    />
+            if ("_dev_id_key_" + gr_devs[key].id === dev.getIdChild()) {
+              APP_STORAGE.sensors.setNumber(gr_devs[key].number);
+  /////////////////////////// Устройство удалено ( deleted - true)
+                  if (gr_devs[key].deleted === true) {
 
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      required
-                      fullWidth
-                      id="Информация"
-                      label="Информация"
-                      autoFocus
-                      disabled={true}
-                      value={gr_devs[key].info}
-                    />
-                  </Box>
-                </Box>
-              </React.Fragment>
-            );
-          }
+                                    devs.push(
+                                    <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
 
-          if (gr_devs[key].deleted === false) {
-            devs.push(
-              <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
-                <Box className="wrappert-devs">
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      width: "100%",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Typography sx={{ color: "#645757", fontWeight: "600" }}>
-                      Место расположения - {gr.g_name}{" "}
-                    </Typography>
-                    {APP_STORAGE.getRoleWrite() === 2 &&
-                      APP_STORAGE.getRoleRead() === 1 && (
-                        <div>
-                          <IconButton
-                            onClick={() => {
-                              APP_STORAGE.devs_groups.setOpen_menu(true);
-                            }}
-                            id="long-button555"
-                            aria-label="more"
-                            aria-controls={open ? "long-menu" : undefined}
-                            aria-expanded={open ? "true" : undefined}
-                            aria-haspopup="true"
-                          >
-                            <MoreVertIcon />
-                          </IconButton>
-                          <Menu
-                            id="long-menu"
-                            MenuListProps={{
-                              "aria-labelledby": "long-button",
-                            }}
-                            anchorEl={document.getElementById("long-button555")}
-                            open={APP_STORAGE.devs_groups.getOpen_menu()}
-                            onClose={() => {
-                              APP_STORAGE.devs_groups.setOpen_menu(false);
-                            }}
-                          >
-                            <MenuItem onClick={() => this.editDevice('1')}>
-                            <ListItemIcon>
-                              <ModeEditRoundedIcon fontSize="small" />
-                            </ListItemIcon>{" "}
-                            Редактировать
-                          </MenuItem>
+                                    <Box className="wrappert-devs">
+                                    <Box
+                                    sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    }}
+                                    >
 
-                            <MenuItem onClick={() => this.editDevice('2')} >
-                            <ListItemIcon>
-                              <LogoutRoundedIcon fontSize="small" />
-                            </ListItemIcon>{" "}
-                            Переместить
-                          </MenuItem>
-                          </Menu>
-                        </div>
-                      )}
-                  </Box>
-                  <Box
-                    sx={{
-                      borderLeft: "1px solid #266bf18c",
-                      pl: "12px",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    <Box></Box>
+                                    <Typography sx={{ color: "#645757", fontWeight: "600" }}>
+                                    Место расположения - {gr.g_name} устройства
+                                    </Typography>
+                                    
+                                    {APP_STORAGE.getRoleWrite() === 2 &&  APP_STORAGE.getRoleRead() === 1 && (
+                                    <div>
+                                    <IconButton
+                                    onClick={() => {devGr.setOpen_menu(true)}}
+                                    id="long-button-menu"
+                                    aria-label="more"
+                                    aria-controls={open ? "long-menu" : undefined}
+                                    aria-expanded={open ? "true" : undefined}
+                                    aria-haspopup="true"
+                                    >
+                                    <MoreVertIcon />
+                                    </IconButton>
+                                    <Menu
+                                    id="long-menu"
+                                    MenuListProps={{
+                                    "aria-labelledby": "long-button",
+                                    }}
+                                    anchorEl={document.getElementById("long-button-menu")}
+                                    open={devGr.getOpen_menu()}
+                                    onClose={() => {
+                                    devGr.setOpen_menu(false);
+                                    }}
+                                    >
 
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      required
-                      fullWidth
-                      id="Название устройства"
-                      label="Название устройства"
-                      autoFocus
-                      value={gr_devs[key].name}
-                    />
+                                    <MenuItem onClick={() => this.editDevice('1')}>
+                                    <ListItemIcon>
+                                    <ModeEditRoundedIcon fontSize="small" />
+                                    </ListItemIcon>{" "}
+                                    Редактировать
+                                    </MenuItem>
 
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      required
-                      fullWidth
-                      id="Долгота"
-                      label="Долгота"
-                      autoFocus
-                      ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
-                      value={gr_devs[key].longitude}
-                    />
+                                    <MenuItem onClick={() => this.editDevice('2')} >
+                                    <ListItemIcon>
+                                    <LogoutRoundedIcon fontSize="small" />
+                                    </ListItemIcon>{" "}
+                                    Переместить
+                                    </MenuItem>
+                                    </Menu>
+                                    </div>
+                                    )}
+                                    </Box>
 
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      required
-                      fullWidth
-                      id="Долгота"
-                      label="Долгота"
-                      autoFocus
-                      ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
-                      value={gr_devs[key].longitude}
-                    />
+                                    <Box
+                                    sx={{
+                                    borderLeft: "1px solid #808080",
+                                    p: "12px",
+                                    borderRadius: "4px",
+                                    background: "#eeeeee5e",
+                                    }}
+                                    >
 
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      required
-                      fullWidth
-                      id="Информация"
-                      label="Информация"
-                      autoFocus
-                      ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
-                      value={gr_devs[key].info}
-                    />
-                  </Box>
-                </Box>
-              </React.Fragment>
-            );
+                                    <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    size="small"
+                                    required
+                                    fullWidth
+                                    id="Название устройства"
+                                    label="Название устройства"
+                                    autoFocus
+                                    disabled={true}
+                                    value={gr_devs[key].name}
+                                    />
+
+                                    <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    size="small"
+                                    required
+                                    fullWidth
+                                    id="Долгота"
+                                    label="Долгота"
+                                    autoFocus
+                                    disabled={true}
+                                    value={gr_devs[key].longitude}
+                                    />
+
+                                    <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    size="small"
+                                    required
+                                    fullWidth
+                                    id="Широта"
+                                    label="Широта"
+                                    autoFocus
+                                    disabled={true}
+                                    value={gr_devs[key].latitude}
+                                    />
+
+                                    <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    size="small"
+                                    required
+                                    fullWidth
+                                    id="Информация"
+                                    label="Информация"
+                                    autoFocus
+                                    disabled={true}
+                                    value={gr_devs[key].info}
+                                    />
+                                    </Box>
+                                    </Box>
+                                    </React.Fragment>
+                                    );
+                                  }
+
+
+
+/////////////////////////// Устройство действующее ( deleted - false)
+            if (gr_devs[key].deleted === false) {  
+                                      devs.push(
+                                      <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
+                                      <Box className="wrappert-devs">
+                                      <Box
+                                      sx={{
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                      width: "100%",
+                                      flexDirection: "row",
+                                      alignItems: "center",
+                                      }}
+                                      >
+                                      <Typography sx={{ color: "#645757", fontWeight: "600" }}>
+                                      Место расположения - {gr.g_name}{" "}
+                                      </Typography>
+                                      {APP_STORAGE.getRoleWrite() === 2 &&
+                                      APP_STORAGE.getRoleRead() === 1 && (
+                                      <div>
+                                      <IconButton
+                                      onClick={() => {
+                                        devGr.setOpen_menu(true);
+                                      }}
+                                      id="long-button555"
+                                      aria-label="more"
+                                      aria-controls={open ? "long-menu" : undefined}
+                                      aria-expanded={open ? "true" : undefined}
+                                      aria-haspopup="true"
+                                      >
+                                      <MoreVertIcon />
+                                      </IconButton>
+                                      <Menu
+                                      id="long-menu"
+                                      MenuListProps={{
+                                      "aria-labelledby": "long-button",
+                                      }}
+                                      anchorEl={document.getElementById("long-button555")}
+                                      open={devGr.getOpen_menu()}
+                                      onClose={() => {
+                                      devGr.setOpen_menu(false);
+                                      }}
+                                      >
+                                      <MenuItem onClick={() => this.editDevice('1')}>
+                                      <ListItemIcon>
+                                      <ModeEditRoundedIcon fontSize="small" />
+                                      </ListItemIcon>{" "}
+                                      Редактировать
+                                      </MenuItem>
+
+                                      <MenuItem onClick={() => this.editDevice('2')} >
+                                      <ListItemIcon>
+                                      <LogoutRoundedIcon fontSize="small" />
+                                      </ListItemIcon>{" "}
+                                      Переместить
+                                      </MenuItem>
+                                      </Menu>
+                                      </div>
+                                      )}
+                                      </Box>
+
+  {/*------------------------- Информация об устройстве ------------------------------------------------------------*/}
+                                      <Box
+                                      sx={{
+                                      borderLeft: "1px solid #266bf18c",
+                                      pl: "12px",
+                                      borderRadius: "4px",
+                                      }}
+                                      >
+
+                                      <Typography sx={{ color: "#645757", fontWeight: "600" }}>
+                                       Название устройства - {gr_devs[key].name}{" "}
+                                      </Typography>  
+
+                                      <Typography sx={{ color: "#645757", fontWeight: "600" }}>
+                                       Долгота - {gr_devs[key].longitude}{" "}
+                                      </Typography> 
+
+                                      <Typography sx={{ color: "#645757", fontWeight: "600" }}>
+                                       Широта - {gr_devs[key].latitude}{" "}
+                                      </Typography>
+
+                                      <Typography sx={{ color: "#645757", fontWeight: "600" }}>
+                                       Информация - {gr_devs[key].info}{" "}
+                                      </Typography>
+
+
+                                        < DevSess/>
+
+                                      </Box>
+                                      </Box>
+                                      </React.Fragment>
+                                      );
           }
         }
       }
 
-      var childs: React.ReactNode[] = new Array();
-      if (gr_childs.length > 0) childs = this.drawDevs(gr_childs);
-
-      devs.push(childs);
-    }
-    return devs;
+          var childs: React.ReactNode[] = new Array();
+          if (gr_childs.length > 0) childs = this.drawDevs(gr_childs);
+          devs.push(childs);}
+          return devs;
   }
 
 
-  drawDevLocation(): React.ReactNode {
-    let DevGr: any;
-    DevGr = APP_STORAGE.devs_groups.getDevsGroups();
-    return this.drawDevs(DevGr); /// передаем сформированные данные
+  drawDevsFunction (): React.ReactNode {
+    let Dev: any;
+    Dev = APP_STORAGE.devs_groups.getDevsGroups();
+    return this.drawDevs(Dev); /// передаем сформированные данные
   }
 
 
-  
   render(): React.ReactNode {
     return (
       <React.Fragment>
-        <Box
-          className="wrapper-devs"
-          sx={{
-            display: "flex",
-            flexDirection: "column;",
-            alignItems: "flex-start;",
-            width: "100%",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              width: "100%",
-            }}
-          >
-            {this.drawDevLocation()}
-          </Box>
-        </Box>
+       {this.drawDevsFunction()}
       </React.Fragment>
     );
   }

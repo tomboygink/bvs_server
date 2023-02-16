@@ -31,6 +31,9 @@ export class DevsStorage {
   @observable add_sensors: boolean = false; ///// модальное окно для добавления сенсоров
   @observable get_sensors: Array<any> = [];
 
+  @observable get_sensors1: Array<any> = [];
+  @observable get_sensors2: Array<any> = [];
+
   @observable array_sensors: Array<any> = []; ////////тестовый массив 
   
   @observable change_sensors: boolean = false;
@@ -64,6 +67,8 @@ export class DevsStorage {
   @observable longitude_err_mess: string = '';
 
   @observable menu_devs : string = '';
+
+  @observable save :string = '';
 
   constructor() {
     makeAutoObservable(this);
@@ -147,6 +152,15 @@ export class DevsStorage {
 
   @action setChangeSensors(val: Array<any>) { this.get_sensors = val }
   @computed getChangeSensors(): Array<any> { return this.get_sensors }
+
+  @action setChangeSensors1(val: Array<any>) { this.get_sensors1 = val }
+  @computed getChangeSensors1(): Array<any> { return this.get_sensors1 }
+
+  @action setChangeSensors2(val: Array<any>) { this.get_sensors2 = val }
+  @computed getChangeSensors2(): Array<any> { return this.get_sensors2 }
+
+  @action setSave(val: string) { this.save = val }
+  @computed getSave(): string{ return this.save }
 
 
   @action setArray_sensors(val: Array<any>) { this.array_sensors = val }
@@ -272,18 +286,20 @@ export class DevsStorage {
 
   async set_DevsDepth(value: number) {
    let a = {"depth": value , "value" : 1 }
-
+   
     this.array.push(a);
-      
 
-    this.setArray(this.array)
-
+    const uniqueChars = this.array.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
+      if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
+        o.push(i);
+      }
+      return o;
+    }, []); 
   }
 
 
   async set_ChangeDevs(name: string, value: any, _options?: any) {
     var sess_code = value;
-
     if (this.getNumber() === '') {
       this.setNumberError(true);
       this.setNumberError_mess('Необходимо ввести номер устройства')
@@ -324,6 +340,7 @@ export class DevsStorage {
 
     var q: IWSQuery = new WSQuery("set_ChangeDevs");
     if (this.getNumber() && this.getName() !== '' && this.getLatitude() !== '' && this.getLongitude() !== '') {
+      
 
       q.args = {
         id: this.getId() || "",
@@ -338,7 +355,7 @@ export class DevsStorage {
       };
 
       q.sess_code = sess_code;
-      (await WSocket.get()).send(q);
+      (await WSocket.get()).send(q); 
       setTimeout(() => {
       
       this.setOpenModalChange(false)

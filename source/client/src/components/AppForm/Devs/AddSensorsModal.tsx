@@ -23,6 +23,16 @@ export class Change_ModalSensors extends React.Component<IProps> {
     APP_STORAGE.devs.get_sensors.push(
       {"depth": APP_STORAGE.devs.getSensors(), "value" : 0 }
     );
+    
+    var q = APP_STORAGE.devs.get_sensors
+    const uniqueChars = q.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
+      if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
+        o.push(i);
+      }
+      return o;
+    }, []);
+    
+    APP_STORAGE.devs.setChangeSensors(JSON.parse(JSON.stringify(uniqueChars)))
   }
 
   render(): React.ReactNode {
@@ -88,8 +98,15 @@ export class Change_ModalSensors extends React.Component<IProps> {
                   this.Change_sensors();
                 }}
               >
-                Сохранить1
+                Сохранить
               </Typography>
+              {/* <Typography
+                onClick={() => {
+                  APP_STORAGE.devs.setDepthSensors_Ch(false);
+                }}
+              >
+                close
+              </Typography> */}
             </Box>
           </Modal>
         </Box>

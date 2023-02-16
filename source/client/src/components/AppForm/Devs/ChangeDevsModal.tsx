@@ -34,7 +34,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-import {TDSensor} from '../../../storage/components/Devs/DevEntityes';
+import { TDSensor } from "../../../storage/components/Devs/DevEntityes";
 
 interface IProps {}
 
@@ -81,14 +81,25 @@ export class ChangeDevsModal extends React.Component<IProps> {
         delete obj[i].depth;
         delete obj[i].value;
       }
-      const array = obj;
-      const array2 = array.filter((element: any) => element !== null);
-      APP_STORAGE.devs.setChangeSensors(array2);
+
+      if (obj[i].depth) {
+        const array = obj;
+
+        const array2 = array.reduce((o: any, i: any) => {
+          ////////////////// Редюсом убираем дубликаты
+          if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
+            o.push(i);
+          }
+          return o;
+        }, []);
+        APP_STORAGE.devs.setChangeSensors(array2);
+      }
     }
     APP_STORAGE.devs.setDepthSensors_Ch(true);
   }
 
-  async DeleteSensors(a: any) { //////////////////////////////////////////////Удаление сенсоров 
+  async DeleteSensors(a: any) {
+    ////////////////////////////////////////////// Удаление сенсоров
     var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
     for (let i = 0; i < obj.length; i++) {
       if (Number(a) === Number(obj[i].depth)) {
@@ -96,7 +107,13 @@ export class ChangeDevsModal extends React.Component<IProps> {
         delete obj[i].value;
       }
       const array = obj;
-      const array2 = array.filter((element: any) => element !== null);
+      const array2 = array.reduce((o: any, i: any) => {
+        ////////////////// Редюсом убираем дубликаты
+        if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
+          o.push(i);
+        }
+        return o;
+      }, []);
       APP_STORAGE.devs.setChangeSensors(array2);
     }
   }
@@ -106,23 +123,13 @@ export class ChangeDevsModal extends React.Component<IProps> {
   }
 
   async ChangeDevs() {
-
-
-    console.log('APP_STORAGE.devs.getChangeSensors()', APP_STORAGE.devs.getChangeSensors())
     var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
     let sensors: Array<any> = [];
-    let a: TDSensor
-    let uniqueChars = obj.filter((element: any, index: any) => { ///////////////////////// Убираем дубли массива
+    let a: TDSensor;
+    let uniqueChars = obj.filter((element: any, index: any) => {
+      ///////////////////////// Убираем дубли массива
       return obj.indexOf(element) === index;
     });
-    // for (let i = 0; i < uniqueChars.length; i++) {
-    //   a = {"depth": uniqueChars[i] , "value" : 1 }
-    //   sensors.push(
-    //     sensors.push(a));  
-  
-    //   APP_STORAGE.devs.setChangeSensors(sensors);
-    // }
- 
     APP_STORAGE.devs.set_ChangeDevs("sess_id", APP_STORAGE.auth_form.getdt());
     setTimeout(() => {
       APP_STORAGE.devs_groups.get_DevsGroups(
@@ -169,22 +176,21 @@ export class ChangeDevsModal extends React.Component<IProps> {
 
     if (APP_STORAGE.devs.getChangeSensors()) {
       const obj1: any = {};
-      let ssss = [];
       var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
 
-      let uniqueChars = obj.filter((element: any, index: any) => {
-        return obj.indexOf(element) === index;
-      });
+      const uniqueChars = obj.reduce((o: any, i: any) => {
+        ////////////////// Редюсом убираем дубликаты
+        if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
+          o.push(i);
+        }
+        return o;
+      }, []);
 
       for (let i = 0; i < uniqueChars.length; i++) {
         obj1[i] = uniqueChars[i];
-
-        
-
-        ssss.push(obj1[i]);
+        count = uniqueChars.length;
 
         if (uniqueChars[i].depth) {
-          count = uniqueChars.length;
           depth_sensors.push(
             <TableRow key={uniqueChars[i].depth}>
               <TableCell
@@ -213,7 +219,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
                   value={uniqueChars[i].depth}
                 />
               </TableCell>
-  
+
               <TableCell
                 align="left"
                 sx={{ color: "#1976D2" }}
@@ -229,7 +235,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               >
                 <AddIcon fontSize="small" />
               </TableCell>
-  
+
               <TableCell
                 align="left"
                 sx={{ color: "#1976D2" }}
@@ -245,7 +251,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               >
                 <ModeEditOutlineOutlinedIcon fontSize="small" />
               </TableCell>
-  
+
               <TableCell
                 align="left"
                 sx={{ color: "#FF4848" }}
@@ -264,10 +270,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
             </TableRow>
           );
         }
-      
       }
-
-
 
       if (!obj.length) {
         depth_sensors.push(

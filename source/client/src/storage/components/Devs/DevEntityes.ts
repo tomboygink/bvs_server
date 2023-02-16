@@ -85,7 +85,7 @@ export class TDevsGroup {
 }
 
 /**
- * Дерево из групп с устройстчами
+ * Дерево из групп с устройствами
  */
 export const DEV_GR_NODE:TDevsGroup = { group:{...D_GROUP}, id:0, p_id:0, childs:[], devs:[], updated:false };
 

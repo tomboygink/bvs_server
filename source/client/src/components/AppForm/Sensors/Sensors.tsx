@@ -65,50 +65,48 @@ export class Sensors extends React.Component<IProps> {
       var gr_devs = dgr.devs;
 
       for (var i in gr_devs) {
-        if (
-          "_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
+        if ("_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
           APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
           APP_STORAGE.sensors.getSortDesc() === ""
         ) {
-          for (var key in gr_devs[i].sensors.s) {
-            if (gr_devs[i].sensors.s[key].depth) {
-              sort_array.push(gr_devs[i].sensors.s[key].depth);
+          var obj = JSON.parse(JSON.stringify(gr_devs[i].sensors.s));
+          const uniqueChars = obj.reduce((o: any, i: any) => {
+            ////////////////// Редюсом убираем дубликаты
+            if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
+              o.push(i);
+            }
+            return o;
+          }, []);
+
+          for (var key in uniqueChars) {
+            if (uniqueChars[key].depth) {
+              sort_array.push(uniqueChars[key].depth);
             }
             APP_STORAGE.setdevs_group_move(sort_array);
 
-            if (
-              gr_devs[i].deleted === true &&
-              gr_devs[i].sensors.s[key].depth
-            ) {
+            if (gr_devs[i].deleted === true && uniqueChars[key].depth) {
               sensors.push(
                 <>
-                  <TableRow
-                    key={"sensors_id" + gr_devs[i].sensors.s[key].depth}
-                  >
+                  <TableRow key={"sensors_id" + uniqueChars[key].depth}>
                     <TableCell>
                       <SensorsIcon fontSize="small" sx={{ color: "#808080" }} />
                     </TableCell>
                     <TableCell>[00{key}]</TableCell>
-                    <TableCell>
-                      [{"" + gr_devs[i].sensors.s[key].depth}]{" "}
-                    </TableCell>
+                    <TableCell>[{"" + uniqueChars[key].depth}] </TableCell>
                   </TableRow>
                 </>
               );
             }
 
-            if (
-              gr_devs[i].deleted === false &&
-              gr_devs[i].sensors.s[key].depth
-            ) {
+            if (gr_devs[i].deleted === false && uniqueChars[key].depth) {
               sensors.push(
-                <TableRow key={"sensors_id" + gr_devs[i].sensors.s[key].depth}>
+                <TableRow key={"sensors_id" + uniqueChars[key].depth}>
                   <TableCell>
                     <SensorsIcon fontSize="small" sx={{ color: "#5be95b" }} />
                   </TableCell>
                   <TableCell>[00{key}]</TableCell>
                   <TableCell sx={{ fontWeight: "700" }}>
-                    [{"" + gr_devs[i].sensors.s[key].depth}]{" "}
+                    [{"" + uniqueChars[key].depth}]{" "}
                   </TableCell>
                 </TableRow>
               );
@@ -201,6 +199,7 @@ export class Sensors extends React.Component<IProps> {
   drawDevLocation(): React.ReactNode {
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
+
     return this.drawSensors(DevGr);
   }
 

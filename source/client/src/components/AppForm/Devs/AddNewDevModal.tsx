@@ -103,9 +103,15 @@ export class AddNewDevModal extends React.Component<IProps> {
 
      
       var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getArray()));
-      let uniqueChars = obj.filter((element: any, index: any) => {
-        return obj.indexOf(element) === index;
-      });
+       
+      const uniqueChars = obj.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
+        if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
+          o.push(i);
+        }
+        return o;
+      }, []);
+
+     
       for (var key in uniqueChars) {
         count = uniqueChars.length;
 
