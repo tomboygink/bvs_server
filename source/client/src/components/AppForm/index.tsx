@@ -19,6 +19,7 @@ import { AddNewSubgroup } from "./DevsGroups/AddNewSubgroup";//////////Доба�
 
 
 import { Devs } from "./Devs/Devs";//////////////////////////// устройства
+import { DevSess } from './Devs/DevSess'
 import { Sensors } from "./Sensors/Sensors"; ///////////////////////////////сенсоры на устройствах
 import { ChangeDevsModal } from "./Devs/ChangeDevsModal";////////////////////////////Редактировать устройства
 import { AddNewDevModal } from "./Devs/AddNewDevModal"; //////////////Добавить новое устройство
@@ -105,6 +106,7 @@ export class AppForm extends React.Component<IProps> {
 
                 <Box className="block-wrapp grid">
                   {middle_form}
+                 
                   {new_group}
                 </Box>
 

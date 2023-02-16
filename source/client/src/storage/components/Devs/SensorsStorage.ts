@@ -11,8 +11,11 @@ export class SensorsStorage {
     @observable active_button_sort: string = '';
     @observable active_button_sort_desc: string = '';
 
-    @observable anchorEl: string = '';
+    @observable sess_period_start : string; 
+    @observable sess_period_end : string;
 
+    @observable anchorEl: string = '';
+    @observable number: string = ''
     constructor(){
         makeAutoObservable(this);
     }
@@ -31,6 +34,34 @@ export class SensorsStorage {
 
     @action setAnchorEl(val : string) {this.anchorEl = val};
     @computed getAnchorEl() : string {return this.anchorEl};
+
+    @action setSessPeriodStart(val : string) {this.sess_period_start = val};
+    @computed getSessPeriodStart() : string {return this.sess_period_start};
+
+    @action setSessPeriodEnd(val : string) {this.sess_period_end = val};
+    @computed getSessPeriodEnd() : string {return this.sess_period_end};
+
+    @action setNumber(val: string) {this.number = val}
+    @computed getNumber(): string {return this.number;}
+
+
+    async set_DevSessions(name: string, value: any, _options?: any) {
+        var sess_code = value;
+      
+    
+        var q: IWSQuery = new WSQuery("set_DevSessions");
+        {
+          q.args = {
+            dev_number: this.getNumber() || "",
+            time_dev: this.getSessPeriodStart() || "",
+            time_srv: this.getSessPeriodEnd() || ""
+          };
+    
+          q.sess_code = sess_code;
+          (await WSocket.get()).send(q);
+         
+        }
+      }
 
 }
 
