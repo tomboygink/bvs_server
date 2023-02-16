@@ -20,21 +20,20 @@ export class Change_ModalSensors extends React.Component<IProps> {
   }
 
   async Change_sensors() {
-
-    APP_STORAGE.devs.get_sensors1 =  APP_STORAGE.devs.get_sensors ;
-
-
-    APP_STORAGE.devs.get_sensors1.push(
+    APP_STORAGE.devs.get_sensors.push(
       {"depth": APP_STORAGE.devs.getSensors(), "value" : 0 }
     );
-     
-    const res = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors1())).reduce((o:any, i:any) => {
+    
+    var q = APP_STORAGE.devs.get_sensors
+    const uniqueChars = q.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
       if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
         o.push(i);
       }
       return o;
     }, []);
-    APP_STORAGE.devs.setChangeSensors2(res);
+    console.log('121212', JSON.parse(JSON.stringify(uniqueChars))); 
+    
+    APP_STORAGE.devs.setChangeSensors(JSON.parse(JSON.stringify(uniqueChars)))
   }
 
   render(): React.ReactNode {
@@ -87,7 +86,7 @@ export class Change_ModalSensors extends React.Component<IProps> {
                 onChange={(e) => {
                   APP_STORAGE.devs.setSensors(Number(e.target.value));
                 }}
-                value={Number(APP_STORAGE.devs.getSensors()) || ""}
+                value={APP_STORAGE.devs.getSensors() || ""}
                 sx={{ mt: 2 }}
               />
               <Typography sx={{ fontSize: "12px", color: "grey" }}>
@@ -102,6 +101,13 @@ export class Change_ModalSensors extends React.Component<IProps> {
               >
                 Сохранить
               </Typography>
+              {/* <Typography
+                onClick={() => {
+                  APP_STORAGE.devs.setDepthSensors_Ch(false);
+                }}
+              >
+                close
+              </Typography> */}
             </Box>
           </Modal>
         </Box>

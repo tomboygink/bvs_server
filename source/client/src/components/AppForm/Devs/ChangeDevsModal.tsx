@@ -82,13 +82,18 @@ export class ChangeDevsModal extends React.Component<IProps> {
         delete obj[i].value;
       }
       const array = obj;
-      const array2 = array.filter((element: any) => element !== null);
+      const array2 = array.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
+        if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
+          o.push(i);
+        }
+        return o;
+      }, []);
       APP_STORAGE.devs.setChangeSensors(array2);
     }
     APP_STORAGE.devs.setDepthSensors_Ch(true);
   }
 
-  async DeleteSensors(a: any) { //////////////////////////////////////////////Удаление сенсоров 
+  async DeleteSensors(a: any) { ////////////////////////////////////////////// Удаление сенсоров 
     var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
     for (let i = 0; i < obj.length; i++) {
       if (Number(a) === Number(obj[i].depth)) {
@@ -96,7 +101,12 @@ export class ChangeDevsModal extends React.Component<IProps> {
         delete obj[i].value;
       }
       const array = obj;
-      const array2 = array.filter((element: any) => element !== null);
+      const array2 = array.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
+        if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
+          o.push(i);
+        }
+        return o;
+      }, []);
       APP_STORAGE.devs.setChangeSensors(array2);
     }
   }
@@ -169,102 +179,101 @@ export class ChangeDevsModal extends React.Component<IProps> {
 
     if (APP_STORAGE.devs.getChangeSensors()) {
       const obj1: any = {};
-      let ssss = [];
       var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
+      
 
-      let uniqueChars = obj.filter((element: any, index: any) => {
-        return obj.indexOf(element) === index;
-      });
+      console.log('obj' , obj);
+
+      const uniqueChars = obj.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
+        if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
+          o.push(i);
+        }
+        return o;
+      }, []);
 
       for (let i = 0; i < uniqueChars.length; i++) {
         obj1[i] = uniqueChars[i];
-
+        count = uniqueChars.length;
         
+       
+        depth_sensors.push(
+          <TableRow key={uniqueChars[i].depth}>
+            <TableCell
+              key={uniqueChars[i].depth}
+              sx={{
+                display: "flex",
+                fontWeight: "700",
+                border: "none",
+              }}
+              align="left"
+            >
+              <TextField
+                id={"_id_s" + uniqueChars[i].depth}
+                inputProps={{ style: { fontSize: 12 } }}
+                InputLabelProps={{ style: { fontSize: 12 } }}
+                variant="outlined"
+                fullWidth
+                required
+                label="Глубина"
+                autoComplete="Глубина"
+                autoFocus
+                size="small"
+                onChange={(e) => {
+                  APP_STORAGE.devs.setNumber(e.target.value);
+                }}
+                value={uniqueChars[i].depth}
+              />
+            </TableCell>
 
-        ssss.push(obj1[i]);
+            <TableCell
+              align="left"
+              sx={{ color: "#1976D2" }}
+              onClick={(e) => {
+                this.AddSensors(
+                  (
+                    document.getElementById(
+                      "_id_s" + uniqueChars[i].depth
+                    ) as HTMLInputElement
+                  ).value
+                );
+              }}
+            >
+              <AddIcon fontSize="small" />
+            </TableCell>
 
-        if (uniqueChars[i].depth) {
-          count = uniqueChars.length;
-          depth_sensors.push(
-            <TableRow key={uniqueChars[i].depth}>
-              <TableCell
-                key={uniqueChars[i].depth}
-                sx={{
-                  display: "flex",
-                  fontWeight: "700",
-                  border: "none",
-                }}
-                align="left"
-              >
-                <TextField
-                  id={"_id_s" + uniqueChars[i].depth}
-                  inputProps={{ style: { fontSize: 12 } }}
-                  InputLabelProps={{ style: { fontSize: 12 } }}
-                  variant="outlined"
-                  fullWidth
-                  required
-                  label="Глубина"
-                  autoComplete="Глубина"
-                  autoFocus
-                  size="small"
-                  onChange={(e) => {
-                    APP_STORAGE.devs.setNumber(e.target.value);
-                  }}
-                  value={uniqueChars[i].depth}
-                />
-              </TableCell>
-  
-              <TableCell
-                align="left"
-                sx={{ color: "#1976D2" }}
-                onClick={(e) => {
-                  this.AddSensors(
-                    (
-                      document.getElementById(
-                        "_id_s" + uniqueChars[i].depth
-                      ) as HTMLInputElement
-                    ).value
-                  );
-                }}
-              >
-                <AddIcon fontSize="small" />
-              </TableCell>
-  
-              <TableCell
-                align="left"
-                sx={{ color: "#1976D2" }}
-                onClick={(e) => {
-                  this.ChangeSensors(
-                    (
-                      document.getElementById(
-                        "_id_s" + uniqueChars[i].depth
-                      ) as HTMLInputElement
-                    ).value
-                  );
-                }}
-              >
-                <ModeEditOutlineOutlinedIcon fontSize="small" />
-              </TableCell>
-  
-              <TableCell
-                align="left"
-                sx={{ color: "#FF4848" }}
-                onClick={(e) => {
-                  this.DeleteSensors(
-                    (
-                      document.getElementById(
-                        "_id_s" + uniqueChars[i].depth
-                      ) as HTMLInputElement
-                    ).value
-                  );
-                }}
-              >
-                <DeleteOutlineOutlinedIcon fontSize="small" />
-              </TableCell>
-            </TableRow>
-          );
-        }
-      
+            <TableCell
+              align="left"
+              sx={{ color: "#1976D2" }}
+              onClick={(e) => {
+                this.ChangeSensors(
+                  (
+                    document.getElementById(
+                      "_id_s" + uniqueChars[i].depth
+                    ) as HTMLInputElement
+                  ).value
+                );
+              }}
+            >
+              <ModeEditOutlineOutlinedIcon fontSize="small" />
+            </TableCell>
+
+            <TableCell
+              align="left"
+              sx={{ color: "#FF4848" }}
+              onClick={(e) => {
+                this.DeleteSensors(
+                  (
+                    document.getElementById(
+                      "_id_s" + uniqueChars[i].depth
+                    ) as HTMLInputElement
+                  ).value
+                );
+              }}
+            >
+              <DeleteOutlineOutlinedIcon fontSize="small" />
+            </TableCell>
+          </TableRow>
+        );
       }
 
 

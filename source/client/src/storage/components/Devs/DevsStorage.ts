@@ -286,18 +286,25 @@ export class DevsStorage {
 
   async set_DevsDepth(value: number) {
    let a = {"depth": value , "value" : 1 }
-
+   
     this.array.push(a);
-      
 
-    this.setArray(this.array)
+    const uniqueChars = this.array.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
+      if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
+        o.push(i);
+      }
+      return o;
+    }, []); 
+
+    console.log('1212123121', uniqueChars)
+
+    
 
   }
 
 
   async set_ChangeDevs(name: string, value: any, _options?: any) {
     var sess_code = value;
-         this.setChangeSensors(this.getChangeSensors2()) ;
     if (this.getNumber() === '') {
       this.setNumberError(true);
       this.setNumberError_mess('Необходимо ввести номер устройства')
