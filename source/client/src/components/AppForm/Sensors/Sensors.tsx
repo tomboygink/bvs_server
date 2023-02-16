@@ -57,7 +57,6 @@ export class Sensors extends React.Component<IProps> {
   }
 
   drawSensors(dgrs: TDevsGroup[]): React.ReactNode[] {
-
     var sensors: React.ReactNode[] = new Array(); ////// отображаем сенсоры
     var sort_array: any = [];
     for (var ii in dgrs) {
@@ -70,17 +69,15 @@ export class Sensors extends React.Component<IProps> {
           "_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
           APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
           APP_STORAGE.sensors.getSortDesc() === ""
-          
         ) {
-
-          console.log(' gr_devs[i].sensors.s',JSON.parse(JSON.stringify(gr_devs[i].sensors.s)));
           var obj = JSON.parse(JSON.stringify(gr_devs[i].sensors.s));
-         const uniqueChars = obj.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
-           if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
-             o.push(i);
-           }
-           return o;
-         }, []);
+          const uniqueChars = obj.reduce((o: any, i: any) => {
+            ////////////////// Редюсом убираем дубликаты
+            if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
+              o.push(i);
+            }
+            return o;
+          }, []);
 
           for (var key in uniqueChars) {
             if (uniqueChars[key].depth) {
@@ -88,22 +85,15 @@ export class Sensors extends React.Component<IProps> {
             }
             APP_STORAGE.setdevs_group_move(sort_array);
 
-          
-            
-              
             if (gr_devs[i].deleted === true && uniqueChars[key].depth) {
               sensors.push(
                 <>
-                  <TableRow
-                    key={"sensors_id" + uniqueChars[key].depth}
-                  >
+                  <TableRow key={"sensors_id" + uniqueChars[key].depth}>
                     <TableCell>
                       <SensorsIcon fontSize="small" sx={{ color: "#808080" }} />
                     </TableCell>
                     <TableCell>[00{key}]</TableCell>
-                    <TableCell>
-                      [{"" + uniqueChars[key].depth}]{" "}
-                    </TableCell>
+                    <TableCell>[{"" + uniqueChars[key].depth}] </TableCell>
                   </TableRow>
                 </>
               );
@@ -210,7 +200,7 @@ export class Sensors extends React.Component<IProps> {
   drawDevLocation(): React.ReactNode {
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
-    
+
     return this.drawSensors(DevGr);
   }
 

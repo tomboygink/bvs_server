@@ -31,7 +31,6 @@ export class Change_ModalSensors extends React.Component<IProps> {
       }
       return o;
     }, []);
-    console.log('121212', JSON.parse(JSON.stringify(uniqueChars))); 
     
     APP_STORAGE.devs.setChangeSensors(JSON.parse(JSON.stringify(uniqueChars)))
   }

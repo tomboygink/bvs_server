@@ -77,18 +77,23 @@ export class ChangeDevsModal extends React.Component<IProps> {
     APP_STORAGE.devs.setSensors(a);
     var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
     for (let i = 0; i < obj.length; i++) {
+      console.log ('23432423', obj[i].depth)
       if (Number(APP_STORAGE.devs.getSensors()) === Number(obj[i].depth)) {
         delete obj[i].depth;
         delete obj[i].value;
       }
-      const array = obj;
-      const array2 = array.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
-        if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
-          o.push(i);
-        }
-        return o;
-      }, []);
-      APP_STORAGE.devs.setChangeSensors(array2);
+       
+      if(obj[i].depth){
+        const array = obj;
+
+        const array2 = array.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
+          if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
+            o.push(i);
+          }
+          return o;
+        }, []);
+        APP_STORAGE.devs.setChangeSensors(array2);
+      }  
     }
     APP_STORAGE.devs.setDepthSensors_Ch(true);
   }
@@ -117,22 +122,12 @@ export class ChangeDevsModal extends React.Component<IProps> {
 
   async ChangeDevs() {
 
-
-    console.log('APP_STORAGE.devs.getChangeSensors()', APP_STORAGE.devs.getChangeSensors())
     var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
     let sensors: Array<any> = [];
     let a: TDSensor
     let uniqueChars = obj.filter((element: any, index: any) => { ///////////////////////// Убираем дубли массива
       return obj.indexOf(element) === index;
     });
-    // for (let i = 0; i < uniqueChars.length; i++) {
-    //   a = {"depth": uniqueChars[i] , "value" : 1 }
-    //   sensors.push(
-    //     sensors.push(a));  
-  
-    //   APP_STORAGE.devs.setChangeSensors(sensors);
-    // }
- 
     APP_STORAGE.devs.set_ChangeDevs("sess_id", APP_STORAGE.auth_form.getdt());
     setTimeout(() => {
       APP_STORAGE.devs_groups.get_DevsGroups(
@@ -182,8 +177,6 @@ export class ChangeDevsModal extends React.Component<IProps> {
       var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
       
 
-      console.log('obj' , obj);
-
       const uniqueChars = obj.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
         if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
           o.push(i);
@@ -195,7 +188,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
         obj1[i] = uniqueChars[i];
         count = uniqueChars.length;
         
-       
+       if (uniqueChars[i].depth) {
         depth_sensors.push(
           <TableRow key={uniqueChars[i].depth}>
             <TableCell
@@ -274,6 +267,8 @@ export class ChangeDevsModal extends React.Component<IProps> {
             </TableCell>
           </TableRow>
         );
+       }
+       
       }
 
 
