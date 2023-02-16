@@ -61,6 +61,7 @@ export class AppForm extends React.Component<IProps> {
     }
 
     var middle_form: React.ReactNode = <></>;
+    var dev_sess: React.ReactNode = <></>;
     var left_form: React.ReactNode = <></>;
     var new_group: React.ReactNode = <></>;
 
@@ -69,13 +70,15 @@ export class AppForm extends React.Component<IProps> {
       APP_STORAGE.devs_groups.getMiddleForm() === ""
     ) {
       middle_form = <DevLocation />;
-
       new_group = <AddNewGroup />;
-
       left_form = <DevsGroupsTree />;
     }
     if (APP_STORAGE.devs_groups.getMiddleForm() === 2) {
-      middle_form = <Devs />;
+      middle_form =  <>
+      <Devs />
+      <DevSess/>
+      </>
+      dev_sess = <DevSess/>
       left_form = <DevsGroupsTree />;
     }
 
@@ -106,12 +109,12 @@ export class AppForm extends React.Component<IProps> {
 
                 <Box className="block-wrapp grid">
                   {middle_form}
-                 
+                  
                   {new_group}
                 </Box>
 
                 <Box className="block-wrapp">
-              <Sensors /> 
+                <Sensors /> 
                 </Box>
               </Box>
             </Box>

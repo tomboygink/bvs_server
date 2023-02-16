@@ -107,15 +107,15 @@ export class Devs extends React.Component<IProps> {
                                     <Box className="wrappert-devs">
                                     <Box
                                     sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    flexDirection: "row",
-                                    alignItems: "center",
+                                      display: "flex",
+                                      justifyContent: "flex-end",
+                                      width: "100%",
+                                      alignItems: "center",
                                     }}
                                     >
 
-                                    <Typography sx={{ color: "#645757", fontWeight: "600" }}>
-                                    Место расположения - {gr.g_name} устройства
+                                    <Typography sx={{ fontSize : '12px' ,  color: '#AAAAAA'}}>
+                                    Место расположения устройства - {gr.g_name} 
                                     </Typography>
                                     
                                     {APP_STORAGE.getRoleWrite() === 2 &&  APP_STORAGE.getRoleRead() === 1 && (
@@ -236,15 +236,16 @@ export class Devs extends React.Component<IProps> {
                                       <Box
                                       sx={{
                                       display: "flex",
-                                      justifyContent: "space-between",
+                                      justifyContent: "flex-end",
                                       width: "100%",
-                                      flexDirection: "row",
                                       alignItems: "center",
                                       }}
                                       >
-                                      <Typography sx={{ color: "#645757", fontWeight: "600" }}>
-                                      Место расположения - {gr.g_name}{" "}
+
+                                      <Typography sx={{ fontSize : '12px' ,  color: '#AAAAAA'}}>
+                                      Место расположения устройства - {gr.g_name} 
                                       </Typography>
+
                                       {APP_STORAGE.getRoleWrite() === 2 &&
                                       APP_STORAGE.getRoleRead() === 1 && (
                                       <div>
@@ -298,25 +299,22 @@ export class Devs extends React.Component<IProps> {
                                       }}
                                       >
 
-                                      <Typography sx={{ color: "#645757", fontWeight: "600" }}>
+                                      <Typography sx={{ color: "#000", fontWeight: "600" }}>
                                        Название устройства - {gr_devs[key].name}{" "}
                                       </Typography>  
 
-                                      <Typography sx={{ color: "#645757", fontWeight: "600" }}>
+                                      <Typography sx={{ color: "#000" }}>
                                        Долгота - {gr_devs[key].longitude}{" "}
-                                      </Typography> 
+                                      </Typography>
+                                       
 
-                                      <Typography sx={{ color: "#645757", fontWeight: "600" }}>
+                                      <Typography sx={{ color: "#000"}}>
                                        Широта - {gr_devs[key].latitude}{" "}
                                       </Typography>
 
-                                      <Typography sx={{ color: "#645757", fontWeight: "600" }}>
+                                      <Typography sx={{ color: "#000" }}>
                                        Информация - {gr_devs[key].info}{" "}
                                       </Typography>
-
-
-                                        < DevSess/>
-
                                       </Box>
                                       </Box>
                                       </React.Fragment>
@@ -342,6 +340,10 @@ export class Devs extends React.Component<IProps> {
   render(): React.ReactNode {
     return (
       <React.Fragment>
+         <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px'}}>
+              {" "}
+              Данные по устройству{" "}
+            </Typography>
        {this.drawDevsFunction()}
       </React.Fragment>
     );
