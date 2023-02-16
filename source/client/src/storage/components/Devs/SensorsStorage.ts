@@ -11,8 +11,8 @@ export class SensorsStorage {
     @observable active_button_sort: string = '';
     @observable active_button_sort_desc: string = '';
 
-    @observable sess_period_start : string; 
-    @observable sess_period_end : string;
+    @observable sess_period_start : string = '' ; 
+    @observable sess_period_end : string = '';
 
     @observable anchorEl: string = '';
     @observable number: string = ''
@@ -45,16 +45,16 @@ export class SensorsStorage {
     @computed getNumber(): string {return this.number;}
 
 
-    async set_DevSessions(name: string, value: any, _options?: any) {
+    async get_DevSessions(name: string, value: any, _options?: any) {
         var sess_code = value;
       
     
-        var q: IWSQuery = new WSQuery("set_DevSessions");
+        var q: IWSQuery = new WSQuery("get_DevSessions");
         {
           q.args = {
             dev_number: this.getNumber() || "",
-            time_dev: this.getSessPeriodStart() || "",
-            time_srv: this.getSessPeriodEnd() || ""
+            sess_period_start: this.getSessPeriodStart() || "",
+            sess_period_end: this.getSessPeriodEnd() || ""
           };
     
           q.sess_code = sess_code;

@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
 import TreeItem from "@mui/lab/TreeItem";
@@ -178,6 +178,10 @@ export class DevsGroupsTree extends React.Component<IProps> {
   render(): React.ReactNode {
     return (
       <React.Fragment>
+         <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px'}}>
+              {" "}
+              Проводник{" "}
+            </Typography>
           <Box
            sx={{
               background: "#fff",

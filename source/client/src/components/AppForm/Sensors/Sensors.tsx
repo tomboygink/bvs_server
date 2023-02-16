@@ -206,6 +206,12 @@ export class Sensors extends React.Component<IProps> {
   render(): React.ReactNode {
     return (
       <>
+       {APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
+          <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px'}}>
+              {" "}
+              Список сенсоров{" "}
+            </Typography>
+  }
         <Box
           className="wrapper-devs"
           sx={{
@@ -231,7 +237,7 @@ export class Sensors extends React.Component<IProps> {
                 <TableBody>
                   {APP_STORAGE.devs_groups.getMiddleForm() === 2 && (
                     <TableRow key={"sensors_id" + 98}>
-                      <TableCell colSpan={2}>Список сенсоров:</TableCell>
+                      <TableCell colSpan={2} sx ={{color: '#aaa'}} >Глубина датчиков:</TableCell>
                       <TableCell sx={{ width: "80px" }}>
                         <ArrowDownwardIcon
                           className={APP_STORAGE.sensors.getActiveButtonSort()}
