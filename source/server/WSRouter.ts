@@ -353,7 +353,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             dev_sess.selectDevSess();
             wsres.error = null;
             wsres.code = q.sess_code;
-            //wsres.data = dev_sess;
+            wsres.data = [dev_sess];
         }
         break;
 

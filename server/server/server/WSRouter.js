@@ -388,6 +388,7 @@ function WSRoute(_ws, q) {
                         dev_sess.selectDevSess();
                         wsres.error = null;
                         wsres.code = q.sess_code;
+                        wsres.data = [dev_sess];
                     }
                     return [3, 57];
                 case 55:
