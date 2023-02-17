@@ -350,10 +350,12 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
         case 'get_DevSessions':{
             var dev_sess = new Dev_sessTable(q.args, q.sess_code);
-            dev_sess.selectDevSess();
+            data = await dev_sess.selectDevSess();
+            
+            //console.log(data);
             wsres.error = null;
             wsres.code = q.sess_code;
-            wsres.data = [dev_sess];
+            wsres.data = data;
         }
         break;
 
