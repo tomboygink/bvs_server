@@ -72,7 +72,6 @@ var Dev_sessTable = (function () {
                         for (r in db_res.rows) {
                             result.push(db_res.rows[r]);
                         }
-                        console.log(result);
                         return [2, result];
                 }
             });

@@ -165,5 +165,5 @@ RETURNS TABLE
 	sess_data TEXT
 )
 AS $$ 
-SELECT * FROM dev_sess WHERE dev_number = c_dev_number AND time_dev>= CAST(start_period as TIMESTAMP) AND time_dev<=CAST(start_period as TIMESTAMP)
-$$ LANGUAGE SQL
+SELECT * FROM dev_sess WHERE dev_number = c_dev_number AND time_dev>= CAST(start_period as TIMESTAMP) AND time_dev<=CAST(end_period as TIMESTAMP)
+$$ LANGUAGE SQL;

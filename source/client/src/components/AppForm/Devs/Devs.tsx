@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-import { Box, Typography, TextField, ListItemIcon, Menu , MenuItem} from "@mui/material";
+import { Box, Typography, TextField, ListItemIcon, Menu , MenuItem, Link} from "@mui/material";
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 
@@ -12,7 +12,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 
-import {DevSess} from './DevSess'
+import {DevSess} from './DevSess';
+import map from './YandexMap'
 
 
 
@@ -98,6 +99,8 @@ export class Devs extends React.Component<IProps> {
 
             if ("_dev_id_key_" + gr_devs[key].id === dev.getIdChild()) {
               APP_STORAGE.sensors.setNumber(gr_devs[key].number);
+              // APP_STORAGE.devs.setLongitude(gr_devs[key].longitude);
+              // APP_STORAGE.devs.setLatitude(gr_devs[key].latitude);
   /////////////////////////// Устройство удалено ( deleted - true)
                   if (gr_devs[key].deleted === true) {
 
@@ -312,6 +315,12 @@ export class Devs extends React.Component<IProps> {
                                        Широта - {gr_devs[key].latitude}{" "}
                                       </Typography>
 
+                                      
+
+                                      <Link href="https://google.com/maps/@ ' + 234234 + ', ' + 121212 + '" variant="body2">
+                                       Показать на карте
+                                      </Link>
+                                    <Box sx = {{background: 'red'}}>  <map/></Box> 
                                       <Typography sx={{ color: "#000" }}>
                                        Информация - {gr_devs[key].info}{" "}
                                       </Typography>
