@@ -151,8 +151,8 @@ LANGUAGE SQL;
 DROP FUNCTION IF EXISTS SelectDev_Sess;
 CREATE OR REPLACE FUNCTION SelectDev_Sess(
 	c_dev_number VARCHAR(80),
-	start_period TIMESTAMP,
-	end_period TIMESTAMP
+	start_period VARCHAR(80),
+	end_period VARCHAR(80)
 )
 RETURNS TABLE
 (
@@ -165,5 +165,5 @@ RETURNS TABLE
 	sess_data TEXT
 )
 AS $$ 
-SELECT * FROM dev_sess WHERE dev_number = c_dev_number AND time_dev>=start_period AND time_dev<=start_period
+SELECT * FROM dev_sess WHERE dev_number = c_dev_number AND time_dev>= CAST(start_period as TIMESTAMP) AND time_dev<=CAST(start_period as TIMESTAMP)
 $$ LANGUAGE SQL
