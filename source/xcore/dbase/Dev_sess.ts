@@ -32,6 +32,7 @@ export class Dev_sessTable
         for (var r in db_res.rows) {
             result.push(db_res.rows[r]);
         }
+        //console.log(result);
         return result;
     }
 }
