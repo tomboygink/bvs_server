@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.time_to_datetime = exports.sqlToDateTime = exports.strToDateTime = exports.strToDate = exports.dateTimeToSQL = exports.dateTimeToStr = exports.dateToStr = void 0;
+exports.js_time_to_sql_time = exports.time_to_datetime = exports.sqlToDateTime = exports.strToDateTime = exports.strToDate = exports.dateTimeToSQL = exports.dateTimeToStr = exports.dateToStr = void 0;
 function dateToStr(dt) {
     var reti = '';
     if (dt.getDate() < 10) {
@@ -164,4 +164,7 @@ function time_to_datetime(times) {
     return YYYY + "-" + MM + '-' + DD + ' ' + hh + ':' + mm + ':' + ss;
 }
 exports.time_to_datetime = time_to_datetime;
+function js_time_to_sql_time() {
+}
+exports.js_time_to_sql_time = js_time_to_sql_time;
 //# sourceMappingURL=DateStr.js.map

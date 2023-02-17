@@ -11,6 +11,7 @@ import { CONFIG } from '../xcore/config'
 import { Console } from 'console';
 import { Devs_groupsTable } from '../xcore/dbase/Devs_groups';
 import { DevsTable } from '../xcore/dbase/Devs';
+import { Dev_sessTable } from '../xcore/dbase/Dev_sess';
 
 
 export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
@@ -148,7 +149,6 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 ut.forgPass();
             }
         } break;
-
 
         //------------------------------------------------------------------------РЕДАКТИРОВАНИЕ ПОЛЬЗОВАТЕЛЕЙ АДМИНИСТРАТОРОМ 
         case 'set_ChangeUser': {
@@ -344,7 +344,19 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             wsres.data=[];
         }
         break;
-            
+        
+        
+        //------------------------------------------------------------------------ПОЛУЧЕНИЕ СЕССИЙ ЗА ОПРЕДЕЛЕННЫЙ ПЕРИОД 
+
+        case 'get_DevSessions':{
+            var dev_sess = new Dev_sessTable(q.args, q.sess_code);
+            dev_sess.selectDevSess();
+            wsres.error = null;
+            wsres.code = q.sess_code;
+            //wsres.data = dev_sess;
+        }
+        break;
+
 
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА

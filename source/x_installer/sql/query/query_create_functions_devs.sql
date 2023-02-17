@@ -145,3 +145,25 @@ AS $$
 	WHERE id = c_id	
 $$
 LANGUAGE SQL; 
+
+
+--------------------------------------------------------------------------------------------Функция получения сессий устройства 
+DROP FUNCTION IF EXISTS SelectDev_Sess;
+CREATE OR REPLACE FUNCTION SelectDev_Sess(
+	c_dev_number VARCHAR(80),
+	start_period TIMESTAMP,
+	end_period TIMESTAMP
+)
+RETURNS TABLE
+(
+	id BIGINT,
+	time_dev TIMESTAMP,
+	time_srv TIMESTAMP,
+	dev_number VARCHAR(80),
+	dev_id BIGINT,
+	level_akb FLOAT,
+	sess_data TEXT
+)
+AS $$ 
+SELECT * FROM dev_sess WHERE dev_number = c_dev_number AND time_dev>=start_period AND time_dev<=start_period
+$$ LANGUAGE SQL
