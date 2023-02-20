@@ -21,6 +21,7 @@ import { AddNewSubgroup } from "./DevsGroups/AddNewSubgroup";//////////Доба�
 import { Devs } from "./Devs/Devs";//////////////////////////// устройства
 import { DevSess } from './Devs/DevSess'
 import { Sensors } from "./Sensors/Sensors"; ///////////////////////////////сенсоры на устройствах
+import { DevSessList } from "./Sensors/DevSessList"
 import { ChangeDevsModal } from "./Devs/ChangeDevsModal";////////////////////////////Редактировать устройства
 import { AddNewDevModal } from "./Devs/AddNewDevModal"; //////////////Добавить новое устройство
 
@@ -64,6 +65,7 @@ export class AppForm extends React.Component<IProps> {
     var dev_sess: React.ReactNode = <></>;
     var left_form: React.ReactNode = <></>;
     var new_group: React.ReactNode = <></>;
+    var right_form: React.ReactNode = <></>;
 
     if (
       APP_STORAGE.devs_groups.getMiddleForm() === 1 ||
@@ -85,6 +87,14 @@ export class AppForm extends React.Component<IProps> {
     if (APP_STORAGE.devs_groups.getMiddleForm() === 3) {
       middle_form = <TableUser />;
       left_form = <></>;
+    }
+
+    if(APP_STORAGE.sensors.getOpenDevsess() === true){
+      right_form = <Sensors/>
+    }
+
+    if(APP_STORAGE.sensors.getOpenDevsess() === false){
+      right_form =  <Sensors /> 
     }
    
     if (APP_STORAGE.auth_form.getUser())
@@ -114,7 +124,7 @@ export class AppForm extends React.Component<IProps> {
                 </Box>
 
                 <Box className="block-wrapp">
-                <Sensors /> 
+                {right_form}
                 </Box>
               </Box>
             </Box>
