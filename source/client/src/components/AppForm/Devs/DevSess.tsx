@@ -11,6 +11,12 @@ import { TableCell } from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 
+import TreeItem from "@mui/lab/TreeItem";
+
+import TreeView from "@mui/lab/TreeView";
+
+import { id_dev_sess } from "../Devs/StyledMua";
+
 interface IProps {}
 
 //Устройства
@@ -18,6 +24,11 @@ interface IProps {}
 export class DevSess extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
+  }
+
+  async setRowId(a:any){
+    alert(a)
+    alert('22')
   }
   async setDevSess() {
     let sess = APP_STORAGE.sensors;
@@ -31,19 +42,38 @@ export class DevSess extends React.Component<IProps> {
 
   render(): React.ReactNode {
     var sensors = []; ////// отображаем сенсоры
+    var count;
     let sess = APP_STORAGE.sensors;
-    let dev_sess;
+    let dev_sess: { [x: string]: {
+      dev_number: string;
+      id: string; level_akb: string; 
+}; };
     if (sess.getDevSession) {
       dev_sess = toJS(sess.getDevSession());
-
+      
       for (var key in dev_sess) {
-        sensors.push(
-          <>
-            <TableRow key={"sensors_id" + dev_sess[key].id}>
-              <TableCell>{dev_sess[key].id}</TableCell>
-              <TableCell>[{"" + dev_sess[key].dev_number}] </TableCell>
-            </TableRow>
-          </>
+      console.log('123412432', Object.keys(dev_sess).length)
+      count = (Object.keys(dev_sess).length);
+        // sensors.push(
+        //   <div onClick={() => {
+        //     this.setRowId(document.getElementById("sensors_id" + dev_sess[key].id).id);
+        //   }}>
+        //     <TableRow id={"sensors_id" + dev_sess[key].id} key={"sensors_id" + dev_sess[key].id} >
+        //       <TableCell> {dev_sess[key].id}</TableCell>
+        //       <TableCell>[{"" + dev_sess[key].dev_number}] </TableCell>
+        //       <TableCell>[{"" + dev_sess[key].level_akb}] </TableCell>
+        //     </TableRow>
+        //     </div>
+        // );
+
+            sensors.push(
+              <TreeItem
+              nodeId={String(dev_sess[key].id)}
+              label={dev_sess[key].id}
+              sx={{ color: "#222", borderBottom: '1px solid #c1c1c1' }}
+            >
+             
+            </TreeItem>
         );
       }
 
@@ -114,13 +144,13 @@ export class DevSess extends React.Component<IProps> {
           >
             Установить переод
           </Button>
-          <TableContainer>
+          {/* <TableContainer>
             <Table aria-label="caption table">
               <TableBody>
                 {APP_STORAGE.sensors.getOpenDevsess() === true && (
                   <TableRow key={"sensors_id" + 98}>
                     <TableCell colSpan={2} sx={{ color: "#aaa" }}>
-                      СЕССИИ ЗА ПЕРИОД:
+                      СЕССИИ ЗА ПЕРИОД: (кол-во: {count})
                     </TableCell>
                     <TableCell sx={{ width: "80px" }}></TableCell>
                   </TableRow>
@@ -128,7 +158,17 @@ export class DevSess extends React.Component<IProps> {
                 {sensors}
               </TableBody>
             </Table>
-          </TableContainer>
+          </TableContainer> */}
+             <TreeView
+              className="wrapper_treeviw"
+              onNodeSelect={id_dev_sess}
+              defaultExpanded={["1", '2', '3', '4', '5']}
+              aria-label="customized"
+              sx={{ flexGrow: 1, maxWidth: 400,overflow: 'auto'}}>
+              
+              {sensors}
+
+            </TreeView>
         </Box>
 
         <Box sx={{ display: "flex", justifyContent: "end", mt: "8px" }}>

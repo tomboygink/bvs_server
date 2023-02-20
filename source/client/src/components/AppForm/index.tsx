@@ -89,8 +89,8 @@ export class AppForm extends React.Component<IProps> {
       left_form = <></>;
     }
 
-    if(APP_STORAGE.sensors.getOpenDevsess() === true){
-      right_form = <Sensors/>
+    if(APP_STORAGE.sensors.getOpenDevsess() === true && APP_STORAGE.sensors.getIdDevSess() !==''){
+      right_form = <DevSessList/>
     }
 
     if(APP_STORAGE.sensors.getOpenDevsess() === false){

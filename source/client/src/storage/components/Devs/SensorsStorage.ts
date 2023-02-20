@@ -19,6 +19,8 @@ export class SensorsStorage {
 
     @observable anchorEl: string = '';
     @observable number: string = '';
+
+    @observable id_dev_sess: string = '';
     constructor(){
         makeAutoObservable(this);
     }
@@ -52,6 +54,9 @@ export class SensorsStorage {
 
     @action setOpenDevsess(val: boolean) {this.open_devsess = val}
     @computed getOpenDevsess(): boolean {return this.open_devsess;}
+
+    @action setIdDevSess(val : string) {this.id_dev_sess = val};
+    @computed getIdDevSess() : string {return this.id_dev_sess};
 
 
     async get_DevSessions(name: string, value: any, _options?: any) {
