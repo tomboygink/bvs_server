@@ -48,6 +48,7 @@ export class DevSessList extends React.Component<IProps> {
                       }, []);
 
                       for (var i in uniqueChars) {
+                        if(String(APP_STORAGE.sensors.getIdDevSess()) === String(sessors[key].id))
                             sensors.push(
                                 <>
                                   <TableRow key={"sensors_id"+{i} + uniqueChars[i].depth}>
