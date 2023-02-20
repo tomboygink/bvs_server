@@ -6,6 +6,9 @@ import { WSocket } from '../../WSocket';
 export class SensorsStorage {
 
     @observable sensors: any = [];
+    @observable open_devsess: boolean = false;
+
+    @observable dev_sensors: any = null;
 
     @observable sort_desc: string = '';
     @observable active_button_sort: string = '';
@@ -15,10 +18,13 @@ export class SensorsStorage {
     @observable sess_period_end : string = '';
 
     @observable anchorEl: string = '';
-    @observable number: string = ''
+    @observable number: string = '';
     constructor(){
         makeAutoObservable(this);
     }
+
+    @action setDevSession(val : any) {this.dev_sensors = val};
+    @computed getDevSession() : any {return this.dev_sensors};
 
     @action setSensors(val : any) {this.sensors = val};
     @computed getSensors() : any {return this.sensors};
@@ -44,6 +50,9 @@ export class SensorsStorage {
     @action setNumber(val: string) {this.number = val}
     @computed getNumber(): string {return this.number;}
 
+    @action setOpenDevsess(val: boolean) {this.open_devsess = val}
+    @computed getOpenDevsess(): boolean {return this.open_devsess;}
+
 
     async get_DevSessions(name: string, value: any, _options?: any) {
         var sess_code = value;
@@ -62,6 +71,14 @@ export class SensorsStorage {
          
         }
       }
+
+      
+  async setDevSess(dt: IWSResult) {
+    this.setDevSession(dt.data); 
+
+ 
+    this.setOpenDevsess(true)
+  }
 
 }
 

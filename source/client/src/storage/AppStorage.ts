@@ -1,4 +1,5 @@
 import { observable, action, computed, makeAutoObservable } from 'mobx';
+import { toJS } from 'mobx';
 import { IWSQuery, IWSResult, WSQuery } from '../../../xcore/WSQuery';
 
 import { PageStorage } from './PageStorage';
@@ -28,6 +29,7 @@ class AppStorage {
     @observable devs: DevsStorage = null;
     @observable sensors: SensorsStorage = null;
 
+   
     @observable devs_group_move: Array<any>; /////////////////////////////////////Тест(потом нужно удалить)
 
     @observable dt: any = null;
@@ -70,7 +72,7 @@ class AppStorage {
     }
 
     @action async onWSData(dt: IWSResult) {
-        console.log("SOCKET RESULT", dt);
+        console.log("SOCKET RESULT", toJS(dt));
         switch (dt.cmd) {
             case ('get_UserByAuth'): { this.auth_form.onGetUserByAuth(dt); } break;
             case ('get_UserBySessionCode'): { this.auth_form.onGetUserBySessionCode(dt); } break;
@@ -84,6 +86,7 @@ class AppStorage {
             case ('get_AllUser'): { this.reg_user.setUsersAll(dt) } break;
             case ('get_DevsGroups'): { this.devs_groups.setDevsGroupsAll(dt) } break;
             case ('get_Devs'): { this.devs.setDevsAll(dt) } break;
+            case ('get_DevSessions'): { this.sensors.setDevSess(dt)} break;
             default: { } break;
         }
     }
