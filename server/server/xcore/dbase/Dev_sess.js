@@ -59,7 +59,7 @@ var Dev_sessTable = (function () {
     }
     Dev_sessTable.prototype.selectDevSess = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var start_date, end_date, db_res, result, r;
+            var start_date, end_date, db_res;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -68,11 +68,7 @@ var Dev_sessTable = (function () {
                         return [4, this.db.query("SELECT * FROM SelectDev_Sess ('" + this.args.dev_number + "', '" + start_date + "', '" + end_date + "')")];
                     case 1:
                         db_res = _a.sent();
-                        result = new Array();
-                        for (r in db_res.rows) {
-                            result.push(db_res.rows[r]);
-                        }
-                        return [2, result];
+                        return [2, JSON.stringify(db_res.rows)];
                 }
             });
         });
