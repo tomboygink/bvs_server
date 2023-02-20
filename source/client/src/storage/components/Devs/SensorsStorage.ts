@@ -80,7 +80,6 @@ export class SensorsStorage {
       
   async setDevSess(dt: IWSResult) {
     this.setDevSession(dt.data); 
-
  
     this.setOpenDevsess(true)
   }
