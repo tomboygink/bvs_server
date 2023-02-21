@@ -59,16 +59,42 @@ var Dev_sessTable = (function () {
     }
     Dev_sessTable.prototype.selectDevSess = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var start_date, end_date, db_res;
+            var dev_sess, start_date, end_date, db_res, result, i;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        dev_sess = {
+                            id: 0,
+                            time_dev: '',
+                            time_srv: '',
+                            dev_number: '',
+                            dev_id: 0,
+                            level_akb: 0.0,
+                            sess_data: ''
+                        };
                         start_date = new Date(this.args.sess_period_start).toISOString().slice(0, 19).replace('T', ' ');
                         end_date = new Date(this.args.sess_period_end).toISOString().slice(0, 19).replace('T', ' ');
                         return [4, this.db.query("SELECT * FROM SelectDev_Sess ('" + this.args.dev_number + "', '" + start_date + "', '" + end_date + "')")];
                     case 1:
                         db_res = _a.sent();
+<<<<<<< HEAD
                         return [2, this.objToString(db_res.rows)];
+=======
+                        result = new Array();
+                        for (i in db_res.rows) {
+                            dev_sess = {
+                                id: db_res.rows[i].id,
+                                time_dev: new Date(db_res.rows[i].time_dev).toISOString().slice(0, 19).replace('T', ' '),
+                                time_srv: new Date(db_res.rows[i].time_srv).toISOString().slice(0, 19).replace('T', ' '),
+                                dev_number: db_res.rows[i].dev_number,
+                                dev_id: db_res.rows[i].dev_id,
+                                level_akb: db_res.rows[i].level_akb,
+                                sess_data: db_res.rows[i].sess_data
+                            };
+                            result.push(dev_sess);
+                        }
+                        return [2, result];
+>>>>>>> main
                 }
             });
         });

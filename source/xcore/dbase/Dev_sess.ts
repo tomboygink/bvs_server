@@ -39,16 +39,46 @@ export class Dev_sessTable {
 
     async selectDevSess() {
 
+        var dev_sess:any = {
+            id: 0,
+            time_dev: '',
+            time_srv: '',
+            dev_number:'',
+            dev_id:0,
+            level_akb: 0.0,
+            sess_data: ''
+        };
+
+
         var start_date = new Date(this.args.sess_period_start).toISOString().slice(0, 19).replace('T', ' ');
         var end_date = new Date(this.args.sess_period_end).toISOString().slice(0, 19).replace('T', ' ');
         var db_res = await this.db.query("SELECT * FROM SelectDev_Sess ('" + this.args.dev_number + "', '" + start_date + "', '" + end_date + "')");
+        
+        var result: Dev_sessEntity[] = new Array();
+        for (var i in db_res.rows) {
+            dev_sess = {
+                id: db_res.rows[i].id,
+                time_dev: new Date(db_res.rows[i].time_dev).toISOString().slice(0,19).replace('T', ' '),
+                time_srv: new Date(db_res.rows[i].time_srv).toISOString().slice(0,19).replace('T', ' '),
+                dev_number: db_res.rows[i].dev_number,
+                dev_id: db_res.rows[i].dev_id,
+                level_akb: db_res.rows[i].level_akb,
+                sess_data: db_res.rows[i].sess_data
+            }
+            result.push(dev_sess);
 
+<<<<<<< HEAD
         //console.log(this.args.sess_period_start, " ", start_date);
 
         //console.log(db_res.rows[0].time_dev);
         //return JSON.stringify(db_res.rows);
         return this.objToString(db_res.rows);
 
+=======
+        }
+        //console.log(result);
+        return result;
+>>>>>>> main
     }
     objToString(obj: any, isArray?: boolean) {
         var isArray = isArray || false; // что нужно вернуть - массив или объект
@@ -94,7 +124,5 @@ export class Dev_sessTable {
         reti = reti.replace(/["]/g, '\\"');
         return reti;
     }
-
-
 
 }
