@@ -13,6 +13,7 @@ import { APP_STORAGE } from "../../../storage/AppStorage";
 
 
 
+
 export function MinusSquare(props: SvgIconProps) {
   return (
     <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
@@ -114,6 +115,14 @@ export const options = async (event: any, node: any) => {
  APP_STORAGE.devs_groups.setParent(node);
 APP_STORAGE.devs.setGroupDevId(String(node));
 }
+
+export const data = [{name: '', uv: 1, pv: 2400, amt: 2400}, 
+{name: '', uv: 2, pv: 2400, amt: 2400}, 
+{name: '', uv: 3, pv: 2400, amt: 2400}, 
+{name: '', uv: 4, pv: 2400, amt: 2400}, 
+{name: '', uv: 5, pv: 2400, amt: 2400}];
+
+
 
 
 

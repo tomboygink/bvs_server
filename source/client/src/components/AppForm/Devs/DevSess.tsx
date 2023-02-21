@@ -14,8 +14,11 @@ import TableRow from "@mui/material/TableRow";
 import TreeItem from "@mui/lab/TreeItem";
 
 import TreeView from "@mui/lab/TreeView";
-
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import {data} from "../Devs/StyledMua";
 import { id_dev_sess } from "../Devs/StyledMua";
+
+
 
 interface IProps {}
 
@@ -52,7 +55,6 @@ export class DevSess extends React.Component<IProps> {
       dev_sess = toJS(sess.getDevSession());
       
       for (var key in dev_sess) {
-      console.log('123412432', Object.keys(dev_sess).length)
       count = (Object.keys(dev_sess).length);
         // sensors.push(
         //   <div onClick={() => {
@@ -144,31 +146,58 @@ export class DevSess extends React.Component<IProps> {
           >
             Установить переод
           </Button>
-          {/* <TableContainer>
-            <Table aria-label="caption table">
+          <Box className="grid_column" sx = {{display:' flex'}}>
+          <TableContainer>
+            <Table >
               <TableBody>
-                {APP_STORAGE.sensors.getOpenDevsess() === true && (
-                  <TableRow key={"sensors_id" + 98}>
-                    <TableCell colSpan={2} sx={{ color: "#aaa" }}>
-                      СЕССИИ ЗА ПЕРИОД: (кол-во: {count})
+               
+                  <TableRow key={"sensors_id" + 98} sx = {{p: '4px'}}>
+                    <TableCell colSpan={2} sx={{ color: "#aaa" , p: '4px'}}>
+                      СЕССИИ ЗА ПЕРИОД: (кол-во: {7})
                     </TableCell>
-                    <TableCell sx={{ width: "80px" }}></TableCell>
+                    <TableCell sx={{ width: "80px" , p: '4px'}}></TableCell>
                   </TableRow>
-                )}
-                {sensors}
+             
+                  <TableRow key={"sensors_id" + 7776} sx = {{p: '4px'}}>
+                  <TableCell sx = {{p: '4px'}} colSpan={2}> 28-09-2022 04:11 </TableCell>
+                  <TableCell sx = {{p: '4px'}}> АКВ: 4.74 </TableCell>
+                 </TableRow>
+
+                 <TableRow sx = {{p: '4px'}} key={"sensors_id" + 775576} >
+                  <TableCell sx = {{p: '4px'}} colSpan={2}> 28-09-2022 04:11 </TableCell>
+                  <TableCell sx = {{p: '4px'}} > АКВ: 4.74 </TableCell>
+                </TableRow>
+
+                <TableRow key={"sensors_id" + 77765} >
+                  <TableCell sx = {{p: '4px'}} colSpan={2}> 28-09-2022 04:11 </TableCell>
+                  <TableCell sx = {{p: '4px'}} > АКВ: 4.74 </TableCell>
+                </TableRow>
+
+                <TableRow key={"sensors_id" + 777121265} >
+                  <TableCell sx = {{p: '4px'}} colSpan={2}> 28-09-2022 04:11 </TableCell>
+                  <TableCell sx = {{p: '4px'}} > АКВ: 4.74 </TableCell>
+                </TableRow>
+
+                <TableRow key={"sensors_id" + 7722765} >
+                  <TableCell sx = {{p: '4px'}} colSpan={2}> 28-09-2022 04:11 </TableCell>
+                  <TableCell sx = {{p: '4px'}} > АКВ: 4.74 </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
-          </TableContainer> */}
-             <TreeView
-              className="wrapper_treeviw"
-              onNodeSelect={id_dev_sess}
-              defaultExpanded={["1", '2', '3', '4', '5']}
-              aria-label="customized"
-              sx={{ flexGrow: 1, maxWidth: 400,overflow: 'auto'}}>
+          </TableContainer>
               
-              {sensors}
+     <LineChart width={400} height={200} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+    <Line type="monotone" dataKey="uv" stroke="#266BF1" />
+    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+    <XAxis dataKey="name" />
+    <YAxis />
+    <Tooltip />
+  </LineChart>
+          </Box>
+     
 
-            </TreeView>
+
+
         </Box>
 
         <Box sx={{ display: "flex", justifyContent: "end", mt: "8px" }}>
