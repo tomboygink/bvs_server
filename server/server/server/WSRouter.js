@@ -346,7 +346,6 @@ function WSRoute(_ws, q) {
                     data = _c.sent();
                     wsres.code = q.sess_code;
                     wsres.error = null;
-                    console.log(data);
                     wsres.data = [data];
                     return [3, 58];
                 case 49:

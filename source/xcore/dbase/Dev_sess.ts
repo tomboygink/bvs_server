@@ -67,62 +67,10 @@ export class Dev_sessTable {
             }
             result.push(dev_sess);
 
-<<<<<<< HEAD
-        //console.log(this.args.sess_period_start, " ", start_date);
-
-        //console.log(db_res.rows[0].time_dev);
-        //return JSON.stringify(db_res.rows);
-        return this.objToString(db_res.rows);
-
-=======
         }
         //console.log(result);
         return result;
->>>>>>> main
     }
-    objToString(obj: any, isArray?: boolean) {
-        var isArray = isArray || false; // что нужно вернуть - массив или объект
-
-        var sstr = "";
-        if (isArray) { sstr += "["; } else { sstr += "{"; }
-
-        var first = true;
-        for (var k in obj) {
-
-            if (typeof obj[k] == 'function') continue; // не включает методы - только JSON для переноса данных
-
-            if (first) {
-                first = false;
-            } else {
-                sstr += ',';
-            }
-
-
-            if (!isArray) { sstr += `"${k}":`; } // ключи для объекта
-
-            // значения
-            if (obj[k] === null) {
-                sstr += 'null'
-            } else if (Array.isArray(obj[k])) {
-                sstr += this.objToString(obj[k], true)
-            } else if ('object' == typeof obj[k]) {
-                sstr += this.objToString(obj[k], false)
-            } else if ('undefined' == typeof obj[k]) {
-                sstr += 'null'; //'undefined'
-            } else if ('string' == typeof obj[k]) {
-                sstr += `"${this.escStr(obj[k])}"`;
-            } else {
-                sstr += obj[k]
-            }
-
-        }
-        if (isArray) { sstr += "]"; } else { sstr += "}"; }
-        return sstr;
-    }
-    escStr(str: string): string {
-        var reti = str.replace(/[\\]/g, "\\\\");
-        reti = reti.replace(/["]/g, '\\"');
-        return reti;
-    }
+   
 
 }

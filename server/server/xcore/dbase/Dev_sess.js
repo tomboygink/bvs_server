@@ -77,9 +77,6 @@ var Dev_sessTable = (function () {
                         return [4, this.db.query("SELECT * FROM SelectDev_Sess ('" + this.args.dev_number + "', '" + start_date + "', '" + end_date + "')")];
                     case 1:
                         db_res = _a.sent();
-<<<<<<< HEAD
-                        return [2, this.objToString(db_res.rows)];
-=======
                         result = new Array();
                         for (i in db_res.rows) {
                             dev_sess = {
@@ -94,64 +91,9 @@ var Dev_sessTable = (function () {
                             result.push(dev_sess);
                         }
                         return [2, result];
->>>>>>> main
                 }
             });
         });
-    };
-    Dev_sessTable.prototype.objToString = function (obj, isArray) {
-        var isArray = isArray || false;
-        var sstr = "";
-        if (isArray) {
-            sstr += "[";
-        }
-        else {
-            sstr += "{";
-        }
-        var first = true;
-        for (var k in obj) {
-            if (typeof obj[k] == 'function')
-                continue;
-            if (first) {
-                first = false;
-            }
-            else {
-                sstr += ',';
-            }
-            if (!isArray) {
-                sstr += "\"".concat(k, "\":");
-            }
-            if (obj[k] === null) {
-                sstr += 'null';
-            }
-            else if (Array.isArray(obj[k])) {
-                sstr += this.objToString(obj[k], true);
-            }
-            else if ('object' == typeof obj[k]) {
-                sstr += this.objToString(obj[k], false);
-            }
-            else if ('undefined' == typeof obj[k]) {
-                sstr += 'null';
-            }
-            else if ('string' == typeof obj[k]) {
-                sstr += "\"".concat(this.escStr(obj[k]), "\"");
-            }
-            else {
-                sstr += obj[k];
-            }
-        }
-        if (isArray) {
-            sstr += "]";
-        }
-        else {
-            sstr += "}";
-        }
-        return sstr;
-    };
-    Dev_sessTable.prototype.escStr = function (str) {
-        var reti = str.replace(/[\\]/g, "\\\\");
-        reti = reti.replace(/["]/g, '\\"');
-        return reti;
     };
     return Dev_sessTable;
 }());
