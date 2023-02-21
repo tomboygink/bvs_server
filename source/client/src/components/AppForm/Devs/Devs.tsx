@@ -12,6 +12,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
+
 import {DevSess} from './DevSess';
 import map from './YandexMap'
 
@@ -315,11 +317,22 @@ export class Devs extends React.Component<IProps> {
                                        Широта - {gr_devs[key].latitude}{" "}
                                       </Typography>
 
-                                      
+                                      {/* <MapContainer
+      className="markercluster-map"
+    >
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      />
 
-                                      <Link href="https://google.com/maps/@ ' + 234234 + ', ' + 121212 + '" variant="body2">
+     
+        <Marker position={[49.8397, 24.0297]} />
+    
+    </MapContainer> */}
+
+                                      {/* <Link href="https://google.com/maps/@ ' + 234234 + ', ' + 121212 + '" variant="body2">
                                        Показать на карте
-                                      </Link>
+                                      </Link> */}
                                     <Box sx = {{background: 'red'}}>  <map/></Box> 
                                       <Typography sx={{ color: "#000" }}>
                                        Информация - {gr_devs[key].info}{" "}

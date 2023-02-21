@@ -23,6 +23,7 @@ export class Dev_sessTable {
     }
 
     //Получение сессий устройства за определенный период
+    
     /*async selectDevSess(): Promise<Dev_sessEntity[]>{
         var start_date = new Date(this.args.sess_period_start).toISOString().slice(0, 19).replace('T', ' ');
         var end_date = new Date(this.args.sess_period_end).toISOString().slice(0, 19).replace('T', ' ');
@@ -32,7 +33,7 @@ export class Dev_sessTable {
             //console.log(db_res.rows[r])
             result.push(db_res.rows[r]);
         }
-        //console.log(result);
+        console.log(result);
         return result;
     }*/
 
@@ -70,5 +71,6 @@ export class Dev_sessTable {
         //console.log(result);
         return result;
     }
+   
 
 }
