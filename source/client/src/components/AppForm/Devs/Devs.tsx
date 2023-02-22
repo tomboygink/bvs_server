@@ -317,7 +317,7 @@ export class Devs extends React.Component<IProps> {
                                        Широта - {gr_devs[key].latitude}{" "}
                                       </Typography>
 
-                                      {/* <MapContainer
+      {/* <MapContainer
       className="markercluster-map"
     >
       <TileLayer
@@ -333,6 +333,7 @@ export class Devs extends React.Component<IProps> {
                                       {/* <Link href="https://google.com/maps/@ ' + 234234 + ', ' + 121212 + '" variant="body2">
                                        Показать на карте
                                       </Link> */}
+                                      
                                     <Box sx = {{background: 'red'}}>  <map/></Box> 
                                       <Typography sx={{ color: "#000" }}>
                                        Информация - {gr_devs[key].info}{" "}

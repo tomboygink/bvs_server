@@ -39,7 +39,6 @@ export class DevSessList extends React.Component<IProps> {
           for (var key in  sessors){
 
                 let sess_data = JSON.parse( (sessors[key].sess_data));
-                    console.log(sess_data.s);
                     const uniqueChars = sess_data.s.reduce((o: any, i: any) => {  ////////////////// Редюсом убираем дубликаты
                         if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
                           o.push(i);
@@ -53,7 +52,7 @@ export class DevSessList extends React.Component<IProps> {
                                 <>
                                   <TableRow key={"sensors_id"+{i} + uniqueChars[i].depth}>
                                     <TableCell>
-                                      <SensorsIcon fontSize="small" sx={{ color: "#808080" }} />
+                                      <SensorsIcon fontSize="small" sx={{ color: "#5be95b" }} />
                                     </TableCell>
                                     <TableCell>[00{i}]</TableCell>
                                     <TableCell>[{"" + uniqueChars[i].depth}] </TableCell>
