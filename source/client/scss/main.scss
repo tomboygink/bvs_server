@@ -98,7 +98,15 @@ body {
   border-color: #c7bcbcd6;
   border-radius: 4px;
 }
-
+.MuiDataGrid-root.MuiDataGrid-root--densityStandard.css-1e2bxag-MuiDataGrid-root {
+  border: none;
+}
+.MuiDataGrid-main.css-204u17-MuiDataGrid-main {
+  display: none;
+}
+.MuiDataGrid-footerContainer.css-17jjc08-MuiDataGrid-footerContainer {
+  display: none;
+}
 .css-vr2p86-MuiButtonBase-root-MuiButton-root:hover {
   color: #266bf1;
 }

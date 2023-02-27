@@ -21,9 +21,14 @@ export class SensorsStorage {
     @observable number: string = '';
 
     @observable id_dev_sess: string = '';
+
+    @observable sessions_period: Array<any>  = [];
     constructor(){
         makeAutoObservable(this);
     }
+
+    @action setSessionsPeriod(val: Array<any>) { this.sessions_period = val; } /// Массив (сессии за переод)
+    @computed getSessionsPeriod(): Array<any> { return this.sessions_period; } /// Массив (сессии за переод)
 
     @action setDevSession(val : any) {this.dev_sensors = val};
     @computed getDevSession() : any {return this.dev_sensors};
@@ -80,8 +85,7 @@ export class SensorsStorage {
       
   async setDevSess(dt: IWSResult) {
     this.setDevSession(dt.data); 
- 
-    this.setOpenDevsess(true)
+    
   }
 
 }

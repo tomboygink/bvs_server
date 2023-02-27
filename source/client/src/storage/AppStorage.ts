@@ -38,6 +38,8 @@ class AppStorage {
     @observable role_read: any = null;
     @observable role_write: any = null;
 
+   
+
     @action setdevs_group_move(val: Array<any>) { this.devs_group_move = val; } ////////////Тест (потом удлаить )
     @computed getdevs_group_move(): Array<any> { return this.devs_group_move; } ////////////Тест (потом удлаить )
 
@@ -72,7 +74,7 @@ class AppStorage {
     }
 
     @action async onWSData(dt: IWSResult) {
-        console.log("SOCKET RESULT", dt);
+        console.log("SOCKET RESULT", toJS(dt));
         switch (dt.cmd) {
             case ('get_UserByAuth'): { this.auth_form.onGetUserByAuth(dt); } break;
             case ('get_UserBySessionCode'): { this.auth_form.onGetUserBySessionCode(dt); } break;
