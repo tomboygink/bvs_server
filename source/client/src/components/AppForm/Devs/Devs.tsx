@@ -15,7 +15,9 @@ import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 
 import {DevSess} from './DevSess';
-import map from './YandexMap'
+import map from './LeafletMap'
+import LeafletMap from "./LeafletMap";
+import { WidthFull } from "@mui/icons-material";
 
 
 
@@ -313,23 +315,11 @@ export class Devs extends React.Component<IProps> {
                                       <Typography sx={{ color: "#000"}}>
                                        Широта - {gr_devs[key].latitude}{" "}
                                       </Typography>
+                                     
 
-      {/* <MapContainer
-      className="markercluster-map"
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-      />
-
-     
-        <Marker position={[49.8397, 24.0297]} />
-    
-    </MapContainer> */}
-
-                                      {/* <Link href="https://google.com/maps/@ ' + 234234 + ', ' + 121212 + '" variant="body2">
-                                       Показать на карте
-                                      </Link> */}
+                                      {/* <Link href= 'http://127.0.0.1:3040/show-map?lng= + `gr_devs[key].longitude`' >Показать на карте</Link> */}
+                                      
+                                      <button type="button" onClick={() => {window.location.href='/show-map?lng=' + gr_devs[key].longitude + '&lat=' + gr_devs[key].latitude}}>Показать на карте</button>
                                       
                                     <Box sx = {{background: 'red'}}>  <map/></Box> 
                                       <Typography sx={{ color: "#000" }}>
@@ -337,6 +327,7 @@ export class Devs extends React.Component<IProps> {
                                       </Typography>
                                       </Box>
                                       </Box>
+                                                                           
                                       </React.Fragment>
                                       );
           }

@@ -62,7 +62,7 @@ export class CustomExport extends React.Component<IProps> {
           }
 
        </TableRow>
-            </React.Fragment>
+        </React.Fragment>
     
         )    
       }}

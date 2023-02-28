@@ -100,6 +100,9 @@ var AppServer = (function () {
         this.app.all("/forgot_pass", function (req, res) {
             res.render('forgot_pass.hbs', { title: "Восстановление пароля" });
         });
+        this.app.all("/show-map", function (req, res) {
+            res.render('show-map.hbs', { title: "Устройство на карте" });
+        });
         this.app.all('/quit', function (req, res) { res.send('QUIT SERVER'); _this.server.close(); });
     };
     AppServer.prototype.onCloseServer = function () {
