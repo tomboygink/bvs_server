@@ -12,18 +12,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 
 import {DevSessCharts} from '../Sensors/DevSessCharts'
-import {CustomToolbar} from "./Export";
-
-import {
-  DataGridPremium,
-  GridToolbarContainer,
-  GridToolbarExport,
-  GridCsvExportOptions,
-  GridExcelExportOptions ,
-  GridColumns,
-  GridRowsProp,
-  useGridApiContext,
-} from '@mui/x-data-grid-premium';
+import  {CustomExport}  from "./Export";
 
 
 
@@ -36,8 +25,28 @@ export class DevSess extends React.Component<IProps> {
     super(props);
   }
 
+  async handleExportExel(){
+    var XLSX = require("xlsx");
+    var table_elt = document.getElementById('my-table-id');
+    var workbook = XLSX.utils.table_to_book(table_elt);
+
+//var ws = workbook.Sheets["Sheet1"];
+// XLSX.utils.sheet_add_aoa(ws, [["Дата вы "+new Date().toISOString()]], {origin:-1});
+
+XLSX.writeFile(workbook, "Report.xlsx");
+  }
+
+  async handleExportCSV(){
+    var XLSX = require("xlsx");
+    var table_elt = document.getElementById('my-table-id');
+    var workbook = XLSX.utils.table_to_book(table_elt);
+
+XLSX.writeFile(workbook, "Report.csv");
+  }
+
+
   async setRowId(e: string){
-    APP_STORAGE.sensors.setOpenDevsess(true)
+   APP_STORAGE.sensors.setOpenDevsess(true)
    APP_STORAGE.sensors.setIdDevSess(e);
    APP_STORAGE.sensors.get_DevSessions("sess_id", APP_STORAGE.auth_form.getdt());
   }
@@ -54,11 +63,7 @@ export class DevSess extends React.Component<IProps> {
 
 
   render(): React.ReactNode {
-    var str: string = ''
-    var columns = []
-    var row = []
     var date = []; 
-    const depgh = []
     var count;
     let sess = APP_STORAGE.sensors;
     let dev_sess: { [x: string]: {
@@ -68,64 +73,21 @@ export class DevSess extends React.Component<IProps> {
       dev_number: string;
       id: string; level_akb: string; 
 }; };
+
     if (sess.getDevSession) {
       dev_sess = toJS(sess.getDevSession());
 
       for (var key in dev_sess) {
-       var sensoers_date = dev_sess[key].sess_data;
-      var ss=  JSON.parse(sensoers_date);
-      
-         for (var i in ss){
-          for(var j in ss[i] ){
-           
-            if(ss[i][j].depgh){
-              depgh.push(
-                ss[i][j].depgh
-              ) 
-            }
-           
-          }
-         }
-       
-        date.push(dev_sess[key]);
-        row.push(
-          {
-            jobTitle: dev_sess[key].dev_number,
-            recruitmentDate: dev_sess[key].time_dev,
-            contract: dev_sess[key].time_srv,
-            id: dev_sess[key].id,
-            arb: dev_sess[key].level_akb,
-           // depgh: myVar,
-          }
-        )
+        date.push(
+          dev_sess[key]
+          );
         count = (Object.keys(dev_sess).length);
-      }
-      
-      columns.push(
-          { 
-    field:'jobTitle', 
-    headerName: 'Устройства', 
-    width: 200 },
-  {
-    field: 'recruitmentDate',
-    headerName: 'Время устройства',
-    width: 150,
-  },
-  {
-    field: 'contract',
-    headerName: 'Время сервера',
-    width: 150,
-  },
-  {
-    field: 'arb',
-    headerName: 'АКБ',
-    width: 150,
-  },
-  
-  )
-      
+      }}
 
-    }
+
+
+
+
     return (
       <React.Fragment>
         <Box className="wrappert-devs" sx={{ mt: "20px" }}>
@@ -191,12 +153,11 @@ export class DevSess extends React.Component<IProps> {
           >
             Установить переод
           </Button>
-          {/* <Box className="grid_column" sx = {{display:' flex'}}> */}
           <TableContainer>
-            <Table >
+            <Table>
               <TableBody>
                
-                  <TableRow key={"sensors_id" + 98} sx = {{p: '4px'}}>
+                  <TableRow key={"sensors_id"} sx = {{p: '4px'}}>
                     <TableCell colSpan={2} sx={{ color: "#aaa" , p: '4px'}}>
                       СЕССИИ ЗА ПЕРИОД: (кол-во: {count})
                     </TableCell>
@@ -205,10 +166,12 @@ export class DevSess extends React.Component<IProps> {
                   
                   {date.map((row : any, i : any) => (
                 
-                <TableRow key={'' + row.id} sx = {{p: '4px'}} onClick = {()=> {this.setRowId(row.id)}}>
+                <TableRow key={'key_row' + row.id} sx = {{p: '4px'}} onClick = {()=> {this.setRowId(row.id)}}>
                 <TableCell sx = {{p: '4px'}} > {'' + row.id} </TableCell>
                 <TableCell sx = {{p: '4px'}} > {'' + row.time_dev} </TableCell>
                 <TableCell sx = {{p: '4px'}}> {'' + row.level_akb} </TableCell>
+         
+              
                </TableRow>
             
                  ))} 
@@ -216,18 +179,40 @@ export class DevSess extends React.Component<IProps> {
             </Table>
           </TableContainer>
               
-
-      <DevSessCharts/>
+          <DevSessCharts/>
         </Box> 
 
-        <DataGridPremium
-        rows={row}
-        columns={columns}
-        
-        components={{
-          Toolbar: CustomToolbar, 
-        }}
-      />
+
+          <Button
+            sx={{
+              background:
+                "linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%)",
+              borderRadius: "4px",
+              border: "1px solid #a1919142",
+              mr: "8px",
+              color: "#111",
+            }}
+            onClick={() => this.handleExportExel()}
+          >
+            Excel
+          </Button>
+
+          <Button
+            sx={{
+              background:
+                "linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%)",
+              borderRadius: "4px",
+              border: "1px solid #a1919142",
+              mr: "8px",
+              color: "#111",
+            }}
+            onClick={() => this.handleExportCSV()}
+          >
+            SCV
+          </Button>
+
+        <CustomExport/>
+
       </React.Fragment>
     );
   }

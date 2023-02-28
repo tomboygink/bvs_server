@@ -14,9 +14,6 @@ import TableRow from "@mui/material/TableRow";
 
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 
 interface IProps {}
 
@@ -30,7 +27,6 @@ export class DevSessList extends React.Component<IProps> {
 
 
   render(): React.ReactNode {
-    let qqq = []
     var sensors = []; ////// отображаем сенсоры
    let sess = APP_STORAGE.sensors;
    let sessors;
@@ -54,8 +50,8 @@ export class DevSessList extends React.Component<IProps> {
                                     <TableCell>
                                       <SensorsIcon fontSize="small" sx={{ color: "#5be95b" }} />
                                     </TableCell>
-                                    <TableCell>[00{i}]</TableCell>
                                     <TableCell>[{"" + uniqueChars[i].depth}] </TableCell>
+                                    <TableCell>[{"" + uniqueChars[i].data}] </TableCell>
                                   </TableRow>
                                 </>
                               );
@@ -101,8 +97,8 @@ export class DevSessList extends React.Component<IProps> {
                 <TableBody>
                   {APP_STORAGE.devs_groups.getMiddleForm() === 2 && (
                     <TableRow key={"sensors_id" + 98}>
-                      <TableCell colSpan={2} sx ={{color: '#aaa'}} >Глубина датчиков:</TableCell>
-                      <TableCell sx={{ width: "80px" }}>
+                      <TableCell colSpan={2} sx ={{color: '#aaa'}} >Глубина и температура датчиков:</TableCell>
+                      {/* <TableCell sx={{ width: "80px" }}>
                         <ArrowDownwardIcon
                           className={APP_STORAGE.sensors.getActiveButtonSort()}
                           fontSize="small"
@@ -119,7 +115,7 @@ export class DevSessList extends React.Component<IProps> {
                         //     this.SortDescSensors("1");
                         //   }}
                         />
-                      </TableCell>
+                      </TableCell> */}
                     </TableRow>
                   )}
                   {sensors}
