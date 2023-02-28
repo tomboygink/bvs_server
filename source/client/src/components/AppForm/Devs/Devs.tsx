@@ -101,9 +101,6 @@ export class Devs extends React.Component<IProps> {
 
             if ("_dev_id_key_" + gr_devs[key].id === dev.getIdChild()) {
               APP_STORAGE.sensors.setNumber(gr_devs[key].number);
-              // APP_STORAGE.devs.setLongitude(gr_devs[key].longitude);
-              // APP_STORAGE.devs.setLatitude(gr_devs[key].latitude);
-  /////////////////////////// Устройство удалено ( deleted - true)
                   if (gr_devs[key].deleted === true) {
 
                                     devs.push(
@@ -366,7 +363,7 @@ export class Devs extends React.Component<IProps> {
          <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px'}}>
               {" "}
               Данные по устройству{" "}
-            </Typography>
+         </Typography>
        {this.drawDevsFunction()}
       </React.Fragment>
     );

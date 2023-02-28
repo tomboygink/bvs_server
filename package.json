@@ -49,6 +49,8 @@
     "@mui/icons-material": "^5.10.9",
     "@mui/lab": "^5.0.0-alpha.114",
     "@mui/material": "^5.10.11",
+    "@mui/x-data-grid": "^5.17.25",
+    "@mui/x-data-grid-generator": "^5.17.25",
     "@mui/x-data-grid-premium": "^5.17.24",
     "@pbe/react-yandex-maps": "^1.2.2",
     "@react-spring/web": "^9.6.1",
@@ -73,6 +75,8 @@
     "recharts": "^2.4.3",
     "save": "^2.9.0",
     "tableexport": "^5.2.0",
-    "ws": "^8.10.0"
+    "ws": "^8.10.0",
+    "x-data-grid": "^2.1.0",
+    "xlsx": "^0.18.5"
   }
 }

@@ -71,7 +71,6 @@ export class Sensors extends React.Component<IProps> {
         ) {
           var obj = JSON.parse(JSON.stringify(gr_devs[i].sensors.s));
           const uniqueChars = obj.reduce((o: any, i: any) => {
-            ////////////////// Редюсом убираем дубликаты
             if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
               o.push(i);
             }
