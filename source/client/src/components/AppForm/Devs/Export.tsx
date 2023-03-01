@@ -78,7 +78,7 @@ export class CustomExport extends React.Component<IProps> {
                     <TableCell key = '12121ewe2' > Время устройства</TableCell>
                     <TableCell key = '121weeew212'> Время сервера</TableCell>
                     <TableCell key = '12121e2eqe2'> АКБ</TableCell>
-                    <TableCell key = '12121e2ewwqe2' colSpan={10}> Глубина</TableCell>
+                    <TableCell key = '12121e2ewwqe2' colSpan={10}> Температура</TableCell>
                   </TableRow>
                {date}
               </TableBody>

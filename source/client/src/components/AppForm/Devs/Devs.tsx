@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-import { Box, Typography, TextField, ListItemIcon, Menu , MenuItem, Link} from "@mui/material";
+import { Box, Typography, TextField, ListItemIcon, Menu , MenuItem, Link, Button} from "@mui/material";
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 
@@ -12,17 +12,9 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
-
-import {DevSess} from './DevSess';
-import map from './LeafletMap'
-import LeafletMap from "./LeafletMap";
-import { WidthFull } from "@mui/icons-material";
-
 
 
 interface IProps {
-
 }
 
 
@@ -240,12 +232,13 @@ export class Devs extends React.Component<IProps> {
                                       <Box
                                       sx={{
                                       display: "flex",
-                                      justifyContent: "flex-end",
+                                      justifyContent: "space-between",
                                       width: "100%",
-                                      alignItems: "center",
+                                      alignItems: "start",
+                                      flexDirection: 'row-reverse'
                                       }}
                                       >
-
+                                      <Box className="right_wrapper_dev" >
                                       <Typography sx={{ fontSize : '12px' ,  color: '#AAAAAA'}}>
                                       Место расположения устройства - {gr.g_name} 
                                       </Typography>
@@ -292,21 +285,14 @@ export class Devs extends React.Component<IProps> {
                                       </Menu>
                                       </div>
                                       )}
-                                      </Box>
-
-  {/*------------------------- Информация об устройстве ------------------------------------------------------------*/}
-                                      <Box
-                                      sx={{
-                                      borderLeft: "1px solid #266bf18c",
-                                      pl: "12px",
-                                      borderRadius: "4px",
-                                      }}
-                                      >
+                                        </Box>
+                                        <Box>
 
                                       <Typography sx={{ color: "#000", fontWeight: "600" }}>
                                        Название устройства - {gr_devs[key].name}{" "}
                                       </Typography>  
 
+                                    
                                       <Typography sx={{ color: "#000" }}>
                                        Долгота - {gr_devs[key].longitude}{" "}
                                       </Typography>
@@ -317,17 +303,22 @@ export class Devs extends React.Component<IProps> {
                                       </Typography>
                                      
 
-                                      {/* <Link href= 'http://127.0.0.1:3040/show-map?lng= + `gr_devs[key].longitude`' >Показать на карте</Link> */}
+                                     
                                       
-                                      <button type="button" onClick={() => {window.location.href='/show-map?lng=' + gr_devs[key].longitude + '&lat=' + gr_devs[key].latitude}}>Показать на карте</button>
+                                      <Link sx= {{fontSize:'14px'}} onClick={() => {window.location.href='/show-map?lng=' + gr_devs[key].longitude + '&lat=' + gr_devs[key].latitude}}>Показать на карте</Link>
                                       
-                                    <Box sx = {{background: 'red'}}>  <map/></Box> 
-                                      <Typography sx={{ color: "#000" }}>
+                                    
+                                      {/* <Typography sx={{ color: "#000" }}>
                                        Информация - {gr_devs[key].info}{" "}
-                                      </Typography>
+                                      </Typography> */}
                                       </Box>
+
                                       </Box>
-                                                                           
+
+  {/*------------------------- Информация об устройстве ------------------------------------------------------------*/}
+                                     
+
+                                      </Box>                                   
                                       </React.Fragment>
                                       );
           }

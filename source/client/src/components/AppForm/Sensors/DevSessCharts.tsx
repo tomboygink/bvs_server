@@ -2,7 +2,9 @@ import * as React from "react";
 import { observer } from "mobx-react";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
+import { PureComponent } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
 
 interface IProps {}
 
@@ -16,14 +18,16 @@ export class DevSessCharts extends React.Component<IProps> {
 
 
   render(): React.ReactNode {
-    var data = []; ////// отображаем сенсоры
+    var data: any[] = []; ////// отображаем сенсоры
+
+    var b: JSX.Element[]= []
    let sess = APP_STORAGE.sensors;
    let sessors;
     if (sess.getDevSession){
          sessors = sess.getDevSession();
-          for (var key in  sessors){
+        for (var key in  sessors){
 
-                let sess_data = JSON.parse( (sessors[key].sess_data));
+                 let sess_data = JSON.parse( (sessors[key].sess_data));
                     const uniqueChars = sess_data.s.reduce((o: any, i: any) => {  
                         if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
                           o.push(i);
@@ -31,28 +35,50 @@ export class DevSessCharts extends React.Component<IProps> {
                         return o;
                       }, []);
 
-                      for (var i in uniqueChars) {
+                     for (var i in uniqueChars) {
                         if(String(APP_STORAGE.sensors.getIdDevSess()) === String(sessors[key].id))
-                            data.push(
-                              {'температура':  uniqueChars[i].data, 'глубина' : uniqueChars[i].depth, pv: 2400, amt: 2400}
-                              );
-                      }   
-          } 
-         
-    }
 
+                       
+                            data.push(
+                              {
+                                name: String(uniqueChars[i].depth) +'м',
+                                pv: uniqueChars[i].data
+                              });
+                     }   
+          } 
+          {data.length && 
+              b.push(
+                <LineChart
+                layout="vertical"
+                width={500}
+                height={600}
+                data={data}
+                margin={{
+                  top: 20,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" dataKey="pv"  axisLine={false}  tickCount={19}  domain={[-6, 20]} />
+                <YAxis dataKey="name" type="category"  tickCount={60}  />
+                <Tooltip />
+                
+                <Line dataKey="pv" stroke="#8884d8" />
+                <Line dataKey="uv" stroke="#fff" />
+              </LineChart>
+              )}}
+
+  
     return (
       <>
-      {data.length && 
-    <LineChart  width={500} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-    <Line type="monotone" dataKey="глубина"  stroke="#82ca9d"  />
-    <Line   dataKey="температура" stroke="inherit" /> 
-    <CartesianGrid stroke="#ccc" strokeDasharray="1 1" />
-    <XAxis dataKey="температура" />
-    <YAxis  dataKey="глубина" />
-    <Tooltip    itemStyle ={{color:'#266BF1'}} />  
-  </LineChart>
-  }
+    
+
+{b}
+
+
+  
       </>
     );
   }
