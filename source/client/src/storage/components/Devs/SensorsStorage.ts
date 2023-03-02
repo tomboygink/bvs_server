@@ -4,7 +4,8 @@ import { WSocket } from '../../WSocket';
 
 
 export class SensorsStorage {
-
+    
+    @observable dataCharts: any = [];
     @observable sensors: any = [];
     @observable open_devsess: boolean = false;
 

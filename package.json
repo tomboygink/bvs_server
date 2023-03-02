@@ -8,6 +8,7 @@
     "build_client_dev": "npx webpack --config source/client/webpack.dev.js  --watch",
     "build_email_dev": "npx webpack --config source/email/webpack.dev.js  --watch",
     "build_forgot_pass": "npx webpack --config source/forgot_pass/webpack.dev.js  --watch",
+    "build_show-map": "npx webpack --config source/show-map/webpack.dev.js  --watch",
     "build_client": "npx webpack --config source/client/webpack.prod.js",
     "run_server": "node ./server/server/server/main.js",
     "build_installer": "npx tsc -w -p source/x_installer",
@@ -30,6 +31,7 @@
     "@types/node": "^18.11.7",
     "@types/nodemailer": "^6.4.6",
     "@types/pg": "^8.6.5",
+    "@types/react-leaflet-markercluster": "^3.0.1",
     "@types/ws": "^8.5.3",
     "babel-loader": "^9.0.0",
     "css-loader": "^6.7.1",
@@ -44,7 +46,6 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.9",
     "@mui/lab": "^5.0.0-alpha.114",
@@ -62,6 +63,7 @@
     "express-handlebars": "^6.0.6",
     "hbs": "^4.2.0",
     "leaflet": "^1.9.3",
+    "leaflet-css": "^0.1.0",
     "mobx": "^6.6.2",
     "mobx-react": "^7.5.3",
     "mui-tel-input": "^2.0.4",

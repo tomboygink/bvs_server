@@ -80,6 +80,10 @@ class AppServer{
         this.app.all("/forgot_pass", (req:express.Request, res:express.Response)=>{
             res.render('forgot_pass.hbs', {title:"Восстановление пароля"});
         });
+        
+        this.app.all("/show-map", (req:express.Request, res:express.Response)=>{
+            res.render('show-map.hbs', {title:"Устройство на карте"});
+        });
 
         this.app.all('/quit', (req:express.Request, res:express.Response)=>{ res.send('QUIT SERVER'); this.server.close(); });
     }

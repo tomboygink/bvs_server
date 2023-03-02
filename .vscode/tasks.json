@@ -45,6 +45,17 @@
 				"isDefault": true
 			}
 		},
+		{
+			"type": "npm",
+			"script": "build_show-map",
+			"problemMatcher": [],
+			"label": "npm: build_show-map",
+			"detail": "компиляция отладочной версии клиента",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
         {
 			"type": "npm",
 			"script": "build_client",

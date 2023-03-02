@@ -98,7 +98,7 @@ export class DevSessList extends React.Component<IProps> {
                   {APP_STORAGE.devs_groups.getMiddleForm() === 2 && (
                     <TableRow key={"sensors_id" + 98}>
                       <TableCell colSpan={2} sx ={{color: '#aaa'}} >Глубина и температура датчиков:</TableCell>
-                      {/* <TableCell sx={{ width: "80px" }}>
+                      <TableCell sx={{ width: "80px" }}>
                         <ArrowDownwardIcon
                           className={APP_STORAGE.sensors.getActiveButtonSort()}
                           fontSize="small"
@@ -115,7 +115,7 @@ export class DevSessList extends React.Component<IProps> {
                         //     this.SortDescSensors("1");
                         //   }}
                         />
-                      </TableCell> */}
+                      </TableCell>
                     </TableRow>
                   )}
                   {sensors}
