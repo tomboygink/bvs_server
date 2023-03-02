@@ -2,15 +2,11 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { Icon } from "leaflet";
+import { MapContainer, TileLayer, Marker} from "react-leaflet";
 
 
-const myIcon = new Icon({
-    
-  iconUrl: './Vector4.svg',
-  iconSize: [25, 25]
-});
+
+
 const styles = {
   mapRoot: {
     height: '100vh'

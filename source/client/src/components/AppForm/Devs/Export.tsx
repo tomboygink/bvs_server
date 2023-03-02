@@ -8,10 +8,9 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import { TableCell } from "@mui/material";
-import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 
-import {DevSessCharts} from '../Sensors/DevSessCharts'
+
 
 
 
@@ -28,7 +27,13 @@ export class CustomExport extends React.Component<IProps> {
 
 
   render(): React.ReactNode {
+    let ar = []
+    let b= [];
+    let indexarray: any[] = [];
     var date = []; 
+
+    var ses_depth = [];
+    var ses_date = [];
     let sess = APP_STORAGE.sensors;
     let dev_sess: { [x: string]: {
       sess_data: any;
@@ -46,8 +51,20 @@ export class CustomExport extends React.Component<IProps> {
    
          
          let senso = JSON.parse(dev_sess[key].sess_data)
-    
-
+        
+         b.push(senso.s);
+         
+         ses_depth.push(
+            senso.s.map((row : any, i : any) => (
+              <TableCell sx = {{p: '4px'}}> {'' + row.depth} </TableCell>
+              ))
+         )
+         ses_date.push(
+          senso.s.map((row : any, i : any) => (
+            <TableCell sx = {{p: '4px'}}> {'' + row.data} </TableCell>
+            ))
+         )
+         
         date.push( 
         <React.Fragment key={"_gr_id_export_" + dev_sess[key].id}>
          <TableRow key={'key_row_export' + dev_sess[key].id} sx = {{p: '4px'}}>
@@ -65,7 +82,34 @@ export class CustomExport extends React.Component<IProps> {
         </React.Fragment>
     
         )    
-      }}
+      }
+
+      var max = -Infinity;
+var index = -1;
+b.forEach(function(a, i){
+  if (a.length>max) {
+    max = a.length;
+    index = i;
+    indexarray.push(a)
+  }
+});
+
+for (var i in indexarray ){
+  
+  for(var j in indexarray[i]){
+    console.log('senso', j);
+    ar.push(
+      <TableCell key = '12121e2ewwqe2'>{j}</TableCell>
+    )
+  }
+}
+
+
+
+  
+  
+  
+    }
 
 
     return (
@@ -78,7 +122,7 @@ export class CustomExport extends React.Component<IProps> {
                     <TableCell key = '12121ewe2' > Время устройства</TableCell>
                     <TableCell key = '121weeew212'> Время сервера</TableCell>
                     <TableCell key = '12121e2eqe2'> АКБ</TableCell>
-                    <TableCell key = '12121e2ewwqe2' colSpan={10}> Температура</TableCell>
+                    {ar}
                   </TableRow>
                {date}
               </TableBody>

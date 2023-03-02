@@ -3,7 +3,7 @@ import * as React from "react";
 import { observer } from "mobx-react";
 import { toJS } from "mobx";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography, TextField, Button, Link } from "@mui/material";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -49,7 +49,46 @@ XLSX.writeFile(workbook, "Report.csv");
    APP_STORAGE.sensors.setOpenDevsess(true)
    APP_STORAGE.sensors.setIdDevSess(e);
    APP_STORAGE.sensors.get_DevSessions("sess_id", APP_STORAGE.auth_form.getdt());
+
+
+
+   var data: any[] = []; ////// отображаем сенсоры
+
+
+  let sess = APP_STORAGE.sensors;
+  let sessors;
+   if (sess.getDevSession){
+        sessors = sess.getDevSession();
+        console.log('sessors', sessors)
+  
+       for (var key in  sessors){
+
+                let sess_data = JSON.parse( (sessors[key].sess_data));
+                   const uniqueChars = sess_data.s.reduce((o: any, i: any) => {  
+                       if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
+                         o.push(i);
+                       }
+                       return o;
+                     }, []);
+
+                    for (var i in uniqueChars) {
+                     if(String(APP_STORAGE.sensors.getIdDevSess()) === String(sessors[key].id)){ 
+                           data.push(
+                             {
+                               name: String(uniqueChars[i].depth) +'м',
+                               uv: 1,
+                               'град.': uniqueChars[i].data,
+                               amt: 2100
+                             });
+                          }
+                    }   
+         } 
   }
+  APP_STORAGE.sensors.dataCharts = data;
+  }
+
+
+
 
   async setDevSess() {
     let sess = APP_STORAGE.sensors;
@@ -63,6 +102,9 @@ XLSX.writeFile(workbook, "Report.csv");
 
 
   render(): React.ReactNode {
+    let count_sess = [];
+    var ses_depth = [];
+    var ses_date = [];
     var date = []; 
     var count;
     let sess = APP_STORAGE.sensors;
@@ -78,6 +120,25 @@ XLSX.writeFile(workbook, "Report.csv");
       dev_sess = toJS(sess.getDevSession());
 
       for (var key in dev_sess) {
+         
+        let senso = JSON.parse(dev_sess[key].sess_data)
+        
+       
+        if(String(APP_STORAGE.sensors.getIdDevSess()) === String(dev_sess[key].id)){  
+        count_sess.push(senso.s.length)
+        ses_depth.push(
+           senso.s.map((row : any, i : any) => (
+             <TableCell sx = {{p: '4px'}}> {'' + row.depth} </TableCell>
+             ))
+        )
+        ses_date.push(
+         senso.s.map((row : any, i : any) => (
+           <TableCell sx = {{p: '4px'}}> {'' + row.data} </TableCell>
+           ))
+        )
+
+}
+
         date.push(
           dev_sess[key]
           );
@@ -153,12 +214,13 @@ XLSX.writeFile(workbook, "Report.csv");
           >
             Установить переод
           </Button>
-          <TableContainer>
+          {date.length &&
+          <TableContainer sx={{mt: '20px'}}>
+
             <Table>
               <TableBody>
-               
                   <TableRow key={"sensors_id"} sx = {{p: '4px'}}>
-                    <TableCell colSpan={2} sx={{ color: "#aaa" , p: '4px'}}>
+                    <TableCell colSpan={2} sx={{ color: "#266bf1" , p: '4px', fontWeight: '500'}}>
                       СЕССИИ ЗА ПЕРИОД: (кол-во: {count})
                     </TableCell>
                     <TableCell sx={{ width: "80px" , p: '4px'}}></TableCell>
@@ -177,41 +239,38 @@ XLSX.writeFile(workbook, "Report.csv");
                  ))} 
               </TableBody>
             </Table>
-          </TableContainer>
-              
-          <DevSessCharts/>
-        </Box> 
-
-
-          <Button
-            sx={{
-              background:
-                "linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%)",
-              borderRadius: "4px",
-              border: "1px solid #a1919142",
-              mr: "8px",
-              color: "#111",
-            }}
+            
+          <Link sx = {{mr: '12px', fontSize: '14px'}}
             onClick={() => this.handleExportExel()}
           >
-            Excel
-          </Button>
+            Excel 
+          </Link>
 
-          <Button
-            sx={{
-              background:
-                "linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%)",
-              borderRadius: "4px",
-              border: "1px solid #a1919142",
-              mr: "8px",
-              color: "#111",
-            }}
-            onClick={() => this.handleExportCSV()}
-          >
-            SCV
-          </Button>
+          <Link sx={{fontSize: '14px'}} onClick={() => this.handleExportCSV()}>
+            SCV 
+          </Link>
+
+          </TableContainer>
+              }
+         
+
+        </Box> 
 
         <CustomExport/>
+        {ses_depth.length && 
+        <>         <Box sx= {{color: '#111',fontWeight: '500', mt: '20px', mb: '12px'}}>Выбранная сессия (Кол-во датчиклв: {count_sess})</Box>
+        <Table sx ={{mb: '20px', p: '12px', background: 'rgb(25 118 210 / 8%)', borderRadius: '4px'}}>
+        <TableBody>
+          <TableRow>
+            <TableCell>Глубина</TableCell>
+            {ses_depth}</TableRow>
+          <TableRow>
+          <TableCell>Температура</TableCell>
+            {ses_date}</TableRow>
+         </TableBody>
+        </Table>
+        </>}
+        <DevSessCharts/>
 
       </React.Fragment>
     );
