@@ -12,6 +12,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 
+import DirectionsIcon from '@mui/icons-material/Directions';
+
 
 
 interface IProps {
@@ -305,12 +307,12 @@ export class Devs extends React.Component<IProps> {
 
                                      
                                       
-                                      <Link sx= {{fontSize:'14px'}} onClick={() => {window.location.href='/show-map?lng=' + gr_devs[key].longitude + '&lat=' + gr_devs[key].latitude}}>Показать на карте</Link>
+                                      <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open('http://127.0.0.1:3040/show-map?lng=' + gr.longitude + '&lat=' + gr.latitude)}}>Показать на карте
                                       
-                                    
-                                      {/* <Typography sx={{ color: "#000" }}>
-                                       Информация - {gr_devs[key].info}{" "}
-                                      </Typography> */}
+                                      <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
+                                      <DirectionsIcon />
+                                      </IconButton>
+                                      </Link>
                                       </Box>
 
                                       </Box>

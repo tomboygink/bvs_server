@@ -73,6 +73,7 @@ export class DevsStorage {
   constructor() {
     makeAutoObservable(this);
   }
+ 
 
   @action setMenu_devs(val: string) { this.menu_devs = val };
   @computed getMenu_devs(): string { return this.menu_devs };

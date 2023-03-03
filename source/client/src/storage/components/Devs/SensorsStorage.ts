@@ -28,6 +28,9 @@ export class SensorsStorage {
         makeAutoObservable(this);
     }
 
+    @action setdataCharts(val: Array<any>) { this.sessions_period = val; } /// Массив (сессии за переод)
+    @computed getdataCharts(): Array<any> { return this.sessions_period; } /// Массив (сессии за переод)
+
     @action setSessionsPeriod(val: Array<any>) { this.sessions_period = val; } /// Массив (сессии за переод)
     @computed getSessionsPeriod(): Array<any> { return this.sessions_period; } /// Массив (сессии за переод)
 

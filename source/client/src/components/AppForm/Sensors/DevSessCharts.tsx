@@ -19,76 +19,16 @@ export class DevSessCharts extends React.Component<IProps> {
 
 
   render(): React.ReactNode {
-  //   var data = toJS(APP_STORAGE.sensors.dataCharts); ////// отображаем сенсоры
 
-  //   var b: JSX.Element[]= []
-  //  let sess = APP_STORAGE.sensors;
-  //  let sessors;
-  //   if (sess.getDevSession){
-  //        sessors = sess.getDevSession();
-   
-        // for (var key in  sessors){
-
-        //          let sess_data = JSON.parse( (sessors[key].sess_data));
-        //             const uniqueChars = sess_data.s.reduce((o: any, i: any) => {  
-        //                 if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
-        //                   o.push(i);
-        //                 }
-        //                 return o;
-        //               }, []);
-
-        //              for (var i in uniqueChars) {
-        //               //  if(String(APP_STORAGE.sensors.getIdDevSess()) === String(sessors[key].id)){ 
-                 
-                       
-        //                     data.push(
-        //                       {
-        //                         name: String(uniqueChars[i].depth) +'м',
-        //                         uv: 3490,
-        //                         pv: uniqueChars[i].data,
-        //                         amt: 2100
-        //                       });
-        //                   //  }
-        //              }   
-        //   } 
-
-         
-// console.log('data',  toJS(APP_STORAGE.sensors.dataCharts))
-//           {data.length && 
-//               b.push(
-//                 <LineChart
-//                 layout="vertical"
-//                 width={1200}
-//                 height={600}
-//                 data={data}
-                
-//                 margin={{
-//                   top: 20,
-//                   right: 30,
-//                   left: 20,
-//                   bottom: 5,
-//                 }}
-//               >
-//                 <CartesianGrid strokeDasharray="3 3" />
-//                 <XAxis type="number" dataKey="pv"  axisLine={false}  tickCount={19}  domain={[-6, 20]} />
-//                 <YAxis dataKey="name" type="category"  tickCount={60}  />
-//                 <Tooltip />
-                
-//                 <Line dataKey="pv" stroke="#8884d8" > 
-//                  <LabelList content={<CustomizedLabel />} />
-//                 </Line>
-//                 <Line dataKey="uv" stroke="#fff" />
-//               </LineChart>
-//               )}}
-
-  if(toJS(APP_STORAGE.sensors.dataCharts).length){
+  if(toJS(APP_STORAGE.sensors.getdataCharts()).length){
     return (
-      <LineChart
+      <ResponsiveContainer width="100%" height={600}> 
+    <LineChart
       className="LineChart"
       layout="vertical"
-      width={1200}
-      height={600}
-      data={toJS(APP_STORAGE.sensors.dataCharts)}
+      // width=100%
+      // height={600}
+      data={toJS(APP_STORAGE.sensors.getdataCharts())}
       
       margin={{
         top: 20,
@@ -98,13 +38,14 @@ export class DevSessCharts extends React.Component<IProps> {
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis type="number" dataKey="град."  tickCount={19}  domain={[-6, 20]} />
-      <YAxis dataKey="name" type="category"  tickCount={60}  />
+      <XAxis type="number" dataKey="град." tickCount={19}  domain={[-6, 20]} />
+      <YAxis dataKey="name" type="category"  stroke="#266BF1"  tickCount={60}  />
       <Tooltip />
+      <Legend />
+      <Line dataKey="град." stroke="#82ca9d" > <LabelList content={<CustomizedLabel />} /></Line>
       
-      <Line dataKey="град." stroke="#82ca9d" >  <LabelList content={<CustomizedLabel />} /></Line>
-      {/* <Line dataKey="uv" stroke="#8884d8" /> */}
     </LineChart>
+    </ResponsiveContainer>
        );
   }}
 }

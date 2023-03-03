@@ -9,7 +9,7 @@ $grid_color: #F1F5FC;
 $grid_margin: percentage(40 / 1920); // 40 / 1920 * 100%;
 $grid_width: percentage(157 / (1920 - 40 * 2));
 $grid_gutter: percentage(30 / (1920 - 40 * 2));
-$body_bgcolor: #F1F5FC;
+////$body_bgcolor: #F1F5FC;
 
 @mixin mq($from, $to: false) {
     @if $to {
@@ -83,6 +83,19 @@ body {
             margin: 0 0 0px;
         }
     }
+}
+
+////////////////////////////////////////////////style for middle card
+
+.grid__card_middle{
+  width: 100%;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 

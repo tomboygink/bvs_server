@@ -13,6 +13,8 @@ import TableRow from "@mui/material/TableRow";
 
 import {DevSessCharts} from '../Sensors/DevSessCharts'
 import  {CustomExport}  from "./Export";
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+
 
 
 
@@ -57,6 +59,7 @@ XLSX.writeFile(workbook, "Report.csv");
 
   let sess = APP_STORAGE.sensors;
   let sessors;
+  let u = [];
    if (sess.getDevSession){
         sessors = sess.getDevSession();
         console.log('sessors', sessors)
@@ -73,18 +76,20 @@ XLSX.writeFile(workbook, "Report.csv");
 
                     for (var i in uniqueChars) {
                      if(String(APP_STORAGE.sensors.getIdDevSess()) === String(sessors[key].id)){ 
-                           data.push(
-                             {
-                               name: String(uniqueChars[i].depth) +'м',
-                               uv: 1,
-                               'град.': uniqueChars[i].data,
-                               amt: 2100
-                             });
-                          }
-                    }   
-         } 
+                      data.push(
+
+                        {
+                           name: String(uniqueChars[i].depth) +'м',
+                          'град.': uniqueChars[i].data,
+                           amt: 2100
+                        });
+
+                     }
+                     APP_STORAGE.sensors.setdataCharts(data);}    } 
+
+                    
   }
-  APP_STORAGE.sensors.dataCharts = data;
+
   }
 
 
@@ -124,20 +129,23 @@ XLSX.writeFile(workbook, "Report.csv");
         let senso = JSON.parse(dev_sess[key].sess_data)
         
        
-        if(String(APP_STORAGE.sensors.getIdDevSess()) === String(dev_sess[key].id)){  
+      if(String(APP_STORAGE.sensors.getIdDevSess()) === String(dev_sess[key].id)){  
         count_sess.push(senso.s.length)
+
         ses_depth.push(
            senso.s.map((row : any, i : any) => (
-             <TableCell sx = {{p: '4px'}}> {'' + row.depth} </TableCell>
+            <React.Fragment key={"data_" + row.data + row.depth}>
+             <TableCell sx = {{p: '4px' , color: '#002757', fontWeight: '500'}}> {'' + row.depth} </TableCell>
+             </React.Fragment>
              ))
         )
         ses_date.push(
          senso.s.map((row : any, i : any) => (
-           <TableCell sx = {{p: '4px'}}> {'' + row.data} </TableCell>
+          <React.Fragment key={"data_qdsadsd" + row.data + row.depth}>
+           <TableCell sx = {{p: '4px', color: '#002757', fontWeight: '500'}}> {'' + row.data} </TableCell>
+           </React.Fragment>
            ))
-        )
-
-}
+        )}
 
         date.push(
           dev_sess[key]
@@ -239,16 +247,35 @@ XLSX.writeFile(workbook, "Report.csv");
                  ))} 
               </TableBody>
             </Table>
-            
-          <Link sx = {{mr: '12px', fontSize: '14px'}}
+
+          <Button
+            className="setDevSess"
+            sx={{
+              background: "#038F54",
+              color: "#fff;",
+              fontSize: "12px",
+              mt: '12px',
+              mr: '16px'
+            }}
             onClick={() => this.handleExportExel()}
           >
-            Excel 
-          </Link>
+ Документ в формате XLSX <FileDownloadOutlinedIcon fontSize="small" sx={{color: '#fff', background: '#3FAE7F', borderRadius:'4px', ml:'4px'}}/>
+          </Button>
 
-          <Link sx={{fontSize: '14px'}} onClick={() => this.handleExportCSV()}>
-            SCV 
-          </Link>
+          <Button
+            className="setDevSess"
+            sx={{
+              background: "#E1BE08",
+              color: "#fff;",
+              fontSize: "12px",
+              mt: '12px'
+            }}
+            onClick={() => this.handleExportCSV()}
+          >
+           Документ в формате SCV <FileDownloadOutlinedIcon fontSize="small" sx={{color: '#fff', background: '#EAD460', borderRadius:'4px', ml:'4px'}}/>
+          </Button>
+
+        
 
           </TableContainer>
               }
@@ -256,10 +283,17 @@ XLSX.writeFile(workbook, "Report.csv");
 
         </Box> 
 
-        <CustomExport/>
+       <CustomExport/>
+       
+    
+        
+
         {ses_depth.length && 
-        <>         <Box sx= {{color: '#111',fontWeight: '500', mt: '20px', mb: '12px'}}>Выбранная сессия (Кол-во датчиклв: {count_sess})</Box>
-        <Table sx ={{mb: '20px', p: '12px', background: 'rgb(25 118 210 / 8%)', borderRadius: '4px'}}>
+        <> 
+         <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px', mt: '20px' }}>
+              Выбранная сессия (Кол-во датчиков: {count_sess})
+         </Typography>
+        <Table sx ={{mb: '20px', p: '12px', background: '#E3EEFA', borderRadius: '4px'}}>
         <TableBody>
           <TableRow>
             <TableCell>Глубина</TableCell>
@@ -270,7 +304,7 @@ XLSX.writeFile(workbook, "Report.csv");
          </TableBody>
         </Table>
         </>}
-        <DevSessCharts/>
+        <DevSessCharts/>s
 
       </React.Fragment>
     );
