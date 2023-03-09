@@ -113,7 +113,7 @@ for (var i in indexarray ){
     return (
       <>
         { date.length && 
-        <Table key='my-table-id' id = 'my-table-id' sx={{display:'none'}} >
+    <Table key='my-table-id' id = 'my-table-id' sx={{display:'none'}} >
       <TableBody  key ={'dsafsafasfd' + 8888}>
           <TableRow  key ={'dsafsafasfd' + 1}>
             <TableCell key = '121212'> Устройство</TableCell>
@@ -127,8 +127,6 @@ for (var i in indexarray ){
     </Table>
       
         }
-      
-       
       </>
     );
   }

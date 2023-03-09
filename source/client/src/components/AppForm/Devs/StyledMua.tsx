@@ -87,6 +87,8 @@ export const id_dev_sess = async (event: any, node: any) => {
 export const handleChange = async (event: any, node: any) => {
   APP_STORAGE.sensors.setActiveButtonSort('sort');
   APP_STORAGE.sensors.setActiveButtonSortDesc('sort');
+  APP_STORAGE.sensors.setdataCharts([]);
+  APP_STORAGE.sensors.setDevSession(null);
    if(node.includes('_dev_id_') === false){
     APP_STORAGE.devs_groups.setParentId(node);
     APP_STORAGE.devs.setIdDevs(node);
@@ -116,20 +118,7 @@ export const options = async (event: any, node: any) => {
 APP_STORAGE.devs.setGroupDevId(String(node));
 }
 
-export const data = [
-{name:  1, data : -7, pv: 2400, amt: 2400}, 
-{name: 0.1, data: -3, pv: 2400, amt: 2400}, 
-{name: 0.2, data: 2.31, pv: 2400, amt: 2400}, 
-{name: 0.3, data: 3.31, pv: 2400, amt: 2400}, 
-{name: 0.4, data: 0.88, pv: 2400, amt: 2400},
-{name: 0.5, data: -0.37 ,pv: 2400, amt: 2400},
-{name: 0.5, data: 0.6 ,pv: 2400, amt: 2400},
-{name: 0.6, data: -0.75 ,pv: 2400, amt: 2400},
-{name: 0.7, data: 0.8 ,pv: 2400, amt: 2400},
-{name: 0.8, data: 0.9 ,pv: 2400, amt: 2400},
-{name: -0.2, data: -0.2 ,pv: 2400, amt: 2400},
-{name: -1 , data: -1 ,pv: 2400, amt: 2400}
-];
+
 
 
 

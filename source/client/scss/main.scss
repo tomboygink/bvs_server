@@ -1,11 +1,9 @@
-//index.css  
-@import url("leaflet/dist/leaflet.css");
 
   .leaflet-container {
     width: 100%;
     height: 100vh;
   }
-$grid_color: #F1F5FC;
+$grid_color: rgb(0 0 0 / 0%);
 $grid_margin: percentage(40 / 1920); // 40 / 1920 * 100%;
 $grid_width: percentage(157 / (1920 - 40 * 2));
 $grid_gutter: percentage(30 / (1920 - 40 * 2));

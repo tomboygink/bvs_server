@@ -4,7 +4,7 @@ import { APP_STORAGE } from "../../../storage/AppStorage";
 
 import { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from 'recharts';
-import { CustomizedLabel } from "./DevSessChartsTest";
+import { CustomizedLabel } from "./recharts";
 import { toJS } from "mobx";
 
 interface IProps {}
@@ -23,11 +23,9 @@ export class DevSessCharts extends React.Component<IProps> {
   if(toJS(APP_STORAGE.sensors.getdataCharts()).length){
     return (
       <ResponsiveContainer width="100%" height={600}> 
-    <LineChart
+     <LineChart
       className="LineChart"
       layout="vertical"
-      // width=100%
-      // height={600}
       data={toJS(APP_STORAGE.sensors.getdataCharts())}
       
       margin={{

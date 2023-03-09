@@ -85,9 +85,7 @@ XLSX.writeFile(workbook, "Report.csv");
                         });
 
                      }
-                     APP_STORAGE.sensors.setdataCharts(data);}    } 
-
-                    
+                     APP_STORAGE.sensors.setdataCharts(data);}    }                  
   }
 
   }
@@ -169,7 +167,7 @@ XLSX.writeFile(workbook, "Report.csv");
             }}
           >
             {" "}
-            Выборка сессий устройства {APP_STORAGE.sensors.getNumber()} по
+            Выборка сессий устройства  по
             периоду{" "}
           </Typography>
 
@@ -304,7 +302,7 @@ XLSX.writeFile(workbook, "Report.csv");
          </TableBody>
         </Table>
         </>}
-        <DevSessCharts/>s
+        <DevSessCharts/>
 
       </React.Fragment>
     );

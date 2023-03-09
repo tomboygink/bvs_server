@@ -36,9 +36,8 @@ export class AuthForm extends React.Component<IProps> {
             <Box sx= {{display: 'flex' , justifyContent: 'space-between'}}> 
                  <Typography component="h1" variant="h5">
                      Авторизация
-                </Typography>
-                    
-                 </Box>
+                </Typography>     
+            </Box>
              
                 
                 <Typography sx={{fontSize: '12px', color: 'grey'}}>

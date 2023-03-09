@@ -80,7 +80,7 @@ export class AppForm extends React.Component<IProps> {
       <Devs />
       <DevSess/>
       </>
-      dev_sess = <DevSess/>
+      // dev_sess = <DevSess/>
       left_form = <DevsGroupsTree />;
     }
 

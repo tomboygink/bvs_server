@@ -55,11 +55,7 @@ export class DevSessList extends React.Component<IProps> {
                                   </TableRow>
                                 </>
                               );
-                        
-                     
-                      }
-               
-                 
+                      }    
           } 
          
     }
