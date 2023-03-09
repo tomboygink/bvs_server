@@ -114,8 +114,10 @@ export const GroupHeader = styled('div')(({ theme }) => ({
 }));
 
 export const options = async (event: any, node: any) => {
- APP_STORAGE.devs_groups.setParent(node);
+
+APP_STORAGE.devs_groups.setParent(node);
 APP_STORAGE.devs.setGroupDevId(String(node));
+
 }
 
 

@@ -33,17 +33,17 @@ export class DevSessCharts extends React.Component<IProps> {
         right: 30,
         left: 20,
         bottom: 5,
-      }}
-    >
+      }}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis type="number" dataKey="град." tickCount={19}  domain={[-6, 20]} />
-      <YAxis dataKey="name" type="category"  stroke="#266BF1"  tickCount={60}  />
+      <YAxis dataKey="name" type="category"  stroke="#266BF1"  tickCount={60}   />
       <Tooltip />
       <Legend />
-      <Line dataKey="град." stroke="#82ca9d" > <LabelList content={<CustomizedLabel />} /></Line>
-      
+
+      <Line dataKey="град." stroke="#82ca9d" > <LabelList content={<CustomizedLabel />} /> </Line>
+       
     </LineChart>
     </ResponsiveContainer>
-       );
+    );
   }}
 }
