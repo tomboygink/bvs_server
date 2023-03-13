@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Box, Typography, TextField, ListItemIcon } from "@mui/material";
+import { Box, Typography, TextField, ListItemIcon, Link } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
@@ -18,9 +18,14 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
 
-////////////////////////////////////Импортируем функции
+import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
+
+import DirectionsIcon from '@mui/icons-material/Directions';
+
+
 
 interface IProps {}
+
 
 //Устройства
 @observer
@@ -29,15 +34,13 @@ export class DevLocation extends React.Component<IProps> {
     super(props);
   }
 
-  async OpenModal(e: any, org_id: any) {
+  async openModal(e: any, org_id: any) {
     APP_STORAGE.devs_groups.setOrg(Number(org_id));
     APP_STORAGE.devs_groups.setParentId(e);
     APP_STORAGE.devs_groups.setOpenModal(true);
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
   }
-  async UpdateDate() {
-    APP_STORAGE.devs.setOpenModal(true);
-  }
+
   async editDeviceLocation() {
     APP_STORAGE.devs_groups.setOpen_menu(false);
     let DevGr: any;
@@ -86,6 +89,7 @@ export class DevLocation extends React.Component<IProps> {
     return parent;
   }
 
+
   getValueMove(dgrs: TDevsGroup[]) {
     let array = [];
     var parent: React.ReactNode[] = new Array();
@@ -120,6 +124,7 @@ export class DevLocation extends React.Component<IProps> {
     return parent;
   }
 
+
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
     let array_parentid = [];
     let parent: React.ReactNode[] = new Array();
@@ -127,10 +132,11 @@ export class DevLocation extends React.Component<IProps> {
       var dgr: TDevsGroup = dgrs[ii];
       var gr: TDGroup = dgr.group;
       var gr_childs = dgr.childs;
-
       var childs: React.ReactNode[] = new Array();
-      if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
 
+
+      if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
+   /////////////////////////////////////////////////////////////////////////////// Если есть дочерние строки
       parent.push(
         <React.Fragment key={"_gr_id_key_" + gr.id}>
           <Box sx={{ display: "flex", width: "100%", flexDirection: "column" }}>
@@ -140,25 +146,12 @@ export class DevLocation extends React.Component<IProps> {
       );
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
-        if (Number(gr.parent_id) === 0 && array_parentid.length === 1) {
-        }
-
-        if (gr.deleted === true) {
+        if (gr.deleted === true) { ////////////////////////////////////////////////////////Если устройство не удаленно 
           parent.push(
             <React.Fragment key={String(gr.id)}>
               <Box
-                id="long-button"
-                sx={{
-                  width: "100%",
-                  borderRadius: "4px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  backgroundColor: "#fff",
-                  p: "20px",
-                  mb: "20px",
-                }}
-              >
+                className="grid__card_middle"
+                id="long-button">
                 <Box
                   sx={{
                     display: "flex",
@@ -167,15 +160,7 @@ export class DevLocation extends React.Component<IProps> {
                   }}
                 >
                   <Box>
-                    <Typography
-                      sx={{
-                        fontWeight: "500",
-                        fontSize: "16px",
-                        color: "#808080",
-                      }}
-                    >
-                      Место расположения устройства:
-                    </Typography>
+                   
                   </Box>
                   {APP_STORAGE.getRoleWrite() === 2 &&
                     APP_STORAGE.getRoleRead() === 1 && (
@@ -276,39 +261,39 @@ export class DevLocation extends React.Component<IProps> {
         } else {
           parent.push(
             <React.Fragment key={String(gr.id)}>
-              <Box
-                id="long-button"
-                sx={{
-                  width: "100%",
-                  background: "#fff",
-                  borderRadius: "4px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  p: "20px",
-                  mb: "20px",
-                }}
-              >
+              <Box id="long-button" className="grid__card_middle">
                 <Box
                   sx={{
                     display: "flex",
-                    alignItems: "center",
+                    alignItems: "flex-start",
                     justifyContent: "space-between",
                   }}
                 >
                   <Box>
-                    <Typography
-                      sx={{
-                        fontWeight: "500",
-                        fontSize: "16px",
-                        color: "#000",
-                      }}
-                    >
-                      Место расположения устройства:
-                    </Typography>
+
+                <Box>
+                    <Typography sx={{ color: "#000", fontWeight: "600" }}>
+                    Место расположения - {gr.g_name}{" "}
+                    </Typography> 
+
+                     <Typography sx={{ color: "#000" }}>
+                    Долгота - {gr.longitude}{" "}
+                    </Typography>  
+
+                    <Typography sx={{ color: "#000" }}>
+                    Широта - {gr.latitude}{" "}
+                    </Typography> 
+                     <Box id={gr.org_id}></Box>
+
+                     <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open('http://127.0.0.1:3040/show-map?lng=' + gr.longitude + '&lat=' + gr.latitude)}}>Показать на карте
+                                      
+                                      <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
+                                      <DirectionsIcon />
+                                      </IconButton>
+                                      </Link>                </Box>
+
                   </Box>
-                  {APP_STORAGE.getRoleWrite() === 2 &&
-                    APP_STORAGE.getRoleRead() === 1 && (
+                  {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 && (
                       <div>
                         <IconButton
                           onClick={() => {
@@ -320,7 +305,7 @@ export class DevLocation extends React.Component<IProps> {
                           aria-expanded={open ? "true" : undefined}
                           aria-haspopup="true"
                         >
-                          <MoreVertIcon />
+                        <MoreVertIcon />
                         </IconButton>
                         <Menu
                           id="long-menu"
@@ -350,20 +335,17 @@ export class DevLocation extends React.Component<IProps> {
                           </MenuItem>
 
                           <Divider />
-                          <MenuItem>
-                            <Typography
-                              onClick={() =>
-                                APP_STORAGE.devs.setOpenModal(true)
-                              }
-                            >
-                              {" "}
+
+                          <MenuItem onClick={() => APP_STORAGE.devs.setOpenModal(true)}>
+                            <ListItemIcon>
+                              <CrisisAlertIcon fontSize="small" />
+                            </ListItemIcon>{" "}
                               Добавить устройство
-                            </Typography>
                           </MenuItem>
 
                           <MenuItem
                             onClick={() =>
-                              this.OpenModal(
+                              this.openModal(
                                 APP_STORAGE.devs.getIdDevs(),
                                 Number(gr.org_id)
                               )
@@ -377,54 +359,10 @@ export class DevLocation extends React.Component<IProps> {
                         </Menu>
                       </div>
                     )}
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    borderRadius: "4px",
-                    flexDirection: "column",
-                  }}
-                >
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    size="small"
-                    required
-                    fullWidth
-                    id="Место расположения"
-                    label="Место расположения"
-                    autoFocus
-                    ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
-                    value={gr.g_name}
-                  />
 
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    size="small"
-                    required
-                    fullWidth
-                    id="Долгота"
-                    label="Долгота"
-                    autoFocus
-                    ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
-                    value={gr.longitude}
-                  />
 
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    size="small"
-                    required
-                    fullWidth
-                    id="Широта"
-                    label="Широта"
-                    autoFocus
-                    ///onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
-                    value={gr.latitude}
-                  />
-                  <Box id={gr.org_id}></Box>
                 </Box>
+             
               </Box>
             </React.Fragment>
           );

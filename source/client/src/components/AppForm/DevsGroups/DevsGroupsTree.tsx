@@ -67,7 +67,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
               nodeId={"_dev_id_key_" + dev.id}
               label={dev.name}
               icon={<CrisisAlertIcon fontSize="small" sx={{color: '#4681F5'}}/>}
-              sx={{ color: "#266BF1" }}></TreeItem>
+              sx={{ color: "#002757" }}></TreeItem>
           </React.Fragment>
         );
       }
@@ -118,8 +118,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
                 nodeId={String(gr.id)}
                 label={gr.g_name}
                 icon={icon}
-                sx={{ color: "#222", borderLeft: '1px solid #c1c1c1' }}
-              >
+                sx={{ color: "#222", borderLeft: '1px solid #c1c1c1' }}>
                 {childs}
               </TreeItem>
             </Box>

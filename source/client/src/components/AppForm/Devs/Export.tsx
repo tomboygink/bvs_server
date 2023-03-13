@@ -46,11 +46,11 @@ export class CustomExport extends React.Component<IProps> {
     if (sess.getDevSession) {
       dev_sess = toJS(sess.getDevSession());
 
-      for (var key in dev_sess) {  
+     for (var key in dev_sess) {  
 
    
          
-         let senso = JSON.parse(dev_sess[key].sess_data)
+          let senso = JSON.parse(dev_sess[key].sess_data)
         
          b.push(senso.s);
          
@@ -64,25 +64,26 @@ export class CustomExport extends React.Component<IProps> {
             <TableCell sx = {{p: '4px'}}> {'' + row.data} </TableCell>
             ))
          )
-         
+
         date.push( 
-        <React.Fragment key={"_gr_id_export_" + dev_sess[key].id}>
-         <TableRow key={'key_row_export' + dev_sess[key].id} sx = {{p: '4px'}}>
-        <TableCell key={'key_row_export' + dev_sess[key].dev_number}  sx = {{p: '4px'}} > {'' + dev_sess[key].dev_number} </TableCell>
-        <TableCell key={'key_row_export' + dev_sess[key].time_dev} sx = {{p: '4px'}} > {'' + dev_sess[key].time_dev} </TableCell>
-        <TableCell key={'key_row_export' + dev_sess[key].time_srv} sx = {{p: '4px'}} > {'' + dev_sess[key].time_srv} </TableCell>
+         
+        <TableRow key={'row' + dev_sess[key].id} id={'row' + dev_sess[key].id} sx = {{p: '4px'}}>
+        <TableCell  sx = {{p: '4px'}} > {'' + dev_sess[key].dev_number} </TableCell>
+        <TableCell sx = {{p: '4px'}} > {'' + dev_sess[key].time_dev} </TableCell>
+        <TableCell  sx = {{p: '4px'}} > {'' + dev_sess[key].time_srv} </TableCell>
         <TableCell  sx = {{p: '4px'}}> {'' + dev_sess[key].level_akb} </TableCell>
           {
           senso.s.map((row : any, i : any) => (
+            <React.Fragment key={"_gr_id_key_sess" + row.depth}>
             <TableCell sx = {{p: '4px'}}> {'' + row.depth} </TableCell>
+            </React.Fragment>
             ))
           }
 
        </TableRow>
-        </React.Fragment>
-    
+       
         )    
-      }
+     }
 
       var max = -Infinity;
 var index = -1;
@@ -97,39 +98,36 @@ b.forEach(function(a, i){
 for (var i in indexarray ){
   
   for(var j in indexarray[i]){
-    console.log('senso', j);
     ar.push(
-      <TableCell key = '12121e2ewwqe2'>{j}</TableCell>
+      <React.Fragment key={"_gr_id_key_sessqqeq" + j}>
+      <TableCell>{j}</TableCell>
+      </React.Fragment>
     )
   }
 }
 
-
-
   
-  
-  
-    }
+   }
 
 
     return (
-      <React.Fragment >
-        { date.length &&
-          <Table key= {'my-table-id'} id = 'my-table-id' sx= {{display: 'none'}} >
-              <TableBody  key ={'dsafsafasfd' + 8888}>
-                  <TableRow  key ={'dsafsafasfd' + 1}>
-                    <TableCell key = '121212'> Устройство</TableCell>
-                    <TableCell key = '12121ewe2' > Время устройства</TableCell>
-                    <TableCell key = '121weeew212'> Время сервера</TableCell>
-                    <TableCell key = '12121e2eqe2'> АКБ</TableCell>
-                    {ar}
-                  </TableRow>
-               {date}
-              </TableBody>
-            </Table>
+      <>
+        { date.length && 
+    <Table key='my-table-id' id = 'my-table-id' sx={{display:'none'}} >
+      <TableBody  key ={'dsafsafasfd' + 8888}>
+          <TableRow  key ={'dsafsafasfd' + 1}>
+            <TableCell key = '121212'> Устройство</TableCell>
+            <TableCell key = '12121ewe2' > Время устройства</TableCell>
+            <TableCell key = '121weeew212'> Время сервера</TableCell>
+            <TableCell key = '12121e2eqe2'> АКБ</TableCell>
+            {ar}
+          </TableRow>
+       {date}
+      </TableBody>
+    </Table>
+      
         }
-       
-      </React.Fragment>
+      </>
     );
   }
 }
