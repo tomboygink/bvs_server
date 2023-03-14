@@ -184,7 +184,8 @@ export class DevsGroupsTree extends React.Component<IProps> {
           <Box
            sx={{
               background: "#fff",
-              p :'20px'
+              p :'20px',
+              borderRadius: '4px'
             }}
           >
             <TreeView

@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Box} from "@mui/material";
+import { Box , Typography } from "@mui/material";
 import { APP_STORAGE } from "../../storage/AppStorage"; //////Хранилище данных
 
 import { AppBarPanel } from "./AppBarPanel/AppBarPanel"; 
@@ -129,7 +129,9 @@ export class AppForm extends React.Component<IProps> {
               </Box>
             </Box>
           </Box>
-
+           <Box sx = {{position : 'fixed', bottom: 0, width: '100%', mb: '16px'}}>
+            
+           <Typography sx ={{textAlign: 'center', color: '#75A4FF',lineHeight: '16px', fontSize : '14px'}}> ООО "СеверБурИнструмент"</Typography> </Box>
         </React.Fragment>
       );
   }

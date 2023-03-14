@@ -34,10 +34,22 @@ export class DevSess extends React.Component<IProps> {
 
   async handleExportCSV() {
     var XLSX = require("xlsx");
-    var table_elt = document.getElementById("my-table-id");
-    var workbook = XLSX.utils.table_to_book(table_elt);
-    XLSX.writeFile(workbook, "Report.csv");
-  }
+
+  var table = document.getElementById("my-table-id");
+var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet JS" });
+var ws1 = wb.Sheets[wb.SheetNames[0]];
+var csv = XLSX.utils.sheet_to_csv(ws1, { strip: true, FS: "|" });
+this.download_file_csv(csv);}
+
+async download_file_csv(content: any) {
+var csvString = content;
+var universalBOM = "\uFEFF";
+var a = window.document.createElement('a');
+a.setAttribute('href', 'data:text/csv; charset=utf-8,' + encodeURIComponent(universalBOM+csvString));
+a.setAttribute('download', 'Report.csv');
+window.document.body.appendChild(a);
+a.click();
+} 
 
   async setRowId(e: string) {
     APP_STORAGE.sensors.setOpenDevsess(true);
@@ -67,13 +79,17 @@ export class DevSess extends React.Component<IProps> {
           if (
             String(APP_STORAGE.sensors.getIdDevSess()) ===
             String(sessors[key].id)
-          ) {
+          )
+          
+          {
             data.push({
               name: String(uniqueChars[i].depth) + "м",
-              "град.": uniqueChars[i].data,
-              amt: 2100,
+              "град.": uniqueChars[i].data
             });
+
+         
           }
+
           APP_STORAGE.sensors.setdataCharts(data);
         }
       }
@@ -91,6 +107,11 @@ export class DevSess extends React.Component<IProps> {
   }
 
   render(): React.ReactNode {
+    
+
+    
+
+
     let count_sess = [];
     var ses_depth = [];
     var ses_date = [];
@@ -297,7 +318,7 @@ export class DevSess extends React.Component<IProps> {
                 }}
                 onClick={() => this.handleExportCSV()}
               >
-                Документ в формате SCV{" "}
+                Документ в формате CSV{" "}
                 <FileDownloadOutlinedIcon
                   fontSize="small"
                   sx={{
@@ -326,6 +347,7 @@ export class DevSess extends React.Component<IProps> {
             >
               Выбранная сессия (Кол-во датчиков: {count_sess})
             </Typography>
+            
             <Table
               sx={{
                 mb: "20px",
@@ -352,3 +374,5 @@ export class DevSess extends React.Component<IProps> {
     );
   }
 }
+
+
