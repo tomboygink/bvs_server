@@ -3,14 +3,11 @@ import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-import { Box, Typography, TextField, ListItemIcon, Menu , MenuItem, Link, Button} from "@mui/material";
+import { Box, Typography, TextField, Link} from "@mui/material";
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 
 import IconButton from "@mui/material/IconButton";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 
 import DirectionsIcon from '@mui/icons-material/Directions';
 import { MenuDevs } from "./MenuDevs";
@@ -87,6 +84,8 @@ export class Devs extends React.Component<IProps> {
                                     value={gr_devs[key].name}
                                     />
 
+                                    
+
                                     <TextField
                                     variant="outlined"
                                     margin="normal"
@@ -130,10 +129,7 @@ export class Devs extends React.Component<IProps> {
                                     </React.Fragment>
                                     );
                                   }
-
-
-
-/////////////////////////// Устройство действующее ( deleted - false)
+/////////////////////////// Устройство  `` действующее ( deleted - false)
             if (gr_devs[key].deleted === false) {  
                                       devs.push(
                                       <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>

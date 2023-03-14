@@ -2,14 +2,15 @@ import * as React from 'react';
 import {MenuItem, IconButton , Divider, Menu , Avatar, Typography , Link, Box } from '@mui/material';
 
 import ListItemIcon from '@mui/material/ListItemIcon';
-import Settings from '@mui/icons-material/Settings';
 import CreateIcon from '@mui/icons-material/Create';
 import Logout from '@mui/icons-material/Logout';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 
 import {getCookie , setCookie, deleteCookie }  from '../../../../storage/browserCookes';
 import { observer } from 'mobx-react';
-import { APP_STORAGE } from '../../../../storage/AppStorage'
+import { APP_STORAGE } from '../../../../storage/AppStorage';
+
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 
 import { IWSQuery, WSQuery, IWSResult } from '../../../../../../xcore/WSQuery';
 import { WSocket } from '../../../../storage/WSocket'; 
@@ -76,15 +77,15 @@ export class AccountMenu extends React.Component<IProps> {
                 }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }} /// смещаем компонент вправо
                 >
-            <MenuItem>
+            <MenuItem >
             <Avatar /> {user.family} {user.name}
             </MenuItem>
-            <Divider />
+            <Divider sx ={{m:'16px'}} />
              
             <MenuItem  onClick={ ()=>{this.ChangeCUserData();}}>
             <ListItemIcon>
-            <CreateIcon fontSize="small" />
-            </ListItemIcon>  Изменить данные пользователя
+            <PermIdentityIcon fontSize="small"  />
+            </ListItemIcon>  Настройки профиля
             </MenuItem>
 
             <MenuItem onClick= {()=> {this.ChangePassword(); }}>
@@ -92,10 +93,11 @@ export class AccountMenu extends React.Component<IProps> {
             <LockOpenIcon fontSize="small" />
             </ListItemIcon>  Изменить пароль
             </MenuItem>
+            <Divider sx ={{m:'16px'}} />
 
-            <MenuItem onClick={ ()=>{this.onLogOut();}}>  
+            <MenuItem onClick={ ()=>{this.onLogOut();}}  sx={{color: '#266BF1'}}>  
             <ListItemIcon>
-            <Logout fontSize="small" />
+            <Logout fontSize="small" sx={{color: '#266BF1'}} />
             </ListItemIcon> Выйти 
             </MenuItem>
             </Menu>

@@ -22,7 +22,7 @@ export class DevSessCharts extends React.Component<IProps> {
 
   if(toJS(APP_STORAGE.sensors.getdataCharts()).length){
     return (
-      <ResponsiveContainer width="100%" height={600}> 
+    <ResponsiveContainer width="100%" height={600}> 
      <LineChart
       className="LineChart"
       layout="vertical"
@@ -40,8 +40,7 @@ export class DevSessCharts extends React.Component<IProps> {
       <Tooltip />
       <Legend />
 
-      <Line dataKey="град." stroke="#82ca9d" > <LabelList content={<CustomizedLabel />} /> </Line>
-       
+    <Line dataKey="град." stroke="#82ca9d" > <LabelList content={<CustomizedLabel />} /> </Line>
     </LineChart>
     </ResponsiveContainer>
     );
