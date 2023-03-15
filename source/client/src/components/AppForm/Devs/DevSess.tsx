@@ -107,11 +107,6 @@ a.click();
   }
 
   render(): React.ReactNode {
-    
-
-    
-
-
     let count_sess = [];
     var ses_depth = [];
     var ses_date = [];
