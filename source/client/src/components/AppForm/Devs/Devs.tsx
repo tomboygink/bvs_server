@@ -1,5 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
+import { CONFIG } from '../../../../../xcore/config';
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
@@ -174,7 +175,7 @@ export class Devs extends React.Component<IProps> {
 
                                      
                                       
-                                      <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open('http://127.0.0.1:3040/show-map?lng=' + gr_devs[key].longitude + '&lat=' + gr_devs[key].latitude)}}>Показать на карте
+                                      <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + gr_devs[key].longitude + '&lat=' + gr_devs[key].latitude)}}>Показать на карте
                                       
                                       <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
                                       <DirectionsIcon />

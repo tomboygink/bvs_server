@@ -22,6 +22,7 @@ import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 
 import DirectionsIcon from '@mui/icons-material/Directions';
 
+import { CONFIG } from '../../../../../xcore/config';
 
 
 interface IProps {}
@@ -171,7 +172,7 @@ export class DevLocation extends React.Component<IProps> {
 
                    </Box>
 
-                   <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open('http://127.0.0.1:3040/show-map?lng=' + gr.longitude + '&lat=' + gr.latitude)}}>Показать на карте
+                   <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + gr.longitude + '&lat=' + gr.latitude)}}>Показать на карте
                                     
                                     <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
                                     <DirectionsIcon />
@@ -278,7 +279,7 @@ export class DevLocation extends React.Component<IProps> {
 
                      </Box>
 
-                     <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open('http://127.0.0.1:3040/show-map?lng=' + gr.longitude + '&lat=' + gr.latitude)}}>Показать на карте
+                     <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + gr.longitude + '&lat=' + gr.latitude)}}>Показать на карте
                                       
                                       <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
                                       <DirectionsIcon />
