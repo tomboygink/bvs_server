@@ -13,15 +13,9 @@ import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import BusinessIcon from "@mui/icons-material/Business";
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 
-import ListItemButton from '@mui/material/ListItemButton';
-import Collapse from '@mui/material/Collapse';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
+import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 
-import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
-import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
+
 
 
 
@@ -103,6 +97,16 @@ export class AppBarLeftPanel extends React.Component<IProps> {
             </ListItemIcon>{" "}
             Пользователи
           </MenuItem>
+
+          <MenuItem
+           onClick={() => this.OpenListDev()}
+          >
+            <ListItemIcon>
+              <FolderOpenIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            Устройства
+          </MenuItem>
+
   
           <Divider light sx={{pb: 1, pt:1}} />
 
@@ -135,17 +139,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
 
           <Divider light sx={{pb: 1, pt:1}} />
 
-          <List
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-      component="nav"
-      aria-labelledby="nested-list-subheader">
    
-     
-      <ListItemButton  onClick={() => this.OpenListDev()}>
-       
-        <ListItemText primary="Устройства" />
-      </ListItemButton> 
-    </List>
         </>
       );
     }

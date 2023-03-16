@@ -112,7 +112,7 @@ for (var i in indexarray ){
 
     return (
       <>
-        { date.length && 
+        { date.length > 0 && 
     <Table key='my-table-id' id = 'my-table-id' sx={{display:'none'}} >
       <TableBody  key ={'dsafsafasfd' + 8888}>
           <TableRow  key ={'dsafsafasfd' + 1}>

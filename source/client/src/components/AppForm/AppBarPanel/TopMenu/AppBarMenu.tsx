@@ -98,7 +98,7 @@ export class AccountMenu extends React.Component<IProps> {
             <MenuItem onClick={ ()=>{this.onLogOut();}}  sx={{color: '#266BF1'}}>  
             <ListItemIcon>
             <Logout fontSize="small" sx={{color: '#266BF1'}} />
-            </ListItemIcon> Выйти 
+            </ListItemIcon> Выйти
             </MenuItem>
             </Menu>
             </React.Fragment>

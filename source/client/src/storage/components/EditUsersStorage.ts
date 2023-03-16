@@ -257,7 +257,8 @@ export class EditUsersStorage {
 
   
   async set_ChangeUser(name: string, value: any, _options?: any) {
-    
+    var sess_code = value;
+    var q: IWSQuery = new WSQuery("set_ChangeUser");
     if(this.getActive() === 1){
         this.setStateActive(false)
     }
@@ -284,7 +285,7 @@ export class EditUsersStorage {
 
        
 
-        if (this.getPassword().length < 6) {
+        if (this.getPassword().length < 7 || this.getPassword().length == 0) {
           this.setErrorPassword(true);
           this.setTextHelpPassword("используйте 6 или более символов");
         }
@@ -302,21 +303,21 @@ export class EditUsersStorage {
         ) {
           this.setErrorRepeatPassword(true);
           this.setTextHelpRepeatPassword("Пароли не совпадают");
-        } else {
+         } 
+       else if (this.getPassword() === this.getRepeatPassword() && this.getPassword().length > 6 ) {
           this.setErrorRepeatPassword(false);
           this.setTextHelpRepeatPassword("");
-          this.setErrorPassword(false);
-          this.setTextHelpPassword("");
         }
     
      
-    var sess_code = value;
+    
     if (
       this.getFamily() &&
-      this.getPassword() === this.getRepeatPassword() &&
+      this.getPassword() === this.getRepeatPassword() &&  this.getPassword().length > 6 &&
       this.getName() 
     ) { 
-    var q: IWSQuery = new WSQuery("set_ChangeUser");
+    console.log()
+    
     q.args = {
         family: this.getFamily() || "",
         name: this.getName() || "",
@@ -334,11 +335,12 @@ export class EditUsersStorage {
         users_r: this.getCheckboxRead() ,
         info: this.getInfo(),
       };
+      q.sess_code = sess_code;
+      (await WSocket.get()).send(q);
+      APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());
+      this.setModalEditUser(false)
     }
-    q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
-    APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());
-    this.setModalEditUser(false)
+ 
   }
 }
 

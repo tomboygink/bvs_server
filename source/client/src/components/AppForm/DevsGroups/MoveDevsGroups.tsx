@@ -131,17 +131,15 @@ export class MoveDevsGroups extends React.Component<IProps> {
   async SaveChangeDevsGroups(a: any) {
     if (Number(0) === Number(a)) {
       APP_STORAGE.devs_groups.setParent(String(0));
+      APP_STORAGE.devs_groups.set_ChangeDevsGroups("sess_id",APP_STORAGE.auth_form.getdt());
     }
 
-    if (APP_STORAGE.devs.getMenu_devs() === "2") {
+    if (APP_STORAGE.devs.getMenu_devs() === "2") { ////// Перемещение для устройств
       APP_STORAGE.devs.set_ChangeDevs("sess_id", APP_STORAGE.auth_form.getdt());
     }
 
-    if (APP_STORAGE.devs.getMenu_devs() === "3") {
-      APP_STORAGE.devs_groups.set_ChangeDevsGroups(
-        "sess_id",
-        APP_STORAGE.auth_form.getdt()
-      );
+    if (APP_STORAGE.devs.getMenu_devs() === "3") { ////// Перемещение дял групп устройств
+      APP_STORAGE.devs_groups.set_ChangeDevsGroups("sess_id",APP_STORAGE.auth_form.getdt());
     }
 
     setTimeout(() => {
@@ -186,7 +184,7 @@ export class MoveDevsGroups extends React.Component<IProps> {
                 mb: "12px",
               }}
             >
-              <Typography>Переместить</Typography>
+              <Typography>Переместить  { APP_STORAGE.devs_groups.getName()}</Typography>
 
               <CloseIcon
                 sx={{ color: "#1976D2" }}
@@ -252,54 +250,57 @@ export class MoveDevsGroups extends React.Component<IProps> {
               </Box>
             )}
 
-            <Box sx={{ display: "flex" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "baseline",
-                  justifyContent: "flex-end",
-                  mr: "40px",
-                }}
-                onClick={() => {
-                  APP_STORAGE.devs_groups.setParent(String(0));
-                }}
-              >
-                <Button
-                  sx={{
-                    background: "#F1F5FC",
-                    color: "#000;",
-                    mt: "18px",
-                    mb: "18px",
-                    fontSize: "12px",
-                  }}
-                >
-                  Переместить в корень
-                </Button>
-              </Box>
+ <Box sx={{ display: "flex" }}>
+ { APP_STORAGE.devs.getMenu_devs() === "3" && 
+ <Box
+   sx={{
+     display: "flex",
+     alignItems: "baseline",
+     justifyContent: "flex-end",
+     mr: "40px",
+   }}
+   onClick={() => {
+     this.SaveChangeDevsGroups(0);
+   }}
+ >
+   <Button
+     sx={{
+       background: "#F1F5FC",
+       color: "#000;",
+       mt: "18px",
+       mb: "18px",
+       fontSize: "12px",
+     }}
+   >
+     Переместить в корень
+   </Button>
+ </Box>
+ }
 
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "baseline",
-                  justifyContent: "flex-end",
-                }}
-                onClick={() => {
-                  this.SaveChangeDevsGroups(1);
-                }}
-              >
-                <Button
-                  sx={{
-                    background: "#266BF1",
-                    color: "#fff;",
-                    mt: "18px",
-                    mb: "18px",
-                    fontSize: "12px",
-                  }}
-                >
-                  Сохранить
-                </Button>
-              </Box>
-            </Box>
+<Box
+   sx={{
+     display: "flex",
+     alignItems: "baseline",
+     justifyContent: "flex-end",
+   }}
+   onClick={() => {
+     this.SaveChangeDevsGroups(1);
+   }}
+ >
+   <Button
+     sx={{
+       background: "#266BF1",
+       color: "#fff;",
+       mt: "18px",
+       mb: "18px",
+       fontSize: "12px",
+     }}
+   >
+     Сохранить
+   </Button>
+ </Box>
+ </Box>
+            
           </Box>
         </Dialog>
       </React.Fragment>

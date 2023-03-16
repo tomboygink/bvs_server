@@ -68,7 +68,7 @@ export class NewJobsTittle extends React.Component<IProps> {
 
     return (
       <React.Fragment>
-        <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+        <FormControl fullWidth size="small" sx={{ mt: "14px" }} error = {APP_STORAGE.reg_user.getErrorOrg()}>
           <InputLabel className="org" sx={{ fontSize: "12px" }}>
             Организация
           </InputLabel>
@@ -107,6 +107,8 @@ export class NewJobsTittle extends React.Component<IProps> {
           sx={{ mt: "12px", mb: "12px" }}
           inputProps={{ style: { fontSize: 12 } }} // font size of input text
           InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+          error = {APP_STORAGE.reg_user.getErrorJobs()}
+          helperText= {APP_STORAGE.reg_user.getTextHelpJobs()}
           variant="outlined"
           fullWidth
           required
@@ -157,6 +159,9 @@ export class NewJobsTittle extends React.Component<IProps> {
             Сохранить
           </Button>
         </Box>
+        {APP_STORAGE.reg_user.getResulSave().length > 0 &&
+       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> {APP_STORAGE.reg_user.getResulSave()}</Typography>
+      }
       </React.Fragment>
     );
   }

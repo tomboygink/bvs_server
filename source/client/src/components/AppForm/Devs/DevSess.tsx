@@ -124,6 +124,16 @@ a.click();
       };
     };
 
+
+    if (sess.getSessPeriodStart() === "" || sess.getSessPeriodEnd() === "") {
+  
+      var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
+      var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -8);
+      sess.setSessPeriodStart(localISOTime);
+      sess.setSessPeriodEnd(localISOTime); // => '2023-03-16T09:00'
+    }
+
+
     if (sess.getDevSession) {
       dev_sess = toJS(sess.getDevSession());
 
@@ -200,7 +210,7 @@ a.click();
               label="Начало периода"
               type="datetime-local"
               defaultValue={
-                APP_STORAGE.sensors.getSessPeriodStart() || "2023-05-24T10:30"
+                APP_STORAGE.sensors.getSessPeriodStart() || new Date().toISOString().substring(0, 10)
               }
               onChange={(e) => {
                 APP_STORAGE.sensors.setSessPeriodStart(e.target.value);
@@ -211,13 +221,14 @@ a.click();
               }}
             />
 
+
             <TextField
               size="small"
               id="datetime-local"
               label="Окончание периода"
               type="datetime-local"
               defaultValue={
-                APP_STORAGE.sensors.getSessPeriodEnd() || "2023-05-24T10:30"
+                APP_STORAGE.sensors.getSessPeriodEnd()
               }
               onChange={(e) => {
                 APP_STORAGE.sensors.setSessPeriodEnd(e.target.value);
@@ -242,20 +253,13 @@ a.click();
           >
             Установить переод
           </Button>
-          {date.length && (
-            <TableContainer sx={{ mt: "20px" }}>
-              <Table>
-                <TableBody>
-                  <TableRow key={"sensors_id"} sx={{ p: "4px" }}>
-                    <TableCell
-                      colSpan={2}
-                      sx={{ color: "#266bf1", p: "4px", fontWeight: "500" }}
-                    >
-                      СЕССИИ ЗА ПЕРИОД: (кол-во: {count})
-                    </TableCell>
-                    <TableCell sx={{ width: "80px", p: "4px" }}></TableCell>
-                  </TableRow>
 
+          {date.length > 0 && (
+            <> 
+            <Typography  sx={{ color: "#266bf1", p: "4px", fontWeight: "500" }}> СЕССИИ ЗА ПЕРИОД: (кол-во: {count})</Typography>
+            <TableContainer sx={{ mt: "20px", height: '200px' }}>
+              <Table >
+                <TableBody>
                   {date.map((row: any, i: any) => (
                     <TableRow
                       key={"key_row" + row.id}
@@ -280,7 +284,9 @@ a.click();
                 </TableBody>
               </Table>
 
-              <Button
+           
+            </TableContainer>
+            <Button
                 className="setDevSess"
                 sx={{
                   background: "#038F54",
@@ -324,13 +330,14 @@ a.click();
                   }}
                 />
               </Button>
-            </TableContainer>
+            </>
+       
           )}
         </Box>
 
         <CustomExport />
 
-        {ses_depth.length && (
+        {ses_depth.length > 0 && (
           <>
             <Typography
               sx={{
@@ -364,6 +371,7 @@ a.click();
             </Table>
           </>
         )}
+
         <DevSessCharts />
       </React.Fragment>
     );

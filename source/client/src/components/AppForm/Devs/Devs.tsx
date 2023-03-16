@@ -160,6 +160,10 @@ export class Devs extends React.Component<IProps> {
 
                                       <Typography sx={{ color: "#000", fontWeight: "600" }}>
                                        Название устройства - {gr_devs[key].name}{" "}
+                                      </Typography> 
+
+                                      <Typography sx={{ color: "#000"}}>
+                                       Номер устройства - {gr_devs[key].number}{" "}
                                       </Typography>  
 
                                     
