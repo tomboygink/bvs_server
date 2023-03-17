@@ -59,7 +59,7 @@ var Dev_sessTable = (function () {
     }
     Dev_sessTable.prototype.selectDevSess = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var dev_sess, start_date, end_date, db_res, result, i;
+            var dev_sess, start_date, end_date, db_res, result, i, tzoffset;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -79,10 +79,11 @@ var Dev_sessTable = (function () {
                         db_res = _a.sent();
                         result = new Array();
                         for (i in db_res.rows) {
+                            tzoffset = (new Date()).getTimezoneOffset() * 60000;
                             dev_sess = {
                                 id: db_res.rows[i].id,
-                                time_dev: new Date(db_res.rows[i].time_dev).toISOString().slice(0, 19).replace('T', ' '),
-                                time_srv: new Date(db_res.rows[i].time_srv).toISOString().slice(0, 19).replace('T', ' '),
+                                time_dev: (new Date(db_res.rows[i].time_dev - tzoffset)).toISOString().slice(0, -1),
+                                time_srv: (new Date(db_res.rows[i].time_srv - tzoffset)).toISOString().slice(0, -1),
                                 dev_number: db_res.rows[i].dev_number,
                                 dev_id: db_res.rows[i].dev_id,
                                 level_akb: db_res.rows[i].level_akb,

@@ -28,9 +28,16 @@ export class DevSess extends React.Component<IProps> {
   async handleExportExel() {
     var XLSX = require("xlsx");
     var table_elt = document.getElementById("my-table-id");
+    // var wb = XLSX.utils.table_to_book(table_elt, { sheet: "Sheet JS" });
+    // var ws1 = wb.Sheets[wb.SheetNames[0]];
+    // var data = XLSX.utils.sheet_to_row_object_array(ws1, {'date_format':'m/d/yy h:mm'});
+    
     var workbook = XLSX.utils.table_to_book(table_elt);
+ 
+   // var rrrr = XLSX.utils.table_to_book(data, { strip: true, FS: "|" });
     XLSX.writeFile(workbook, "Report.xlsx");
   }
+
 
   async handleExportCSV() {
     var XLSX = require("xlsx");
@@ -273,12 +280,13 @@ a.click();
                       <TableCell sx={{ p: "4px" }}> {"" + i} </TableCell>
                       <TableCell sx={{ p: "4px" }}>
                         {" "}
-                        {"" + row.time_dev}{" "}
+                        {"" + row.time_dev.replace('T', ' ')}{" "}
                       </TableCell>
                       <TableCell sx={{ p: "4px" }}>
                         {" "}
                         {"" + row.level_akb}{" "}
                       </TableCell>
+                    
                     </TableRow>
                   ))}
                 </TableBody>

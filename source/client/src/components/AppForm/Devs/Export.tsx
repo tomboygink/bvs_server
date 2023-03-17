@@ -64,13 +64,13 @@ export class CustomExport extends React.Component<IProps> {
             <TableCell sx = {{p: '4px'}}> {'' + row.data} </TableCell>
             ))
          )
-
+    
         date.push( 
          
         <TableRow key={'row' + dev_sess[key].id} id={'row' + dev_sess[key].id} sx = {{p: '4px'}}>
         <TableCell  sx = {{p: '4px'}} > {'' + dev_sess[key].dev_number} </TableCell>
-        <TableCell sx = {{p: '4px'}} > {'' + dev_sess[key].time_dev} </TableCell>
-        <TableCell  sx = {{p: '4px'}} > {'' + dev_sess[key].time_srv} </TableCell>
+        <TableCell sx = {{p: '4px'}} > {'' + dev_sess[key].time_dev.replace('T', '|')} </TableCell>
+        <TableCell  sx = {{p: '4px'}} > {'' + dev_sess[key].time_srv.replace('T', '|')} </TableCell>
         <TableCell  sx = {{p: '4px'}}> {'' + dev_sess[key].level_akb} </TableCell>
           {
           senso.s.map((row : any, i : any) => (
@@ -81,7 +81,6 @@ export class CustomExport extends React.Component<IProps> {
           }
 
        </TableRow>
-       
         )    
      }
 
