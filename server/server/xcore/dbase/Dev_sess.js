@@ -82,8 +82,8 @@ var Dev_sessTable = (function () {
                             tzoffset = (new Date()).getTimezoneOffset() * 60000;
                             dev_sess = {
                                 id: db_res.rows[i].id,
-                                time_dev: (new Date(db_res.rows[i].time_dev - tzoffset)).toISOString().slice(0, -1),
-                                time_srv: (new Date(db_res.rows[i].time_srv - tzoffset)).toISOString().slice(0, -1),
+                                time_dev: (new Date(db_res.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
+                                time_srv: (new Date(db_res.rows[i].time_srv - tzoffset)).toISOString().slice(0, -8),
                                 dev_number: db_res.rows[i].dev_number,
                                 dev_id: db_res.rows[i].dev_id,
                                 level_akb: db_res.rows[i].level_akb,

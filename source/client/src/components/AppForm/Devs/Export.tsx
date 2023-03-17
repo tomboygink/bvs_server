@@ -72,6 +72,8 @@ export class CustomExport extends React.Component<IProps> {
         <TableCell sx = {{p: '4px'}} > {'' + dev_sess[key].time_dev.replace('T', '|')} </TableCell>
         <TableCell  sx = {{p: '4px'}} > {'' + dev_sess[key].time_srv.replace('T', '|')} </TableCell>
         <TableCell  sx = {{p: '4px'}}> {'' + dev_sess[key].level_akb} </TableCell>
+
+        
           {
           senso.s.map((row : any, i : any) => (
             <React.Fragment key={"_gr_id_key_sess" + row.depth}>
