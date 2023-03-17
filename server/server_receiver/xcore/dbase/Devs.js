@@ -64,9 +64,12 @@ var DevsTable = (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT number FROM devs")];
+                    case 0: return [4, this.db.query("SELECT number FROM devs WHERE number = '" + this.args.number + "'")];
                     case 1:
                         data = _a.sent();
+                        console.log(data.rows);
+                        console.log(data.rows.some(function (e) { return e.number !== _this.args.number; }));
+                        console.log(data.rows.length === 0);
                         if (!(data.rows.some(function (e) { return e.number !== _this.args.number; }) || data.rows.length === 0)) return [3, 3];
                         return [4, this.db.query("SELECT AddDevs(CAST(" + this.args.group_dev_id + " AS BIGINT), " +
                                 "CAST('" + this.args.number + "' AS VARCHAR(80))," +
