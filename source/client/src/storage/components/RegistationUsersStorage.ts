@@ -56,6 +56,7 @@ export class ModalLeftPanel {
   @observable texthelp_password: string = "";
   @observable error_repeat_password: boolean = false;
   @observable texthelp_repeat_password: string = "";
+  
 
   //////////////////////добавление организации
 
@@ -68,6 +69,10 @@ export class ModalLeftPanel {
   @observable info_org: string = "";
 
   //////////////////////добавление должности
+  @observable error_org: boolean = false;
+  @observable texthelp_org: string = "";
+  @observable error_jobs: boolean = false;
+  @observable texthelp_jobs: string = "";
 
   @observable jobs_titles_new: string = "";
 
@@ -183,31 +188,15 @@ export class ModalLeftPanel {
   @action setTextHelpTelephone(val: string) {this.texthelp_telephone = val;}
   @computed getTextHelpTelephone(): string {return this.texthelp_telephone;}
 
-  @action setErrorLogin(val: boolean) {
-    this.error_login = val;
-  }
-  @computed getErrorLogin(): boolean {
-    return this.error_login;
-  }
-  @action setTextHelpLogin(val: string) {
-    this.texthelp_login = val;
-  }
-  @computed getTextHelpLogin(): string {
-    return this.texthelp_login;
-  }
+  @action setErrorLogin(val: boolean) {this.error_login = val;}
+  @computed getErrorLogin(): boolean {return this.error_login;}
+  @action setTextHelpLogin(val: string) {this.texthelp_login = val;}
+  @computed getTextHelpLogin(): string {return this.texthelp_login;}
   /// проверка , если такой логин уже есть
-  @action setErrorLoginDouble(val: boolean) {
-    this.error_login_double = val;
-  }
-  @computed getErrorLoginDouble(): boolean {
-    return this.error_login_double;
-  }
-  @action setTextHelpLoginDouble(val: string) {
-    this.texthelp_login_double = val;
-  }
-  @computed getTextHelpLoginDouble(): string {
-    return this.texthelp_login_double;
-  }
+  @action setErrorLoginDouble(val: boolean) {this.error_login_double = val;}
+  @computed getErrorLoginDouble(): boolean {return this.error_login_double;}
+  @action setTextHelpLoginDouble(val: string) {this.texthelp_login_double = val;}
+  @computed getTextHelpLoginDouble(): string {return this.texthelp_login_double;}
 
   @action setErrorPassword(val: boolean) {this.error_password = val;}
   @computed getErrorPassword(): boolean {return this.error_password;}
@@ -224,8 +213,7 @@ export class ModalLeftPanel {
   @action setFullNameOrg(val: string) {this.full_name_org = val;}
   @computed getFullNameOrg(): string {return this.full_name_org;}
 
-  @action setNameOrg(val: string) {this.name_org = val;
-  }
+  @action setNameOrg(val: string) {this.name_org = val;}
   @computed getNameOrg(): string {return this.name_org;}
 
   @action setInn(val: string) {this.inn = val;}
@@ -284,6 +272,18 @@ export class ModalLeftPanel {
 
   @action setResulSave(val: string) {this.result_save = val;}
   @computed getResulSave(): string {return this.result_save;}
+
+  ////Добавление должности
+
+  @action setErrorOrg(val: boolean) {this.error_org = val;} /// проверка адреса на ввод данных (только цифры)
+  @computed getErrorOrg(): boolean {return this.error_org;}
+  @action setTextHelpOrg(val: string) {this.texthelp_org = val; }
+  @computed getTextHelpOrg(): string {return this.texthelp_org;}
+
+  @action setErrorJobs(val: boolean) {this.error_jobs = val;} /// проверка адреса на ввод данных (только цифры)
+  @computed getErrorJobs(): boolean {return this.error_jobs;}
+  @action setTextHelpJobs(val: string) {this.texthelp_jobs = val; }
+  @computed getTextHelpJobs(): string {return this.texthelp_jobs;}
 
 
   async get_AllUsers(name: string, value: any, _options?: any) {/* -----  Отправляем запрос на получение всех пользователей   */
@@ -592,6 +592,23 @@ export class ModalLeftPanel {
   async set_NewJobTitle(name: string, value: any, _options?: any) {
     var sess_code = value; ////// передаем код сессии
 
+   if(this.getKeyOrg() === null){
+    this.setErrorOrg(true);
+   }
+   else{
+    this.setErrorOrg(false);
+   }
+
+   if(this.getNewJobsTitles() === ''){
+    this.setErrorJobs(true);
+    this.setTextHelpJobs('Обязательные поля должны быть заполнены')
+   }
+   else{
+    this.setErrorJobs(false);
+    this.setTextHelpJobs('')
+   }
+
+   if(this.getKeyOrg() !== null && this.getNewJobsTitles() !== '') {
     var q: IWSQuery = new WSQuery("set_NewJobTitle");
     q.args = {
       id_org: this.getKeyOrg() || "",
@@ -600,6 +617,14 @@ export class ModalLeftPanel {
     };
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);
-     this.setModalRegUser(false) 
+
+     this.setResulSave('Данные успешно сохранены')
+      
+     setTimeout(() => {
+       this.setResulSave('');
+       this.setModalRegUser(false);
+     }, 2000);
+   }
+    
   }
 }

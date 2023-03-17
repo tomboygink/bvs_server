@@ -52,9 +52,13 @@ export class MenuDevs extends React.Component<IProps> {
         if (
           "_dev_id_key_" + gr_devs[key].id === APP_STORAGE.devs.getIdChild()
         ) {
+
+          
           dev.setNumber(String(gr_devs[key].number));
           devGr.setParentId('key-09');
           dev.setName(String(gr_devs[key].name));
+          APP_STORAGE.devs_groups.setName(gr_devs[key].name);
+          APP_STORAGE.devs_groups.setKeyOrg(gr.org_id)
           dev.setLongitude(String(gr_devs[key].longitude));
           dev.setLatitude(String(gr_devs[key].latitude));
           dev.setInfo(String(gr_devs[key].info));

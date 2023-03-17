@@ -50,12 +50,10 @@ export class DevLocation extends React.Component<IProps> {
   }
 
   async moveDeviceLocation(a: any) {
-    APP_STORAGE.devs.setMenu_devs(a);
+    APP_STORAGE.devs.setMenu_devs(a)
     APP_STORAGE.devs_groups.setOpen_menu(false);
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
-     
-
     return this.getValueMove(DevGr);
   }
 
@@ -73,6 +71,7 @@ export class DevLocation extends React.Component<IProps> {
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
         APP_STORAGE.devs_groups.setName(String(gr.g_name));
+        
         APP_STORAGE.devs_groups.setLongitude(String(gr.longitude));
         APP_STORAGE.devs_groups.setLatitude(String(gr.latitude));
         APP_STORAGE.devs_groups.setInfo(String(gr.g_info));
@@ -107,6 +106,7 @@ export class DevLocation extends React.Component<IProps> {
       APP_STORAGE.setdevs_group_move(array);
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
+        APP_STORAGE.devs_groups.setKeyOrg(gr.org_id)
         APP_STORAGE.devs_groups.setParentId(String(gr.id));
         APP_STORAGE.devs_groups.setParent(String(gr.parent_id));
         APP_STORAGE.devs_groups.setName(gr.g_name);
@@ -123,7 +123,6 @@ export class DevLocation extends React.Component<IProps> {
 
 
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
-    let array_parentid = [];
     let parent: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];

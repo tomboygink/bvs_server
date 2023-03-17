@@ -65,7 +65,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
           <React.Fragment key={"_dev_id_key_" + dev.id}>
             <TreeItem
               nodeId={"_dev_id_key_" + dev.id}
-              label={dev.name}
+              label={dev.number}
               icon={<CrisisAlertIcon fontSize="small" sx={{color: '#4681F5'}}/>}
               sx={{ color: "#002757" }}></TreeItem>
           </React.Fragment>
@@ -79,7 +79,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
         <React.Fragment key={"_dev_id_key_" + dev.id}>
           <TreeItem
             nodeId={"_dev_id_key_" + dev.id}
-            label={dev.name}
+            label={dev.number}
             icon={<CrisisAlertIcon fontSize="small" sx={{color: '#266BF1'}}/>}
             sx={{ color: "#266BF1" }}></TreeItem>
         </React.Fragment>
@@ -179,8 +179,8 @@ export class DevsGroupsTree extends React.Component<IProps> {
       <React.Fragment>
          <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px'}}>
               {" "}
-              Проводник{" "}
-            </Typography>
+              Список устройств{" "}
+          </Typography>
           <Box
            sx={{
               background: "#fff",
@@ -191,7 +191,6 @@ export class DevsGroupsTree extends React.Component<IProps> {
             <TreeView
               className="wrapper_treeviw"
               onNodeSelect={handleChange}
-              defaultExpanded={["1", '2', '3', '4', '5']}
               aria-label="customized"
               sx={{ flexGrow: 1, maxWidth: 400,overflow: 'auto'}}>
               

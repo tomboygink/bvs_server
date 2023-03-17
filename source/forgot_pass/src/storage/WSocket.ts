@@ -31,9 +31,6 @@ import { FORGOT_PASS } from './ForgotPass';
         this.socket.onopen = function(e){
             WSocket.__this.isConnected = true;
         };
-
-      
-
     }
 
     async __wait(){

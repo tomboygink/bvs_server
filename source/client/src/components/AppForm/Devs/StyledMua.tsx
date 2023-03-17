@@ -91,6 +91,7 @@ export const handleChange = async (event: any, node: any) => {
   APP_STORAGE.sensors.setDevSession(null);
    if(node.includes('_dev_id_') === false){
     APP_STORAGE.devs_groups.setParentId(node);
+    APP_STORAGE.main.setTitle("Показания устройств");
     APP_STORAGE.devs.setIdDevs(node);
     APP_STORAGE.devs_groups.setMiddleForm(1);
    }
