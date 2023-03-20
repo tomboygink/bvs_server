@@ -11,10 +11,12 @@ import { TableCell } from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 
+import { TablePagination } from '@mui/material';
+import EnhancedTable  from './TAbleDevs'
+
 import { DevSessCharts } from "../Sensors/DevSessCharts";
 import { CustomExport } from "./Export";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
-import { truncate } from "fs";
 
 interface IProps {}
 
@@ -197,8 +199,14 @@ a.click();
 
     return (
       <React.Fragment>
+         {date.length > 0 && (
         <Box className="wrappert-devs" sx={{ mt: "20px" }}>
-          <Typography
+       
+
+
+         
+            <> 
+               <Typography
             sx={{
               fontSize: "12px",
               color: "#AAAAAA",
@@ -207,64 +215,10 @@ a.click();
             }}
           >
             {" "}
-            Выборка сессий устройства по периоду{" "}
+            Таблица сессий по периоду
           </Typography>
-
-          <Box sx={{ display: "flex" }}>
-            <TextField
-              size="small"
-              id="datetime-local"
-              label="Начало периода"
-              type="datetime-local"
-              defaultValue={
-                APP_STORAGE.sensors.getSessPeriodStart() || new Date().toISOString().substring(0, 10)
-              }
-              onChange={(e) => {
-                APP_STORAGE.sensors.setSessPeriodStart(e.target.value);
-              }}
-              sx={{ width: 250, mr: "22px", mt: "12px", mb: "12px" }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-
-
-            <TextField
-              size="small"
-              id="datetime-local"
-              label="Окончание периода"
-              type="datetime-local"
-              defaultValue={
-                APP_STORAGE.sensors.getSessPeriodEnd()
-              }
-              onChange={(e) => {
-                APP_STORAGE.sensors.setSessPeriodEnd(e.target.value);
-              }}
-              sx={{ width: 250, mt: "12px", mb: "12px" }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Box>
-
-          <Button
-            className="setDevSess"
-            sx={{
-              background: "#266BF1",
-              color: "#fff;",
-              fontSize: "12px",
-            }}
-            onClick={() => {
-              this.setDevSess();
-            }}
-          >
-            Установить переод
-          </Button>
-
-          {date.length > 0 && (
-            <> 
             <Typography  sx={{ color: "#266bf1", p: "4px", fontWeight: "500" }}> СЕССИИ ЗА ПЕРИОД: (кол-во: {count})</Typography>
-            <TableContainer sx={{ mt: "20px", height: '200px' }}>
+             <TableContainer sx={{ mt: "20px", height: '200px' }}>
               <Table >
                 <TableBody>
                   {date.map((row: any, i: any) => (
@@ -294,6 +248,9 @@ a.click();
 
            
             </TableContainer>
+
+            {/* <EnhancedTable/> */}
+     
             <Button
                 className="setDevSess"
                 sx={{
@@ -340,9 +297,9 @@ a.click();
               </Button>
             </>
        
-          )}
+         
         </Box>
-
+ )}
         <CustomExport />
 
         {ses_depth.length > 0 && (
@@ -377,7 +334,9 @@ a.click();
                 </TableRow>
               </TableBody>
             </Table>
+          
           </>
+
         )}
 
         <DevSessCharts />

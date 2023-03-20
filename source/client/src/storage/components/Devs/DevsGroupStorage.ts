@@ -139,6 +139,9 @@ export class DevsGroupStorage{
 
     
     async set_NewDevGroup(name: string, value: any, _options?: any) { ///////// Добавляем новое расположение устройств
+
+      
+
         var sess_code = value;
         var q:IWSQuery = new WSQuery("set_NewDevGroup");
         
@@ -149,7 +152,7 @@ export class DevsGroupStorage{
 
         if( this.getName() !== ''){
           this.setNameError(false);
-          this.setNameError_mess('')
+          this.setNameError_mess('');
         }
 
 
@@ -181,7 +184,7 @@ export class DevsGroupStorage{
 
         if(this.getName() !== '' && this.getLatitude() !== '' && this.getLongitude() !== '' && this.getKeyOrg() !== ''){
           q.args = {
-            g_name: this.getName() || '',
+            g_name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '',
             latitude:this.getLatitude() || '', 
             longitude:this.getLongitude() || '', 
             org_id:this.getKeyOrg() || '',

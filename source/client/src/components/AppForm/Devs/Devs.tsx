@@ -38,6 +38,8 @@ export class Devs extends React.Component<IProps> {
 
             if ("_dev_id_key_" + gr_devs[key].id === dev.getIdChild()) {
               APP_STORAGE.sensors.setNumber(gr_devs[key].number);
+              let longitude = gr_devs[key].longitude;
+              let latitude = gr_devs[key].latitude;
 
                   if (gr_devs[key].deleted === true) {
 
@@ -179,7 +181,7 @@ export class Devs extends React.Component<IProps> {
 
                                      
                                       
-                                      <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + gr_devs[key].longitude + '&lat=' + gr_devs[key].latitude)}}>Показать на карте
+                                      <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude + '&lat=' + latitude)}}>Показать на карте
                                       
                                       <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
                                       <DirectionsIcon />
@@ -213,7 +215,7 @@ export class Devs extends React.Component<IProps> {
   render(): React.ReactNode {
     return (
       <>
-         <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px'}}>
+         <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px', mt: '72px'}}>
               {" "}
               Данные по устройству{" "}
          </Typography>

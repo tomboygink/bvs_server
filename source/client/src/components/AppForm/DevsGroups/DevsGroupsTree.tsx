@@ -137,7 +137,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
                   nodeId={String(gr.id)}
                   label={gr.g_name}
                   icon={icon}
-                  sx={{ color: "#222", borderLeft: '1px solid #c1c1c1' }}
+                  sx={{ color: "#222", borderLeft: '1px solid #c1c1c1' ,  fontSize: '14px'}}
                 >
                   {childs}
                 </TreeItem>
@@ -154,7 +154,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
                   nodeId={String(gr.id)}
                   label={gr.g_name}
                   icon= {<FolderIcon fontSize="small" sx={{ color: "#808080"}} />}
-                  sx={{ color: "#808080", borderLeft: '1px solid #c1c1c1' }}
+                  sx={{ color: "#808080", borderLeft: '1px solid #c1c1c1',  fontSize: '14px' }}
                 >
                   {childs}
                 </TreeItem>
