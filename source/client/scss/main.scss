@@ -165,7 +165,15 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   background: #F1F5FC;
   border-radius: 5px;
 }
+.move_devtree::-webkit-scrollbar {
+  width: 4px;
+  background-color: #fff;
+} 
 
+.move_devtree::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: #c8cdd3;
+}
 
 .css-g7pccu-MuiTreeView-root::-webkit-scrollbar {
   width: 4px;

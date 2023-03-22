@@ -313,6 +313,9 @@ export class AddNewDevModal extends React.Component<IProps> {
                 Сохранить
               </Button>
             </Box>
+            {APP_STORAGE.devs.getResulSave().length > 0 &&
+       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> {APP_STORAGE.devs.getResulSave()}</Typography>
+      }
           </Box>
         </Dialog>
       </React.Fragment>

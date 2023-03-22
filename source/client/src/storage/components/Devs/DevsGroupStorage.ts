@@ -25,6 +25,8 @@ export class DevsGroupStorage{
     @observable parent : string = '';
     
     @observable select_parent_id : string = ''; ///перепроверить и переименовать элемент 
+
+    @observable result_save:string = ''; ////// Результат сохранения
      
     ////////////////////////////////////////////Проверка
  
@@ -52,6 +54,10 @@ export class DevsGroupStorage{
     constructor(){
         makeAutoObservable(this);
     }
+
+    @action setResulSave(val: string) {this.result_save = val;}
+    @computed getResulSave(): string {return this.result_save;} /////Результат сохранения
+
 
     @action setSearch (val: any) {this.search = val}
     @computed getSearch(): any {return this.search}
@@ -139,9 +145,6 @@ export class DevsGroupStorage{
 
     
     async set_NewDevGroup(name: string, value: any, _options?: any) { ///////// Добавляем новое расположение устройств
-
-      
-
         var sess_code = value;
         var q:IWSQuery = new WSQuery("set_NewDevGroup");
         
@@ -195,8 +198,22 @@ export class DevsGroupStorage{
          }; 
           q.sess_code = sess_code;
          (await WSocket.get()).send(q); 
-          this.setOpenModal(false)
 
+         this.setResulSave('Данные успешно сохранены')
+         setTimeout(() => {
+           this.setResulSave('');
+           this.setKeyOrg('');
+           this.setOpenModal(false);
+           this.setName('');
+           this.setNameError(false);
+           this.setNameError_mess('');
+           this.setLongitude('');
+           this.setLongitudeError(false);
+           this.setLongitudeError_mess('')
+           this.setLatitude('');
+           this.setLatitudeError(false);
+           this.setLatitudeError_mess('');
+         }, 2000)
          }
        }
 
@@ -291,7 +308,7 @@ export class DevsGroupStorage{
         q.args = {
             id: Number(this.getParentId()) || "",
             parent_id: Number(this.getParent()) || 0,
-            name: this.getName() || "",
+            name: this.getName().replace(/"([^"]*)"/g, '«$1»') || "",
             latitude: this.getLatitude() || "",
             longitude: this.getLongitude() || "",
             org_id : Number(this.getKeyOrg()),
@@ -302,7 +319,14 @@ export class DevsGroupStorage{
         
         q.sess_code = sess_code;
         (await WSocket.get()).send(q);
-        this.setOpenModalChDevsGr(false);
+
+        this.setResulSave('Данные успешно сохранены')
+        setTimeout(() => {
+          this.setResulSave('');
+          this.setKeyOrg('');
+          this.setOpenModalChDevsGr(false);
+          this.setOpenModalMoveDevsGr(false)
+        }, 2000)  
       }
     }
 

@@ -274,6 +274,9 @@ export class ChangeDevsGroups extends React.Component<IProps> {
                 Сохранить
               </Button>
             </Box>
+            {APP_STORAGE.devs_groups.getResulSave().length > 0 &&
+       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> {APP_STORAGE.devs_groups.getResulSave()}</Typography>
+      }
           </Box>
         </Dialog>
       </React.Fragment>
