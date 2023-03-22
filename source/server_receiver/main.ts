@@ -2,7 +2,7 @@ console.log("Hello server receiver");
 import net from 'net';
 
 //Импорт парсера
-import{ServerData} from "./datas"
+import { ServerData } from "./datas"
 
 export class Server_Receiver {
 
@@ -62,13 +62,18 @@ export class Server_Receiver {
                 if (data_str.length > 500) {
                     data_str = data_str.substr(0, 500);
                     socket.write('505', () => { if (this.debug) console.log(s_ind, " << !505!"); });
-                    //console.log("!!! SEND ERROR 505 !!!");
+
                     socket.end();
                 } else {
-                    if (data_str.length < 1) { socket.write('25', () => { if (this.debug) console.log(s_ind, " << !25!"); }); return; }
-                    if (data_str === "10") { socket.write('30', () => { if (this.debug) console.log(s_ind, " << 10 -> !30!"); }); return; }
-                    if (data_str.trim() === 'TEST') { socket.write('TEST - OK', () => { if (this.debug) console.log(s_ind, " << TEST -> !TEST - OK!"); }); return; }
-                    socket.write('20', () => { if (this.debug) console.log(s_ind, " << !20!"); });
+                    if (data_str[1] + data_str[2] + data_str[3] + data_str[4] === 'Time'|| data_str[0] + data_str[1]==='10'|| data_str[1] + data_str[2] + data_str[3] + data_str[4] === 'TEST') {
+
+                        if (data_str.length < 1) { socket.write('25', () => { if (this.debug) console.log(s_ind, " << !25!"); }); return; }
+                        if (data_str === "10") { socket.write('30', () => { if (this.debug) console.log(s_ind, " << 10 -> !30!"); }); return; }
+                        if (data_str.trim() === 'TEST') { socket.write('TEST - OK', () => { if (this.debug) console.log(s_ind, " << TEST -> !TEST - OK!"); }); return; }
+                        socket.write('20', () => { if (this.debug) console.log(s_ind, " << !20!"); });
+                    }
+                    else{socket.end();}
+
                 }
 
                 //отправляем на парсер

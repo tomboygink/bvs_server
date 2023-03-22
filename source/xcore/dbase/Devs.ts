@@ -26,12 +26,6 @@ export class DevsTable {
     async insertDevs(): Promise<DevsEntity[]> {
         var data = await this.db.query("SELECT number FROM devs WHERE number = '"+this.args.number+"'");
 
-        console.log(data.rows);
-        console.log(data.rows.some(e => e.number !== this.args.number));
-        console.log(data.rows.length === 0);
-
-
-
         if (data.rows.some(e => e.number !== this.args.number) || data.rows.length === 0) {
 
             var db_res = await this.db.query("SELECT AddDevs(CAST(" + this.args.group_dev_id + " AS BIGINT), " +
