@@ -93,23 +93,28 @@ var Server_Receiver = (function () {
                                 socket.end();
                             }
                             else {
-                                if (data_str.length < 1) {
-                                    socket.write('25', function () { if (_this.debug)
-                                        console.log(s_ind, " << !25!"); });
-                                    return;
+                                if (data_str[1] + data_str[2] + data_str[3] + data_str[4] === 'Time' || data_str[0] + data_str[1] === '10' || data_str[1] + data_str[2] + data_str[3] + data_str[4] === 'TEST') {
+                                    if (data_str.length < 1) {
+                                        socket.write('25', function () { if (_this.debug)
+                                            console.log(s_ind, " << !25!"); });
+                                        return;
+                                    }
+                                    if (data_str === "10") {
+                                        socket.write('30', function () { if (_this.debug)
+                                            console.log(s_ind, " << 10 -> !30!"); });
+                                        return;
+                                    }
+                                    if (data_str.trim() === 'TEST') {
+                                        socket.write('TEST - OK', function () { if (_this.debug)
+                                            console.log(s_ind, " << TEST -> !TEST - OK!"); });
+                                        return;
+                                    }
+                                    socket.write('20', function () { if (_this.debug)
+                                        console.log(s_ind, " << !20!"); });
                                 }
-                                if (data_str === "10") {
-                                    socket.write('30', function () { if (_this.debug)
-                                        console.log(s_ind, " << 10 -> !30!"); });
-                                    return;
+                                else {
+                                    socket.end();
                                 }
-                                if (data_str.trim() === 'TEST') {
-                                    socket.write('TEST - OK', function () { if (_this.debug)
-                                        console.log(s_ind, " << TEST -> !TEST - OK!"); });
-                                    return;
-                                }
-                                socket.write('20', function () { if (_this.debug)
-                                    console.log(s_ind, " << !20!"); });
                             }
                             var srv_datas = new datas_1.ServerData(data_str, s_ind);
                             srv_datas.Run();

@@ -24,14 +24,16 @@ export class ServerData {
             console.log(this.s_ind, "\x1b[0m >> " + this.data_str);
             //разбираем строку формата csv
             var dt_arr_0 = this.data_str.split(",");
+          
             for (var d in dt_arr_0) {
                 if (dt_arr_0[d].trim() != '') {
                     this.data_arr.push(dt_arr_0[d].trim());
                 }
             }
+            
 
             //Ошибка данных для парсера
-            if (this.data_arr.length < 2) {
+            if (this.data_arr.length <= 2) {
                 console.log(this.s_ind, "\x1b[31m >>", this.data_str);
                 return;
             }

@@ -60,7 +60,7 @@ var ServerData = (function () {
                                 this.data_arr.push(dt_arr_0[d].trim());
                             }
                         }
-                        if (this.data_arr.length < 2) {
+                        if (this.data_arr.length <= 2) {
                             console.log(this.s_ind, "\x1b[31m >>", this.data_str);
                             return [2];
                         }

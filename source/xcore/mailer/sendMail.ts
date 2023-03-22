@@ -22,7 +22,7 @@ export class SendMail {
             secure: true, // true for 465, false for other ports
             auth: {
                 user: 'noreplay@bvs45.ru', // generated ethereal user
-                pass: 'f2R2Ny8P' // generated ethereal password
+                pass: 'TH0TMx2F' // generated ethereal password
             }
         });
 
@@ -33,7 +33,8 @@ export class SendMail {
             subject: 'Activate mail',
             //Отправка ссылки с кодом для подтверждения
             //html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://127.0.0.1:3040/confirm_mail?code= '+ a +'">Click this link</a></h1> and paste this code <b>'+ crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login+"_"+this.args.email).digest('hex')+'</b>',
-            html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://127.0.0.1:3040/confirm_mail?code= '+ a +'">Click this link</a></h1>',
+            //html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://127.0.0.1:3040/confirm_mail?code= '+ a +'">Click this link</a></h1>',
+            html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://'+CONFIG.host+':'+CONFIG.port+'/confirm_mail?code= '+ a +'">Click this link</a></h1>',
         })
 
     }
@@ -48,7 +49,7 @@ export class SendMail {
             secure: true, // true for 465, false for other ports
             auth: {
                 user: 'noreplay@bvs45.ru', // generated ethereal user
-                pass: 'f2R2Ny8P' // generated ethereal password
+                pass: 'TH0TMx2F' // generated ethereal password
             }
         });
         
@@ -60,8 +61,8 @@ export class SendMail {
             //Отправка ссылки с кодом для подтверждения
             //html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://127.0.0.1:3040/confirm_mail?code= '+ a +'">Click this link</a></h1> and paste this code <b>'+ crypto.createHmac('sha256', CONFIG.key_code).update(this.args.login+"_"+this.args.email).digest('hex')+'</b>',
             //html: 'This message was sent from bvs_server to reset your password, paste this code <b>'+data+'</b>',
-
-            html: 'This message was sent from bvs_server to reset your password. <h1><a href="http://127.0.0.1:3040/forgot_pass?code= '+ data[0].re_password_code +'">Click this link</a></h1>',
+            //html: 'This message was sent from bvs_server to reset your password. <h1><a href="http://127.0.0.1:3040/forgot_pass?code= '+ data[0].re_password_code +'">Click this link</a></h1>',
+            html: 'This message was sent from bvs_server to reset your password. <h1><a href="http://'+CONFIG.host+':'+CONFIG.port+'/forgot_pass?code= '+ data[0].re_password_code +'">Click this link</a></h1>',
         })
     }
 }
