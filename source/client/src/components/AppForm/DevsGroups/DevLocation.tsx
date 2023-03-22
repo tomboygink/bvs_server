@@ -142,6 +142,8 @@ export class DevLocation extends React.Component<IProps> {
       );
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
+        let longitude = gr.longitude;
+        let latitude = gr.latitude;
         if (gr.deleted === true) { ////////////////////////////////////////////////////////Если устройство не удаленно 
           parent.push(
             <React.Fragment key={String(gr.id)}>
@@ -171,12 +173,13 @@ export class DevLocation extends React.Component<IProps> {
 
                    </Box>
 
-                   <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + gr.longitude + '&lat=' + gr.latitude)}}>Показать на карте
+                   <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude + '&lat=' + latitude)}}>2222Показать на карте
                                     
                                     <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
                                     <DirectionsIcon />
                                     </IconButton>
-                                    </Link>                </Box>
+                                    </Link> 
+                                    </Box>
 
                 </Box>
                 {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 && (
@@ -278,7 +281,7 @@ export class DevLocation extends React.Component<IProps> {
 
                      </Box>
 
-                     <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + gr.longitude + '&lat=' + gr.latitude)}}>Показать на карте
+                     <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude + '&lat=' + latitude)}}>Показать на карте
                                       
                                       <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
                                       <DirectionsIcon />

@@ -216,8 +216,7 @@ export class DevsStorage {
 
   async set_NewDevs(name: string, value: any, _options?: any) {
 
-    
-       if (this.getNumber() === '') {
+      if (this.getNumber() === '') {
       this.setNumberError(true);
       this.setNumberError_mess('Поле не может быть пустым');
     }
@@ -265,8 +264,8 @@ export class DevsStorage {
 
       q.args = {
         group_dev_id: this.getIdDevs(),
-        number: this.getNumber() || '',
-        name: this.getName() || '',
+        number: this.getNumber().replace(/"([^"]*)"/g, '«$1»') || '',
+        name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '',
         latitude: this.getLatitude() || '',
         longitude: this.getLongitude() || '',
         sensors: '{\"s\":' +  JSON.stringify(this.getArray()) + '}',
@@ -275,6 +274,11 @@ export class DevsStorage {
       };
       q.sess_code = sess_code;
       (await WSocket.get()).send(q);
+      this.setName('');
+      this.setNumber('')
+      this.setLatitude('');
+      this.setLongitude('');
+      this.setInfo('');
 
       this.setOpenModal(false);
     }
@@ -300,6 +304,7 @@ export class DevsStorage {
 
 
   async set_ChangeDevs(name: string, value: any, _options?: any) {
+    
     var sess_code = value;
     if (this.getNumber() === '') {
       this.setNumberError(true);

@@ -199,7 +199,7 @@ export class AddNewDevModal extends React.Component<IProps> {
               helperText={APP_STORAGE.devs.getNamaError_mess()}
               fullWidth
               required
-              label="название устройства "
+              label="Название устройства "
               autoComplete="Название устройства"
               autoFocus
               size="small"

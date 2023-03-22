@@ -14,6 +14,8 @@ import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 
 import { IWSQuery, WSQuery, IWSResult } from '../../../../../../xcore/WSQuery';
 import { WSocket } from '../../../../storage/WSocket'; 
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
 interface IProps{} 
 
 
@@ -52,12 +54,12 @@ export class AccountMenu extends React.Component<IProps> {
         const  user =  APP_STORAGE.auth_form.getUser();
         return (
             <React.Fragment>
-                <IconButton id = 'btnPerfil'onClick={()=>{ APP_STORAGE.app_bar.setAppBarUser(true);  }}>
+                <Box  sx = {{background: '#266BF1', borderRadius: '4px',  maxHeight: '52px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: '20px'}} id = 'btnPerfil'onClick={()=>{ APP_STORAGE.app_bar.setAppBarUser(true);  }}>
                 <Avatar sx={{ width: 32, height: 32 }}></Avatar>
                
                 <Typography sx={{  pl: '1rem', color : 'white'}} > {user.family} {user.name} {user.father}  </Typography>
-                
-                </IconButton>
+                <ArrowDropDownIcon/>
+                </Box>
                 
             <Menu
                 anchorEl={document.getElementById('btnPerfil')}

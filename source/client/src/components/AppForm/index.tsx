@@ -129,7 +129,7 @@ export class AppForm extends React.Component<IProps> {
               </Box>
             </Box>
           </Box>
-           <Box sx = {{position : 'fixed', bottom: 0, width: '100%', mb: '16px'}}>
+           <Box sx = {{bottom: 0, width: '100%', mb: '16px'}}>
             
            <Typography sx ={{textAlign: 'center', color: '#75A4FF',lineHeight: '16px', fontSize : '14px'}}> ООО "СеверБурИнструмент"</Typography> </Box>
         </React.Fragment>
