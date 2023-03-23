@@ -8,7 +8,7 @@ import { toJS } from 'mobx';
 /**
  * Класс управления web-сокетом на клиенте
  */
- export class WSocket {
+export class WSocket {
 
     // экземпляр объекта данного класса (один для клиента)
     public static __this:WSocket = null;
@@ -24,20 +24,42 @@ import { toJS } from 'mobx';
      */
     constructor(){
         // создание сокета
-        this.socket = new WebSocket(`ws://${CONFIG.host}:${CONFIG.port}`);
+        // this.socket = new WebSocket(`ws://${CONFIG.host}:${CONFIG.port}`);
 
         WSocket.__this = this;
+
+        /*
+        // открытие сокета
+        this.socket.onopen = function(e){
+            WSocket.__this.isConnected = true;
+        };
+
+        this.socket.onclose = function(e){
+            WSocket.__this.isConnected = false;
+        };
+        */
+    }
+
+    async connect(){
+        if(this.isConnected) return;
+
+        this.socket = new WebSocket(`ws://${CONFIG.host}:${CONFIG.port}`);
 
         // открытие сокета
         this.socket.onopen = function(e){
             WSocket.__this.isConnected = true;
         };
 
-        // при получении сокетом сообщения
-        this.socket.onmessage = function(event) {
-            WSocket.__this.onMessage(this, event);
+        // при закрытии сокета
+        this.socket.onclose = function(e){
+            WSocket.__this.isConnected = false;
         };
 
+        var wh = true;
+        while(wh){
+            await this.__wait();
+            wh = !this.isConnected;
+        }
     }
 
     async __wait(){
@@ -53,6 +75,8 @@ import { toJS } from 'mobx';
     public static async get():Promise<WSocket>{
         var ws = WSocket.__this;
         if(ws === null) ws = new WSocket();
+        await ws.connect();
+        /*
         if(!ws.isConnected){
             var wh = true;
             while(wh){
@@ -60,6 +84,7 @@ import { toJS } from 'mobx';
                 wh = !ws.isConnected;
             }
         }
+        */
         return ws;
     }
 
@@ -68,17 +93,15 @@ import { toJS } from 'mobx';
      * @param socket 
      * @param event 
      */
-    onMessage(socket:WebSocket, event:MessageEvent<any>){
-        APP_STORAGE.onWSData(JSON.parse(event.data));
-    }
-
+   
     
     /**
      * Отправка сообщения на сервер
      * @param data 
      */
     //send(data: string | ArrayBufferLike | Blob | ArrayBufferView):void{
-    send(data: IWSQuery):void{
+    async send(data: IWSQuery){
+        await this.connect();
         this.socket.send(WSStr(data));
     }
 
