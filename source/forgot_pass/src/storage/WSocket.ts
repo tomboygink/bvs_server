@@ -23,14 +23,42 @@ import { FORGOT_PASS } from './ForgotPass';
      */
     constructor(){
         // создание сокета
-        this.socket = new WebSocket(`ws://${CONFIG.host}:${CONFIG.port}`);
+        // this.socket = new WebSocket(`ws://${CONFIG.host}:${CONFIG.port}`);
 
         WSocket.__this = this;
+
+        /*
+        // открытие сокета
+        this.socket.onopen = function(e){
+            WSocket.__this.isConnected = true;
+        };
+
+        this.socket.onclose = function(e){
+            WSocket.__this.isConnected = false;
+        };
+        */
+    }
+
+    async connect(){
+        if(this.isConnected) return;
+
+        this.socket = new WebSocket(`ws://${CONFIG.host}:${CONFIG.port}`);
 
         // открытие сокета
         this.socket.onopen = function(e){
             WSocket.__this.isConnected = true;
         };
+
+        // при закрытии сокета
+        this.socket.onclose = function(e){
+            WSocket.__this.isConnected = false;
+        };
+
+        var wh = true;
+        while(wh){
+            await this.__wait();
+            wh = !this.isConnected;
+        }
     }
 
     async __wait(){
@@ -46,6 +74,8 @@ import { FORGOT_PASS } from './ForgotPass';
     public static async get():Promise<WSocket>{
         var ws = WSocket.__this;
         if(ws === null) ws = new WSocket();
+        await ws.connect();
+        /*
         if(!ws.isConnected){
             var wh = true;
             while(wh){
@@ -53,6 +83,7 @@ import { FORGOT_PASS } from './ForgotPass';
                 wh = !ws.isConnected;
             }
         }
+        */
         return ws;
     }
 
@@ -68,7 +99,8 @@ import { FORGOT_PASS } from './ForgotPass';
      * @param data 
      */
     //send(data: string | ArrayBufferLike | Blob | ArrayBufferView):void{
-    send(data: IWSQuery):void{
+    async send(data: IWSQuery){
+        await this.connect();
         this.socket.send(WSStr(data));
     }
 

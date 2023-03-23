@@ -70,19 +70,10 @@ export class DevsStorage {
 
   @observable save :string = '';
 
-  @observable result_save:string = ''; ////// Результат сохранения
-
-  @observable move_dev:string = ''; ////// Результат сохранения
-
   constructor() {
     makeAutoObservable(this);
   }
  
-  @action setResulSave(val: string) {this.result_save = val;}
-  @computed getResulSave(): string {return this.result_save;} /////Результат сохранения
-
-  @action setMoveDev(val: string) {this.move_dev = val;}
-  @computed getMoveDev(): string {return this.move_dev;} /////  Результат перемещения устройства
 
   @action setMenu_devs(val: string) { this.menu_devs = val };
   @computed getMenu_devs(): string { return this.menu_devs };
@@ -283,19 +274,13 @@ export class DevsStorage {
       };
       q.sess_code = sess_code;
       (await WSocket.get()).send(q);
-     
+      this.setName('');
+      this.setNumber('')
+      this.setLatitude('');
+      this.setLongitude('');
+      this.setInfo('');
 
-      this.setResulSave('Данные успешно сохранены')
-      setTimeout(() => {
-        this.setResulSave('');
-        this.setOpenModal(false);
-        this.setName('');
-        this.setNumber('');
-        this.setLatitude('');
-        this.setLongitude('');
-        this.setInfo('');
-        this.setArray([])
-      }, 2000) 
+      this.setOpenModal(false);
     }
   }
 
@@ -366,8 +351,8 @@ export class DevsStorage {
       q.args = {
         id: this.getId() || "",
         group_dev_id: this.getGroupDevId() || '',
-        number: this.getNumber().replace(/"([^"]*)"/g, '«$1»') || '',
-        name: this.getName().replace(/"([^"]*)"/g, '«$1»') || "",
+        number: this.getNumber() || '',
+        name: this.getName() || "",
         latitude: this.getLatitude() || "",
         longitude: this.getLongitude() || "",
         sensors: '{\"s\":' + JSON.stringify(this.getChangeSensors()) + '}',
@@ -377,11 +362,10 @@ export class DevsStorage {
 
       q.sess_code = sess_code;
       (await WSocket.get()).send(q); 
-      this.setResulSave('Данные успешно сохранены')
       setTimeout(() => {
-        this.setResulSave('');
-        this.setOpenModalChange(false)
-      }, 2000) 
+      
+      this.setOpenModalChange(false)
+      }, 2000);
 
     }
   }

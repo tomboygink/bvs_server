@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -42,6 +65,8 @@ exports.__esModule = true;
 exports.Server_Receiver = void 0;
 console.log("Hello server receiver");
 var net_1 = __importDefault(require("net"));
+var fs = __importStar(require("fs"));
+var path = __importStar(require("path"));
 var datas_1 = require("./datas");
 var Server_Receiver = (function () {
     function Server_Receiver() {
@@ -54,8 +79,15 @@ var Server_Receiver = (function () {
     }
     Server_Receiver.prototype.startServer = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var dir, logs;
             var _this = this;
             return __generator(this, function (_a) {
+                dir = 'logs';
+                logs = path.join(__dirname, '..', '..', '..', 'logs');
+                if (!fs.existsSync(dir)) {
+                    console.log('Create folder logs');
+                    fs.mkdirSync(dir);
+                }
                 this.server.maxConnections = 200;
                 this.server.on('connection', function (socket) { return __awaiter(_this, void 0, void 0, function () {
                     var s_ind;
@@ -84,7 +116,15 @@ var Server_Receiver = (function () {
                             socket.destroy();
                         });
                         socket.on('data', function (data) {
+                            var file = 'log ' + new Date().getDate() + '.' + new Date().getMonth() + '.' + new Date().getFullYear() + '.txt';
+                            if (!fs.existsSync(path.join(logs, file))) {
+                                console.log('Create file logs');
+                                fs.createWriteStream(path.join(logs, file), 'utf-8');
+                            }
+                            var date_log = new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds() + '| ';
                             var data_str = Buffer.from(data).toString().trim();
+                            fs.appendFile(path.join(logs, file), date_log + data_str + '\n', 'utf-8', function (err) { });
+                            fs.appendFile(path.join(logs, file), '________________________________________________________________________________\n', 'utf-8', function (err) { });
                             console.log("\x1B[37m", data_str);
                             if (data_str.length > 500) {
                                 data_str = data_str.substr(0, 500);
