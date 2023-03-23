@@ -78,6 +78,7 @@ export class MoveDevsGroups extends React.Component<IProps> {
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
     let parent: React.ReactNode[] = new Array();
 
+    let options: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr: TDGroup = dgr.group;
@@ -135,9 +136,6 @@ export class MoveDevsGroups extends React.Component<IProps> {
 
     if (APP_STORAGE.devs.getMenu_devs() === "2") { ////// Перемещение для устройств
       APP_STORAGE.devs.set_ChangeDevs("sess_id", APP_STORAGE.auth_form.getdt());
-      setTimeout(() => {
-        APP_STORAGE.devs_groups.setOpenModalMoveDevsGr(false)
-      }, 2000) 
     }
 
     if (APP_STORAGE.devs.getMenu_devs() === "3") { ////// Перемещение дял групп устройств
@@ -169,6 +167,7 @@ export class MoveDevsGroups extends React.Component<IProps> {
         }
       }
     }
+
     return (
       <React.Fragment>
         <Dialog
@@ -185,7 +184,7 @@ export class MoveDevsGroups extends React.Component<IProps> {
                 mb: "12px",
               }}
             >
-              <Typography sx={{display: 'flex' , color: '#000'}}>Переместить <Typography sx = {{color: '#266BF1',  ml: '4px', mr: '4px'}}> { APP_STORAGE.devs_groups.getName()} </Typography>  {APP_STORAGE.devs.getMoveDev()}</Typography>
+              <Typography>Переместить  { APP_STORAGE.devs_groups.getName()}</Typography>
 
               <CloseIcon
                 sx={{ color: "#1976D2" }}
@@ -228,15 +227,16 @@ export class MoveDevsGroups extends React.Component<IProps> {
             </FormControl>
             {APP_STORAGE.devs_groups.getKeyOrg() && (
               <Box
-              className="move_devtree"
                 sx={{
+                  background: "#f1f5fcad",
+                  p: "20px",
+                  borderRadius: "4px",
                   maxHeight: '200px',
                   overflow: 'auto'
+
                 }}
               >
-                
-                <Typography sx={{pt: '12px', pb: '12px', pl: '5px'}}>Переместить в: </Typography>
-                
+                <Typography sx={{}}>Переместить в: </Typography>
                 <TreeView
                   aria-label="multi-select"
                   defaultCollapseIcon={<ExpandMoreIcon />}
@@ -300,13 +300,7 @@ export class MoveDevsGroups extends React.Component<IProps> {
    </Button>
  </Box>
  </Box>
- {APP_STORAGE.devs.getResulSave().length > 0 &&
-       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> {APP_STORAGE.devs.getResulSave()}</Typography>
-      }
-
-{APP_STORAGE.devs_groups.getResulSave().length > 0 &&
-       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> {APP_STORAGE.devs_groups.getResulSave()}</Typography>
-      }
+            
           </Box>
         </Dialog>
       </React.Fragment>

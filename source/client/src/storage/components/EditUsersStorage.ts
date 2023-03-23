@@ -189,7 +189,7 @@ export class EditUsersStorage {
 
       for (var key in user) {
         let users = user[key];
-        if (String(users.u_id) === String(id_rows)) {
+        if (users.u_id === id_rows) {
           user_selected.push(users);
         }
       }

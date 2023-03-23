@@ -9,8 +9,6 @@ import { ModalLeftPanel } from "./AppBarPanel/LeftPanel/RegistationUsers/ModalLe
 
 
 import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser";/////////////Таблица пользователей
-import { UsersMenu } from "./User/UsersMenu";//////////////////////////// устройства
-import {Users} from "./User/Users"
 
 import { DevsGroupsTree } from "./DevsGroups/DevsGroupsTree"; /////////////////Дерево устройств (левое боковое меню)
 import { DevLocation } from "./DevsGroups/DevLocation"; ////////расположение устройств
@@ -87,9 +85,8 @@ export class AppForm extends React.Component<IProps> {
     }
 
     if (APP_STORAGE.devs_groups.getMiddleForm() === 3) {
-      ///middle_form = <TableUser />;
-      middle_form = <Users />;
-      left_form = <UsersMenu/>;
+      middle_form = <TableUser />;
+      left_form = <></>;
     }
 
     // if(APP_STORAGE.sensors.getOpenDevsess() === true && APP_STORAGE.sensors.getIdDevSess() !==''){

@@ -19,16 +19,6 @@ export class AppBarPanel extends React.Component<IProps> {
     constructor(props:any){
         super(props);   
     }
-    async OpenModalRegUser(e: any, tittle: string) {
-      APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
-  
-      APP_STORAGE.reg_user.setTakeModal(e); // идентификатор модального окна
-      APP_STORAGE.reg_user.setTittleModal(tittle); // заголовок модального окна
-      APP_STORAGE.reg_user.setModalRegUser(true);
-      APP_STORAGE.app_bar.setSetOpenAppBar(false);
-      APP_STORAGE.reg_user.setOpenTableUsers(false);
-      APP_STORAGE.reg_user.setOpenTableUsers(false);
-    }
 
     async OpenLeftMenu() {
         APP_STORAGE.app_bar.setSetOpenAppBar(true);
@@ -47,9 +37,9 @@ export class AppBarPanel extends React.Component<IProps> {
         if ( APP_STORAGE.devs_groups.getMiddleForm() === 1 || APP_STORAGE.devs_groups.getMiddleForm() === "") {
             middle_form = <>
             
-        <Box sx={{background: '#fff', display: 'flex', justifyContent: 'space-between', p: '20px', alignItems: 'center'}}>
+                <Box sx={{background: '#fff', display: 'flex', justifyContent: 'space-between', p: '20px', alignItems: 'center'}}>
                   <Typography sx={{color: '#999999', fontSize: '14px'}}> Добавить новое расположение</Typography>
-        <Box className='btn_border_left' sx={{borderLeft: '1px solid #AAAAAA'}}>
+          <Box className='btn_border_left' sx={{borderLeft: '1px solid #AAAAAA'}}>
         
           <Button
           className="button-save new-devs"
@@ -72,21 +62,7 @@ export class AppBarPanel extends React.Component<IProps> {
           }
       
           if (APP_STORAGE.devs_groups.getMiddleForm() === 3) {
-            middle_form =    <Box sx={{background: '#fff', display: 'flex', justifyContent: 'space-between', p: '20px', alignItems: 'center'}}>
-            <Typography sx={{color: '#999999', fontSize: '14px'}}> Добавить пользователя</Typography>
-  <Box className='btn_border_left' sx={{borderLeft: '1px solid #AAAAAA'}}>
-  
-    <Button
-    className="button-save new-devs"
-      sx={{
-        background: "#266BF1",
-        color: "#fff;",
-        fontSize: "12px",
-        ml: '12px'}} onClick={() => this.OpenModalRegUser(1, "Добавить пользователя")}> Добавить 
-    </Button>
-
-  </Box> 
- </Box>
+            middle_form = <Box sx={{background: '#fff'}}>Пользователь</Box>
           }
 
 
