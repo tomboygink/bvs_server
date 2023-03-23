@@ -124,12 +124,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
 
   async ChangeDevs() {
     var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
-    let sensors: Array<any> = [];
-    let a: TDSensor;
-    let uniqueChars = obj.filter((element: any, index: any) => {
-      ///////////////////////// Убираем дубли массива
-      return obj.indexOf(element) === index;
-    });
+
     APP_STORAGE.devs.set_ChangeDevs("sess_id", APP_STORAGE.auth_form.getdt());
     setTimeout(() => {
       APP_STORAGE.devs_groups.get_DevsGroups(
@@ -497,6 +492,9 @@ export class ChangeDevsModal extends React.Component<IProps> {
                 Сохранить
               </Button>
             </Box>
+            {APP_STORAGE.devs.getResulSave().length > 0 &&
+       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> {APP_STORAGE.devs.getResulSave()}</Typography>
+      }
           </Box>
         </Dialog>
       </React.Fragment>

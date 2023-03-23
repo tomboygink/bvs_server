@@ -1,4 +1,5 @@
 /// КУКИ
+import { CONFIG } from '../../../xcore/config';
 
 export function getCookie(name: string) {
   let matches = document.cookie.match(
@@ -26,7 +27,7 @@ export function setCookie(name: string, value: any, _options?: any) {
   }
 
   let updatedCookie =
-    encodeURIComponent(name) + "=" + encodeURIComponent(value);
+  encodeURIComponent(name) + "=" + encodeURIComponent(value);
 
   for (let optionKey in options) {
     updatedCookie += "; " + optionKey;
