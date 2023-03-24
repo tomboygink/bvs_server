@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, InputBase, Paper, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
 import TreeItem from "@mui/lab/TreeItem";
@@ -19,6 +19,12 @@ import { TDevice } from "../../../storage/components/Devs/DevEntityes";
 
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import FolderZipIcon from '@mui/icons-material/FolderZip';
+
+
+import Divider from '@mui/material/Divider';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import DirectionsIcon from '@mui/icons-material/Directions';
 
 interface IProps {
   devs_tree: TDevsGroup;
@@ -44,7 +50,6 @@ export class DevsGroupsTree extends React.Component<IProps> {
       APP_STORAGE.auth_form.getdt()
     );
   }
-
 
 
   drawDeviceItem(dev: TDevice): React.ReactNode {
@@ -138,7 +143,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
                   nodeId={String(gr.id)}
                   label={gr.g_name}
                   icon={icon}
-                  sx={{ color: "#222", borderLeft: '1px solid #c1c1c1' ,  fontSize: '14px'}}
+                  sx={{ color: "#222", borderLeft: '1px solid #c1c1c1' ,  fontSize: '14px'}} 
                 >
                   {childs}
                 </TreeItem>
@@ -189,6 +194,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
               borderRadius: '4px'
             }}
           >
+      
             <TreeView
               className="wrapper_treeviw"
               onNodeSelect={handleChange}

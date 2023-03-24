@@ -32,6 +32,20 @@ export class UsersMenu extends React.Component<IProps> {
     APP_STORAGE.reg_user.setNodeidUser(node);
   }
 
+  async SeachFamily(a: any) { 
+
+  let filter = (document.getElementById('search') as HTMLInputElement).value.toUpperCase();
+  let lis = document.getElementsByTagName('li');
+  for (var i = 0; i < lis.length; i++) {
+    var name = lis[i].innerText;
+    console.log(name)
+    if (name.toUpperCase().indexOf(filter) == 0) 
+      lis[i].style.display = 'list-item';
+    else
+      lis[i].style.display = 'none';
+}
+  }
+
   render(): React.ReactNode {
     let rows_search: React.ReactNode = <></>;
     let table_rows = [];
@@ -43,28 +57,9 @@ export class UsersMenu extends React.Component<IProps> {
         let row = users[key];
         if (row.u_deleted === false) {
           table_rows.push(
-            // <TableRow
-            //     key={row.u_id}
-            //     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            //   >
-            //   <TableCell align="center" >{key}</TableCell>
-            //   <TableCell align="center" > {row.u_family} </TableCell>
-            //   <TableCell  align="center" > {row.u_name} </TableCell>
-            //   <TableCell  align="center">{row.u_father}</TableCell>
-            //   <TableCell  align="center">{row.u_login}</TableCell>
-            //   <TableCell  align="center">{row.u_telephone}</TableCell>
-            //   <TableCell  align="center">{row.u_email}</TableCell>
-            //   <TableCell  align="center">{row.u_info}</TableCell>
-            //   <TableCell align="center"
-            //      onClick={(e) => {APP_STORAGE.edit_user.set_IdRows(row.u_id)}}>
-            //     <DriveFileRenameOutlineOutlinedIcon fontSize="small"/>
-            //  </TableCell>
-            //  <TableCell  align="center">Действующая</TableCell>
-
-            //   </TableRow>
-
+       
             <React.Fragment key={"_gr_id_key_" + row.u_id}>
-              <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+            
                 <TreeItem
                   nodeId={String(row.u_id)}
                   label={row.u_family + " " + row.u_name + " " + row.u_father}
@@ -73,14 +68,14 @@ export class UsersMenu extends React.Component<IProps> {
                     color: "#222",
                     fontSize: "14px",
                   }}
-                ></TreeItem>
-              </Box>
+                >
+                </TreeItem> 
             </React.Fragment>
-          );
+          )
         } else {
           table_rows.push(
             <React.Fragment key={"_gr_id_key_" + row.u_id}>
-              <Box sx={{ display: "flex" }}>
+            
                 <TreeItem
                   draggable="true"
                   nodeId={String(row.u_id)}
@@ -90,8 +85,10 @@ export class UsersMenu extends React.Component<IProps> {
                     color: "#222",
                     fontSize: "14px",
                   }}
-                ></TreeItem>
-              </Box>
+                >
+
+                </TreeItem>
+            
             </React.Fragment>
           );
         }
@@ -117,9 +114,13 @@ export class UsersMenu extends React.Component<IProps> {
     >
     
       <InputBase
+        id="search"
         sx={{ ml: 1, flex: 1 , fontSize: '14px', pl: '14px'}}
         placeholder="Поиск по пользователям"
         inputProps={{ 'aria-label': 'search google maps' }}
+        onChange={(e) => {
+          this.SeachFamily(e.target.value);
+          }} 
       />
       <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
       <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
@@ -128,7 +129,7 @@ export class UsersMenu extends React.Component<IProps> {
       
   
     </Paper>
-          <TreeView
+          <TreeView 
             className="wrapper_treeviw"
             onNodeSelect={this.handleChange}
             aria-label="customized"
@@ -136,6 +137,8 @@ export class UsersMenu extends React.Component<IProps> {
           >
             {table_rows}
           </TreeView>
+
+
         </Box>
       </React.Fragment>
     );

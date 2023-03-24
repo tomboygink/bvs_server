@@ -73,7 +73,7 @@ body {
     @include mq(1023) {
         grid-template-columns: 1fr;
     }
-
+ 
     > .block-wrapp {
         font-size: 20px;
         color: #fff;
@@ -85,10 +85,30 @@ body {
         }
     }
 }
+button#long-button_menu {
+  padding: 0px;
+}
 
 tr.MuiTableRow-root.active_row.css-efx171-MuiTableRow-root:hover {
   background: #eee;
 }
+//////////////////////////////////////// Подробная информация ( Пользователь ) 
+.edit_user_menu {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.wrapper_user_card{
+  display: grid;
+  grid-template-columns: 20% 80%;
+
+  > .box_info{
+            margin-top: 12px;
+            margin-bottom: 0px;
+  }
+}
+
+
+
 ////////////////////////////////////////////////style for middle card
 
 .grid__card_middle{
@@ -165,15 +185,7 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   background: #F1F5FC;
   border-radius: 5px;
 }
-.move_devtree::-webkit-scrollbar {
-  width: 4px;
-  background-color: #fff;
-} 
 
-.move_devtree::-webkit-scrollbar-thumb {
-  width: 1px;
-  background-color: #c8cdd3;
-}
 
 .css-g7pccu-MuiTreeView-root::-webkit-scrollbar {
   width: 4px;
@@ -272,7 +284,13 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   margin-bottom: 40px;
 }
 .css-5o2g24-MuiTypography-root{
-  margin-top: 0px!important;
+  margin-top: 0px;
+}
+.wrapper_user_card{
+  grid-template-columns: 1fr;
+}
+.wrapper_user_card > .box_info {
+  margin-top: 3px;
 }
 }
 
