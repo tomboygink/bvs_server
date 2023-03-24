@@ -7,7 +7,7 @@ import Fab from '@mui/material/Fab';
 import CheckIcon from '@mui/icons-material/Check';
 import SaveIcon from '@mui/icons-material/Save';
 
-import { APP_STORAGE } from '../storage/AppStorage';
+import { APP_STORAGE } from './../storage/AppStorage';
 
 export default function CircularIntegration() {
   const [loading, setLoading] = React.useState(false);

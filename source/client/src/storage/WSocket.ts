@@ -55,6 +55,11 @@ export class WSocket {
             WSocket.__this.isConnected = false;
         };
 
+         // при получении сокетом сообщения
+         this.socket.onmessage = function(event) {
+            WSocket.__this.onMessage(this, event);
+        };
+
         var wh = true;
         while(wh){
             await this.__wait();
@@ -93,6 +98,10 @@ export class WSocket {
      * @param socket 
      * @param event 
      */
+
+    onMessage(socket:WebSocket, event:MessageEvent<any>){
+        APP_STORAGE.onWSData(JSON.parse(event.data));
+    }
    
     
     /**

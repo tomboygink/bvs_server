@@ -17,6 +17,7 @@ import EnhancedTable  from './TAbleDevs'
 import { DevSessCharts } from "../Sensors/DevSessCharts";
 import { CustomExport } from "./Export";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
+import { Calendar } from "./Calendar";
 
 interface IProps {}
 
@@ -199,12 +200,10 @@ a.click();
 
     return (
       <React.Fragment>
+            
          {date.length > 0 && (
         <Box className="wrappert-devs" sx={{ mt: "20px" }}>
        
-
-
-         
             <> 
                <Typography
             sx={{

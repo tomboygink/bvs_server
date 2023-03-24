@@ -23,7 +23,7 @@ export class AddNewGroup extends React.Component<IProps> {
   render(): React.ReactNode {
     return (
       <React.Fragment>
-                  {/* {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 &&
+                  {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 &&
             <Box
               sx={{
                 borderRadius: "4px",
@@ -40,7 +40,7 @@ export class AddNewGroup extends React.Component<IProps> {
               </Typography>
             </Box>
            
-  } */}
+  }
       </React.Fragment>
     );
   }

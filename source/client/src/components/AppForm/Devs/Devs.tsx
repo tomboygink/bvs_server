@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 
 import DirectionsIcon from '@mui/icons-material/Directions';
 import { MenuDevs } from "./MenuDevs";
+import { Calendar } from "./Calendar";
 interface IProps {
 }
 
@@ -189,9 +190,13 @@ export class Devs extends React.Component<IProps> {
                                       </Link>
                                       </Box>
 
-                                      </Box>
+                                      
 
-                                      </Box>                                   
+                                      </Box>
+                                      <Calendar />
+
+                                      </Box>
+                                                                        
                                       </React.Fragment>
                                       );
           }
@@ -215,11 +220,12 @@ export class Devs extends React.Component<IProps> {
   render(): React.ReactNode {
     return (
       <>
-         <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px', mt: '72px'}}>
+         <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px'}}>
               {" "}
               Данные по устройству{" "}
          </Typography>
        {this.drawDevsFunction()}
+       {/* <Calendar/> */}
        </>
     );
   }

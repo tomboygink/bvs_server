@@ -68,29 +68,22 @@ export class AppBarPanel extends React.Component<IProps> {
 
         return (
             <React.Fragment>
-           <AppBar className='header-top' sx={{background: '#266bf100', boxShadow: 'none',  position: 'absolute'}}>
-                <Box className='wrapper menu'>
-                <Box className='menu-mobile'>
-                 <Typography onClick={()=>{ this.OpenLeftMenu()}} >Меню</Typography>
-                 <Typography onClick={() => this.OpenModal("0", 0)}>Добавить новое расположение</Typography>
-                </Box>
-                <Box
-                    sx = {{background: '#266BF1', borderRadius: '4px', display: 'flex', alignItems: 'center', p: '20px', justifyContent: 'space-between', maxHeight: '52px'}}
+               <AppBar sx={{background: '#266BF1'}}>
+                <Box 
+                    sx={{ display: 'flex' , 
+                    justifyContent: 'space-between' , 
+                    pl: '3rem' , 
+                    pr: '2rem'}} >
+                    <IconButton
                     color="inherit"
-                    onClick={()=>{ this.OpenLeftMenu()}}           
-                   >
-                <MenuIcon sx={{background:'#4B88FF', borderRadius: '50px', p: '8px' , width: '40px', height: '40px' }}/>
-                <Typography sx ={{fontSize: '14px'}}></Typography>
-                <IconButton>
-                {/* <ArrowForwardIosIcon sx = {{background: '#4B88FF'}} /> */}
+                    onClick={()=>{ APP_STORAGE.app_bar.setSetOpenAppBar(true); }}           
+                    edge="start">
+                <MenuIcon />
                 </IconButton>
-                </Box>
-
-                 {middle_form}
                 <AccountMenu/> 
                 </Box>
             </AppBar>
-            <AppBarLeftPanel/> 
+            <AppBarLeftPanel/>  
 
       </React.Fragment>
         );
