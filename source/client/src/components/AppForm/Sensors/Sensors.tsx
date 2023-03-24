@@ -81,8 +81,8 @@ export class Sensors extends React.Component<IProps> {
               sort_array.push(uniqueChars[key].depth);
             }
             APP_STORAGE.setdevs_group_move(sort_array);
-
-            if (gr_devs[i].deleted === true && uniqueChars[key].depth) {
+           
+            if (gr_devs[i].deleted === true) {
               sensors.push(
                 <>
                   <TableRow key={"sensors_id" + uniqueChars[key].depth}>
@@ -96,7 +96,7 @@ export class Sensors extends React.Component<IProps> {
               );
             }
 
-            if (gr_devs[i].deleted === false && uniqueChars[key].depth) {
+            if (gr_devs[i].deleted === false) {
               sensors.push(
                 <TableRow key={"sensors_id" + uniqueChars[key].depth}>
                   <TableCell>
