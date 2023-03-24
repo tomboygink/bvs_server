@@ -1,5 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
+import { toJS } from 'mobx';
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -32,7 +33,8 @@ export class Change_ModalSensors extends React.Component<IProps> {
       return o;
     }, []);
     
-    APP_STORAGE.devs.setChangeSensors(JSON.parse(JSON.stringify(uniqueChars)))
+    APP_STORAGE.devs.setChangeSensors(JSON.parse(JSON.stringify(uniqueChars)));
+    console.log(toJS(APP_STORAGE.devs.getChangeSensors()))
   }
 
   render(): React.ReactNode {
@@ -85,9 +87,11 @@ export class Change_ModalSensors extends React.Component<IProps> {
                 onChange={(e) => {
                   APP_STORAGE.devs.setSensors(Number(e.target.value));
                 }}
-                value={APP_STORAGE.devs.getSensors() || ""}
-                sx={{ mt: 2 }}
+                // value={APP_STORAGE.devs.getSensors() || ""}
+                // sx={{ mt: 2 }}
               />
+
+
               <Typography sx={{ fontSize: "12px", color: "grey" }}>
                 Введите глубину датчика
               </Typography>
@@ -96,17 +100,9 @@ export class Change_ModalSensors extends React.Component<IProps> {
                 sx={{ mt: 2 }}
                 onClick={() => {
                   this.Change_sensors();
-                }}
-              >
+                }}>
                 Сохранить
               </Typography>
-              {/* <Typography
-                onClick={() => {
-                  APP_STORAGE.devs.setDepthSensors_Ch(false);
-                }}
-              >
-                close
-              </Typography> */}
             </Box>
           </Modal>
         </Box>

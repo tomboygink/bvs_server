@@ -46,7 +46,7 @@ export class DevsStorage {
   @observable longitude: string = ''
   @observable deleted: boolean = false;
   @observable info: string = '';
-  @observable sensors: number = null;
+  @observable sensors: number = 0;
   @observable select_id_dev: string = '';
 
   @observable checkbox_editing: boolean = false;
@@ -279,6 +279,7 @@ export class DevsStorage {
       this.setLatitude('');
       this.setLongitude('');
       this.setInfo('');
+      this.setArray([]);
 
       this.setOpenModal(false);
     }
