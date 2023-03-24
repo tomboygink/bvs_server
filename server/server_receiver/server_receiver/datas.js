@@ -48,10 +48,11 @@ var ServerData = (function () {
     }
     ServerData.prototype.Run = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var dt_arr_0, d, TIME, NUMBER, NUMBER_I, AKB, AKB_I, SENSORS, SENSORS_I, d, errors, info_err;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var dt_arr_0, d, TIME, NUMBER, NUMBER_I, AKB, AKB_I, SENSORS, SENSORS_I, d, errors, info_err, _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
+                        _b.trys.push([0, 2, , 3]);
                         console.log(this.s_ind, "\x1b[0m >> " + this.data_str);
                         dt_arr_0 = this.data_str.split(",");
                         for (d in dt_arr_0) {
@@ -59,7 +60,7 @@ var ServerData = (function () {
                                 this.data_arr.push(dt_arr_0[d].trim());
                             }
                         }
-                        if (this.data_arr.length < 2) {
+                        if (this.data_arr.length <= 2) {
                             console.log(this.s_ind, "\x1b[31m >>", this.data_str);
                             return [2];
                         }
@@ -104,6 +105,10 @@ var ServerData = (function () {
                             info_err += "ДАННОГО УСТРОЙСТВА НЕТ В БАЗЕ ДАННЫХ";
                             errors = true;
                         }
+                        if (AKB == null) {
+                            info_err += "УРОВЕНЬ ЗАРЯДА НЕ СООТВЕТСТВУЕТ ФОРМАТУ ИЛИ ОТСУТСТВУЕТ";
+                            errors = true;
+                        }
                         if (SENSORS.length < 1) {
                             info_err += "ДАННЫХ ПО СЕНСЕРАМ НА УСТРОЙСТВЕ НЕТ";
                             errors = true;
@@ -122,8 +127,13 @@ var ServerData = (function () {
                         }
                         return [4, this.saveSqlData(TIME, NUMBER, SENSORS, AKB, this.data_str)];
                     case 1:
-                        _a.sent();
-                        return [2];
+                        _b.sent();
+                        return [3, 3];
+                    case 2:
+                        _a = _b.sent();
+                        info_err += "ПРОИЗОШЛА ФАТАЛЬНАЯ ОШИБКА";
+                        return [3, 3];
+                    case 3: return [2];
                 }
             });
         });

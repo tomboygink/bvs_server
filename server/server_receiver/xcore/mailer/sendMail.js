@@ -63,14 +63,14 @@ var SendMail = (function () {
                             secure: true,
                             auth: {
                                 user: 'noreplay@bvs45.ru',
-                                pass: 'f2R2Ny8P'
+                                pass: 'TH0TMx2F'
                             }
                         });
                         return [4, transporter.sendMail({
                                 from: 'noreplay@bvs45.ru',
                                 to: this.args.email,
                                 subject: 'Activate mail',
-                                html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://127.0.0.1:3040/confirm_mail?code= ' + a + '">Click this link</a></h1>'
+                                html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://' + config_1.CONFIG.host + ':' + config_1.CONFIG.port + '/confirm_mail?code= ' + a + '">Click this link</a></h1>'
                             })];
                     case 1:
                         _a.sent();
@@ -95,14 +95,14 @@ var SendMail = (function () {
                             secure: true,
                             auth: {
                                 user: 'noreplay@bvs45.ru',
-                                pass: 'f2R2Ny8P'
+                                pass: 'TH0TMx2F'
                             }
                         });
                         return [4, transporter.sendMail({
                                 from: 'noreplay@bvs45.ru',
                                 to: this.args.email,
                                 subject: 'Forgot password',
-                                html: 'This message was sent from bvs_server to reset your password. <h1><a href="http://127.0.0.1:3040/forgot_pass?code= ' + data[0].re_password_code + '">Click this link</a></h1>'
+                                html: 'This message was sent from bvs_server to reset your password. <h1><a href="http://' + config_1.CONFIG.host + ':' + config_1.CONFIG.port + '/forgot_pass?code= ' + data[0].re_password_code + '">Click this link</a></h1>'
                             })];
                     case 2:
                         _a.sent();

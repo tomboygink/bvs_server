@@ -92,16 +92,11 @@ export class ModalLeftPanel {
   @observable error_inn_double: boolean = false;
   @observable texthelp_inn_double: string = "";
 
-  @observable nodeid_user: string = '';
-
   
   constructor() {
     makeAutoObservable(this);
     Map<string, string>;
   }
-
-  @action setNodeidUser(val: string) {this.nodeid_user = val;} /// UserMenu
-  @computed getNodeidUser(): string {return this.nodeid_user;}
 
   @action setOpenTableUsers(val: boolean) {this.table_user = val;} //// открываем таблицу пользователей
   @action getOpenTableUsers(): boolean {return this.table_user;}

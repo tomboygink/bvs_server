@@ -112,6 +112,7 @@ function WSRoute(_ws, q) {
                     return [4, ut.selectUser()];
                 case 6:
                     data = _c.sent();
+                    console.log(data);
                     if (sess_code === '' && data[0] === undefined) {
                         wsres.error = "Пользователя не существует или введены не верные данные";
                     }

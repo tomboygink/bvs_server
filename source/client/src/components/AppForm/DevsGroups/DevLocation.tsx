@@ -50,9 +50,6 @@ export class DevLocation extends React.Component<IProps> {
   }
 
   async moveDeviceLocation(a: any) {
-    if(a === '3'){
-      APP_STORAGE.devs.setMoveDev('группу устройств')
-    }
     APP_STORAGE.devs.setMenu_devs(a)
     APP_STORAGE.devs_groups.setOpen_menu(false);
     let DevGr: any;

@@ -139,7 +139,6 @@ export class DevsGroupsTree extends React.Component<IProps> {
             <React.Fragment key={"_gr_id_key_" + gr.id}>
               <Box sx={{ display: "flex" }}>
                 <TreeItem
-                  draggable="true"
                   nodeId={String(gr.id)}
                   label={gr.g_name}
                   icon={icon}

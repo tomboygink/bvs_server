@@ -29,11 +29,6 @@ export class MenuDevs extends React.Component<IProps> {
   }
 
   async editDevice(a:any) { /////////////////////////////////////////Кнопка редактирования
-    if(a === '2'){
-      APP_STORAGE.devs.setMoveDev('устройство')
-    }
-
-  
     APP_STORAGE.devs.setMenu_devs(a);
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();

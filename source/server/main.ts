@@ -23,6 +23,7 @@ class AppServer{
         this.app = express();
         this.server = http.createServer(this.app);
         this.wss = new WebSocket.Server({ server: this.server });
+        
 
         this.app.set('view engine', 'hbs');
 
@@ -89,9 +90,6 @@ class AppServer{
     }
     
    
-
-
-     
 
     async onCloseServer(){
         await endDB();

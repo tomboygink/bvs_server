@@ -24,8 +24,7 @@ export class DevsTable {
     }
     //Добавление устройства
     async insertDevs(): Promise<DevsEntity[]> {
-        var data = await this.db.query("SELECT number FROM devs");
-        
+        var data = await this.db.query("SELECT number FROM devs WHERE number = '"+this.args.number+"'");
 
         if (data.rows.some(e => e.number !== this.args.number) || data.rows.length === 0) {
 
