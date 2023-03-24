@@ -1,35 +1,31 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Box , Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../storage/AppStorage"; //////Хранилище данных
 
-import { AppBarPanel } from "./AppBarPanel/AppBarPanel"; 
-import { Modal } from "./AppBarPanel/TopMenu/Modal/Modal"; //// Модальное окно для изменения данных пользователя 
+import { AppBarPanel } from "./AppBarPanel/AppBarPanel";
+import { Modal } from "./AppBarPanel/TopMenu/Modal/Modal"; //// Модальное окно для изменения данных пользователя
 import { ModalLeftPanel } from "./AppBarPanel/LeftPanel/RegistationUsers/ModalLeftPanel";
 
-
-import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser";/////////////Таблица пользователей
-import { UsersMenu } from "./User/UsersMenu";//////////////////////////// устройства
-import {Users} from "./User/Users"
+import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser"; /////////////Таблица пользователей
+import { UsersMenu } from "./User/UsersMenu"; //////////////////////////// устройства
+import { Users } from "./User/Users";
 
 import { DevsGroupsTree } from "./DevsGroups/DevsGroupsTree"; /////////////////Дерево устройств (левое боковое меню)
 import { DevLocation } from "./DevsGroups/DevLocation"; ////////расположение устройств
-import { ChangeDevsGroups } from "./DevsGroups/ChangeDevsGroups";/////// Редактировать расположение5 устройств (модальное окно)
-import { MoveDevsGroups } from "./DevsGroups/MoveDevsGroups";////////////Переместить расположение устройств (модальное окно)
+import { ChangeDevsGroups } from "./DevsGroups/ChangeDevsGroups"; /////// Редактировать расположение5 устройств (модальное окно)
+import { MoveDevsGroups } from "./DevsGroups/MoveDevsGroups"; ////////////Переместить расположение устройств (модальное окно)
 import { AddNewGroup } from "./DevsGroups/AddNewGroup"; ////////// Добавить новое расположение
-import { AddNewSubgroup } from "./DevsGroups/AddNewSubgroup";//////////Добавить новую подгруппу
+import { AddNewSubgroup } from "./DevsGroups/AddNewSubgroup"; //////////Добавить новую подгруппу
 
-
-import { Devs } from "./Devs/Devs";//////////////////////////// устройства
-import { DevSess } from './Devs/DevSess'
+import { Devs } from "./Devs/Devs"; //////////////////////////// устройства
+import { DevSess } from "./Devs/DevSess";
 import { Sensors } from "./Sensors/Sensors"; ///////////////////////////////сенсоры на устройствах
-import { DevSessList } from "./Sensors/DevSessList"
-import { ChangeDevsModal } from "./Devs/ChangeDevsModal";////////////////////////////Редактировать устройства
+import { DevSessList } from "./Sensors/DevSessList";
+import { ChangeDevsModal } from "./Devs/ChangeDevsModal"; ////////////////////////////Редактировать устройства
 import { AddNewDevModal } from "./Devs/AddNewDevModal"; //////////////Добавить новое устройство
 import { Calendar } from "./Devs/Calendar";
 
-
- 
 interface IProps {}
 
 //Компонент формы приложения
@@ -79,20 +75,21 @@ export class AppForm extends React.Component<IProps> {
       left_form = <DevsGroupsTree />;
     }
     if (APP_STORAGE.devs_groups.getMiddleForm() === 2) {
-      middle_form =  <>
-      <Devs />
-   
-            <DevSess/>
-      </>
+      middle_form = (
+        <>
+          <Devs />
+
+          <DevSess />
+        </>
+      );
       //dev_sess = <DevSess/>
       left_form = <DevsGroupsTree />;
     }
 
     if (APP_STORAGE.devs_groups.getMiddleForm() === 3) {
-        ///middle_form = <TableUser />;
-        middle_form = <Users />;
-        left_form = <UsersMenu/>;
-        
+      ///middle_form = <TableUser />;
+      middle_form = <Users />;
+      left_form = <UsersMenu />;
     }
 
     // if(APP_STORAGE.sensors.getOpenDevsess() === true && APP_STORAGE.sensors.getIdDevSess() !==''){
@@ -100,9 +97,9 @@ export class AppForm extends React.Component<IProps> {
     // }
 
     // if(APP_STORAGE.sensors.getOpenDevsess() === false ){
-      right_form =  <Sensors /> 
+    right_form = <Sensors />;
     //}
-   
+
     if (APP_STORAGE.auth_form.getUser())
       return (
         <React.Fragment>
@@ -125,19 +122,27 @@ export class AppForm extends React.Component<IProps> {
 
                 <Box className="block-wrapp grid">
                   {middle_form}
-                  
+
                   {new_group}
                 </Box>
 
-                <Box className="block-wrapp">
-                {right_form}
-                </Box>
+                <Box className="block-wrapp">{right_form}</Box>
               </Box>
             </Box>
           </Box>
-           <Box sx = {{bottom: 0, width: '100%', mb: '16px'}}>
-            
-           <Typography sx ={{textAlign: 'center', color: '#75A4FF',lineHeight: '16px', fontSize : '14px'}}> ООО "СеверБурИнструмент"</Typography> </Box>
+          <Box sx={{ bottom: 0, width: "100%", mb: "16px" }}>
+            <Typography
+              sx={{
+                textAlign: "center",
+                color: "#75A4FF",
+                lineHeight: "16px",
+                fontSize: "14px",
+              }}
+            >
+              {" "}
+              ООО "СеверБурИнструмент"
+            </Typography>{" "}
+          </Box>
         </React.Fragment>
       );
   }
