@@ -151,12 +151,12 @@ tr.MuiTableRow-root.active_row.css-efx171-MuiTableRow-root:hover {
   display: none;
 }
 
-.block-wrapp.grid.MuiBox-root.css-0::-webkit-scrollbar {
+.block-wrapp.grid.MuiBox-root.css-0::-webkit-scrollbar , .block-wrapp.MuiBox-root.css-0::-webkit-scrollbar{
   width: 4px;
   background-color: #ffffff00;
 } 
 
-.block-wrapp.grid.MuiBox-root.css-0::-webkit-scrollbar-thumb {
+.block-wrapp.grid.MuiBox-root.css-0::-webkit-scrollbar-thumb , .block-wrapp.MuiBox-root.css-0::-webkit-scrollbar-thumb{
   width: 1px;
   background-color: #ffffff00;
 }
