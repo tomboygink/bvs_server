@@ -196,7 +196,7 @@ a.click();
       <React.Fragment>
             
          {date.length > 0 && (
-        <Box className="wrappert-devs" sx={{ mt: "20px" }}>
+        <Box className="wrappert-devs" sx={{ mt: "32px" }}>
        
             <> 
             <Box className="session_pediod" sx ={{display: 'flex', justifyContent: "space-between"}}>
