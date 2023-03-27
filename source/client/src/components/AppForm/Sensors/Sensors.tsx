@@ -77,7 +77,7 @@ export class Sensors extends React.Component<IProps> {
           }, []);
 
           for (var key in uniqueChars) {
-            if (uniqueChars[key].depth) {
+            if (uniqueChars) {
               sort_array.push(uniqueChars[key].depth);
             }
             APP_STORAGE.setdevs_group_move(sort_array);
