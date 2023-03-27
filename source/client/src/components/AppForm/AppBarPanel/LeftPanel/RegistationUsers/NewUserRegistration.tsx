@@ -37,7 +37,8 @@ export class NewUserRegistration extends React.Component<IProps> {
    
     setTimeout(() => {
       APP_STORAGE.reg_user.set_NewUser("sess_id", APP_STORAGE.auth_form.getdt());
-    }, 1000)
+    }, 1000);
+    APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());
   }
 
   async ChekedForEdit(editing: any) { /// Переключатель (разрешить редактирование)
