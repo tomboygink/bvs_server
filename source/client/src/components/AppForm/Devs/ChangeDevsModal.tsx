@@ -190,7 +190,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
         obj1[i] = uniqueChars[i];
         count = uniqueChars.length;
 
-        if (uniqueChars[i].depth) {
+        if (uniqueChars[i].depth !== null) {
           depth_sensors.push(
             <TableRow key={uniqueChars[i].depth}>
               <TableCell

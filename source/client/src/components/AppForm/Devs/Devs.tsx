@@ -4,7 +4,7 @@ import { CONFIG } from '../../../../../xcore/config';
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-import { Box, Typography, TextField, Link} from "@mui/material";
+import { Box, Typography, TextField, Link, Divider, TextareaAutosize} from "@mui/material";
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 
@@ -138,19 +138,12 @@ export class Devs extends React.Component<IProps> {
                                       devs.push(
                                       <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
                                       <Box className="wrappert-devs">
-                                      <Box
-                                      sx={{
-                                      display: "flex",
-                                      justifyContent: "space-between",
-                                      width: "100%",
-                                      alignItems: "start",
-                                      flexDirection: 'row-reverse'
-                                      }}
-                                      >
-                                      <Box className="right_wrapper_dev" >
-                                      <Typography sx={{ fontSize : '12px' ,  color: '#AAAAAA'}}>
+                                 
+
+                                      <Box className="right_wrapper_dev" sx={{display: "flex",flexDirection: "row-reverse",}} >
+                                      {/* <Typography sx={{ fontSize : '12px' ,  color: '#AAAAAA'}}>
                                       Место расположения устройства - {gr.g_name} 
-                                      </Typography>
+                                      </Typography> */}
 
                                       {APP_STORAGE.getRoleWrite() === 2 &&
                                       APP_STORAGE.getRoleRead() === 1 && (
@@ -159,43 +152,115 @@ export class Devs extends React.Component<IProps> {
 
                                       )}
                                         </Box>
-                                        <Box>
 
-                                      <Typography sx={{ color: "#000", fontWeight: "600" }}>
-                                       Название устройства - {gr_devs[key].name}{" "}
-                                      </Typography> 
 
-                                      <Typography sx={{ color: "#000"}}>
-                                       Номер устройства - {gr_devs[key].number}{" "}
-                                      </Typography>  
+                                        <Box className="wrapper_devlocation_card">
 
-                                    
-                                      <Typography sx={{ color: "#000" }}>
-                                       Долгота - {gr_devs[key].longitude}{" "}
-                                      </Typography>
-                                       
+ 
+                                        <Typography className="box_info" sx={{ color: "#000" }}>
+                   Место расположения  -
+                    </Typography>
 
-                                      <Typography sx={{ color: "#000"}}>
-                                       Широта - {gr_devs[key].latitude}{" "}
-                                      </Typography>
-                                     
+                    <TextField
+                      className="box_info"
+                      fullWidth
+                      inputProps={{ style: { fontSize: 12 } }}
+                      InputLabelProps={{ style: { fontSize: 12 } }}
+                      variant="outlined"
+                      margin="normal"
+                      size="small"
+                      value={gr.g_name || ""}
+                    />
 
-                                     
+                  <Typography className="box_info" sx={{ color: "#000" }}>
+                   Название устройства  -
+                    </Typography>
+
+                    <TextField
+                      className="box_info"
+                      fullWidth
+                      inputProps={{ style: { fontSize: 12 } }}
+                      InputLabelProps={{ style: { fontSize: 12 } }}
+                      variant="outlined"
+                      margin="normal"
+                      size="small"
+                      value={gr_devs[key].name || ""}
+                    />
+
+                    
+                  <Typography className="box_info" sx={{ color: "#000" }}>
+                   Номер устройства  -
+                    </Typography>
+
+                    <TextField
+                      className="box_info"
+                      fullWidth
+                      inputProps={{ style: { fontSize: 12 } }}
+                      InputLabelProps={{ style: { fontSize: 12 } }}
+                      variant="outlined"
+                      margin="normal"
+                      size="small"
+                      value={gr_devs[key].number|| ""}
+                    />
+
+                        <Typography className="box_info" sx={{ color: "#000" }}>
+                        Долгота  -
+                        </Typography>
+
+                        <TextField
+                        className="box_info"
+                        fullWidth
+                        inputProps={{ style: { fontSize: 12 } }}
+                        InputLabelProps={{ style: { fontSize: 12 } }}
+                        variant="outlined"
+                        margin="normal"
+                        size="small"
+                        value={gr_devs[key].longitude|| ""}
+                        />
+
+                        <Typography className="box_info" sx={{ color: "#000" }}>
+                        Широта  -
+                        </Typography>
+
+                        <TextField
+                        className="box_info"
+                        fullWidth
+                        inputProps={{ style: { fontSize: 12 } }}
+                        InputLabelProps={{ style: { fontSize: 12 } }}
+                        variant="outlined"
+                        margin="normal"
+                        size="small"
+                        value={gr_devs[key].latitude|| ""}
+                        />
+
+                                      </Box>
                                       
-                                      <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude + '&lat=' + latitude)}}>Показать на карте
+                                      <Link sx= {{fontSize:'1rem', display: 'flex', alignItems: 'center', flexDirection: 'row-reverse'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude + '&lat=' + latitude)}}>Показать на карте
                                       
                                       <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
                                       <DirectionsIcon />
                                       </IconButton>
                                       </Link>
-                                      </Box>
+
+                                    
+
+
+<TextareaAutosize
+
+className="info"
+aria-label="minimum height"
+minRows={4}
+style={{ width: "100%" , marginTop: '12px'}}
+value={gr.g_info || ""}
+/>
+<Calendar />
 
                                       
 
                                       </Box>
-                                      <Calendar />
+                                   
 
-                                      </Box>
+                                
                                                                         
                                       </React.Fragment>
                                       );
@@ -224,8 +289,8 @@ export class Devs extends React.Component<IProps> {
               {" "}
               Данные по устройству{" "}
          </Typography>
-       {this.drawDevsFunction()}
-       {/* <Calendar/> */}
+        
+        {this.drawDevsFunction()}
        </>
     );
   }
