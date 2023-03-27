@@ -31,6 +31,7 @@ body {
     position: relative;
     padding: 80px 0;
     min-height: 90vh;
+    padding-bottom: 0px;
     
     &.is-grid::after {
         content: '';
@@ -77,7 +78,9 @@ body {
         font-size: 20px;
         color: #fff;
         border-radius: 4px;
-
+        max-height: 90vh;
+        overflow: auto;
+   
         @include mq(1023) {
             width: auto;
             margin: 0 0 0px;
@@ -96,7 +99,7 @@ tr.MuiTableRow-root.active_row.css-efx171-MuiTableRow-root:hover {
   display: flex;
   flex-direction: row-reverse;
 }
-.wrapper_user_card{
+.wrapper_user_card, .wrapper_devlocation_card{
   display: grid;
   grid-template-columns: 20% 80%;
 
@@ -147,6 +150,18 @@ tr.MuiTableRow-root.active_row.css-efx171-MuiTableRow-root:hover {
 .MuiDataGrid-main.css-204u17-MuiDataGrid-main {
   display: none;
 }
+
+.block-wrapp.grid.MuiBox-root.css-0::-webkit-scrollbar , .block-wrapp.MuiBox-root.css-0::-webkit-scrollbar{
+  width: 4px;
+  background-color: #ffffff00;
+} 
+
+.block-wrapp.grid.MuiBox-root.css-0::-webkit-scrollbar-thumb , .block-wrapp.MuiBox-root.css-0::-webkit-scrollbar-thumb{
+  width: 1px;
+  background-color: #ffffff00;
+}
+
+
 .MuiDataGrid-footerContainer.css-17jjc08-MuiDataGrid-footerContainer {
   display: none;
 }
@@ -215,10 +230,21 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   background-color: #c8cdd3;
 } 
 
+.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar {
+  width: 4px;
+  background-color: #fff;
+} 
+
+.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: #c8cdd3;
+}
+
 .wrapper-devs.MuiBox-root.css-6dvury {
-  max-height: 88vh;
+  max-height: 85vh;
   overflow: auto;
 }
+
 
 .sort-sensors{
   color: #266BF1;

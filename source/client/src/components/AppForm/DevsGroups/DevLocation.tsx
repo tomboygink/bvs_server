@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Box, Typography, TextField, ListItemIcon, Link } from "@mui/material";
+import { Box, Typography, TextField, ListItemIcon, Link, TextareaAutosize } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
@@ -144,7 +144,8 @@ export class DevLocation extends React.Component<IProps> {
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
         let longitude = gr.longitude;
         let latitude = gr.latitude;
-        if (gr.deleted === true) { ////////////////////////////////////////////////////////Если устройство не удаленно 
+        if (gr.deleted === true) {
+/////////////////////////////////////////////////////////////////////////////////////////Если устройство удаленно 
           parent.push(
             <React.Fragment key={String(gr.id)}>
             <Box id="long-button" className="grid__card_middle">
@@ -252,44 +253,16 @@ export class DevLocation extends React.Component<IProps> {
             </Box>
           </React.Fragment>
           );
-        } else {
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      } 
+      else {
+/////////////////////////////////////////////////////////////////////////////////////////Если устройство действующее
           parent.push(
             <React.Fragment key={String(gr.id)}>
               <Box id="long-button" className="grid__card_middle">
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Box>
-
-                <Box>
-                    <Typography sx={{ color: "#000", fontWeight: "600" }}>
-                    Место расположения - {gr.g_name}{" "}
-                    </Typography> 
-
-                     <Typography sx={{ color: "#000" }}>
-                    Долгота - {gr.longitude}{" "}
-                    </Typography>  
-
-                    <Typography sx={{ color: "#000" }}>
-                    Широта - {gr.latitude}{" "}
-                    </Typography> 
-                     <Box id={gr.org_id}>
-
-                     </Box>
-
-                     <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude + '&lat=' + latitude)}}>Показать на карте
-                                      
-                                      <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
-                                      <DirectionsIcon />
-                                      </IconButton>
-                                      </Link>                </Box>
-
-                  </Box>
-                  {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 && (
+                <Box sx={{display: "flex",flexDirection: "row-reverse",}}>
+                   {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 && (
                       <div>
                         <IconButton
                           onClick={() => {
@@ -353,9 +326,78 @@ export class DevLocation extends React.Component<IProps> {
                         </Menu>
                       </div>
                     )}
+                   </Box>
 
-                </Box>
-             
+                 
+
+                <Box className="wrapper_devlocation_card">
+
+                  
+                   <Typography className="box_info" sx={{ color: "#000" }}>
+                   Место расположения  -
+                    </Typography>
+
+                    <TextField
+                      className="box_info"
+                      fullWidth
+                      inputProps={{ style: { fontSize: 12 } }}
+                      InputLabelProps={{ style: { fontSize: 12 } }}
+                      variant="outlined"
+                      margin="normal"
+                      size="small"
+                      value={gr.g_name || ""}
+                    />
+
+                    <Typography className="box_info" sx={{ color: "#000" }}>
+                    Долгота  -
+                    </Typography>
+
+                    <TextField
+                    className="box_info"
+                    fullWidth
+                    inputProps={{ style: { fontSize: 12 } }}
+                    InputLabelProps={{ style: { fontSize: 12 } }}
+                    variant="outlined"
+                    margin="normal"
+                    size="small"
+                    value={gr.longitude || ""}
+                    />
+
+                    <Typography className="box_info" sx={{ color: "#000" }}>
+                    Широта  -
+                    </Typography>
+
+                    <TextField
+                    className="box_info"
+                    fullWidth
+                    inputProps={{ style: { fontSize: 12 } }}
+                    InputLabelProps={{ style: { fontSize: 12 } }}
+                    variant="outlined"
+                    margin="normal"
+                    size="small"
+                    value={gr.latitude || ""}
+                    />                 
+                  </Box>
+
+                  
+                  <Link sx= {{fontSize:'1rem', display: 'flex', alignItems: 'center', flexDirection: 'row-reverse'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude + '&lat=' + latitude)}}>Показать на карте
+                                      
+                                      <IconButton color="primary" aria-label="directions">
+                                      <DirectionsIcon/>
+                                      </IconButton>
+                                      </Link>  
+                  <Divider sx ={{m: '2px'}}/>
+
+
+                  <TextareaAutosize
+
+                  className="info"
+                  aria-label="minimum height"
+                  minRows={4}
+                  style={{ width: "100%" , marginTop: '12px'}}
+                  value={gr.g_info || ""}
+                  />
+
               </Box>
             </React.Fragment>
           );

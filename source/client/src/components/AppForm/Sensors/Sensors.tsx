@@ -77,7 +77,7 @@ export class Sensors extends React.Component<IProps> {
           }, []);
 
           for (var key in uniqueChars) {
-            if (uniqueChars[key].depth) {
+            if (uniqueChars) {
               sort_array.push(uniqueChars[key].depth);
             }
             APP_STORAGE.setdevs_group_move(sort_array);
@@ -205,13 +205,37 @@ export class Sensors extends React.Component<IProps> {
     return (
       <>
        {APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
-          <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px'}}>
-              {" "}
-              Список сенсоров{" "}
-            </Typography>
+       <Box sx ={{display: 'flex', justifyContent: 'space-between',  color: '#111111'}}> 
+
+           <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px' }}>   Список сенсоров </Typography>
+
+                    
+                      <Box sx={{ width: "80px" }}>
+                        <ArrowDownwardIcon
+                          className={APP_STORAGE.sensors.getActiveButtonSort()}
+                          fontSize="small"
+                          sx={{ p: "2px" }}
+                          onClick={() => {
+                            this.SortDescSensors("0");
+                          }}
+                        />
+                        <ArrowUpwardIcon
+                          className={APP_STORAGE.sensors.getActiveButtonSortDesc()}
+                          fontSize="small"
+                          sx={{ p: "2px" }}
+                          onClick={() => {
+                            this.SortDescSensors("1");
+                          }}
+                        /> 
+                      </Box> 
+
+                      </Box>
+                  
+                
+          
   }
         <Box
-          className="wrapper-devs"
+          className="wrapper-devs sensors"
           sx={{
             display: "flex",
             flexDirection: "column;",
@@ -230,32 +254,10 @@ export class Sensors extends React.Component<IProps> {
               overflow: "auto",
             }}
           >
-            <TableContainer>
+            <TableContainer className="table_container sensors">
               <Table aria-label="caption table">
-                <TableBody>
-                  {APP_STORAGE.devs_groups.getMiddleForm() === 2 && (
-                    <TableRow key={"sensors_id" + 98}>
-                      <TableCell colSpan={2} sx ={{color: '#aaa'}} >Глубина датчиков:</TableCell>
-                      <TableCell sx={{ width: "80px" }}>
-                        <ArrowDownwardIcon
-                          className={APP_STORAGE.sensors.getActiveButtonSort()}
-                          fontSize="small"
-                          sx={{ p: "2px" }}
-                          onClick={() => {
-                            this.SortDescSensors("0");
-                          }}
-                        />
-                        <ArrowUpwardIcon
-                          className={APP_STORAGE.sensors.getActiveButtonSortDesc()}
-                          fontSize="small"
-                          sx={{ p: "2px" }}
-                          onClick={() => {
-                            this.SortDescSensors("1");
-                          }}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  )}
+                <TableBody className="table_body sensors">
+         
                   {this.drawDevLocation()}
                 </TableBody>
               </Table>

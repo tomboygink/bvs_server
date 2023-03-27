@@ -31,13 +31,7 @@ export class DevSess extends React.Component<IProps> {
   async handleExportExel() {
     var XLSX = require("xlsx");
     var table_elt = document.getElementById("my-table-id");
-    // var wb = XLSX.utils.table_to_book(table_elt, { sheet: "Sheet JS" });
-    // var ws1 = wb.Sheets[wb.SheetNames[0]];
-    // var data = XLSX.utils.sheet_to_row_object_array(ws1, {'date_format':'m/d/yy h:mm'});
-    
     var workbook = XLSX.utils.table_to_book(table_elt);
- 
-   // var rrrr = XLSX.utils.table_to_book(data, { strip: true, FS: "|" });
     XLSX.writeFile(workbook, "Report.xlsx");
   }
 
@@ -202,22 +196,24 @@ a.click();
       <React.Fragment>
             
          {date.length > 0 && (
-        <Box className="wrappert-devs" sx={{ mt: "20px" }}>
+        <Box className="wrappert-devs" sx={{ mt: "32px" }}>
        
             <> 
-               <Typography
+            <Box className="session_pediod" sx ={{display: 'flex', justifyContent: "space-between"}}>
+            <Typography  sx={{ color: "#266bf1", p: "4px", fontWeight: "500" }}> СЕССИИ ЗА ПЕРИОД: (кол-во: {count})</Typography>
+            <Typography
             sx={{
               fontSize: "12px",
-              color: "#AAAAAA",
-              display: "flex",
-              flexDirection: "row-reverse",
+              color: "#AAAAAA"
             }}
           >
-            {" "}
             Таблица сессий по периоду
           </Typography>
-            <Typography  sx={{ color: "#266bf1", p: "4px", fontWeight: "500" }}> СЕССИИ ЗА ПЕРИОД: (кол-во: {count})</Typography>
-             <TableContainer sx={{ mt: "20px", height: '200px' }}>
+            </Box>
+         
+
+
+             <TableContainer sx={{ mt: "10px",mb: '10px',  maxHeight: '200px' }}>
               <Table >
                 <TableBody>
                   {date.map((row: any, i: any) => (
@@ -248,7 +244,7 @@ a.click();
            
             </TableContainer>
 
-            {/* <EnhancedTable/> */}
+     
      
             <Button
                 className="setDevSess"
