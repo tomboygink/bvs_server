@@ -241,27 +241,15 @@ export class Devs extends React.Component<IProps> {
                                       <DirectionsIcon />
                                       </IconButton>
                                       </Link>
-
-                                    
-
-
 <TextareaAutosize
-
 className="info"
 aria-label="minimum height"
 minRows={4}
 style={{ width: "100%" , marginTop: '12px'}}
-value={gr.g_info || ""}
+value={gr_devs[key].info|| ""}
 />
 <Calendar />
-
-                                      
-
-                                      </Box>
-                                   
-
-                                
-                                                                        
+                                      </Box>                               
                                       </React.Fragment>
                                       );
           }
@@ -273,15 +261,11 @@ value={gr.g_info || ""}
           devs.push(childs);}
           return devs;
   }
-
-
   drawDevsFunction (): React.ReactNode {
     let Dev: any;
     Dev = APP_STORAGE.devs_groups.getDevsGroups();
     return this.drawDevs(Dev); /// передаем сформированные данные
   }
-
-
   render(): React.ReactNode {
     return (
       <>

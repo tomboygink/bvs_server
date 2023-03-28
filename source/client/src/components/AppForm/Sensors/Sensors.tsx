@@ -64,6 +64,7 @@ export class Sensors extends React.Component<IProps> {
       var gr_devs = dgr.devs;
 
       for (var i in gr_devs) {
+
         if ("_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
           APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
           APP_STORAGE.sensors.getSortDesc() === ""
@@ -112,13 +113,14 @@ export class Sensors extends React.Component<IProps> {
           }
         }
 
+
         //////////////////////////////Сортировка..................................................................
 
-        if (
-          "_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
+        if ("_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
           APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
           APP_STORAGE.sensors.getSortDesc() === "1"
         ) {
+
           sort_array = APP_STORAGE.getdevs_group_move();
 
           for (var y in sort_array.sort((a: any, b: any) => b - a)) {
@@ -197,20 +199,18 @@ export class Sensors extends React.Component<IProps> {
   drawDevLocation(): React.ReactNode {
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
-
     return this.drawSensors(DevGr);
   }
+
 
   render(): React.ReactNode {
     return (
       <>
        {APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
        <Box sx ={{display: 'flex', justifyContent: 'space-between',  color: '#111111'}}> 
-
            <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px' }}>   Список сенсоров </Typography>
-
-                    
                       <Box sx={{ width: "80px" }}>
+
                         <ArrowDownwardIcon
                           className={APP_STORAGE.sensors.getActiveButtonSort()}
                           fontSize="small"
@@ -219,6 +219,7 @@ export class Sensors extends React.Component<IProps> {
                             this.SortDescSensors("0");
                           }}
                         />
+
                         <ArrowUpwardIcon
                           className={APP_STORAGE.sensors.getActiveButtonSortDesc()}
                           fontSize="small"
@@ -227,13 +228,9 @@ export class Sensors extends React.Component<IProps> {
                             this.SortDescSensors("1");
                           }}
                         /> 
-                      </Box> 
 
-                      </Box>
-                  
-                
-          
-  }
+                      </Box> 
+                      </Box>}
         <Box
           className="wrapper-devs sensors"
           sx={{
@@ -257,7 +254,6 @@ export class Sensors extends React.Component<IProps> {
             <TableContainer className="table_container sensors">
               <Table aria-label="caption table">
                 <TableBody className="table_body sensors">
-         
                   {this.drawDevLocation()}
                 </TableBody>
               </Table>
