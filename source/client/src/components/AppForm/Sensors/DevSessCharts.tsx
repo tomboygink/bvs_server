@@ -23,7 +23,6 @@ export class DevSessCharts extends React.Component<IProps> {
   
 
   if(toJS(APP_STORAGE.sensors.getdataCharts()).length){
-    console.log(toJS(APP_STORAGE.sensors.getdataCharts()).length, 'sortedData11')
 
     return (
       <Box sx={{background: '#f1f5fcb3', borderTopLeftRadius: '48px', pt: '22px'}}>   
@@ -56,7 +55,6 @@ export class DevSessCharts extends React.Component<IProps> {
   }
 
   if(!toJS(APP_STORAGE.sensors.getdataCharts()).length){
-    console.log(toJS(APP_STORAGE.sensors.getdataCharts()).length, 'sortedData11')
 
     return (
       <Box sx={{background: '#f1f5fcb3', borderTopLeftRadius: '48px', pt: '22px'}}>   

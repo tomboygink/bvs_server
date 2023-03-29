@@ -49,83 +49,127 @@ export class Devs extends React.Component<IProps> {
           if (gr_devs[key].deleted === true) {
             devs.push(
               <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
-                <Box className="wrappert-devs">
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      width: "100%",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Typography sx={{ fontSize: "12px", color: "#AAAAAA" }}>
-                      Место расположения устройства - {gr.g_name}
-                    </Typography>
+                <Box
+                  className="wrappert-devs"
+                  sx={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    columnGap: "12px",
+                  }}
+                >
+                  <Box>
+                    <Box
+                      className="right_wrapper_dev"
+                      sx={{ display: "flex", flexDirection: "row-reverse" }}
+                    >
+          
 
-                    {APP_STORAGE.getRoleWrite() === 2 &&
-                      APP_STORAGE.getRoleRead() === 1 && <MenuDevs />}
+                      {APP_STORAGE.getRoleWrite() === 2 &&
+                        APP_STORAGE.getRoleRead() === 1 && <MenuDevs />}
+                    </Box>
+
+                    <Box>
+                      <TextField
+                        sx={{ pt: "0px", mt: "4px" }}
+                        className="box_info"
+                        fullWidth
+                        inputProps={{ style: { fontSize: 12 } }}
+                        InputLabelProps={{ style: { fontSize: 12 } }}
+                        variant="outlined"
+                        margin="normal"
+                        label="Место расположения"
+                        size="small"
+                        value={gr.g_name || ""}
+                      />
+
+                      <TextField
+                        sx={{ pt: "0px", mt: "4px" }}
+                        className="box_info"
+                        fullWidth
+                        inputProps={{ style: { fontSize: 12 } }}
+                        InputLabelProps={{ style: { fontSize: 12 } }}
+                        variant="outlined"
+                        margin="normal"
+                        size="small"
+                        label="Название устройства"
+                        value={gr_devs[key].name || ""}
+                      />
+
+                      <TextField
+                        sx={{ pt: "0px", mt: "4px" }}
+                        className="box_info"
+                        fullWidth
+                        inputProps={{ style: { fontSize: 12 } }}
+                        InputLabelProps={{ style: { fontSize: 12 } }}
+                        variant="outlined"
+                        margin="normal"
+                        label="Номер устройства"
+                        size="small"
+                        value={gr_devs[key].number || ""}
+                      />
+
+                      <TextField
+                        sx={{ pt: "0px", mt: "4px" }}
+                        className="box_info"
+                        fullWidth
+                        inputProps={{ style: { fontSize: 12 } }}
+                        InputLabelProps={{ style: { fontSize: 12 } }}
+                        variant="outlined"
+                        margin="normal"
+                        label="Долгота"
+                        size="small"
+                        value={gr_devs[key].longitude || ""}
+                      />
+
+                      <TextField
+                        sx={{ pt: "0px", mt: "4px" }}
+                        fullWidth
+                        inputProps={{ style: { fontSize: 12 } }}
+                        InputLabelProps={{ style: { fontSize: 12 } }}
+                        variant="outlined"
+                        label="Широта"
+                        margin="normal"
+                        size="small"
+                        value={gr_devs[key].latitude || ""}
+                      />
+                    </Box>
+
+                    <Link
+                      sx={{
+                        fontSize: "1rem",
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "row-reverse",
+                      }}
+                      onClick={() => {
+                        window.open(
+                          `http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` +
+                            longitude +
+                            "&lat=" +
+                            latitude
+                        );
+                      }}
+                    >
+                      Показать на карте
+                      <IconButton
+                        color="primary"
+                        sx={{ p: "0px" }}
+                        aria-label="directions"
+                      >
+                        <DirectionsIcon />
+                      </IconButton>
+                    </Link>
+                    <TextareaAutosize
+                      className="info"
+                      aria-label="minimum height"
+                      minRows={4}
+                      style={{ width: "100%", marginTop: "12px" }}
+                      value={gr_devs[key].info || ""}
+                    />
+                    <Calendar />
+                    <DevSess />
                   </Box>
-
-                  <Box
-                    sx={{
-                      borderLeft: "1px solid #808080",
-                      p: "12px",
-                      borderRadius: "4px",
-                      background: "#eeeeee5e",
-                    }}
-                  >
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      required
-                      fullWidth
-                      id="Название устройства"
-                      label="Название устройства"
-                      autoFocus
-                      disabled={true}
-                      value={gr_devs[key].name}
-                    />
-
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      required
-                      fullWidth
-                      id="Долгота"
-                      label="Долгота"
-                      autoFocus
-                      disabled={true}
-                      value={gr_devs[key].longitude}
-                    />
-
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      required
-                      fullWidth
-                      id="Широта"
-                      label="Широта"
-                      autoFocus
-                      disabled={true}
-                      value={gr_devs[key].latitude}
-                    />
-
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      required
-                      fullWidth
-                      id="Информация"
-                      label="Информация"
-                      autoFocus
-                      disabled={true}
-                      value={gr_devs[key].info}
-                    />
-                  </Box>
+                  <DevSessCharts />
                 </Box>
               </React.Fragment>
             );
@@ -147,9 +191,7 @@ export class Devs extends React.Component<IProps> {
                       className="right_wrapper_dev"
                       sx={{ display: "flex", flexDirection: "row-reverse" }}
                     >
-                      {/* <Typography sx={{ fontSize : '12px' ,  color: '#AAAAAA'}}>
-                                      Место расположения устройства - {gr.g_name} 
-                                      </Typography> */}
+          
 
                       {APP_STORAGE.getRoleWrite() === 2 &&
                         APP_STORAGE.getRoleRead() === 1 && <MenuDevs />}
