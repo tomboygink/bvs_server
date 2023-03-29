@@ -14,7 +14,6 @@ import TableRow from "@mui/material/TableRow";
 import { TablePagination } from '@mui/material';
 import EnhancedTable  from './TAbleDevs'
 
-import { DevSessCharts } from "../Sensors/DevSessCharts";
 import { CustomExport } from "./Export";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import { Calendar } from "./Calendar";
@@ -77,9 +76,9 @@ a.click();
             o.push(i);
           }
           return o;
-        }, []);
+        }, []); 
 
-        for (var i in uniqueChars) {
+        for (var i in uniqueChars.sort((a: { depth: number; },b: { depth: number; }) =>  b.depth - a.depth )) {
           if (
             String(APP_STORAGE.sensors.getIdDevSess()) ===
             String(sessors[key].id)
@@ -87,7 +86,7 @@ a.click();
           
           {
             data.push({
-              name: String(uniqueChars[i].depth) + "м",
+              name: String(uniqueChars[i].depth),
               "град.": uniqueChars[i].data
             });
 
@@ -196,11 +195,11 @@ a.click();
       <React.Fragment>
             
          {date.length > 0 && (
-        <Box className="wrappert-devs" sx={{ mt: "32px" }}>
+        <Box  sx={{ mt: "32px" }}>
        
             <> 
             <Box className="session_pediod" sx ={{display: 'flex', justifyContent: "space-between"}}>
-            <Typography  sx={{ color: "#266bf1", p: "4px", fontWeight: "500" }}> СЕССИИ ЗА ПЕРИОД: (кол-во: {count})</Typography>
+            <Typography  sx={{ color: "#266bf1",  fontWeight: "500" }}> СЕССИИ ЗА ПЕРИОД: (кол-во: {count})</Typography>
             <Typography
             sx={{
               fontSize: "12px",
@@ -220,7 +219,6 @@ a.click();
                     <TableRow
                       key={"key_row" + row.id}
                       className = 'active_row'
-                      sx={{ p: "4px" }}
                       id ={row.id}
                       onClick={() => {
                         this.setRowId(row.id);
@@ -240,12 +238,7 @@ a.click();
                   ))}
                 </TableBody>
               </Table>
-
-           
             </TableContainer>
-
-     
-     
             <Button
                 className="setDevSess"
                 sx={{
@@ -291,13 +284,11 @@ a.click();
                 />
               </Button>
             </>
-       
-         
         </Box>
  )}
         <CustomExport />
 
-        {ses_depth.length > 0 && (
+        {/* {ses_depth.length > 0 && (
           <>
             <Typography
               sx={{
@@ -332,9 +323,7 @@ a.click();
           
           </>
 
-        )}
-
-        <DevSessCharts />
+        )} */}
       </React.Fragment>
     );
   }

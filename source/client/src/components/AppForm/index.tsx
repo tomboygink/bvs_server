@@ -25,6 +25,7 @@ import { DevSessList } from "./Sensors/DevSessList";
 import { ChangeDevsModal } from "./Devs/ChangeDevsModal"; ////////////////////////////Редактировать устройства
 import { AddNewDevModal } from "./Devs/AddNewDevModal"; //////////////Добавить новое устройство
 import { Calendar } from "./Devs/Calendar";
+import { SelectedSession } from "./Devs/SelectedSession";
 
 interface IProps {}
 
@@ -79,7 +80,7 @@ export class AppForm extends React.Component<IProps> {
         <>
           <Devs />
 
-          <DevSess />
+         <SelectedSession /> 
         </>
       );
       //dev_sess = <DevSess/>
@@ -130,7 +131,7 @@ export class AppForm extends React.Component<IProps> {
               </Box>
             </Box>
           </Box>
-          <Box sx={{ bottom: 0, width: "100%", mb: "16px" }}>
+          {/* <Box sx={{ bottom: 0, width: "100%", mb: "0px" }}>
             <Typography
               sx={{
                 textAlign: "center",
@@ -142,7 +143,7 @@ export class AppForm extends React.Component<IProps> {
               {" "}
               ООО "СеверБурИнструмент"
             </Typography>{" "}
-          </Box>
+          </Box> */}
         </React.Fragment>
       );
   }

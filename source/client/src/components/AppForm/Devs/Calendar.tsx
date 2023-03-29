@@ -48,13 +48,7 @@ export class Calendar extends React.Component<IProps> {
     return (
       <React.Fragment>
         <Divider sx={{ m: "20px" }} />
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <Box>
           <Box>
             <TextField
               size="small"
@@ -95,7 +89,7 @@ export class Calendar extends React.Component<IProps> {
               background: "#266BF1",
               color: "#fff;",
               fontSize: "12px",
-              ml: "12px",
+              mt: "12px",
             }}
             onClick={() => {
               this.setDevSess();

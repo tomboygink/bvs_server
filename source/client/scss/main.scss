@@ -102,15 +102,14 @@ tr.MuiTableRow-root.active_row.css-efx171-MuiTableRow-root:hover {
 .wrapper_user_card, .wrapper_devlocation_card{
   display: grid;
   grid-template-columns: 20% 80%;
+  align-items: center;
 
   > .box_info{
-            margin-top: 12px;
+            margin-top: 8px;
             margin-bottom: 0px;
-  }
-}
-
-
-
+            font-size: 14px;
+            padding: 0px;
+}}
 ////////////////////////////////////////////////style for middle card
 
 .grid__card_middle{

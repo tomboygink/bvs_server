@@ -110,7 +110,7 @@ export class UsersMenu extends React.Component<IProps> {
         >
               <Paper
       component="form"
-      sx={{ mb: '22px', display: 'flex', alignItems: 'center', boxShadow: 'none', background: '#F3F3F3', borderRadius: '100px' }}
+      sx={{ mb: '22px', display: 'flex', alignItems: 'center', boxShadow: 'none', background: '#E3EDFF', borderRadius: '100px' }}
     >
     
       <InputBase
