@@ -22,11 +22,16 @@ export class SensorsStorage {
     @observable number: string = '';
 
     @observable id_dev_sess: string = '';
+    @observable chose_sess_time : string = '';
 
     @observable sessions_period: Array<any>  = [];
     constructor(){
         makeAutoObservable(this);
     }
+
+
+    @action setChoseSessTime(val : string) {this.chose_sess_time = val};
+    @computed getChoseSessTime() : string {return this.chose_sess_time}; 
 
     @action setdataCharts(val: Array<any>) { this.sessions_period = val; } 
     @computed getdataCharts(): Array<any> { return this.sessions_period; }

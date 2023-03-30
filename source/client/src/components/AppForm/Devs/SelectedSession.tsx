@@ -56,9 +56,11 @@ export class SelectedSession extends React.Component<IProps> {
           String(dev_sess[key].id)
         ) {
           count_sess.push(senso.s.length);
-
+         /// console.log('senso.s', 
+          let sess_data = senso.s.sort((a: { depth: number; },b: { depth: number; }) =>  b.depth - a.depth );
           ses_depth.push(
-            senso.s.map((row: any, i: any) => (
+           // senso.s.map([].sort((a, b) =>( )
+           sess_data.map((row: any, i: any) => (
               <React.Fragment key={"data_" + row.data + row.depth}>
                 <TableCell
                   sx={{ p: "4px", color: "#002757", fontWeight: "500" }}

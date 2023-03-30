@@ -53,8 +53,17 @@ a.setAttribute('download', 'Report.csv');
 window.document.body.appendChild(a);
 a.click();
 } 
+ 
 
-  async setRowId(e: string) {
+// async getIntroOfPage(label: any){
+
+// }
+
+
+
+
+  async setRowId(e: string, time: string) {
+    APP_STORAGE.sensors.setChoseSessTime(time)
     APP_STORAGE.sensors.setOpenDevsess(true);
     APP_STORAGE.sensors.setIdDevSess(e);
     APP_STORAGE.sensors.get_DevSessions(
@@ -221,7 +230,7 @@ a.click();
                       className = 'active_row'
                       id ={row.id}
                       onClick={() => {
-                        this.setRowId(row.id);
+                        this.setRowId(row.id, row.time_dev.replace('T', ' '));
                       }}
                     >
                       <TableCell sx={{ p: "4px" }}> {"" + i} </TableCell>
