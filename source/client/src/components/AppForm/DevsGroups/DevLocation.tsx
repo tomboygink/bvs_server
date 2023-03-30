@@ -171,7 +171,6 @@ export class DevLocation extends React.Component<IProps> {
                   Широта - {gr.latitude}{" "}
                   </Typography> 
                    <Box id={gr.org_id}>
-
                    </Box>
 
                    <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude + '&lat=' + latitude)}}>2222Показать на карте
@@ -326,13 +325,10 @@ export class DevLocation extends React.Component<IProps> {
                         </Menu>
                       </div>
                     )}
-                   </Box>
-
-                 
+                 </Box>
 
                 <Box className="wrapper_devlocation_card">
 
-                  
                    <Typography className="box_info" sx={{ color: "#000" }}>
                    Место расположения  -
                     </Typography>
@@ -380,24 +376,20 @@ export class DevLocation extends React.Component<IProps> {
                   </Box>
 
                   
-                  <Link sx= {{fontSize:'1rem', display: 'flex', alignItems: 'center', flexDirection: 'row-reverse'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude + '&lat=' + latitude)}}>Показать на карте
+                  <Link sx= {{fontSize:'1rem', display: 'flex', alignItems: 'center', flexDirection: 'row-reverse'}} >Показать на карте
                                       
-                                      <IconButton color="primary" aria-label="directions">
+                                      <IconButton color="primary" aria-label="directions" onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude + '&lat=' + latitude)}}>
                                       <DirectionsIcon/>
                                       </IconButton>
-                                      </Link>  
+                  </Link> 
+                  
                   <Divider sx ={{m: '2px'}}/>
-
-
                   <TextareaAutosize
-
                   className="info"
                   aria-label="minimum height"
                   minRows={4}
                   style={{ width: "100%" , marginTop: '12px'}}
-                  value={gr.g_info || ""}
-                  />
-
+                  value={gr.g_info || ""}/>
               </Box>
             </React.Fragment>
           );

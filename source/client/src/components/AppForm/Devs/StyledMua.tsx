@@ -3,12 +3,18 @@ import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 import { alpha, styled,  lighten, darken  } from '@mui/material/styles';
 import TreeItem, { TreeItemProps, treeItemClasses } from '@mui/lab/TreeItem';
 import Collapse from '@mui/material/Collapse';
+import Typography from '@mui/material/Typography';
 
 import { useSpring, animated } from '@react-spring/web';
 import { TransitionProps } from '@mui/material/transitions';
 
+import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
+
+
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
+import { Box } from '@mui/material';
 
 
 
@@ -89,6 +95,7 @@ export const handleChange = async (event: any, node: any) => {
   APP_STORAGE.sensors.setActiveButtonSortDesc('sort');
   APP_STORAGE.sensors.setdataCharts([]);
   APP_STORAGE.sensors.setDevSession(null);
+  
    if(node.includes('_dev_id_') === false){
     APP_STORAGE.devs_groups.setParentId(node);
     APP_STORAGE.main.setTitle("Показания устройств");
@@ -98,6 +105,7 @@ export const handleChange = async (event: any, node: any) => {
    
    if(node.includes('_dev_id_key_') === true){
     APP_STORAGE.devs.setIdChild(node);
+    APP_STORAGE.sensors.setSortDesc('') ;
     APP_STORAGE.devs_groups.setMiddleForm(2)
    }  
 }
@@ -115,11 +123,36 @@ export const GroupHeader = styled('div')(({ theme }) => ({
 }));
 
 export const options = async (event: any, node: any) => {
-
 APP_STORAGE.devs_groups.setParent(node);
 APP_STORAGE.devs.setGroupDevId(String(node));
-
 }
+
+export const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <Box sx={{background: '#fff', p: '4px', borderRadius:' 4px', boxShadow: '0px 1px 8px 0px rgba(15, 134, 225, 0.2)'}}>
+        <Box sx ={{display: 'flex', justifyItems: 'center', alignItems: 'center'}}> 
+        <ShowChartIcon sx= {{ color: '#FFAD4E', fontSize: '12px'}}  />
+        <Typography sx= {{color:"#808080",  fontSize: '12px',  mr: '2px'}}>Глубина - </Typography>
+        <Typography sx= {{color:"#266BF1", fontSize: '12px'}}> {`${label}`}  </Typography>
+          </Box>  
+
+          <Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
+          <DeviceThermostatIcon sx={{color: '#75A4FF', fontSize: '12px'}}/>
+        <Typography sx= {{color:"#808080", fontSize: '12px', mr: '2px'}}>Температура - </Typography>
+        <Typography sx= {{color:"#266BF1", fontSize: '12px'}}> {`${payload[0].value}`}  </Typography>
+          </Box>  
+        
+         {/* <Typography sx= {{color:"#266BF1"}}> <ShowChartIcon /> {"Глубина" + `${label}`}    </Typography>
+        <Typography sx= {{color:"#266BF1"}}> <DeviceThermostatIcon fontSize='small'/> {"Температура" + `${payload[0].value}`}</Typography> */}
+        {/* <p className="intro">{getIntroOfPage(label)}</p> */}
+        {/* <Typography sx= {{color:"#266BF1"}}> Anything you want can be displayed here.</Typography> */}
+      </Box>
+    );
+  }
+  return null;
+};
+
 
 
 

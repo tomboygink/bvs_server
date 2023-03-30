@@ -291,7 +291,7 @@ export class DevsGroupStorage{
         q.args = {
             id: Number(this.getParentId()) || "",
             parent_id: Number(this.getParent()) || 0,
-            name: this.getName() || "",
+            name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '' || "",
             latitude: this.getLatitude() || "",
             longitude: this.getLongitude() || "",
             org_id : Number(this.getKeyOrg()),

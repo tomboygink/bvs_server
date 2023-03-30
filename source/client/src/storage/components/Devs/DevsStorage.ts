@@ -352,8 +352,8 @@ export class DevsStorage {
       q.args = {
         id: this.getId() || "",
         group_dev_id: this.getGroupDevId() || '',
-        number: this.getNumber() || '',
-        name: this.getName() || "",
+        number: this.getNumber().replace(/"([^"]*)"/g, '«$1»') || '' || '',
+        name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '' || "",
         latitude: this.getLatitude() || "",
         longitude: this.getLongitude() || "",
         sensors: '{\"s\":' + JSON.stringify(this.getChangeSensors()) + '}',
