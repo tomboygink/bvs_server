@@ -375,7 +375,6 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         break;
 
 
-
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
         case 'deleteCookie': {
             st = new SessionsTable(q.args);
