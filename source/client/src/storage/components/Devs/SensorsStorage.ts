@@ -1,6 +1,8 @@
 import {observable, action, computed, makeAutoObservable } from "mobx";
 import { IWSQuery, WSQuery, IWSResult } from '../../../../../xcore/WSQuery';
 import { WSocket } from '../../WSocket';
+import {APP_STORAGE} from '../../AppStorage';
+import { toJS } from "mobx";
 
 
 export class SensorsStorage {
@@ -25,6 +27,8 @@ export class SensorsStorage {
     @observable chose_sess_time : string = '';
 
     @observable sessions_period: Array<any>  = [];
+
+    @observable sessions_first_last_period: Array<any>  = [];
     constructor(){
         makeAutoObservable(this);
     }
@@ -72,6 +76,13 @@ export class SensorsStorage {
     @action setIdDevSess(val : string) {this.id_dev_sess = val};
     @computed getIdDevSess() : string {return this.id_dev_sess};
 
+  
+
+    @action setSessFirstLast(val: Array<any>) { this.sessions_first_last_period = val; } 
+    @computed getSessFirstLast(): Array<any> { return this.sessions_first_last_period; }
+
+    
+
 
     async get_DevSessions(name: string, value: any, _options?: any) {
         var sess_code = value;
@@ -85,7 +96,6 @@ export class SensorsStorage {
     
           q.sess_code = sess_code;
           (await WSocket.get()).send(q);
-         
         }
       }
 
@@ -104,7 +114,59 @@ export class SensorsStorage {
       
   async setDevSess(dt: IWSResult) {
     this.setDevSession(dt.data); 
+  }
+
+
+  async set_DevFirstLastSessions(dt: IWSResult) {
+    var data: any[] = []; ////// отображаем сенсоры
+    let sessdata: any[] = [];
+    console.log('тут',dt.data);
+
+
+   // for (var key in dt.data[1]) {
+      let sess_data = JSON.parse(dt.data[1].sess_data);
+      
     
+  
+      console.log('sess_data1', sess_data.s);
+
+      const uniqueChars = sess_data.s; 
+
+
+      for (var i in uniqueChars.sort((a: { depth: number; },b: { depth: number; }) =>  b.depth - a.depth )) {
+          data.push({
+            name: String(uniqueChars[i].depth),
+            "град.": uniqueChars[i].data
+          });
+      APP_STORAGE.sensors.setdataCharts(data);
+      console.log(toJS(APP_STORAGE.sensors.getdataCharts))
+      }
+
+    //   for (var i in uniqueChars1.sort((a: { depth: number; },b: { depth: number; }) =>  b.depth - a.depth )) {
+    //     data.push({
+    //       name: String(uniqueChars[i].depth),
+    //       "град.": uniqueChars[i].data
+    //     });
+    // APP_STORAGE.sensors.setSessFirstLast(data);
+    // console.log(toJS(APP_STORAGE.sensors.setSessFirstLast), '12334')
+
+    // }
+   
+  
+
+    // //  for (var i in uniqueChars.sort((a: { depth: number; },b: { depth: number; }) =>  b.depth - a.depth )) {
+
+    //     // {
+    //     //   data.push({
+    //     //     name: String(uniqueChars[i].depth),
+    //     //     "град.": uniqueChars[i].data
+    //     //   });
+    //     // }
+
+    //     //this.setSessFirstLast(data);
+    //  // }
+    //  // console.log('sdfsdf', toJS(this.getSessFirstLast()))
+    // }
   }
 
 }

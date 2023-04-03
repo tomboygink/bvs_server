@@ -95,7 +95,7 @@ export class Calendar extends React.Component<IProps> {
               this.setDevSess();
             }}
           >
-            Установить переод
+            Установить период
           </Button>
         </Box>
       </React.Fragment>

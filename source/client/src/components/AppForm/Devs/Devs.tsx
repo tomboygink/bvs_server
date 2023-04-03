@@ -20,6 +20,7 @@ import { MenuDevs } from "./MenuDevs";
 import { Calendar } from "./Calendar";
 import { DevSessCharts } from "../Sensors/DevSessCharts";
 import { DevSess } from "./DevSess";
+import { toJS } from "mobx";
 interface IProps {}
 
 @observer
@@ -37,6 +38,10 @@ export class Devs extends React.Component<IProps> {
       var gr: TDGroup = dgr.group;
       var gr_childs = dgr.childs;
       var gr_devs = dgr.devs;
+
+      // if(APP_STORAGE.sensors.getSessFirstLast()){
+      //   console.log(toJS(APP_STORAGE.sensors.getSessFirstLast()))
+      // }
 
       for (var key in gr_devs) {
         
@@ -326,6 +331,8 @@ export class Devs extends React.Component<IProps> {
     return this.drawDevs(Dev); 
   }
   render(): React.ReactNode {
+
+   
     return (
       <>
         <Typography sx={{ fontWeight: "500", color: "#111111", mb: "8px" }}>

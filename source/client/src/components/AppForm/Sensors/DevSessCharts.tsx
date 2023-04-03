@@ -24,6 +24,7 @@ export class DevSessCharts extends React.Component<IProps> {
 
 
   render(): React.ReactNode {
+
   
 
   if(toJS(APP_STORAGE.sensors.getdataCharts()).length){
@@ -49,7 +50,7 @@ export class DevSessCharts extends React.Component<IProps> {
       <CartesianGrid strokeDasharray="2 2" />
       <XAxis type="number" dataKey="град." strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tickCount={19}  tick={{ fill: '#266BF1', fontSize: '14px' }} domain={[-12, 12]} />
       <YAxis dataKey="name" type="category" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tick={{ fill: '#266BF1', fontSize: '14px' }} />
-      {/* <YAxis dataKey="name" type="category"  stroke="#266BF1"  tickCount={60}   /> */}
+      {/* <YAxis data ={toJS(APP_STORAGE.sensors.getSessFirstLast())}  type="category"  stroke="#266BF1"  tickCount={60}   />  */}
       <Tooltip content={<CustomTooltip/>}  />
       {/* <Legend /> */}
 
@@ -63,7 +64,7 @@ export class DevSessCharts extends React.Component<IProps> {
     );
   }
 
-  if(!toJS(APP_STORAGE.sensors.getdataCharts()).length){
+  if(!toJS(APP_STORAGE.sensors.getdataCharts()).length && toJS(APP_STORAGE.sensors.getSessFirstLast().length)){
 
     return (
       <Box sx={{background: '#f1f5fcb3', borderTopLeftRadius: '48px', pt: '22px', border: '1px solid #eee'}}>   
@@ -72,6 +73,7 @@ export class DevSessCharts extends React.Component<IProps> {
      <LineChart
       className="LineChart"
       layout="vertical"
+      
       margin={{
         top: 20,
         right: 30,
