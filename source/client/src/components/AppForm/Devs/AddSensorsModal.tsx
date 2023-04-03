@@ -5,7 +5,7 @@ import { toJS } from 'mobx';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { TextField } from "@mui/material";
+import { Button, Divider, TextField } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -61,14 +61,35 @@ export class Change_ModalSensors extends React.Component<IProps> {
                 outline: "none",
               }}
             >
-              <Box sx={{ display: "grid", justifyItems: "end" }}>
+              {/* <Box sx={{ display: "grid", justifyItems: "end" }}>
                 <CloseIcon
                   fontSize="small"
                   onClick={() => {
                     APP_STORAGE.devs.setDepthSensors_Ch(false);
                   }}
                 />
+              </Box> */}
+              
+
+              <Box
+                className="ModalTitle"
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  mb: "12px",
+                }}
+              >
+                <Typography>Введите глубину датчика</Typography>
+
+                <CloseIcon
+                  sx={{ color: "#1976D2" }}
+                  onClick={() => {
+                    APP_STORAGE.devs.setDepthSensors_Ch(false);
+                  }}
+                />
               </Box>
+
+              <Divider sx={{ marginBottom: "20px" }} />
 
               <TextField
                 size="small"
@@ -92,17 +113,42 @@ export class Change_ModalSensors extends React.Component<IProps> {
               />
 
 
-              <Typography sx={{ fontSize: "12px", color: "grey" }}>
-                Введите глубину датчика
-              </Typography>
-              <Typography
+       
+
+
+              {/* <Typography
                 id="modal-modal-description"
                 sx={{ mt: 2 }}
                 onClick={() => {
                   this.Change_sensors();
                 }}>
                 Сохранить
-              </Typography>
+              </Typography> */}
+
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Button
+                  className="button-save"
+                  sx={{
+                    background: "#266BF1",
+                    color: "#fff;",
+                    mt: "18px",
+                    mb: "18px",
+                    fontSize: "12px",
+                  }}
+                  onClick={() => {
+                    this.Change_sensors();
+                  }}
+                >
+                  Сохранить( Сенсоры )
+                </Button>
+              </Box>
+
             </Box>
           </Modal>
         </Box>

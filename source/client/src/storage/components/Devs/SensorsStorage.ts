@@ -75,8 +75,6 @@ export class SensorsStorage {
 
     async get_DevSessions(name: string, value: any, _options?: any) {
         var sess_code = value;
-      
-    
         var q: IWSQuery = new WSQuery("get_DevSessions");
         {
           q.args = {
@@ -88,6 +86,18 @@ export class SensorsStorage {
           q.sess_code = sess_code;
           (await WSocket.get()).send(q);
          
+        }
+      }
+
+      async get_DevFirstLastSessions(name: string, value: any, _options?: any) {
+        var sess_code = value;
+        var q: IWSQuery = new WSQuery("get_DevFirstLastSessions");
+        {
+          q.args = {
+            dev_number: this.getNumber() || ""
+          };
+          q.sess_code = sess_code;
+          (await WSocket.get()).send(q); 
         }
       }
 

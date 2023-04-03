@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Box, IconButton, InputBase, Paper, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
 import TreeItem from "@mui/lab/TreeItem";
@@ -21,10 +21,7 @@ import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import FolderZipIcon from '@mui/icons-material/FolderZip';
 
 
-import Divider from '@mui/material/Divider';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import DirectionsIcon from '@mui/icons-material/Directions';
+
 
 interface IProps {
   devs_tree: TDevsGroup;
@@ -51,7 +48,6 @@ export class DevsGroupsTree extends React.Component<IProps> {
     );
   }
 
-
   drawDeviceItem(dev: TDevice): React.ReactNode {
     if(APP_STORAGE.getRoleRead() === 1 && APP_STORAGE.getRoleWrite() === 2){
       if(dev.deleted === true){
@@ -59,7 +55,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
           <React.Fragment key={"_dev_id_key_" + dev.id}>
             <TreeItem
               nodeId={"_dev_id_key_" + dev.id}
-              label={dev.name}
+              label={dev.number}
               icon={<CrisisAlertIcon fontSize="small" sx={{color: '#808080'}}/>}
               sx={{ color: "#808080" }}></TreeItem>
           </React.Fragment>
@@ -98,7 +94,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr: TDGroup = dgr.group;
-      var gr_childs = dgr.childs;
+      var gr_childs = dgr.childs;  
       var gr_devs = dgr.devs;
 
       var childs: React.ReactNode[] = new Array();
@@ -115,7 +111,8 @@ export class DevsGroupsTree extends React.Component<IProps> {
         icon = <FolderIcon fontSize="small" sx={{ color: "#FFE2C0" }} />;
 
       if(Number(gr.org_id) === Number(APP_STORAGE.getIdOrgUser()) 
-      && APP_STORAGE.getRoleRead() === 1 && !APP_STORAGE.getRoleWrite() && gr.deleted === false ) { ////// Условие для пользователя с правами "только чтение"
+      && APP_STORAGE.getRoleRead() === 1 && !APP_STORAGE.getRoleWrite() && gr.deleted === false ) { 
+        ////// Условие для пользователя с правами "только чтение"
         parent.push(
           <React.Fragment key={"_gr_id_key_" + gr.id}>
             <Box sx={{ display: "flex" }}>
@@ -173,19 +170,19 @@ export class DevsGroupsTree extends React.Component<IProps> {
     return parent;
   }
 
-  drawDevsTree(): React.ReactNode {
+
+
+  drawDevsTree(): React.ReactNode { ////////////////////////////// Функция отрисовки дерева 
     let DevGr:any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
     return this.drawDevGroup(DevGr);
   }
 
+
   render(): React.ReactNode {
     return (
       <React.Fragment>
-         <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px'}}>
-              {" "}
-              Список устройств{" "}
-          </Typography>
+         <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px'}}>Список устройств</Typography>
           <Box
            sx={{
               background: "#fff",
