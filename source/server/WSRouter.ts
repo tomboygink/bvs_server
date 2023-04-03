@@ -52,7 +52,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
             //Генерация кода сессии, запись в бд
             data = await ut.selectUser();
-            console.log(data);
+            //console.log(data);
             if (sess_code === '' && data[0] === undefined) { wsres.error = "Пользователя не существует или введены не верные данные"; }
             else {
                 wsres.code = sess_code;
@@ -349,6 +349,19 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         break;
         
         
+        //------------------------------------------------------------------------ПОЛУЧЕНИЕ ПЕРВОЙ И ПОСЛЕДНЕЙ СЕССИИ 
+        case 'get_DevFirstLastSessions':{
+            var fl_sess = new Dev_sessTable(q.args, q.sess_code);
+            data = await fl_sess.selectFirstLastSess();
+            wsres.error = null;
+            wsres.code = q.sess_code;
+            wsres.data = data;
+
+        }
+        break;
+
+
+
         //------------------------------------------------------------------------ПОЛУЧЕНИЕ СЕССИЙ ЗА ОПРЕДЕЛЕННЫЙ ПЕРИОД 
 
         case 'get_DevSessions':{
