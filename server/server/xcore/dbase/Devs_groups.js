@@ -85,10 +85,9 @@ var Devs_groupsTable = (function () {
     };
     Devs_groupsTable.prototype.selectDevsGroups = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var groups, roots_gr, _a, _b, _c, _i, i, _d, _e, roots_gr, _f, _g, _h, _j, i, _k, _l, _m, _o, _p, _q, i, _r, result;
-            var _s, _t;
-            return __generator(this, function (_u) {
-                switch (_u.label) {
+            var groups, test, dev, roots_gr, _a, _b, _c, _i, i, device, tzoffset, j, roots_gr, _d, _e, _f, _g, i, device, tzoffset, j, _h, _j, _k, _l, i, _m, result;
+            return __generator(this, function (_o) {
+                switch (_o.label) {
                     case 0:
                         groups = {
                             group: {},
@@ -98,89 +97,136 @@ var Devs_groupsTable = (function () {
                             devs: new Array(),
                             update: false
                         };
+                        test = new Array;
+                        dev = {
+                            id: 0,
+                            group_dev_id: '',
+                            number: '',
+                            name: '',
+                            latitude: '',
+                            longitude: '',
+                            sensors: '',
+                            deleted: false,
+                            info: '',
+                            time: ''
+                        };
                         if (!(this.args.users_w === true)) return [3, 7];
                         return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ")];
                     case 1:
-                        roots_gr = _u.sent();
+                        roots_gr = _o.sent();
                         _a = roots_gr.rows;
                         _b = [];
                         for (_c in _a)
                             _b.push(_c);
                         _i = 0;
-                        _u.label = 2;
+                        _o.label = 2;
                     case 2:
                         if (!(_i < _b.length)) return [3, 6];
                         _c = _b[_i];
                         if (!(_c in _a)) return [3, 5];
                         i = _c;
-                        _e = (_d = groups.childs).push;
-                        _s = {
+                        return [4, this.db.query("SELECT devs.id, group_dev_id, number, " +
+                                "name, latitude, longitude, sensors, deleted, info, MAX(time_srv) as time " +
+                                "FROM devs INNER JOIN dev_sess ON devs.number = dev_sess.dev_number WHERE group_dev_id = " + roots_gr.rows[i].id + " group by devs.id")];
+                    case 3: return [4, (_o.sent()).rows];
+                    case 4:
+                        device = _o.sent();
+                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                        for (j in device) {
+                            dev = {
+                                id: device[j].id,
+                                group_dev_id: device[j].group_dev_id,
+                                number: device[j].number,
+                                name: device[j].name,
+                                latitude: device[j].latitude,
+                                longitude: device[j].longitude,
+                                sensors: device[j].sensors,
+                                deleted: device[j].deleted,
+                                info: device[j].info,
+                                time: (new Date(device[j].time - tzoffset)).toISOString().slice(0, -8)
+                            };
+                            test.push(dev);
+                        }
+                        groups.childs.push({
                             group: roots_gr.rows[i],
                             id: roots_gr.rows[i].id,
                             p_id: roots_gr.rows[i].parent_id,
-                            childs: new Array()
-                        };
-                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)];
-                    case 3: return [4, (_u.sent()).rows];
-                    case 4:
-                        _e.apply(_d, [(_s.devs = _u.sent(),
-                                _s.update = false,
-                                _s)]);
-                        _u.label = 5;
+                            childs: new Array(),
+                            devs: test,
+                            update: false
+                        });
+                        _o.label = 5;
                     case 5:
                         _i++;
                         return [3, 2];
                     case 6: return [3, 13];
                     case 7: return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id)];
                     case 8:
-                        roots_gr = _u.sent();
-                        _f = roots_gr.rows;
-                        _g = [];
-                        for (_h in _f)
-                            _g.push(_h);
-                        _j = 0;
-                        _u.label = 9;
+                        roots_gr = _o.sent();
+                        _d = roots_gr.rows;
+                        _e = [];
+                        for (_f in _d)
+                            _e.push(_f);
+                        _g = 0;
+                        _o.label = 9;
                     case 9:
-                        if (!(_j < _g.length)) return [3, 13];
-                        _h = _g[_j];
-                        if (!(_h in _f)) return [3, 12];
-                        i = _h;
-                        _l = (_k = groups.childs).push;
-                        _t = {
+                        if (!(_g < _e.length)) return [3, 13];
+                        _f = _e[_g];
+                        if (!(_f in _d)) return [3, 12];
+                        i = _f;
+                        return [4, this.db.query("SELECT devs.id, group_dev_id, number, " +
+                                "name, latitude, longitude, sensors, deleted, info, MAX(time_srv) as time " +
+                                "FROM devs INNER JOIN dev_sess ON devs.number = dev_sess.dev_number WHERE group_dev_id = " + roots_gr.rows[i].id + " group by devs.id")];
+                    case 10: return [4, (_o.sent()).rows];
+                    case 11:
+                        device = _o.sent();
+                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                        for (j in device) {
+                            dev = {
+                                id: device[j].id,
+                                group_dev_id: device[j].group_dev_id,
+                                number: device[j].number,
+                                name: device[j].name,
+                                latitude: device[j].latitude,
+                                longitude: device[j].longitude,
+                                sensors: device[j].sensors,
+                                deleted: device[j].deleted,
+                                info: device[j].info,
+                                time: (new Date(device[j].time - tzoffset)).toISOString().slice(0, -8)
+                            };
+                            test.push(dev);
+                        }
+                        groups.childs.push({
                             group: roots_gr.rows[i],
                             id: roots_gr.rows[i].id,
                             p_id: roots_gr.rows[i].parent_id,
-                            childs: new Array()
-                        };
-                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)];
-                    case 10: return [4, (_u.sent()).rows];
-                    case 11:
-                        _l.apply(_k, [(_t.devs = _u.sent(),
-                                _t.update = false,
-                                _t)]);
-                        _u.label = 12;
+                            childs: new Array(),
+                            devs: test,
+                            update: false
+                        });
+                        _o.label = 12;
                     case 12:
-                        _j++;
+                        _g++;
                         return [3, 9];
                     case 13:
-                        _m = groups.childs;
-                        _o = [];
-                        for (_p in _m)
-                            _o.push(_p);
-                        _q = 0;
-                        _u.label = 14;
+                        _h = groups.childs;
+                        _j = [];
+                        for (_k in _h)
+                            _j.push(_k);
+                        _l = 0;
+                        _o.label = 14;
                     case 14:
-                        if (!(_q < _o.length)) return [3, 17];
-                        _p = _o[_q];
-                        if (!(_p in _m)) return [3, 16];
-                        i = _p;
-                        _r = groups.childs[i];
+                        if (!(_l < _j.length)) return [3, 17];
+                        _k = _j[_l];
+                        if (!(_k in _h)) return [3, 16];
+                        i = _k;
+                        _m = groups.childs[i];
                         return [4, this._d_tree(groups.childs[i])];
                     case 15:
-                        _r.childs = _u.sent();
-                        _u.label = 16;
+                        _m.childs = _o.sent();
+                        _o.label = 16;
                     case 16:
-                        _q++;
+                        _l++;
                         return [3, 14];
                     case 17:
                         result = this.objToString(groups);
