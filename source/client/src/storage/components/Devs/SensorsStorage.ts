@@ -90,7 +90,6 @@ export class SensorsStorage {
       }
 
       async get_DevFirstLastSessions(name: string, value: any, _options?: any) {
-       
         var sess_code = value;
         var q: IWSQuery = new WSQuery("get_DevFirstLastSessions");
         {

@@ -63,7 +63,7 @@ export class UsersMenu extends React.Component<IProps> {
                 <TreeItem
                   nodeId={String(row.u_id)}
                   label={row.u_family + " " + row.u_name + " " + row.u_father}
-                  icon={<AccountCircleOutlinedIcon />}
+                  icon={<AccountCircleOutlinedIcon sx ={{color: '#266BF1'}}/>}
                   sx={{
                     color: "#222",
                     fontSize: "14px",
@@ -80,13 +80,12 @@ export class UsersMenu extends React.Component<IProps> {
                   draggable="true"
                   nodeId={String(row.u_id)}
                   label={row.u_family}
-                  icon={<AccountCircleOutlinedIcon />}
+                  icon={<AccountCircleOutlinedIcon sx={{color: '#808080'}}/>}
                   sx={{
-                    color: "#222",
+                    color: "#808080",
                     fontSize: "14px",
                   }}
                 >
-
                 </TreeItem>
             
             </React.Fragment>

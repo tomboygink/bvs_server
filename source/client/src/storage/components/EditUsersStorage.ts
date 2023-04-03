@@ -285,11 +285,11 @@ export class EditUsersStorage {
 
        
 
-        if (this.getPassword().length < 7 || this.getPassword().length == 0) {
-          this.setErrorPassword(true);
-          this.setTextHelpPassword("используйте 6 или более символов");
-        }
-        else if (this.getPassword() === this.getLogin()){
+        // if (this.getPassword().length < 7) {
+        //   this.setErrorPassword(true);
+        //   this.setTextHelpPassword("используйте 6 или более символов");
+        // }
+       if (this.getPassword() === this.getLogin()){
           this.setErrorPassword(true);
           this.setTextHelpPassword("Пароль должен отличаться от логина");
         }
@@ -313,7 +313,7 @@ export class EditUsersStorage {
     
     if (
       this.getFamily() &&
-      this.getPassword() === this.getRepeatPassword() &&  this.getPassword().length > 6 &&
+      this.getPassword() === this.getRepeatPassword() &&
       this.getName() 
     ) { 
     console.log()

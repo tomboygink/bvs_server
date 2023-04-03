@@ -39,11 +39,17 @@ export class Devs extends React.Component<IProps> {
       var gr_devs = dgr.devs;
 
       for (var key in gr_devs) {
+        
         ////////////////////////////////// Все устройства
-
         if ("_dev_id_key_" + gr_devs[key].id === dev.getIdChild()) {
           APP_STORAGE.sensors.setNumber(gr_devs[key].number);
-          APP_STORAGE.sensors.get_DevFirstLastSessions("sess_id", APP_STORAGE.auth_form.getdt(),  gr_devs[key].number);
+         
+          setTimeout(() => { ///////////////////////////////////////////Функция дял орисовки графика при нажатии на устройству
+            APP_STORAGE.sensors.get_DevFirstLastSessions("sess_id", APP_STORAGE.auth_form.getdt(),  gr_devs[key].number);
+
+          }, 100);
+
+
           let longitude = gr_devs[key].longitude;
           let latitude = gr_devs[key].latitude;
 
@@ -56,21 +62,18 @@ export class Devs extends React.Component<IProps> {
                     display: "grid",
                     gridTemplateColumns: "1fr 1fr",
                     columnGap: "12px",
-                  }}
-                >
+                  }}>
                   <Box>
                     <Box
                       className="right_wrapper_dev"
-                      sx={{ display: "flex", flexDirection: "row-reverse" }}
-                    >
-          
-
+                      sx={{ display: "flex", flexDirection: "row-reverse" }}>
                       {APP_STORAGE.getRoleWrite() === 2 &&
-                        APP_STORAGE.getRoleRead() === 1 && <MenuDevs />}
+                      APP_STORAGE.getRoleRead() === 1 && <MenuDevs />}
                     </Box>
 
                     <Box>
                       <TextField
+                        disabled={true}
                         sx={{ pt: "0px", mt: "4px" }}
                         className="box_info"
                         fullWidth
@@ -84,6 +87,7 @@ export class Devs extends React.Component<IProps> {
                       />
 
                       <TextField
+                        disabled={true}
                         sx={{ pt: "0px", mt: "4px" }}
                         className="box_info"
                         fullWidth
@@ -97,6 +101,7 @@ export class Devs extends React.Component<IProps> {
                       />
 
                       <TextField
+                        disabled={true}
                         sx={{ pt: "0px", mt: "4px" }}
                         className="box_info"
                         fullWidth
@@ -110,6 +115,7 @@ export class Devs extends React.Component<IProps> {
                       />
 
                       <TextField
+                        disabled={true}
                         sx={{ pt: "0px", mt: "4px" }}
                         className="box_info"
                         fullWidth
@@ -123,6 +129,7 @@ export class Devs extends React.Component<IProps> {
                       />
 
                       <TextField
+                        disabled={true}
                         sx={{ pt: "0px", mt: "4px" }}
                         fullWidth
                         inputProps={{ style: { fontSize: 12 } }}
@@ -137,6 +144,7 @@ export class Devs extends React.Component<IProps> {
 
                     <Link
                       sx={{
+                        color: '#808080',
                         fontSize: "1rem",
                         display: "flex",
                         alignItems: "center",
@@ -149,18 +157,18 @@ export class Devs extends React.Component<IProps> {
                             "&lat=" +
                             latitude
                         );
-                      }}
-                    >
-                      Показать на карте
+                      }}> Показать на карте
                       <IconButton
                         color="primary"
-                        sx={{ p: "0px" }}
+                        sx={{ p: "0px" , color: '#808080'}}
                         aria-label="directions"
                       >
                         <DirectionsIcon />
                       </IconButton>
+
                     </Link>
                     <TextareaAutosize
+                      disabled={true}
                       className="info"
                       aria-label="minimum height"
                       minRows={4}
@@ -315,7 +323,7 @@ export class Devs extends React.Component<IProps> {
   drawDevsFunction(): React.ReactNode {
     let Dev: any;
     Dev = APP_STORAGE.devs_groups.getDevsGroups();
-    return this.drawDevs(Dev); /// передаем сформированные данные
+    return this.drawDevs(Dev); 
   }
   render(): React.ReactNode {
     return (

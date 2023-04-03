@@ -148,109 +148,166 @@ export class DevLocation extends React.Component<IProps> {
 /////////////////////////////////////////////////////////////////////////////////////////Если устройство удаленно 
           parent.push(
             <React.Fragment key={String(gr.id)}>
-            <Box id="long-button" className="grid__card_middle">
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Box>
-
-              <Box>
-                  <Typography sx={{ color: "#808080", fontWeight: "600" }}>
-                  Место расположения - {gr.g_name}{" "}
-                  </Typography> 
-
-                   <Typography sx={{ color: "#808080" }}>
-                  Долгота - {gr.longitude}{" "}
-                  </Typography>  
-
-                  <Typography sx={{ color: "#808080" }}>
-                  Широта - {gr.latitude}{" "}
-                  </Typography> 
-                   <Box id={gr.org_id}>
-                   </Box>
-
-                   <Link sx= {{fontSize:'1rem', fontWeight: '700'}} onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude + '&lat=' + latitude)}}>2222Показать на карте
-                                    
-                                    <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
-                                    <DirectionsIcon />
-                                    </IconButton>
-                                    </Link> 
-                                    </Box>
-
-                </Box>
-                {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 && (
-                    <div>
-                      <IconButton
-                        onClick={() => {
-                          APP_STORAGE.devs_groups.setOpen_menu(true);
-                        }}
-                        id="long-button_menu"
-                        aria-label="more"
-                        aria-controls={open ? "long-menu" : undefined}
-                        aria-expanded={open ? "true" : undefined}
-                        aria-haspopup="true"
-                      >
-                      <MoreVertIcon />
-                      </IconButton>
-                      <Menu
-                        id="long-menu"
-                        MenuListProps={{
-                          "aria-labelledby": "long-button",
-                        }}
-                        anchorEl={document.getElementById("long-button_menu")}
-                        open={APP_STORAGE.devs_groups.getOpen_menu()}
-                        onClose={() => {
-                          APP_STORAGE.devs_groups.setOpen_menu(false);
-                        }}
-                      >
-                        <MenuItem onClick={() => this.editDeviceLocation()}>
-                          <ListItemIcon>
-                            <ModeEditRoundedIcon fontSize="small" />
-                          </ListItemIcon>{" "}
-                          Редактировать
-                        </MenuItem>
-
-                        <MenuItem
-                          onClick={() => this.moveDeviceLocation("3")}>
-                          <ListItemIcon>
-                            <LogoutRoundedIcon fontSize="small" />
-                          </ListItemIcon>{" "}
-                          Переместить
-                        </MenuItem>
-
-                        <Divider />
-
-                        <MenuItem onClick={() => APP_STORAGE.devs.setOpenModal(true)}>
-                          <ListItemIcon>
-                            <CrisisAlertIcon fontSize="small" />
-                          </ListItemIcon>{" "}
-                            Добавить устройство
-                        </MenuItem>
-
-                        <MenuItem
-                          onClick={() =>
-                            this.openModal(
-                              APP_STORAGE.devs.getIdDevs(),
-                              Number(gr.org_id)
-                            ) }
+              <Box id="long-button" className="grid__card_middle">
+                <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
+                  {APP_STORAGE.getRoleWrite() === 2 &&
+                    APP_STORAGE.getRoleRead() === 1 && (
+                      <div>
+                        <IconButton
+                          onClick={() => {
+                            APP_STORAGE.devs_groups.setOpen_menu(true);
+                          }}
+                          id="long-button_menu"
+                          aria-label="more"
+                          aria-controls={open ? "long-menu" : undefined}
+                          aria-expanded={open ? "true" : undefined}
+                          aria-haspopup="true"
                         >
-                          <ListItemIcon>
-                            <CreateNewFolderOutlinedIcon fontSize="small" />
+                          <MoreVertIcon />
+                        </IconButton>
+                        <Menu
+                          id="long-menu"
+                          MenuListProps={{
+                            "aria-labelledby": "long-button",
+                          }}
+                          anchorEl={document.getElementById("long-button_menu")}
+                          open={APP_STORAGE.devs_groups.getOpen_menu()}
+                          onClose={() => {
+                            APP_STORAGE.devs_groups.setOpen_menu(false);
+                          }}
+                        >
+                          <MenuItem onClick={() => this.editDeviceLocation()}>
+                            <ListItemIcon>
+                              <ModeEditRoundedIcon fontSize="small" />
                             </ListItemIcon>{" "}
-                          Добавить подруппу
-                        </MenuItem>
-                      </Menu>
-                    </div>
-                  )}
+                            Редактировать
+                          </MenuItem>
 
+                          <MenuItem
+                            onClick={() => this.moveDeviceLocation("3")}
+                          >
+                            <ListItemIcon>
+                              <LogoutRoundedIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                            Переместить
+                          </MenuItem>
+
+                          <Divider />
+
+                          <MenuItem
+                            onClick={() => APP_STORAGE.devs.setOpenModal(true)}
+                          >
+                            <ListItemIcon>
+                              <CrisisAlertIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                            Добавить устройство
+                          </MenuItem>
+
+                          <MenuItem
+                            onClick={() =>
+                              this.openModal(
+                                APP_STORAGE.devs.getIdDevs(),
+                                Number(gr.org_id)
+                              )
+                            }
+                          >
+                            <ListItemIcon>
+                              <CreateNewFolderOutlinedIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                            Добавить подруппу
+                          </MenuItem>
+                        </Menu>
+                      </div>
+                    )}
+                </Box>
+
+                <Box className="wrapper_devlocation_card">
+                  <Typography className="box_info" sx={{ color: "#000" }}>
+                    Место расположения -
+                  </Typography>
+
+                  <TextField
+                    disabled= {true}
+                    className="box_info"
+                    fullWidth
+                    inputProps={{ style: { fontSize: 12 } }}
+                    InputLabelProps={{ style: { fontSize: 12 } }}
+                    variant="outlined"
+                    margin="normal"
+                    size="small"
+                    value={gr.g_name || ""}
+                  />
+
+                  <Typography className="box_info" sx={{ color: "#000" }}>
+                    Долгота -
+                  </Typography>
+
+                  <TextField
+                    disabled= {true}
+                    className="box_info"
+                    fullWidth
+                    inputProps={{ style: { fontSize: 12 } }}
+                    InputLabelProps={{ style: { fontSize: 12 } }}
+                    variant="outlined"
+                    margin="normal"
+                    size="small"
+                    value={gr.longitude || ""}
+                  />
+
+                  <Typography className="box_info" sx={{ color: "#000" }}>
+                    Широта -
+                  </Typography>
+
+                  <TextField
+                    disabled= {true}
+                    className="box_info"
+                    fullWidth
+                    inputProps={{ style: { fontSize: 12 } }}
+                    InputLabelProps={{ style: { fontSize: 12 } }}
+                    variant="outlined"
+                    margin="normal"
+                    size="small"
+                    value={gr.latitude || ""}
+                  />
+                </Box>
+
+
+                <Link
+                  sx={{
+                    color: '#808080',
+                    fontSize: "1rem",
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "row-reverse",
+                  }}
+                >
+                  Показать на карте
+                  <IconButton
+                    sx={{color: '#808080'}}
+                    aria-label="directions"
+                    onClick={() => {
+                      window.open(
+                        `http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` +
+                          longitude +
+                          "&lat=" +
+                          latitude
+                      );
+                    }}
+                  >
+                    <DirectionsIcon />
+                  </IconButton>
+                </Link>
+
+                <Divider sx={{ m: "2px" }} />
+                <TextareaAutosize
+                  className="info"
+                  aria-label="minimum height"
+                  minRows={4}
+                  style={{ width: "100%", marginTop: "12px" }}
+                  value={gr.g_info || ""}
+                />
               </Box>
-           
-            </Box>
-          </React.Fragment>
+            </React.Fragment>
           );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -376,8 +433,7 @@ export class DevLocation extends React.Component<IProps> {
                   </Box>
 
                   
-                  <Link sx= {{fontSize:'1rem', display: 'flex', alignItems: 'center', flexDirection: 'row-reverse'}} >Показать на карте
-                                      
+                  <Link sx= {{fontSize:'1rem', display: 'flex', alignItems: 'center', flexDirection: 'row-reverse'}} >Показать на карте               
                                       <IconButton color="primary" aria-label="directions" onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude + '&lat=' + latitude)}}>
                                       <DirectionsIcon/>
                                       </IconButton>
