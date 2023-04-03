@@ -23,7 +23,7 @@ export class Dev_sessTable {
     }
 
     //Получение сессий устройства за определенный период
-    
+
     /*async selectDevSess(): Promise<Dev_sessEntity[]>{
         var start_date = new Date(this.args.sess_period_start).toISOString().slice(0, 19).replace('T', ' ');
         var end_date = new Date(this.args.sess_period_end).toISOString().slice(0, 19).replace('T', ' ');
@@ -39,12 +39,12 @@ export class Dev_sessTable {
 
     async selectDevSess() {
 
-        var dev_sess:any = {
+        var dev_sess: any = {
             id: 0,
             time_dev: '',
             time_srv: '',
-            dev_number:'',
-            dev_id:0,
+            dev_number: '',
+            dev_id: 0,
             level_akb: 0.0,
             sess_data: ''
         };
@@ -53,8 +53,8 @@ export class Dev_sessTable {
         var start_date = new Date(this.args.sess_period_start).toISOString().slice(0, 19).replace('T', ' ');
         var end_date = new Date(this.args.sess_period_end).toISOString().slice(0, 19).replace('T', ' ');
         var db_res = await this.db.query("SELECT * FROM SelectDev_Sess ('" + this.args.dev_number + "', '" + start_date + "', '" + end_date + "')");
-       // console.log('db_res.rows', db_res.rows);
-        
+        // console.log('db_res.rows', db_res.rows);
+
         var result: Dev_sessEntity[] = new Array();
         for (var i in db_res.rows) {
 
@@ -62,12 +62,12 @@ export class Dev_sessTable {
             //var dev = timedev.getTimezoneOffset()*60000;
 
             var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
-            
+
             dev_sess = {
                 id: db_res.rows[i].id,
                 ////time_dev:  new Date(db_res.rows[i].time_dev).toISOString().slice(0,19).replace('T', ' '),  //new Date(timedev.getTime()-dev),
-               ///// time_srv: new Date(db_res.rows[i].time_srv).toISOString().slice(0,19).replace('T', ' '),
-                time_dev:  (new Date(db_res.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8), 
+                ///// time_srv: new Date(db_res.rows[i].time_srv).toISOString().slice(0,19).replace('T', ' '),
+                time_dev: (new Date(db_res.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
                 time_srv: (new Date(db_res.rows[i].time_srv - tzoffset)).toISOString().slice(0, -8),
                 dev_number: db_res.rows[i].dev_number,
                 dev_id: db_res.rows[i].dev_id,
@@ -80,6 +80,50 @@ export class Dev_sessTable {
         //console.log(result);
         return result;
     }
-   
+
+    async selectFirstLastSess() {
+        var dev_sess: any = {
+            id: 0,
+            time_dev: '',
+            time_srv: '',
+            dev_number: '',
+            dev_id: 0,
+            level_akb: 0.0,
+            sess_data: ''
+        };
+        var db_res_last = await this.db.query("SELECT * FROM dev_sess where dev_number = '" + this.args.dev_number + "' order by id desc limit 1;"); //last
+        var db_res_first = await this.db.query("SELECT * FROM dev_sess where dev_number = '" + this.args.dev_number + "' order by id asc limit 1;"); //first
+        var result: Dev_sessEntity[] = new Array();
+        for (var i in db_res_last.rows) {
+
+            var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
+
+            dev_sess = {
+                id: db_res_last.rows[i].id,
+                time_dev: (new Date(db_res_last.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
+                time_srv: (new Date(db_res_last.rows[i].time_srv - tzoffset)).toISOString().slice(0, -8),
+                dev_number: db_res_last.rows[i].dev_number,
+                dev_id: db_res_last.rows[i].dev_id,
+                level_akb: db_res_last.rows[i].level_akb,
+                sess_data: db_res_last.rows[i].sess_data
+            }
+            result.push(dev_sess);
+
+            dev_sess = {
+                id: db_res_first.rows[i].id,
+                time_dev: (new Date(db_res_first.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
+                time_srv: (new Date(db_res_first.rows[i].time_srv - tzoffset)).toISOString().slice(0, -8),
+                dev_number: db_res_first.rows[i].dev_number,
+                dev_id: db_res_first.rows[i].dev_id,
+                level_akb: db_res_first.rows[i].level_akb,
+                sess_data: db_res_first.rows[i].sess_data
+            }
+
+            result.push(dev_sess);
+
+        }
+        return result;
+
+    }
 
 }
