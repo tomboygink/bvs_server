@@ -70,32 +70,26 @@ export class DevSessCharts extends React.Component<IProps> {
     return (
       <Box sx={{background: '#f1f5fcb3', borderTopLeftRadius: '48px', pt: '22px', border: '1px solid #eee'}}>   
       <Typography sx={{color: '#1976d2', fontSize: '12px', display: 'flex', justifyContent: 'center'}}>График изменения температуры грунта </Typography>
-      <ResponsiveContainer width="100%" height={770}> 
-     <LineChart
-      className="LineChart"
-      layout="vertical"
-      
-      
-      margin={{
-        top: 20,
-        right: 30,
-        left: 20,
-        bottom: 5
-      }}>
-
-      <CartesianGrid strokeDasharray="2 2" />
-      <XAxis type="number" dataKey="град." strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tickCount={19}  tick={{ fill: '#266BF1', fontSize: '14px' }} domain={[-12, 12]} />
-      <YAxis dataKey="name" type="category" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tick={{ fill: '#266BF1', fontSize: '14px' }} />
-      {/* <YAxis data ={toJS(APP_STORAGE.sensors.getSessFirstLast())}  type="category"  stroke="#266BF1"  tickCount={60}   />  */}
-      <Tooltip content={<CustomTooltip/>}  />
-      {/* <Legend /> */}
-
-
-    <Line dataKey="град." stroke="#9747FF" > </Line>
-    <Line dataKey="град." stroke="#9747FF" > </Line>
-    {/* <Line dataKey="град." stroke="#82ca9d" > <LabelList content={<CustomizedLabel />} /> </Line> */}
-    </LineChart>
-    </ResponsiveContainer>
+      <ResponsiveContainer width="100%" height={770}>
+        <LineChart
+          layout="vertical"
+          data={toJS(APP_STORAGE.sensors.getSessFirstLast())}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="number" domain={[-12, 12]} />
+          <YAxis dataKey="name" type="category" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tick={{ fill: '#266BF1', fontSize: '14px' }} />
+          <Tooltip />
+          <Legend />
+          <Line dataKey="start" stroke="#8884d8" />
+          <Line dataKey="uv" stroke="red" />
+        </LineChart>
+      </ResponsiveContainer>
     </Box>
     );
   }

@@ -132,24 +132,33 @@ export class SensorsStorage {
 
   async set_DevFirstLastSessions(dt: IWSResult) {
 
-//     var arr = []
+    var arr = [];
 
-//       let start_sess = JSON.parse(dt.data[1].sess_data);
-//       let end_sess = JSON.parse(dt.data[0].sess_data);
+    var arrqw = [];
+
+      let start_sess = JSON.parse(dt.data[1].sess_data);
+      let end_sess = JSON.parse(dt.data[0].sess_data);
       
 
-// for(let i in start_sess.s){
-//   arr.push({
-//     name: start_sess.s[i].depth,
-  
-//     pv: start_sess.s[i].data
-// })
-// }
-//    console.log(arr)
+for(let i in start_sess.s){
+  for( let i in end_sess.s){
+    arr.push({
+      name: start_sess.s[i].depth,
+      uv: end_sess.s[i].data,
+      start: start_sess.s[i].data
+  })
+  }
 
-  
+}
 
-//        this.setSessFirstLast(arr);  
+
+const res = arr.reduce((o, i) => {
+  if (!o.find(v => v.name == i.name)) {
+    o.push(i);
+  }
+  return o;
+}, []);
+ this.setSessFirstLast(res);
   }
 }
 
