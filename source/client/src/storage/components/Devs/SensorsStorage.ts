@@ -29,9 +29,22 @@ export class SensorsStorage {
     @observable sessions_period: Array<any>  = [];
 
     @observable sessions_first_last_period: Array<any>  = [];
+
+
+
+    @observable sess_end: Array<any> = [];
+    @observable sess_start: Array<any> = [];
+
     constructor(){
         makeAutoObservable(this);
     }
+
+
+    @action setsess_end(val: Array<any>) { this.sess_end = val; } 
+    @computed getsess_end(): Array<any> { return this.sess_end; }
+
+    @action setsess_start(val: Array<any>) { this.sess_start = val; } 
+    @computed getsess_start(): Array<any> { return this.sess_start; }
 
 
     @action setChoseSessTime(val : string) {this.chose_sess_time = val};
@@ -118,56 +131,25 @@ export class SensorsStorage {
 
 
   async set_DevFirstLastSessions(dt: IWSResult) {
-    var data: any[] = []; ////// отображаем сенсоры
-    let sessdata: any[] = [];
-    console.log('тут',dt.data);
 
+//     var arr = []
 
-   // for (var key in dt.data[1]) {
-      let sess_data = JSON.parse(dt.data[1].sess_data);
+//       let start_sess = JSON.parse(dt.data[1].sess_data);
+//       let end_sess = JSON.parse(dt.data[0].sess_data);
       
-    
+
+// for(let i in start_sess.s){
+//   arr.push({
+//     name: start_sess.s[i].depth,
   
-      console.log('sess_data1', sess_data.s);
+//     pv: start_sess.s[i].data
+// })
+// }
+//    console.log(arr)
 
-      const uniqueChars = sess_data.s; 
-
-
-      for (var i in uniqueChars.sort((a: { depth: number; },b: { depth: number; }) =>  b.depth - a.depth )) {
-          data.push({
-            name: String(uniqueChars[i].depth),
-            "град.": uniqueChars[i].data
-          });
-      APP_STORAGE.sensors.setdataCharts(data);
-      console.log(toJS(APP_STORAGE.sensors.getdataCharts))
-      }
-
-    //   for (var i in uniqueChars1.sort((a: { depth: number; },b: { depth: number; }) =>  b.depth - a.depth )) {
-    //     data.push({
-    //       name: String(uniqueChars[i].depth),
-    //       "град.": uniqueChars[i].data
-    //     });
-    // APP_STORAGE.sensors.setSessFirstLast(data);
-    // console.log(toJS(APP_STORAGE.sensors.setSessFirstLast), '12334')
-
-    // }
-   
   
 
-    // //  for (var i in uniqueChars.sort((a: { depth: number; },b: { depth: number; }) =>  b.depth - a.depth )) {
-
-    //     // {
-    //     //   data.push({
-    //     //     name: String(uniqueChars[i].depth),
-    //     //     "град.": uniqueChars[i].data
-    //     //   });
-    //     // }
-
-    //     //this.setSessFirstLast(data);
-    //  // }
-    //  // console.log('sdfsdf', toJS(this.getSessFirstLast()))
-    // }
+//        this.setSessFirstLast(arr);  
   }
-
 }
 

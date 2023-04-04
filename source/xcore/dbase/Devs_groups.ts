@@ -72,6 +72,7 @@ export class Devs_groupsTable {
                 var device = await (await this.db.query("SELECT devs.id, group_dev_id, number, " +
                     "name, latitude, longitude, sensors, deleted, info, MAX(time_srv) as time " +
                     "FROM devs INNER JOIN dev_sess ON devs.number = dev_sess.dev_number WHERE group_dev_id = " + roots_gr.rows[i].id + " group by devs.id")).rows;
+                    
                 var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
                 for (var j in device) {
                     dev = {
@@ -88,6 +89,8 @@ export class Devs_groupsTable {
                     }
                     test.push(dev);
                 }
+                console.log(test);
+
 
                 groups.childs.push({
                     group: roots_gr.rows[i],
@@ -125,9 +128,10 @@ export class Devs_groupsTable {
                         info: device[j].info,
                         time: (new Date(device[j].time - tzoffset)).toISOString().slice(0, -8),
                     }
+                    
                     test.push(dev);
                 }
-
+               
                 groups.childs.push({
                     group: roots_gr.rows[i],
                     id: roots_gr.rows[i].id,
@@ -144,7 +148,7 @@ export class Devs_groupsTable {
             groups.childs[i].childs = await this._d_tree(groups.childs[i]);
         }
         var result = this.objToString(groups);
-        //console.log(result);
+        console.log(result);
         return result
 
     }
@@ -199,6 +203,7 @@ export class Devs_groupsTable {
                 updated: false
             });
         }
+        //console.log(reti);
         return reti;
     }
 
