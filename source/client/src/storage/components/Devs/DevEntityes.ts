@@ -19,6 +19,7 @@ export class TDevice {
     longitude: string = '';
     sensors: TDSensorsList = {"s": []};
     info: string = '';
+    time: string = '';
     deleted: boolean = false;
 };
 
@@ -42,6 +43,7 @@ export const DEVICE:TDevice = {
     longitude:'0.0',
     sensors: SENSORS_LIST,
     info:'',
+    time: '',
     deleted: false
 };
 
@@ -56,7 +58,7 @@ export type TDGroup = {
     longitude:string,
     ord_num:string,
     org_id:string,
-    g_info:string,
+    g_info:string
 	deleted:boolean
 };
 

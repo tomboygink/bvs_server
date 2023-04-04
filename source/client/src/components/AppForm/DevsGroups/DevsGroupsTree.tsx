@@ -62,15 +62,18 @@ export class DevsGroupsTree extends React.Component<IProps> {
         );
       }
       if(dev.deleted === false){
-        return (
-          <React.Fragment key={"_dev_id_key_" + dev.id}>
-            <TreeItem
-              nodeId={"_dev_id_key_" + dev.id}
-              label={dev.number}
-              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#4681F5'}}/>}
-              sx={{ color: "#002757" }}></TreeItem>
-          </React.Fragment>
-        );
+        if(dev.time === null){
+          return (
+            <React.Fragment key={"_dev_id_key_" + dev.id}>
+              <TreeItem
+                nodeId={"_dev_id_key_" + dev.id}
+                label={dev.number}
+                icon={<CrisisAlertIcon fontSize="small" sx={{color: 'red'}}/>}
+                sx={{ color: "#002757" }}></TreeItem>
+            </React.Fragment>
+          );
+        }
+     
       }
   
     }
