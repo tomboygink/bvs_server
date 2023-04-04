@@ -72,8 +72,22 @@ export class Devs_groupsTable {
                 var device = await (await this.db.query("SELECT devs.id, group_dev_id, number, " +
                     "name, latitude, longitude, sensors, deleted, info, MAX(time_srv) as time " +
                     "FROM devs INNER JOIN dev_sess ON devs.number = dev_sess.dev_number WHERE group_dev_id = " + roots_gr.rows[i].id + " group by devs.id")).rows;
+
+                var t;
+                //console.log(device[i])
+                if (device[i] === undefined) {
+                    device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)).rows;
+                    //t = null;
+                }
+
+
                 var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
                 for (var j in device) {
+
+                    //console.log(device[j].time);
+                    if (device[j].time === undefined) { t = null }
+                    else { t = (new Date(device[j].time - tzoffset)).toISOString().slice(0, -8) }
+
                     dev = {
                         id: device[j].id,
                         group_dev_id: device[j].group_dev_id,
@@ -84,7 +98,7 @@ export class Devs_groupsTable {
                         sensors: device[j].sensors,
                         deleted: device[j].deleted,
                         info: device[j].info,
-                        time: (new Date(device[j].time - tzoffset)).toISOString().slice(0, -8),
+                        time: t
                     }
                     test.push(dev);
                 }
@@ -94,10 +108,8 @@ export class Devs_groupsTable {
                     id: roots_gr.rows[i].id,
                     p_id: roots_gr.rows[i].parent_id,
                     childs: new Array(),
-                    //devs: await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)).rows,
                     devs: test,
                     update: false
-
                 })
 
 
@@ -111,8 +123,19 @@ export class Devs_groupsTable {
                 var device = await (await this.db.query("SELECT devs.id, group_dev_id, number, " +
                     "name, latitude, longitude, sensors, deleted, info, MAX(time_srv) as time " +
                     "FROM devs INNER JOIN dev_sess ON devs.number = dev_sess.dev_number WHERE group_dev_id = " + roots_gr.rows[i].id + " group by devs.id")).rows;
+
+                var t;
+                //console.log(device[i])
+                if (device[i] === undefined) {
+                    device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)).rows;
+                    //t = null;
+                }
+
                 var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
                 for (var j in device) {
+                    if (device[j].time === undefined) { t = null }
+                    else { t = (new Date(device[j].time - tzoffset)).toISOString().slice(0, -8) }
+
                     dev = {
                         id: device[j].id,
                         group_dev_id: device[j].group_dev_id,
@@ -123,7 +146,7 @@ export class Devs_groupsTable {
                         sensors: device[j].sensors,
                         deleted: device[j].deleted,
                         info: device[j].info,
-                        time: (new Date(device[j].time - tzoffset)).toISOString().slice(0, -8),
+                        time: t//(new Date(device[j].time - tzoffset)).toISOString().slice(0, -8),
                     }
                     test.push(dev);
                 }
@@ -171,8 +194,18 @@ export class Devs_groupsTable {
             var device = await (await this.db.query("SELECT devs.id, group_dev_id, number, " +
                 "name, latitude, longitude, sensors, deleted, info, MAX(time_srv) as time " +
                 "FROM devs INNER JOIN dev_sess ON devs.number = dev_sess.dev_number WHERE group_dev_id = " + grs.rows[i].id + " group by devs.id")).rows;
+            var t;
+            //console.log(device[i])
+            if (device[i] === undefined) {
+                device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + grs.rows[i].id)).rows;
+                //t = null;
+            }
+
             var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
             for (var j in device) {
+                if (device[j].time === undefined) { t = null }
+                else { t = (new Date(device[j].time - tzoffset)).toISOString().slice(0, -8) }
+
                 dev = {
                     id: device[j].id,
                     group_dev_id: device[j].group_dev_id,
@@ -183,7 +216,7 @@ export class Devs_groupsTable {
                     sensors: device[j].sensors,
                     deleted: device[j].deleted,
                     info: device[j].info,
-                    time: (new Date(device[j].time - tzoffset)).toISOString().slice(0, -8),
+                    time: t//(new Date(device[j].time - tzoffset)).toISOString().slice(0, -8),
                 }
                 test.push(dev);
             }
