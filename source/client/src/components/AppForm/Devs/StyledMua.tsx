@@ -142,17 +142,17 @@ export const CustomTooltip = ({ active, payload, label }: any) => {
 
           {payload && payload[0]  &&
           <Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
-          <DeviceThermostatIcon sx={{color: '#75A4FF', fontSize: '12px'}}/>
+          <DeviceThermostatIcon sx={{color: '#8884d8', fontSize: '12px'}}/>
         <Typography sx= {{color:"#808080", fontSize: '12px', mr: '2px'}}>Температура ( первая сессия ) </Typography>
-        <Typography sx= {{color:"#266BF1", fontSize: '12px'}}> {`${payload[0].value}`}  </Typography>
+        <Typography sx= {{color:"#8884d8", fontSize: '12px'}}> {`${payload[0].value}`}  </Typography>
           </Box> 
   }
           {payload && payload[1]  &&
 
           <Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
-          <DeviceThermostatIcon sx={{color: '#75A4FF', fontSize: '12px'}}/>
+          <DeviceThermostatIcon sx={{color: '#82ca9d', fontSize: '12px'}}/>
         <Typography sx= {{color:"#808080", fontSize: '12px', mr: '2px'}}>Температура (последняя сессия) </Typography>
-        <Typography sx= {{color:"#266BF1", fontSize: '12px'}}>   {`${payload[1].value}`}  </Typography>
+        <Typography sx= {{color:"#82ca9d", fontSize: '12px'}}>   {`${payload[1].value}`}  </Typography>
           </Box>  
         
           }

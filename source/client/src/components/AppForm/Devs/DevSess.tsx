@@ -3,7 +3,7 @@ import * as React from "react";
 import { observer } from "mobx-react";
 import { toJS } from "mobx";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-import { Box, Typography, TextField, Button, Link } from "@mui/material";
+import { Box, Typography, TextField, Button, Link, TableHead } from "@mui/material";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -229,6 +229,13 @@ export class DevSess extends React.Component<IProps> {
                 sx={{ mt: "10px", mb: "10px", maxHeight: "200px" }}
               >
                 <Table>
+                  <TableHead >
+                    <TableRow key='header_12'>
+                      <TableCell sx ={{p: 0, textAlign: 'left'}}>№</TableCell>
+                      <TableCell sx ={{p: 0, textAlign: 'left'}}>Время устройств</TableCell>
+                      <TableCell sx ={{p: 0, textAlign: 'left'}}>Заряд</TableCell>
+                    </TableRow>
+                  </TableHead>
                   <TableBody>
                     {date.map((row: any, i: any) => (
                       <TableRow
@@ -301,43 +308,6 @@ export class DevSess extends React.Component<IProps> {
           </Box>
         )}
         <CustomExport />
-
-        {/* {ses_depth.length > 0 && (
-          <>
-            <Typography
-              sx={{
-                fontWeight: "500",
-                color: "#111111",
-                mb: "8px",
-                mt: "20px",
-              }}
-            >
-              Выбранная сессия (Кол-во датчиков: {count_sess})
-            </Typography>
-            
-            <Table
-              sx={{
-                mb: "20px",
-                p: "12px",
-                background: "#E3EEFA",
-                borderRadius: "4px",
-              }}
-            >
-              <TableBody>
-                <TableRow>
-                  <TableCell>Глубина</TableCell>
-                  {ses_depth}
-                </TableRow>
-                <TableRow>
-                  <TableCell>Температура</TableCell>
-                  {ses_date}
-                </TableRow>
-              </TableBody>
-            </Table>
-          
-          </>
-
-        )} */}
       </React.Fragment>
     );
   }

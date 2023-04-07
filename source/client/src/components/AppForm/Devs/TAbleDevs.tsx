@@ -210,7 +210,6 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         >
           СЕССИИ ЗА ПЕРИОД
         </Typography>
-  
   );
 }
 

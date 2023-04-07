@@ -71,7 +71,7 @@ export class DevSessCharts extends React.Component<IProps> {
       <Box sx={{background: '#f1f5fcb3', borderTopLeftRadius: '48px', pt: '22px', border: '1px solid #eee'}}>   
       <Typography sx={{color: '#1976d2', fontSize: '12px', display: 'flex', justifyContent: 'center'}}>График изменения температуры грунта</Typography>
       <Typography sx={{color: '#82ca9d', fontSize: '12px', display: 'flex', justifyContent: 'center'}}>
-      <CommitIcon sx={{fontSize: '16px', color: '#9747FF', mr: '4px'}}/>Сессия (первая) - {APP_STORAGE.sensors.getTimeDevSessFirst()}</Typography>  
+      <CommitIcon sx={{fontSize: '16px', color: '#82ca9d', mr: '4px'}}/>Сессия (первая) - {APP_STORAGE.sensors.getTimeDevSessFirst()}</Typography>  
       <Typography sx={{color: '#8884d8', fontSize: '12px', display: 'flex', justifyContent: 'center'}}>
       <CommitIcon sx={{fontSize: '16px', color: '#9747FF', mr: '4px'}}/>Сессия (последняя) - {APP_STORAGE.sensors.getTimeDevSessLast()}</Typography> 
       <ResponsiveContainer width="100%" height={770}>
@@ -121,6 +121,6 @@ export class DevSessCharts extends React.Component<IProps> {
       </ResponsiveContainer>
     </Box>
     );
-  }
+  };
 } 
 }
