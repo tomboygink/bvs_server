@@ -130,72 +130,71 @@ export class SensorsStorage {
 
 
   async set_DevFirstLastSessions(dt: IWSResult) {
+    
+    if(Object.keys(dt.data).length > 0){
+      let start_sess = JSON.parse(dt.data[1].sess_data);
+      let end_sess = JSON.parse(dt.data[0].sess_data);
+      this.setTimeDevSessFirst(dt.data[0].time_dev);
+      this.setTimeDevSessLast(dt.data[1].time_dev);
+    
+      var obj_first: any = {
+        depth: '',
+        data: ''
+    };
+    
+    var obj_second: any = {
+      depth: '',
+      data1: ''
+    };
+    
+    var first = new Array();
+    var second = new Array();
+   
+      const mergeByProperty = (arrays: any[], property = "depth") => {
+       const arr = arrays.flatMap((item) => item); //делаем из всех массивов - один
+     
+       const obj = arr.reduce((acc, item) => {
+         return { // делаем из массива - объект, чтобы повторения перезаписывались
+           ...acc,
+           [item[property]]: { ...acc[item[property]], ...item }
+         };
+       }, {});
+     
+       return Object.values(obj); //обратно преобразуем из объекта в массив
+     };
+     
+   
+   
+   
+    /////////////////////////////////////////////////////////////////////////////////   
+     for(var i in start_sess.s){
+       obj_first = {
+         data_f : start_sess.s[i].data,
+         depth : start_sess.s[i].depth
+     }
+     first.push(obj_first)
+     }
+   
+   
+   
+     for (var j in end_sess.s){
+         obj_second= {
+           data_s: end_sess.s[j].data,
+          depth : end_sess.s[j].depth
+         }  
+         second.push(obj_second)
+     }
+    
+     
+     const result1 = mergeByProperty([first, second]);
+     console.log(result1, 'depth11');
+         this.setSessFirstLast(result1);
+    }
+    else{
+      this.setSessFirstLast([]);
+    }
 
-
-  // console.log(toJS(APP_STORAGE.sensors.getdataCharts(), 'getdataCharts'))
-   let start_sess = JSON.parse(dt.data[1].sess_data);
-   let end_sess = JSON.parse(dt.data[0].sess_data);
-   this.setTimeDevSessFirst(dt.data[0].time_dev);
-   this.setTimeDevSessLast(dt.data[1].time_dev);
- 
-   var obj_first: any = {
-     depth: '',
-     data: ''
- };
- 
- var obj_second: any = {
-   depth: '',
-   data1: ''
- };
- 
- var first = new Array();
- var second = new Array();
-
-   const mergeByProperty = (arrays: any[], property = "depth") => {
-    const arr = arrays.flatMap((item) => item); //делаем из всех массивов - один
   
-    const obj = arr.reduce((acc, item) => {
-      return { // делаем из массива - объект, чтобы повторения перезаписывались
-        ...acc,
-        [item[property]]: { ...acc[item[property]], ...item }
-      };
-    }, {});
-  
-    return Object.values(obj); //обратно преобразуем из объекта в массив
-  };
-  
-
-
-
- /////////////////////////////////////////////////////////////////////////////////   
-  for(var i in start_sess.s){
-    obj_first = {
-      data_f : start_sess.s[i].data,
-      depth : start_sess.s[i].depth
-  }
-  first.push(obj_first)
-  }
-
-
-
-  for (var j in end_sess.s){
-      obj_second= {
-        data_s: end_sess.s[j].data,
-       depth : end_sess.s[j].depth
-      }  
-      second.push(obj_second)
-  }
- 
-  
-  const result1 = mergeByProperty([first, second]);
-  console.log(result1, 'depth11');
-
-
-
-
-      
-
-      this.setSessFirstLast(result1);
    
       
 }
