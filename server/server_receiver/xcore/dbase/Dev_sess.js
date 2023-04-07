@@ -96,6 +96,56 @@ var Dev_sessTable = (function () {
             });
         });
     };
+    Dev_sessTable.prototype.selectFirstLastSess = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var dev_sess, db_res_last, db_res_first, result, i, tzoffset;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dev_sess = {
+                            id: 0,
+                            time_dev: '',
+                            time_srv: '',
+                            dev_number: '',
+                            dev_id: 0,
+                            level_akb: 0.0,
+                            sess_data: ''
+                        };
+                        return [4, this.db.query("SELECT * FROM dev_sess where dev_number = '" + this.args.dev_number + "' order by id desc limit 1;")];
+                    case 1:
+                        db_res_last = _a.sent();
+                        return [4, this.db.query("SELECT * FROM dev_sess where dev_number = '" + this.args.dev_number + "' order by id asc limit 1;")];
+                    case 2:
+                        db_res_first = _a.sent();
+                        result = new Array();
+                        for (i in db_res_last.rows) {
+                            tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                            dev_sess = {
+                                id: db_res_last.rows[i].id,
+                                time_dev: (new Date(db_res_last.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
+                                time_srv: (new Date(db_res_last.rows[i].time_srv - tzoffset)).toISOString().slice(0, -8),
+                                dev_number: db_res_last.rows[i].dev_number,
+                                dev_id: db_res_last.rows[i].dev_id,
+                                level_akb: db_res_last.rows[i].level_akb,
+                                sess_data: db_res_last.rows[i].sess_data
+                            };
+                            result.push(dev_sess);
+                            dev_sess = {
+                                id: db_res_first.rows[i].id,
+                                time_dev: (new Date(db_res_first.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
+                                time_srv: (new Date(db_res_first.rows[i].time_srv - tzoffset)).toISOString().slice(0, -8),
+                                dev_number: db_res_first.rows[i].dev_number,
+                                dev_id: db_res_first.rows[i].dev_id,
+                                level_akb: db_res_first.rows[i].level_akb,
+                                sess_data: db_res_first.rows[i].sess_data
+                            };
+                            result.push(dev_sess);
+                        }
+                        return [2, result];
+                }
+            });
+        });
+    };
     return Dev_sessTable;
 }());
 exports.Dev_sessTable = Dev_sessTable;

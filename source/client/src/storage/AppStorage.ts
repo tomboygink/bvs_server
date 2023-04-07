@@ -89,6 +89,7 @@ class AppStorage {
             case ('get_DevsGroups'): { this.devs_groups.setDevsGroupsAll(dt) } break;
             case ('get_Devs'): { this.devs.setDevsAll(dt) } break;
             case ('get_DevSessions'): { this.sensors.setDevSess(dt)} break;
+            case('get_DevFirstLastSessions'): { this.sensors.set_DevFirstLastSessions(dt)} break;
             default: { } break;
         }
     }

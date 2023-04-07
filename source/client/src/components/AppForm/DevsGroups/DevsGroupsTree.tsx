@@ -49,6 +49,8 @@ export class DevsGroupsTree extends React.Component<IProps> {
   }
 
   drawDeviceItem(dev: TDevice): React.ReactNode {
+
+
     if(APP_STORAGE.getRoleRead() === 1 && APP_STORAGE.getRoleWrite() === 2){
       if(dev.deleted === true){
         return (
@@ -62,17 +64,90 @@ export class DevsGroupsTree extends React.Component<IProps> {
         );
       }
       if(dev.deleted === false){
+ 
+       if(dev.time === null){
+          return (
+            <React.Fragment key={"_dev_id_key_" + dev.id}>
+              <TreeItem
+                nodeId={"_dev_id_key_" + dev.id}
+                label={dev.number}
+                icon={<CrisisAlertIcon fontSize="small" sx={{color: 'red'}}/>}
+                sx={{ color: "#002757" }}></TreeItem>
+            </React.Fragment>
+          );
+      }
+
+      if (dev.time !== ''){
+      //////----------------------------------Определяем сколько дней прошло с даты otherDate по nowDate
+       let otherDate=new Date(dev.time);
+       let nowDate= new Date();
+       let delta=nowDate.getTime()-otherDate.getTime();
+       
+       var passedDay= Math.floor(delta/1000/60/60/24) ///////////////////( new Date( ( new Date() ).toDateString() ) - 86400000 ); // 24*60*60*1000
+        
+        console.log("Прошло "+passedDay+" дней")
+       
+       if(passedDay === 0){
         return (
           <React.Fragment key={"_dev_id_key_" + dev.id}>
             <TreeItem
               nodeId={"_dev_id_key_" + dev.id}
               label={dev.number}
-              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#4681F5'}}/>}
+              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#4ECB71'}}/>}
               sx={{ color: "#002757" }}></TreeItem>
           </React.Fragment>
         );
+       }
+
+       if(passedDay === 3){
+        return (
+          <React.Fragment key={"_dev_id_key_" + dev.id}>
+            <TreeItem
+              nodeId={"_dev_id_key_" + dev.id}
+              label={dev.number}
+              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#266BF1'}}/>}
+              sx={{ color: "#002757" }}></TreeItem>
+          </React.Fragment>
+        );
+       }
+
+       if(passedDay === 5){
+        return (
+          <React.Fragment key={"_dev_id_key_" + dev.id}>
+            <TreeItem
+              nodeId={"_dev_id_key_" + dev.id}
+              label={dev.number}
+              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FFD233'}}/>}
+              sx={{ color: "#002757" }}></TreeItem>
+          </React.Fragment>
+        );
+       }
+
+       if(passedDay === 15){
+        return (
+          <React.Fragment key={"_dev_id_key_" + dev.id}>
+            <TreeItem
+              nodeId={"_dev_id_key_" + dev.id}
+              label={dev.number}
+              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FD8A04'}}/>}
+              sx={{ color: "#002757" }}></TreeItem>
+          </React.Fragment>
+        );
+       }
+
+       if(passedDay === 30){
+        return (
+          <React.Fragment key={"_dev_id_key_" + dev.id}>
+            <TreeItem
+              nodeId={"_dev_id_key_" + dev.id}
+              label={dev.number}
+              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FF4848'}}/>}
+              sx={{ color: "#002757" }}></TreeItem>
+          </React.Fragment>
+        );
+       }
       }
-  
+      }
     }
 
     if(APP_STORAGE.getRoleRead() === 1 && !APP_STORAGE.getRoleWrite() && dev.deleted === false){
