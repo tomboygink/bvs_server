@@ -66,10 +66,14 @@ export class DevSessCharts extends React.Component<IProps> {
   }
 
   if(!toJS(APP_STORAGE.sensors.getdataCharts()).length && toJS(APP_STORAGE.sensors.getSessFirstLast().length)){
-
+     
     return (
       <Box sx={{background: '#f1f5fcb3', borderTopLeftRadius: '48px', pt: '22px', border: '1px solid #eee'}}>   
-      <Typography sx={{color: '#1976d2', fontSize: '12px', display: 'flex', justifyContent: 'center'}}>График изменения температуры грунта </Typography>
+      <Typography sx={{color: '#1976d2', fontSize: '12px', display: 'flex', justifyContent: 'center'}}>График изменения температуры грунта</Typography>
+      <Typography sx={{color: '#82ca9d', fontSize: '12px', display: 'flex', justifyContent: 'center'}}>
+      <CommitIcon sx={{fontSize: '16px', color: '#9747FF', mr: '4px'}}/>Сессия (первая) - {APP_STORAGE.sensors.getTimeDevSessFirst()}</Typography>  
+      <Typography sx={{color: '#8884d8', fontSize: '12px', display: 'flex', justifyContent: 'center'}}>
+      <CommitIcon sx={{fontSize: '16px', color: '#9747FF', mr: '4px'}}/>Сессия (последняя) - {APP_STORAGE.sensors.getTimeDevSessLast()}</Typography> 
       <ResponsiveContainer width="100%" height={770}>
         <LineChart
           layout="vertical"
@@ -83,11 +87,36 @@ export class DevSessCharts extends React.Component<IProps> {
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" domain={[-12, 12]} />
-          <YAxis dataKey="name" type="category" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tick={{ fill: '#266BF1', fontSize: '14px' }} />
+          <YAxis  dataKey='depth' type="category" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tick={{ fill: '#266BF1', fontSize: '14px' }} />
+          <Tooltip content={<CustomTooltip/>}  />
+          <Line  strokeWidth={'2'}  dataKey="data_s" stroke="#8884d8" />
+          <Line strokeWidth={'2'} dataKey="data_f" stroke="#82ca9d" />
+        </LineChart>
+      </ResponsiveContainer>
+    </Box>
+    );
+  }
+
+
+  if(!toJS(APP_STORAGE.sensors.getdataCharts()).length && !toJS(APP_STORAGE.sensors.getSessFirstLast().length)){
+
+    return (
+      <Box sx={{background: '#f1f5fcb3', borderTopLeftRadius: '48px', pt: '22px', border: '1px solid #eee'}}>   
+      <Typography sx={{color: '#1976d2', fontSize: '12px', display: 'flex', justifyContent: 'center'}}>График изменения температуры грунта </Typography>
+      <ResponsiveContainer width="100%" height={770}>
+        <LineChart
+          layout="vertical"
+          margin={{
+            top: 20,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="number" domain={[-12, 12]} />
+          <YAxis domain={[-12, 60]} type="category" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tick={{ fill: '#266BF1', fontSize: '14px' }} />
           <Tooltip />
-          <Legend />
-          <Line dataKey="start" stroke="#8884d8" />
-          <Line dataKey="uv" stroke="red" />
+    
         </LineChart>
       </ResponsiveContainer>
     </Box>

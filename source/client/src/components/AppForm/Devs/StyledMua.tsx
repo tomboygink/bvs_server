@@ -129,7 +129,9 @@ APP_STORAGE.devs.setGroupDevId(String(node));
 }
 
 export const CustomTooltip = ({ active, payload, label }: any) => {
-  if (active && payload && payload.length) {
+  if (active && payload && payload.length)
+ 
+  {
     return (
       <Box sx={{background: '#fff', p: '4px', borderRadius:' 4px', boxShadow: '0px 1px 8px 0px rgba(15, 134, 225, 0.2)'}}>
         <Box sx ={{display: 'flex', justifyItems: 'center', alignItems: 'center'}}> 
@@ -138,16 +140,22 @@ export const CustomTooltip = ({ active, payload, label }: any) => {
         <Typography sx= {{color:"#266BF1", fontSize: '12px'}}> {`${label}`}  </Typography>
           </Box>  
 
+          {payload && payload[0]  &&
           <Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
           <DeviceThermostatIcon sx={{color: '#75A4FF', fontSize: '12px'}}/>
-        <Typography sx= {{color:"#808080", fontSize: '12px', mr: '2px'}}>Температура - </Typography>
+        <Typography sx= {{color:"#808080", fontSize: '12px', mr: '2px'}}>Температура ( первая сессия ) </Typography>
         <Typography sx= {{color:"#266BF1", fontSize: '12px'}}> {`${payload[0].value}`}  </Typography>
+          </Box> 
+  }
+          {payload && payload[1]  &&
+
+          <Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
+          <DeviceThermostatIcon sx={{color: '#75A4FF', fontSize: '12px'}}/>
+        <Typography sx= {{color:"#808080", fontSize: '12px', mr: '2px'}}>Температура (последняя сессия) </Typography>
+        <Typography sx= {{color:"#266BF1", fontSize: '12px'}}>   {`${payload[1].value}`}  </Typography>
           </Box>  
         
-         {/* <Typography sx= {{color:"#266BF1"}}> <ShowChartIcon /> {"Глубина" + `${label}`}    </Typography>
-        <Typography sx= {{color:"#266BF1"}}> <DeviceThermostatIcon fontSize='small'/> {"Температура" + `${payload[0].value}`}</Typography> */}
-        {/* <p className="intro">{getIntroOfPage(label)}</p> */}
-        {/* <Typography sx= {{color:"#266BF1"}}> Anything you want can be displayed here.</Typography> */}
+          }
       </Box>
     );
   }

@@ -3,7 +3,6 @@ import { IWSQuery, WSQuery, IWSResult } from '../../../../../xcore/WSQuery';
 import { WSocket } from '../../WSocket';
 import {APP_STORAGE} from '../../AppStorage';
 import { toJS } from "mobx";
-import { RechartsEntity } from "./RechartsEntityes";
 
 
 export class SensorsStorage {
@@ -30,21 +29,23 @@ export class SensorsStorage {
     @observable sessions_period: Array<any>  = [];
 
     @observable sessions_first_last_period: Array<any>  = [];
-    
-    @observable time_dev_firstsess : string = '';
-    @observable time_dev_lastsess : string = '';
-    
+
+
+
+    @observable sess_end: Array<any> = [];
+    @observable sess_start: Array<any> = [];
+
     constructor(){
         makeAutoObservable(this);
     }
 
 
-   
-    @action setTimeDevSessFirst(val : string) {this.time_dev_firstsess = val};
-    @computed getTimeDevSessFirst() : string {return this.time_dev_firstsess}; 
+    @action setsess_end(val: Array<any>) { this.sess_end = val; } 
+    @computed getsess_end(): Array<any> { return this.sess_end; }
 
-    @action setTimeDevSessLast(val : string) {this.time_dev_lastsess = val};
-    @computed getTimeDevSessLast() : string {return this.time_dev_lastsess}; 
+    @action setsess_start(val: Array<any>) { this.sess_start = val; } 
+    @computed getsess_start(): Array<any> { return this.sess_start; }
+
 
     @action setChoseSessTime(val : string) {this.chose_sess_time = val};
     @computed getChoseSessTime() : string {return this.chose_sess_time}; 
@@ -130,74 +131,142 @@ export class SensorsStorage {
 
 
   async set_DevFirstLastSessions(dt: IWSResult) {
+    var first_sess = [];
+    var last_sess = [];
 
-
-  // console.log(toJS(APP_STORAGE.sensors.getdataCharts(), 'getdataCharts'))
-   let start_sess = JSON.parse(dt.data[1].sess_data);
-   let end_sess = JSON.parse(dt.data[0].sess_data);
-   this.setTimeDevSessFirst(dt.data[0].time_dev);
-   this.setTimeDevSessLast(dt.data[1].time_dev);
- 
-   var obj_first: any = {
-     depth: '',
-     data: ''
- };
- 
- var obj_second: any = {
-   depth: '',
-   data1: ''
- };
- 
- var first = new Array();
- var second = new Array();
-
-   const mergeByProperty = (arrays: any[], property = "depth") => {
-    const arr = arrays.flatMap((item) => item); //делаем из всех массивов - один
-  
-    const obj = arr.reduce((acc, item) => {
-      return { // делаем из массива - объект, чтобы повторения перезаписывались
-        ...acc,
-        [item[property]]: { ...acc[item[property]], ...item }
-      };
-    }, {});
-  
-    return Object.values(obj); //обратно преобразуем из объекта в массив
-  };
-  
-
-
-
- /////////////////////////////////////////////////////////////////////////////////   
-  for(var i in start_sess.s){
-    obj_first = {
-      data_f : start_sess.s[i].data,
-      depth : start_sess.s[i].depth
-  }
-  first.push(obj_first)
-  }
-
-
-
-  for (var j in end_sess.s){
-      obj_second= {
-        data_s: end_sess.s[j].data,
-       depth : end_sess.s[j].depth
-      }  
-      second.push(obj_second)
-  }
- 
-  
-  const result1 = mergeByProperty([first, second]);
-  console.log(result1, 'depth11');
-
-
-
-
+      let start_sess = JSON.parse(dt.data[1].sess_data);
+      let end_sess = JSON.parse(dt.data[0].sess_data);
       
 
-      this.setSessFirstLast(result1);
+
+
+for (let i in start_sess.s){
+  first_sess.push({
+    depth: start_sess.s[i].depth
+  })
+}
+
+for (let i in end_sess.s){
+  last_sess.push({
+    depth: end_sess.s[i].depth
+  })
+}
+
+let start = [];
+let end = [];
+
+for (let i in start_sess.s){ ///////////////////////////// данные по первой сессии
+  start.push({
+    start: start_sess.s[i].data
+  })
+}
+
+for (let i in end_sess.s){ ///////////////////////////// данные по первой сессии
+  end.push({
+    end: end_sess.s[i].data
+  })
+}
+ ////////////////////////////////////////////////////////////////Сравниваем глубину двух строк 
+
+ let f = first_sess.length; /////////////первая строка
+ let e = last_sess.length  /////////////////////вторая строка
+let depth_s = []; ////// Глубина (Наибольшая длина)
+ if (f> e){
+  depth_s.push(first_sess)
+ }
+ else{
+  depth_s.push(last_sess)
+ }
+
+
+ const result = [...depth_s[0], ...end, ...start];
+
+
+
+const arr = [];
+const end_s = [];
+const start_s = [];
+const all_array = [];
+ for ( let iii in result){
+  console.log(result[iii].depth);
+  if(result[iii].depth !== undefined){
+    arr.push({
+      name: result[iii].depth
+  })
+}
+  }
+
+  all_array.push(
+    depth_s[0],
+    end,
+    start
+  )
+
+
+  console.log('all_array', all_array);
+
+ 
+   const a = all_array[1].length;
+   const b = all_array[2].length;
+   let rr:any = ''
+ 
    
-      
+  if( a > b){
+   rr = a-b;
+   alert('lf')
+    for( let b = 0; b> rr; b++){
+       console.log()
+    }
+  }
+  else{
+    rr = b -a;
+  }
+  
+
+  console.log(rr);
+
+  for ( let iii in result){
+    if(result[iii].end !== undefined){
+      end_s.push({
+        end: result[iii].end
+    })
+  }
+    }
+
+    for ( let iii in result){
+      if(result[iii].start !== undefined){
+        start_s.push({
+          start: result[iii].start
+      })
+    }
+      }
+
+
+
+this.setSessFirstLast(arr);
+this.setsess_end(end_s);
+this.setsess_start(start_s);
+// for(let i in start_sess.s.sort(
+//   (a: { depth: number }, b: { depth: number }) => b.depth - a.depth
+// )){
+//   for( let i in start_sess.s){
+//     arr.push({
+//       name: start_sess.s[i].depth,
+//       uv: end_sess.s[i].data,
+//       start: start_sess.s[i].data
+//   })
+//   }
+// }
+
+// const res = result.reduce((o, i) => {
+//   if (!o.find(v => v.depth == i.depth)) {
+//     o.push(i);
+//   }
+//   return o;
+// }, []);
+
+//  console.log(res, 'res1')
+ ///this.setSessFirstLast(res);
+  }
 }
 
-}

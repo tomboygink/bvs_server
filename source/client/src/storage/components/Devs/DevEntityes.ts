@@ -19,7 +19,7 @@ export class TDevice {
     longitude: string = '';
     sensors: TDSensorsList = {"s": []};
     info: string = '';
-    time: string = '';
+time: string = '';
     deleted: boolean = false;
 };
 

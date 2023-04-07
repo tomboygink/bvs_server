@@ -11,8 +11,8 @@ import { TableCell } from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 
-import { TablePagination } from '@mui/material';
-import EnhancedTable  from './TAbleDevs'
+import { TablePagination } from "@mui/material";
+import EnhancedTable from "./TAbleDevs";
 
 import { CustomExport } from "./Export";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
@@ -34,36 +34,36 @@ export class DevSess extends React.Component<IProps> {
     XLSX.writeFile(workbook, "Report.xlsx");
   }
 
-
   async handleExportCSV() {
     var XLSX = require("xlsx");
 
-  var table = document.getElementById("my-table-id");
-var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet JS" });
-var ws1 = wb.Sheets[wb.SheetNames[0]];
-var csv = XLSX.utils.sheet_to_csv(ws1, { strip: true, FS: "|" });
-this.download_file_csv(csv);}
+    var table = document.getElementById("my-table-id");
+    var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet JS" });
+    var ws1 = wb.Sheets[wb.SheetNames[0]];
+    var csv = XLSX.utils.sheet_to_csv(ws1, { strip: true, FS: "|" });
+    this.download_file_csv(csv);
+  }
 
-async download_file_csv(content: any) {
-var csvString = content;
-var universalBOM = "\uFEFF";
-var a = window.document.createElement('a');
-a.setAttribute('href', 'data:text/csv; charset=utf-8,' + encodeURIComponent(universalBOM+csvString));
-a.setAttribute('download', 'Report.csv');
-window.document.body.appendChild(a);
-a.click();
-} 
- 
+  async download_file_csv(content: any) {
+    var csvString = content;
+    var universalBOM = "\uFEFF";
+    var a = window.document.createElement("a");
+    a.setAttribute(
+      "href",
+      "data:text/csv; charset=utf-8," +
+        encodeURIComponent(universalBOM + csvString)
+    );
+    a.setAttribute("download", "Report.csv");
+    window.document.body.appendChild(a);
+    a.click();
+  }
 
-// async getIntroOfPage(label: any){
+  // async getIntroOfPage(label: any){
 
-// }
-
-
-
+  // }
 
   async setRowId(e: string, time: string) {
-    APP_STORAGE.sensors.setChoseSessTime(time)
+    APP_STORAGE.sensors.setChoseSessTime(time);
     APP_STORAGE.sensors.setOpenDevsess(true);
     APP_STORAGE.sensors.setIdDevSess(e);
     APP_STORAGE.sensors.get_DevSessions(
@@ -85,21 +85,19 @@ a.click();
             o.push(i);
           }
           return o;
-        }, []); 
+        }, []);
 
-        for (var i in uniqueChars.sort((a: { depth: number; },b: { depth: number; }) =>  b.depth - a.depth )) {
+        for (var i in uniqueChars.sort(
+          (a: { depth: number }, b: { depth: number }) => b.depth - a.depth
+        )) {
           if (
             String(APP_STORAGE.sensors.getIdDevSess()) ===
             String(sessors[key].id)
-          )
-          
-          {
+          ) {
             data.push({
               name: String(uniqueChars[i].depth),
-              "град.": uniqueChars[i].data
+              "град.": uniqueChars[i].data,
             });
-
-         
           }
 
           APP_STORAGE.sensors.setdataCharts(data);
@@ -136,15 +134,14 @@ a.click();
       };
     };
 
-
     if (sess.getSessPeriodStart() === "" || sess.getSessPeriodEnd() === "") {
-  
-      var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
-      var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -8);
+      var tzoffset = new Date().getTimezoneOffset() * 60000; // смещение в миллисекундах
+      var localISOTime = new Date(Date.now() - tzoffset)
+        .toISOString()
+        .slice(0, -8);
       sess.setSessPeriodStart(localISOTime);
       sess.setSessPeriodEnd(localISOTime); // => '2023-03-16T09:00'
     }
-
 
     if (sess.getDevSession) {
       dev_sess = toJS(sess.getDevSession());
@@ -187,68 +184,76 @@ a.click();
         date.push(dev_sess[key]);
         count = Object.keys(dev_sess).length;
 
-        if(document.getElementById(dev_sess[key].id)){
-          if(document.getElementById(dev_sess[key].id).id === APP_STORAGE.sensors.getIdDevSess()){
-            document.getElementById(dev_sess[key].id).style.backgroundColor = '#E3EEFA'
-          }
-          else if(document.getElementById(dev_sess[key].id).id !== APP_STORAGE.sensors.getIdDevSess()){
-            document.getElementById(dev_sess[key].id).style.backgroundColor = '#fff'
+        if (document.getElementById(dev_sess[key].id)) {
+          if (
+            document.getElementById(dev_sess[key].id).id ===
+            APP_STORAGE.sensors.getIdDevSess()
+          ) {
+            document.getElementById(dev_sess[key].id).style.backgroundColor =
+              "#E3EEFA";
+          } else if (
+            document.getElementById(dev_sess[key].id).id !==
+            APP_STORAGE.sensors.getIdDevSess()
+          ) {
+            document.getElementById(dev_sess[key].id).style.backgroundColor =
+              "#fff";
           }
         }
-      
-     
       }
     }
 
     return (
       <React.Fragment>
-            
-         {date.length > 0 && (
-        <Box  sx={{ mt: "32px" }}>
-       
-            <> 
-            <Box className="session_pediod" sx ={{display: 'flex', justifyContent: "space-between"}}>
-            <Typography  sx={{ color: "#266bf1",  fontWeight: "500" }}> СЕССИИ ЗА ПЕРИОД: (кол-во: {count})</Typography>
-            <Typography
-            sx={{
-              fontSize: "12px",
-              color: "#AAAAAA"
-            }}
-          >
-            Таблица сессий по периоду
-          </Typography>
-            </Box>
-         
+        {date.length > 0 && (
+          <Box sx={{ mt: "32px" }}>
+            <>
+              <Box
+                className="session_pediod"
+                sx={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <Typography sx={{ color: "#266bf1", fontWeight: "500" }}>
+                  {" "}
+                  СЕССИИ ЗА ПЕРИОД: (кол-во: {count})
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                    color: "#AAAAAA",
+                  }}
+                >
+                  Таблица сессий по периоду
+                </Typography>
+              </Box>
 
-
-             <TableContainer sx={{ mt: "10px",mb: '10px',  maxHeight: '200px' }}>
-              <Table >
-                <TableBody>
-                  {date.map((row: any, i: any) => (
-                    <TableRow
-                      key={"key_row" + row.id}
-                      className = 'active_row'
-                      id ={row.id}
-                      onClick={() => {
-                        this.setRowId(row.id, row.time_dev.replace('T', ' '));
-                      }}
-                    >
-                      <TableCell sx={{ p: "4px" }}> {"" + i} </TableCell>
-                      <TableCell sx={{ p: "4px" }}>
-                        {" "}
-                        {"" + row.time_dev.replace('T', ' ')}{" "}
-                      </TableCell>
-                      <TableCell sx={{ p: "4px" }}>
-                        {" "}
-                        {"" + row.level_akb}{" "}
-                      </TableCell>
-                    
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <Button
+              <TableContainer
+                sx={{ mt: "10px", mb: "10px", maxHeight: "200px" }}
+              >
+                <Table>
+                  <TableBody>
+                    {date.map((row: any, i: any) => (
+                      <TableRow
+                        key={"key_row" + row.id}
+                        className="active_row"
+                        id={row.id}
+                        onClick={() => {
+                          this.setRowId(row.id, row.time_dev.replace("T", " "));
+                        }}
+                      >
+                        <TableCell sx={{ p: "4px" }}> {"" + i} </TableCell>
+                        <TableCell sx={{ p: "4px" }}>
+                          {" "}
+                          {"" + row.time_dev.replace("T", " ")}{" "}
+                        </TableCell>
+                        <TableCell sx={{ p: "4px" }}>
+                          {" "}
+                          {"" + row.level_akb}{" "}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <Button
                 className="setDevSess"
                 sx={{
                   background: "#038F54",
@@ -293,8 +298,8 @@ a.click();
                 />
               </Button>
             </>
-        </Box>
- )}
+          </Box>
+        )}
         <CustomExport />
 
         {/* {ses_depth.length > 0 && (
@@ -337,5 +342,3 @@ a.click();
     );
   }
 }
-
-
