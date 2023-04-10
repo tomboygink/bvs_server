@@ -87,7 +87,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
        
        var passedDay= Math.floor(delta/1000/60/60/24) ///////////////////( new Date( ( new Date() ).toDateString() ) - 86400000 ); // 24*60*60*1000
       
-        if(passedDay){
+        if(passedDay > 0){
           return (
             <React.Fragment key={"_dev_id_key_" + dev.id}>
               <TreeItem
