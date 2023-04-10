@@ -86,11 +86,11 @@ export class DevSessCharts extends React.Component<IProps> {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" domain={[-12, 12]} />
+          <XAxis type="number" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tickCount={19}  tick={{ fill: '#266BF1', fontSize: '14px' }} domain={[-12, 12]} />
           <YAxis  dataKey='depth' type="category" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tick={{ fill: '#266BF1', fontSize: '14px' }} />
           <Tooltip content={<CustomTooltip/>}  />
-          <Line  strokeWidth={'2'}  dataKey="data_s" stroke="#8884d8" />
-          <Line strokeWidth={'2'} dataKey="data_f" stroke="#82ca9d" />
+          <Line  strokeWidth={'1'}  dataKey="data_s" stroke="#8884d8" />
+          <Line strokeWidth={'1'} dataKey="data_f" stroke="#82ca9d" />
         </LineChart>
       </ResponsiveContainer>
     </Box>
@@ -113,7 +113,7 @@ export class DevSessCharts extends React.Component<IProps> {
             bottom: 5,
           }}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" domain={[-12, 12]} />
+          <XAxis type="number" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tickCount={19}  tick={{ fill: '#266BF1', fontSize: '14px' }} domain={[-12, 12]} />
           <YAxis domain={[-12, 60]} type="category" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tick={{ fill: '#266BF1', fontSize: '14px' }} />
           <Tooltip />
     
