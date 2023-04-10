@@ -34,7 +34,6 @@ export class Change_ModalSensors extends React.Component<IProps> {
     }, []);
     
     APP_STORAGE.devs.setChangeSensors(JSON.parse(JSON.stringify(uniqueChars)));
-    console.log(toJS(APP_STORAGE.devs.getChangeSensors()))
   }
 
   render(): React.ReactNode {

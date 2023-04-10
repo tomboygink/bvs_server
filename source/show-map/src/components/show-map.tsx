@@ -23,8 +23,7 @@ export default function LeafletMap() {
     let splArr1 = splArr.split('=');
    
     let separ = splArr1[1].split('&');
-    console.log('separ', separ[0]);
-    console.log('splArr1', splArr1[2]);
+    
 
   return (
 <MapContainer

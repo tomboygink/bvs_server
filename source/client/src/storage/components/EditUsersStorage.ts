@@ -316,7 +316,6 @@ export class EditUsersStorage {
       this.getPassword() === this.getRepeatPassword() &&
       this.getName() 
     ) { 
-    console.log()
     
     q.args = {
         family: this.getFamily() || "",

@@ -1,4 +1,6 @@
 import React from "react";
+import { toJS } from "mobx";
+
 import { observer } from "mobx-react";
 
 import { Box, Typography } from "@mui/material";
@@ -84,8 +86,18 @@ export class DevsGroupsTree extends React.Component<IProps> {
        let delta=nowDate.getTime()-otherDate.getTime();
        
        var passedDay= Math.floor(delta/1000/60/60/24) ///////////////////( new Date( ( new Date() ).toDateString() ) - 86400000 ); // 24*60*60*1000
-        
-        console.log("Прошло "+passedDay+" дней")
+      
+        if(passedDay){
+          return (
+            <React.Fragment key={"_dev_id_key_" + dev.id}>
+              <TreeItem
+                nodeId={"_dev_id_key_" + dev.id}
+                label={dev.number}
+                icon={<CrisisAlertIcon fontSize="small" sx={{color: '#266BF1'}}/>}
+                sx={{ color: "#002757" }}></TreeItem>
+            </React.Fragment>
+          );
+         }
        
        if(passedDay === 0){
         return (

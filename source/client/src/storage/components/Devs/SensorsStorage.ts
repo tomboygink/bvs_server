@@ -130,8 +130,6 @@ export class SensorsStorage {
 
 
   async set_DevFirstLastSessions(dt: IWSResult) {
-    
-      console.log(Object.keys(dt.data).length, 'Object length')
 
      if(Object.keys(dt.data).length > 0){
       let start_sess = JSON.parse(dt.data[0].sess_data);
@@ -167,7 +165,9 @@ export class SensorsStorage {
      
    
 
-     for(var i in start_sess.s){
+     for(var i in start_sess.s.sort(
+      (a: { depth: number }, b: { depth: number }) => b.depth - a.depth
+    )){
        obj_first = {
          data_f : start_sess.s[i].data,
          depth : start_sess.s[i].depth
@@ -176,7 +176,9 @@ export class SensorsStorage {
      }
    
    
-     for (var j in end_sess.s){
+     for (var j in end_sess.s.sort(
+      (a: { depth: number }, b: { depth: number }) => b.depth - a.depth
+    )){
          obj_second= {
            data_s: end_sess.s[j].data,
           depth : end_sess.s[j].depth
@@ -185,8 +187,9 @@ export class SensorsStorage {
      }
     
      const result1 = mergeByProperty([first, second]);
-     console.log(result1, 'depth11');
-     this.setSessFirstLast(result1);
+     this.setSessFirstLast(result1.sort(
+      (a: { depth: number }, b: { depth: number }) => b.depth - a.depth
+    ));
     }
     if(Object.keys(dt.data).length === 0){
       this.setSessFirstLast([]);
