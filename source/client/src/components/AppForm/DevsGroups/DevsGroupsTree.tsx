@@ -67,19 +67,9 @@ export class DevsGroupsTree extends React.Component<IProps> {
       }
       if(dev.deleted === false){
  
-       if(dev.time === null){
-          return (
-            <React.Fragment key={"_dev_id_key_" + dev.id}>
-              <TreeItem
-                nodeId={"_dev_id_key_" + dev.id}
-                label={dev.number}
-                icon={<CrisisAlertIcon fontSize="small" sx={{color: 'red'}}/>}
-                sx={{ color: "#002757" }}></TreeItem>
-            </React.Fragment>
-          );
-      }
+   
 
-      if (dev.time !== ''){
+    
       //////----------------------------------Определяем сколько дней прошло с даты otherDate по nowDate
        let otherDate=new Date(dev.time);
        let nowDate= new Date();
@@ -87,7 +77,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
        
        var passedDay= Math.floor(delta/1000/60/60/24) ///////////////////( new Date( ( new Date() ).toDateString() ) - 86400000 ); // 24*60*60*1000
       
-        if(passedDay > 0){
+     {
           return (
             <React.Fragment key={"_dev_id_key_" + dev.id}>
               <TreeItem
@@ -99,66 +89,66 @@ export class DevsGroupsTree extends React.Component<IProps> {
           );
          }
        
-       if(passedDay === 0){
-        return (
-          <React.Fragment key={"_dev_id_key_" + dev.id}>
-            <TreeItem
-              nodeId={"_dev_id_key_" + dev.id}
-              label={dev.number}
-              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#4ECB71'}}/>}
-              sx={{ color: "#002757" }}></TreeItem>
-          </React.Fragment>
-        );
-       }
+      //  if(passedDay === 0){
+      //   return (
+      //     <React.Fragment key={"_dev_id_key_" + dev.id}>
+      //       <TreeItem
+      //         nodeId={"_dev_id_key_" + dev.id}
+      //         label={dev.number}
+      //         icon={<CrisisAlertIcon fontSize="small" sx={{color: '#4ECB71'}}/>}
+      //         sx={{ color: "#002757" }}></TreeItem>
+      //     </React.Fragment>
+      //   );
+      //  }
 
-       if(passedDay === 3){
-        return (
-          <React.Fragment key={"_dev_id_key_" + dev.id}>
-            <TreeItem
-              nodeId={"_dev_id_key_" + dev.id}
-              label={dev.number}
-              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#266BF1'}}/>}
-              sx={{ color: "#002757" }}></TreeItem>
-          </React.Fragment>
-        );
-       }
+      //  if(passedDay === 3){
+      //   return (
+      //     <React.Fragment key={"_dev_id_key_" + dev.id}>
+      //       <TreeItem
+      //         nodeId={"_dev_id_key_" + dev.id}
+      //         label={dev.number}
+      //         icon={<CrisisAlertIcon fontSize="small" sx={{color: '#266BF1'}}/>}
+      //         sx={{ color: "#002757" }}></TreeItem>
+      //     </React.Fragment>
+      //   );
+      //  }
 
-       if(passedDay === 5){
-        return (
-          <React.Fragment key={"_dev_id_key_" + dev.id}>
-            <TreeItem
-              nodeId={"_dev_id_key_" + dev.id}
-              label={dev.number}
-              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FFD233'}}/>}
-              sx={{ color: "#002757" }}></TreeItem>
-          </React.Fragment>
-        );
-       }
+      //  if(passedDay === 5){
+      //   return (
+      //     <React.Fragment key={"_dev_id_key_" + dev.id}>
+      //       <TreeItem
+      //         nodeId={"_dev_id_key_" + dev.id}
+      //         label={dev.number}
+      //         icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FFD233'}}/>}
+      //         sx={{ color: "#002757" }}></TreeItem>
+      //     </React.Fragment>
+      //   );
+      //  }
 
-       if(passedDay === 15){
-        return (
-          <React.Fragment key={"_dev_id_key_" + dev.id}>
-            <TreeItem
-              nodeId={"_dev_id_key_" + dev.id}
-              label={dev.number}
-              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FD8A04'}}/>}
-              sx={{ color: "#002757" }}></TreeItem>
-          </React.Fragment>
-        );
-       }
+      //  if(passedDay === 15){
+      //   return (
+      //     <React.Fragment key={"_dev_id_key_" + dev.id}>
+      //       <TreeItem
+      //         nodeId={"_dev_id_key_" + dev.id}
+      //         label={dev.number}
+      //         icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FD8A04'}}/>}
+      //         sx={{ color: "#002757" }}></TreeItem>
+      //     </React.Fragment>
+      //   );
+      //  }
 
-       if(passedDay === 30){
-        return (
-          <React.Fragment key={"_dev_id_key_" + dev.id}>
-            <TreeItem
-              nodeId={"_dev_id_key_" + dev.id}
-              label={dev.number}
-              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FF4848'}}/>}
-              sx={{ color: "#002757" }}></TreeItem>
-          </React.Fragment>
-        );
-       }
-      }
+      //  if(passedDay === 30){
+      //   return (
+      //     <React.Fragment key={"_dev_id_key_" + dev.id}>
+      //       <TreeItem
+      //         nodeId={"_dev_id_key_" + dev.id}
+      //         label={dev.number}
+      //         icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FF4848'}}/>}
+      //         sx={{ color: "#002757" }}></TreeItem>
+      //     </React.Fragment>
+      //   );
+      //  }
+      
       }
     }
 
@@ -177,13 +167,14 @@ export class DevsGroupsTree extends React.Component<IProps> {
   }
 
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
+    console.log('TDevsGroup', toJS(dgrs))
     var parent: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr: TDGroup = dgr.group;
       var gr_childs = dgr.childs;  
       var gr_devs = dgr.devs;
-
+      console.log('TDevsGroup', toJS(dgr))
       var childs: React.ReactNode[] = new Array();
       if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
 

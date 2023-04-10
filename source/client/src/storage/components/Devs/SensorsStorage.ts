@@ -163,7 +163,6 @@ export class SensorsStorage {
        return Object.values(obj); //обратно преобразуем из объекта в массив
      };
      
-   
 
      for(var i in start_sess.s.sort(
       (a: { depth: number }, b: { depth: number }) => b.depth - a.depth
