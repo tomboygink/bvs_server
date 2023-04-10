@@ -328,7 +328,6 @@ export class Devs extends React.Component<IProps> {
   drawDevsFunction(): React.ReactNode {
     let Dev: any;
     Dev = APP_STORAGE.devs_groups.getDevsGroups();
-    console.log(toJS(APP_STORAGE.devs_groups.getDevsGroups()), 'devsgroups')
     return this.drawDevs(Dev); 
   }
   render(): React.ReactNode {

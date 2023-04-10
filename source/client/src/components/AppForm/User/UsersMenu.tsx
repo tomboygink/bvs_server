@@ -38,7 +38,6 @@ export class UsersMenu extends React.Component<IProps> {
   let lis = document.getElementsByTagName('li');
   for (var i = 0; i < lis.length; i++) {
     var name = lis[i].innerText;
-    console.log(name)
     if (name.toUpperCase().indexOf(filter) == 0) 
       lis[i].style.display = 'list-item';
     else
