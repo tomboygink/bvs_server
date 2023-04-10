@@ -96,16 +96,7 @@ b.forEach(function(a, i){
   }
 });
 
-for (var i in indexarray ){
-  
-  for(var j in indexarray[i]){
-    ar.push(
-      <React.Fragment key={"_gr_id_key_sessqqeq" + j}>
-      <TableCell>{j}</TableCell>
-      </React.Fragment>
-    )
-  }
-}
+
 
   
    }
@@ -121,12 +112,11 @@ for (var i in indexarray ){
             <TableCell key = '12121ewe2' > Время устройства</TableCell>
             <TableCell key = '121weeew212'> Время сервера</TableCell>
             <TableCell key = '12121e2eqe2'> АКБ</TableCell>
-            {ar}
+           
           </TableRow>
        {date}
       </TableBody>
     </Table>
-      
         }
       </>
     );

@@ -88,7 +88,7 @@ export class DevSess extends React.Component<IProps> {
         }, []);
 
         for (var i in uniqueChars.sort(
-          (a: { depth: number }, b: { depth: number }) => b.depth - a.depth
+          (a: { depth: number }, b: { depth: number }) => a.depth - b.depth
         )) {
           if (
             String(APP_STORAGE.sensors.getIdDevSess()) ===
