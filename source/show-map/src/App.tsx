@@ -30,7 +30,6 @@ export class App extends React.Component<IProps>{
                 <Box sx ={{height: '100vh'}}>
                 <LeafletMap/>
                 </Box>
-               
             </React.Fragment>
         );
     }
