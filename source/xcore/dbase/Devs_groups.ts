@@ -40,7 +40,22 @@ export class Devs_groupsTable {
     }
 
     //Получение группы устройства 
+    //Получение группы устройства 
     async selectDevsGroups() {
+        var dev: any = {
+            id: 0,
+            group_dev_id: '',
+            number: '',
+            name: '',
+            latitude: '',
+            longitude: '',
+            sensors: '',
+            deleted: false,
+            info: '',
+            time: ''
+        };
+
+
         var groups: any = {
             group: {},
             id: 0,
@@ -49,9 +64,94 @@ export class Devs_groupsTable {
             devs: new Array(),
             update: false
         }
+        var devs = new Array();
+        var t;
+        if (this.args.users_w === true) {
+            console.log("im admin")
+            var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ");
+            for (var i in roots_gr.rows) {
+                var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)).rows;
+                devs = new Array();
+                for (var j in device) {
+                    var time_srv = await (await this.db.query("SELECT time_srv as time from dev_sess WHERE dev_number = '" + device[j].number + "' order by id desc limit 1;")).rows;
+                    var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
+                    if (time_srv[0] === undefined) { t = null }
+                    else { t = (new Date(time_srv[0].time - tzoffset)).toISOString().slice(0, -8) }
+                    dev = {
+                        id: device[j].id,
+                        group_dev_id: device[j].group_dev_id,
+                        number: device[j].number,
+                        name: device[j].name,
+                        latitude: device[j].latitude,
+                        longitude: device[j].longitude,
+                        sensors: device[j].sensors,
+                        deleted: device[j].deleted,
+                        info: device[j].info,
+                        time: t
+                    }
+                    devs.push(dev);
+                }
+                groups.childs.push({
+                    group: roots_gr.rows[i],
+                    id: roots_gr.rows[i].id,
+                    p_id: roots_gr.rows[i].parent_id,
+                    childs: new Array(),
+                    devs: devs,
+                    update: false
+                })
+            }
+            //console.log(groups.childs);
+        }
+        else {
+            console.log("im user")
+            var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id);
+            for (var i in roots_gr.rows) {
+                var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)).rows;
+                devs = new Array();
+                for (var j in device) {
+                    var time_srv = await (await this.db.query("SELECT time_srv as time from dev_sess WHERE dev_number = '" + device[j].number + "' order by id desc limit 1;")).rows;
+                    var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
+                    if (time_srv[0] === undefined) { t = null }
+                    else { t = (new Date(time_srv[0].time - tzoffset)).toISOString().slice(0, -8) }
+                    dev = {
+                        id: device[j].id,
+                        group_dev_id: device[j].group_dev_id,
+                        number: device[j].number,
+                        name: device[j].name,
+                        latitude: device[j].latitude,
+                        longitude: device[j].longitude,
+                        sensors: device[j].sensors,
+                        deleted: device[j].deleted,
+                        info: device[j].info,
+                        time: t
+                    }
+                    devs.push(dev);
+                }
+                groups.childs.push({
+                    group: roots_gr.rows[i],
+                    id: roots_gr.rows[i].id,
+                    p_id: roots_gr.rows[i].parent_id,
+                    childs: new Array(),
+                    devs: devs,
+                    update: false
+                })
+            
+            }
+        }
+
+        for (var i in groups.childs) {
+            groups.childs[i].childs = await this._d_tree(groups.childs[i]);
+        }
+        var result = this.objToString(groups);
+        console.log(result);
+        return result
+
+    }
 
 
-        var devs = new Array;
+    //Преобразоватие в дерево 
+    async _d_tree(childs: any) {
+        var reti = new Array();
         var dev: any = {
             id: 0,
             group_dev_id: '',
@@ -66,119 +166,21 @@ export class Devs_groupsTable {
         };
         
         var t;
+        var devs = new Array();
 
-
-        //Отрисовка для админа
-        if (this.args.users_w === true) {
-            var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ");
-            for (var i in roots_gr.rows) {
-                var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)).rows;
-                var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
-                for (var j in device) {
-                    var time_srv = await (await this.db.query("SELECT time_srv as time from dev_sess WHERE dev_number = '"+device[j].number+"' order by id desc limit 1;")).rows;
-                    //console.log(time_srv[0])
-                    //console.log( device[j].number + " " + time_srv[j]);
-                    if (time_srv[0] === undefined ) { t = null }
-                    else { t = (new Date(time_srv[0].time - tzoffset)).toISOString().slice(0, -8) }
-
-                    dev = {
-                        id: device[j].id,
-                        group_dev_id: device[j].group_dev_id,
-                        number: device[j].number,
-                        name: device[j].name,
-                        latitude: device[j].latitude,
-                        longitude: device[j].longitude,
-                        sensors: device[j].sensors,
-                        deleted: device[j].deleted,
-                        info: device[j].info,
-                        time: t
-                    }
-                    devs.push(dev);
-                }
-                groups.childs.push({
-                    group: roots_gr.rows[i],
-                    id: roots_gr.rows[i].id,
-                    p_id: roots_gr.rows[i].parent_id,
-                    childs: new Array(),
-                    devs: devs,
-                    update: false
-                })
-            }
-
-        }
-        //отрисовка для пользователя с группами 
-        else {
-            var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id);
-            for (var i in roots_gr.rows) {
-                var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)).rows;
-                var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
-                for (var j in device) {
-                    var time_srv = await (await this.db.query("SELECT time_srv as time from dev_sess WHERE dev_number = '"+device[j].number+"' order by id desc limit 1;")).rows;
-                    if (time_srv[0] === undefined ) { t = null }
-                    else { t = (new Date(time_srv[0].time - tzoffset)).toISOString().slice(0, -8) }
-
-                    dev = {
-                        id: device[j].id,
-                        group_dev_id: device[j].group_dev_id,
-                        number: device[j].number,
-                        name: device[j].name,
-                        latitude: device[j].latitude,
-                        longitude: device[j].longitude,
-                        sensors: device[j].sensors,
-                        deleted: device[j].deleted,
-                        info: device[j].info,
-                        time: t
-                    }
-                    devs.push(dev);
-                }
-
-                groups.childs.push({
-                    group: roots_gr.rows[i],
-                    id: roots_gr.rows[i].id,
-                    p_id: roots_gr.rows[i].parent_id,
-                    childs: new Array(),
-                    devs: devs,
-                    update: false
-
-                })
-            }
-        }
-
-        for (var i in groups.childs) {
-            groups.childs[i].childs = await this._d_tree(groups.childs[i]);
-        }
-        var result = this.objToString(groups);
-        return result
-
-    }
-
-    //Преобразоватие в дерево 
-    async _d_tree(childs: any) {
-        var reti = new Array();
         var grs = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=" + childs.id);
-        var devs = new Array;
-        var dev: any = {
-            id: 0,
-            group_dev_id: '',
-            number: '',
-            name: '',
-            latitude: '',
-            longitude: '',
-            sensors: '',
-            deleted: false,
-            info: '',
-            time: ''
-        };
-
         for (var i in grs.rows) {
+           // console.log(grs.rows[i].id + " " + grs.rows[i].g_name)
             var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + grs.rows[i].id)).rows;
-            var t;
-            var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
+            
+            var devs = new Array();
+
             for (var j in device) {
-                var time_srv = await (await this.db.query("SELECT time_srv as time from dev_sess WHERE dev_number = '"+device[j].number+"' order by id desc limit 1;")).rows;
-                
-                if (time_srv[0] === undefined ) { t = null }
+                var time_srv = await (await this.db.query("SELECT time_srv as time from dev_sess WHERE dev_number = '" + device[j].number + "' order by id desc limit 1;")).rows;
+                var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
+                if (time_srv[0] === undefined) { t = null }
                 else { t = (new Date(time_srv[0].time - tzoffset)).toISOString().slice(0, -8) }
+                
                 dev = {
                     id: device[j].id,
                     group_dev_id: device[j].group_dev_id,
@@ -193,7 +195,6 @@ export class Devs_groupsTable {
                 }
                 devs.push(dev);
             }
-
 
             reti.push({
                 group: grs.rows[i],
