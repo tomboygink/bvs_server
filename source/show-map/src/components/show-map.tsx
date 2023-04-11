@@ -23,10 +23,11 @@ export default function LeafletMap() {
     let splArr1 = splArr.split('=');
    
     let separ = splArr1[1].split('&');
-    
+    console.log('separ', separ[0]);
+    console.log('splArr1111', splArr1[2]);
 
   return (
-<MapContainer
+   <MapContainer
       style={styles.mapRoot}
       center={[Number(separ[0]), Number(splArr1[2])]}
       zoom={13}
@@ -36,8 +37,8 @@ export default function LeafletMap() {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-   <Marker position={[Number(separ[0]), Number(splArr1[2])]} />
-    </MapContainer>
+    <Marker position={[Number(separ[0]), Number(splArr1[2])]} />
+  </MapContainer>
   );
 }
 
