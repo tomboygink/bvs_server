@@ -48,6 +48,7 @@ export class AuthFormStorage{
         makeAutoObservable(this);
     }
 
+   
     @action setLogin(val:string){ this.login = val; } //устанавливает значение поля - Логин
     @computed getLogin():string{ return this.login; } //возвращает значение поля - Логин (отмечает геттер)
 
@@ -182,10 +183,11 @@ export class AuthFormStorage{
     onGetUserBySessionCode(dt: IWSResult){
         this.setUserWS(dt);
         if(dt.error){
-          /// deleteCookie('sess_id', this.getdt() );
+           // deleteCookie('sess_id', this.getdt() );
             deleteAllCookies();
             window.location.href = `http://${CONFIG.host}:${CONFIG.port}`;
-        }    
+        }
+        
     }
 
     onSaveNewPass(dt: IWSResult){    //////////// Socket result cmd - set_ForgPass
