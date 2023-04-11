@@ -11,12 +11,12 @@ import { TableCell } from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 
-import { TablePagination } from "@mui/material";
-import EnhancedTable from "./TAbleDevs";
+
 
 import { CustomExport } from "./Export";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import { Calendar } from "./Calendar";
+import { SsidChart } from "@mui/icons-material";
 
 interface IProps {}
 
@@ -75,9 +75,14 @@ export class DevSess extends React.Component<IProps> {
 
     let sess = APP_STORAGE.sensors;
     let sessors;
+    console.log('setSessFirstLast', toJS(APP_STORAGE.sensors.getSessFirstLast()))
     if (sess.getDevSession) {
       sessors = sess.getDevSession();
 
+
+
+
+      
       for (var key in sessors) {
         let sess_data = JSON.parse(sessors[key].sess_data);
         const uniqueChars = sess_data.s.reduce((o: any, i: any) => {
@@ -95,15 +100,31 @@ export class DevSess extends React.Component<IProps> {
             String(sessors[key].id)
           ) {
             data.push({
-              name: String(uniqueChars[i].depth),
+              depth: String(uniqueChars[i].depth),
               "град.": uniqueChars[i].data,
             });
           }
-
-          APP_STORAGE.sensors.setdataCharts(data);
         }
       }
     }
+    const mergeByProperty = (arrays: any[], property = "depth") => {
+      const arr = arrays.flatMap((item) => item); //делаем из всех массивов - один
+    
+      const obj = arr.reduce((acc, item) => {
+        return { // делаем из массива - объект, чтобы повторения перезаписывались
+          ...acc,
+          [item[property]]: { ...acc[item[property]], ...item }
+        };
+      }, {});
+    
+      return Object.values(obj); //обратно преобразуем из объекта в массив
+    };
+
+    const result1 = mergeByProperty([data, toJS(APP_STORAGE.sensors.getSessFirstLast())]);
+
+    console.log('data', data);
+    console.log('mergeByProperty', result1);
+    APP_STORAGE.sensors.setdataCharts(result1);
   }
 
   async setDevSess() {

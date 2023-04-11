@@ -100,11 +100,11 @@ export class Sensors extends React.Component<IProps> {
             if (gr_devs[i].deleted === false) {
               sensors.push(
                 <TableRow key={"sensors_id" + uniqueChars[key].depth}>
-                  <TableCell>
+                  <TableCell sx={{borderBottom: 'none'}}>
                     <SensorsIcon fontSize="small" sx={{ color: "#5be95b" }} />
                   </TableCell>
-                  <TableCell>[00{key}]</TableCell>
-                  <TableCell sx={{ fontWeight: "700" }}>
+                  <TableCell sx={{borderBottom: 'none'}}>[00{key}]</TableCell>
+                  <TableCell sx={{ fontWeight: "700" , borderBottom: 'none'}}>
                     [{"" + uniqueChars[key].depth}]{" "}
                   </TableCell>
                 </TableRow>
@@ -208,7 +208,7 @@ export class Sensors extends React.Component<IProps> {
       <>
        {APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
        <Box sx ={{display: 'flex', justifyContent: 'space-between',  color: '#111111'}}> 
-           <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px' }}>   Список сенсоров </Typography>
+           <Typography sx={{ fontWeight: "500" , color: '#0D1C52', mb : '12px' }}>   Список сенсоров </Typography>
                       <Box sx={{ width: "80px" }}>
 
                         <ArrowDownwardIcon
