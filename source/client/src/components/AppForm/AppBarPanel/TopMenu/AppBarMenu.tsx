@@ -6,7 +6,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import Logout from '@mui/icons-material/Logout';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 
-import {getCookie , setCookie, deleteCookie , deleteAllCookies}  from '../../../../storage/browserCookes';
+import {getCookie , setCookie, deleteCookie }  from '../../../../storage/browserCookes';
 import { observer } from 'mobx-react';
 import { APP_STORAGE } from '../../../../storage/AppStorage';
 
@@ -34,8 +34,7 @@ export class AccountMenu extends React.Component<IProps> {
             (await WSocket.get()).send(q);
             APP_STORAGE.auth_form.setUser(null);
            
-           ///deleteCookie('sess_id', APP_STORAGE.auth_form.getdt() ) 
-           deleteAllCookies();
+            deleteCookie('sess_id', APP_STORAGE.auth_form.getdt() ) 
             }
 
     async ChangeCUserData( ) {
@@ -55,11 +54,11 @@ export class AccountMenu extends React.Component<IProps> {
         const  user =  APP_STORAGE.auth_form.getUser();
         return (
             <React.Fragment>
-                <Box  sx = {{background: '#fff', borderRadius: '4px',  maxHeight: '52px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: '20px'}} id = 'btnPerfil'onClick={()=>{ APP_STORAGE.app_bar.setAppBarUser(true);  }}>
+                <Box  sx = {{background: '#266BF1', borderRadius: '4px',  maxHeight: '52px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: '20px'}} id = 'btnPerfil'onClick={()=>{ APP_STORAGE.app_bar.setAppBarUser(true);  }}>
                 <Avatar sx={{ width: 32, height: 32 }}></Avatar>
                
-                <Typography sx={{  pl: '1rem', color : '#0D1C52'}} > {user.family} {user.name} {user.father}  </Typography>
-                <ArrowDropDownIcon sx={{color: '#0D1C52'}}/>
+                <Typography sx={{  pl: '1rem', color : 'white'}} > {user.family} {user.name} {user.father}  </Typography>
+                <ArrowDropDownIcon/>
                 </Box>
                 
             <Menu
