@@ -48,7 +48,6 @@ export class AuthFormStorage{
         makeAutoObservable(this);
     }
 
-   
     @action setLogin(val:string){ this.login = val; } //устанавливает значение поля - Логин
     @computed getLogin():string{ return this.login; } //возвращает значение поля - Логин (отмечает геттер)
 
@@ -183,16 +182,18 @@ export class AuthFormStorage{
     onGetUserBySessionCode(dt: IWSResult){
         this.setUserWS(dt);
         if(dt.error){
-
-          
-
+<<<<<<< HEAD
+<<<<<<< HEAD
+           // deleteCookie('sess_id', this.getdt() );
+=======
+          /// deleteCookie('sess_id', this.getdt() );
+>>>>>>> parent of 697c5c6 (Revert "11.04.2023_15.56")
             deleteAllCookies();
-
-           
-
+=======
+            deleteCookie('sess_id', this.getdt() ) 
+>>>>>>> parent of 35123bd (Azatylnikova)
             window.location.href = `http://${CONFIG.host}:${CONFIG.port}`;
-        }
-        
+        }    
     }
 
     onSaveNewPass(dt: IWSResult){    //////////// Socket result cmd - set_ForgPass

@@ -260,7 +260,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
   render(): React.ReactNode {
     return (
       <React.Fragment>
-         <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px'}}>Список устройств</Typography>
+         <Typography sx={{ fontWeight: "500" , color: '#0D1C52', mb : '12px'}}>Список устройств</Typography>
           <Box
            sx={{
               background: "#fff",

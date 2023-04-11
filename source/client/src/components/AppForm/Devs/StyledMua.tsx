@@ -135,27 +135,25 @@ export const CustomTooltip = ({ active, payload, label }: any) => {
     return (
       <Box sx={{background: '#fff', p: '4px', borderRadius:' 4px', boxShadow: '0px 1px 8px 0px rgba(15, 134, 225, 0.2)'}}>
         <Box sx ={{display: 'flex', justifyItems: 'center', alignItems: 'center'}}> 
-        <ShowChartIcon sx= {{ color: '#FFAD4E', fontSize: '12px'}}  />
-        <Typography sx= {{color:"#808080",  fontSize: '12px',  mr: '2px'}}>Глубина - </Typography>
-        <Typography sx= {{color:"#266BF1", fontSize: '12px'}}> {`${label}`}  </Typography>
+        <ShowChartIcon sx= {{ color: '#FFAD4E', fontSize: '14px'}}  />
+        <Typography sx= {{color:"#808080",  fontSize: '14px',  mr: '2px'}}>Глубина - </Typography>
+        <Typography sx= {{color:"#266BF1", fontSize: '14px'}}> {`${label}`}  </Typography>
           </Box>  
 
           {payload && payload[0]  &&
           <Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
-          <DeviceThermostatIcon sx={{color: '#8884d8', fontSize: '12px'}}/>
-        <Typography sx= {{color:"#808080", fontSize: '12px', mr: '2px'}}>Температура ( первая сессия ) </Typography>
-        <Typography sx= {{color:"#8884d8", fontSize: '12px'}}> {`${payload[0].value}`}  </Typography>
+          <DeviceThermostatIcon sx={{color: '#8884d8', fontSize: '14px'}}/>
+        <Typography sx= {{color:"#808080", fontSize: '14px', mr: '2px'}}>Температура ( последняя сессия ) </Typography>
+        <Typography sx= {{color:"#8884d8", fontSize: '14px'}}> {`${payload[0].value}`}  </Typography>
           </Box> 
-  }
+         }
           {payload && payload[1]  &&
 
           <Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
-          <DeviceThermostatIcon sx={{color: '#82ca9d', fontSize: '12px'}}/>
-        <Typography sx= {{color:"#808080", fontSize: '12px', mr: '2px'}}>Температура (последняя сессия) </Typography>
-        <Typography sx= {{color:"#82ca9d", fontSize: '12px'}}>   {`${payload[1].value}`}  </Typography>
-          </Box>  
-        
-          }
+          <DeviceThermostatIcon sx={{color: '#82ca9d', fontSize: '14px'}}/>
+        <Typography sx= {{color:"#808080", fontSize: '14px', mr: '14px'}}>Температура (первая сессия) </Typography>
+        <Typography sx= {{color:"#82ca9d", fontSize: '14px'}}>   {`${payload[1].value}`}  </Typography>
+          </Box>  }
       </Box>
     );
   }
