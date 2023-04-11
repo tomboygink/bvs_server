@@ -48,15 +48,18 @@ export class DevSessCharts extends React.Component<IProps> {
       }}>
 
       <CartesianGrid strokeDasharray="2 2" />
-      <XAxis type="number" dataKey="град." strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tickCount={19}  tick={{ fill: '#266BF1', fontSize: '14px' }} domain={[-12, 12]} />
-      <YAxis dataKey="name" type="category" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tick={{ fill: '#266BF1', fontSize: '14px' }} />
+      <XAxis type="number"  strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tickCount={19}  tick={{ fill: '#266BF1', fontSize: '14px' }} domain={[-12, 12]} />
+      <YAxis dataKey="depth" type="category" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tick={{ fill: '#266BF1', fontSize: '14px' }} />
       {/* <YAxis data ={toJS(APP_STORAGE.sensors.getSessFirstLast())}  type="category"  stroke="#266BF1"  tickCount={60}   />  */}
       <Tooltip content={<CustomTooltip/>}  />
       {/* <Legend /> */}
 
 
     <Line dataKey="град." stroke="#9747FF" > </Line>
-    <Line dataKey="град." stroke="#9747FF" > </Line>
+
+    <Line dataKey="data_s" stroke="red" > </Line>
+
+    <Line dataKey="data_f" stroke="green" > </Line>
     {/* <Line dataKey="град." stroke="#82ca9d" > <LabelList content={<CustomizedLabel />} /> </Line> */}
     </LineChart>
     </ResponsiveContainer>
@@ -68,13 +71,13 @@ export class DevSessCharts extends React.Component<IProps> {
   if(!toJS(APP_STORAGE.sensors.getdataCharts()).length && toJS(APP_STORAGE.sensors.getSessFirstLast().length)){
      
     return (
-      <Box sx={{background: '#f1f5fcb3', borderTopLeftRadius: '48px', pt: '22px', border: '1px solid #eee'}}>   
+      <Box sx={{background: '#f1f5fcb3', borderTopLeftRadius: '48px', pt: '22px', border: '1px solid #8F9DCE'}}>   
       <Typography sx={{color: '#1976d2', fontSize: '12px', display: 'flex', justifyContent: 'center'}}>График изменения температуры грунта</Typography>
-      <Typography sx={{color: '#82ca9d', fontSize: '12px', display: 'flex', justifyContent: 'center'}}>
-      <CommitIcon sx={{fontSize: '16px', color: '#82ca9d', mr: '4px'}}/>Сессия (первая) - {APP_STORAGE.sensors.getTimeDevSessFirst()}</Typography>  
+      {/* <Typography sx={{color: '#00B394', fontSize: '12px', display: 'flex', justifyContent: 'center'}}>
+      <CommitIcon sx={{fontSize: '16px', color: '#00B394', mr: '4px'}}/>Сессия (первая) - {APP_STORAGE.sensors.getTimeDevSessFirst()}</Typography>  
       <Typography sx={{color: '#8884d8', fontSize: '12px', display: 'flex', justifyContent: 'center'}}>
-      <CommitIcon sx={{fontSize: '16px', color: '#9747FF', mr: '4px'}}/>Сессия (последняя) - {APP_STORAGE.sensors.getTimeDevSessLast()}</Typography> 
-      <ResponsiveContainer width="100%" height={770}>
+      <CommitIcon sx={{fontSize: '16px', color: '#9747FF', mr: '4px'}}/>Сессия (последняя) - {APP_STORAGE.sensors.getTimeDevSessLast()}</Typography>  */}
+      <ResponsiveContainer width="70%" height={740}>
         <LineChart
           layout="vertical"
           data={toJS(APP_STORAGE.sensors.getSessFirstLast())}
@@ -89,8 +92,8 @@ export class DevSessCharts extends React.Component<IProps> {
           <XAxis type="number" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tickCount={19}  tick={{ fill: '#266BF1', fontSize: '14px' }} domain={[-12, 12]} />
           <YAxis  dataKey='depth' type="category" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tick={{ fill: '#266BF1', fontSize: '14px' }} />
           <Tooltip content={<CustomTooltip/>}  />
-          <Line  strokeWidth={'1'}  dataKey="data_s" stroke="#8884d8" />
-          <Line strokeWidth={'1'} dataKey="data_f" stroke="#82ca9d" />
+          <Line  strokeWidth={'2'}  dataKey="data_s" stroke="#8884d8" />
+          <Line strokeWidth={'2'} dataKey="data_f" stroke="#00B394" />
         </LineChart>
       </ResponsiveContainer>
     </Box>

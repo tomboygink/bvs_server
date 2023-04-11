@@ -64,21 +64,22 @@ export class AppBarPanel extends React.Component<IProps> {
           if (APP_STORAGE.devs_groups.getMiddleForm() === 3) {
             middle_form = <Box sx={{background: '#fff'}}>Пользователь</Box>
           }
-
+//
 
         return (
             <React.Fragment>
-               <AppBar sx={{background: '#266BF1'}}>
+               <AppBar sx={{background: '#fff', boxShadow: 'none', borderBottom: '1px solid #8F9DCE;'}}>
                 <Box 
                     sx={{ display: 'flex' , 
                     justifyContent: 'space-between' , 
                     pl: '3rem' , 
                     pr: '2rem'}} >
                     <IconButton
-                    color="inherit"
+                    sx ={{color: '#0D1C52'}}
                     onClick={()=>{ APP_STORAGE.app_bar.setSetOpenAppBar(true); }}           
                     edge="start">
                 <MenuIcon />
+                <Typography sx = {{marginLeft: '22px', fontSize: '14px'}}> Выбрано: 5005 устройство</Typography>
                 </IconButton>
                 <AccountMenu/> 
                 </Box>
