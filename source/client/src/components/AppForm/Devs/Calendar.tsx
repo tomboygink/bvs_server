@@ -47,13 +47,12 @@ export class Calendar extends React.Component<IProps> {
 
     return (
       <React.Fragment>
-        <Divider sx={{ m: "20px" }} />
+        <Divider sx={{ m: "20px" , background: '#8F9DCE;'}} />
         <Box>
           <Box>
             <TextField
               size="small"
               id="datetime-local"
-              label="Начало периода"
               type="datetime-local"
               defaultValue={
                 APP_STORAGE.sensors.getSessPeriodStart() ||
@@ -62,7 +61,7 @@ export class Calendar extends React.Component<IProps> {
               onChange={(e) => {
                 APP_STORAGE.sensors.setSessPeriodStart(e.target.value);
               }}
-              sx={{ mr: "15px" }}
+              sx={{ mr: "15px"}}
               InputLabelProps={{
                 shrink: true,
               }}

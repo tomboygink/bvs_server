@@ -335,7 +335,7 @@ export class Devs extends React.Component<IProps> {
    
     return (
       <>
-        <Typography sx={{ fontWeight: "500", color: "#111111", mb: "8px" }}>
+        <Typography sx={{ fontWeight: "500", color: "#111111", mb: "12px" }}>
           {" "}
           Данные по устройству{" "}
         </Typography>
