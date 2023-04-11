@@ -183,7 +183,13 @@ export class AuthFormStorage{
     onGetUserBySessionCode(dt: IWSResult){
         this.setUserWS(dt);
         if(dt.error){
-            deleteCookie('sess_id', this.getdt() ) 
+
+          
+
+            deleteAllCookies();
+
+           
+
             window.location.href = `http://${CONFIG.host}:${CONFIG.port}`;
         }
         

@@ -64,8 +64,7 @@ export class AppBarPanel extends React.Component<IProps> {
           if (APP_STORAGE.devs_groups.getMiddleForm() === 3) {
             middle_form = <Box sx={{background: '#fff'}}>Пользователь</Box>
           }
-
-
+//asdasd
         return (
             <React.Fragment>
                <AppBar sx={{background: '#266BF1'}}>
