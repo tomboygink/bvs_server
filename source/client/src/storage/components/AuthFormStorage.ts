@@ -2,7 +2,7 @@ import { observable, action, computed, makeAutoObservable } from 'mobx';
 import { UsersEntity } from '../../../../xcore/dbase/Users';
 import { IWSQuery, WSQuery, IWSResult } from '../../../../xcore/WSQuery';
 import { WSocket } from '../WSocket';
-import {getCookie , setCookie, deleteCookie }  from '../browserCookes';
+import {getCookie , setCookie, deleteCookie, deleteAllCookies , }  from '../browserCookes';
 import { ThumbUpSharp } from '@mui/icons-material';
 import { CONFIG } from '../../../../xcore/config';
 
@@ -182,16 +182,8 @@ export class AuthFormStorage{
     onGetUserBySessionCode(dt: IWSResult){
         this.setUserWS(dt);
         if(dt.error){
-<<<<<<< HEAD
-<<<<<<< HEAD
-           // deleteCookie('sess_id', this.getdt() );
-=======
-          /// deleteCookie('sess_id', this.getdt() );
->>>>>>> parent of 697c5c6 (Revert "11.04.2023_15.56")
             deleteAllCookies();
-=======
-            deleteCookie('sess_id', this.getdt() ) 
->>>>>>> parent of 35123bd (Azatylnikova)
+            ////deleteCookie('sess_id', this.getdt() ) ';
             window.location.href = `http://${CONFIG.host}:${CONFIG.port}`;
         }    
     }

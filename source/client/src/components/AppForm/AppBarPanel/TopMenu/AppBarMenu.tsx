@@ -33,7 +33,7 @@ export class AccountMenu extends React.Component<IProps> {
             };
             (await WSocket.get()).send(q);
             APP_STORAGE.auth_form.setUser(null);
-           
+           //a
            ///deleteCookie('sess_id', APP_STORAGE.auth_form.getdt() ) 
            deleteAllCookies();
             }
