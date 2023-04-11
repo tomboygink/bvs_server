@@ -85,10 +85,19 @@ var Devs_groupsTable = (function () {
     };
     Devs_groupsTable.prototype.selectDevsGroups = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var dev, groups, devs, t, roots_gr, _a, _b, _c, _i, i, device, _d, _e, _f, _g, j, time_srv, tzoffset, roots_gr, _h, _j, _k, _l, i, device, _m, _o, _p, _q, j, time_srv, tzoffset, _r, _s, _t, _u, i, _v, result;
+            var groups, devs, dev, t, roots_gr, _a, _b, _c, _i, i, device, tzoffset, _d, _e, _f, _g, j, time_srv, roots_gr, _h, _j, _k, _l, i, device, tzoffset, _m, _o, _p, _q, j, time_srv, _r, _s, _t, _u, i, _v, result;
             return __generator(this, function (_w) {
                 switch (_w.label) {
                     case 0:
+                        groups = {
+                            group: {},
+                            id: 0,
+                            p_id: 0,
+                            childs: new Array(),
+                            devs: new Array(),
+                            update: false
+                        };
+                        devs = new Array;
                         dev = {
                             id: 0,
                             group_dev_id: '',
@@ -101,17 +110,7 @@ var Devs_groupsTable = (function () {
                             info: '',
                             time: ''
                         };
-                        groups = {
-                            group: {},
-                            id: 0,
-                            p_id: 0,
-                            childs: new Array(),
-                            devs: new Array(),
-                            update: false
-                        };
-                        devs = new Array();
                         if (!(this.args.users_w === true)) return [3, 12];
-                        console.log("im admin");
                         return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ")];
                     case 1:
                         roots_gr = _w.sent();
@@ -130,7 +129,7 @@ var Devs_groupsTable = (function () {
                     case 3: return [4, (_w.sent()).rows];
                     case 4:
                         device = _w.sent();
-                        devs = new Array();
+                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
                         _d = device;
                         _e = [];
                         for (_f in _d)
@@ -146,7 +145,6 @@ var Devs_groupsTable = (function () {
                     case 6: return [4, (_w.sent()).rows];
                     case 7:
                         time_srv = _w.sent();
-                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
                         if (time_srv[0] === undefined) {
                             t = null;
                         }
@@ -184,9 +182,7 @@ var Devs_groupsTable = (function () {
                         _i++;
                         return [3, 2];
                     case 11: return [3, 23];
-                    case 12:
-                        console.log("im user");
-                        return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id)];
+                    case 12: return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id)];
                     case 13:
                         roots_gr = _w.sent();
                         _h = roots_gr.rows;
@@ -204,7 +200,7 @@ var Devs_groupsTable = (function () {
                     case 15: return [4, (_w.sent()).rows];
                     case 16:
                         device = _w.sent();
-                        devs = new Array();
+                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
                         _m = device;
                         _o = [];
                         for (_p in _m)
@@ -220,7 +216,6 @@ var Devs_groupsTable = (function () {
                     case 18: return [4, (_w.sent()).rows];
                     case 19:
                         time_srv = _w.sent();
-                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
                         if (time_srv[0] === undefined) {
                             t = null;
                         }
@@ -279,7 +274,6 @@ var Devs_groupsTable = (function () {
                         return [3, 24];
                     case 27:
                         result = this.objToString(groups);
-                        console.log(result);
                         return [2, result];
                 }
             });
@@ -287,12 +281,16 @@ var Devs_groupsTable = (function () {
     };
     Devs_groupsTable.prototype._d_tree = function (childs) {
         return __awaiter(this, void 0, void 0, function () {
-            var reti, dev, t, devs, grs, _a, _b, _c, _i, i, device, devs, _d, _e, _f, _g, j, time_srv, tzoffset, _h, _j;
+            var reti, grs, devs, dev, _a, _b, _c, _i, i, device, t, tzoffset, _d, _e, _f, _g, j, time_srv, _h, _j;
             var _k;
             return __generator(this, function (_l) {
                 switch (_l.label) {
                     case 0:
                         reti = new Array();
+                        return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=" + childs.id)];
+                    case 1:
+                        grs = _l.sent();
+                        devs = new Array;
                         dev = {
                             id: 0,
                             group_dev_id: '',
@@ -305,10 +303,6 @@ var Devs_groupsTable = (function () {
                             info: '',
                             time: ''
                         };
-                        devs = new Array();
-                        return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=" + childs.id)];
-                    case 1:
-                        grs = _l.sent();
                         _a = grs.rows;
                         _b = [];
                         for (_c in _a)
@@ -324,7 +318,7 @@ var Devs_groupsTable = (function () {
                     case 3: return [4, (_l.sent()).rows];
                     case 4:
                         device = _l.sent();
-                        devs = new Array();
+                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
                         _d = device;
                         _e = [];
                         for (_f in _d)
@@ -340,7 +334,6 @@ var Devs_groupsTable = (function () {
                     case 6: return [4, (_l.sent()).rows];
                     case 7:
                         time_srv = _l.sent();
-                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
                         if (time_srv[0] === undefined) {
                             t = null;
                         }
