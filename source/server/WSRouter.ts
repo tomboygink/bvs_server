@@ -18,7 +18,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
     // начало - создание ответа
     var wsres: IWSResult = new WSResult(q.cmd);
 
-   // console.log(q);
+    console.log(q);
     var sess_code;
     var data;
 
