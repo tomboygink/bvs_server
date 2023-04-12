@@ -9,7 +9,7 @@ import { ModalStorage } from './components/ModalStorage';
 import { ModalLeftPanel } from './components/RegistationUsersStorage';
 import { EditUsersStorage } from './components/EditUsersStorage'
 import { WSocket } from './WSocket';
-import { getCookie, setCookie, deleteCookie } from './browserCookes'
+import { getCookie, setCookie, deleteCookie , deleteAllCookies} from './browserCookes'
 import { UsersEntity } from '../../../xcore/dbase/Users';
 import { DevsGroupStorage } from './components/Devs/DevsGroupStorage';
 import { DevsStorage } from './components/Devs/DevsStorage';
@@ -103,8 +103,7 @@ class AppStorage {
      */
     async get_UserBySessionCode() {
         var ss_code = getCookie('sess_id');
-        if (ss_code === undefined) return;
-
+        if (ss_code === undefined) return deleteAllCookies() ;
         var q: IWSQuery = new WSQuery('get_UserBySessionCode', { code: ss_code });
         (await WSocket.get()).send(q);
     }
