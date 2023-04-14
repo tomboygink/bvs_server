@@ -193,7 +193,7 @@ export class DevSessCharts extends React.Component<IProps> {
     return (
       <Box sx={{background: '#f1f5fcb3', borderTopLeftRadius: '48px', pt: '22px', border: '1px solid #8F9DCE', display: 'flex'}}>   
        
-      <svg className="svg_well" width="507" height="764" viewBox="0 0 507 764" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* <svg className="svg_well" width="507" height="764" viewBox="0 0 507 764" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g filter="url(#filter0_b_7_15)">
     <path d="M143 0.5H201C202.933 0.5 204.5 2.067 204.5 4V114.249C204.5 116.182 202.933 117.749 201 117.749H143C141.067 117.749 139.5 116.182 139.5 114.249V4.00001C139.5 2.06701 141.067 0.5 143 0.5Z" stroke="#266BF1"/>
     <path d="M143 0.5H201C202.933 0.5 204.5 2.067 204.5 4V114.249C204.5 116.182 202.933 117.749 201 117.749H143C141.067 117.749 139.5 116.182 139.5 114.249V4.00001C139.5 2.06701 141.067 0.5 143 0.5Z" stroke="#565252" strokeOpacity="0.2"/>
@@ -268,7 +268,7 @@ export class DevSessCharts extends React.Component<IProps> {
     <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_7_15" result="shape"/>
     </filter>
     </defs>
-    </svg>
+    </svg> */}
          <ResponsiveContainer width="70%" height={740}>
             <LineChart
               layout="vertical"
