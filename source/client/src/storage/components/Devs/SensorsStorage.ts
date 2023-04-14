@@ -33,6 +33,7 @@ export class SensorsStorage {
     
     @observable time_dev_firstsess : string = '';
     @observable time_dev_lastsess : string = '';
+    @observable akb_lastsess : string = '';
     
     constructor(){
         makeAutoObservable(this);
@@ -45,6 +46,9 @@ export class SensorsStorage {
 
     @action setTimeDevSessLast(val : string) {this.time_dev_lastsess = val};
     @computed getTimeDevSessLast() : string {return this.time_dev_lastsess}; 
+
+    @action setAkbSessLast(val : string) {this.akb_lastsess = val};
+    @computed getAkbSessLast() : string {return this.akb_lastsess}; 
 
     @action setChoseSessTime(val : string) {this.chose_sess_time = val};
     @computed getChoseSessTime() : string {return this.chose_sess_time}; 
@@ -138,6 +142,7 @@ export class SensorsStorage {
 
       this.setTimeDevSessFirst(dt.data[1].time_dev);
       this.setTimeDevSessLast(dt.data[0].time_dev);
+      this.setAkbSessLast(dt.data[0].level_akb)
     
       var obj_first: any = {
         depth: '',
@@ -175,8 +180,6 @@ export class SensorsStorage {
      }
      first.push(obj_first)
      }
-   
-   
      for (var j in end_sess.s.sort(
       (a: { depth: number }, b: { depth: number }) => b.depth - a.depth
     )){
@@ -188,9 +191,6 @@ export class SensorsStorage {
      }
     
      const result1 = mergeByProperty([first, second]);
-     console.log('first', first)
-     console.log('second', second)
-     console.log('result1', result1)
      this.setSessFirstLast(result1.sort(
       (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
     ));

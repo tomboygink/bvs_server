@@ -30,6 +30,7 @@ export class AddNewGroup extends React.Component<IProps> {
                 width: '100%',
                 background:'#E3EDFF',
                 p:2,
+                border: '1px solid #8F9DCE'
                 
               }}
               onClick={() => this.OpenModal("0", 0)}

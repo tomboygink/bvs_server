@@ -94,9 +94,6 @@ class AppStorage {
         }
     }
 
-
-
-
     /**
      * Получить пользователя по коду сессии из куков (пользователь уже заходил с этого браузера)
      * @returns 
@@ -110,4 +107,3 @@ class AppStorage {
 };
 
 export const APP_STORAGE: AppStorage = new AppStorage();
-
