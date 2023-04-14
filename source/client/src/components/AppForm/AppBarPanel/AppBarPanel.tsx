@@ -79,7 +79,8 @@ export class AppBarPanel extends React.Component<IProps> {
                     onClick={()=>{ APP_STORAGE.app_bar.setSetOpenAppBar(true); }}           
                     edge="start">
                 <MenuIcon />
-                <Typography sx = {{marginLeft: '22px', fontSize: '14px'}}> Выбрано: 5005 устройство</Typography>
+                {APP_STORAGE.sensors.getNumber().length > 0 &&
+                <Typography sx = {{marginLeft: '22px', fontSize: '14px'}}> Выбрано: {APP_STORAGE.sensors.getNumber()} устройство</Typography>}
                 </IconButton>
                 <AccountMenu/> 
                 </Box>
