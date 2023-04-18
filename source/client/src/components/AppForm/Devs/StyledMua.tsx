@@ -154,6 +154,14 @@ export const CustomTooltip = ({ active, payload, label }: any) => {
         <Typography sx= {{color:"#808080", fontSize: '14px', mr: '14px'}}>Температура (первая сессия) </Typography>
         <Typography sx= {{color:"#82ca9d", fontSize: '14px'}}>   {`${payload[1].value}`}  </Typography>
           </Box>  }
+
+          {payload && payload[2]  &&
+
+<Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
+<DeviceThermostatIcon sx={{color: '#FE6F4F', fontSize: '14px'}}/>
+<Typography sx= {{color:"#808080", fontSize: '14px', mr: '14px'}}>Температура (первая сессия) </Typography>
+<Typography sx= {{color:"#FE6F4F", fontSize: '14px'}}>   {`${payload[2].value}`}  </Typography>
+</Box>  }
       </Box>
     );
   }

@@ -3,6 +3,9 @@ import * as React from "react";
 import { observer } from "mobx-react";
 import { toJS } from "mobx";
 import { APP_STORAGE } from "../../../storage/AppStorage";
+
+import CropSquareIcon from '@mui/icons-material/CropSquare';
+import Battery5BarIcon from '@mui/icons-material/Battery5Bar';
 import {
   Box,
   Button,
@@ -48,6 +51,9 @@ export class Calendar extends React.Component<IProps> {
     return (
       <React.Fragment>
         <Divider sx={{ m: "20px" , background: '#8F9DCE;'}} />
+
+        <Box sx={{display: 'flex', justifyContent: 'space-between' }}>
+
         <Box>
           <Box>
             <TextField
@@ -70,7 +76,6 @@ export class Calendar extends React.Component<IProps> {
             <TextField
               size="small"
               id="datetime-local"
-              label="Окончание периода"
               type="datetime-local"
               defaultValue={APP_STORAGE.sensors.getSessPeriodEnd()}
               onChange={(e) => {
@@ -96,6 +101,14 @@ export class Calendar extends React.Component<IProps> {
           >
             Установить период
           </Button>
+        </Box>
+
+        <Box className="legend" sx={{background: '#f5f8fd', borderRadius: '4px', border: '1px solid #8F9DCE', p: '4px', boxShadow: '-1px 0px 8px -2px rgba(34, 60, 80, 0.2)'}}>
+        <Typography sx = {{color: '#00B394', display: 'flex', alignItems: 'center', fontSize: '14px'}} > <CropSquareIcon  sx = {{color : '#00B394', fontSize: 'small'}} />  - Первая сессия ({APP_STORAGE.sensors.getTimeDevSessFirst().replace('T',' ')})</Typography>
+        <Typography sx = {{color: '#A3A0DC', display: 'flex', alignItems: 'center', fontSize: '14px'}} > <CropSquareIcon sx ={{color: '#A3A0DC' , fontSize: 'small'}}/> - Последняя сессия ({APP_STORAGE.sensors.getTimeDevSessLast().replace('T',' ')})</Typography>   
+        <Typography sx = {{color: '#FE6F4F', display: 'flex', alignItems: 'center', fontSize: '14px'}} > <CropSquareIcon sx = {{color: '#FE6F4F' , fontSize: 'small'}}/> - Выбраная сессия ({APP_STORAGE.sensors.getChoseSessTime()})</Typography> 
+        <Typography sx = {{color: '#266BF1', display: 'flex', alignItems: 'center', fontSize: '14px'}} > <Battery5BarIcon sx = {{color: '#266BF1', fontSize: 'small'}}/> - Аккумулятор ({APP_STORAGE.sensors.getAkbSessLast()})</Typography>        
+        </Box>
         </Box>
       </React.Fragment>
     );
