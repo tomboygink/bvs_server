@@ -43,8 +43,7 @@ export class Devs extends React.Component<IProps> {
       // }
 
       for (var key in gr_devs) {
-        
-        ////////////////////////////////// Все устройства
+        ///////////////////////////////////////////////// Все устройства
         if ("_dev_id_key_" + gr_devs[key].id === dev.getIdChild()) {
           APP_STORAGE.sensors.setNumber(gr_devs[key].number);
          
@@ -66,7 +65,7 @@ export class Devs extends React.Component<IProps> {
                     gridTemplateColumns: "1fr 1fr",
                     columnGap: "12px",
                   }}>
-                  <Box>
+                   <Box>
                     <Box
                       className="right_wrapper_dev"
                       sx={{ display: "flex", flexDirection: "row-reverse" }}>
@@ -201,10 +200,7 @@ export class Devs extends React.Component<IProps> {
                   <Box>
                     <Box
                       className="right_wrapper_dev"
-                      sx={{ display: "flex", flexDirection: "row-reverse" }}
-                    >
-          
-
+                      sx={{ display: "flex", flexDirection: "row-reverse" }}>
                       {APP_STORAGE.getRoleWrite() === 2 &&
                         APP_STORAGE.getRoleRead() === 1 && <MenuDevs />}
                     </Box>
