@@ -197,6 +197,10 @@ export class SensorsStorage {
     }
     if(Object.keys(dt.data).length === 0){
       this.setSessFirstLast([]);
+      this.setTimeDevSessFirst('');
+      this.setTimeDevSessLast('');
+      this.setAkbSessLast('');
+      APP_STORAGE.sensors.setChoseSessTime('');
     }     
 }
 }

@@ -31,7 +31,6 @@ export class Devs extends React.Component<IProps> {
 
   drawDevs(dgrs: TDevsGroup[]): React.ReactNode[] {
     var dev = APP_STORAGE.devs;
-    var devGr = APP_STORAGE.devs_groups;
     var devs: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
@@ -51,7 +50,6 @@ export class Devs extends React.Component<IProps> {
          
           setTimeout(() => { ///////////////////////////////////////////Функция дял орисовки графика при нажатии на устройству
             APP_STORAGE.sensors.get_DevFirstLastSessions("sess_id", APP_STORAGE.auth_form.getdt(),  gr_devs[key].number);
-
           }, 100);
 
 
@@ -196,7 +194,7 @@ export class Devs extends React.Component<IProps> {
                   className="wrappert-devs"
                   sx={{
                     display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
+                    gridTemplateColumns: "70% 30%",
                     columnGap: "12px",
                   }}
                 >
@@ -339,7 +337,6 @@ export class Devs extends React.Component<IProps> {
           {" "}
           Данные по устройству{" "}
         </Typography>
-
         {this.drawDevsFunction()}
       </>
     );

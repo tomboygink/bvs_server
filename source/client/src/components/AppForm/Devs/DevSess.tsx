@@ -121,10 +121,9 @@ export class DevSess extends React.Component<IProps> {
     };
 
     const result1 = mergeByProperty([data, toJS(APP_STORAGE.sensors.getSessFirstLast())]);
-
-    console.log('data', data);
-    console.log('mergeByProperty', result1);
-    APP_STORAGE.sensors.setdataCharts(result1);
+    APP_STORAGE.sensors.setdataCharts(result1.sort(
+      (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
+    ));
   }
 
   async setDevSess() {

@@ -182,9 +182,6 @@ export class DevSessCharts extends React.Component<IProps> {
       
     </ResponsiveContainer>
    </Box>
-    
-     
-   
     </Box>
     );
   }
