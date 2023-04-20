@@ -143,7 +143,7 @@ export const CustomTooltip = ({ active, payload, label }: any) => {
           {payload && payload[0]  &&
           <Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
           <DeviceThermostatIcon sx={{color: '#8884d8', fontSize: '14px'}}/>
-        <Typography sx= {{color:"#808080", fontSize: '14px', mr: '2px'}}>Температура ( последняя сессия ) </Typography>
+        <Typography sx= {{color:"#808080", fontSize: '14px', mr: '2px'}}>Температура </Typography>
         <Typography sx= {{color:"#8884d8", fontSize: '14px'}}> {`${payload[0].value}`}  </Typography>
           </Box> 
          }
@@ -151,7 +151,7 @@ export const CustomTooltip = ({ active, payload, label }: any) => {
 
           <Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
           <DeviceThermostatIcon sx={{color: '#82ca9d', fontSize: '14px'}}/>
-        <Typography sx= {{color:"#808080", fontSize: '14px', mr: '14px'}}>Температура (первая сессия) </Typography>
+        <Typography sx= {{color:"#808080", fontSize: '14px', mr: '14px'}}>Температура</Typography>
         <Typography sx= {{color:"#82ca9d", fontSize: '14px'}}>   {`${payload[1].value}`}  </Typography>
           </Box>  }
 
@@ -159,7 +159,7 @@ export const CustomTooltip = ({ active, payload, label }: any) => {
 
 <Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
 <DeviceThermostatIcon sx={{color: '#FE6F4F', fontSize: '14px'}}/>
-<Typography sx= {{color:"#808080", fontSize: '14px', mr: '14px'}}>Температура (первая сессия) </Typography>
+<Typography sx= {{color:"#808080", fontSize: '14px', mr: '14px'}}>Температура </Typography>
 <Typography sx= {{color:"#FE6F4F", fontSize: '14px'}}>   {`${payload[2].value}`}  </Typography>
 </Box>  }
       </Box>

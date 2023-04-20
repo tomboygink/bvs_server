@@ -43,11 +43,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
   
 
   componentDidMount(): void {
-    APP_STORAGE.devs_groups.get_DevsGroups(
-      "sess_id",
-      APP_STORAGE.auth_form.getdt()
-    );
-  }
+    APP_STORAGE.devs_groups.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt());}
 
   drawDeviceItem(dev: TDevice): React.ReactNode {
 
@@ -72,7 +68,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
               <TreeItem
                 nodeId={"_dev_id_key_" + dev.id}
                 label={dev.number}
-                icon={<CrisisAlertIcon fontSize="small" sx={{color: 'red'}}/>}
+                icon={<CrisisAlertIcon fontSize="small" sx={{color: '#EB4C42'}}/>}
                 sx={{ color: "#002757" }}></TreeItem>
             </React.Fragment>
           );
@@ -86,58 +82,43 @@ export class DevsGroupsTree extends React.Component<IProps> {
        
        var passedDay= Math.floor(delta/1000/60/60/24) ///////////////////( new Date( ( new Date() ).toDateString() ) - 86400000 ); // 24*60*60*1000
       
-        // if(passedDay > 0){
-
-        //  console.log('прошло ' + passedDay  )
-
-        //   return (
-        //     <React.Fragment key={"_dev_id_key_" + dev.id}>
-        //       <TreeItem
-        //         nodeId={"_dev_id_key_" + dev.id}
-        //         label={dev.number}
-        //         icon={<CrisisAlertIcon fontSize="small" sx={{color: '#808080'}}/>}
-        //         sx={{ color: "#002757" }}></TreeItem>
-        //     </React.Fragment>
-        //   );
-        //  }
-       
+      
        if(passedDay === 0){
         return (
           <React.Fragment key={"_dev_id_key_" + dev.id}>
             <TreeItem
               nodeId={"_dev_id_key_" + dev.id}
               label={dev.number}
-              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#4ECB71'}}/>}
+              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#0FA958'}}/>}
               sx={{ color: "#002757" }}></TreeItem>
           </React.Fragment>
         );
-       }
-
-       if(passedDay <= 3 ){
+    }
+       if(passedDay <=3 ){
         return (
           <React.Fragment key={"_dev_id_key_" + dev.id}>
             <TreeItem
               nodeId={"_dev_id_key_" + dev.id}
               label={dev.number}
-              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#00B394'}}/>}
+              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#266BF1'}}/>}
               sx={{ color: "#002757" }}></TreeItem>
           </React.Fragment>
         );
        }
 
-       if(passedDay <= 3 && passedDay >= 8){
+       if(passedDay >= 3 && passedDay <= 5){
         return (
           <React.Fragment key={"_dev_id_key_" + dev.id}>
             <TreeItem
               nodeId={"_dev_id_key_" + dev.id}
               label={dev.number}
-              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FFD233'}}/>}
+              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FFEF02'}}/>}
               sx={{ color: "#002757" }}></TreeItem>
           </React.Fragment>
         );
        }
 
-       if(passedDay >= 15 && passedDay<=30 ){
+       if(passedDay > 5 && passedDay <= 15){
         return (
           <React.Fragment key={"_dev_id_key_" + dev.id}>
             <TreeItem
@@ -149,13 +130,25 @@ export class DevsGroupsTree extends React.Component<IProps> {
         );
        }
 
-       if(passedDay >= 30){
+       if(passedDay >= 15 && passedDay<=29 ){
         return (
           <React.Fragment key={"_dev_id_key_" + dev.id}>
             <TreeItem
               nodeId={"_dev_id_key_" + dev.id}
               label={dev.number}
-              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FF4848'}}/>}
+              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#EB4C42'}}/>}
+              sx={{ color: "#002757" }}></TreeItem>
+          </React.Fragment>
+        );
+       }
+
+       if(passedDay>=30){
+        return (
+          <React.Fragment key={"_dev_id_key_" + dev.id}>
+            <TreeItem
+              nodeId={"_dev_id_key_" + dev.id}
+              label={dev.number}
+              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#EB4C42'}}/>}
               sx={{ color: "#002757" }}></TreeItem>
           </React.Fragment>
         );
@@ -175,7 +168,6 @@ export class DevsGroupsTree extends React.Component<IProps> {
         </React.Fragment>
       );
     }
-   
   }
 
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
@@ -245,15 +237,13 @@ export class DevsGroupsTree extends React.Component<IProps> {
                   nodeId={String(gr.id)}
                   label={gr.g_name}
                   icon= {<FolderIcon fontSize="small" sx={{ color: "#808080"}} />}
-                  sx={{ color: "#808080", borderLeft: '1px solid #c1c1c1',  fontSize: '14px' }}
-                >
+                  sx={{ color: "#808080", borderLeft: '1px solid #c1c1c1',  fontSize: '14px' }} >
                   {childs}
                 </TreeItem>
               </Box>
             </React.Fragment>
           );
         }
-
       }
     }
     return parent;
@@ -267,15 +257,11 @@ export class DevsGroupsTree extends React.Component<IProps> {
     return this.drawDevGroup(DevGr);
   }
 
-
   render(): React.ReactNode {
     return (
       <React.Fragment>
        
-        <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px'}}>Список устройств</Typography>
-    
-      
-       
+        <Typography sx={{ fontWeight: "500" , color: '#111111', mb : '8px'}}>Список устройств</Typography>  
           <Box
            sx={{
               background: "#fff",
@@ -283,15 +269,12 @@ export class DevsGroupsTree extends React.Component<IProps> {
               borderRadius: '4px'
             }}
           >
-      
             <TreeView
               className="wrapper_treeviw"
               onNodeSelect={handleChange}
               aria-label="customized"
               sx={{ flexGrow: 1, maxWidth: 400,overflow: 'auto'}}>
-              
               {this.drawDevsTree()}
-
             </TreeView>
           </Box>
       </React.Fragment>
