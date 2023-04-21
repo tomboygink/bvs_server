@@ -74,62 +74,30 @@ export class ChangeDevsModal extends React.Component<IProps> {
   }
 
   async ChangeSensors(a: any) {
-    APP_STORAGE.devs.setSensors(a);
-    var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
-    for (let i = 0; i < obj.length; i++) {
-      if (Number(APP_STORAGE.devs.getSensors()) === Number(obj[i].depth)) {
-        delete obj[i].depth;
-        delete obj[i].value;
-      }
-
-      if (obj[i].depth) {
-        const array = obj;
-
-        const array2 = array.reduce((o: any, i: any) => {
-          ////////////////// Редюсом убираем дубликаты
-          if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
-            o.push(i);
-          }
-          return o;
-        }, []);
-        APP_STORAGE.devs.setChangeSensors(array2);
-      }
-    }
+    APP_STORAGE.devs.setChangeSensorsValue(a);
     APP_STORAGE.devs.setDepthSensors_Ch(true);
   }
 
   async DeleteSensors(a: any) {
-    ////////////////////////////////////////////// Удаление сенсоров
     var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
-    for (let i = 0; i < obj.length; i++) {
+    for (var i in obj) {
       if (Number(a) === Number(obj[i].depth)) {
         delete obj[i].depth;
         delete obj[i].value;
       }
-      const array = obj;
-      const array2 = array.reduce((o: any, i: any) => {
-        ////////////////// Редюсом убираем дубликаты
-        if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
-          o.push(i);
-        }
-        return o;
-      }, []);
-      APP_STORAGE.devs.setChangeSensors(array2);
     }
+      var newArray = obj.filter((value: {}) => Object.keys(value).length !== 0);
+      APP_STORAGE.devs.setChangeSensors(newArray);
   }
 
-  async AddSensors(a: any) {
+  async AddSensors(a: any) { 
+    APP_STORAGE.devs.setChangeSensorsValue('add')
     APP_STORAGE.devs.setDepthSensors_Ch(true);
   }
 
   async ChangeDevs() {
     var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
-    let sensors: Array<any> = [];
-    let a: TDSensor;
-    let uniqueChars = obj.filter((element: any, index: any) => {
-      ///////////////////////// Убираем дубли массива
-      return obj.indexOf(element) === index;
-    });
+
     APP_STORAGE.devs.set_ChangeDevs("sess_id", APP_STORAGE.auth_form.getdt());
     setTimeout(() => {
       APP_STORAGE.devs_groups.get_DevsGroups(
@@ -140,7 +108,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
   }
 
   render(): React.ReactNode {
-    let depth_sensors = [];
+    let depth_sensors = []; //// массив сенсоров на устройстве
     let count: any = "";
     let org = null;
     var options_org = [];
@@ -213,9 +181,6 @@ export class ChangeDevsModal extends React.Component<IProps> {
                   autoComplete="Глубина"
                   autoFocus
                   size="small"
-                  onChange={(e) => {
-                    APP_STORAGE.devs.setNumber(e.target.value);
-                  }}
                   value={uniqueChars[i].depth}
                 />
               </TableCell>
@@ -224,7 +189,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
                 align="left"
                 sx={{ color: "#1976D2" }}
                 onClick={(e) => {
-                  this.AddSensors(
+                  this.AddSensors( /////// Добавление сенсоров 
                     (
                       document.getElementById(
                         "_id_s" + uniqueChars[i].depth
@@ -290,6 +255,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
                 variant="outlined"
                 fullWidth
                 required
+                disabled={true}
                 label="Глубина"
                 autoComplete="Глубина"
                 autoFocus
@@ -342,7 +308,6 @@ export class ChangeDevsModal extends React.Component<IProps> {
               }}
             >
               <Typography>Редактировать устройство</Typography>
-
               <CloseIcon
                 sx={{ color: "#1976D2" }}
                 onClick={() => {
@@ -383,7 +348,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               helperText={APP_STORAGE.devs.getNamaError_mess()}
               fullWidth
               required
-              label="название устройства "
+              label="Название устройства "
               autoComplete="Название устройства"
               autoFocus
               size="small"
