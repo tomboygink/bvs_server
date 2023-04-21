@@ -21,20 +21,48 @@ export class Change_ModalSensors extends React.Component<IProps> {
   }
 
   async Change_sensors() {
-    APP_STORAGE.devs.get_sensors.push(
-      {"depth": APP_STORAGE.devs.getSensors(), "value" : 0 }
-    );
+    if(APP_STORAGE.devs.getChangeSensorsValue() === 'add'){
+      APP_STORAGE.devs.get_sensors.push(
+        {"depth": APP_STORAGE.devs.getSensors(), "value" : 0 }
+      );
+      
+      var q = APP_STORAGE.devs.get_sensors
+      const uniqueChars = q.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
+        if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
+          o.push(i);
+        }
+        return o;
+      }, []);
+      
+      APP_STORAGE.devs.setChangeSensors(JSON.parse(JSON.stringify(uniqueChars)));
+    }
+
+    else if(APP_STORAGE.devs.getChangeSensorsValue() !== 'add'){
+      var q = APP_STORAGE.devs.get_sensors;
+
+      let array = (JSON.parse(JSON.stringify(q)));
+      for ( var key in array){
+         if(Number( APP_STORAGE.devs.getChangeSensorsValue()) === Number(array[key].depth)){
+          array[key].depth = APP_STORAGE.devs.getSensors();
+         } 
+   
     
-    var q = APP_STORAGE.devs.get_sensors
-    const uniqueChars = q.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
-      if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
-        o.push(i);
       }
-      return o;
-    }, []);
-    
-    APP_STORAGE.devs.setChangeSensors(JSON.parse(JSON.stringify(uniqueChars)));
+      const uniqueChars = array.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
+        if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
+          
+          o.push(i);
+        }
+        return o;
+      }, []);
+      APP_STORAGE.devs.setChangeSensors(JSON.parse(JSON.stringify(uniqueChars)));
+    }
+
   }
+
+
+
+
 
   render(): React.ReactNode {
     return (
@@ -78,7 +106,7 @@ export class Change_ModalSensors extends React.Component<IProps> {
                   mb: "12px",
                 }}
               >
-                <Typography>Введите глубину датчика</Typography>
+                <Typography>Введите глубину датчика11</Typography>
 
                 <CloseIcon
                   sx={{ color: "#1976D2" }}

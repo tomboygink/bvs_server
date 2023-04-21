@@ -47,6 +47,7 @@ export class DevsStorage {
   @observable deleted: boolean = false;
   @observable info: string = '';
   @observable sensors: number = 0;
+  @observable change_sensors_value: string = '';
   @observable select_id_dev: string = '';
 
   @observable checkbox_editing: boolean = false;
@@ -135,6 +136,9 @@ export class DevsStorage {
 
   @action setSensors(val: number) { this.sensors = val };
   @computed getSensors(): number { return this.sensors };
+
+  @action setChangeSensorsValue(val: string) { this.change_sensors_value = val };
+  @computed getChangeSensorsValue(): string { return this.change_sensors_value };
 
   @action setParent(val: number) { this.parent = val };
   @computed getParent(): number { return this.parent };
