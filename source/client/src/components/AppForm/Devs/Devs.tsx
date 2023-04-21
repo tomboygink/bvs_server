@@ -10,6 +10,7 @@ import {
   TextField,
   Link, TextareaAutosize
 } from "@mui/material";
+
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 
@@ -20,7 +21,7 @@ import { MenuDevs } from "./MenuDevs";
 import { Calendar } from "./Calendar";
 import { DevSessCharts } from "../Sensors/DevSessCharts";
 import { DevSess } from "./DevSess";
-import { toJS } from "mobx";
+
 interface IProps {}
 
 @observer
@@ -42,12 +43,11 @@ export class Devs extends React.Component<IProps> {
       //   console.log(toJS(APP_STORAGE.sensors.getSessFirstLast()))
       // }
 
-      for (var key in gr_devs) {
-        ///////////////////////////////////////////////// Все устройства
+      for (var key in gr_devs) { ///////////////////////////////////////////////// Все устройства
         if ("_dev_id_key_" + gr_devs[key].id === dev.getIdChild()) {
           APP_STORAGE.sensors.setNumber(gr_devs[key].number);
          
-          setTimeout(() => { ///////////////////////////////////////////Функция дял орисовки графика при нажатии на устройству
+          setTimeout(() => {  ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройству
             APP_STORAGE.sensors.get_DevFirstLastSessions("sess_id", APP_STORAGE.auth_form.getdt(),  gr_devs[key].number);
           }, 100);
 

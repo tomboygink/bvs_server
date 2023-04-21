@@ -171,13 +171,16 @@ export class DevsGroupsTree extends React.Component<IProps> {
   }
 
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
+
+   
     var parent: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr: TDGroup = dgr.group;
       var gr_childs = dgr.childs;  
       var gr_devs = dgr.devs;
-
+    
+      console.log(toJS(dgrs), 'TDevsGroup' )
       var childs: React.ReactNode[] = new Array();
       if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
 
@@ -190,7 +193,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
       if (gr_devs.length > 0) icon = <FolderIcon fontSize="small" sx={{ color: "#FFE2C0" }} />;
       if (gr_childs.length > 0 && gr_devs.length > 0)
         icon = <FolderIcon fontSize="small" sx={{ color: "#FFE2C0" }} />;
-
+       
       if(Number(gr.org_id) === Number(APP_STORAGE.getIdOrgUser()) 
       && APP_STORAGE.getRoleRead() === 1 && !APP_STORAGE.getRoleWrite() && gr.deleted === false ) { 
         ////// Условие для пользователя с правами "только чтение"
