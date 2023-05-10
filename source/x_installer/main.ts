@@ -14,6 +14,8 @@ import {dev_sess_table} from './sql/dev_sess';
 import {devs_groups_table} from './sql/devs_groups';
 import {devs_table} from './sql/devs';
 import {info_log_table} from './sql/info_log';
+import { dev_povs_table } from './sql/dev_povs';
+import { control_dev_sess_table } from './sql/control_dev_sess';
 
 
 async function run(){
@@ -43,6 +45,15 @@ async function run(){
     console.log("ADDING TABLE \"users\"");
     await db.query(users_table.sql, users_table.args);
     console.log("TABLE \"users\" ADD");
+
+    console.log("ADDING TABLE \"dev_povs\"");
+    await db.query(dev_povs_table.sql, users_table.args);
+    console.log("TABLE \"dev_povs\" ADD");
+
+    console.log("ADDING TABLE \"control_dev_sess\"");
+    await db.query(control_dev_sess_table.sql, control_dev_sess_table.args)
+    console.log("TABLE \"control_dev_sess\" ADD");
+
 
 
     //Создание пользователя

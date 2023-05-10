@@ -1,7 +1,6 @@
 --------------------------------------------------------------------------------------------Таблица групп устройств 
 DROP TABLE IF EXISTS devs_groups;
-CREATE TABLE devs_groups
-(
+CREATE TABLE devs_groups (
     "id" BIGSERIAL NOT NULL PRIMARY KEY,
     "parent_id" BIGINT NOT NULL DEFAULT(0),
     "g_name" CHARACTER VARYING(250) NOT NULL DEFAULT(''),
@@ -22,11 +21,10 @@ COMMENT ON COLUMN devs_groups.ord_num IS 'Порядок следования г
 COMMENT ON COLUMN devs_groups.deleted IS 'Группа удалена';
 COMMENT ON COLUMN devs_groups.g_info IS 'Информация о группе';
 
-
 --------------------------------------------------------------------------------------------Таблица устройств
 DROP TABLE IF EXISTS devs;
-CREATE TABLE devs
-(
+
+CREATE TABLE devs (
     "id" BIGSERIAL NOT NULL PRIMARY KEY,
     "group_dev_id" BIGINT NOT NULL DEFAULT(0),
     "number" CHARACTER VARYING(80) NOT NULL DEFAULT(''),
@@ -49,17 +47,15 @@ COMMENT ON COLUMN devs.info IS 'Информация об устройстве';
 
 --------------------------------------------------------------------------------------------Таблица сессий устройств
 DROP TABLE IF EXISTS dev_sess;
-CREATE TABLE dev_sess 
-(
-	"id" BIGSERIAL NOT NULL PRIMARY KEY,
-	"time_dev" TIMESTAMP NOT NULL,
-	"time_srv" TIMESTAMP NOT NULL,
-	"dev_number" VARCHAR(80) NOT NULL DEFAULT(''),
-	"dev_id" BIGSERIAL NOT NULL,
-	"level_akb" FLOAT NOT NULL,
-	"sess_data" TEXT NOT NULL
+CREATE TABLE dev_sess (
+    "id" BIGSERIAL NOT NULL PRIMARY KEY,
+    "time_dev" TIMESTAMP NOT NULL,
+    "time_srv" TIMESTAMP NOT NULL,
+    "dev_number" VARCHAR(80) NOT NULL DEFAULT(''),
+    "dev_id" BIGSERIAL NOT NULL,
+    "level_akb" FLOAT NOT NULL,
+    "sess_data" TEXT NOT NULL
 );
-
 COMMENT ON TABLE dev_sess IS 'Сессии по устройствам';
 COMMENT ON COLUMN dev_sess.id IS 'Идентификатор сессии';
 COMMENT ON COLUMN dev_sess.time_dev IS 'Время устройства';
@@ -69,14 +65,47 @@ COMMENT ON COLUMN dev_sess.dev_id IS 'Идентификатор устройс�
 COMMENT ON COLUMN dev_sess.level_akb IS 'Уровень заряда устройства';
 COMMENT ON COLUMN dev_sess.sess_data IS 'Данные с устройства';
 
+--------------------------------------------------------------------------------------------Таблица поверок
+DROP TABLE IF EXISTS dev_povs;
+CREATE TABLE dev_povs (
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    dev_id BIGSERIAL NOT NULL,
+    dev_number VARCHAR(80) NOT NULL DEFAULT(''),
+    start_povs TIMESTAMP DEFAULT(CURRENT_TIMESTAMP),
+    end_povs TIMESTAMP DEFAULT(CURRENT_TIMESTAMP),
+    old_dev_povs BIGSERIAL NOT NULL
+);
+
+COMMENT ON TABLE dev_povs IS 'Поверка кос';
+COMMENT ON COLUMN dev_povs.id IS 'Идентификатор поверки';
+COMMENT ON COLUMN dev_povs.dev_id IS 'Идентификатор устройства';
+COMMENT ON COLUMN dev_povs.dev_number IS 'Номер устройства';
+COMMENT ON COLUMN dev_povs.start_povs IS 'Начало поверки';
+COMMENT ON COLUMN dev_povs.end_povs IS 'Окончание поверки';
+COMMENT ON COLUMN dev_povs.old_dev_povs IS 'Идентификатор старой поверки'; --берется id из этой базы 
+
+--------------------------------------------------------------------------------------------Таблица контрольной сессии
+DROP TABLE IF EXISTS control_dev_sess;
+CREATE TABLE control_dev_sess (
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    dev_sess_id BIGSERIAL NOT NULL,
+    dev_id BIGSERIAL NOT NULL,
+    dev_number VARCHAR(80) NOT NULL DEFAULT('')
+);
+COMMENT ON TABLE control_dev_sess IS 'Контрольная сессия после установки термокосы';
+COMMENT ON COLUMN control_dev_sess.id IS 'Идентификатор контрольной сессии';
+COMMENT ON COLUMN control_dev_sess.dev_sess_id IS 'Идентификатор сессии устройства';
+COMMENT ON COLUMN control_dev_sess.dev_id IS 'Идентификатор устройства';
+COMMENT ON COLUMN control_dev_sess.dev_number IS 'Номер устройства';
+
 --------------------------------------------------------------------------------------------Таблица логов ошибок
 DROP TABLE IF EXISTS info_log;
-CREATE TABLE info_log 
-(
-	"id" BIGSERIAL NOT NULL PRIMARY KEY,
-	"msg_type" VARCHAR(70) NOT NULL DEFAULT (''),
-	"log" TEXT NOT NULL DEFAULT (''),
-	"info" TEXT NOT NULL DEFAULT ('')
+
+CREATE TABLE info_log (
+    "id" BIGSERIAL NOT NULL PRIMARY KEY,
+    "msg_type" VARCHAR(70) NOT NULL DEFAULT (''),
+    "log" TEXT NOT NULL DEFAULT (''),
+    "info" TEXT NOT NULL DEFAULT ('')
 );
 COMMENT ON TABLE info_log IS 'Логи по ошибкам';
 COMMENT ON COLUMN info_log.id IS 'Идентификатор лога';

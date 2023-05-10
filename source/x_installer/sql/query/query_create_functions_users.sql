@@ -1,33 +1,4 @@
 --------------------------------------------------------------------------------------------Функция получения всех пользователей
-/*DROP FUNCTION IF EXISTS SelectAllUsers;
-CREATE OR REPLACE FUNCTION SelectAllUsers()
-RETURNS table 
-(
-	id BIGINT, 
-    login VARCHAR(250), 
-    password VARCHAR(250), 
-    family VARCHAR(150), 
-    name VARCHAR(150), 
-    father VARCHAR(150), 
-    telephone VARCHAR(50), 
-    email VARCHAR(150), 
-    org_id BIGINT, 
-    job_title_id BIGINT, 
-    roles_ids JSON,
-    user_data JSON, 
-    mail_code VARCHAR(250), 
-    act_mail BOOLEAN, 
-    re_password_code VARCHAR(250), 
-    deleted BOOLEAN, 
-    deleted_date TIMESTAMP, 
-    created_at TIMESTAMP, 
-    info TEXT
-)
-AS $$
-SELECT * FROM users
-$$
-LANGUAGE SQL;*/
-
 DROP FUNCTION IF EXISTS SelectAllUsers;
 CREATE OR REPLACE FUNCTION SelectAllUsers()
 RETURNS table 
@@ -153,7 +124,6 @@ AS $$
 	act_mail = CASE WHEN ((SELECT email FROM users WHERE login=c_login) <> c_email) THEN (false) ELSE (SELECT act_mail FROM users WHERE login=c_login) END,
 	re_password_code = c_re_password_code,
 	deleted = c_deleted,
-	--deleted_date = CASE WHEN ((SELECT deleted FROM users WHERE login=c_login)<>c_deleted) then (CURRENT_TIMESTAMP) ELSE (SELECT deleted_date FROM users WHERE login=c_login) END,
 	deleted_date = CASE WHEN (c_deleted<>false) then (CURRENT_TIMESTAMP) ELSE (null) END,
     info = c_info
 	WHERE login = c_login
@@ -377,6 +347,33 @@ SELECT * FROM orgs
 $$
 LANGUAGE SQL;
 
+--------------------------------------------------------------------------------------------Функция обновления организации
+DROP FUNCTION IF EXISTS UpdateOrgs;
+CREATE OR REPLACE FUNCTION UpdateOrgs(
+	c_id BIGINT,
+	c_name VARCHAR(250),
+	c_full_name VARCHAR(400),
+	c_inn VARCHAR(50),
+	c_address VARCHAR(400),
+	c_latitude VARCHAR(60),
+	c_longitude VARCHAR(60),
+	c_info TEXT
+)
+RETURNS VOID 
+AS $$
+	UPDATE orgs SET
+	id = c_id, 
+	name = c_name,
+	full_name = c_full_name,
+	inn = c_inn,
+	address = c_address,
+	latitude = c_latitude,
+	longitude = c_longitude,
+	info = c_info
+	WHERE id = c_id
+$$
+LANGUAGE SQL; 
+
 --------------------------------------------------------------------------------------------Функция получения должностей организации
 DROP FUNCTION IF EXISTS SelectJobs_titles;
 CREATE OR REPLACE FUNCTION SelectJobs_titles(
@@ -409,3 +406,21 @@ AS $$
 $$ 
 LANGUAGE SQL;
 
+--------------------------------------------------------------------------------------------Функция обновления должности
+DROP FUNCTION IF EXISTS UpdateJobs_titles;
+CREATE OR REPLACE FUNCTION UpdateJobs_titles(
+	c_id BIGINT,
+	c_org_id BIGINT,
+	c_name VARCHAR(250),
+	c_info TEXT
+)
+RETURNS VOID 
+AS $$
+	UPDATE jobs_titles SET
+	id = c_id, 
+	org_id = c_org_id,
+	name = c_name,
+	info = c_info
+	WHERE id = c_id
+$$
+LANGUAGE SQL; 

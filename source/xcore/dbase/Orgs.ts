@@ -53,6 +53,19 @@ export class OrgsTable {
         return result;
     }
 
+    //Редактирование организации 
+    async updateOrgs(){
+        await this.db.query("SELECT * FROM UpdateOrgs(" +
+        "CAST (" + this.args.id + " AS BIGINT), " +
+        "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
+        "CAST ('" + this.args.full_name + "' AS VARCHAR(400)), " +
+        "CAST ('" + this.args.inn + "' AS VARCHAR(50)), " +
+        "CAST ('" + this.args.address + "' AS VARCHAR(400)), " +
+        "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
+        "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
+        "CAST ('" + this.args.info + "' AS TEXT))");
+    }
+
 }
 
 
