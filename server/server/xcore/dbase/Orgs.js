@@ -101,6 +101,26 @@ var OrgsTable = (function () {
             });
         });
     };
+    OrgsTable.prototype.updateOrgs = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.db.query("SELECT * FROM UpdateOrgs(" +
+                            "CAST (" + this.args.id + " AS BIGINT), " +
+                            "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
+                            "CAST ('" + this.args.full_name + "' AS VARCHAR(400)), " +
+                            "CAST ('" + this.args.inn + "' AS VARCHAR(50)), " +
+                            "CAST ('" + this.args.address + "' AS VARCHAR(400)), " +
+                            "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
+                            "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
+                            "CAST ('" + this.args.info + "' AS TEXT))")];
+                    case 1:
+                        _a.sent();
+                        return [2];
+                }
+            });
+        });
+    };
     return OrgsTable;
 }());
 exports.OrgsTable = OrgsTable;
