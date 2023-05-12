@@ -153,6 +153,7 @@ export class SensorsStorage {
       var obj_first: any = {
         depth: '',
         data: '', 
+        xaxis: ''
     };
     
     var obj_second: any = {

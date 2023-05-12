@@ -201,7 +201,7 @@ export class Devs extends React.Component<IProps> {
                     <Box
                       className="right_wrapper_dev"
                       sx={{ display: "flex", flexDirection: "row-reverse" }}>
-                      {APP_STORAGE.getRoleWrite() === 2 &&
+                        {APP_STORAGE.getRoleWrite() === 2 &&
                         APP_STORAGE.getRoleRead() === 1 && <MenuDevs />}
                     </Box>
 

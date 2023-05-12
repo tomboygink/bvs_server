@@ -3,13 +3,13 @@ import { observer } from "mobx-react";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
 import { PureComponent } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList, Label, ReferenceLine, Customized } from 'recharts';
 import CommitIcon from '@mui/icons-material/Commit';
 import { CustomizedLabel } from "./recharts";
 import { toJS } from "mobx";
 import { Box, Typography } from "@mui/material";
 
-import {CustomTooltip} from "./../Devs/StyledMua"
+import {CustomTooltip, customizedGroupTick} from "./../Devs/StyledMua"
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 
 interface IProps {}
@@ -37,69 +37,29 @@ export class DevSessCharts extends React.Component<IProps> {
       gridTemplateColumns: '10% 90%',
       alignItems: 'center'
       }}>    
-<svg width="51" height="744" viewBox="0 0 51 716" fill="none" xmlns="http://www.w3.org/2000/svg">
-<line x1="0.6" y1="25.7" x2="3.6" y2="21.7" stroke="#BABBBD"/>
-<line x1="0.434084" y1="29.5616" x2="6.60657" y2="21.6914" stroke="#BABBBD"/>
-<line x1="0.613021" y1="32.6834" x2="9.61302" y2="21.6834" stroke="#BABBBD"/>
-<line x1="0.609566" y1="36.6877" x2="12.6096" y2="21.6877" stroke="#BABBBD"/>
-<line x1="0.607559" y1="40.6902" x2="15.6076" y2="21.6902" stroke="#BABBBD"/>
-<line x1="0.806535" y1="44.8484" x2="19.4117" y2="21.5279" stroke="#BABBBD"/>
-<line x1="0.609147" y1="49.0087" x2="19.2144" y2="25.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="53.0087" x2="19.2144" y2="29.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="62.0087" x2="19.2144" y2="38.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="67.0087" x2="19.2144" y2="43.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="72.0087" x2="19.2144" y2="48.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="77.0087" x2="19.2144" y2="53.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="82.0087" x2="19.2144" y2="58.6882" stroke="#BABBBD"/>
-<line x1="31.6091" y1="71.0087" x2="50.2144" y2="47.6882" stroke="#BABBBD"/>
-<line x1="31.6091" y1="64.0087" x2="50.2144" y2="40.6882" stroke="#BABBBD"/>
-<line x1="31.6168" y1="55.6788" x2="49.222" y2="34.6788" stroke="#BABBBD"/>
-<line x1="31.6168" y1="48.6788" x2="49.222" y2="27.6788" stroke="#BABBBD"/>
-<line x1="30.6168" y1="42.6788" x2="48.222" y2="21.6788" stroke="#BABBBD"/>
-<line x1="31.6314" y1="33.6621" x2="42.6314" y2="21.6621" stroke="#BABBBD"/>
-<line x1="32.6096" y1="27.6877" x2="36.6096" y2="22.6877" stroke="#BABBBD"/>
-<line x1="30.6091" y1="78.0087" x2="49.2144" y2="54.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="87.0087" x2="19.2144" y2="63.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="92.0087" x2="19.2144" y2="68.6882" stroke="#BABBBD"/>
-<line x1="30.6091" y1="85.0087" x2="49.2144" y2="61.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="97.0087" x2="19.2144" y2="73.6882" stroke="#BABBBD"/>
-<line x1="31.6091" y1="90.0087" x2="50.2144" y2="66.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="102.009" x2="19.2144" y2="78.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="107.009" x2="19.2144" y2="83.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="111.009" x2="19.2144" y2="87.6882" stroke="#BABBBD"/>
-<line x1="31.6091" y1="97.0087" x2="50.2144" y2="73.6882" stroke="#BABBBD"/>
-<line x1="31.6091" y1="103.009" x2="50.2144" y2="79.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="115.009" x2="19.2144" y2="91.6882" stroke="#BABBBD"/>
-<line x1="31.6091" y1="110.009" x2="50.2144" y2="86.6882" stroke="#BABBBD"/>
-<line x1="2.60906" y1="117.009" x2="19.6091" y2="95.6883" stroke="#BABBBD"/>
-<line x1="31.6091" y1="116.009" x2="48.6091" y2="94.6883" stroke="#BABBBD"/>
-<line x1="6.6336" y1="116.66" x2="19.6336" y2="102.66" stroke="#BABBBD"/>
-<line x1="34.614" y1="117.682" x2="48.614" y2="100.682" stroke="#BABBBD"/>
-<line x1="9.63003" y1="117.664" x2="19.63" y2="106.664" stroke="#BABBBD"/>
-<line x1="39.63" y1="116.664" x2="49.63" y2="105.664" stroke="#BABBBD"/>
-<line x1="14.6096" y1="116.688" x2="18.6096" y2="111.688" stroke="#BABBBD"/>
-<line x1="44.6096" y1="116.688" x2="48.6096" y2="111.688" stroke="#BABBBD"/>
-<line x1="0.609147" y1="57.0087" x2="19.2144" y2="33.6882" stroke="#BABBBD"/>
-<g filter="url(#filter0_b_58_54)">
-<path d="M4 0.5H47C48.933 0.5 50.5 2.067 50.5 4V114C50.5 115.933 48.933 117.5 47 117.5H4C2.067 117.5 0.5 115.933 0.5 114V4C0.5 2.067 2.067 0.5 4 0.5Z" stroke="#BABBBD"/>
+<svg width="50" height="744" viewBox="0 0 50 716" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_b_39_6)">
+<path d="M4 0.5H46C47.933 0.5 49.5 2.067 49.5 4V114C49.5 115.933 47.933 117.5 46 117.5H4C2.067 117.5 0.5 115.933 0.5 114V4C0.5 2.067 2.067 0.5 4 0.5Z" stroke="#266BF1"/>
+<path d="M4 0.5H46C47.933 0.5 49.5 2.067 49.5 4V114C49.5 115.933 47.933 117.5 46 117.5H4C2.067 117.5 0.5 115.933 0.5 114V4C0.5 2.067 2.067 0.5 4 0.5Z" stroke="#565252" strokeOpacity="0.2"/>
 </g>
-<line x1="25.5" y1="22" x2="25.5" y2="706" stroke="#BABBBD"/>
-<line x1="23" y1="127.5" x2="28" y2="127.5" stroke="#BABBBD"/>
-<line x1="23" y1="174.5" x2="28" y2="174.5" stroke="#BABBBD"/>
-<line x1="23" y1="240.5" x2="28" y2="240.5" stroke="#BABBBD"/>
+<line x1="25.5" y1="22" x2="25.5" y2="706" stroke="black"/>
+<line x1="23" y1="127.5" x2="28" y2="127.5" stroke="black"/>
+<line x1="23" y1="174.5" x2="28" y2="174.5" stroke="black"/>
+<line x1="23" y1="240.5" x2="28" y2="240.5" stroke="black"/>
 <line x1="23" y1="305.5" x2="28" y2="305.5" stroke="black"/>
-<path d="M28 305.5H23" stroke="#BABBBD"/>
-<path d="M28 371H23" stroke="#BABBBD"/>
-<line x1="23" y1="78.5" x2="28" y2="78.5" stroke="#BABBBD"/>
-<line x1="23" y1="43.5" x2="28" y2="43.5" stroke="#BABBBD"/>
-<line x1="1.00017" y1="21.5" x2="49.0002" y2="21.5161" stroke="#BABBBD"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M28 8H23C21.3431 8 20 9.34315 20 11V712C20 713.657 21.3431 715 23 715H28C29.6569 715 31 713.657 31 712V11C31 9.34315 29.6569 8 28 8ZM23 7C20.7909 7 19 8.79087 19 11V712C19 714.209 20.7909 716 23 716H28C30.2091 716 32 714.209 32 712V11C32 8.79086 30.2091 7 28 7H23Z" fill="#BABBBD"/>
+<path d="M28 305.5H23" stroke="black"/>
+<path d="M28 371H23" stroke="black"/>
+<line x1="23" y1="78.5" x2="28" y2="78.5" stroke="black"/>
+<line x1="23" y1="43.5" x2="28" y2="43.5" stroke="black"/>
+<line y1="21.5" x2="49" y2="21.5" stroke="black"/>
+<path d="M19 11C19 8.79087 20.7909 7 23 7H28C30.2091 7 32 8.79086 32 11V712C32 714.209 30.2091 716 28 716H23C20.7909 716 19 714.209 19 712V11Z" fill="white"/>
+<path fillRule="evenodd" clipRule="evenodd" d="M28 8H23C21.3431 8 20 9.34315 20 11V712C20 713.657 21.3431 715 23 715H28C29.6569 715 31 713.657 31 712V11C31 9.34315 29.6569 8 28 8ZM23 7C20.7909 7 19 8.79087 19 11V712C19 714.209 20.7909 716 23 716H28C30.2091 716 32 714.209 32 712V11C32 8.79086 30.2091 7 28 7H23Z" fill="#266BF1"/>
 <defs>
-<filter id="filter0_b_58_54" x="-4" y="-4" width="59" height="126" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<filter id="filter0_b_39_6" x="-4" y="-4" width="58" height="126" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
 <feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feGaussianBlur in="BackgroundImageFix" stdDeviation="2"/>
-<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_58_54"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_58_54" result="shape"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_39_6"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_39_6" result="shape"/>
 </filter>
 </defs>
 </svg>
@@ -137,117 +97,155 @@ export class DevSessCharts extends React.Component<IProps> {
   }
 
   if(!toJS(APP_STORAGE.sensors.getdataCharts()).length && toJS(APP_STORAGE.sensors.getSessFirstLast().length)){
-     
-    return (
-      <Box sx={{background: '#f1f5fcb3', 
-      borderTopLeftRadius: '48px', 
-      p: '12px',pt: '22px', 
-      border: '1px solid #8F9DCE', 
-      display: 'grid', 
-      flexDirection: 'column-reverse',
-      gridTemplateColumns: '10% 90%',
-      alignItems: 'center'
-      }}>   
+   let tick_yaxis = [];
+   let tick_xaxis = [];
+   let mintick_y = null;
+   let maxtick_y= null;
+   let filtered = [];
 
-<svg width="51" height="744" viewBox="0 0 51 716" fill="none" xmlns="http://www.w3.org/2000/svg">
-<line x1="0.6" y1="25.7" x2="3.6" y2="21.7" stroke="#BABBBD"/>
-<line x1="0.434084" y1="29.5616" x2="6.60657" y2="21.6914" stroke="#BABBBD"/>
-<line x1="0.613021" y1="32.6834" x2="9.61302" y2="21.6834" stroke="#BABBBD"/>
-<line x1="0.609566" y1="36.6877" x2="12.6096" y2="21.6877" stroke="#BABBBD"/>
-<line x1="0.607559" y1="40.6902" x2="15.6076" y2="21.6902" stroke="#BABBBD"/>
-<line x1="0.806535" y1="44.8484" x2="19.4117" y2="21.5279" stroke="#BABBBD"/>
-<line x1="0.609147" y1="49.0087" x2="19.2144" y2="25.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="53.0087" x2="19.2144" y2="29.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="62.0087" x2="19.2144" y2="38.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="67.0087" x2="19.2144" y2="43.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="72.0087" x2="19.2144" y2="48.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="77.0087" x2="19.2144" y2="53.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="82.0087" x2="19.2144" y2="58.6882" stroke="#BABBBD"/>
+   let mintick_x = null;
+   let maxtick_x= null;
+    for ( var i in APP_STORAGE.sensors.getSessFirstLast()){
+      tick_yaxis.push(APP_STORAGE.sensors.getSessFirstLast()[i].depth);
+      // mintick = APP_STORAGE.sensors.getSessFirstLast()[i].depth[0];
+      // maxtick = APP_STORAGE.sensors.getSessFirstLast()[i].depth[-1];
+
+     
+        tick_xaxis.push(
+          APP_STORAGE.sensors.getSessFirstLast()[i].data_f, 
+          APP_STORAGE.sensors.getSessFirstLast()[i].data_s
+        )
+    }
+
+     
+
+
+    if(tick_yaxis.length){
+
+          maxtick_y = tick_yaxis[tick_yaxis.length - 1];
+          mintick_y = tick_yaxis[0];
+    }   
+    
+   if (tick_xaxis.sort().length){
+
+    filtered = tick_xaxis.sort().filter(function(x) {
+      return x !== undefined;
+ });
+    maxtick_x = filtered[filtered.sort().length - 1];
+    mintick_x = filtered.sort()[0];
+   }
+  
+   let uniqueChars: number[] = [];
+   filtered.sort().forEach((element) => {
+    if (!uniqueChars.includes(element)) {
+        uniqueChars.push(element);
+    }
+});
+
+    if(maxtick_y !== null && mintick_y!== null){
+      return (
+        <Box className="container_charts" sx={{background: '#f1f5fcb3', 
+        borderTopLeftRadius: '48px', 
+        border: '1px solid #8F9DCE', 
+        display: 'grid', 
+        alignItems: 'center',
+        }}>   
+  
+  <svg width="51" className="item-1" height="716" viewBox="0 0 51 716" fill="none" xmlns="http://www.w3.org/2000/svg">
 <line x1="31.6091" y1="71.0087" x2="50.2144" y2="47.6882" stroke="#BABBBD"/>
 <line x1="31.6091" y1="64.0087" x2="50.2144" y2="40.6882" stroke="#BABBBD"/>
-<line x1="31.6168" y1="55.6788" x2="49.222" y2="34.6788" stroke="#BABBBD"/>
-<line x1="31.6168" y1="48.6788" x2="49.222" y2="27.6788" stroke="#BABBBD"/>
-<line x1="30.6168" y1="42.6788" x2="48.222" y2="21.6788" stroke="#BABBBD"/>
-<line x1="31.6314" y1="33.6621" x2="42.6314" y2="21.6621" stroke="#BABBBD"/>
-<line x1="32.6096" y1="27.6877" x2="36.6096" y2="22.6877" stroke="#BABBBD"/>
-<line x1="30.6091" y1="78.0087" x2="49.2144" y2="54.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="87.0087" x2="19.2144" y2="63.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="92.0087" x2="19.2144" y2="68.6882" stroke="#BABBBD"/>
-<line x1="30.6091" y1="85.0087" x2="49.2144" y2="61.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="97.0087" x2="19.2144" y2="73.6882" stroke="#BABBBD"/>
+<line x1="31.6216" y1="55.6732" x2="50.6216" y2="33.6732" stroke="#BABBBD"/>
+<line x1="31.6216" y1="48.6732" x2="50.6216" y2="26.6732" stroke="#BABBBD"/>
+<line x1="31.6216" y1="41.6732" x2="50.6216" y2="19.6732" stroke="#BABBBD"/>
+<line x1="31.6216" y1="34.6732" x2="50.6216" y2="12.6732" stroke="#BABBBD"/>
+<line x1="31.6216" y1="26.6732" x2="50.6216" y2="4.67319" stroke="#BABBBD"/>
+<line x1="31.6222" y1="19.6725" x2="44.6222" y2="4.67254" stroke="#BABBBD"/>
+<line x1="31.6" y1="13.7" x2="37.6" y2="5.7" stroke="#BABBBD"/>
+<path d="M31.6418 76.7143L50.5449 53.7551" stroke="#BABBBD"/>
+<line x1="31.6216" y1="82.6732" x2="50.6216" y2="60.6732" stroke="#BABBBD"/>
 <line x1="31.6091" y1="90.0087" x2="50.2144" y2="66.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="102.009" x2="19.2144" y2="78.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="107.009" x2="19.2144" y2="83.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="111.009" x2="19.2144" y2="87.6882" stroke="#BABBBD"/>
 <line x1="31.6091" y1="97.0087" x2="50.2144" y2="73.6882" stroke="#BABBBD"/>
-<line x1="31.6091" y1="103.009" x2="50.2144" y2="79.6882" stroke="#BABBBD"/>
-<line x1="0.609147" y1="115.009" x2="19.2144" y2="91.6882" stroke="#BABBBD"/>
-<line x1="31.6091" y1="110.009" x2="50.2144" y2="86.6882" stroke="#BABBBD"/>
-<line x1="2.60906" y1="117.009" x2="19.6091" y2="95.6883" stroke="#BABBBD"/>
-<line x1="31.6091" y1="116.009" x2="48.6091" y2="94.6883" stroke="#BABBBD"/>
-<line x1="6.6336" y1="116.66" x2="19.6336" y2="102.66" stroke="#BABBBD"/>
-<line x1="34.614" y1="117.682" x2="48.614" y2="100.682" stroke="#BABBBD"/>
-<line x1="9.63003" y1="117.664" x2="19.63" y2="106.664" stroke="#BABBBD"/>
-<line x1="39.63" y1="116.664" x2="49.63" y2="105.664" stroke="#BABBBD"/>
-<line x1="14.6096" y1="116.688" x2="18.6096" y2="111.688" stroke="#BABBBD"/>
-<line x1="44.6096" y1="116.688" x2="48.6096" y2="111.688" stroke="#BABBBD"/>
-<line x1="0.609147" y1="57.0087" x2="19.2144" y2="33.6882" stroke="#BABBBD"/>
-<g filter="url(#filter0_b_58_54)">
+<line x1="31.6124" y1="103.005" x2="50.6124" y2="79.6842" stroke="#BABBBD"/>
+<line x1="31.606" y1="110.013" x2="50.606" y2="85.6922" stroke="#BABBBD"/>
+<line x1="31.606" y1="116.013" x2="50.606" y2="91.6922" stroke="#BABBBD"/>
+<line x1="34.6096" y1="117.688" x2="50.6096" y2="97.6877" stroke="#BABBBD"/>
+<line x1="11.6464" y1="117.646" x2="19.6464" y2="109.646" stroke="#BABBBD"/>
+<line x1="5.64645" y1="117.646" x2="19.6464" y2="103.646" stroke="#BABBBD"/>
+<line x1="0.656128" y1="115.637" x2="19.6561" y2="97.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="108.637" x2="19.6561" y2="90.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="108.637" x2="19.6561" y2="90.637" stroke="#BABBBD"/>
+<path d="M0.5 102L19.5 84" stroke="#BABBBD"/>
+<line x1="0.656128" y1="95.637" x2="19.6561" y2="77.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="88.637" x2="19.6561" y2="70.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="80.637" x2="19.6561" y2="62.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="73.637" x2="19.6561" y2="55.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="65.637" x2="19.6561" y2="47.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="58.637" x2="19.6561" y2="40.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="50.637" x2="19.6561" y2="32.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="42.637" x2="19.6561" y2="24.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="34.637" x2="19.6561" y2="16.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="27.637" x2="19.6561" y2="9.63702" stroke="#BABBBD"/>
+<line x1="0.657318" y1="20.6359" x2="17.6573" y2="4.6359" stroke="#BABBBD"/>
+<line x1="0.646447" y1="14.6464" x2="9.64645" y2="5.64645" stroke="#BABBBD"/>
+<line x1="39.5968" y1="117.704" x2="50.5968" y2="102.704" stroke="#BABBBD"/>
+<line x1="43.6053" y1="117.693" x2="50.6053" y2="108.693" stroke="#BABBBD"/>
+<g filter="url(#filter0_b_75_25)">
 <path d="M4 0.5H47C48.933 0.5 50.5 2.067 50.5 4V114C50.5 115.933 48.933 117.5 47 117.5H4C2.067 117.5 0.5 115.933 0.5 114V4C0.5 2.067 2.067 0.5 4 0.5Z" stroke="#BABBBD"/>
 </g>
-<line x1="25.5" y1="22" x2="25.5" y2="706" stroke="#BABBBD"/>
-<line x1="23" y1="127.5" x2="28" y2="127.5" stroke="#BABBBD"/>
-<line x1="23" y1="174.5" x2="28" y2="174.5" stroke="#BABBBD"/>
-<line x1="23" y1="240.5" x2="28" y2="240.5" stroke="#BABBBD"/>
-<line x1="23" y1="305.5" x2="28" y2="305.5" stroke="black"/>
-<path d="M28 305.5H23" stroke="#BABBBD"/>
-<path d="M28 371H23" stroke="#BABBBD"/>
-<line x1="23" y1="78.5" x2="28" y2="78.5" stroke="#BABBBD"/>
-<line x1="23" y1="43.5" x2="28" y2="43.5" stroke="#BABBBD"/>
-<line x1="1.00017" y1="21.5" x2="49.0002" y2="21.5161" stroke="#BABBBD"/>
-<path fillRule="evenodd" clipRule="evenodd" d="M28 8H23C21.3431 8 20 9.34315 20 11V712C20 713.657 21.3431 715 23 715H28C29.6569 715 31 713.657 31 712V11C31 9.34315 29.6569 8 28 8ZM23 7C20.7909 7 19 8.79087 19 11V712C19 714.209 20.7909 716 23 716H28C30.2091 716 32 714.209 32 712V11C32 8.79086 30.2091 7 28 7H23Z" fill="#BABBBD"/>
+<line x1="25.5" y1="5" x2="25.5" y2="703" stroke="#BABBBD"/>
+<line x1="0.000322059" y1="5" x2="50.0003" y2="5.0161" stroke="#BABBBD" stroke-width="2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M28 2.99154H23C21.3431 2.99154 20 4.32332 20 5.96616V701.034C20 702.677 21.3431 704.008 23 704.008H28C29.6569 704.008 31 702.677 31 701.034V5.96615C31 4.32332 29.6569 2.99154 28 2.99154ZM23 2C20.7909 2 19 3.77571 19 5.96616V701.034C19 703.224 20.7909 705 23 705H28C30.2091 705 32 703.224 32 701.034V5.96615C32 3.77571 30.2091 2 28 2H23Z" fill="#BABBBD"/>
 <defs>
-<filter id="filter0_b_58_54" x="-4" y="-4" width="59" height="126" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-<feFlood floodOpacity="0" result="BackgroundImageFix"/>
+<filter id="filter0_b_75_25" x="-4" y="-4" width="59" height="126" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feGaussianBlur in="BackgroundImageFix" stdDeviation="2"/>
-<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_58_54"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_58_54" result="shape"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_75_25"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_75_25" result="shape"/>
 </filter>
 </defs>
 </svg>
 
-     <ResponsiveContainer width="100%" height={740}>
-        <LineChart
-          layout="vertical"
-          data={toJS(APP_STORAGE.sensors.getSessFirstLast())}
-          margin={{
-            top: 20,
-            right: 20,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tickCount={19}  tick={{ fill: '#266BF1', fontSize: '14px' }} domain={[-15, 15]} />
-          <YAxis   dataKey='depth' type="category" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tick={{ fill: '#266BF1', fontSize: '14px' }} />
-          <Tooltip content={<CustomTooltip/>}  />
-          <Line  strokeWidth={'2'}  dataKey="data_s" stroke="#8884d8" />
-          <Line strokeWidth={'2'} dataKey="data_f" stroke="#00B394" />
-        </LineChart>
-      </ResponsiveContainer>
-    </Box>
-    );
+       <ResponsiveContainer className="item-2" width="100%">
+          <LineChart
+            layout="vertical"
+            data={toJS(APP_STORAGE.sensors.getSessFirstLast())}
+            margin={{
+              top: 20,
+              right: 20,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis type="number" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tickCount={27}  tick={{ fill: '#7F00FF', fontSize: '14px' }} domain={[-15, 15]} />
+          
+                        <YAxis ticks= {tick_yaxis} domain={[Number(mintick_y), Number(maxtick_y)]} dataKey="depth"  type="number" strokeWidth={'0.1mm'} stroke="rgb(255 255 255 / 0%)"  tick={customizedGroupTick}/ > 
+            
+            <Tooltip content={<CustomTooltip/>}  />
+            <ReferenceLine className="y7676" y={Number(mintick_y)} stroke="#BABBBD" />
+             {/*
+            <ReferenceLine className="y7676" x="-15" stroke="red" /> */}
+            {/* <Customized component={customizedGroupTick} /> */}
+
+            <Line data = {toJS(APP_STORAGE.sensors.getSess_second())} strokeWidth={'2'}  dataKey="data_s" stroke="#9566FB" />
+            <Line data = {toJS(APP_STORAGE.sensors.getSess_first())} strokeWidth={'2'} dataKey="data_f" stroke="#00B394" />
+          </LineChart>
+        </ResponsiveContainer>
+      </Box>
+      );
+    }
+  
   }
 
 
   if(!toJS(APP_STORAGE.sensors.getdataCharts()).length && !toJS(APP_STORAGE.sensors.getSessFirstLast().length)){
-
+    
     return (
       <Box sx={{background: '#f1f5fcb3', borderTopLeftRadius: '48px', pt: '22px', border: '1px solid #8F9DCE', display: 'flex', flexDirection: 'column-reverse'}}>   
          <ResponsiveContainer width="100%" height={740}>
             <LineChart
               layout="vertical"
-              data={toJS(APP_STORAGE.sensors.getSessFirstLast())}
+              // data={toJS(APP_STORAGE.sensors.getSessFirstLast())}
               margin={{
                 top: 20,
                 right: 20,
@@ -259,8 +257,8 @@ export class DevSessCharts extends React.Component<IProps> {
               <XAxis type="number" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tickCount={19}  tick={{ fill: '#266BF1', fontSize: '14px' }} domain={[-12, 12]} />
               <YAxis   dataKey='depth' type="category" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tick={{ fill: '#266BF1', fontSize: '14px' }} />
               <Tooltip content={<CustomTooltip/>}  />
-              <Line  strokeWidth={'2'}  dataKey="data_s" stroke="#8884d8" />
-              <Line strokeWidth={'2'} dataKey="data_f" stroke="#00B394" />
+              <Line    strokeWidth={'2'}  dataKey="data_s" stroke="#8884d8" />
+              <Line  strokeWidth={'2'} dataKey="data_f" stroke="#00B394" />
             </LineChart>
             
           </ResponsiveContainer>

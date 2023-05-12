@@ -60,8 +60,6 @@ body {
   padding: 20px;
   border-radius: 4px;
 }
-
-
 // .css-1g86id8-MuiTreeItem-content .MuiTreeItem-label, .css-170guiz-MuiTypography-root, .css-2mihi7-MuiTypography-root{
 //   font-size: 14px!important;
 // }
@@ -89,12 +87,25 @@ body {
         }
     }
 }
-
-svg.svg_well {
-  position: absolute;
-  //top: 138px;
+.item-1 {
+  background-color: #ffff0000;
+  grid-row: 1;
+  grid-column: 3/3;
+  margin-top: 14px;
+  animation: ani 2s forwards;
+  
 }
 
+@keyframes ani {
+  0% {transform: translateX(+50%);}
+  100% {transform: translateX(8);}
+}
+
+.item-2 {
+  background-color: #ffffff00;
+  grid-column: 2/9;
+  grid-row: 1;
+}
 button#long-button_menu {
   padding: 0px;
 }

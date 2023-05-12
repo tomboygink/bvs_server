@@ -15,6 +15,7 @@ import ShowChartIcon from '@mui/icons-material/ShowChart';
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
 import { Box } from '@mui/material';
+import { Cross, Rectangle } from 'recharts';
 
 
 
@@ -166,6 +167,24 @@ export const CustomTooltip = ({ active, payload, label }: any) => {
     );
   }
   return null;
+};
+
+ export const customizedGroupTick = (props: any) => {
+  const { index, x, y, payload } = props;
+
+  // console.log(index, 'index');
+  // console.log(x, 'x');
+  // console.log(y, 'y');
+  console.log(payload.value, 'payload');
+  return (
+   
+          <g>
+         <rect x={x} y ={y}  className ='map'  width="4" height="8" fill="#808080" font-family="Verdana" font-size="14px" />
+        <text dx={x - 35} dy={y + 10} fill="blue" font-size="12px" text-anchor="middle">
+           {payload.value}
+        </text>
+  </g>
+  );
 };
 
 
