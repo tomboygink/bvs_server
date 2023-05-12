@@ -11,6 +11,13 @@ import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUs
 import { UsersMenu } from "./User/UsersMenu"; //////////////////////////// устройства
 import { Users } from "./User/Users";
 
+import { OrgsMenu } from "./Оrgs/OrgsMenu";
+import { Orgs } from "./Оrgs/Оrgs";
+
+import { JobsTitlesMenu } from "./JobsTitles/JobsTitlesMenu";
+import { JobsTitles } from "./JobsTitles/JobsTitles";
+
+
 import { DevsGroupsTree } from "./DevsGroups/DevsGroupsTree"; /////////////////Дерево устройств (левое боковое меню)
 import { DevLocation } from "./DevsGroups/DevLocation"; ////////расположение устройств
 import { ChangeDevsGroups } from "./DevsGroups/ChangeDevsGroups"; /////// Редактировать расположение5 устройств (модальное окно)
@@ -74,6 +81,7 @@ export class AppForm extends React.Component<IProps> {
       new_group = <AddNewGroup />;
       left_form = <DevsGroupsTree />;
     }
+
     if (APP_STORAGE.devs_groups.getMiddleForm() === 2) {
       middle_form = (
         <>
@@ -90,6 +98,16 @@ export class AppForm extends React.Component<IProps> {
       ///middle_form = <TableUser />;
       middle_form = <Users />;
       left_form = <UsersMenu />;
+    }
+
+    if (APP_STORAGE.devs_groups.getMiddleForm() === 5) {
+      middle_form = <Orgs />;
+      left_form = <OrgsMenu />;
+    }
+
+    if (APP_STORAGE.devs_groups.getMiddleForm() === 6) {
+      middle_form = <JobsTitles />;
+      left_form = <JobsTitlesMenu />;
     }
 
     // if(APP_STORAGE.sensors.getOpenDevsess() === true && APP_STORAGE.sensors.getIdDevSess() !==''){

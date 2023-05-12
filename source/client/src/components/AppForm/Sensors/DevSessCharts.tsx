@@ -193,11 +193,11 @@ export class DevSessCharts extends React.Component<IProps> {
 <path d="M4 0.5H47C48.933 0.5 50.5 2.067 50.5 4V114C50.5 115.933 48.933 117.5 47 117.5H4C2.067 117.5 0.5 115.933 0.5 114V4C0.5 2.067 2.067 0.5 4 0.5Z" stroke="#BABBBD"/>
 </g>
 <line x1="25.5" y1="5" x2="25.5" y2="703" stroke="#BABBBD"/>
-<line x1="0.000322059" y1="5" x2="50.0003" y2="5.0161" stroke="#BABBBD" stroke-width="2"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M28 2.99154H23C21.3431 2.99154 20 4.32332 20 5.96616V701.034C20 702.677 21.3431 704.008 23 704.008H28C29.6569 704.008 31 702.677 31 701.034V5.96615C31 4.32332 29.6569 2.99154 28 2.99154ZM23 2C20.7909 2 19 3.77571 19 5.96616V701.034C19 703.224 20.7909 705 23 705H28C30.2091 705 32 703.224 32 701.034V5.96615C32 3.77571 30.2091 2 28 2H23Z" fill="#BABBBD"/>
+<line x1="0.000322059" y1="5" x2="50.0003" y2="5.0161" stroke="#BABBBD" strokeWidth="2"/>
+<path fillRule="evenodd" clipRule="evenodd" d="M28 2.99154H23C21.3431 2.99154 20 4.32332 20 5.96616V701.034C20 702.677 21.3431 704.008 23 704.008H28C29.6569 704.008 31 702.677 31 701.034V5.96615C31 4.32332 29.6569 2.99154 28 2.99154ZM23 2C20.7909 2 19 3.77571 19 5.96616V701.034C19 703.224 20.7909 705 23 705H28C30.2091 705 32 703.224 32 701.034V5.96615C32 3.77571 30.2091 2 28 2H23Z" fill="#BABBBD"/>
 <defs>
-<filter id="filter0_b_75_25" x="-4" y="-4" width="59" height="126" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter0_b_75_25" x="-4" y="-4" width="59" height="126" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feGaussianBlur in="BackgroundImageFix" stdDeviation="2"/>
 <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_75_25"/>
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_75_25" result="shape"/>
@@ -219,7 +219,7 @@ export class DevSessCharts extends React.Component<IProps> {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="number" strokeWidth={'0.1mm'} stroke="rgb(23 21 21)"  tickCount={27}  tick={{ fill: '#7F00FF', fontSize: '14px' }} domain={[-15, 15]} />
           
-                        <YAxis ticks= {tick_yaxis} domain={[Number(mintick_y), Number(maxtick_y)]} dataKey="depth"  type="number" strokeWidth={'0.1mm'} stroke="rgb(255 255 255 / 0%)"  tick={customizedGroupTick}/ > 
+                        <YAxis ticks= {tick_yaxis} domain={[Number(mintick_y), Number(maxtick_y)]} dataKey="depth"  type="number" strokeWidth={'0.1mm'} stroke="rgb(255 255 255 / 0%)"  tick={customizedGroupTick} /> 
             
             <Tooltip content={<CustomTooltip/>}  />
             <ReferenceLine className="y7676" y={Number(mintick_y)} stroke="#BABBBD" />
@@ -265,5 +265,5 @@ export class DevSessCharts extends React.Component<IProps> {
         </Box>
     );
   };
-} 
+}
 }

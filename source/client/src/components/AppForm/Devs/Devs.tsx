@@ -46,9 +46,10 @@ export class Devs extends React.Component<IProps> {
       for (var key in gr_devs) { ///////////////////////////////////////////////// Все устройства
         if ("_dev_id_key_" + gr_devs[key].id === dev.getIdChild()) {
           APP_STORAGE.sensors.setNumber(gr_devs[key].number);
+        
          
-          setTimeout(() => {  ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройству
-            APP_STORAGE.sensors.get_DevFirstLastSessions("sess_id", APP_STORAGE.auth_form.getdt(),  gr_devs[key].number);
+          setTimeout(() => {  ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
+            APP_STORAGE.sensors.get_DevFirstLastSessions("sess_id", APP_STORAGE.auth_form.getdt());
           }, 100);
 
 

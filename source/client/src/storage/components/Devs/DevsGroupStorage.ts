@@ -139,9 +139,6 @@ export class DevsGroupStorage{
 
     
     async set_NewDevGroup(name: string, value: any, _options?: any) { ///////// Добавляем новое расположение устройств
-
-      
-
         var sess_code = value;
         var q:IWSQuery = new WSQuery("set_NewDevGroup");
         
@@ -185,8 +182,8 @@ export class DevsGroupStorage{
         if(this.getName() !== '' && this.getLatitude() !== '' && this.getLongitude() !== '' && this.getKeyOrg() !== ''){
           q.args = {
             g_name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '',
-            latitude:this.getLatitude() || '', 
-            longitude:this.getLongitude() || '', 
+            latitude:this.getLatitude().replace(/\,/g, '.') || '', 
+            longitude:this.getLongitude().replace(/\,/g, '.') || '', 
             org_id:this.getKeyOrg() || '',
             parent_id: this.getParentId(),
             ord_num: 0,
@@ -292,8 +289,8 @@ export class DevsGroupStorage{
             id: Number(this.getParentId()) || "",
             parent_id: Number(this.getParent()) || 0,
             name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '' || "",
-            latitude: this.getLatitude() || "",
-            longitude: this.getLongitude() || "",
+            latitude: this.getLatitude().replace(/\,/g, '.') || "",
+            longitude: this.getLongitude().replace(/\,/g, '.') || "",
             org_id : Number(this.getKeyOrg()),
             ord_id: 0,
             deleted: this.getCheckboxEd(),

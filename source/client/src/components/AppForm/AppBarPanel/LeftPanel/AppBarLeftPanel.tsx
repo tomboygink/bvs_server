@@ -32,6 +32,16 @@ export class AppBarLeftPanel extends React.Component<IProps> {
     APP_STORAGE.devs_groups.setMiddleForm(1);
     APP_STORAGE.app_bar.setSetOpenAppBar(false)
   }
+
+  async OpenListOrg() {
+    APP_STORAGE.devs_groups.setMiddleForm(5);
+    APP_STORAGE.app_bar.setSetOpenAppBar(false);
+  }
+
+  async OpenListJobsTitles() {
+    APP_STORAGE.devs_groups.setMiddleForm(6);
+    APP_STORAGE.app_bar.setSetOpenAppBar(false);
+  }
   
   async DevLocation (e:any){
     APP_STORAGE.devs_groups.setMiddleForm(e);
@@ -48,6 +58,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
     APP_STORAGE.reg_user.setOpenTableUsers(false);
     APP_STORAGE.reg_user.setOpenTableUsers(false);
   }
+
 
   async OpenTableUser(a:any) {  /// рисуем таблицу пользователей
     APP_STORAGE.devs_groups.setMiddleForm(a);
@@ -105,6 +116,24 @@ export class AppBarLeftPanel extends React.Component<IProps> {
               <FolderOpenIcon fontSize="small" />
             </ListItemIcon>{" "}
             Устройства
+          </MenuItem>
+
+          <MenuItem
+           onClick={() => this.OpenListOrg()}
+          >
+            <ListItemIcon>
+              <FolderOpenIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            Организации
+          </MenuItem>
+
+          <MenuItem
+           onClick={() => this.OpenListJobsTitles()}
+          >
+            <ListItemIcon>
+              <FolderOpenIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            Должности
           </MenuItem>
 
   

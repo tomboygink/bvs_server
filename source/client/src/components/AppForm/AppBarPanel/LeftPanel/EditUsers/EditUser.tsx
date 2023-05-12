@@ -249,6 +249,7 @@ export class EditUser extends React.Component<IProps> {
                 {options_org}
                 <Divider />
               </Select>
+              
             </FormControl>
 
             <FormControl fullWidth size="small" sx={{ mt: "14px" }}>

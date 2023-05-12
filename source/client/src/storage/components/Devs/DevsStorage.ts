@@ -270,8 +270,8 @@ export class DevsStorage {
         group_dev_id: this.getIdDevs(),
         number: this.getNumber().replace(/"([^"]*)"/g, '«$1»') || '',
         name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '',
-        latitude: this.getLatitude() || '',
-        longitude: this.getLongitude() || '',
+        latitude: this.getLatitude().replace(/\,/g, '.') || '',
+        longitude: this.getLongitude().replace(/\,/g, '.') || '',
         sensors: '{\"s\":' +  JSON.stringify(this.getArray()) + '}',
         deleted: this.getDeleted() || false,
         info: this.getDeleted() || ''
@@ -358,8 +358,8 @@ export class DevsStorage {
         group_dev_id: this.getGroupDevId() || '',
         number: this.getNumber().replace(/"([^"]*)"/g, '«$1»') || '' || '',
         name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '' || "",
-        latitude: this.getLatitude() || "",
-        longitude: this.getLongitude() || "",
+        latitude: this.getLatitude().replace(/\,/g, '.') || "",
+        longitude: this.getLongitude().replace(/\,/g, '.') || "",
         sensors: '{\"s\":' + JSON.stringify(this.getChangeSensors()) + '}',
         deleted: this.getCheckboxEd(),
         info: this.getInfo() || ""
