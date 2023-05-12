@@ -93,6 +93,22 @@ var Jobs_titlesTable = (function () {
             });
         });
     };
+    Jobs_titlesTable.prototype.updateJobs_title = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.db.query("SELECT * FROM UpdateJobs_titles(" +
+                            "CAST (" + this.args.id + " AS BIGINT), " +
+                            "CAST (" + this.args.org_id + " AS BIGINT), " +
+                            "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
+                            "CAST ('" + this.args.info + "' AS TEXT))")];
+                    case 1:
+                        _a.sent();
+                        return [2];
+                }
+            });
+        });
+    };
     return Jobs_titlesTable;
 }());
 exports.Jobs_titlesTable = Jobs_titlesTable;

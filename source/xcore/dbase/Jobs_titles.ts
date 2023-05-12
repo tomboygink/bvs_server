@@ -40,4 +40,13 @@ export class Jobs_titlesTable{
         for (var p in db_res.rows) { result.push(db_res.rows[p]); }
         return result;
     }
+
+    async updateJobs_title()
+    {
+        await this.db.query("SELECT * FROM UpdateJobs_titles(" +
+        "CAST (" + this.args.id + " AS BIGINT), " +
+        "CAST (" + this.args.org_id + " AS BIGINT), " +
+        "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
+        "CAST ('" + this.args.info + "' AS TEXT))");
+    }
 }

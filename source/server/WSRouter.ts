@@ -192,6 +192,15 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
                 wsres.error = null;
             }
         } break;
+        //Редактирование организации 
+        case 'set_ChangeOrg':{
+            var orgs = new OrgsTable(q.args, q.sess_code);
+            orgs.updateOrgs();
+            wsres.error = null;
+            wsres.code=q.sess_code;
+            wsres.data=[];
+        }
+        break;
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ДОЛЖНОСТЕЙ ОПРЕДЕЛЕННОЙ ОРГАНИЗАЦИИ
         //Получение должностей организации 
@@ -227,6 +236,16 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
 
         } break;
+        //Обновление должности 
+        case 'set_ChangeJobs_Titles':{
+            var jobs = new Jobs_titlesTable(q.args, q.sess_code);
+            jobs.updateJobs_title();
+            wsres.error = null;
+            wsres.code=q.sess_code;
+            wsres.data=[];
+        }
+        break;
+
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЕЙ
         //Добавление пользователя
@@ -322,21 +341,24 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
         } break;
         //Получение устройств по id группы 
-   /*     case 'get_Devs': {
-            var devs = new DevsTable(q.args, q.sess_code);
-            data = await devs.selectDevs();
-            if (data.length > 0) {
-                wsres.code = q.sess_code;
-                wsres.error = null;
-                wsres.data = data;
-            }
-            else {
-                wsres.code = q.sess_code;
-                wsres.data = [],
-                    wsres.error = 'Список устройств отсутсвует';
-            }
 
-        } break;*/
+        //------------------------------------------------------------------------ДОБАВЛЕНИЕ/ОБНОВЛЕНИЕ/ПОЛУЧЕНИЕ ПОВЕРОЧНОГО ИНТЕРВАЛА 
+        //Добавление поверочного интервала 
+        case 'set_NewDevPovs':{}
+        break;
+
+        //Обновление поверочного интервала 
+        case 'set_ChangeDevPovs':{}
+        break;
+        
+        //Получение поверочного интервала 
+        case 'get_DevPovs':{}
+        break;
+
+        //------------------------------------------------------------------------ДОБАВЛЕНИЕ КОНТРОЛЬНОЙ СЕСССИИ 
+        case 'set_NewControlDevSess':{}
+        break;
+
 
         //Изменение устройства
         case 'set_ChangeDevs':{
