@@ -62,14 +62,14 @@ export class DevsGroupsTree extends React.Component<IProps> {
       }
       if(dev.deleted === false){
  
-       if(dev.time === null){
+        if(dev.time === null){
           return (
             <React.Fragment key={"_dev_id_key_" + dev.id}>
               <TreeItem
                 nodeId={"_dev_id_key_" + dev.id}
                 label={dev.number}
-                icon={<CrisisAlertIcon fontSize="small" sx={{color: '#EB4C42'}}/>}
-                sx={{ color: "#002757" }}></TreeItem>
+                icon={<CrisisAlertIcon fontSize="small" sx={{color: '#EA4335'}}/>}
+                sx={{ color: "#EA4335" }}></TreeItem>
             </React.Fragment>
           );
       }
@@ -157,16 +157,103 @@ export class DevsGroupsTree extends React.Component<IProps> {
       }
     }
 
+
+
+
     if(APP_STORAGE.getRoleRead() === 1 && !APP_STORAGE.getRoleWrite() && dev.deleted === false){
+
+      if(dev.time === null){
+        return (
+          <React.Fragment key={"_dev_id_key_" + dev.id}>
+            <TreeItem
+              nodeId={"_dev_id_key_" + dev.id}
+              label={dev.number}
+              icon={<CrisisAlertIcon fontSize="small" sx={{color: '#EA4335'}}/>}
+              sx={{ color: "#EA4335" }}></TreeItem>
+          </React.Fragment>
+        );
+    }
+
+    if (dev.time !== ''){
+    //////----------------------------------Определяем сколько дней прошло с даты otherDate по nowDate
+     let otherDate=new Date(dev.time);
+     let nowDate= new Date();
+     let delta=nowDate.getTime()-otherDate.getTime();
+     
+     var passedDay= Math.floor(delta/1000/60/60/24) ///////////////////( new Date( ( new Date() ).toDateString() ) - 86400000 ); // 24*60*60*1000
+    
+    
+     if(passedDay === 0){
+      return (
+        <React.Fragment key={"_dev_id_key_" + dev.id}>
+          <TreeItem
+            nodeId={"_dev_id_key_" + dev.id}
+            label={dev.number}
+            icon={<CrisisAlertIcon fontSize="small" sx={{color: '#0FA958'}}/>}
+            sx={{ color: "#002757" }}></TreeItem>
+        </React.Fragment>
+      );
+  }
+     if(passedDay <=3 ){
       return (
         <React.Fragment key={"_dev_id_key_" + dev.id}>
           <TreeItem
             nodeId={"_dev_id_key_" + dev.id}
             label={dev.number}
             icon={<CrisisAlertIcon fontSize="small" sx={{color: '#266BF1'}}/>}
-            sx={{ color: "#266BF1" }}></TreeItem>
+            sx={{ color: "#002757" }}></TreeItem>
         </React.Fragment>
       );
+     }
+
+     if(passedDay >= 3 && passedDay <= 5){
+      return (
+        <React.Fragment key={"_dev_id_key_" + dev.id}>
+          <TreeItem
+            nodeId={"_dev_id_key_" + dev.id}
+            label={dev.number}
+            icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FFEF02'}}/>}
+            sx={{ color: "#002757" }}></TreeItem>
+        </React.Fragment>
+      );
+     }
+
+     if(passedDay > 5 && passedDay <= 15){
+      return (
+        <React.Fragment key={"_dev_id_key_" + dev.id}>
+          <TreeItem
+            nodeId={"_dev_id_key_" + dev.id}
+            label={dev.number}
+            icon={<CrisisAlertIcon fontSize="small" sx={{color: '#FD8A04'}}/>}
+            sx={{ color: "#002757" }}></TreeItem>
+        </React.Fragment>
+      );
+     }
+
+     if(passedDay >= 15 && passedDay<=29 ){
+      return (
+        <React.Fragment key={"_dev_id_key_" + dev.id}>
+          <TreeItem
+            nodeId={"_dev_id_key_" + dev.id}
+            label={dev.number}
+            icon={<CrisisAlertIcon fontSize="small" sx={{color: '#EB4C42'}}/>}
+            sx={{ color: "#002757" }}></TreeItem>
+        </React.Fragment>
+      );
+     }
+
+     if(passedDay>=30){
+      return (
+        <React.Fragment key={"_dev_id_key_" + dev.id}>
+          <TreeItem
+            nodeId={"_dev_id_key_" + dev.id}
+            label={dev.number}
+            icon={<CrisisAlertIcon fontSize="small" sx={{color: '#EB4C42'}}/>}
+            sx={{ color: "#002757" }}></TreeItem>
+        </React.Fragment>
+      );
+     }
+    }
     }
   }
 
@@ -180,7 +267,6 @@ export class DevsGroupsTree extends React.Component<IProps> {
       var gr_childs = dgr.childs;  
       var gr_devs = dgr.devs;
     
-      console.log(toJS(dgrs), 'TDevsGroup' )
       var childs: React.ReactNode[] = new Array();
       if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
 

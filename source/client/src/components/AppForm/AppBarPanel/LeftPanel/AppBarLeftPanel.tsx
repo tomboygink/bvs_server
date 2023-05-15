@@ -68,14 +68,21 @@ export class AppBarLeftPanel extends React.Component<IProps> {
    APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());  // как только модальное окно открылось, отправляем запрос на получение всех организаций
   }
 
+ async functionSetIdOrgUser(){
+    APP_STORAGE.setIdOrgUser(APP_STORAGE.auth_form.getUser().org_id);
+  }
+
   render(): React.ReactNode {
     let user_r = null;
     let user_w = null;
     var menu: React.ReactNode = <></>;
     var roles = null;
     if (APP_STORAGE.auth_form.getUser().roles_ids) {
-
-    APP_STORAGE.setIdOrgUser(APP_STORAGE.auth_form.getUser().org_id);
+  
+      
+      setTimeout(() => this.functionSetIdOrgUser(), 100);
+     
+      
       roles = JSON.parse(
         JSON.stringify(APP_STORAGE.auth_form.getUser().roles_ids)
       );
@@ -83,8 +90,9 @@ export class AppBarLeftPanel extends React.Component<IProps> {
         if (roles.hasOwnProperty(key)) {
 
           let a = roles[key];
-          APP_STORAGE.setRoleRead(a[0]);
-          APP_STORAGE.setRoleWrite(a[1]);
+
+          setTimeout(() => APP_STORAGE.setRoleRead(a[0]), 100);
+          setTimeout(() => APP_STORAGE.setRoleWrite(a[1]), 100);
           user_r = a[0];
           user_w = a[1];
         }

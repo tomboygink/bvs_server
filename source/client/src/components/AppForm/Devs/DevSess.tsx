@@ -116,6 +116,13 @@ export class DevSess extends React.Component<IProps> {
     };
 
     const result1 = mergeByProperty([data, toJS(APP_STORAGE.sensors.getSessFirstLast())]);
+
+
+    APP_STORAGE.sensors.setSess_middle(data.sort(
+      (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
+    ));
+   
+
     APP_STORAGE.sensors.setdataCharts(result1.sort(
       (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
     ));
@@ -241,7 +248,7 @@ export class DevSess extends React.Component<IProps> {
               </Box>
 
               <TableContainer
-                sx={{ mt: "10px", mb: "10px", maxHeight: "200px" }}
+                sx={{ mt: "10px", mb: "10px", maxHeight: "100px" }}
               >
                 <Table>
                   <TableHead >
