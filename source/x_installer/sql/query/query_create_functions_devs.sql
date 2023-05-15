@@ -167,3 +167,53 @@ RETURNS TABLE
 AS $$ 
 SELECT * FROM dev_sess WHERE dev_number = c_dev_number AND time_dev>= CAST(start_period as TIMESTAMP) AND time_dev<=CAST(end_period as TIMESTAMP)
 $$ LANGUAGE SQL;
+
+
+--------------------------------------------------------------------------------------------Функция добавления поверочного интервала устройства
+DROP FUNCTION IF EXISTS AddDev_Povs;
+CREATE OR REPLACE FUNCTION AddDev_Povs(
+	c_dev_id BIGINT,
+	c_dev_number VARCHAR(80), 
+	c_start_povs TIMESTAMP, 
+	c_end_povs TIMESTAMP, 
+	c_old_dev_povs BIGINT
+) RETURNS BIGINT
+AS $$
+	INSERT INTO dev_povs(dev_id, dev_number, start_povs, end_povs, old_dev_povs)
+	VALUES(c_dev_id, c_dev_number, c_start_povs, c_end_povs, c_old_dev_povs)
+	RETURNING id
+$$
+LANGUAGE SQL;
+
+--------------------------------------------------------------------------------------------Функция получения поверочного интервала устройства
+DROP FUNCTION IF EXISTS SelectDev_Povs;
+CREATE OR REPLACE FUNCTION SelectDev_Povs(
+	c_dev_id BIGINT,
+	c_dev_number VARCHAR(80) 
+) RETURNS TABLE
+(
+	id BIGINT,
+	dev_id BIGINT, 
+	dev_number VARCHAR(80), 
+	start_povs TIMESTAMP, 
+	end_povs TIMESTAMP, 
+	old_dev_povs BIGINT
+)
+AS $$
+	select * from dev_povs WHERE dev_id = c_dev_id AND dev_number = c_dev_number;
+$$
+LANGUAGE SQL;
+
+--------------------------------------------------------------------------------------------Функция добавления контрольной сессии 
+DROP FUNCTION IF EXISTS AddControl_Dev_Sess;
+CREATE OR REPLACE FUNCTION AddControl_Dev_Sess(
+	c_dev_sess_id BIGINT,
+	c_dev_id BIGINT,
+	c_dev_number VARCHAR(80) 
+) RETURNS BIGINT
+AS $$
+	INSERT INTO control_dev_sess(dev_sess_id, dev_id, dev_number)
+	VALUES(c_dev_sess_id, c_dev_id, c_dev_number)
+	RETURNING id
+$$
+LANGUAGE SQL;
