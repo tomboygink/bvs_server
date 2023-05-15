@@ -96,8 +96,6 @@ export class ChangeDevsModal extends React.Component<IProps> {
   }
 
   async ChangeDevs() {
-    var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getChangeSensors()));
-
     APP_STORAGE.devs.set_ChangeDevs("sess_id", APP_STORAGE.auth_form.getdt());
     setTimeout(() => {
       APP_STORAGE.devs_groups.get_DevsGroups(

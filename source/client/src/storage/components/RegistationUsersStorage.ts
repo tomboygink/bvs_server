@@ -93,6 +93,8 @@ export class ModalLeftPanel {
   @observable texthelp_inn_double: string = "";
 
   @observable nodeid_user: string = '';
+  @observable nodeid_org: string = '';
+  @observable nodeid_jobstitles: string = '';
 
 
   
@@ -103,6 +105,13 @@ export class ModalLeftPanel {
 
   @action setNodeidUser(val: string) {this.nodeid_user = val;} /// UserMenu
   @computed getNodeidUser(): string {return this.nodeid_user;}
+
+  @action setNodeidOrg(val: string) {this.nodeid_org = val;} /// OrgMenu
+  @computed getNodeidOrg(): string {return this.nodeid_org;}
+
+  @action setNodeidJobsTitles(val: string) {this.nodeid_jobstitles = val;} /// OrgMenu
+  @computed getNodeidJobsTitles(): string {return this.nodeid_jobstitles;}
+
 
   @action setOpenTableUsers(val: boolean) {this.table_user = val;} //// открываем таблицу пользователей
   @action getOpenTableUsers(): boolean {return this.table_user;}

@@ -153,6 +153,7 @@ export class SensorsStorage {
       var obj_first: any = {
         depth: '',
         data: '', 
+        xaxis: ''
     };
     
     var obj_second: any = {
@@ -198,12 +199,7 @@ export class SensorsStorage {
     
     
      const result1 = mergeByProperty([first, second]);
-     
-    console.log(result1, "result1")
-
-
-
-
+  
      this.setSess_first(first.sort(
       (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
     ));

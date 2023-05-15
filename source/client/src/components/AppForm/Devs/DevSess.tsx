@@ -75,14 +75,9 @@ export class DevSess extends React.Component<IProps> {
 
     let sess = APP_STORAGE.sensors;
     let sessors;
-    console.log('setSessFirstLast', toJS(APP_STORAGE.sensors.getSessFirstLast()))
     if (sess.getDevSession) {
       sessors = sess.getDevSession();
-
-
-
-
-      
+ 
       for (var key in sessors) {
         let sess_data = JSON.parse(sessors[key].sess_data);
         const uniqueChars = sess_data.s.reduce((o: any, i: any) => {
