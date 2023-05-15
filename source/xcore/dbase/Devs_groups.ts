@@ -59,9 +59,6 @@ import { DBase, getDB } from "./DBase";
 	            info: '',
 	            time: ''
 	        };
-	
-
-	
 
 	        var groups: any = {
 	            group: {},
