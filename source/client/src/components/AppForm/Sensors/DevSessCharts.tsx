@@ -74,302 +74,59 @@ export class DevSessCharts extends React.Component<IProps> {
           border: "1px solid #8F9DCE"
         }}
       >
-          <svg
-            width="51"
-            className="item-1"
-            height="716"
-            viewBox="0 0 51 716"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <line
-              x1="31.6091"
-              y1="71.0087"
-              x2="50.2144"
-              y2="47.6882"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6091"
-              y1="64.0087"
-              x2="50.2144"
-              y2="40.6882"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6216"
-              y1="55.6732"
-              x2="50.6216"
-              y2="33.6732"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6216"
-              y1="48.6732"
-              x2="50.6216"
-              y2="26.6732"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6216"
-              y1="41.6732"
-              x2="50.6216"
-              y2="19.6732"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6216"
-              y1="34.6732"
-              x2="50.6216"
-              y2="12.6732"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6216"
-              y1="26.6732"
-              x2="50.6216"
-              y2="4.67319"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6222"
-              y1="19.6725"
-              x2="44.6222"
-              y2="4.67254"
-              stroke="#BABBBD"
-            />
-            <line x1="31.6" y1="13.7" x2="37.6" y2="5.7" stroke="#BABBBD" />
-            <path d="M31.6418 76.7143L50.5449 53.7551" stroke="#BABBBD" />
-            <line
-              x1="31.6216"
-              y1="82.6732"
-              x2="50.6216"
-              y2="60.6732"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6091"
-              y1="90.0087"
-              x2="50.2144"
-              y2="66.6882"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6091"
-              y1="97.0087"
-              x2="50.2144"
-              y2="73.6882"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6124"
-              y1="103.005"
-              x2="50.6124"
-              y2="79.6842"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.606"
-              y1="110.013"
-              x2="50.606"
-              y2="85.6922"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.606"
-              y1="116.013"
-              x2="50.606"
-              y2="91.6922"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="34.6096"
-              y1="117.688"
-              x2="50.6096"
-              y2="97.6877"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="11.6464"
-              y1="117.646"
-              x2="19.6464"
-              y2="109.646"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="5.64645"
-              y1="117.646"
-              x2="19.6464"
-              y2="103.646"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="115.637"
-              x2="19.6561"
-              y2="97.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="108.637"
-              x2="19.6561"
-              y2="90.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="108.637"
-              x2="19.6561"
-              y2="90.637"
-              stroke="#BABBBD"
-            />
-            <path d="M0.5 102L19.5 84" stroke="#BABBBD" />
-            <line
-              x1="0.656128"
-              y1="95.637"
-              x2="19.6561"
-              y2="77.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="88.637"
-              x2="19.6561"
-              y2="70.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="80.637"
-              x2="19.6561"
-              y2="62.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="73.637"
-              x2="19.6561"
-              y2="55.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="65.637"
-              x2="19.6561"
-              y2="47.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="58.637"
-              x2="19.6561"
-              y2="40.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="50.637"
-              x2="19.6561"
-              y2="32.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="42.637"
-              x2="19.6561"
-              y2="24.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="34.637"
-              x2="19.6561"
-              y2="16.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="27.637"
-              x2="19.6561"
-              y2="9.63702"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.657318"
-              y1="20.6359"
-              x2="17.6573"
-              y2="4.6359"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.646447"
-              y1="14.6464"
-              x2="9.64645"
-              y2="5.64645"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="39.5968"
-              y1="117.704"
-              x2="50.5968"
-              y2="102.704"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="43.6053"
-              y1="117.693"
-              x2="50.6053"
-              y2="108.693"
-              stroke="#BABBBD"
-            />
-            <g filter="url(#filter0_b_75_25)">
-              <path
-                d="M4 0.5H47C48.933 0.5 50.5 2.067 50.5 4V114C50.5 115.933 48.933 117.5 47 117.5H4C2.067 117.5 0.5 115.933 0.5 114V4C0.5 2.067 2.067 0.5 4 0.5Z"
-                stroke="#BABBBD"
-              />
-            </g>
-            <line x1="25.5" y1="5" x2="25.5" y2="703" stroke="#BABBBD" />
-            <line
-              x1="0.000322059"
-              y1="5"
-              x2="50.0003"
-              y2="5.0161"
-              stroke="#BABBBD"
-              strokeWidth="2"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M28 2.99154H23C21.3431 2.99154 20 4.32332 20 5.96616V701.034C20 702.677 21.3431 704.008 23 704.008H28C29.6569 704.008 31 702.677 31 701.034V5.96615C31 4.32332 29.6569 2.99154 28 2.99154ZM23 2C20.7909 2 19 3.77571 19 5.96616V701.034C19 703.224 20.7909 705 23 705H28C30.2091 705 32 703.224 32 701.034V5.96615C32 3.77571 30.2091 2 28 2H23Z"
-              fill="#BABBBD"
-            />
-            <defs>
-              <filter
-                id="filter0_b_75_25"
-                x="-4"
-                y="-4"
-                width="59"
-                height="126"
-                filterUnits="userSpaceOnUse"
-                colorInterpolationFilters="sRGB"
-              >
-                <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                <feGaussianBlur in="BackgroundImageFix" stdDeviation="2" />
-                <feComposite
-                  in2="SourceAlpha"
-                  operator="in"
-                  result="effect1_backgroundBlur_75_25"
-                />
-                <feBlend
-                  mode="normal"
-                  in="SourceGraphic"
-                  in2="effect1_backgroundBlur_75_25"
-                  result="shape"
-                />
-              </filter>
-            </defs>
-          </svg>
+               <svg width="51" className="item-1" height="732" viewBox="0 0 51 732" fill="none" xmlns="http://www.w3.org/2000/svg">
+<line x1="31.6091" y1="87.0087" x2="50.2144" y2="63.6882" stroke="#BABBBD"/>
+<line x1="31.6091" y1="80.0087" x2="50.2144" y2="56.6882" stroke="#BABBBD"/>
+<line x1="31.6216" y1="71.6732" x2="50.6216" y2="49.6732" stroke="#BABBBD"/>
+<line x1="31.6216" y1="64.6732" x2="50.6216" y2="42.6732" stroke="#BABBBD"/>
+<line x1="31.6216" y1="57.6732" x2="50.6216" y2="35.6732" stroke="#BABBBD"/>
+<line x1="31.6216" y1="50.6732" x2="50.6216" y2="28.6732" stroke="#BABBBD"/>
+<line x1="31.6204" y1="42.6746" x2="49.6204" y2="21.6746" stroke="#BABBBD"/>
+<line x1="31.6204" y1="35.6746" x2="43.6204" y2="21.6746" stroke="#BABBBD"/>
+<line x1="31.6" y1="29.7" x2="37.6" y2="21.7" stroke="#BABBBD"/>
+<path d="M31.6418 92.7143L50.5449 69.7551" stroke="#BABBBD"/>
+<line x1="31.6216" y1="98.6732" x2="50.6216" y2="76.6732" stroke="#BABBBD"/>
+<line x1="31.6091" y1="106.009" x2="50.2144" y2="82.6882" stroke="#BABBBD"/>
+<line x1="31.6091" y1="113.009" x2="50.2144" y2="89.6882" stroke="#BABBBD"/>
+<line x1="31.6124" y1="119.005" x2="50.6124" y2="95.6842" stroke="#BABBBD"/>
+<line x1="31.606" y1="126.013" x2="50.606" y2="101.692" stroke="#BABBBD"/>
+<line x1="31.606" y1="132.013" x2="50.606" y2="107.692" stroke="#BABBBD"/>
+<line x1="34.6096" y1="133.688" x2="50.6096" y2="113.688" stroke="#BABBBD"/>
+<line x1="11.6464" y1="133.646" x2="19.6464" y2="125.646" stroke="#BABBBD"/>
+<line x1="5.64645" y1="133.646" x2="19.6464" y2="119.646" stroke="#BABBBD"/>
+<line x1="0.656128" y1="131.637" x2="19.6561" y2="113.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="124.637" x2="19.6561" y2="106.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="124.637" x2="19.6561" y2="106.637" stroke="#BABBBD"/>
+<path d="M0.5 118L19.5 100" stroke="#BABBBD"/>
+<line x1="0.656128" y1="111.637" x2="19.6561" y2="93.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="104.637" x2="19.6561" y2="86.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="96.637" x2="19.6561" y2="78.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="89.637" x2="19.6561" y2="71.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="81.637" x2="19.6561" y2="63.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="74.637" x2="19.6561" y2="56.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="66.637" x2="19.6561" y2="48.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="58.637" x2="19.6561" y2="40.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="50.637" x2="19.6561" y2="32.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="43.637" x2="19.6561" y2="25.637" stroke="#BABBBD"/>
+<line x1="0.646447" y1="36.6464" x2="15.6464" y2="21.6464" stroke="#BABBBD"/>
+<line x1="0.646447" y1="30.6464" x2="9.64645" y2="21.6464" stroke="#BABBBD"/>
+<line x1="39.5968" y1="133.704" x2="50.5968" y2="118.704" stroke="#BABBBD"/>
+<line x1="43.6053" y1="133.693" x2="50.6053" y2="124.693" stroke="#BABBBD"/>
+<g filter="url(#filter0_b_107_2)">
+<path d="M4 0.5H47C48.933 0.5 50.5 2.067 50.5 4V130C50.5 131.933 48.933 133.5 47 133.5H4C2.067 133.5 0.5 131.933 0.5 130V4C0.5 2.067 2.067 0.5 4 0.5Z" stroke="#BABBBD"/>
+</g>
+<line x1="25.5" y1="21" x2="25.5" y2="719" stroke="#BABBBD"/>
+<line x1="0.000161029" y1="21.5" x2="50.0001" y2="21.5161" stroke="#BABBBD"/>
+<path fillRule="evenodd" clipRule="evenodd" d="M28 18.9915H23C21.3431 18.9915 20 20.3233 20 21.9662V717.034C20 718.677 21.3431 720.008 23 720.008H28C29.6569 720.008 31 718.677 31 717.034V21.9661C31 20.3233 29.6569 18.9915 28 18.9915ZM23 18C20.7909 18 19 19.7757 19 21.9662V717.034C19 719.224 20.7909 721 23 721H28C30.2091 721 32 719.224 32 717.034V21.9661C32 19.7757 30.2091 18 28 18H23Z" fill="#BABBBD"/>
+<defs>
+<filter id="filter0_b_107_2" x="-4" y="-4" width="59" height="142" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImageFix" stdDeviation="2"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_107_2"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_107_2" result="shape"/>
+</filter>
+</defs>
+</svg>
 
           <ResponsiveContainer className="item-2" width="100%">
             <LineChart
@@ -479,302 +236,60 @@ export class DevSessCharts extends React.Component<IProps> {
               border: "1px solid #8F9DCE"
             }}
           >
-            <svg
-              width="51"
-              className="item-1"
-              height="716"
-              viewBox="0 0 51 716"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <line
-                x1="31.6091"
-                y1="71.0087"
-                x2="50.2144"
-                y2="47.6882"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="31.6091"
-                y1="64.0087"
-                x2="50.2144"
-                y2="40.6882"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="31.6216"
-                y1="55.6732"
-                x2="50.6216"
-                y2="33.6732"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="31.6216"
-                y1="48.6732"
-                x2="50.6216"
-                y2="26.6732"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="31.6216"
-                y1="41.6732"
-                x2="50.6216"
-                y2="19.6732"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="31.6216"
-                y1="34.6732"
-                x2="50.6216"
-                y2="12.6732"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="31.6216"
-                y1="26.6732"
-                x2="50.6216"
-                y2="4.67319"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="31.6222"
-                y1="19.6725"
-                x2="44.6222"
-                y2="4.67254"
-                stroke="#BABBBD"
-              />
-              <line x1="31.6" y1="13.7" x2="37.6" y2="5.7" stroke="#BABBBD" />
-              <path d="M31.6418 76.7143L50.5449 53.7551" stroke="#BABBBD" />
-              <line
-                x1="31.6216"
-                y1="82.6732"
-                x2="50.6216"
-                y2="60.6732"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="31.6091"
-                y1="90.0087"
-                x2="50.2144"
-                y2="66.6882"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="31.6091"
-                y1="97.0087"
-                x2="50.2144"
-                y2="73.6882"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="31.6124"
-                y1="103.005"
-                x2="50.6124"
-                y2="79.6842"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="31.606"
-                y1="110.013"
-                x2="50.606"
-                y2="85.6922"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="31.606"
-                y1="116.013"
-                x2="50.606"
-                y2="91.6922"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="34.6096"
-                y1="117.688"
-                x2="50.6096"
-                y2="97.6877"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="11.6464"
-                y1="117.646"
-                x2="19.6464"
-                y2="109.646"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="5.64645"
-                y1="117.646"
-                x2="19.6464"
-                y2="103.646"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.656128"
-                y1="115.637"
-                x2="19.6561"
-                y2="97.637"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.656128"
-                y1="108.637"
-                x2="19.6561"
-                y2="90.637"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.656128"
-                y1="108.637"
-                x2="19.6561"
-                y2="90.637"
-                stroke="#BABBBD"
-              />
-              <path d="M0.5 102L19.5 84" stroke="#BABBBD" />
-              <line
-                x1="0.656128"
-                y1="95.637"
-                x2="19.6561"
-                y2="77.637"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.656128"
-                y1="88.637"
-                x2="19.6561"
-                y2="70.637"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.656128"
-                y1="80.637"
-                x2="19.6561"
-                y2="62.637"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.656128"
-                y1="73.637"
-                x2="19.6561"
-                y2="55.637"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.656128"
-                y1="65.637"
-                x2="19.6561"
-                y2="47.637"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.656128"
-                y1="58.637"
-                x2="19.6561"
-                y2="40.637"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.656128"
-                y1="50.637"
-                x2="19.6561"
-                y2="32.637"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.656128"
-                y1="42.637"
-                x2="19.6561"
-                y2="24.637"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.656128"
-                y1="34.637"
-                x2="19.6561"
-                y2="16.637"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.656128"
-                y1="27.637"
-                x2="19.6561"
-                y2="9.63702"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.657318"
-                y1="20.6359"
-                x2="17.6573"
-                y2="4.6359"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="0.646447"
-                y1="14.6464"
-                x2="9.64645"
-                y2="5.64645"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="39.5968"
-                y1="117.704"
-                x2="50.5968"
-                y2="102.704"
-                stroke="#BABBBD"
-              />
-              <line
-                x1="43.6053"
-                y1="117.693"
-                x2="50.6053"
-                y2="108.693"
-                stroke="#BABBBD"
-              />
-              <g filter="url(#filter0_b_75_25)">
-                <path
-                  d="M4 0.5H47C48.933 0.5 50.5 2.067 50.5 4V114C50.5 115.933 48.933 117.5 47 117.5H4C2.067 117.5 0.5 115.933 0.5 114V4C0.5 2.067 2.067 0.5 4 0.5Z"
-                  stroke="#BABBBD"
-                />
-              </g>
-              <line x1="25.5" y1="5" x2="25.5" y2="703" stroke="#BABBBD" />
-              <line
-                x1="0.000322059"
-                y1="5"
-                x2="50.0003"
-                y2="5.0161"
-                stroke="#BABBBD"
-                strokeWidth="2"
-              />
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M28 2.99154H23C21.3431 2.99154 20 4.32332 20 5.96616V701.034C20 702.677 21.3431 704.008 23 704.008H28C29.6569 704.008 31 702.677 31 701.034V5.96615C31 4.32332 29.6569 2.99154 28 2.99154ZM23 2C20.7909 2 19 3.77571 19 5.96616V701.034C19 703.224 20.7909 705 23 705H28C30.2091 705 32 703.224 32 701.034V5.96615C32 3.77571 30.2091 2 28 2H23Z"
-                fill="#BABBBD"
-              />
-              <defs>
-                <filter
-                  id="filter0_b_75_25"
-                  x="-4"
-                  y="-4"
-                  width="59"
-                  height="126"
-                  filterUnits="userSpaceOnUse"
-                  colorInterpolationFilters="sRGB"
-                >
-                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                  <feGaussianBlur in="BackgroundImageFix" stdDeviation="2" />
-                  <feComposite
-                    in2="SourceAlpha"
-                    operator="in"
-                    result="effect1_backgroundBlur_75_25"
-                  />
-                  <feBlend
-                    mode="normal"
-                    in="SourceGraphic"
-                    in2="effect1_backgroundBlur_75_25"
-                    result="shape"
-                  />
-                </filter>
-              </defs>
-            </svg>
+ <svg width="51" className="item-1" height="732" viewBox="0 0 51 732" fill="none" xmlns="http://www.w3.org/2000/svg">
+<line x1="31.6091" y1="87.0087" x2="50.2144" y2="63.6882" stroke="#BABBBD"/>
+<line x1="31.6091" y1="80.0087" x2="50.2144" y2="56.6882" stroke="#BABBBD"/>
+<line x1="31.6216" y1="71.6732" x2="50.6216" y2="49.6732" stroke="#BABBBD"/>
+<line x1="31.6216" y1="64.6732" x2="50.6216" y2="42.6732" stroke="#BABBBD"/>
+<line x1="31.6216" y1="57.6732" x2="50.6216" y2="35.6732" stroke="#BABBBD"/>
+<line x1="31.6216" y1="50.6732" x2="50.6216" y2="28.6732" stroke="#BABBBD"/>
+<line x1="31.6204" y1="42.6746" x2="49.6204" y2="21.6746" stroke="#BABBBD"/>
+<line x1="31.6204" y1="35.6746" x2="43.6204" y2="21.6746" stroke="#BABBBD"/>
+<line x1="31.6" y1="29.7" x2="37.6" y2="21.7" stroke="#BABBBD"/>
+<path d="M31.6418 92.7143L50.5449 69.7551" stroke="#BABBBD"/>
+<line x1="31.6216" y1="98.6732" x2="50.6216" y2="76.6732" stroke="#BABBBD"/>
+<line x1="31.6091" y1="106.009" x2="50.2144" y2="82.6882" stroke="#BABBBD"/>
+<line x1="31.6091" y1="113.009" x2="50.2144" y2="89.6882" stroke="#BABBBD"/>
+<line x1="31.6124" y1="119.005" x2="50.6124" y2="95.6842" stroke="#BABBBD"/>
+<line x1="31.606" y1="126.013" x2="50.606" y2="101.692" stroke="#BABBBD"/>
+<line x1="31.606" y1="132.013" x2="50.606" y2="107.692" stroke="#BABBBD"/>
+<line x1="34.6096" y1="133.688" x2="50.6096" y2="113.688" stroke="#BABBBD"/>
+<line x1="11.6464" y1="133.646" x2="19.6464" y2="125.646" stroke="#BABBBD"/>
+<line x1="5.64645" y1="133.646" x2="19.6464" y2="119.646" stroke="#BABBBD"/>
+<line x1="0.656128" y1="131.637" x2="19.6561" y2="113.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="124.637" x2="19.6561" y2="106.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="124.637" x2="19.6561" y2="106.637" stroke="#BABBBD"/>
+<path d="M0.5 118L19.5 100" stroke="#BABBBD"/>
+<line x1="0.656128" y1="111.637" x2="19.6561" y2="93.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="104.637" x2="19.6561" y2="86.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="96.637" x2="19.6561" y2="78.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="89.637" x2="19.6561" y2="71.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="81.637" x2="19.6561" y2="63.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="74.637" x2="19.6561" y2="56.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="66.637" x2="19.6561" y2="48.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="58.637" x2="19.6561" y2="40.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="50.637" x2="19.6561" y2="32.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="43.637" x2="19.6561" y2="25.637" stroke="#BABBBD"/>
+<line x1="0.646447" y1="36.6464" x2="15.6464" y2="21.6464" stroke="#BABBBD"/>
+<line x1="0.646447" y1="30.6464" x2="9.64645" y2="21.6464" stroke="#BABBBD"/>
+<line x1="39.5968" y1="133.704" x2="50.5968" y2="118.704" stroke="#BABBBD"/>
+<line x1="43.6053" y1="133.693" x2="50.6053" y2="124.693" stroke="#BABBBD"/>
+<g filter="url(#filter0_b_107_2)">
+<path d="M4 0.5H47C48.933 0.5 50.5 2.067 50.5 4V130C50.5 131.933 48.933 133.5 47 133.5H4C2.067 133.5 0.5 131.933 0.5 130V4C0.5 2.067 2.067 0.5 4 0.5Z" stroke="#BABBBD"/>
+</g>
+<line x1="25.5" y1="21" x2="25.5" y2="719" stroke="#BABBBD"/>
+<line x1="0.000161029" y1="21.5" x2="50.0001" y2="21.5161" stroke="#BABBBD"/>
+<path fillRule="evenodd" clipRule="evenodd" d="M28 18.9915H23C21.3431 18.9915 20 20.3233 20 21.9662V717.034C20 718.677 21.3431 720.008 23 720.008H28C29.6569 720.008 31 718.677 31 717.034V21.9661C31 20.3233 29.6569 18.9915 28 18.9915ZM23 18C20.7909 18 19 19.7757 19 21.9662V717.034C19 719.224 20.7909 721 23 721H28C30.2091 721 32 719.224 32 717.034V21.9661C32 19.7757 30.2091 18 28 18H23Z" fill="#BABBBD"/>
+<defs>
+<filter id="filter0_b_107_2" x="-4" y="-4" width="59" height="142" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImageFix" stdDeviation="2"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_107_2"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_107_2" result="shape"/>
+</filter>
+</defs>
+</svg>
+
 
             <ResponsiveContainer className="item-2" width="100%">
               <LineChart
@@ -846,302 +361,59 @@ export class DevSessCharts extends React.Component<IProps> {
               border: "1px solid #8F9DCE"
             }}
           >
-          <svg
-            width="51"
-            className="item-1"
-            height="716"
-            viewBox="0 0 51 716"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <line
-              x1="31.6091"
-              y1="71.0087"
-              x2="50.2144"
-              y2="47.6882"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6091"
-              y1="64.0087"
-              x2="50.2144"
-              y2="40.6882"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6216"
-              y1="55.6732"
-              x2="50.6216"
-              y2="33.6732"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6216"
-              y1="48.6732"
-              x2="50.6216"
-              y2="26.6732"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6216"
-              y1="41.6732"
-              x2="50.6216"
-              y2="19.6732"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6216"
-              y1="34.6732"
-              x2="50.6216"
-              y2="12.6732"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6216"
-              y1="26.6732"
-              x2="50.6216"
-              y2="4.67319"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6222"
-              y1="19.6725"
-              x2="44.6222"
-              y2="4.67254"
-              stroke="#BABBBD"
-            />
-            <line x1="31.6" y1="13.7" x2="37.6" y2="5.7" stroke="#BABBBD" />
-            <path d="M31.6418 76.7143L50.5449 53.7551" stroke="#BABBBD" />
-            <line
-              x1="31.6216"
-              y1="82.6732"
-              x2="50.6216"
-              y2="60.6732"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6091"
-              y1="90.0087"
-              x2="50.2144"
-              y2="66.6882"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6091"
-              y1="97.0087"
-              x2="50.2144"
-              y2="73.6882"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.6124"
-              y1="103.005"
-              x2="50.6124"
-              y2="79.6842"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.606"
-              y1="110.013"
-              x2="50.606"
-              y2="85.6922"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="31.606"
-              y1="116.013"
-              x2="50.606"
-              y2="91.6922"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="34.6096"
-              y1="117.688"
-              x2="50.6096"
-              y2="97.6877"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="11.6464"
-              y1="117.646"
-              x2="19.6464"
-              y2="109.646"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="5.64645"
-              y1="117.646"
-              x2="19.6464"
-              y2="103.646"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="115.637"
-              x2="19.6561"
-              y2="97.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="108.637"
-              x2="19.6561"
-              y2="90.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="108.637"
-              x2="19.6561"
-              y2="90.637"
-              stroke="#BABBBD"
-            />
-            <path d="M0.5 102L19.5 84" stroke="#BABBBD" />
-            <line
-              x1="0.656128"
-              y1="95.637"
-              x2="19.6561"
-              y2="77.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="88.637"
-              x2="19.6561"
-              y2="70.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="80.637"
-              x2="19.6561"
-              y2="62.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="73.637"
-              x2="19.6561"
-              y2="55.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="65.637"
-              x2="19.6561"
-              y2="47.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="58.637"
-              x2="19.6561"
-              y2="40.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="50.637"
-              x2="19.6561"
-              y2="32.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="42.637"
-              x2="19.6561"
-              y2="24.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="34.637"
-              x2="19.6561"
-              y2="16.637"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.656128"
-              y1="27.637"
-              x2="19.6561"
-              y2="9.63702"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.657318"
-              y1="20.6359"
-              x2="17.6573"
-              y2="4.6359"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="0.646447"
-              y1="14.6464"
-              x2="9.64645"
-              y2="5.64645"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="39.5968"
-              y1="117.704"
-              x2="50.5968"
-              y2="102.704"
-              stroke="#BABBBD"
-            />
-            <line
-              x1="43.6053"
-              y1="117.693"
-              x2="50.6053"
-              y2="108.693"
-              stroke="#BABBBD"
-            />
-            <g filter="url(#filter0_b_75_25)">
-              <path
-                d="M4 0.5H47C48.933 0.5 50.5 2.067 50.5 4V114C50.5 115.933 48.933 117.5 47 117.5H4C2.067 117.5 0.5 115.933 0.5 114V4C0.5 2.067 2.067 0.5 4 0.5Z"
-                stroke="#BABBBD"
-              />
-            </g>
-            <line x1="25.5" y1="5" x2="25.5" y2="703" stroke="#BABBBD" />
-            <line
-              x1="0.000322059"
-              y1="5"
-              x2="50.0003"
-              y2="5.0161"
-              stroke="#BABBBD"
-              strokeWidth="2"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M28 2.99154H23C21.3431 2.99154 20 4.32332 20 5.96616V701.034C20 702.677 21.3431 704.008 23 704.008H28C29.6569 704.008 31 702.677 31 701.034V5.96615C31 4.32332 29.6569 2.99154 28 2.99154ZM23 2C20.7909 2 19 3.77571 19 5.96616V701.034C19 703.224 20.7909 705 23 705H28C30.2091 705 32 703.224 32 701.034V5.96615C32 3.77571 30.2091 2 28 2H23Z"
-              fill="#BABBBD"
-            />
-            <defs>
-              <filter
-                id="filter0_b_75_25"
-                x="-4"
-                y="-4"
-                width="59"
-                height="126"
-                filterUnits="userSpaceOnUse"
-                colorInterpolationFilters="sRGB"
-              >
-                <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                <feGaussianBlur in="BackgroundImageFix" stdDeviation="2" />
-                <feComposite
-                  in2="SourceAlpha"
-                  operator="in"
-                  result="effect1_backgroundBlur_75_25"
-                />
-                <feBlend
-                  mode="normal"
-                  in="SourceGraphic"
-                  in2="effect1_backgroundBlur_75_25"
-                  result="shape"
-                />
-              </filter>
-            </defs>
-          </svg>
+          <svg width="51" className="item-1" height="732" viewBox="0 0 51 732" fill="none" xmlns="http://www.w3.org/2000/svg">
+<line x1="31.6091" y1="87.0087" x2="50.2144" y2="63.6882" stroke="#BABBBD"/>
+<line x1="31.6091" y1="80.0087" x2="50.2144" y2="56.6882" stroke="#BABBBD"/>
+<line x1="31.6216" y1="71.6732" x2="50.6216" y2="49.6732" stroke="#BABBBD"/>
+<line x1="31.6216" y1="64.6732" x2="50.6216" y2="42.6732" stroke="#BABBBD"/>
+<line x1="31.6216" y1="57.6732" x2="50.6216" y2="35.6732" stroke="#BABBBD"/>
+<line x1="31.6216" y1="50.6732" x2="50.6216" y2="28.6732" stroke="#BABBBD"/>
+<line x1="31.6204" y1="42.6746" x2="49.6204" y2="21.6746" stroke="#BABBBD"/>
+<line x1="31.6204" y1="35.6746" x2="43.6204" y2="21.6746" stroke="#BABBBD"/>
+<line x1="31.6" y1="29.7" x2="37.6" y2="21.7" stroke="#BABBBD"/>
+<path d="M31.6418 92.7143L50.5449 69.7551" stroke="#BABBBD"/>
+<line x1="31.6216" y1="98.6732" x2="50.6216" y2="76.6732" stroke="#BABBBD"/>
+<line x1="31.6091" y1="106.009" x2="50.2144" y2="82.6882" stroke="#BABBBD"/>
+<line x1="31.6091" y1="113.009" x2="50.2144" y2="89.6882" stroke="#BABBBD"/>
+<line x1="31.6124" y1="119.005" x2="50.6124" y2="95.6842" stroke="#BABBBD"/>
+<line x1="31.606" y1="126.013" x2="50.606" y2="101.692" stroke="#BABBBD"/>
+<line x1="31.606" y1="132.013" x2="50.606" y2="107.692" stroke="#BABBBD"/>
+<line x1="34.6096" y1="133.688" x2="50.6096" y2="113.688" stroke="#BABBBD"/>
+<line x1="11.6464" y1="133.646" x2="19.6464" y2="125.646" stroke="#BABBBD"/>
+<line x1="5.64645" y1="133.646" x2="19.6464" y2="119.646" stroke="#BABBBD"/>
+<line x1="0.656128" y1="131.637" x2="19.6561" y2="113.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="124.637" x2="19.6561" y2="106.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="124.637" x2="19.6561" y2="106.637" stroke="#BABBBD"/>
+<path d="M0.5 118L19.5 100" stroke="#BABBBD"/>
+<line x1="0.656128" y1="111.637" x2="19.6561" y2="93.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="104.637" x2="19.6561" y2="86.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="96.637" x2="19.6561" y2="78.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="89.637" x2="19.6561" y2="71.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="81.637" x2="19.6561" y2="63.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="74.637" x2="19.6561" y2="56.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="66.637" x2="19.6561" y2="48.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="58.637" x2="19.6561" y2="40.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="50.637" x2="19.6561" y2="32.637" stroke="#BABBBD"/>
+<line x1="0.656128" y1="43.637" x2="19.6561" y2="25.637" stroke="#BABBBD"/>
+<line x1="0.646447" y1="36.6464" x2="15.6464" y2="21.6464" stroke="#BABBBD"/>
+<line x1="0.646447" y1="30.6464" x2="9.64645" y2="21.6464" stroke="#BABBBD"/>
+<line x1="39.5968" y1="133.704" x2="50.5968" y2="118.704" stroke="#BABBBD"/>
+<line x1="43.6053" y1="133.693" x2="50.6053" y2="124.693" stroke="#BABBBD"/>
+<g filter="url(#filter0_b_107_2)">
+<path d="M4 0.5H47C48.933 0.5 50.5 2.067 50.5 4V130C50.5 131.933 48.933 133.5 47 133.5H4C2.067 133.5 0.5 131.933 0.5 130V4C0.5 2.067 2.067 0.5 4 0.5Z" stroke="#BABBBD"/>
+</g>
+<line x1="25.5" y1="21" x2="25.5" y2="719" stroke="#BABBBD"/>
+<line x1="0.000161029" y1="21.5" x2="50.0001" y2="21.5161" stroke="#BABBBD"/>
+<path fillRule="evenodd" clipRule="evenodd" d="M28 18.9915H23C21.3431 18.9915 20 20.3233 20 21.9662V717.034C20 718.677 21.3431 720.008 23 720.008H28C29.6569 720.008 31 718.677 31 717.034V21.9661C31 20.3233 29.6569 18.9915 28 18.9915ZM23 18C20.7909 18 19 19.7757 19 21.9662V717.034C19 719.224 20.7909 721 23 721H28C30.2091 721 32 719.224 32 717.034V21.9661C32 19.7757 30.2091 18 28 18H23Z" fill="#BABBBD"/>
+<defs>
+<filter id="filter0_b_107_2" x="-4" y="-4" width="59" height="142" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImageFix" stdDeviation="2"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_107_2"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_107_2" result="shape"/>
+</filter>
+</defs>
+</svg>
 
           <ResponsiveContainer className="item-2" width="100%">
             <LineChart
@@ -1160,7 +432,7 @@ export class DevSessCharts extends React.Component<IProps> {
 
               <YAxis
                 ticks={[0, 10, 20, 30, 40]}
-                domain={[-15, 40]}
+                domain={[0, 40]}
                 dataKey="depth"
                 type="number"
                 strokeWidth={"0.1mm"}

@@ -98,31 +98,39 @@ body {
 
 .container_charts {
   padding-top: 12px;
-  max-height: 726px;
+  max-height: 746px;
   max-width: 300px;
   min-width: 300px;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: 0px 0px;
-  grid-template-areas:
-      ". y . . . . . . . . . ."
-      ". y . . . . . . . . . ."
-      ". y . . . . . . . . . ."
-      ". y . . . . . . . . . ."
-      ". y . . . . . . . . . ."
-      ". y . . . . . . . . . ."
-      ". y . . . . . . . . . ."
-      ". y . . . . . . . . . ."
-      ". y . . . . . . . . . ."
-      ". y . . . . . . . . . ."
-      ". y . . . . . . . . . ."
-      ". y . . . . . . . . . .";
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . ."
+    ". . . . . . . . . . . .";
 
            >   .item-1 {
             background-color: rgba(255, 255, 0, 0);
-            grid-row: 1/12;
+            grid-row: 1/38;
             grid-column: 2/12;
             /* margin-top: 14px; */
             /* padding-left: 12px; */
@@ -132,7 +140,7 @@ body {
         > .item-2 {
           background-color: rgba(255, 255, 255, 0);
           grid-column: 1/12;
-          grid-row: 1/12;
+          grid-row: 2/38;
           /* grid-row: 1; */
           /* grid-column-start: 1; */
         }
