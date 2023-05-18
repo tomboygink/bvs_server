@@ -305,7 +305,7 @@ export class DevSessCharts extends React.Component<IProps> {
   }
 
 
-  if(!toJS(APP_STORAGE.sensors.getdataCharts()).length && !toJS(APP_STORAGE.sensors.getSessFirstLast().length)){
+  if(!toJS(APP_STORAGE.sensors.getdataCharts()).length && !toJS(APP_STORAGE.sensors.getSessFirstLast().length)){ 
     return (
       <Box className="container_charts" sx={{background: '#f1f5fcb3', 
       borderTopLeftRadius: '48px', 

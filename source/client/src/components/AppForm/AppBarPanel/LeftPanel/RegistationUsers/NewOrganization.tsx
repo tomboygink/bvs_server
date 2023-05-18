@@ -28,6 +28,9 @@ export class NewOrganization extends React.Component<IProps> {
   }
 
   render(): React.ReactNode {
+
+    
+   
     return (
       <React.Fragment>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -186,8 +189,6 @@ export class NewOrganization extends React.Component<IProps> {
         {APP_STORAGE.reg_user.getResulSave().length > 0 &&
        <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> {APP_STORAGE.reg_user.getResulSave()}</Typography>
       }
-        
-     
       </React.Fragment>
     );
   }

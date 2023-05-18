@@ -41,7 +41,7 @@ export class Jobs_titlesTable{
         return result;
     }
 
-    async updateJobs_title()
+    async  updateJobs_title()
     {
         await this.db.query("SELECT * FROM UpdateJobs_titles(" +
         "CAST (" + this.args.id + " AS BIGINT), " +

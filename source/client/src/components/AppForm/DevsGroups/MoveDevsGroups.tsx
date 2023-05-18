@@ -42,7 +42,7 @@ export class MoveDevsGroups extends React.Component<IProps> {
   }
 
   componentDidMount(): void {
-    APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());
+  //  APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());
   }
 
   async closeModal() {

@@ -17,13 +17,7 @@ import Divider from "@mui/material/Divider";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import { EditUser } from "../AppBarPanel/LeftPanel/EditUsers/EditUser";
-import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
 
-import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
-
-import DirectionsIcon from "@mui/icons-material/Directions";
-
-import { CONFIG } from "../../../../../xcore/config";
 
 interface IProps {}
 
@@ -33,6 +27,20 @@ export class Users extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }
+
+  async OpenModalRegUser(e: any, tittle: string) {
+    
+
+    APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
+
+  APP_STORAGE.reg_user.setTakeModal(e); // идентификатор модального окна
+  APP_STORAGE.reg_user.setTittleModal(tittle); // заголовок модального окна
+  APP_STORAGE.reg_user.setModalRegUser(true);
+  APP_STORAGE.app_bar.setSetOpenAppBar(false);
+  APP_STORAGE.reg_user.setOpenTableUsers(false);
+  APP_STORAGE.reg_user.setOpenTableUsers(false);
+ 
+}
 
   render(): React.ReactNode {
     let table_rows = [];
@@ -224,6 +232,22 @@ export class Users extends React.Component<IProps> {
         </Typography>
         {table_rows}
         <EditUser />
+        <Box
+              sx={{
+                borderRadius: "4px",
+                width: '100%',
+                background:'#E3EDFF',
+                p:2,
+                border: '1px solid #8F9DCE'
+                
+              }}
+              onClick={() => this.OpenModalRegUser(1, "Добавить пользователя")}
+            >
+              <Typography sx={{ display: "flex", color:'#266BF1', justifyContent: 'center' }}>
+                {" "}
+                Добавить пользователя
+              </Typography>
+            </Box>
       </React.Fragment>
     );
   }

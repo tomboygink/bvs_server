@@ -252,7 +252,7 @@ export class ModalLeftPanel {
   @action setTextHelpFullName(val: string) {this.texthelp_full_name = val;}
   @computed getTextHelpFullName(): string {return this.texthelp_full_name;}
 
-  @action setErrorFullNameDouble(val: boolean) {this.error_full_name_double = val;} /// проверка -  есть ли катакая организация (полное наименование )
+  @action setErrorFullNameDouble(val: boolean) {this.error_full_name_double = val;} /// проверка -  есть ли такая организация (полное наименование )
   @computed getErrorFullNameDouble(): boolean {return this.error_full_name_double;}
   @action setTextHelpFullNameDouble(val: string) {this.texthelp_full_name_double = val;}
   @computed getTextHelpFullNameDouble(): string {return this.texthelp_full_name_double;}
@@ -262,7 +262,7 @@ export class ModalLeftPanel {
   @action setTextHelpNameOrg(val: string) {this.texthelp_name_org = val;}
   @computed getTextHelpNameOrg(): string {return this.texthelp_name_org;}
 
-  @action setErrorNameDouble(val: boolean) {this.error_name_double = val;} /// проверка -  есть ли катакая организация
+  @action setErrorNameDouble(val: boolean) {this.error_name_double = val;} /// проверка -  есть ли такая организация
   @computed getErrorNameDouble(): boolean {return this.error_name_double;}
   @action setTextHelpNameDouble(val: string) {this.texthelp_name_double = val;}
   @computed getTextHelpNameDouble(): string {return this.texthelp_name_double;}
@@ -272,7 +272,7 @@ export class ModalLeftPanel {
   @action setTextHelpInn(val: string) {this.texthelp_inn = val;}
   @computed getTextHelpInn(): string {return this.texthelp_inn;}
 
-  @action setErrorInnDouble(val: boolean) {this.error_inn_double = val;} /// проверка -  есть ли катакая организация
+  @action setErrorInnDouble(val: boolean) {this.error_inn_double = val;} 
   @computed getErrorInnDouble(): boolean {return this.error_inn_double;}
   @action setTextHelpInnDouble(val: string) {this.texthelp_inn_double = val;}
   @computed getTextHelpInnDouble(): string {return this.texthelp_inn_double;}
@@ -596,7 +596,7 @@ export class ModalLeftPanel {
       q.args = {
         name: this.getNameOrg() || "",
         full_name: this.getFullNameOrg() || "",
-        inn: this.getInn() || "",
+        inn: this.getInn() || "", 
         address: this.getAddress() || "",
         latitude: this.getLatitude() || "",
         longitude: this.getLongitude() || "",
