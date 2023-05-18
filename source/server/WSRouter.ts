@@ -12,6 +12,8 @@ import { Console } from 'console';
 import { Devs_groupsTable } from '../xcore/dbase/Devs_groups';
 import { DevsTable } from '../xcore/dbase/Devs';
 import { Dev_sessTable } from '../xcore/dbase/Dev_sess';
+import { Dev_povsTable } from '../xcore/dbase/Dev_Povs';
+import { Control_dev_sessTable } from '../xcore/dbase/Control_Dev_Sess';
 
 
 export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
@@ -193,14 +195,14 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
         } break;
         //Редактирование организации 
-        case 'set_ChangeOrg':{
+        case 'set_ChangeOrg': {
             var orgs = new OrgsTable(q.args, q.sess_code);
             orgs.updateOrgs();
             wsres.error = null;
-            wsres.code=q.sess_code;
-            wsres.data=[];
+            wsres.code = q.sess_code;
+            wsres.data = [];
         }
-        break;
+            break;
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ДОЛЖНОСТЕЙ ОПРЕДЕЛЕННОЙ ОРГАНИЗАЦИИ
         //Получение должностей организации 
@@ -237,15 +239,15 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
 
         } break;
         //Обновление должности 
-        case 'set_ChangeJobs_Titles':{
-            console.log('GFytff')
+
+        case 'set_ChangeJobs_Titles': {
             var jobs = new Jobs_titlesTable(q.args, q.sess_code);
             jobs.updateJobs_title();
             wsres.error = null;
-            wsres.code=q.sess_code;
-            wsres.data=[];
+            wsres.code = q.sess_code;
+            wsres.data = [];
         }
-        break;
+            break;
 
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ ПОЛЬЗОВАТЕЛЕЙ
@@ -313,13 +315,13 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             */
         } break;
         //редактирование группы по id
-        case 'set_ChangeDevsGroups':{
+        case 'set_ChangeDevsGroups': {
             var dg = new Devs_groupsTable(q.args, q.sess_code);
             data = await dg.updateDevsGroups();
             wsres.code = q.sess_code;
             wsres.error = null;
             wsres.data = [];
-        }break;
+        } break;
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ И ПОЛУЧЕНИЕ УСТРОЙСТВ ПО ГРУППЕ УСТРОЙСТВА
         //Добавление нового устройства
@@ -327,7 +329,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             var dev = new DevsTable(q.args, q.sess_code);
             data = await dev.insertDevs();
 
-            if (data === null || data === undefined || data[0].id === 0 ) {
+            if (data === null || data === undefined || data[0].id === 0) {
                 wsres.code = q.sess_code;
                 wsres.data = [];
                 wsres.error = "Ошибка добавления устройства"
@@ -344,36 +346,64 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         //Получение устройств по id группы 
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ/ОБНОВЛЕНИЕ/ПОЛУЧЕНИЕ ПОВЕРОЧНОГО ИНТЕРВАЛА 
-        //Добавление поверочного интервала 
-        case 'set_NewDevPovs':{}
-        break;
+        //Добавление/Обновление поверочного интервала 
+        case 'set_NewDevPovs': {
+            var dev_povs = new Dev_povsTable(q.args, q.sess_code);
+            data = await dev_povs.insertDev_povs();
+            if (data === null || data === undefined || data[0].id === 0) {
+                wsres.code = q.sess_code;
+                wsres.data = [];
+                wsres.error = "Ошибка добавления поверочного интервала"
+            }
+            else {
+                wsres.code = q.sess_code;
+                wsres.data = [];
+                wsres.error = null;
+            }
 
-        //Обновление поверочного интервала 
-        case 'set_ChangeDevPovs':{}
-        break;
-        
+        } break;
+
+
         //Получение поверочного интервала 
-        case 'get_DevPovs':{}
-        break;
+        case 'get_DevPovs': {
+            var dev_povs = new Dev_povsTable(q.args, q.sess_code);
+            data = await dev_povs.selectDev_povs();
+            wsres.code = q.sess_code;
+            wsres.error = null;
+            wsres.data = [data];
+
+        } break;
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ КОНТРОЛЬНОЙ СЕСССИИ 
-        case 'set_NewControlDevSess':{}
-        break;
+        case 'set_NewControlDevSess': { 
+            var control_dev = new Control_dev_sessTable(q.args, q.sess_code);
+            data = await control_dev.insertControl_dev_sess();
+            if (data === null || data === undefined || data[0].id === 0) {
+                wsres.code = q.sess_code;
+                wsres.data = [];
+                wsres.error = "Ошибка добавления контрольной сессии"
+            }
+            else {
+                wsres.code = q.sess_code;
+                wsres.data = [];
+                wsres.error = null;
+            }
+        } break;
 
 
         //Изменение устройства
-        case 'set_ChangeDevs':{
+        case 'set_ChangeDevs': {
             var dev = new DevsTable(q.args, q.sess_code);
             dev.updateDevs();
             wsres.error = null;
-            wsres.code=q.sess_code;
-            wsres.data=[];
+            wsres.code = q.sess_code;
+            wsres.data = [];
         }
-        break;
-        
-        
+            break;
+
+
         //------------------------------------------------------------------------ПОЛУЧЕНИЕ ПЕРВОЙ И ПОСЛЕДНЕЙ СЕССИИ 
-        case 'get_DevFirstLastSessions':{
+        case 'get_DevFirstLastSessions': {
             var fl_sess = new Dev_sessTable(q.args, q.sess_code);
             data = await fl_sess.selectFirstLastSess();
             wsres.error = null;
@@ -381,13 +411,13 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             wsres.data = data;
 
         }
-        break;
+            break;
 
 
 
         //------------------------------------------------------------------------ПОЛУЧЕНИЕ СЕССИЙ ЗА ОПРЕДЕЛЕННЫЙ ПЕРИОД 
 
-        case 'get_DevSessions':{
+        case 'get_DevSessions': {
             var dev_sess = new Dev_sessTable(q.args, q.sess_code);
             data = await dev_sess.selectDevSess();
             wsres.error = null;
@@ -395,7 +425,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             //console.log(data);
             wsres.data = data;
         }
-        break;
+            break;
 
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
