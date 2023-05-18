@@ -203,14 +203,9 @@ export class Devs extends React.Component<IProps> {
             devs.push(
               <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
                 <Box
-                  className="wrappert-devs"
-                  sx={{
-                    display: "grid",
-                    gridTemplateColumns: "70% 30%",
-                    columnGap: "12px",
-                  }}
+                  className="wrappert-devs chart"
                 >
-                  <Box>
+                  <Box sx = {{mr: '22px'}}> 
                     <Box
                       className="right_wrapper_dev"
                       sx={{ display: "flex", flexDirection: "row-reverse" }}>
