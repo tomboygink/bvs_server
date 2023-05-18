@@ -15,6 +15,9 @@ import { DevsGroupStorage } from './components/Devs/DevsGroupStorage';
 import { DevsStorage } from './components/Devs/DevsStorage';
 import { SensorsStorage } from './components/Devs/SensorsStorage';
 
+import { OrgStorage } from './components/Orgs/OrgStorage'; /////// Вкладка организации
+import { JobsTitlesStorage } from './components/JobsTitles/JobsTitlesStorage'
+
 // ********************************************************************************************************************************************************
 // ХРАНИЛИЩЕ
 
@@ -28,6 +31,9 @@ class AppStorage {
     @observable devs_groups: DevsGroupStorage = null;
     @observable devs: DevsStorage = null;
     @observable sensors: SensorsStorage = null;
+    @observable org: OrgStorage = null;
+    @observable jobs: JobsTitlesStorage = null;
+
 
    
     @observable devs_group_move: Array<any>; /////////////////////////////////////Тест(потом нужно удалить)
@@ -68,6 +74,8 @@ class AppStorage {
         this.devs_groups = new DevsGroupStorage();
         this.devs = new DevsStorage();
         this.sensors = new SensorsStorage();
+        this.org = new OrgStorage();
+        this.jobs = new JobsTitlesStorage();
         makeAutoObservable(this);
 
         // WSocket.get();
@@ -90,6 +98,7 @@ class AppStorage {
             case ('get_Devs'): { this.devs.setDevsAll(dt) } break;
             case ('get_DevSessions'): { this.sensors.setDevSess(dt)} break;
             case('get_DevFirstLastSessions'): { this.sensors.set_DevFirstLastSessions(dt)} break;
+            case('set_ChangeOrg'): {this.org.get_ChangeOrg(dt)}
             default: { } break;
         }
     }

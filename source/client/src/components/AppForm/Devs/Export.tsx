@@ -3,16 +3,11 @@ import * as React from "react";
 import { observer } from "mobx-react";
 import { toJS } from "mobx";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-import { Box, Typography, TextField, Button } from "@mui/material";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import { TableCell } from "@mui/material";
 import TableRow from "@mui/material/TableRow";
-
-
-
-
 
 
 interface IProps {}
@@ -27,7 +22,7 @@ export class CustomExport extends React.Component<IProps> {
 
 
   render(): React.ReactNode {
-    let ar = []
+    let depth = [];
     let b= [];
     let indexarray: any[] = [];
     var date = []; 
@@ -47,26 +42,21 @@ export class CustomExport extends React.Component<IProps> {
       dev_sess = toJS(sess.getDevSession());
 
      for (var key in dev_sess) {  
-
-   
+          let senso = JSON.parse(dev_sess[key].sess_data);
+        //  b.push(senso.s);
          
-          let senso = JSON.parse(dev_sess[key].sess_data)
-        
-         b.push(senso.s);
-         
-         ses_depth.push(
-            senso.s.map((row : any, i : any) => (
-              <TableCell sx = {{p: '4px'}}> {'' + row.depth} </TableCell>
-              ))
-         )
-         ses_date.push(
-          senso.s.map((row : any, i : any) => (
-            <TableCell sx = {{p: '4px'}}> {'' + row.data} </TableCell>
-            ))
-         )
+        //  ses_depth.push(
+        //     senso.s.map((row : any, i : any) => (
+        //       row.depth
+        //       ))
+        //  )
+        //  ses_date.push(
+        //   senso.s.map((row : any, i : any) => (
+        //     <TableCell sx = {{p: '4px'}}> {'' + row.data} </TableCell>
+        //     ))
+        //  )
     
-        date.push( 
-         
+        date.push(    
         <TableRow key={'row' + dev_sess[key].id} id={'row' + dev_sess[key].id} sx = {{p: '4px'}}>
         <TableCell  sx = {{p: '4px'}} > {'' + dev_sess[key].dev_number} </TableCell>
         <TableCell sx = {{p: '4px'}} > {'' + dev_sess[key].time_dev.replace('T', '|')} </TableCell>
@@ -76,30 +66,26 @@ export class CustomExport extends React.Component<IProps> {
         
           {
           senso.s.map((row : any, i : any) => (
-            <React.Fragment key={"_gr_id_key_sess" + row.depth}>
-            <TableCell sx = {{p: '4px'}}> {'' + row.depth} </TableCell>
+            <React.Fragment key={"_gr_id_key_sess" + row.depth + row}>
+            <TableCell sx = {{p: '4px'}}> {'' + row.data} </TableCell>
             </React.Fragment>
             ))
           }
-
        </TableRow>
-        )    
+        ) 
      }
 
-      var max = -Infinity;
-var index = -1;
-b.forEach(function(a, i){
-  if (a.length>max) {
-    max = a.length;
-    index = i;
-    indexarray.push(a)
-  }
-});
-
-
-
-  
-   }
+//       var max = -Infinity; //// Находим глубину датчиков
+// var index = -1;
+// b.forEach(function(a, i){ 
+//   if (a.length>max) {
+//     max = a.length;
+//     index = i;
+//     indexarray.push(a)
+//   }
+// });
+//  console.log('indexarray', indexarray)
+}
 
 
     return (
@@ -112,7 +98,6 @@ b.forEach(function(a, i){
             <TableCell key = '12121ewe2' > Время устройства</TableCell>
             <TableCell key = '121weeew212'> Время сервера</TableCell>
             <TableCell key = '12121e2eqe2'> АКБ</TableCell>
-           
           </TableRow>
        {date}
       </TableBody>

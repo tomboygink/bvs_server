@@ -30,7 +30,13 @@ export class Devs extends React.Component<IProps> {
     super(props);
   }
 
+
+  async setDevNumber(a:any){
+    APP_STORAGE.sensors.setNumber(a);
+  }
+
   drawDevs(dgrs: TDevsGroup[]): React.ReactNode[] {
+    let dev_number: any = 0;
     var dev = APP_STORAGE.devs;
     var devs: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
@@ -45,9 +51,15 @@ export class Devs extends React.Component<IProps> {
 
       for (var key in gr_devs) { ///////////////////////////////////////////////// Все устройства
         if ("_dev_id_key_" + gr_devs[key].id === dev.getIdChild()) {
-          APP_STORAGE.sensors.setNumber(gr_devs[key].number);
-        
-         
+          
+          
+
+          dev_number = gr_devs[key].number;
+          
+          setTimeout(() => {  ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
+            this.setDevNumber(dev_number);
+         }, 100);
+
           setTimeout(() => {  ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
             APP_STORAGE.sensors.get_DevFirstLastSessions("sess_id", APP_STORAGE.auth_form.getdt());
           }, 100);
@@ -191,14 +203,9 @@ export class Devs extends React.Component<IProps> {
             devs.push(
               <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
                 <Box
-                  className="wrappert-devs"
-                  sx={{
-                    display: "grid",
-                    gridTemplateColumns: "70% 30%",
-                    columnGap: "12px",
-                  }}
+                  className="wrappert-devs chart"
                 >
-                  <Box>
+                  <Box sx = {{mr: '22px'}}> 
                     <Box
                       className="right_wrapper_dev"
                       sx={{ display: "flex", flexDirection: "row-reverse" }}>

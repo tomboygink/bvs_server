@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Drawer, List, Divider, ListItemIcon, MenuItem, ListItemText } from "@mui/material";
+import { Drawer, List, Divider, ListItemIcon, MenuItem, ListItemText, Button } from "@mui/material";
 
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -12,6 +12,10 @@ import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import BusinessIcon from "@mui/icons-material/Business";
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlined';
+import EngineeringOutlinedIcon from '@mui/icons-material/EngineeringOutlined';
+
+
 
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 
@@ -49,7 +53,9 @@ export class AppBarLeftPanel extends React.Component<IProps> {
   }
 
   async OpenModalRegUser(e: any, tittle: string) {
-    APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
+    
+
+      APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
 
     APP_STORAGE.reg_user.setTakeModal(e); // идентификатор модального окна
     APP_STORAGE.reg_user.setTittleModal(tittle); // заголовок модального окна
@@ -57,6 +63,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
     APP_STORAGE.app_bar.setSetOpenAppBar(false);
     APP_STORAGE.reg_user.setOpenTableUsers(false);
     APP_STORAGE.reg_user.setOpenTableUsers(false);
+   
   }
 
 
@@ -65,7 +72,11 @@ export class AppBarLeftPanel extends React.Component<IProps> {
    APP_STORAGE.reg_user.setOpenTableUsers(true);
    APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt()); // все пользователи
    APP_STORAGE.app_bar.setSetOpenAppBar(false);/// закрываем
-   APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());  // как только модальное окно открылось, отправляем запрос на получение всех организаций
+   ///APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());  // как только модальное окно открылось, отправляем запрос на получение всех организаций
+  }
+
+ async functionSetIdOrgUser(){
+    APP_STORAGE.setIdOrgUser(APP_STORAGE.auth_form.getUser().org_id);
   }
 
   render(): React.ReactNode {
@@ -74,8 +85,11 @@ export class AppBarLeftPanel extends React.Component<IProps> {
     var menu: React.ReactNode = <></>;
     var roles = null;
     if (APP_STORAGE.auth_form.getUser().roles_ids) {
-
-    APP_STORAGE.setIdOrgUser(APP_STORAGE.auth_form.getUser().org_id);
+  
+      
+      setTimeout(() => this.functionSetIdOrgUser(), 100);
+     
+      
       roles = JSON.parse(
         JSON.stringify(APP_STORAGE.auth_form.getUser().roles_ids)
       );
@@ -83,8 +97,9 @@ export class AppBarLeftPanel extends React.Component<IProps> {
         if (roles.hasOwnProperty(key)) {
 
           let a = roles[key];
-          APP_STORAGE.setRoleRead(a[0]);
-          APP_STORAGE.setRoleWrite(a[1]);
+
+          setTimeout(() => APP_STORAGE.setRoleRead(a[0]), 100);
+          setTimeout(() => APP_STORAGE.setRoleWrite(a[1]), 100);
           user_r = a[0];
           user_w = a[1];
         }
@@ -100,14 +115,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
     if (user_w === 2 && user_r === 1) {  
       menu = (
         <>
-          <MenuItem
-           onClick={() => this.OpenTableUser(3)}
-          >
-            <ListItemIcon>
-              <PeopleOutlineIcon fontSize="small" />
-            </ListItemIcon>{" "}
-            Пользователи
-          </MenuItem>
+        
 
           <MenuItem
            onClick={() => this.OpenListDev()}
@@ -119,10 +127,19 @@ export class AppBarLeftPanel extends React.Component<IProps> {
           </MenuItem>
 
           <MenuItem
+           onClick={() => this.OpenTableUser(3)}
+          >
+            <ListItemIcon>
+              <PeopleOutlineIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            Пользователи
+          </MenuItem>
+
+          <MenuItem
            onClick={() => this.OpenListOrg()}
           >
             <ListItemIcon>
-              <FolderOpenIcon fontSize="small" />
+              <AccountBalanceOutlinedIcon fontSize="small" />
             </ListItemIcon>{" "}
             Организации
           </MenuItem>
@@ -131,7 +148,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
            onClick={() => this.OpenListJobsTitles()}
           >
             <ListItemIcon>
-              <FolderOpenIcon fontSize="small" />
+              <EngineeringOutlinedIcon fontSize="small" />
             </ListItemIcon>{" "}
             Должности
           </MenuItem>
@@ -199,16 +216,14 @@ export class AppBarLeftPanel extends React.Component<IProps> {
           anchor="left"
           open={APP_STORAGE.app_bar.getSetOpenAppBar()}
         >
-          <IconButton
+          <Button
             sx={{ color: "#1976D2" }}
-            aria-label="open drawer"
             onClick={() => {
               APP_STORAGE.app_bar.setSetOpenAppBar(false);
             }}
-            edge="start"
           >
-            <ChevronLeftIcon sx={{ marginLeft: 28 }} />
-          </IconButton>
+            <ChevronLeftIcon sx={{ marginLeft: 28 , color: '#2D70E7'}} />
+          </Button>
 
           {menu}
         </Drawer>

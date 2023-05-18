@@ -114,7 +114,7 @@ export class EditUser extends React.Component<IProps> {
               className="ModalTitle"
               sx={{ display: "flex", justifyContent: "space-between" }}
             >
-             <Typography>Редактирование</Typography> 
+             <Typography>Изменить данные пользователя </Typography> 
 
               <CloseIcon
                 sx={{ color: "#1976D2" }}

@@ -63,7 +63,7 @@ export class NewUserRegistration extends React.Component<IProps> {
   async OpenModalRegUser(e: any, tittle: string) {  /// Функция для открытия модашльного окна
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());  // как только модальное окно открылось, отправляем запрос на получение всех организаций
  
-    APP_STORAGE.reg_user.setTakeModal(e);  // передаем идентифкатор ( какое действие хочет сделать пользователь из Левого меню )
+    APP_STORAGE.reg_user.setTakeModal(e);  // передаем идентифкатор
     APP_STORAGE.reg_user.setTittleModal(tittle); // передаем заголовок в модальное окно
     APP_STORAGE.reg_user.setModalRegUser(true);
     APP_STORAGE.app_bar.setSetOpenAppBar(false); // полсе того , как появилось модальное окно, закрываем меню слева (APP BAR)

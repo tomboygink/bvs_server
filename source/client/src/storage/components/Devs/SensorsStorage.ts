@@ -32,6 +32,7 @@ export class SensorsStorage {
     @observable sessions_first_last_period: Array<any>  = [];
     @observable sess_first : Array<any>  = [];
     @observable sess_second : Array<any>  = [];
+    @observable sess_middle: Array<any> = [];
     
     @observable time_dev_firstsess : string = '';
     @observable time_dev_lastsess : string = '';
@@ -105,6 +106,11 @@ export class SensorsStorage {
 
     @action setSess_second(val: Array<any>) { this.sess_second = val; } 
     @computed getSess_second(): Array<any> { return this.sess_second; }
+
+    @action setSess_middle(val: Array<any>) { this.sess_middle = val; } 
+    @computed getSess_middle(): Array<any> { return this.sess_middle; }
+
+    
 
 
     async get_DevSessions(name: string, value: any, _options?: any) {
@@ -198,12 +204,6 @@ export class SensorsStorage {
     
     
      const result1 = mergeByProperty([first, second]);
-     
-    console.log(result1, "result1")
-
-
-
-
      this.setSess_first(first.sort(
       (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
     ));
