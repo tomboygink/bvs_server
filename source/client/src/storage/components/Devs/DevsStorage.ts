@@ -4,6 +4,7 @@ import { IWSQuery, WSQuery, IWSResult } from '../../../../../xcore/WSQuery';
 import { WSocket } from '../../WSocket';
 import { getCookie, setCookie, deleteCookie } from '../../browserCookes';
 import { info } from 'console';
+import { APP_STORAGE } from '../../AppStorage';
 
 
 export class DevsStorage {
@@ -373,6 +374,24 @@ export class DevsStorage {
       }, 2000);
 
     }
+  }
+
+
+  async set_NewDevPovs(name: string, value: any, _options?: any){ //////// Поверочный интервал
+    var sess_code = value; 
+    var date = '2023-03-29 15:37'; //////// Исправить на актуальные данные
+    var q: IWSQuery = new WSQuery ('set_NewDevPovs');
+
+    q.args = {
+      id  : this.getGroupDevId(),
+      dev_id  :  this.getId(),
+      dev_number : this.getNumber() ,
+      start_povs: date,
+      end_povs : date, 
+      old_dev_povs : 0
+    } 
+    q.sess_code  = sess_code;
+    (await WSocket.get()).send(q);    
   }
 
 }

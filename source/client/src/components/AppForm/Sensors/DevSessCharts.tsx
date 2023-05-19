@@ -13,7 +13,7 @@ import {
   ReferenceLine,
 } from "recharts";
 import { toJS } from "mobx";
-import { Box } from "@mui/material";
+import { Box , Divider  } from "@mui/material";
 
 import { CustomTooltip, customizedGroupTick } from "./../Devs/StyledMua";
 
@@ -290,6 +290,7 @@ export class DevSessCharts extends React.Component<IProps> {
 </defs>
 </svg>
 
+ < Box className="item-3" />
 
             <ResponsiveContainer className="item-2" width="100%">
               <LineChart
