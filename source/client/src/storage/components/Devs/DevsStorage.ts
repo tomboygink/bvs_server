@@ -383,12 +383,24 @@ export class DevsStorage {
     var q: IWSQuery = new WSQuery ('set_NewDevPovs');
 
     q.args = {
-      id  : this.getGroupDevId(),
       dev_id  :  this.getId(),
       dev_number : this.getNumber() ,
       start_povs: date,
       end_povs : date, 
       old_dev_povs : 0
+    } 
+    q.sess_code  = sess_code;
+    (await WSocket.get()).send(q);    
+  }
+
+  async set_NewControlDevSess(name: string, value: any, _options?: any){ //////// Установка контрольной сессии 
+    var sess_code = value; 
+    var q: IWSQuery = new WSQuery ('set_NewControlDevSess');
+
+    q.args = {
+      dev_sess_id : 1,
+      dev_id  :  this.getId(),
+      dev_number : this.getNumber()
     } 
     q.sess_code  = sess_code;
     (await WSocket.get()).send(q);    
