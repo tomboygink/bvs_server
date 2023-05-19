@@ -40,6 +40,10 @@ export class MenuDevs extends React.Component<IProps> {
     APP_STORAGE.devs.set_NewDevPovs("sess_id", APP_STORAGE.auth_form.getdt())
   }
 
+  async set_NewControlDevSess() {
+    APP_STORAGE.devs.set_NewControlDevSess("sess_id", APP_STORAGE.auth_form.getdt())
+  }
+
   PassValueEditForm(dgrs: TDevsGroup[]) {
     var dev = APP_STORAGE.devs;
     var devGr = APP_STORAGE.devs_groups;
@@ -82,6 +86,10 @@ export class MenuDevs extends React.Component<IProps> {
         
       if(dev.getMenu_devs() === '3'){
         this.set_NewDevPovs()
+      }
+
+      if(dev.getMenu_devs() === '4'){
+        this.set_NewControlDevSess();
       }
         }
       }
@@ -142,6 +150,13 @@ export class MenuDevs extends React.Component<IProps> {
                                       <MiscellaneousServicesIcon fontSize="small" />
                                       </ListItemIcon>{" "}
                                       Поверочный интервал
+                                      </MenuItem>
+
+                                      <MenuItem onClick={() => this.editDevice('4')} >
+                                      <ListItemIcon>
+                                      <MiscellaneousServicesIcon fontSize="small" />
+                                      </ListItemIcon>{" "}
+                                      Установить контрольную сессию
                                       </MenuItem>
                                       </Menu>
                                       </div>

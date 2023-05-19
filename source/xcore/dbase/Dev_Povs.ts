@@ -23,9 +23,15 @@ export class Dev_povsTable {
 
     //Добавление/Обновление поверочного интервала 
     async insertDev_povs(): Promise<Dev_povsEntity[]> {
+        console.log("SELECT AddDev_Povs(" +
+        "CAST (" + this.args.dev_id + " AS BIGINT)," +
+        "CAST ('" + this.args.dev_number + "' AS VARCHAR(80)), " +
+        "CAST ('" + dateTimeToSQL(new Date(this.args.start_povs)) + "' AS TIMESTAMP), " +
+        "CAST ('" + dateTimeToSQL(new Date(this.args.end_povs)) + "' AS TIMESTAMP), " +
+        "CAST ('" + this.args.old_dev_povs + "' AS BIGINT)) AS id");
+
         var db_res = await this.db.query("SELECT AddDev_Povs(" +
-            "CAST (" + this.args.id + " AS BIGINT), " +
-            "CAST (" + this.args.dev_id + " AS BIGINT)" +
+            "CAST (" + this.args.dev_id + " AS BIGINT)," +
             "CAST ('" + this.args.dev_number + "' AS VARCHAR(80)), " +
             "CAST ('" + dateTimeToSQL(new Date(this.args.start_povs)) + "' AS TIMESTAMP), " +
             "CAST ('" + dateTimeToSQL(new Date(this.args.end_povs)) + "' AS TIMESTAMP), " +
