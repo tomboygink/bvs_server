@@ -3,7 +3,7 @@ import * as React from "react";
 import { observer } from "mobx-react";
 import { toJS } from "mobx";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-import { Box, Typography, TextField, ListItemIcon, Menu , MenuItem, Link, Button, IconButton} from "@mui/material";
+import { Box, Typography, TextField, ListItemIcon, Menu , MenuItem, Link, Button, IconButton,  Divider} from "@mui/material";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
@@ -11,6 +11,7 @@ import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
+import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices';
 
 import DirectionsIcon from '@mui/icons-material/Directions';
 
@@ -33,6 +34,10 @@ export class MenuDevs extends React.Component<IProps> {
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
     return this.PassValueEditForm(DevGr); 
+  }
+
+  async set_NewDevPovs() {
+    APP_STORAGE.devs.set_NewDevPovs("sess_id", APP_STORAGE.auth_form.getdt())
   }
 
   PassValueEditForm(dgrs: TDevsGroup[]) {
@@ -74,7 +79,10 @@ export class MenuDevs extends React.Component<IProps> {
         devGr.setOpenModalMoveDevsGr(true);
         devGr.setOpen_menu(false);
           }
-          
+        
+      if(dev.getMenu_devs() === '3'){
+        this.set_NewDevPovs()
+      }
         }
       }
     }
@@ -125,6 +133,15 @@ export class MenuDevs extends React.Component<IProps> {
                                       <LogoutRoundedIcon fontSize="small" />
                                       </ListItemIcon>{" "}
                                       Переместить
+                                      </MenuItem>
+
+                                      <Divider/>
+
+                                      <MenuItem onClick={() => this.editDevice('3')} >
+                                      <ListItemIcon>
+                                      <MiscellaneousServicesIcon fontSize="small" />
+                                      </ListItemIcon>{" "}
+                                      Поверочный интервал
                                       </MenuItem>
                                       </Menu>
                                       </div>

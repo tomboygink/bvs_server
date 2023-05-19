@@ -145,6 +145,13 @@ body {
           /* grid-column-start: 1; */
         }
 
+        > .item-3 {
+          grid-column: 1/14;
+          grid-row: 2;
+          background: #babbbd;
+          height: 1px;
+      }
+
     }
 
 
