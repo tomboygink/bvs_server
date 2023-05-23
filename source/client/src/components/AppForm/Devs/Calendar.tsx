@@ -55,8 +55,9 @@ export class Calendar extends React.Component<IProps> {
         <Box sx={{display: 'flex', justifyContent: 'space-between' }}>
 
         <Box>
-          <Box>
+          <Box sx ={{display: 'flex'}}>
             <TextField
+               className="qweqweqwre"
               size="small"
               id="datetime-local"
               type="datetime-local"
@@ -67,13 +68,14 @@ export class Calendar extends React.Component<IProps> {
               onChange={(e) => {
                 APP_STORAGE.sensors.setSessPeriodStart(e.target.value);
               }}
-              sx={{ mr: "15px"}}
+              sx={{ mr: "16px", fontSize: '14px'}}
               InputLabelProps={{
                 shrink: true,
               }}
             />
 
             <TextField
+            sx ={{fontSize: '12px!important', mr: "16px"}}
               size="small"
               id="datetime-local"
               type="datetime-local"
@@ -85,15 +87,13 @@ export class Calendar extends React.Component<IProps> {
                 shrink: true,
               }}
             />
-          </Box>
 
-          <Button
+<Button
             className="button-save new-devs"
             sx={{
               background: "#266BF1",
               color: "#fff;",
-              fontSize: "12px",
-              mt: "12px",
+              fontSize: "12px"
             }}
             onClick={() => {
               this.setDevSess();
@@ -101,14 +101,17 @@ export class Calendar extends React.Component<IProps> {
           >
             Установить период
           </Button>
+          </Box>
+
+         
         </Box>
 
-        <Box className="legend" sx={{background: '#f5f8fd', borderRadius: '4px', border: '1px solid #8F9DCE', p: '4px', boxShadow: '-1px 0px 8px -2px rgba(34, 60, 80, 0.2)'}}>
+        {/* <Box className="legend" sx={{background: '#f5f8fd', borderRadius: '4px', border: '1px solid #8F9DCE', p: '4px', boxShadow: '-1px 0px 8px -2px rgba(34, 60, 80, 0.2)'}}>
         <Typography sx = {{color: '#00B394', display: 'flex', alignItems: 'center', fontSize: '14px'}} > <CropSquareIcon  sx = {{color : '#00B394', fontSize: 'small'}} />  - Первая сессия ({APP_STORAGE.sensors.getTimeDevSessFirst().replace('T',' ')})</Typography>
         <Typography sx = {{color: '#A3A0DC', display: 'flex', alignItems: 'center', fontSize: '14px'}} > <CropSquareIcon sx ={{color: '#A3A0DC' , fontSize: 'small'}}/> - Последняя сессия ({APP_STORAGE.sensors.getTimeDevSessLast().replace('T',' ')})</Typography>   
         <Typography sx = {{color: '#FE6F4F', display: 'flex', alignItems: 'center', fontSize: '14px'}} > <CropSquareIcon sx = {{color: '#FE6F4F' , fontSize: 'small'}}/> - Выбраная сессия ({APP_STORAGE.sensors.getChoseSessTime()})</Typography> 
         <Typography sx = {{color: '#266BF1', display: 'flex', alignItems: 'center', fontSize: '14px'}} > <Battery5BarIcon sx = {{color: '#266BF1', fontSize: 'small'}}/> - Аккумулятор ({APP_STORAGE.sensors.getAkbSessLast()})</Typography>        
-        </Box>
+        </Box> */}
         </Box>
       </React.Fragment>
     );

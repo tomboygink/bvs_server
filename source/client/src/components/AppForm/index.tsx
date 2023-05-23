@@ -26,7 +26,6 @@ import { AddNewGroup } from "./DevsGroups/AddNewGroup"; ////////// Добави�
 import { AddNewSubgroup } from "./DevsGroups/AddNewSubgroup"; //////////Добавить новую подгруппу
 
 import { Devs } from "./Devs/Devs"; //////////////////////////// устройства
-import { DevSess } from "./Devs/DevSess";
 import { Sensors } from "./Sensors/Sensors"; ///////////////////////////////сенсоры на устройствах
 import { ChangeDevsModal } from "./Devs/ChangeDevsModal"; ////////////////////////////Редактировать устройства
 import { AddNewDevModal } from "./Devs/AddNewDevModal"; //////////////Добавить новое устройство

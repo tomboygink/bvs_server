@@ -72,10 +72,25 @@ export class DevsStorage {
 
   @observable save :string = '';
 
+
+
+
+
+  ///////////////////////////////////////////////////////////////////////////  Таблица сессий
+
+
+  @observable rowsPerPage: number = 5;
+  @observable page: number = 0;
+
   constructor() {
     makeAutoObservable(this);
   }
  
+  @action setRowsPerPage(val: number) { this.rowsPerPage = val };
+  @computed getRowsPerPage(): number { return this.rowsPerPage };
+
+  @action setPage(val: number) { this.page = val };
+  @computed getPage(): number { return this.page };
 
   @action setMenu_devs(val: string) { this.menu_devs = val };
   @computed getMenu_devs(): string { return this.menu_devs };
@@ -265,8 +280,6 @@ export class DevsStorage {
     var q: IWSQuery = new WSQuery("set_NewDevs");
 
     if (this.getNumber() !== '' && this.getName() !== '' && this.getLatitude() !== '' && this.getLongitude() !== '') {
-
-
       q.args = {
         group_dev_id: this.getIdDevs(),
         number: this.getNumber().replace(/"([^"]*)"/g, '«$1»') || '',
@@ -393,14 +406,15 @@ export class DevsStorage {
     (await WSocket.get()).send(q);    
   }
 
-  async set_NewControlDevSess(name: string, value: any, _options?: any){ //////// Установка контрольной сессии 
+  async set_NewControlDevSess(value: any,  id_sess: any, dev_id:any , dev_number: any){ //////// Установка контрольной сессии 
+
     var sess_code = value; 
     var q: IWSQuery = new WSQuery ('set_NewControlDevSess');
 
     q.args = {
-      dev_sess_id : 1,
-      dev_id  :  this.getId(),
-      dev_number : this.getNumber()
+      dev_sess_id : id_sess,
+      dev_id  :  dev_id,
+      dev_number : dev_number
     } 
     q.sess_code  = sess_code;
     (await WSocket.get()).send(q);    

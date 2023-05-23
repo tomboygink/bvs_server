@@ -143,6 +143,7 @@ export class DevSessCharts extends React.Component<IProps> {
                 domain={[-15, 15]}
               />
               <YAxis
+                interval={0}
                 ticks={tick_yaxis}
                 domain={[Number(mintick_y), Number(maxtick_y)]}
                 dataKey="depth"
@@ -315,6 +316,7 @@ export class DevSessCharts extends React.Component<IProps> {
 
                 <YAxis
                   ticks={tick_yaxis}
+                  interval={0}
                   domain={[Number(mintick_y), Number(maxtick_y)]}
                   dataKey="depth"
                   type="number"
@@ -432,6 +434,7 @@ export class DevSessCharts extends React.Component<IProps> {
               />
 
               <YAxis
+                interval={0}
                 ticks={[0, 10, 20, 30, 40]}
                 domain={[0, 40]}
                 dataKey="depth"
