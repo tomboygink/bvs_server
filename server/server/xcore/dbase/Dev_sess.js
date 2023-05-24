@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.Dev_sessTable = exports.Dev_sessEntity = void 0;
 var DBase_1 = require("./DBase");
+var DateStr_1 = require("../../xcore/dbase/DateStr");
 var Dev_sessEntity = (function () {
     function Dev_sessEntity() {
         this.id = 0;
@@ -58,7 +59,7 @@ var Dev_sessTable = (function () {
     }
     Dev_sessTable.prototype.selectDevSess = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var dev_sess, start_date, end_date, db_res, result, i, tzoffset;
+            var dev_sess, tzoffset, start_date, end_date, db_res, result, i;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -71,14 +72,14 @@ var Dev_sessTable = (function () {
                             level_akb: 0.0,
                             sess_data: ''
                         };
-                        start_date = new Date(this.args.sess_period_start).toISOString().slice(0, 19).replace('T', ' ');
-                        end_date = new Date(this.args.sess_period_end).toISOString().slice(0, 19).replace('T', ' ');
+                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                        start_date = (0, DateStr_1.dateTimeToSQL)(new Date(this.args.sess_period_start));
+                        end_date = (0, DateStr_1.dateTimeToSQL)(new Date(this.args.sess_period_end));
                         return [4, this.db.query("SELECT * FROM SelectDev_Sess ('" + this.args.dev_number + "', '" + start_date + "', '" + end_date + "')")];
                     case 1:
                         db_res = _a.sent();
                         result = new Array();
                         for (i in db_res.rows) {
-                            tzoffset = (new Date()).getTimezoneOffset() * 60000;
                             dev_sess = {
                                 id: db_res.rows[i].id,
                                 time_dev: (new Date(db_res.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
