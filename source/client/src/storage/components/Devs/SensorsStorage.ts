@@ -33,6 +33,9 @@ export class SensorsStorage {
     @observable sess_first : Array<any>  = [];
     @observable sess_second : Array<any>  = [];
     @observable sess_middle: Array<any> = [];
+
+
+    @observable example: Array<any> = [];
     
     @observable time_dev_firstsess : string = '';
     @observable time_dev_lastsess : string = '';
@@ -109,6 +112,11 @@ export class SensorsStorage {
 
     @action setSess_middle(val: Array<any>) { this.sess_middle = val; } 
     @computed getSess_middle(): Array<any> { return this.sess_middle; }
+
+    @action setexample(val: Array<any>) { this.example = val; } 
+    @computed getexample(): Array<any> { return this.example; }
+
+    
 
     
 

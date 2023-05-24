@@ -15,7 +15,12 @@ import TableRow from "@mui/material/TableRow";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
+import CommitIcon from '@mui/icons-material/Commit';
+
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
+
+import Battery0BarOutlinedIcon from '@mui/icons-material/Battery0BarOutlined';
+
 
 interface IProps {}
 
@@ -232,7 +237,7 @@ export class Sensors extends React.Component<IProps> {
                       </Box> 
                       </Box>}
         <Box
-          className="wrapper-devs sensors"
+          className=" sensors"
           sx={{
             display: "flex",
             flexDirection: "column;",
@@ -243,6 +248,7 @@ export class Sensors extends React.Component<IProps> {
           <Box
             sx={{
               width: "100%",
+              maxHeight: '300px',
               background: "#fff",
               borderRadius: "4px",
               display: "flex",
@@ -260,6 +266,37 @@ export class Sensors extends React.Component<IProps> {
             </TableContainer>
           </Box>
         </Box>
+
+{APP_STORAGE.sensors.getTimeDevSessFirst() && 
+<>
+ <Typography sx={{ fontWeight: "500" , color: '#0D1C52', mb : '12px', mt: '40px' }}>  Дополнительная информация </Typography>
+
+
+ <Box
+    sx={{
+     width: "100%",
+     height: '100%',
+     background: "#fff",
+     borderRadius: "4px",
+     display: "flex",
+     padding: '16px',
+     flexDirection: 'column',
+     
+     overflow: "auto",
+   }}
+ >
+
+<Box  sx = {{fontSize: '15px', color:'#000', display: 'flex', pb: '12px', justifyContent: 'flex-start', alignItems: 'center'}} ><CommitIcon sx ={{color: '#0BF1CA'}}/> {APP_STORAGE.sensors.getTimeDevSessFirst().replace('T',' ')} <Typography sx ={{color: '#808080', fontSize: '12px'}}> (первая сессия)  </Typography> </Box>
+<Box sx = {{fontSize: '15px', color:'#000', display: 'flex' , pb: '12px' , justifyContent: 'flex-start', alignItems: 'center'}} ><CommitIcon sx ={{color: '#A178FB'}}/>  {APP_STORAGE.sensors.getTimeDevSessLast().replace('T',' ')} <Typography sx ={{color: '#808080', fontSize: '12px'}}> (последняя сессия)  </Typography></Box>
+{APP_STORAGE.sensors.getChoseSessTime() && 
+       <Box sx = {{fontSize: '15px', color:'#000', display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}} ><CommitIcon sx ={{color: '#FD8A04'}}/>  {APP_STORAGE.sensors.getChoseSessTime().replace('T', ' ')} <Typography sx ={{color: '#808080', fontSize: '12px'}}> (выбранная сесия)  </Typography></Box>
+     }
+
+
+ </Box>
+ </>
+}
+       
       </>
     );
   }

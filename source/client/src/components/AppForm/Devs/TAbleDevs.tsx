@@ -208,7 +208,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           id="tableTitle"
           component="div"
         >
-          СЕССИИ ЗА ПЕРИОД
+          СЕССИИ ЗА ПЕРИОД11
         </Typography>
   );
 }

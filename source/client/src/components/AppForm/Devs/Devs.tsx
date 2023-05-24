@@ -71,8 +71,7 @@ export class Devs extends React.Component<IProps> {
           if (gr_devs[key].deleted === true) {
             devs.push(
               <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
-                <Box
-                  className="wrappert-devs"
+                <Box 
                   sx={{
                     display: "grid",
                     gridTemplateColumns: "1fr 1fr",
@@ -80,7 +79,7 @@ export class Devs extends React.Component<IProps> {
                   }}>
                    <Box>
                     <Box
-                      className="right_wrapper_dev"
+                      className="right_wrapper_dev "
                       sx={{ display: "flex", flexDirection: "row-reverse" }}>
                       {APP_STORAGE.getRoleWrite() === 2 &&
                       APP_STORAGE.getRoleRead() === 1 && <MenuDevs />}
@@ -201,11 +200,11 @@ export class Devs extends React.Component<IProps> {
           /////////////////////////// Устройство  `` действующее ( deleted - false)
           if (gr_devs[key].deleted === false) {
             devs.push(
-              <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
+              <React.Fragment key={"_gr_id_key_" + gr_devs[key].id} >
                 <Box
-                  className="wrappert-devs chart"
+                  className="chart"
                 >
-                  <Box sx = {{mr: '22px'}}> 
+                  <Box sx = {{mr: '22px'}} className="wrappert-devs"> 
                     <Box
                       className="right_wrapper_dev"
                       sx={{ display: "flex", flexDirection: "row-reverse" }}>
@@ -213,7 +212,7 @@ export class Devs extends React.Component<IProps> {
                         APP_STORAGE.getRoleRead() === 1 && <MenuDevs />}
                     </Box>
 
-                    <Box>
+                    <Box sx ={{width: '100%'}}>
                       <TextField
                         sx={{ pt: "0px", mt: "4px" }}
                         className="box_info"
@@ -252,11 +251,12 @@ export class Devs extends React.Component<IProps> {
                         size="small"
                         value={gr_devs[key].number || ""}
                       />
+                      <Box sx ={{display: 'flex', justifyContent: 'flex-start'}}>
 
                       <TextField
-                        sx={{ pt: "0px", mt: "4px" }}
+                        sx={{ pt: "0px", mt: "4px" , mr : '16px'}}
                         className="box_info"
-                        fullWidth
+                      
                         inputProps={{ style: { fontSize: 12 } }}
                         InputLabelProps={{ style: { fontSize: 12 } }}
                         variant="outlined"
@@ -267,8 +267,8 @@ export class Devs extends React.Component<IProps> {
                       />
 
                       <TextField
-                        sx={{ pt: "0px", mt: "4px" }}
-                        fullWidth
+                        sx={{ pt: "0px", mt: "4px" , mr : '16px'}}
+                        
                         inputProps={{ style: { fontSize: 12 } }}
                         InputLabelProps={{ style: { fontSize: 12 } }}
                         variant="outlined"
@@ -277,9 +277,7 @@ export class Devs extends React.Component<IProps> {
                         size="small"
                         value={gr_devs[key].latitude || ""}
                       />
-                    </Box>
-
-                    <Link
+                            <Link
                       sx={{
                         fontSize: "1rem",
                         display: "flex",
@@ -304,13 +302,25 @@ export class Devs extends React.Component<IProps> {
                         <DirectionsIcon />
                       </IconButton>
                     </Link>
+                      </Box>
+                
+                
+                 
+                    </Box>
+
+               
+
+                    {gr_devs[key].info && 
+                    
                     <TextareaAutosize
-                      className="info"
-                      aria-label="minimum height"
-                      minRows={4}
-                      style={{ width: "100%", marginTop: "12px" }}
-                      value={gr_devs[key].info || ""}
-                    />
+                    className="info"
+                    aria-label="minimum height"
+                    minRows={4}
+                    style={{ width: "100%", marginTop: "12px" }}
+                    value={gr_devs[key].info || ""}
+                  />}
+                   
+
                     <Calendar />
                     <DevSess />
                   </Box>

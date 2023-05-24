@@ -3,7 +3,6 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 
 export class Dev_sessEntity {
     id: number = 0;
-    time_dev: Date = null;
     time_srv: Date = new Date(Date.now());
     dev_number: string = '';
     dev_id: number = 0;

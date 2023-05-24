@@ -62,19 +62,12 @@ var Dev_povsTable = (function () {
             var db_res, result, p;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log("SELECT AddDev_Povs(" +
+                    case 0: return [4, this.db.query("SELECT AddDev_Povs(" +
                             "CAST (" + this.args.dev_id + " AS BIGINT)," +
                             "CAST ('" + this.args.dev_number + "' AS VARCHAR(80)), " +
                             "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(this.args.start_povs)) + "' AS TIMESTAMP), " +
                             "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(this.args.end_povs)) + "' AS TIMESTAMP), " +
-                            "CAST ('" + this.args.old_dev_povs + "' AS BIGINT)) AS id");
-                        return [4, this.db.query("SELECT AddDev_Povs(" +
-                                "CAST (" + this.args.dev_id + " AS BIGINT)," +
-                                "CAST ('" + this.args.dev_number + "' AS VARCHAR(80)), " +
-                                "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(this.args.start_povs)) + "' AS TIMESTAMP), " +
-                                "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(this.args.end_povs)) + "' AS TIMESTAMP), " +
-                                "CAST ('" + this.args.old_dev_povs + "' AS BIGINT)) AS id")];
+                            "CAST ('" + this.args.old_dev_povs + "' AS BIGINT)) AS id")];
                     case 1:
                         db_res = _a.sent();
                         result = new Array();

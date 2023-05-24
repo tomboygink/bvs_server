@@ -15,8 +15,12 @@ import TableRow from "@mui/material/TableRow";
 
 import { CustomExport } from "./Export";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
-import { Calendar } from "./Calendar";
-import { SsidChart } from "@mui/icons-material";
+
+import {TableSess} from './TableSess'; ////////////////////// Таблица сессий
+
+
+
+
 
 interface IProps {}
 
@@ -58,75 +62,12 @@ export class DevSess extends React.Component<IProps> {
     a.click();
   }
 
-  // async getIntroOfPage(label: any){
 
-  // }
-
-  async setRowId(e: string, time: string) {
-    APP_STORAGE.sensors.setChoseSessTime(time);
-    APP_STORAGE.sensors.setOpenDevsess(true);
-    APP_STORAGE.sensors.setIdDevSess(e);
-    APP_STORAGE.sensors.get_DevSessions(
-      "sess_id",
-      APP_STORAGE.auth_form.getdt()
-    );
-
-    var data: any[] = []; ////// отображаем сенсоры
-
-    let sess = APP_STORAGE.sensors;
-    let sessors;
-    if (sess.getDevSession) {
-      sessors = sess.getDevSession();
- 
-      for (var key in sessors) {
-        let sess_data = JSON.parse(sessors[key].sess_data);
-        const uniqueChars = sess_data.s.reduce((o: any, i: any) => {
-          if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
-            o.push(i);
-          }
-          return o;
-        }, []);
-
-        for (var i in uniqueChars.sort(
-          (a: { depth: number }, b: { depth: number }) => a.depth - b.depth
-        )) {
-          if (
-            String(APP_STORAGE.sensors.getIdDevSess()) ===
-            String(sessors[key].id)
-          ) {
-            data.push({
-              depth: String(uniqueChars[i].depth),
-              "град.": uniqueChars[i].data,
-            });
-          }
-        }
-      }
-    }
-    const mergeByProperty = (arrays: any[], property = "depth") => {
-      const arr = arrays.flatMap((item) => item); //делаем из всех массивов - один
-    
-      const obj = arr.reduce((acc, item) => {
-        return { // делаем из массива - объект, чтобы повторения перезаписывались
-          ...acc,
-          [item[property]]: { ...acc[item[property]], ...item }
-        };
-      }, {});
-    
-      return Object.values(obj); //обратно преобразуем из объекта в массив
-    };
-
-    const result1 = mergeByProperty([data, toJS(APP_STORAGE.sensors.getSessFirstLast())]);
-
-
-    APP_STORAGE.sensors.setSess_middle(data.sort(
-      (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
-    ));
-   
-
-    APP_STORAGE.sensors.setdataCharts(result1.sort(
-      (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
-    ));
+  async set_NewControlDevSess(id: any, dev_id: any, dev_number: any) {
+    APP_STORAGE.devs.set_NewControlDevSess(APP_STORAGE.auth_form.getdt(), id, dev_id, dev_number)
   }
+
+  
 
   async setDevSess() {
     let sess = APP_STORAGE.sensors;
@@ -204,6 +145,9 @@ export class DevSess extends React.Component<IProps> {
         }
 
         date.push(dev_sess[key]);
+
+
+        
         count = Object.keys(dev_sess).length;
 
         if (document.getElementById(dev_sess[key].id)) {
@@ -235,7 +179,7 @@ export class DevSess extends React.Component<IProps> {
               >
                 <Typography sx={{ color: "#266bf1", fontWeight: "500" }}>
                   {" "}
-                  СЕССИИ ЗА ПЕРИОД: (кол-во: {count})
+                  
                 </Typography>
                 <Typography
                   sx={{
@@ -243,45 +187,13 @@ export class DevSess extends React.Component<IProps> {
                     color: "#AAAAAA",
                   }}
                 >
-                  Таблица сессий по периоду
+                  Таблица сессий по периоду (кол-во: {count})
                 </Typography>
               </Box>
 
-              <TableContainer
-                sx={{ mt: "10px", mb: "10px", maxHeight: "100px" }}
-              >
-                <Table>
-                  <TableHead >
-                    <TableRow key='header_12'>
-                      <TableCell sx ={{p: 0, textAlign: 'left'}}>№</TableCell>
-                      <TableCell sx ={{p: 0, textAlign: 'left'}}>Время устройств</TableCell>
-                      <TableCell sx ={{p: 0, textAlign: 'left'}}>Заряд</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {date.map((row: any, i: any) => (
-                      <TableRow
-                        key={"key_row" + row.id}
-                        className="active_row"
-                        id={row.id}
-                        onClick={() => {
-                          this.setRowId(row.id, row.time_dev.replace("T", " "));
-                        }}
-                      >
-                        <TableCell sx={{ p: "4px" }}> {"" + i} </TableCell>
-                        <TableCell sx={{ p: "4px" }}>
-                          {" "}
-                          {"" + row.time_dev.replace("T", " ")}{" "}
-                        </TableCell>
-                        <TableCell sx={{ p: "4px" }}>
-                          {" "}
-                          {"" + row.level_akb}{" "}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+
+            <TableSess />
+              
               <Button
                 className="setDevSess"
                 sx={{
@@ -304,6 +216,8 @@ export class DevSess extends React.Component<IProps> {
                   }}
                 />
               </Button>
+
+
 
               <Button
                 className="setDevSess"

@@ -59,9 +59,11 @@ body {
   background: #fff;
   padding: 20px;
   border-radius: 4px;
+  width: 100%;
+  height: 100%;
 }
 
-.wrappert-devs.chart {
+.chart {
   // grid-template-columns: 70% 30%;
   // column-gap: 12px;
   // display: grid;
@@ -96,6 +98,9 @@ body {
     }
 }
 
+input#datetime-local {
+  font-size: 14px;
+}
 .container_charts {
   padding-top: 12px;
   max-height: 746px;
@@ -347,6 +352,7 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
 .menu-mobile {
  display: none;
 }
+//////////////////////////////////////////////////////////////Power 
 
 
 // @media (max-width: 1700px) {

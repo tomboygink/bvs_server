@@ -29,6 +29,4 @@ export class Control_dev_sessTable {
         for (var p in db_res.rows) { result.push(db_res.rows[p]); }
         return result;
     }
-
-
 }

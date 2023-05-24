@@ -41,7 +41,6 @@ var DBase_1 = require("./DBase");
 var Dev_sessEntity = (function () {
     function Dev_sessEntity() {
         this.id = 0;
-        this.time_dev = null;
         this.time_srv = new Date(Date.now());
         this.dev_number = '';
         this.dev_id = 0;
