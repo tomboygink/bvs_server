@@ -52,7 +52,7 @@ var Devs_groups_1 = require("../xcore/dbase/Devs_groups");
 var Devs_1 = require("../xcore/dbase/Devs");
 var Dev_sess_1 = require("../xcore/dbase/Dev_sess");
 var Dev_Povs_1 = require("../xcore/dbase/Dev_Povs");
-var Control_Dev_Sess_1 = require("../xcore/dbase/Control_Dev_Sess");
+var Control_dev_sess_1 = require("../xcore/dbase/Control_dev_sess");
 function WSRoute(_ws, q) {
     return __awaiter(this, void 0, void 0, function () {
         var wsres, sess_code, data, _a, st, ut, code, ut, st, old_pass, pass, sendMail, _b, orgs, orgs, orgs, jobs, jobs, jobs, ut, ut, dg, dg, dg, dev, dev_povs, dev_povs, control_dev, dev, fl_sess, dev_sess;
@@ -425,7 +425,7 @@ function WSRoute(_ws, q) {
                     wsres.data = data;
                     return [3, 68];
                 case 59:
-                    control_dev = new Control_Dev_Sess_1.Control_dev_sessTable(q.args, q.sess_code);
+                    control_dev = new Control_dev_sess_1.Control_dev_sessTable(q.args, q.sess_code);
                     return [4, control_dev.insertControl_dev_sess()];
                 case 60:
                     data = _c.sent();
