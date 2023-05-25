@@ -13,7 +13,7 @@ import { Devs_groupsTable } from '../xcore/dbase/Devs_groups';
 import { DevsTable } from '../xcore/dbase/Devs';
 import { Dev_sessTable } from '../xcore/dbase/Dev_sess';
 import { Dev_povsTable } from '../xcore/dbase/Dev_Povs';
-import { Control_dev_sessTable } from '../xcore/dbase/Control_Dev_Sess';
+import { Control_dev_sessTable } from '../xcore/dbase/Control_dev_sess';
 
 
 export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
