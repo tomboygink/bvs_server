@@ -92,6 +92,7 @@ export const id_dev_sess = async (event: any, node: any) => {
 }
 
 export const handleChange = async (event: any, node: any) => {
+
   APP_STORAGE.sensors.setActiveButtonSort('sort');
   APP_STORAGE.sensors.setActiveButtonSortDesc('sort');
   APP_STORAGE.sensors.setdataCharts([]);

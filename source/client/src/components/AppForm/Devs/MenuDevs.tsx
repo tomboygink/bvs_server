@@ -152,7 +152,20 @@ export class MenuDevs extends React.Component<IProps> {
                                       Поверочный интервал
                                       </MenuItem>
 
-                                   
+                                      <MenuItem>
+                                      <ListItemIcon>
+                                        <MiscellaneousServicesIcon fontSize= "small" />
+                                        Поверочный интервал
+                                      </ListItemIcon>
+                                      
+                                      </MenuItem>
+
+                                      {/* <TableCell component="th" scope="row"  >
+                            <Button  sx={{fontSize: '12px'}} onClick={() => {
+                            this.set_NewControlDevSess(row.id, row.dev_id, row.dev_number);
+                          }}> установить </Button>
+                            
+                          </TableCell> */}
                                       </Menu>
                                       </div>
     

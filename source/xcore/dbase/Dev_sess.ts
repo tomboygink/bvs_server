@@ -59,6 +59,7 @@ export class Dev_sessTable {
 
             //var timedev = new Date(db_res.rows[i].time_dev);//.toISOString().slice(0,19).replace('T', ' ');
             //var dev = timedev.getTimezoneOffset()*60000;
+            
 
             var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
 

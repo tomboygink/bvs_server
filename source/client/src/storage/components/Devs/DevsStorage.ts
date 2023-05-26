@@ -79,7 +79,7 @@ export class DevsStorage {
   ///////////////////////////////////////////////////////////////////////////  Таблица сессий
 
 
-  @observable rowsPerPage: number = 5;
+  @observable rowsPerPage: number = 3;
   @observable page: number = 0;
 
   constructor() {

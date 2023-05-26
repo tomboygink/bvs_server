@@ -61,6 +61,7 @@ body {
   border-radius: 4px;
   width: 100%;
   height: 100%;
+  min-width: 50%;
 }
 
 .chart {
@@ -69,10 +70,9 @@ body {
   // display: grid;
   display: flex;
   justify-content: space-between;
+  
 }
-// .css-1g86id8-MuiTreeItem-content .MuiTreeItem-label, .css-170guiz-MuiTypography-root, .css-2mihi7-MuiTypography-root{
-//   font-size: 14px!important;
-// }
+
 .blocks {
     display: grid;
     align-items: start;
@@ -153,7 +153,7 @@ input#datetime-local {
         > .item-3 {
           grid-column: 1/14;
           grid-row: 2;
-          background: #babbbd;
+          background: #eee;
           height: 1px;
       }
 
@@ -352,17 +352,18 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
 .menu-mobile {
  display: none;
 }
-//////////////////////////////////////////////////////////////Power 
 
 
-// @media (max-width: 1700px) {
-//   .menu {
-//     column-gap: 0px;
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: space-between;
-//     background: #266bf1;
-//   }
+
+@media (max-width: 500px) {
+  .chart {
+    flex-wrap: wrap;
+    }
+    .wrappert-devs.MuiBox-root.css-19gha27 {
+      margin-right: 0;
+  }
+  }
+
 
 //   .css-c3vlm2 {
 //     background: #9783be;

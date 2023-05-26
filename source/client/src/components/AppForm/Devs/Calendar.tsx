@@ -52,10 +52,10 @@ export class Calendar extends React.Component<IProps> {
       <React.Fragment>
         <Divider sx={{ m: "20px" , background: '#8F9DCE;'}} />
 
-        <Box sx={{display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
 
         <Box>
-          <Box sx ={{display: 'flex'}}>
+          <Box sx ={{display: 'flex', flexWrap: 'wrap'}}>
             <TextField
                className="qweqweqwre"
               size="small"
@@ -68,14 +68,14 @@ export class Calendar extends React.Component<IProps> {
               onChange={(e) => {
                 APP_STORAGE.sensors.setSessPeriodStart(e.target.value);
               }}
-              sx={{ mr: "16px", fontSize: '14px'}}
+              sx={{ mr: "16px", fontSize: '14px', mb: '8px'}}
               InputLabelProps={{
                 shrink: true,
               }}
             />
 
             <TextField
-            sx ={{fontSize: '12px!important', mr: "16px"}}
+            sx ={{fontSize: '12px!important', mr: "16px",  mb: '8px'}}
               size="small"
               id="datetime-local"
               type="datetime-local"
@@ -93,7 +93,8 @@ export class Calendar extends React.Component<IProps> {
             sx={{
               background: "#266BF1",
               color: "#fff;",
-              fontSize: "12px"
+              fontSize: "12px",
+              height: '37px'
             }}
             onClick={() => {
               this.setDevSess();
@@ -102,8 +103,6 @@ export class Calendar extends React.Component<IProps> {
             Установить период
           </Button>
           </Box>
-
-         
         </Box>
 
         {/* <Box className="legend" sx={{background: '#f5f8fd', borderRadius: '4px', border: '1px solid #8F9DCE', p: '4px', boxShadow: '-1px 0px 8px -2px rgba(34, 60, 80, 0.2)'}}>

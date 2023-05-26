@@ -209,6 +209,26 @@ export class Sensors extends React.Component<IProps> {
 
 
   render(): React.ReactNode {
+
+
+let FirstData = APP_STORAGE.sensors.getTimeDevSessFirst().split('T')[0]; ///////// Перевернуть дату
+const [year_first, month_first, day_first] = FirstData.split('-');
+ let FirstSess = `${day_first}.${month_first}.${year_first}`;
+ let FirstTimeSess = APP_STORAGE.sensors.getTimeDevSessFirst().split('T')[1];
+
+ let LastData = APP_STORAGE.sensors.getTimeDevSessLast().split('T')[0]; ///////// Перевернуть дату
+ const [year_last, month_last, day_last] = LastData.split('-');
+ let LastSess = `${day_last}.${month_last}.${year_last}`;
+ let LastTimeSess = APP_STORAGE.sensors.getTimeDevSessLast().split('T')[1];
+
+ let ChoseData = APP_STORAGE.sensors.getChoseSessTime().split('T')[0]; ///////// Перевернуть дату
+ const [year_chose, month_chose, day_chose] = ChoseData.split('-');
+ let ChoseSess = `${day_chose}.${month_chose}.${year_chose}`;
+ let ChoseTimeSess = APP_STORAGE.sensors.getChoseSessTime().split('T')[1];
+
+
+
+
     return (
       <>
        {APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
@@ -267,11 +287,9 @@ export class Sensors extends React.Component<IProps> {
           </Box>
         </Box>
 
-{APP_STORAGE.sensors.getTimeDevSessFirst() && 
+{FirstTimeSess && APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
 <>
  <Typography sx={{ fontWeight: "500" , color: '#0D1C52', mb : '12px', mt: '40px' }}>  Дополнительная информация </Typography>
-
-
  <Box
     sx={{
      width: "100%",
@@ -281,18 +299,20 @@ export class Sensors extends React.Component<IProps> {
      display: "flex",
      padding: '16px',
      flexDirection: 'column',
-     
      overflow: "auto",
    }}
  >
 
-<Box  sx = {{fontSize: '15px', color:'#000', display: 'flex', pb: '12px', justifyContent: 'flex-start', alignItems: 'center'}} ><CommitIcon sx ={{color: '#0BF1CA'}}/> {APP_STORAGE.sensors.getTimeDevSessFirst().replace('T',' ')} <Typography sx ={{color: '#808080', fontSize: '12px'}}> (первая сессия)  </Typography> </Box>
-<Box sx = {{fontSize: '15px', color:'#000', display: 'flex' , pb: '12px' , justifyContent: 'flex-start', alignItems: 'center'}} ><CommitIcon sx ={{color: '#A178FB'}}/>  {APP_STORAGE.sensors.getTimeDevSessLast().replace('T',' ')} <Typography sx ={{color: '#808080', fontSize: '12px'}}> (последняя сессия)  </Typography></Box>
+<Box  sx = {{fontSize: '15px', color:'#000', display: 'flex', pb: '12px', justifyContent: 'flex-start', alignItems: 'center'}} ><CommitIcon sx ={{color: '#0BF1CA'}}/> 
+{FirstSess} {''} {FirstTimeSess.replace('T', ' ')}
+<Typography sx ={{color: '#808080', fontSize: '12px'}}> {''} (первая сессия)  </Typography> </Box>
+<Box sx = {{fontSize: '15px', color:'#000', display: 'flex' , pb: '12px' , justifyContent: 'flex-start', alignItems: 'center'}} >
+  <CommitIcon sx ={{color: '#A178FB'}}/>  {LastSess} {''} {LastTimeSess.replace('T', ' ')} 
+  <Typography sx ={{color: '#808080', fontSize: '12px'}}> {''} (последняя сессия)  </Typography></Box>
 {APP_STORAGE.sensors.getChoseSessTime() && 
-       <Box sx = {{fontSize: '15px', color:'#000', display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}} ><CommitIcon sx ={{color: '#FD8A04'}}/>  {APP_STORAGE.sensors.getChoseSessTime().replace('T', ' ')} <Typography sx ={{color: '#808080', fontSize: '12px'}}> (выбранная сесия)  </Typography></Box>
+       <Box sx = {{fontSize: '15px', color:'#000', display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}} >
+        <CommitIcon sx ={{color: '#FD8A04'}}/>  {ChoseSess} {''} {ChoseTimeSess.replace('T', ' ')} <Typography sx ={{color: '#808080', fontSize: '12px'}}> {''} (выбранная сесия)  </Typography></Box>
      }
-
-
  </Box>
  </>
 }

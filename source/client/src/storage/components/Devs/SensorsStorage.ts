@@ -148,6 +148,21 @@ export class SensorsStorage {
         }
       }
 
+      async get_DevPovs(value: any, dev_id : any, dev_number: any){
+        var sess_code = value;
+
+        var q: IWSQuery = new WSQuery("get_DevPovs");
+        {
+          q.args = {
+            id: dev_id,
+            dev_number: dev_number
+          }
+          q.sess_code = sess_code;
+          (await WSocket.get()).send(q)
+
+        }
+      }
+
       
   async setDevSess(dt: IWSResult) {
     this.setDevSession(dt.data); 
@@ -156,9 +171,14 @@ export class SensorsStorage {
 
   async set_DevFirstLastSessions(dt: IWSResult) {
      if(Object.keys(dt.data).length > 0){
+
+//       const [year, month, day] = '2020-02-18'.split('-');
+// alert(`${day}.${month}.${year}`)
       
       let start_sess = JSON.parse(dt.data[1].sess_data);
       let end_sess = JSON.parse(dt.data[0].sess_data);
+
+
 
       this.setTimeDevSessFirst(dt.data[1].time_dev);
       this.setTimeDevSessLast(dt.data[0].time_dev);

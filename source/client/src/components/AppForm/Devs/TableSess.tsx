@@ -181,27 +181,14 @@ export class TableSess extends React.Component<IProps> {
       }
     }
 
-    let page = APP_STORAGE.devs.getPage();
-    let rowsPerPage = APP_STORAGE.devs.getRowsPerPage();
+    let page = APP_STORAGE.devs.getPage(); 
+    let rowsPerPage = APP_STORAGE.devs.getRowsPerPage(); /////// Начальное кол-во страниц
 
     const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - date.length) : 0;
 
-    if (document.getElementById(dev_sess[key].id)) {
-      if (
-        document.getElementById(dev_sess[key].id).id ===
-        APP_STORAGE.sensors.getIdDevSess()
-      ) {
-        document.getElementById(dev_sess[key].id).style.backgroundColor =
-          "#E3EEFA";
-      } else if (
-        document.getElementById(dev_sess[key].id).id !==
-        APP_STORAGE.sensors.getIdDevSess()
-      ) {
-        document.getElementById(dev_sess[key].id).style.backgroundColor =
-          "#fff";
-      }
-    }
+
+   
 
     return (
       <React.Fragment>
@@ -219,7 +206,7 @@ export class TableSess extends React.Component<IProps> {
                           </TableCell>
                           
                           <TableCell style={{ width: 160 }} align="center">
-                          Время устройств
+                          Время устройства
                           </TableCell>
                           <TableCell style={{ width: 160 }} align="center">
                             Заряд
@@ -239,13 +226,13 @@ export class TableSess extends React.Component<IProps> {
                           key={row.id}
                         >
                           <TableCell component="th" scope="row">
-                            {row.dev_number}
+                            {row.id}
                           </TableCell>
                        
-                          <TableCell style={{ width: 160 }} align="right">
+                          <TableCell style={{ width: 160 }} align="center">
                             {row.time_dev.replace('T', ' ')}
                           </TableCell>
-                          <TableCell style={{ width: 160 }} align="right">
+                          <TableCell style={{ width: 160 }} align="center">
                             {row.level_akb}
                           </TableCell>
 
@@ -255,6 +242,7 @@ export class TableSess extends React.Component<IProps> {
                           }}> установить </Button>
                             
                           </TableCell>
+                          
                           <TableCell component="th" scope="row"  >
                             <Button sx={{fontSize: '12px'}} onClick={() => {
                             this.setRowId(row.id, row.time_dev);
@@ -274,18 +262,14 @@ export class TableSess extends React.Component<IProps> {
                   <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              sx = {{width: '100%'}}
+              rowsPerPageOptions={[3, 10, 25, { label: 'Все', value: -1 }]}
               colSpan={3}
               count={date.length}
               rowsPerPage={rowsPerPage}
               labelRowsPerPage={"строк на странице"}
               page={page}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'rows per page',
-                },
-                native: true,
-              }}
+             
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
               //ActionsComponent={TablePaginationActions}

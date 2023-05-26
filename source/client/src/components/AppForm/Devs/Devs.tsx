@@ -4,11 +4,12 @@ import { CONFIG } from "../../../../../xcore/config";
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
+
 import {
   Box,
   Typography,
   TextField,
-  Link, TextareaAutosize
+  Link, TextareaAutosize, Button
 } from "@mui/material";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
@@ -21,6 +22,8 @@ import { MenuDevs } from "./MenuDevs";
 import { Calendar } from "./Calendar";
 import { DevSessCharts } from "../Sensors/DevSessCharts";
 import { DevSess } from "./DevSess";
+
+import Collapse from '@mui/material/Collapse';
 
 interface IProps {}
 
@@ -62,6 +65,7 @@ export class Devs extends React.Component<IProps> {
 
           setTimeout(() => {  ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
             APP_STORAGE.sensors.get_DevFirstLastSessions("sess_id", APP_STORAGE.auth_form.getdt());
+           //// APP_STORAGE.sensors.get_DevPovs(APP_STORAGE.auth_form.getdt(), gr_devs[key].id, gr_devs[key].number)
           }, 100);
 
 
@@ -213,6 +217,7 @@ export class Devs extends React.Component<IProps> {
                     </Box>
 
                     <Box sx ={{width: '100%'}}>
+                    <Collapse in={false} timeout="auto" unmountOnExit />
                       <TextField
                         sx={{ pt: "0px", mt: "4px" }}
                         className="box_info"
@@ -303,12 +308,8 @@ export class Devs extends React.Component<IProps> {
                       </IconButton>
                     </Link>
                       </Box>
-                
-                
-                 
                     </Box>
 
-               
 
                     {gr_devs[key].info && 
                     
@@ -325,6 +326,7 @@ export class Devs extends React.Component<IProps> {
                     <DevSess />
                   </Box>
                   <DevSessCharts />
+                  
                 </Box>
               </React.Fragment>
             );
