@@ -200,7 +200,7 @@ CREATE OR REPLACE FUNCTION SelectDev_Povs(
 	old_dev_povs BIGINT
 )
 AS $$
-	select * from dev_povs WHERE dev_id = c_dev_id AND dev_number = c_dev_number;
+	select * from dev_povs WHERE dev_id = c_dev_id AND dev_number = c_dev_number order by id asc limit 1;
 $$
 LANGUAGE SQL;
 

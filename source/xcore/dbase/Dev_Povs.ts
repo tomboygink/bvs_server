@@ -34,6 +34,7 @@ export class Dev_povsTable {
         return result;
     }
 
+    //Выбор поверочного интервала
     async selectDev_povs():Promise<Dev_povsEntity[]>
     {
         var db_res = await this.db.query("SELECT * FROM SelectDev_Povs('" + 

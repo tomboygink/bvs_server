@@ -29,4 +29,11 @@ export class Control_dev_sessTable {
         for (var p in db_res.rows) { result.push(db_res.rows[p]); }
         return result;
     }
+
+    //Удаление контрольной сессии 
+    async deleteControl_dev_sess()
+    {
+        await this.db.query("DELETE * FROM control_dev_sess WHERE id = ('" + this.args.id + "')");
+
+    }
 }
