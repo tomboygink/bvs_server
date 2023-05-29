@@ -156,7 +156,7 @@ export class DevSess extends React.Component<IProps> {
             APP_STORAGE.sensors.getIdDevSess()
           ) {
             document.getElementById(dev_sess[key].id).style.backgroundColor =
-              "#E3EEFA";
+              "#F3F8FD";
           } else if (
             document.getElementById(dev_sess[key].id).id !==
             APP_STORAGE.sensors.getIdDevSess()
@@ -177,10 +177,7 @@ export class DevSess extends React.Component<IProps> {
                 className="session_pediod"
                 sx={{ display: "flex", justifyContent: "space-between" }}
               >
-                <Typography sx={{ color: "#266bf1", fontWeight: "500" }}>
-                  {" "}
-                  
-                </Typography>
+                
                 <Typography
                   sx={{
                     fontSize: "12px",
@@ -190,7 +187,6 @@ export class DevSess extends React.Component<IProps> {
                   Таблица сессий по периоду (кол-во: {count})
                 </Typography>
               </Box>
-
 
             <TableSess />
               

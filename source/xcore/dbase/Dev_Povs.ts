@@ -37,7 +37,7 @@ export class Dev_povsTable {
     async selectDev_povs():Promise<Dev_povsEntity[]>
     {
         var db_res = await this.db.query("SELECT * FROM SelectDev_Povs('" + 
-        this.args.dev_id + "', '"+this.args.dev_number+"')");
+        this.args.id + "', '"+this.args.dev_number+"')");
         var result:Dev_povsEntity[] = new Array();
         for(var p in db_res.rows) {result.push(db_res.rows[p]);}
         return result;

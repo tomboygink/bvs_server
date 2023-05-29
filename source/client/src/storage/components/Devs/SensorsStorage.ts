@@ -23,6 +23,7 @@ export class SensorsStorage {
 
     @observable anchorEl: string = '';
     @observable number: string = '';
+    @observable id_dev: string = '';
 
     @observable id_dev_sess: string = '';
     @observable chose_sess_time : string = '';
@@ -40,6 +41,10 @@ export class SensorsStorage {
     @observable time_dev_firstsess : string = '';
     @observable time_dev_lastsess : string = '';
     @observable akb_lastsess : string = '';
+
+
+    @observable id_firstsess : string  = '';
+    @observable id_lastsess : string  = '';
     
     constructor(){
         makeAutoObservable(this);
@@ -89,6 +94,9 @@ export class SensorsStorage {
     @action setSessPeriodEnd(val : string) {this.sess_period_end = val};
     @computed getSessPeriodEnd() : string {return this.sess_period_end};
 
+    @action setIdDev(val: string) {this.id_dev = val}
+    @computed getIdDev(): string {return this.id_dev;} 
+
     @action setNumber(val: string) {this.number = val}
     @computed getNumber(): string {return this.number;}
 
@@ -112,6 +120,13 @@ export class SensorsStorage {
 
     @action setSess_middle(val: Array<any>) { this.sess_middle = val; } 
     @computed getSess_middle(): Array<any> { return this.sess_middle; }
+
+    
+    @action setIdFirstSess(val: string) { this.id_firstsess = val; } 
+    @computed getIdFirstSess(): string { return this.id_firstsess; }
+
+    @action setIdLastSess(val: string) { this.id_lastsess = val; } 
+    @computed getIdLastSess(): string { return this.id_lastsess; }
 
     @action setexample(val: Array<any>) { this.example = val; } 
     @computed getexample(): Array<any> { return this.example; }
@@ -148,6 +163,21 @@ export class SensorsStorage {
         }
       }
 
+      async get_DevPovs(value: any){
+        var sess_code = value;
+
+        var q: IWSQuery = new WSQuery("get_DevPovs");
+        {
+          q.args = {
+            id: APP_STORAGE.sensors.getIdDev(),
+            dev_number: APP_STORAGE.sensors.getNumber()
+          }
+          q.sess_code = sess_code;
+          (await WSocket.get()).send(q)
+
+        }
+      }
+
       
   async setDevSess(dt: IWSResult) {
     this.setDevSession(dt.data); 
@@ -156,12 +186,21 @@ export class SensorsStorage {
 
   async set_DevFirstLastSessions(dt: IWSResult) {
      if(Object.keys(dt.data).length > 0){
+
+//       const [year, month, day] = '2020-02-18'.split('-');
+// alert(`${day}.${month}.${year}`)
       
       let start_sess = JSON.parse(dt.data[1].sess_data);
       let end_sess = JSON.parse(dt.data[0].sess_data);
 
+
+
       this.setTimeDevSessFirst(dt.data[1].time_dev);
       this.setTimeDevSessLast(dt.data[0].time_dev);
+      this.setIdFirstSess(dt.data[1].id); 
+      this.setIdLastSess(dt.data[0].id);
+
+
       this.setAkbSessLast(dt.data[0].level_akb)
     
       var obj_first: any = {

@@ -98,7 +98,8 @@ class AppStorage {
             case ('get_Devs'): { this.devs.setDevsAll(dt) } break;
             case ('get_DevSessions'): { this.sensors.setDevSess(dt)} break;
             case('get_DevFirstLastSessions'): { this.sensors.set_DevFirstLastSessions(dt)} break;
-            case('set_ChangeOrg'): {this.org.get_ChangeOrg(dt)}
+            case('set_ChangeOrg'): {this.org.get_ChangeOrg(dt)};
+            case('set_NewControlDevSess') : {this.devs.get_NewControlDevSess(dt)}
             default: { } break;
         }
     }

@@ -384,7 +384,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
             else {
                 wsres.code = q.sess_code;
-                wsres.data = [];
+                wsres.data = [q.args.dev_sess_id];
                 wsres.error = null;
             }
         } break;
@@ -421,8 +421,9 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             data = await dev_sess.selectDevSess();
             wsres.error = null;
             wsres.code = q.sess_code;
-            //console.log(data);
+            console.log(data);
             wsres.data = data;
+            
         }
             break;
 

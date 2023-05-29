@@ -69,9 +69,9 @@ export class DevSessCharts extends React.Component<IProps> {
         <Box
         className="container_charts"
         sx={{
-          background: "#f1f5fcb3",
+          background: "#fff",
           borderTopLeftRadius: "48px",
-          border: "1px solid #8F9DCE"
+          border: "1px solid #eee"
         }}
       >
                <svg width="51" className="item-1" height="732" viewBox="0 0 51 732" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -232,9 +232,9 @@ export class DevSessCharts extends React.Component<IProps> {
           <Box
             className="container_charts"
             sx={{
-              background: "#f1f5fcb3",
+              background: "#fff",
               borderTopLeftRadius: "48px",
-              border: "1px solid #8F9DCE"
+              border: "1px solid #eee"
             }}
           >
  <svg width="51" className="item-1" height="732" viewBox="0 0 51 732" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -291,7 +291,7 @@ export class DevSessCharts extends React.Component<IProps> {
 </defs>
 </svg>
 
- < Box className="item-3" />
+ {/* < Box className="item-3" /> */}
 
             <ResponsiveContainer className="item-2" width="100%">
               <LineChart
@@ -359,9 +359,9 @@ export class DevSessCharts extends React.Component<IProps> {
         <Box
             className="container_charts"
             sx={{
-              background: "#f1f5fcb3",
+              background: "#fff",
               borderTopLeftRadius: "48px",
-              border: "1px solid #8F9DCE"
+              border: "1px solid #eee"
             }}
           >
           <svg width="51" className="item-1" height="732" viewBox="0 0 51 732" fill="none" xmlns="http://www.w3.org/2000/svg">

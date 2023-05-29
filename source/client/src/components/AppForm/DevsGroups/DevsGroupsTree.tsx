@@ -78,10 +78,12 @@ export class DevsGroupsTree extends React.Component<IProps> {
       //////----------------------------------Определяем сколько дней прошло с даты otherDate по nowDate
        let otherDate=new Date(dev.time);
        let nowDate= new Date();
+       
+       
+
        let delta=nowDate.getTime()-otherDate.getTime();
        
        var passedDay= Math.floor(delta/1000/60/60/24) ///////////////////( new Date( ( new Date() ).toDateString() ) - 86400000 ); // 24*60*60*1000
-      
       
        if(passedDay === 0){
         return (
@@ -180,8 +182,8 @@ export class DevsGroupsTree extends React.Component<IProps> {
      let nowDate= new Date();
      let delta=nowDate.getTime()-otherDate.getTime();
      
-     var passedDay= Math.floor(delta/1000/60/60/24) ///////////////////( new Date( ( new Date() ).toDateString() ) - 86400000 ); // 24*60*60*1000
-    
+     var passedDay= Math.floor(delta/1000/60/60/24) ;///////////////////( new Date( ( new Date() ).toDateString() ) - 86400000 ); // 24*60*60*1000
+  
     
      if(passedDay === 0){
       return (

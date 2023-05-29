@@ -13,6 +13,9 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices';
 
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+
+
 import DirectionsIcon from '@mui/icons-material/Directions';
 
 
@@ -36,9 +39,7 @@ export class MenuDevs extends React.Component<IProps> {
     return this.PassValueEditForm(DevGr); 
   }
 
-  async set_NewDevPovs() {
-    APP_STORAGE.devs.set_NewDevPovs("sess_id", APP_STORAGE.auth_form.getdt())
-  }
+ 
 
   async set_NewControlDevSess() {
     //APP_STORAGE.devs.set_NewControlDevSess("sess_id", APP_STORAGE.auth_form.getdt())
@@ -80,12 +81,13 @@ export class MenuDevs extends React.Component<IProps> {
             devGr.setOpen_menu(false);
           }
       if(dev.getMenu_devs() === '2'){
-        devGr.setOpenModalMoveDevsGr(true);
+        devGr.setOpenModalMoveDevsGr(true);APP_STORAGE.devs.getOpenNewdevpovs()
         devGr.setOpen_menu(false);
           }
         
       if(dev.getMenu_devs() === '3'){
-        this.set_NewDevPovs()
+        // this.set_NewDevPovs()
+        APP_STORAGE.devs.setOpenNewdevpovs(true);
       }
 
       if(dev.getMenu_devs() === '4'){
@@ -153,6 +155,22 @@ export class MenuDevs extends React.Component<IProps> {
                                       </MenuItem>
 
                                    
+
+                                      <MenuItem sx = {{mb: '8px'}}>
+                                      <ListItemIcon>
+                                        <DeleteOutlineIcon fontSize= "small" />
+                                        Удалить контрольную сессию
+                                      </ListItemIcon>
+                                      
+                                      
+                                      </MenuItem >
+
+                                      {/* <TableCell component="th" scope="row"  >
+                            <Button  sx={{fontSize: '12px'}} onClick={() => {
+                            this.set_NewControlDevSess(row.id, row.dev_id, row.dev_number);
+                          }}> установить </Button>
+                            
+                          </TableCell> */}
                                       </Menu>
                                       </div>
     
