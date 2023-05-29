@@ -389,6 +389,18 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             }
         } break;
 
+        //------------------------------------------------------------------------УДАЛЕНИЕ КОНТРОЛЬНОЙ СЕСССИИ 
+        case 'deleteControlDevSess':{
+            var deleteControlDevSess = new Control_dev_sessTable(q.args, q.sess_code);
+            deleteControlDevSess.deleteControl_dev_sess();
+            wsres.code = '';
+            wsres.data = [];
+            wsres.error = null;
+
+
+
+        }break;
+
 
         //Изменение устройства
         case 'set_ChangeDevs': {
@@ -421,7 +433,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             data = await dev_sess.selectDevSess();
             wsres.error = null;
             wsres.code = q.sess_code;
-            console.log(data);
+            //console.log(data);
             wsres.data = data;
             
         }
