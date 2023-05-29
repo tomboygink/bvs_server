@@ -419,7 +419,6 @@ export class DevsStorage {
 
   async set_NewDevPovs(name: string, value: any, _options?: any){ //////// Поверочный интервал
     var sess_code = value; 
-    var date = '2023-03-29 15:37'; //////// Исправить на актуальные данные
     var q: IWSQuery = new WSQuery ('set_NewDevPovs');
 
     q.args = {
@@ -427,7 +426,7 @@ export class DevsStorage {
       dev_number : this.getNumber() ,
       start_povs: this.getStartDevPovs(),
       end_povs : this.getEndDevPovs(), 
-      old_dev_povs : 0
+      old_dev_povs : APP_STORAGE.sensors.getOldDevPovs()
     } 
     q.sess_code  = sess_code;
     (await WSocket.get()).send(q);    
@@ -453,8 +452,5 @@ export class DevsStorage {
     this.setDeactivateControlSess(dt.data);
     this.setErrorControlSess(dt.error);
     APP_STORAGE.sensors.get_DevFirstLastSessions("sess_id", APP_STORAGE.auth_form.getdt());
-
-    console.log('this.setErrorControlSess', this.getErrorControlSess())
-    console.log('this.setDeactivate1112', toJS(this.getDeactivateControlSess()[0]))
   }
 }

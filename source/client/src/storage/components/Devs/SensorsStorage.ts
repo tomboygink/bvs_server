@@ -45,6 +45,8 @@ export class SensorsStorage {
 
     @observable id_firstsess : string  = '';
     @observable id_lastsess : string  = '';
+
+    @observable old_dev_povs: string = ''
     
     constructor(){
         makeAutoObservable(this);
@@ -131,9 +133,8 @@ export class SensorsStorage {
     @action setexample(val: Array<any>) { this.example = val; } 
     @computed getexample(): Array<any> { return this.example; }
 
-    
-
-    
+    @action setOldDevPovs(val : string) {this.old_dev_povs = val};
+    @computed getOldDevPovs() : string {return this.old_dev_povs};
 
 
     async get_DevSessions(name: string, value: any, _options?: any) {
@@ -178,7 +179,17 @@ export class SensorsStorage {
         }
       }
 
-      
+      async set_DevPovs(dt: IWSResult) {
+        if(Object.keys(dt.data).length !== 0){
+          this.setOldDevPovs(dt.data[0].id);
+        }
+        else if(Object.keys(dt.data).length === 0){
+          this.setOldDevPovs('0');
+        }
+     
+      }
+
+
   async setDevSess(dt: IWSResult) {
     this.setDevSession(dt.data); 
   }
