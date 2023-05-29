@@ -1,4 +1,4 @@
-import { observable, action, computed, makeAutoObservable } from 'mobx';
+import { observable, action, computed, makeAutoObservable , toJS} from 'mobx';
 import { UsersEntity } from '../../../../../xcore/dbase/Users';
 import { IWSQuery, WSQuery, IWSResult } from '../../../../../xcore/WSQuery';
 import { WSocket } from '../../WSocket';
@@ -73,7 +73,15 @@ export class DevsStorage {
   @observable save :string = '';
 
 
+  @observable deactivate_constrolsess : any = ''
+  @observable error_controlsess : any = '';
 
+
+  @observable open_newdevpovs : boolean = false;
+
+
+  @observable start_devpovs: string = '';
+  @observable end_devpovs: string = '';
 
 
   ///////////////////////////////////////////////////////////////////////////  Таблица сессий
@@ -85,6 +93,13 @@ export class DevsStorage {
   constructor() {
     makeAutoObservable(this);
   }
+  
+
+  @action setDeactivateControlSess(val: any) { this.deactivate_constrolsess = val };
+  @computed getDeactivateControlSess(): any { return this.deactivate_constrolsess };
+
+  @action setErrorControlSess(val: any ) { this.error_controlsess = val};
+  @computed getErrorControlSess(): any { return this.deactivate_constrolsess };
  
   @action setRowsPerPage(val: number) { this.rowsPerPage = val };
   @computed getRowsPerPage(): number { return this.rowsPerPage };
@@ -207,6 +222,18 @@ export class DevsStorage {
   @computed getLongitudeError(): boolean { return this.longitude_err }
   @action setLongitudeError_mess(val: string) { this.longitude_err_mess = val }
   @computed getLongitudeError_mess(): string { return this.longitude_err_mess }
+
+  @action setOpenNewdevpovs(val: boolean) { this.open_newdevpovs = val}
+  @computed getOpenNewdevpovs(): boolean { return this.open_newdevpovs }
+
+
+
+
+  @action setStartDevPovs(val: string) { this.start_devpovs = val }; //////////////////// Установить поверочный интервал начало
+  @computed getStartDevPovs(): string { return this.start_devpovs };
+
+  @action setEndDevPovs(val: string) { this.end_devpovs = val }; //////////////////// Установить поверочный интервал окнчание
+  @computed getEndDevPovs(): string { return this.end_devpovs };
 
 
   async get_Devs(name: string, value: any, _options?: any) {
@@ -398,8 +425,8 @@ export class DevsStorage {
     q.args = {
       dev_id  :  this.getId(),
       dev_number : this.getNumber() ,
-      start_povs: date,
-      end_povs : date, 
+      start_povs: this.getStartDevPovs(),
+      end_povs : this.getEndDevPovs(), 
       old_dev_povs : 0
     } 
     q.sess_code  = sess_code;
@@ -420,4 +447,14 @@ export class DevsStorage {
     (await WSocket.get()).send(q);    
   }
 
+
+  async get_NewControlDevSess(dt: IWSResult) {
+    /* -----  Получаем все должности   */
+    this.setDeactivateControlSess(dt.data);
+    this.setErrorControlSess(dt.error);
+    APP_STORAGE.sensors.get_DevFirstLastSessions("sess_id", APP_STORAGE.auth_form.getdt());
+
+    console.log('this.setErrorControlSess', this.getErrorControlSess())
+    console.log('this.setDeactivate1112', toJS(this.getDeactivateControlSess()[0]))
+  }
 }

@@ -305,7 +305,7 @@ const [year_first, month_first, day_first] = FirstData.split('-');
 
 <Box  sx = {{fontSize: '15px', color:'#000', display: 'flex', pb: '12px', justifyContent: 'flex-start', alignItems: 'center'}} ><CommitIcon sx ={{color: '#0BF1CA'}}/> 
 {FirstSess} {''} {FirstTimeSess.replace('T', ' ')}
-<Typography sx ={{color: '#808080', fontSize: '12px'}}> {''} (первая сессия)  </Typography> </Box>
+<Typography sx ={{color: '#808080', fontSize: '12px'}}> {''} (контрольная сессия)  </Typography> </Box>
 <Box sx = {{fontSize: '15px', color:'#000', display: 'flex' , pb: '12px' , justifyContent: 'flex-start', alignItems: 'center'}} >
   <CommitIcon sx ={{color: '#A178FB'}}/>  {LastSess} {''} {LastTimeSess.replace('T', ' ')} 
   <Typography sx ={{color: '#808080', fontSize: '12px'}}> {''} (последняя сессия)  </Typography></Box>

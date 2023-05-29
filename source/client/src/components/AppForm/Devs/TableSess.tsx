@@ -235,13 +235,51 @@ export class TableSess extends React.Component<IProps> {
                           <TableCell style={{ width: 160 }} align="center">
                             {row.level_akb}
                           </TableCell>
+                          
+                       
+                                
 
-                          <TableCell component="th" scope="row"  >
-                            <Button  sx={{fontSize: '12px'}} onClick={() => {
-                            this.set_NewControlDevSess(row.id, row.dev_id, row.dev_number);
-                          }}> установить </Button>
-                            
-                          </TableCell>
+                              {/* <TableCell component="th" scope="row"  >
+                                 {APP_STORAGE.sensors.getIdFirstSess() === APP_STORAGE.sensors.getIdLastSess() && 
+
+                                <Button  sx={{fontSize: '12px'}} onClick={() => {
+                                 this.set_NewControlDevSess(row.id, row.dev_id, row.dev_number);
+                               }}> 
+                               установить 11
+                               </Button> 
+     }
+                              </TableCell> */}
+
+{APP_STORAGE.sensors.getIdFirstSess() === APP_STORAGE.sensors.getIdLastSess() &&
+                                 <TableCell component="th" scope="row"  >
+                                 <Button  sx={{fontSize: '12px'}} onClick={() => {
+                                 this.set_NewControlDevSess(row.id, row.dev_id, row.dev_number);
+                               }}> 
+                               Установить
+                               </Button>  
+                              </TableCell>
+
+}
+
+
+
+{APP_STORAGE.sensors.getIdFirstSess() !== APP_STORAGE.sensors.getIdLastSess() && String(toJS(APP_STORAGE.sensors.getIdFirstSess())) === String(row.id) &&
+                                 <TableCell component="th" scope="row"  >
+                                 <Button  sx={{fontSize: '12px'}} > 
+                               Установлено
+                               </Button>  
+                              </TableCell>
+
+}
+
+{APP_STORAGE.sensors.getIdFirstSess() !== APP_STORAGE.sensors.getIdLastSess() && String(toJS(APP_STORAGE.sensors.getIdFirstSess())) !== String(row.id) &&
+                                 <TableCell component="th" scope="row"  >
+                               <Button  sx={{fontSize: '12px', color: '#eee'}} > 
+                               установить
+                               </Button> 
+                              </TableCell>
+
+}
                           
                           <TableCell component="th" scope="row"  >
                             <Button sx={{fontSize: '12px'}} onClick={() => {
@@ -257,9 +295,9 @@ export class TableSess extends React.Component<IProps> {
               <TableCell colSpan={6} />
             </TableRow>
           )}
-                  </TableBody>
+           </TableBody>
 
-                  <TableFooter>
+          <TableFooter>
           <TableRow>
             <TablePagination
               sx = {{width: '100%'}}

@@ -34,12 +34,14 @@ export class Devs extends React.Component<IProps> {
   }
 
 
-  async setDevNumber(a:any){
+  async setDevNumber(a:any, id: any){
     APP_STORAGE.sensors.setNumber(a);
+    APP_STORAGE.sensors.setIdDev(id);
   }
 
   drawDevs(dgrs: TDevsGroup[]): React.ReactNode[] {
     let dev_number: any = 0;
+    let dev_id: any = 0;
     var dev = APP_STORAGE.devs;
     var devs: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
@@ -58,14 +60,15 @@ export class Devs extends React.Component<IProps> {
           
 
           dev_number = gr_devs[key].number;
+          dev_id = gr_devs[key].id;
           
           setTimeout(() => {  ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
-            this.setDevNumber(dev_number);
+            this.setDevNumber(dev_number, dev_id);
          }, 100);
 
           setTimeout(() => {  ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
             APP_STORAGE.sensors.get_DevFirstLastSessions("sess_id", APP_STORAGE.auth_form.getdt());
-           //// APP_STORAGE.sensors.get_DevPovs(APP_STORAGE.auth_form.getdt(), gr_devs[key].id, gr_devs[key].number)
+           APP_STORAGE.sensors.get_DevPovs(APP_STORAGE.auth_form.getdt())
           }, 100);
 
 

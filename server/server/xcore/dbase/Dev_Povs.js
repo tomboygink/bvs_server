@@ -85,7 +85,7 @@ var Dev_povsTable = (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, this.db.query("SELECT * FROM SelectDev_Povs('" +
-                            this.args.dev_id + "', '" + this.args.dev_number + "')")];
+                            this.args.id + "', '" + this.args.dev_number + "')")];
                     case 1:
                         db_res = _a.sent();
                         result = new Array();

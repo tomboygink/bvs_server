@@ -6,6 +6,7 @@ import { APP_STORAGE } from "../../storage/AppStorage"; //////Хранилище
 import { AppBarPanel } from "./AppBarPanel/AppBarPanel";
 import { Modal } from "./AppBarPanel/TopMenu/Modal/Modal"; //// Модальное окно для изменения данных пользователя
 import { ModalLeftPanel } from "./AppBarPanel/LeftPanel/RegistationUsers/ModalLeftPanel";
+import {NewDevPovs} from "./Devs/NewDevPovs"
 
 import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser"; /////////////Таблица пользователей
 import { UsersMenu } from "./User/UsersMenu"; //////////////////////////// устройства
@@ -125,6 +126,7 @@ export class AppForm extends React.Component<IProps> {
             <Modal />
             <ModalLeftPanel />
             <ChangeDevsModal />{" "}
+            <NewDevPovs />
             {/*-------------------------Модальное окно - редактировать уствройство */}
             <AddNewSubgroup />
             <ChangeDevsGroups />
