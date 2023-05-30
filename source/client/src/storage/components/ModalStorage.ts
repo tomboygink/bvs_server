@@ -292,9 +292,9 @@ export class ModalStorage{
            
         q.args = {
             login:this.getLogin(), 
-            old_password:this.getOld_Pass(), 
-            new_password:this.getNew_Pass(),
-            repeat_password:this.getRepeat_password()
+            old_password:this.getOld_Pass().trim(), 
+            new_password:this.getNew_Pass().trim(),
+            repeat_password:this.getRepeat_password().trim()
          }; 
           q.sess_code = sess_code;
          (await WSocket.get()).send(q); 

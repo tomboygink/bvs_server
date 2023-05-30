@@ -429,7 +429,14 @@ export class DevsStorage {
       old_dev_povs : APP_STORAGE.sensors.getOldDevPovs()
     } 
     q.sess_code  = sess_code;
-    (await WSocket.get()).send(q);    
+    (await WSocket.get()).send(q); 
+    
+    APP_STORAGE.reg_user.setResulSave('Поверочный интервал установлен')
+    setTimeout(() => {
+
+      APP_STORAGE.reg_user.setResulSave('');
+      this.setOpenNewdevpovs(false);
+    }, 2000)   
   }
 
   async set_NewControlDevSess(value: any,  id_sess: any, dev_id:any , dev_number: any){ //////// Установка контрольной сессии 

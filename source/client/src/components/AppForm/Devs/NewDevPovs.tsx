@@ -24,10 +24,8 @@ export class NewDevPovs extends React.Component<IProps> {
   }
 
   componentDidMount(): void {
-  //  APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());
   }
 
- 
 
   render(): React.ReactNode {
 
@@ -40,8 +38,8 @@ export class NewDevPovs extends React.Component<IProps> {
         APP_STORAGE.devs.setEndDevPovs(localISOTime); // => '2023-03-16T09:00'
       }
 
-    return (
-      <React.Fragment>
+     return (
+       <React.Fragment>
         <Dialog
           BackdropProps={{ style: { background: "rgba(0 0 0 / 12%)" } }}
           open={APP_STORAGE.devs.getOpenNewdevpovs()}
@@ -112,9 +110,11 @@ export class NewDevPovs extends React.Component<IProps> {
           >
             Сохранить
           </Button>
+          {APP_STORAGE.reg_user.getResulSave().length > 0 &&
+       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> {APP_STORAGE.reg_user.getResulSave()}</Typography>
+      }
           </Box>
            
-          
         </Dialog>
       </React.Fragment>
     );
