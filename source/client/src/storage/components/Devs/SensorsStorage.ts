@@ -46,7 +46,9 @@ export class SensorsStorage {
     @observable id_firstsess : string  = '';
     @observable id_lastsess : string  = '';
 
-    @observable old_dev_povs: string = ''
+    @observable old_dev_povs: string = ''; //////////////////////// Поверочный интервал
+    @observable start_povs: string = '';
+    @observable end_povs: string = '';
     
     constructor(){
         makeAutoObservable(this);
@@ -136,6 +138,12 @@ export class SensorsStorage {
     @action setOldDevPovs(val : string) {this.old_dev_povs = val};
     @computed getOldDevPovs() : string {return this.old_dev_povs};
 
+    @action setStartPovs(val: string) {this.start_povs = val};
+    @computed getStartPovs(): string {return this.start_povs};
+
+    @action setEndPovs(val: string) {this.end_povs =val};
+    @computed getEndPovs(): string {return this.end_povs};
+
 
     async get_DevSessions(name: string, value: any, _options?: any) {
         var sess_code = value;
@@ -174,7 +182,7 @@ export class SensorsStorage {
             dev_number: APP_STORAGE.sensors.getNumber()
           }
           q.sess_code = sess_code;
-          (await WSocket.get()).send(q)
+          (await WSocket.get()).send(q);
 
         }
       }
@@ -182,11 +190,12 @@ export class SensorsStorage {
       async set_DevPovs(dt: IWSResult) {
         if(Object.keys(dt.data).length !== 0){
           this.setOldDevPovs(dt.data[0].id);
+          this.setStartPovs(dt.data[0].start_povs);
+          this.setStartPovs(dt.data[0].end_povs);
         }
         else if(Object.keys(dt.data).length === 0){
           this.setOldDevPovs('0');
         }
-     
       }
 
 

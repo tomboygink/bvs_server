@@ -68,6 +68,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
 
 
   async OpenTableUser(a:any) {  /// рисуем таблицу пользователей
+    
     APP_STORAGE.devs_groups.setMiddleForm(a);
    APP_STORAGE.reg_user.setOpenTableUsers(true);
    APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt()); // все пользователи

@@ -1,6 +1,5 @@
 import { CONFIG } from '../../../xcore/config';
 import { IWSQuery, WSStr } from '../../../xcore/WSQuery';
-import { FORGOT_PASS } from './ForgotPass';
 
 
 

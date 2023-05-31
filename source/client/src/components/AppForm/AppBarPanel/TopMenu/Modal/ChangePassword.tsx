@@ -80,7 +80,7 @@ export class ChangePassword extends React.Component<IProps> {
               onChange={(e) => {
                 APP_STORAGE.modal.setOld_Pass(e.target.value);
               }}
-              value={APP_STORAGE.modal.getOld_Pass() || ""}
+              value={APP_STORAGE.modal.getOld_Pass().trim() || ""}
             />
 
             <TextField
@@ -100,7 +100,7 @@ export class ChangePassword extends React.Component<IProps> {
               onChange={(e) => {
                 APP_STORAGE.modal.setNew_Pass(e.target.value);
               }}
-              value={APP_STORAGE.modal.getNew_Pass() || ""}
+              value={APP_STORAGE.modal.getNew_Pass().trim() || ""}
             />
 
             <TextField
@@ -120,7 +120,7 @@ export class ChangePassword extends React.Component<IProps> {
               onChange={(e) => {
                 APP_STORAGE.modal.setRepeat_password(e.target.value);
               }}
-              value={APP_STORAGE.modal.getRepeat_password() || ""}
+              value={APP_STORAGE.modal.getRepeat_password().trim() || ""}
             />
           </Box>
 

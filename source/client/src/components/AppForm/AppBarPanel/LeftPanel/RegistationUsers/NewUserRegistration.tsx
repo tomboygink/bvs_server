@@ -289,7 +289,7 @@ export class NewUserRegistration extends React.Component<IProps> {
           onChange={(e) => {
             APP_STORAGE.reg_user.setLogin(e.target.value);
           }}
-          value={APP_STORAGE.reg_user.getLogin()}
+          value={APP_STORAGE.reg_user.getLogin().trim()}
         />
         <form>
           <TextField
@@ -309,7 +309,7 @@ export class NewUserRegistration extends React.Component<IProps> {
             onChange={(e) => {
               APP_STORAGE.reg_user.setPassword(e.target.value);
             }}
-            value={APP_STORAGE.reg_user.getPassword()}
+            value={APP_STORAGE.reg_user.getPassword().trim()}
           />
 
           <FormHelperText sx={{ ml: "12px" }}>
@@ -333,7 +333,7 @@ export class NewUserRegistration extends React.Component<IProps> {
             onChange={(e) => {
               APP_STORAGE.reg_user.setRepeatPassword(e.target.value);
             }}
-            value={APP_STORAGE.reg_user.getRepeatPassword()}
+            value={APP_STORAGE.reg_user.getRepeatPassword().trim()}
           />
         </form>
         <Divider sx={{ padding: "12px" }} />
