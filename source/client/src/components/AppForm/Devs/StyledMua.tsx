@@ -107,6 +107,9 @@ export const handleChange = async (event: any, node: any) => {
    
    if(node.includes('_dev_id_key_') === true){
     APP_STORAGE.devs.setIdChild(node);
+    APP_STORAGE.sensors.setSessFirstLast([]);
+    APP_STORAGE.sensors.setSess_first([])
+    APP_STORAGE.sensors.setSess_second([])
     APP_STORAGE.sensors.setSortDesc('') ;
     APP_STORAGE.sensors.setChoseSessTime('');
     APP_STORAGE.sensors.setAkbSessLast('');

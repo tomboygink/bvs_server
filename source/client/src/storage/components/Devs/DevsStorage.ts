@@ -90,6 +90,7 @@ export class DevsStorage {
   @observable rowsPerPage: number = 3;
   @observable page: number = 0;
 
+
   constructor() {
     makeAutoObservable(this);
   }
