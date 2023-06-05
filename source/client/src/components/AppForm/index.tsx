@@ -27,7 +27,7 @@ import { AddNewGroup } from "./DevsGroups/AddNewGroup"; ////////// Добави�
 import { AddNewSubgroup } from "./DevsGroups/AddNewSubgroup"; //////////Добавить новую подгруппу
 
 import { Devs } from "./Devs/Devs"; //////////////////////////// устройства
-import { Sensors } from "./Sensors/Sensors"; ///////////////////////////////сенсоры на устройствах
+import { LeftPanelAdditionalInformation } from "./Sensors/LeftPanelAdditionalInformation"; ///////////////////////////////сенсоры на устройствах
 import { ChangeDevsModal } from "./Devs/ChangeDevsModal"; ////////////////////////////Редактировать устройства
 import { AddNewDevModal } from "./Devs/AddNewDevModal"; //////////////Добавить новое устройство
 import { Calendar } from "./Devs/Calendar";
@@ -109,13 +109,9 @@ export class AppForm extends React.Component<IProps> {
       left_form = <JobsTitlesMenu />;
     }
 
-    // if(APP_STORAGE.sensors.getOpenDevsess() === true && APP_STORAGE.sensors.getIdDevSess() !==''){
-    //   right_form = <DevSessList/>
-    // }
-
-    // if(APP_STORAGE.sensors.getOpenDevsess() === false ){
-    right_form = <Sensors />;
-    //}
+  
+    right_form = <LeftPanelAdditionalInformation />;
+ 
 
     if (APP_STORAGE.auth_form.getUser())
       return (

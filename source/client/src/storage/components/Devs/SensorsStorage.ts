@@ -265,16 +265,14 @@ export class SensorsStorage {
          }  
          second.push(obj_second)
      }
-    
-    
-     const result1 = mergeByProperty([first, second]);
+     const result = mergeByProperty([first, second]);
      this.setSess_first(first.sort(
       (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
     ));
      this.setSess_second(second.sort(
       (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
     ));
-     this.setSessFirstLast(result1.sort(
+     this.setSessFirstLast(result.sort(
       (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
     ));
     }

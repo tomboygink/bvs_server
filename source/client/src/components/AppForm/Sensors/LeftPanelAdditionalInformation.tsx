@@ -27,7 +27,7 @@ interface IProps {}
 
 //Компонент формы приложения
 @observer
-export class Sensors extends React.Component<IProps> {
+export class LeftPanelAdditionalInformation extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }
@@ -334,12 +334,13 @@ const [year_first, month_first, day_first] = FirstData.split('-');
    }}
  >
 
-<Box  sx = {{fontSize: '15px', color:'#000', display: 'flex', pb: '12px', justifyContent: 'flex-start', alignItems: 'center'}} ><AccessTimeIcon sx ={{color: '#eee'}}/> 
+<Box  sx = {{fontSize: '15px', color:'#000', display: 'flex', pb: '12px', justifyContent: 'flex-start', alignItems: 'center'}} >
+<AccessTimeIcon sx ={{color: '#eee',  mr: '4px'}}/> 
 {APP_STORAGE.sensors.getStartPovs().replace('T', ' ')}
 <Typography sx ={{color: '#808080', fontSize: '12px'}}> {''} (Начало)  </Typography> </Box>
 
 <Box sx = {{fontSize: '15px', color:'#000', display: 'flex' , pb: '12px' , justifyContent: 'flex-start', alignItems: 'center'}} >
-  <AccessTimeIcon sx ={{color: '#eee'}}/> {APP_STORAGE.sensors.getEndPovs().replace('T', ' ')} 
+  <AccessTimeIcon sx ={{color: '#eee', mr: '4px'}}/> {APP_STORAGE.sensors.getEndPovs().replace('T', ' ')} 
   <Typography sx ={{color: '#808080', fontSize: '12px'}}> {''} (Завершение )  </Typography></Box>
 
  </Box>
