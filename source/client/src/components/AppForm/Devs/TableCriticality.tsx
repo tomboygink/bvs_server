@@ -13,8 +13,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
-
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -48,10 +46,9 @@ export class TableCriticality extends React.Component<IProps> {
               <React.Fragment key={"_depth_key_" + a[key] + key}>
                 <TableCell
                   align="left"
-                  sx={{ fontSize: "small", color: "red" }}
                 >
                   {" "}
-                  <CloseIcon />{" "}
+                  <CloseIcon sx={{ fontSize: "small", color: "red" }} />{" "}
                 </TableCell>
               </React.Fragment>
             );
@@ -65,7 +62,7 @@ export class TableCriticality extends React.Component<IProps> {
               </React.Fragment>
             );
           }
-        }
+        } 
       }
     }
 

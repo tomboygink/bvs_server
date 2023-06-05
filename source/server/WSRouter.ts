@@ -397,8 +397,6 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             wsres.data = [];
             wsres.error = null;
 
-
-
         }break;
 
 
