@@ -124,9 +124,7 @@ export class EditUser extends React.Component<IProps> {
               />
             </Box>
             <Divider sx={{ marginBottom: "20px" }} />
-
-
-
+            
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <TextField
                 inputProps={{ style: { fontSize: 12 } }} 
@@ -145,8 +143,6 @@ export class EditUser extends React.Component<IProps> {
                 }}
                 value={APP_STORAGE.edit_user.getFamily() || ""}
               />
-
-
 
               <TextField
                 inputProps={{ style: { fontSize: 12 } }} 

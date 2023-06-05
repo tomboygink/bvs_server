@@ -10,6 +10,7 @@ console.log('ENTRY_PATH', ENTRY_PATH);
 console.log('OUT_DIR', OUT_DIR);
 
 module.exports = {
+  devtool: 'eval-source-map',
     entry: ENTRY_PATH,
     module: {
         rules: [   //загрузчик для tsx
@@ -55,8 +56,7 @@ module.exports = {
     output: {
       filename: OUT_FILENAME,
       path: path.resolve(__dirname, OUT_DIR),
+      sourceMapFilename: "[forgot].js.map"
     },
 
 }
-
-

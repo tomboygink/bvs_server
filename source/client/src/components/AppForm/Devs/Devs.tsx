@@ -24,6 +24,8 @@ import { DevSessCharts } from "../Sensors/DevSessCharts";
 import { DevSess } from "./DevSess";
 
 import Collapse from '@mui/material/Collapse';
+import { TableCriticality } from "./TableCriticality";
+import { LocalActivityRounded } from "@mui/icons-material";
 
 interface IProps {}
 
@@ -146,7 +148,7 @@ export class Devs extends React.Component<IProps> {
                         margin="normal"
                         label="Долгота"
                         size="small"
-                        value={gr_devs[key].longitude || ""}
+                        value={gr_devs[key].longitude.trim() || ""}
                       />
 
                       <TextField
@@ -159,7 +161,7 @@ export class Devs extends React.Component<IProps> {
                         label="Широта"
                         margin="normal"
                         size="small"
-                        value={gr_devs[key].latitude || ""}
+                        value={gr_devs[key].latitude.trim() || ""}
                       />
                     </Box>
 
@@ -172,12 +174,7 @@ export class Devs extends React.Component<IProps> {
                         flexDirection: "row-reverse",
                       }}
                       onClick={() => {
-                        window.open(
-                          `http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` +
-                            longitude +
-                            "&lat=" +
-                            latitude
-                        );
+                        window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lat=` + latitude.trim() + "&lng=" + longitude.trim() );
                       }}> Показать на карте
                       <IconButton
                         color="primary"
@@ -271,7 +268,7 @@ export class Devs extends React.Component<IProps> {
                         margin="normal"
                         label="Долгота"
                         size="small"
-                        value={gr_devs[key].longitude || ""}
+                        value={gr_devs[key].longitude.trim() || ""}
                       />
 
                       <TextField
@@ -283,7 +280,7 @@ export class Devs extends React.Component<IProps> {
                         label="Широта"
                         margin="normal"
                         size="small"
-                        value={gr_devs[key].latitude || ""}
+                        value={gr_devs[key].latitude.trim() || ""}
                       />
                             <Link
                       sx={{
@@ -293,12 +290,7 @@ export class Devs extends React.Component<IProps> {
                         flexDirection: "row-reverse",
                       }}
                       onClick={() => {
-                        window.open(
-                          `http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` +
-                            longitude +
-                            "&lat=" +
-                            latitude
-                        );
+                        window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lat=` + latitude.trim() + "&lng=" + longitude.trim() );
                       }}
                     >
                       Показать на карте
@@ -312,8 +304,6 @@ export class Devs extends React.Component<IProps> {
                     </Link>
                       </Box>
                     </Box>
-
-
                     {gr_devs[key].info && 
                     
                     <TextareaAutosize
@@ -327,6 +317,7 @@ export class Devs extends React.Component<IProps> {
 
                     <Calendar />
                     <DevSess />
+                    <TableCriticality/>
                   </Box>
                   <DevSessCharts />
                   

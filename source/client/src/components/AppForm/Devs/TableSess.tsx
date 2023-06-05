@@ -22,11 +22,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 
 import { CustomExport } from "./Export";
-import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
-import AddIcon from "@mui/icons-material/Add";
 
-import { Calendar } from "./Calendar";
-import { SsidChart } from "@mui/icons-material";
 import { handleChangePage, handleChangeRowsPerPage } from "./CustomPaginationActionsTable";
 
 
@@ -235,21 +231,6 @@ export class TableSess extends React.Component<IProps> {
                           <TableCell style={{ width: 160 }} align="center">
                             {row.level_akb}
                           </TableCell>
-                          
-                       
-                                
-
-                              {/* <TableCell component="th" scope="row"  >
-                                 {APP_STORAGE.sensors.getIdFirstSess() === APP_STORAGE.sensors.getIdLastSess() && 
-
-                                <Button  sx={{fontSize: '12px'}} onClick={() => {
-                                 this.set_NewControlDevSess(row.id, row.dev_id, row.dev_number);
-                               }}> 
-                               установить 11
-                               </Button> 
-     }
-                              </TableCell> */}
-
 {APP_STORAGE.sensors.getIdFirstSess() === APP_STORAGE.sensors.getIdLastSess() &&
                                  <TableCell component="th" scope="row"  >
                                  <Button  sx={{fontSize: '12px'}} onClick={() => {

@@ -251,7 +251,7 @@ export class DevLocation extends React.Component<IProps> {
                     variant="outlined"
                     margin="normal"
                     size="small"
-                    value={gr.longitude || ""}
+                    value={gr.longitude.trim() || ""}
                   />
 
                   <Typography className="box_info" sx={{ color: "#000" }}>
@@ -267,7 +267,7 @@ export class DevLocation extends React.Component<IProps> {
                     variant="outlined"
                     margin="normal"
                     size="small"
-                    value={gr.latitude || ""}
+                    value={gr.latitude.trim() || ""}
                   />
                 </Box>
 
@@ -288,9 +288,9 @@ export class DevLocation extends React.Component<IProps> {
                     onClick={() => {
                       window.open(
                         `http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` +
-                          longitude +
+                          longitude.trim() +
                           "&lat=" +
-                          latitude
+                          latitude.trim()
                       );
                     }}
                   >
@@ -413,7 +413,7 @@ export class DevLocation extends React.Component<IProps> {
                     variant="outlined"
                     margin="normal"
                     size="small"
-                    value={gr.longitude || ""}
+                    value={gr.longitude.trim() || ""}
                     />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
@@ -428,13 +428,14 @@ export class DevLocation extends React.Component<IProps> {
                     variant="outlined"
                     margin="normal"
                     size="small"
-                    value={gr.latitude || ""}
+                    value={gr.latitude.trim() || ""}
                     />                 
                   </Box>
 
                   
                   <Link sx= {{fontSize:'1rem', display: 'flex', alignItems: 'center', flexDirection: 'row-reverse'}} >Показать на карте               
-                                      <IconButton color="primary" aria-label="directions" onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude + '&lat=' + latitude)}}>
+                                      <IconButton color="primary" aria-label="directions" 
+                                      onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude.trim() + '&lat=' + latitude.trim())}}>
                                       <DirectionsIcon/>
                                       </IconButton>
                   </Link> 
