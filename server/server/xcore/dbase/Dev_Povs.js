@@ -43,7 +43,7 @@ var Dev_povsEntity = (function () {
     function Dev_povsEntity() {
         this.id = 0;
         this.dev_id = 0;
-        this.dev_number = '0';
+        this.dev_number = '';
         this.start_povs = null;
         this.end_povs = null;
         this.old_dev_povs = 0;
@@ -81,16 +81,34 @@ var Dev_povsTable = (function () {
     };
     Dev_povsTable.prototype.selectDev_povs = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var db_res, result, p;
+            var dev_povs, db_res, tzoffset, result, i;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT * FROM SelectDev_Povs('" +
-                            this.args.id + "', '" + this.args.dev_number + "')")];
+                    case 0:
+                        dev_povs = {
+                            id: 0,
+                            dev_id: 0,
+                            dev_number: '',
+                            start_povs: '',
+                            end_povs: '',
+                            old_dev_povs: 0
+                        };
+                        return [4, this.db.query("SELECT * FROM SelectDev_Povs('" +
+                                this.args.id + "', '" + this.args.dev_number + "')")];
                     case 1:
                         db_res = _a.sent();
+                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
                         result = new Array();
-                        for (p in db_res.rows) {
-                            result.push(db_res.rows[p]);
+                        for (i in db_res.rows) {
+                            dev_povs = {
+                                id: db_res.rows[i].id,
+                                dev_id: db_res.rows[i].dev_id,
+                                dev_number: db_res.rows[i].dev_number,
+                                start_povs: (new Date(db_res.rows[i].start_povs - tzoffset)).toISOString().slice(0, -8),
+                                end_povs: (new Date(db_res.rows[i].end_povs - tzoffset)).toISOString().slice(0, -8),
+                                old_dev_povs: db_res.rows[i].old_dev_povs
+                            };
+                            result.push(dev_povs);
                         }
                         return [2, result];
                 }
