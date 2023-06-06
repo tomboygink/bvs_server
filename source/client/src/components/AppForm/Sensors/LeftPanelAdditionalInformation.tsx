@@ -15,6 +15,7 @@ import TableRow from "@mui/material/TableRow";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CommitIcon from '@mui/icons-material/Commit';
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
@@ -26,7 +27,7 @@ interface IProps {}
 
 //Компонент формы приложения
 @observer
-export class Sensors extends React.Component<IProps> {
+export class LeftPanelAdditionalInformation extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }
@@ -313,6 +314,35 @@ const [year_first, month_first, day_first] = FirstData.split('-');
        <Box sx = {{fontSize: '15px', color:'#000', display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}} >
         <CommitIcon sx ={{color: '#FD8A04'}}/>  {ChoseSess} {''} {ChoseTimeSess.replace('T', ' ')} <Typography sx ={{color: '#808080', fontSize: '12px'}}> {''} (выбранная сесия)  </Typography></Box>
      }
+ </Box>
+ </>
+}
+
+{APP_STORAGE.sensors.getStartPovs() !== '' && APP_STORAGE.sensors.getEndPovs() !== '' && APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
+<>
+ <Typography sx={{ fontWeight: "500" , color: '#0D1C52', mb : '12px', mt: '40px' }}>  Поверочный интервал </Typography>
+ <Box
+    sx={{
+     width: "100%",
+     height: '100%',
+     background: "#fff",
+     borderRadius: "4px",
+     display: "flex",
+     padding: '16px',
+     flexDirection: 'column',
+     overflow: "auto",
+   }}
+ >
+
+<Box  sx = {{fontSize: '15px', color:'#000', display: 'flex', pb: '12px', justifyContent: 'flex-start', alignItems: 'center'}} >
+<AccessTimeIcon sx ={{color: '#eee',  mr: '4px'}}/> 
+{APP_STORAGE.sensors.getStartPovs().replace('T', ' ')}
+<Typography sx ={{color: '#808080', fontSize: '12px'}}> {''} (Начало)  </Typography> </Box>
+
+<Box sx = {{fontSize: '15px', color:'#000', display: 'flex' , pb: '12px' , justifyContent: 'flex-start', alignItems: 'center'}} >
+  <AccessTimeIcon sx ={{color: '#eee', mr: '4px'}}/> {APP_STORAGE.sensors.getEndPovs().replace('T', ' ')} 
+  <Typography sx ={{color: '#808080', fontSize: '12px'}}> {''} (Завершение )  </Typography></Box>
+
  </Box>
  </>
 }

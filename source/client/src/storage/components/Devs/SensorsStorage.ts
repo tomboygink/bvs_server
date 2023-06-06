@@ -191,10 +191,12 @@ export class SensorsStorage {
         if(Object.keys(dt.data).length !== 0){
           this.setOldDevPovs(dt.data[0].id);
           this.setStartPovs(dt.data[0].start_povs);
-          this.setStartPovs(dt.data[0].end_povs);
+          this.setEndPovs(dt.data[0].end_povs);
         }
         else if(Object.keys(dt.data).length === 0){
           this.setOldDevPovs('0');
+          this.setStartPovs('');
+          this.setEndPovs('');
         }
       }
 
@@ -206,14 +208,9 @@ export class SensorsStorage {
 
   async set_DevFirstLastSessions(dt: IWSResult) {
      if(Object.keys(dt.data).length > 0){
-
-//       const [year, month, day] = '2020-02-18'.split('-');
-// alert(`${day}.${month}.${year}`)
       
       let start_sess = JSON.parse(dt.data[1].sess_data);
       let end_sess = JSON.parse(dt.data[0].sess_data);
-
-
 
       this.setTimeDevSessFirst(dt.data[1].time_dev);
       this.setTimeDevSessLast(dt.data[0].time_dev);
@@ -268,16 +265,14 @@ export class SensorsStorage {
          }  
          second.push(obj_second)
      }
-    
-    
-     const result1 = mergeByProperty([first, second]);
+     const result = mergeByProperty([first, second]);
      this.setSess_first(first.sort(
       (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
     ));
      this.setSess_second(second.sort(
       (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
     ));
-     this.setSessFirstLast(result1.sort(
+     this.setSessFirstLast(result.sort(
       (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
     ));
     }

@@ -454,6 +454,22 @@ export class DevsStorage {
     (await WSocket.get()).send(q);    
   }
 
+  async deleteControlDevSess(value: any,  id_sess: any){
+
+    var sess_code = id_sess;
+    var q: IWSQuery = new WSQuery ('deleteControlDevSess');
+
+    q.args = {
+      id : APP_STORAGE.sensors.getIdFirstSess()
+    }
+
+    q.sess_code = sess_code;
+    (await WSocket.get()).send(q);
+    setTimeout(() => {  ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
+      APP_STORAGE.sensors.get_DevFirstLastSessions("sess_id", APP_STORAGE.auth_form.getdt());
+    }, 100);
+  }
+
 
   async get_NewControlDevSess(dt: IWSResult) {
     /* -----  Получаем все должности   */

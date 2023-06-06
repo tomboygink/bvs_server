@@ -33,7 +33,7 @@ export class Control_dev_sessTable {
     //Удаление контрольной сессии 
     async deleteControl_dev_sess()
     {
-        await this.db.query("DELETE * FROM control_dev_sess WHERE id = ('" + this.args.id + "')");
+        await this.db.query("DELETE FROM control_dev_sess WHERE dev_sess_id = ('" + this.args.id + "')");
 
     }
 }

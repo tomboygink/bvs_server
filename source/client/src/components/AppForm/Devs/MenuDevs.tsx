@@ -45,6 +45,11 @@ export class MenuDevs extends React.Component<IProps> {
     //APP_STORAGE.devs.set_NewControlDevSess("sess_id", APP_STORAGE.auth_form.getdt())
   }
 
+  async deleteControlDevSess(){
+     APP_STORAGE.devs.deleteControlDevSess("sess_id", APP_STORAGE.auth_form.getdt())
+
+  }
+
   PassValueEditForm(dgrs: TDevsGroup[]) {
     var dev = APP_STORAGE.devs;
     var devGr = APP_STORAGE.devs_groups;
@@ -92,6 +97,12 @@ export class MenuDevs extends React.Component<IProps> {
 
       if(dev.getMenu_devs() === '4'){
         this.set_NewControlDevSess();
+      }
+
+      if(dev.getMenu_devs() === '5'){
+         this.deleteControlDevSess();
+
+     
       }
         }
       }
@@ -155,15 +166,28 @@ export class MenuDevs extends React.Component<IProps> {
                                       </MenuItem>
 
                                    
+                  {APP_STORAGE.sensors.getIdFirstSess() !== APP_STORAGE.sensors.getIdLastSess() && 
 
-                                      <MenuItem sx = {{mb: '8px'}}>
-                                      <ListItemIcon>
-                                        <DeleteOutlineIcon fontSize= "small" />
-                                        Удалить контрольную сессию
-                                      </ListItemIcon>
-                                      
-                                      
-                                      </MenuItem >
+<MenuItem onClick={() => this.editDevice('5')} sx = {{mb: '8px'}}>
+<ListItemIcon>
+  <DeleteOutlineIcon fontSize= "small" />
+  Удалить контрольную сессию
+</ListItemIcon>
+</MenuItem >
+                  }
+
+{APP_STORAGE.sensors.getIdFirstSess() === APP_STORAGE.sensors.getIdLastSess() && 
+
+<MenuItem onClick={() => this.editDevice('5')} sx = {{mb: '8px', color: '#212121'}}>
+<ListItemIcon>
+  <DeleteOutlineIcon fontSize= "small" />
+  Контрольная сессия не установлена
+</ListItemIcon>
+
+
+</MenuItem >
+                  }
+                                  
 
                                       {/* <TableCell component="th" scope="row"  >
                             <Button  sx={{fontSize: '12px'}} onClick={() => {

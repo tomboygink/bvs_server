@@ -221,8 +221,8 @@ export class TableSess extends React.Component<IProps> {
                         <TableRow id = {row.id}
                           key={row.id}
                         >
-                          <TableCell component="th" scope="row">
-                            {row.id}
+                          <TableCell align="center"  component="th" scope="row">
+                            {row.dev_number}
                           </TableCell>
                        
                           <TableCell style={{ width: 160 }} align="center">
@@ -239,7 +239,6 @@ export class TableSess extends React.Component<IProps> {
                                Установить
                                </Button>  
                               </TableCell>
-
 }
 
 
