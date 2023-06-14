@@ -5,9 +5,9 @@ import { APP_STORAGE } from './storage/AppStorage';
 
 
 
-import { AuthForm } from './components/AuthForm';
+import { AuthForm } from './components/AuthForm/AuthForm';
 import { AppForm } from './components/AppForm/index';
-import { ForgotPass } from './components/ForgotPassForm';
+import { ForgotPass } from './components/AuthForm/ForgotPassForm';
 
 import { Box, Typography } from "@mui/material";
 
@@ -34,7 +34,6 @@ export class App extends React.Component<IProps>{
 
         var ret_dt:React.ReactNode = <></>;
         var user = APP_STORAGE.auth_form.getUser();
-        var sess_id: string = null;
 
        if(user !== null && user.id > 0 && document.cookie !== '') {
             ret_dt = <AppForm/>} 

@@ -1,12 +1,17 @@
 
+ @use 'base';
+
+ @mixin theme($theme: DarkGray) {
+  background: $theme;
+  box-shadow: 0 0 1px rgba($theme, .25);
+  color: base.$white;
+}
+
  .leaflet-container {
     width: 100%;
     height: 100vh;
   }
-$grid_color: rgb(0 0 0 / 0%);
-$grid_margin: percentage(40 / 1920); // 40 / 1920 * 100%;
-$grid_width: percentage(157 / (1920 - 40 * 2));
-$grid_gutter: percentage(30 / (1920 - 40 * 2));
+
 ////$body_bgcolor: #F1F5FC;
 
 @mixin mq($from, $to: false) {
@@ -25,7 +30,7 @@ $grid_gutter: percentage(30 / (1920 - 40 * 2));
     box-sizing: border-box;
 }
 body {
-  background: #f1f5fc;
+  background: base.$body_bg;
 }
 .is-grid {
     position: relative;
@@ -40,23 +45,23 @@ body {
         top: 0;
         bottom: 0;
         opacity: 0.15;
-        left: $grid_margin;
-        right: $grid_margin;
+        left: base.$grid_margin;
+        right: base.$grid_margin;
         background: repeating-linear-gradient(90deg,
-                $grid_color 0,
-                $grid_color $grid_width,
-                transparent $grid_width,
-                transparent $grid_width + $grid_gutter);
+                base.$grid_color 0,
+                base.$grid_color base.$grid_width,
+                transparent base.$grid_width,
+                transparent base.$grid_width + base.$grid_gutter);
         pointer-events: none;
     }
 }
 
 .wrapper {
-    margin: 0 $grid_margin;
+    margin: 0 base.$grid_margin;
 }
 
 .wrappert-devs{
-  background: #fff;
+  background: base.$white;
   padding: 20px;
   border-radius: 4px;
   width: 100%;
@@ -82,7 +87,7 @@ body {
  
     > .block-wrapp {
         font-size: 20px;
-        color: #fff;
+        color: base.$white;
         border-radius: 4px;
         max-height: 90vh;
         overflow: auto;
@@ -94,47 +99,25 @@ body {
     }
 }
 
-input#datetime-local {
+input#datetime-local { 
   font-size: 14px;
 }
-.container_charts {
+.container_charts {   /////////////////////////////////////////////////  Graph
   padding-top: 12px;
   max-height: 746px;
   max-width: 300px;
   min-width: 300px;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+  grid-template-columns: base.$template-coll; 
+  grid-template-rows: base.$template-rows; 
   gap: 0px 0px; 
-  grid-template-areas: 
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . ."
-    ". . . . . . . . . . . .";
+  grid-template-areas: base.$grid_areas;
 
            >   .item-1 {
             background-color: rgba(255, 255, 0, 0);
             grid-row: 1/38;
             grid-column: 2/12;
-            /* margin-top: 14px; */
-            /* padding-left: 12px; */
             margin-left: 8px;
         }
 
@@ -142,8 +125,6 @@ input#datetime-local {
           background-color: rgba(255, 255, 255, 0);
           grid-column: 1/12;
           grid-row: 2/38;
-          /* grid-row: 1; */
-          /* grid-column-start: 1; */
         }
 
         > .item-3 {
@@ -187,14 +168,13 @@ tr.MuiTableRow-root.active_row.css-efx171-MuiTableRow-root:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: #fff;
+  background: base.$white;
   padding: 20px;
   margin-bottom: 20px;
 }
 
-
 .css-1xmmv5i {
-  background: #fff;
+  background: base.$white;
   padding: 20px;
   max-height: 88vh;
   overflow: auto;
@@ -234,79 +214,16 @@ tr.MuiTableRow-root.active_row.css-efx171-MuiTableRow-root:hover {
   display: none;
 }
 .css-vr2p86-MuiButtonBase-root-MuiButton-root:hover {
-  color: #266bf1;
+  color: base.$blue;
 }
 .setDevSess:hover{
-  color: #266bf1;
+  color: base.$blue;
 }
 ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list {
   max-height: 200px;
   overflow-y: scroll;
 }
-ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar , .css-ne4h0p-MuiPaper-root-MuiTableContainer-root::-webkit-scrollbar {
-  width: 1px;
-  background-color: #fff;
-}
-ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar-thumb,
-.css-ne4h0p-MuiPaper-root-MuiTableContainer-root::-webkit-scrollbar-thumb {
-  width: 1px;
-  background-color: #1890ff;
-}
 
-.css-tlc64q-MuiPaper-root-MuiDialog-paper::-webkit-scrollbar {
-  width: 1px;
-  background-color: #fff;
-}
-
-.css-tlc64q-MuiPaper-root-MuiDialog-paper::-webkit-scrollbar-thumb {
-  width: 1px;
-  background-color: #1890ff;
-}
-
-.css-1g86id8-MuiTreeItem-content.Mui-selected {
-  background: #F1F5FC;
-  border-radius: 5px;
-}
-
-
-.css-g7pccu-MuiTreeView-root::-webkit-scrollbar {
-  width: 4px;
-  background-color: #fff;
-} 
-.css-g7pccu-MuiTreeView-root::-webkit-scrollbar-thumb {
-  width: 1px;
-  background-color: #c8cdd3;
-}
-
-.css-1e0rjt7-MuiTreeView-root::-webkit-scrollbar {
-  width: 4px;
-  background-color: #fff;
-} 
-
-.css-1e0rjt7-MuiTreeView-root::-webkit-scrollbar-thumb {
-  width: 1px;
-  background-color: #c8cdd3;
-}
-
-.css-1xmmv5i::-webkit-scrollbar {
-  width: 1px;
-  background-color: #fff;
-} 
-
-.css-1xmmv5i::-webkit-scrollbar-thumb {
-  width: 1px;
-  background-color: #c8cdd3;
-} 
-
-.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar {
-  width: 4px;
-  background-color: #fff;
-} 
-
-.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar-thumb {
-  width: 1px;
-  background-color: #c8cdd3;
-}
 
 .wrapper-devs.MuiBox-root.css-6dvury {
   max-height: 85vh;
@@ -314,11 +231,11 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
 }
 
 .sort-sensors{
-  color: #266BF1;
+  color: base.$blue;
 }
 
 .sort-sensors-desc{
-  color: #266BF1;
+  color: base.$blue;
 }
 
 .leaflet-container {
@@ -331,7 +248,7 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   align-items: center;
 }
 .new-devs:hover{
-  color: #266BF1;
+  color: base.$blue;
 }
 
 .menu{
@@ -348,24 +265,147 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
  display: none;
 }
 
+////////////////////////////////////////////////////////////////////Style for scroll //////////////////////////////////////////////////////////////////
+ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar , .css-ne4h0p-MuiPaper-root-MuiTableContainer-root::-webkit-scrollbar {
+  width: 1px;
+  background-color: base.$white;
+}
+ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list::-webkit-scrollbar-thumb,
+.css-ne4h0p-MuiPaper-root-MuiTableContainer-root::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: #1890ff;
+}
+
+.css-tlc64q-MuiPaper-root-MuiDialog-paper::-webkit-scrollbar {
+  width: 1px;
+  background-color: base.$white;
+}
+
+.css-tlc64q-MuiPaper-root-MuiDialog-paper::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: #1890ff;
+}
+
+.css-1g86id8-MuiTreeItem-content.Mui-selected {
+  background: #F1F5FC;
+  border-radius: 5px;
+}
+
+.css-g7pccu-MuiTreeView-root::-webkit-scrollbar {
+  width: 4px;
+  background-color: base.$white;
+} 
+.css-g7pccu-MuiTreeView-root::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: #c8cdd3;
+}
+
+.css-1e0rjt7-MuiTreeView-root::-webkit-scrollbar {
+  width: 4px;
+  background-color: base.$white;
+} 
+
+.css-1e0rjt7-MuiTreeView-root::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: #c8cdd3;
+}
+
+.css-1xmmv5i::-webkit-scrollbar {
+  width: 1px;
+  background-color: base.$white;
+} 
+
+.css-1xmmv5i::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: #c8cdd3;
+} 
+
+.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar {
+  width: 4px;
+  background-color: base.$white;
+} 
+
+.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: #c8cdd3;
+}
 
 
-@media (max-width: 500px) {
+
+
+///////////////////////////////////////////////////Mobale Version
+
+
+.warapper-menu-mobale{
+  width: 100%;
+  margin-top: 60px;
+  display: none;
+    
+
+             >.menu-mobale{
+                display: flex;
+                background: #266BF1 ;
+                border-radius: 4px;
+                justify-content: space-around;
+
+                >.menu-mobale-button{
+                  color: #fff!important;
+                  font-weight: 400;
+                  text-transform: none;
+                  width: 100%;
+               }
+
+               >.active{
+                color: #fff!important;
+                background: #c0df14;
+                font-weight: 400;
+                text-transform: none;
+                width: 100%;
+              }
+             }
+}
+
+
+
+@media (max-width: 700px) { //////исправить на 500
+  
+  #left-form{
+    display: none;
+  }
+
+  #top-menu{
+    display: none;
+  }
+  
+  #right-form{
+    display: none;
+  }
+
+  ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-list{
+    height: 100%;
+    max-height: 100%;
+  }
+
+  .warapper-menu-mobale{
+    display: block;
+  }
+  .is-grid {
+    padding: 24px 0;
+}
+
   .chart {
     flex-wrap: wrap;
     }
     .wrappert-devs.MuiBox-root.css-19gha27 {
       margin-right: 0;
+      margin-bottom: 22px;
+  }
+
+  .container_charts.MuiBox-root.css-mkypic {
+    background: #F1F5FC!important;
   }
   
   }
 
 
-//   .css-c3vlm2 {
-//     background: #9783be;
-// }}
-
-// @media (max-width: 768px) {
- 
-// }
 

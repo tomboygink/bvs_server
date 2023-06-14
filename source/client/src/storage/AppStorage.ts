@@ -15,6 +15,7 @@ import { DevsGroupStorage } from './components/Devs/DevsGroupStorage';
 import { DevsStorage } from './components/Devs/DevsStorage';
 import { SensorsStorage } from './components/Devs/SensorsStorage';
 
+import { MobaleStorage } from '../storage/components/MobaleVersion/MobaleStorage'
 import { OrgStorage } from './components/Orgs/OrgStorage'; /////// Вкладка организации
 import { JobsTitlesStorage } from './components/JobsTitles/JobsTitlesStorage'
 
@@ -33,6 +34,7 @@ class AppStorage {
     @observable sensors: SensorsStorage = null;
     @observable org: OrgStorage = null;
     @observable jobs: JobsTitlesStorage = null;
+    @observable mobale: MobaleStorage = null; ////////////////////// Для мобильных устройств
 
 
    
@@ -76,6 +78,7 @@ class AppStorage {
         this.sensors = new SensorsStorage();
         this.org = new OrgStorage();
         this.jobs = new JobsTitlesStorage();
+        this.mobale = new MobaleStorage();
         makeAutoObservable(this);
 
         // WSocket.get();

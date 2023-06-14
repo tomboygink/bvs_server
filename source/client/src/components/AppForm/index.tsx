@@ -6,7 +6,7 @@ import { APP_STORAGE } from "../../storage/AppStorage"; //////Хранилище
 import { AppBarPanel } from "./AppBarPanel/AppBarPanel";
 import { Modal } from "./AppBarPanel/TopMenu/Modal/Modal"; //// Модальное окно для изменения данных пользователя
 import { ModalLeftPanel } from "./AppBarPanel/LeftPanel/RegistationUsers/ModalLeftPanel";
-import {NewDevPovs} from "./Devs/NewDevPovs"
+import {NewDevPovs} from "./DevsContainer/Dev/Menu/NewDevPovs"
 
 import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser"; /////////////Таблица пользователей
 import { UsersMenu } from "./User/UsersMenu"; //////////////////////////// устройства
@@ -19,19 +19,19 @@ import { JobsTitlesMenu } from "./JobsTitles/JobsTitlesMenu";
 import { JobsTitles } from "./JobsTitles/JobsTitles";
 
 
-import { DevsGroupsTree } from "./DevsGroups/DevsGroupsTree"; /////////////////Дерево устройств (левое боковое меню)
-import { DevLocation } from "./DevsGroups/DevLocation"; ////////расположение устройств
-import { ChangeDevsGroups } from "./DevsGroups/ChangeDevsGroups"; /////// Редактировать расположение5 устройств (модальное окно)
-import { MoveDevsGroups } from "./DevsGroups/MoveDevsGroups"; ////////////Переместить расположение устройств (модальное окно)
-import { AddNewGroup } from "./DevsGroups/AddNewGroup"; ////////// Добавить новое расположение
-import { AddNewSubgroup } from "./DevsGroups/AddNewSubgroup"; //////////Добавить новую подгруппу
+import { DevsGroupsTree } from './DevsContainer/DevsGroupsTree'; /////////////////Дерево устройств (левое боковое меню)
+import { DevLocation } from "./DevsContainer/DevsGroups/DevLocation"; ////////расположение устройств
+import { ChangeDevsGroups } from "./DevsContainer/DevsGroups/Menu/ChangeDevsGroups"; /////// Редактировать расположение5 устройств (модальное окно)
+import { MoveDevsGroups } from "./DevsContainer/DevsGroups/Menu/MoveDevsGroups"; ////////////Переместить расположение устройств (модальное окно)
+import { AddNewGroup } from "./DevsContainer/DevsGroups/Menu/AddNewGroup"; ////////// Добавить новое расположение
+import { AddNewSubgroup } from "./DevsContainer/DevsGroups/Menu/AddNewSubgroup"; //////////Добавить новую подгруппу
 
-import { Devs } from "./Devs/Devs"; //////////////////////////// устройства
+import { Devs } from "./DevsContainer/Dev/Devs"; //////////////////////////// устройства
 import { LeftPanelAdditionalInformation } from "./Sensors/LeftPanelAdditionalInformation"; ///////////////////////////////сенсоры на устройствах
-import { ChangeDevsModal } from "./Devs/ChangeDevsModal"; ////////////////////////////Редактировать устройства
-import { AddNewDevModal } from "./Devs/AddNewDevModal"; //////////////Добавить новое устройство
-import { Calendar } from "./Devs/Calendar";
-import { SelectedSession } from "./Devs/SelectedSession";
+import { ChangeDevsModal } from "./DevsContainer/Dev/Menu/ChangeDevsModal"; ////////////////////////////Редактировать устройства
+import { AddNewDevModal } from "./DevsContainer/Dev/Menu/AddNewDevModal"; //////////////Добавить новое устройство
+import { Calendar } from "./DevsContainer/Dev/Calendar";
+import { SelectedSession } from "./DevsContainer/Dev/SelectedSession";
 
 interface IProps {}
 
@@ -132,7 +132,7 @@ export class AppForm extends React.Component<IProps> {
           <Box className="is-grid">
             <Box className="wrapper">
               <Box className="blocks">
-                <Box className="block-wrapp">{left_form}</Box>
+                <Box className="block-wrapp" id ='left-form'>{left_form}</Box>
 
                 <Box className="block-wrapp grid">
                   {middle_form}
@@ -140,7 +140,7 @@ export class AppForm extends React.Component<IProps> {
                   {new_group}
                 </Box>
 
-                <Box className="block-wrapp">{right_form}</Box>
+                <Box className="block-wrapp" id = 'right-form'>{right_form}</Box>
               </Box>
             </Box>
           </Box>
