@@ -453,6 +453,7 @@ export class DevsStorage {
 
       APP_STORAGE.reg_user.setResulSave('');
       this.setOpenNewdevpovs(false);
+      APP_STORAGE.sensors.get_DevPovs(APP_STORAGE.auth_form.getdt())
     }, 2000)   
   }
 

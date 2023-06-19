@@ -3,8 +3,9 @@ import React from 'react';
 
 import {APP_STORAGE} from '../../../storage/AppStorage'
 
-import {DevsGroupsTree} from '../../AppForm/DevsContainer/DevsGroupsTree';
-import {LeftPanelAdditionalInformation} from '../Sensors/LeftPanelAdditionalInformation'
+
+import {SensorsList} from '../Sensors/SensorsList'
+import { DevsGroupsTree } from '../Devs/DevsGroupsTree';
 
 
 
@@ -79,7 +80,7 @@ const MobaleMenu = () => {
         <DevsGroupsTree/> 
         }
          {idEl === 'basic-button2' &&
-        <LeftPanelAdditionalInformation/> 
+        <SensorsList/> 
         }
         {idEl === 'basic-button3' &&
         

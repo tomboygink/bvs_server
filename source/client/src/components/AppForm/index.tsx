@@ -6,7 +6,7 @@ import { APP_STORAGE } from "../../storage/AppStorage"; //////Хранилище
 import { AppBarPanel } from "./AppBarPanel/AppBarPanel";
 import { Modal } from "./AppBarPanel/TopMenu/Modal/Modal"; //// Модальное окно для изменения данных пользователя
 import { ModalLeftPanel } from "./AppBarPanel/LeftPanel/RegistationUsers/ModalLeftPanel";
-import {NewDevPovs} from "./DevsContainer/Dev/Menu/NewDevPovs"
+import { NewDevPovs } from "./Devs/Dev/Menu/NewDevPovs"
 
 import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser"; /////////////Таблица пользователей
 import { UsersMenu } from "./User/UsersMenu"; //////////////////////////// устройства
@@ -19,21 +19,22 @@ import { JobsTitlesMenu } from "./JobsTitles/JobsTitlesMenu";
 import { JobsTitles } from "./JobsTitles/JobsTitles";
 
 
-import { DevsGroupsTree } from './DevsContainer/DevsGroupsTree'; /////////////////Дерево устройств (левое боковое меню)
-import { DevLocation } from "./DevsContainer/DevsGroups/DevLocation"; ////////расположение устройств
-import { ChangeDevsGroups } from "./DevsContainer/DevsGroups/Menu/ChangeDevsGroups"; /////// Редактировать расположение5 устройств (модальное окно)
-import { MoveDevsGroups } from "./DevsContainer/DevsGroups/Menu/MoveDevsGroups"; ////////////Переместить расположение устройств (модальное окно)
-import { AddNewGroup } from "./DevsContainer/DevsGroups/Menu/AddNewGroup"; ////////// Добавить новое расположение
-import { AddNewSubgroup } from "./DevsContainer/DevsGroups/Menu/AddNewSubgroup"; //////////Добавить новую подгруппу
 
-import { Devs } from "./DevsContainer/Dev/Devs"; //////////////////////////// устройства
-import { LeftPanelAdditionalInformation } from "./Sensors/LeftPanelAdditionalInformation"; ///////////////////////////////сенсоры на устройствах
-import { ChangeDevsModal } from "./DevsContainer/Dev/Menu/ChangeDevsModal"; ////////////////////////////Редактировать устройства
-import { AddNewDevModal } from "./DevsContainer/Dev/Menu/AddNewDevModal"; //////////////Добавить новое устройство
-import { Calendar } from "./DevsContainer/Dev/Calendar";
-import { SelectedSession } from "./DevsContainer/Dev/SelectedSession";
+import { DevLocation } from "./Devs/DevsGroups/DevLocation"; ////////расположение устройств
+import { ChangeDevsGroups } from "./Devs/DevsGroups/Menu/ChangeDevsGroups"; /////// Редактировать расположение5 устройств (модальное окно)
+import { MoveDevsGroups } from "./Devs/DevsGroups/Menu/MoveDevsGroups"; ////////////Переместить расположение устройств (модальное окно)
+import { AddNewGroup } from "./Devs/DevsGroups/Menu/AddNewGroup"; ////////// Добавить новое расположение
+import { AddNewSubgroup } from "./Devs/DevsGroups/Menu/AddNewSubgroup"; //////////Добавить новую подгруппу
 
-interface IProps {}
+import { Devs } from "./Devs/Dev/Devs"; //////////////////////////// устройства
+import { SensorsList } from "./Sensors/SensorsList"; ///////////////////////////////сенсоры на устройствах
+import { ChangeDevsModal } from "./Devs/Dev/Menu/ChangeDevsModal"; ////////////////////////////Редактировать устройства
+import { AddNewDevModal } from "./Devs/Dev/Menu/AddNewDevModal"; //////////////Добавить новое устройство
+import { Calendar } from "./Devs/Dev/Calendar";
+import { SelectedSession } from "./Devs/Dev/SelectedSession";
+import { DevsGroupsTree } from "./Devs/DevsGroupsTree";
+
+interface IProps { }
 
 //Компонент формы приложения
 @observer
@@ -86,7 +87,7 @@ export class AppForm extends React.Component<IProps> {
       middle_form = (
         <>
           <Devs />
-         <SelectedSession /> 
+          <SelectedSession />
         </>
       );
       //dev_sess = <DevSess/>
@@ -109,9 +110,9 @@ export class AppForm extends React.Component<IProps> {
       left_form = <JobsTitlesMenu />;
     }
 
-  
-    right_form = <LeftPanelAdditionalInformation />;
- 
+
+    right_form = <SensorsList />;
+
 
     if (APP_STORAGE.auth_form.getUser())
       return (
@@ -132,7 +133,7 @@ export class AppForm extends React.Component<IProps> {
           <Box className="is-grid">
             <Box className="wrapper">
               <Box className="blocks">
-                <Box className="block-wrapp" id ='left-form'>{left_form}</Box>
+                <Box className="block-wrapp" id='left-form'> {left_form} </Box>
 
                 <Box className="block-wrapp grid">
                   {middle_form}
@@ -140,7 +141,7 @@ export class AppForm extends React.Component<IProps> {
                   {new_group}
                 </Box>
 
-                <Box className="block-wrapp" id = 'right-form'>{right_form}</Box>
+                <Box className="block-wrapp" id='right-form'>{right_form}</Box>
               </Box>
             </Box>
           </Box>

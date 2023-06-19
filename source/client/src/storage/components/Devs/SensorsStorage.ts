@@ -3,7 +3,6 @@ import { IWSQuery, WSQuery, IWSResult } from '../../../../../xcore/WSQuery';
 import { WSocket } from '../../WSocket';
 import {APP_STORAGE} from '../../AppStorage';
 import { toJS } from "mobx";
-import { RechartsEntity } from "./RechartsEntityes";
 
 
 export class SensorsStorage {
@@ -188,6 +187,8 @@ export class SensorsStorage {
       }
 
       async set_DevPovs(dt: IWSResult) {
+
+        
         if(Object.keys(dt.data).length !== 0){
           this.setOldDevPovs(dt.data[0].id);
           this.setStartPovs(dt.data[0].start_povs);
