@@ -1,6 +1,9 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { Box, Button, Typography } from "@mui/material";
+
+import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
+
 import { APP_STORAGE } from "../../storage/AppStorage"; //////Хранилище данных
 
 import { AppBarPanel } from "./AppBarPanel/AppBarPanel";
@@ -43,7 +46,10 @@ export class AppForm extends React.Component<IProps> {
     super(props);
   }
 
- async BackToTopButton(){}
+ async BackToTopButton(){
+  let el = document.getElementById('marker-up')
+  el.scrollIntoView(); 
+ }
 
   render(): React.ReactNode {
     let user_r = null;
@@ -150,10 +156,13 @@ export class AppForm extends React.Component<IProps> {
           </Box>
 
           <Button className="button-back-to-up"
+          sx={{background: '#C2E0FF', borderRadius: '24px', position: 'absolute'}}
           onClick={() => {
             this.BackToTopButton()
           }}
-          >Back to top</Button>
+          >
+           <ExpandLessRoundedIcon sx = {{fontWeight: '800'}}/> 
+          </Button>
         </React.Fragment>
       );
   }
