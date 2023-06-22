@@ -191,8 +191,6 @@ export class SensorsStorage {
       }
 
       async set_DevPovs(dt: IWSResult) {
-
-        console.log('DevPovs11', dt);
         
         if(Object.keys(dt.data).length !== 0){
           this.setOldDevPovs(dt.data[0].id);

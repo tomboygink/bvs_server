@@ -9,7 +9,6 @@ import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 
 export const CustomizedLabel: FunctionComponent<any> = (props: any) => {
   const { x, y, stroke, value } = props;
-  console.log('value', value)
     if(Number(1.44) === Number(value)){
       return (
         <text x={x} y={y} dy={-4} fill={'#FF0404'} fontSize={14} color={'red'} textAnchor="middle">
@@ -40,10 +39,6 @@ export const CustomTooltip = ({ active, payload, label, props }: any) => {
 
   
   if (active && payload && payload.length)
-  console.log(props, 'props');
-  console.log(payload, 'payload')
-
-  console.log(payload, 'active')
   {
     return (
       <> 

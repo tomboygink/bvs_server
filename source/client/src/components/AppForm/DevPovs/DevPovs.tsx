@@ -17,7 +17,6 @@ export class DevPovs extends React.Component<IProps> {
   }
 
   render(): React.ReactNode {
-   console.log('APP_STORAGE.sensors.getStartPovs()', APP_STORAGE.sensors.getStartPovs())
     let StartPovsDate;
     let StartPovsTime;
     let EndPovsDate;
@@ -40,7 +39,7 @@ export class DevPovs extends React.Component<IProps> {
       <div className="wrapper-sensors">
     {APP_STORAGE.sensors.getStartPovs() !== '' && APP_STORAGE.sensors.getEndPovs() !== '' && APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
 <>
- <Typography sx={{ fontWeight: "500" , color: '#0D1C52', mb : '12px', mt: '40px' }}>  Поверочный интервал </Typography>
+ <Typography id='devpovs' sx={{ fontWeight: "500" , color: '#0D1C52', mb : '12px', mt: '40px' }}>  Поверочный интервал </Typography>
  <Box
     sx={{
      width: "100%",

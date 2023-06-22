@@ -86,7 +86,7 @@ export class CriticalityTable extends React.Component<IProps> {
                     .getSessFirstLast()
                     .map((row: any, i: any) => (
                       <React.Fragment
-                        key={"data_qdsadsd121212" + row.depth + row}
+                        key={"data_qd" + row.depth + row}
                       >
                         <TableCell
                           align="left"
@@ -123,7 +123,7 @@ export class CriticalityTable extends React.Component<IProps> {
                     .map((row: any, i: any) => (
                       <React.Fragment
                         key={
-                          "data_qdsaddaddsdssd" + row.data_f + i + row.data_f
+                          "data_qds" + row.data_f + i + row.data_f
                         }
                       >
                         <TableCell

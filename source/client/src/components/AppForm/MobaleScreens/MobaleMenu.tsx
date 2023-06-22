@@ -6,6 +6,8 @@ import {APP_STORAGE} from '../../../storage/AppStorage'
 
 import {SensorsList} from '../Sensors/SensorsList'
 import { DevsGroupsTree } from '../Devs/DevsGroupsTree';
+import { DevPovs } from '../DevPovs/DevPovs';
+import { AdditionInfo } from '../AdditionInfo/AdditionInfo';
 
 
 
@@ -84,9 +86,10 @@ const MobaleMenu = () => {
         }
         {idEl === 'basic-button3' &&
         
-        <>
-        
-        </>
+        <Box className='mobale_screens'>
+          <AdditionInfo />
+         <DevPovs/>
+        </Box>
         }
         </MenuItem>
       </Menu>

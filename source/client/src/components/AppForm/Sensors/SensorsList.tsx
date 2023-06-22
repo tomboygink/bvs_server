@@ -287,9 +287,13 @@ const [year_first, month_first, day_first] = FirstData.split('-');
           </Box>
         </Box>
 
-<AdditionInfo />
+        <div id ='addition_info'>
+        <AdditionInfo />
 
 {APP_STORAGE.sensors.getEndPovs()!== '' ? <DevPovs/> : ''}
+
+        </div>
+
 
       </div>
     );
