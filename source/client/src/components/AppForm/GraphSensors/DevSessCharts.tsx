@@ -233,14 +233,14 @@ export class DevSessCharts extends React.Component<IProps> {
                   strokeWidth={"3"}
                   dataKey="data_s"
                   stroke="#9566FB"
-                  // label={CustomizedLabel}
+                  label={CustomizedLabel}
                 />
                 <Line
                   data={toJS(APP_STORAGE.sensors.getSess_first())}
                   strokeWidth={"2"}
                   dataKey="data_f"
                   stroke="#00B394"
-                  // label ={CustomizedLabel}
+                  label ={CustomizedLabel}
                 />
               </LineChart>
             </ResponsiveContainer>
