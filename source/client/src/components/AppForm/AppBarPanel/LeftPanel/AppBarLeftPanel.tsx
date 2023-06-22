@@ -187,14 +187,14 @@ export class AppBarLeftPanel extends React.Component<IProps> {
 
           <Divider light sx={{pb: 1, pt:1}} />
 
-          <MenuItem
+          {/* <MenuItem
           >
             <ListItemIcon>
               <LogoutIcon fontSize="small" />
             </ListItemIcon>
             Выход
           </MenuItem>
-   
+    */}
         </>
       );
     }
