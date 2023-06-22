@@ -88,7 +88,7 @@ export class AccountMenu extends React.Component<IProps> {
             <MenuItem  onClick={ ()=>{this.ChangeCUserData();}}>
             <ListItemIcon>
             <PermIdentityIcon fontSize="small"  />
-            </ListItemIcon>  Настройки профиля
+            </ListItemIcon>  Настройка профиля
             </MenuItem>
 
             <MenuItem onClick= {()=> {this.ChangePassword(); }}>

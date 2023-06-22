@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../storage/AppStorage"; //////Хранилище данных
 
 import { AppBarPanel } from "./AppBarPanel/AppBarPanel";
@@ -42,6 +42,8 @@ export class AppForm extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }
+
+ async BackToTopButton(){}
 
   render(): React.ReactNode {
     let user_r = null;
@@ -144,7 +146,14 @@ export class AppForm extends React.Component<IProps> {
                 <Box className="block-wrapp" id='right-form'>{right_form}</Box>
               </Box>
             </Box>
+           
           </Box>
+
+          <Button className="button-back-to-up"
+          onClick={() => {
+            this.BackToTopButton()
+          }}
+          >Back to top</Button>
         </React.Fragment>
       );
   }

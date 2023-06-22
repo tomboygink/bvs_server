@@ -22,6 +22,11 @@ import { TDevice } from "../../../storage/components/Devs/DevEntityes";
 import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import FolderZipIcon from '@mui/icons-material/FolderZip';
 
+import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
+
+
+
+
 
 
 interface IProps {
@@ -158,9 +163,6 @@ export class DevsGroupsTree extends React.Component<IProps> {
       }
       }
     }
-
-
-
 
     if(APP_STORAGE.getRoleRead() === 1 && !APP_STORAGE.getRoleWrite() && dev.deleted === false){
 
@@ -341,6 +343,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
   drawDevsTree(): React.ReactNode { ////////////////////////////// Функция отрисовки дерева 
     let DevGr:any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
+
 
     return this.drawDevGroup(DevGr);
   }

@@ -15,7 +15,7 @@ import {
 import { toJS } from "mobx";
 import { Box , Divider  } from "@mui/material";
 import { Charts } from "./SvgWell";
-import { CustomTooltip, customizedGroupTick } from "./recharts";
+import { CustomTooltip, CustomizedLabel, customizedGroupTick } from "./Recharts";
 
 interface IProps {}
 
@@ -206,7 +206,7 @@ export class DevSessCharts extends React.Component<IProps> {
                   strokeWidth={"0.1mm"}
                   stroke="rgb(255 255 255 / 0%)"
                   tickCount={27}
-                  tick={{ fill: "#7F00FF", fontSize: "14px" }}
+                  tick={{ fill: "#7F00FF", fontSize: "14px" }} 
                   domain={[-15, 15]}
                 />
 
@@ -230,15 +230,17 @@ export class DevSessCharts extends React.Component<IProps> {
 
                 <Line
                   data={toJS(APP_STORAGE.sensors.getSess_second())}
-                  strokeWidth={"2"}
+                  strokeWidth={"3"}
                   dataKey="data_s"
                   stroke="#9566FB"
+                  // label={CustomizedLabel}
                 />
                 <Line
                   data={toJS(APP_STORAGE.sensors.getSess_first())}
                   strokeWidth={"2"}
                   dataKey="data_f"
                   stroke="#00B394"
+                  // label ={CustomizedLabel}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -290,7 +292,7 @@ export class DevSessCharts extends React.Component<IProps> {
 
               <Tooltip content={<CustomTooltip />} />
 
-              <Line strokeWidth={"2"} dataKey="data_s" stroke="#9566FB" />
+              <Line strokeWidth={"1"} dataKey="data_s" stroke="#9566FB" />
               <Line strokeWidth={"2"} dataKey="data_f" stroke="#00B394" />
             </LineChart>
           </ResponsiveContainer>

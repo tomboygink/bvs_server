@@ -9,12 +9,17 @@ import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 
 export const CustomizedLabel: FunctionComponent<any> = (props: any) => {
   const { x, y, stroke, value } = props;
+  console.log('value', value)
+    if(Number(1.44) === Number(value)){
+      return (
+        <text x={x} y={y} dy={-4} fill={'#FF0404'} fontSize={14} color={'red'} textAnchor="middle">
+         {value} Критично
+        </text>
+      );
+    }
+ 
+  
 
-  return (
-    <text x={x} y={y} dy={-4} fill={'#447FF2'} fontSize={14} color={'red'} textAnchor="middle">
-     {value} град.
-    </text>
-  );
 };
 
 export const customizedGroupTick = (props: any) => {
@@ -31,11 +36,17 @@ export const customizedGroupTick = (props: any) => {
   ); 
 };
 
-export const CustomTooltip = ({ active, payload, label }: any) => {
+export const CustomTooltip = ({ active, payload, label, props }: any) => {
+
+  
   if (active && payload && payload.length)
- 
+  console.log(props, 'props');
+  console.log(payload, 'payload')
+
+  console.log(payload, 'active')
   {
     return (
+      <> 
       <Box sx={{background: '#fff', p: '4px', borderRadius:' 4px', boxShadow: '0px 1px 8px 0px rgba(15, 134, 225, 0.2)'}}>
         <Box sx ={{display: 'flex', justifyItems: 'center', alignItems: 'center'}}> 
         <ShowChartIcon sx= {{ color: '#FFAD4E', fontSize: '14px'}}  />
@@ -66,6 +77,7 @@ export const CustomTooltip = ({ active, payload, label }: any) => {
 <Typography sx= {{color:"#FE6F4F", fontSize: '14px'}}>   {`${payload[2].value}`}  </Typography>
 </Box>  }
       </Box>
+      </>
     );
   }
   return null;

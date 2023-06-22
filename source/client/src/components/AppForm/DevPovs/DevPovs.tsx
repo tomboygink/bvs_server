@@ -17,17 +17,24 @@ export class DevPovs extends React.Component<IProps> {
   }
 
   render(): React.ReactNode {
-
+   console.log('APP_STORAGE.sensors.getStartPovs()', APP_STORAGE.sensors.getStartPovs())
+    let StartPovsDate;
+    let StartPovsTime;
+    let EndPovsDate;
+    let EndPovsTime;
+    if(APP_STORAGE.sensors.getStartPovs() !== undefined ) {
+      
+      let StartPovs = APP_STORAGE.sensors.getStartPovs().split("T")[0]; ///////// Перевернуть дату
+      const [year_startPovs, month_startPovs, day_startPovs] = StartPovs.split("-");
+      StartPovsDate = `${day_startPovs}.${month_startPovs}.${year_startPovs}`;
+      StartPovsTime = APP_STORAGE.sensors.getTimeDevSessFirst().split("T")[1];
   
-    let StartPovs = APP_STORAGE.sensors.getStartPovs().split("T")[0]; ///////// Перевернуть дату
-    const [year_startPovs, month_startPovs, day_startPovs] = StartPovs.split("-");
-    let StartPovsDate = `${day_startPovs}.${month_startPovs}.${year_startPovs}`;
-    let StartPovsTime = APP_STORAGE.sensors.getTimeDevSessFirst().split("T")[1];
-
-    let EndPovs = APP_STORAGE.sensors.getEndPovs().split("T")[0]; ///////// Перевернуть дату
-    const [year_endPovs, month_endPovs, day_endPovs] = EndPovs.split("-");
-    let EndPovsDate = `${day_endPovs}.${month_endPovs}.${year_endPovs}`;
-    let EndPovsTime = APP_STORAGE.sensors.getTimeDevSessFirst().split("T")[1];
+      let EndPovs = APP_STORAGE.sensors.getEndPovs().split("T")[0]; ///////// Перевернуть дату
+      const [year_endPovs, month_endPovs, day_endPovs] = EndPovs.split("-");
+      EndPovsDate = `${day_endPovs}.${month_endPovs}.${year_endPovs}`;
+      EndPovsTime = APP_STORAGE.sensors.getTimeDevSessFirst().split("T")[1];
+    }
+  
    
     return (
       <div className="wrapper-sensors">

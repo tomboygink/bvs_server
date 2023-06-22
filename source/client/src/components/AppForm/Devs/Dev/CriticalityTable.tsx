@@ -69,7 +69,7 @@ export class CriticalityTable extends React.Component<IProps> {
           sx={{ fontWeight: "500", color: "#0D1C52", mb: "12px", mt: "40px" }}
         >
           {" "}
-          Таблица критичности{" "}
+          Контроль критичности отклонений показания{" "}
         </Typography>
 
         <Paper style={{ maxHeight: 200, overflow: "auto" }} elevation={1}>

@@ -25,8 +25,7 @@ import { ExportTable } from "./ExportTable";
 
 import { handleChangePage, handleChangeRowsPerPage } from "../StyledMua";
 
-
-interface IProps {}
+interface IProps { }
 
 //Устройства
 @observer
@@ -36,7 +35,13 @@ export class DevSessTable extends React.Component<IProps> {
   }
 
   async set_NewControlDevSess(id: any, dev_id: any, dev_number: any) {
-    APP_STORAGE.devs.set_NewControlDevSess(APP_STORAGE.auth_form.getdt(), id, dev_id, dev_number)
+    APP_STORAGE.devs.set_NewControlDevSess(
+      APP_STORAGE.auth_form.getdt(),
+      id,
+      dev_id,
+      dev_number
+    );
+    APP_STORAGE.sensors.get_DevPovs(APP_STORAGE.auth_form.getdt())
   }
 
   async setRowId(e: string, time: string) {
@@ -54,7 +59,7 @@ export class DevSessTable extends React.Component<IProps> {
     let sessors;
     if (sess.getDevSession) {
       sessors = sess.getDevSession();
- 
+
       for (var key in sessors) {
         let sess_data = JSON.parse(sessors[key].sess_data);
         const uniqueChars = sess_data.s.reduce((o: any, i: any) => {
@@ -81,30 +86,35 @@ export class DevSessTable extends React.Component<IProps> {
     }
     const mergeByProperty = (arrays: any[], property = "depth") => {
       const arr = arrays.flatMap((item) => item); //делаем из всех массивов - один
-    
+
       const obj = arr.reduce((acc, item) => {
-        return { // делаем из массива - объект, чтобы повторения перезаписывались
+        return {
+          // делаем из массива - объект, чтобы повторения перезаписывались
           ...acc,
-          [item[property]]: { ...acc[item[property]], ...item }
+          [item[property]]: { ...acc[item[property]], ...item },
         };
       }, {});
-    
+
       return Object.values(obj); //обратно преобразуем из объекта в массив
     };
 
-    const result1 = mergeByProperty([data, toJS(APP_STORAGE.sensors.getSessFirstLast())]);
+    const result1 = mergeByProperty([
+      data,
+      toJS(APP_STORAGE.sensors.getSessFirstLast()),
+    ]);
 
+    APP_STORAGE.sensors.setSess_middle(
+      data.sort(
+        (a: { depth: number }, b: { depth: number }) => a.depth - b.depth
+      )
+    );
 
-    APP_STORAGE.sensors.setSess_middle(data.sort(
-      (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
-    ));
-   
-
-    APP_STORAGE.sensors.setdataCharts(result1.sort(
-      (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
-    ));
+    APP_STORAGE.sensors.setdataCharts(
+      result1.sort(
+        (a: { depth: number }, b: { depth: number }) => a.depth - b.depth
+      )
+    );
   }
- 
 
   render(): React.ReactNode {
     let count_sess = [];
@@ -116,7 +126,7 @@ export class DevSessTable extends React.Component<IProps> {
     let dev_sess: {
       [x: string]: {
         sess_data: any;
-        dev_id:any;
+        dev_id: any;
         time_srv: string;
         time_dev: string;
         dev_number: string;
@@ -177,129 +187,150 @@ export class DevSessTable extends React.Component<IProps> {
       }
     }
 
-    let page = APP_STORAGE.devs.getPage(); 
+    let page = APP_STORAGE.devs.getPage();
     let rowsPerPage = APP_STORAGE.devs.getRowsPerPage(); /////// Начальное кол-во страниц
 
     const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - date.length) : 0;
-
+      page > 0 ? Math.max(0, (1 + page) * rowsPerPage - date.length) : 0;
 
     return (
       <React.Fragment>
         {date.length > 0 && (
           <Box sx={{ mt: "8px" }}>
             <>
-              <TableContainer component={Paper}>
+              <TableContainer component={Paper} id='table-paper'>
                 <Table>
                   <TableHead>
-                    <TableRow 
-                          key={'row_key'}
-                        >
-                          <TableCell component="th" scope="row">
-                            Номер устройства
-                          </TableCell>
-                          
-                          <TableCell style={{ width: 160 }} align="center">
-                          Время устройства
-                          </TableCell>
-                          <TableCell style={{ width: 160 }} align="center">
-                            Заряд
-                          </TableCell>
-                          <TableCell style={{ width: 160 }} align="center">
-                          Контрольная сессия
-                          </TableCell>
-                          <TableCell component="th" scope="row"  >
-                           Показать на графике 
-                          </TableCell>
-                        </TableRow>
+                    <TableRow key={"row_key"}>
+                      <TableCell component="th" scope="row">
+                        Номер устройства
+                      </TableCell>
+
+                      <TableCell style={{ width: 160 }} align="center">
+                        Время устройства
+                      </TableCell>
+                      <TableCell style={{ width: 160 }} align="center">
+                        Заряд
+                      </TableCell>
+                      <TableCell style={{ width: 160 }} align="center">
+                        Контрольная сессия
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        Показать на графике
+                      </TableCell>
+                    </TableRow>
                   </TableHead>
                   <TableBody>
-                    {(rowsPerPage > 0 ? date.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : date).map(
-                      (row) => (
-                        <TableRow id = {row.id}
-                          key={row.id}
-                        >
-                          <TableCell align="center"  component="th" scope="row">
-                            {row.dev_number}
-                          </TableCell>
-                       
-                          <TableCell style={{ width: 160 }} align="center">
-                            {row.time_dev.replace('T', ' ')}
-                          </TableCell>
-                          <TableCell style={{ width: 160 }} align="center">
-                            {row.level_akb}
-                          </TableCell>
-{APP_STORAGE.sensors.getIdFirstSess() === APP_STORAGE.sensors.getIdLastSess() &&  APP_STORAGE.sensors.getIdFirstSess() !== row.id &&
-                                 <TableCell component="th" scope="row"  >
-                                 <Button  sx={{fontSize: '12px'}} onClick={() => {
-                                 this.set_NewControlDevSess(row.id, row.dev_id, row.dev_number);
-                               }}> 
-                               Установить
-                               </Button>  
-                              </TableCell>
-}
-
-{APP_STORAGE.sensors.getIdFirstSess() === APP_STORAGE.sensors.getIdLastSess() && APP_STORAGE.sensors.getIdFirstSess() === row.id &&
-                                 <TableCell component="th" scope="row"  >
-                                 <Button  sx={{fontSize: '12px'}} 
-                               > 
-                               Текущая контрольная сессия
-                               </Button>  
-                              </TableCell>
-}
-
-
-
-{APP_STORAGE.sensors.getIdFirstSess() !== APP_STORAGE.sensors.getIdLastSess() && String(toJS(APP_STORAGE.sensors.getIdFirstSess())) === String(row.id) &&
-                                 <TableCell component="th" scope="row"  >
-                                 <Button  sx={{fontSize: '12px'}} > 
-                               Установлено
-                               </Button>  
-                              </TableCell>
-}
-
-{APP_STORAGE.sensors.getIdFirstSess() !== APP_STORAGE.sensors.getIdLastSess() && String(toJS(APP_STORAGE.sensors.getIdFirstSess())) !== String(row.id) &&
-                                 <TableCell component="th" scope="row"  >
-                               <Button  sx={{fontSize: '12px', color: '#eee'}} > 
-                               установить
-                               </Button> 
-                              </TableCell>
-
-}
-                          
-                          <TableCell component="th" scope="row"  >
-                            <Button sx={{fontSize: '12px'}} onClick={() => {
-                            this.setRowId(row.id, row.time_dev);
-                          }}> Выбрать </Button>
-                            
-                          </TableCell>
-                        </TableRow>
+                    {(rowsPerPage > 0
+                      ? date.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
                       )
-                    )}
-                 {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
-          )}
-           </TableBody>
+                      : date
+                    ).map((row) => (
+                      <TableRow id={row.id} key={row.id}>
+                        <TableCell align="center" component="th" scope="row">
+                          {row.dev_number}
+                        </TableCell>
 
-          <TableFooter>
-          <TableRow>
-            <TablePagination
-              sx = {{width: '100%'}}
-              rowsPerPageOptions={[3, 10, 25, { label: 'Все', value: -1 }]}
-              colSpan={3}
-              count={date.length}
-              rowsPerPage={rowsPerPage}
-              labelRowsPerPage={"строк на странице"}
-              page={page}
-             
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              //ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
+                        <TableCell style={{ width: 160 }} align="center">
+                          {row.time_dev.replace("T", " ")}
+                        </TableCell>
+                        <TableCell style={{ width: 160 }} align="center">
+                          {row.level_akb}
+                        </TableCell>
+                        {APP_STORAGE.sensors.getIdFirstSess() ===
+                          APP_STORAGE.sensors.getIdLastSess() &&
+                          APP_STORAGE.sensors.getIdFirstSess() !== row.id && (
+                            <TableCell component="th" scope="row">
+                              <Button
+                                sx={{ fontSize: "12px" }}
+                                onClick={() => {
+                                  this.set_NewControlDevSess(
+                                    row.id,
+                                    row.dev_id,
+                                    row.dev_number
+                                  );
+                                }}
+                              >
+                                Установить
+                              </Button>
+                            </TableCell>
+                          )}
+
+                        {APP_STORAGE.sensors.getIdFirstSess() ===
+                          APP_STORAGE.sensors.getIdLastSess() &&
+                          APP_STORAGE.sensors.getIdFirstSess() === row.id && (
+                            <TableCell component="th" scope="row">
+                              <Button sx={{ fontSize: "12px" }}>
+                                Текущая контрольная сессия
+                              </Button>
+                            </TableCell>
+                          )}
+
+                        {APP_STORAGE.sensors.getIdFirstSess() !==
+                          APP_STORAGE.sensors.getIdLastSess() &&
+                          String(toJS(APP_STORAGE.sensors.getIdFirstSess())) ===
+                          String(row.id) && (
+                            <TableCell component="th" scope="row">
+                              <Button sx={{ fontSize: "12px" }}>
+                                Установлено
+                              </Button>
+                            </TableCell>
+                          )}
+
+                        {APP_STORAGE.sensors.getIdFirstSess() !==
+                          APP_STORAGE.sensors.getIdLastSess() &&
+                          String(toJS(APP_STORAGE.sensors.getIdFirstSess())) !==
+                          String(row.id) && (
+                            <TableCell component="th" scope="row">
+                              <Button sx={{ fontSize: "12px", color: "#eee" }}>
+                                установить
+                              </Button>
+                            </TableCell>
+                          )}
+
+                        <TableCell component="th" scope="row">
+                          <Button
+                            sx={{ fontSize: "12px" }}
+                            onClick={() => {
+                              this.setRowId(row.id, row.time_dev);
+                            }}
+                          >
+                            {" "}
+                            Выбрать{" "}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    {emptyRows > 0 && (
+                      <TableRow style={{ height: 53 * emptyRows }}>
+                        <TableCell colSpan={6} />
+                      </TableRow>
+                    )}
+                  </TableBody>
+
+                  <TableFooter>
+                    <TableRow>
+                      <TablePagination
+                        sx={{ width: "100%" }}
+                        rowsPerPageOptions={[
+                          3,
+                          10,
+                          25,
+                          { label: "Все", value: -1 },
+                        ]}
+                        colSpan={3}
+                        count={date.length}
+                        rowsPerPage={rowsPerPage}
+                        labelRowsPerPage={"строк на странице"}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                      //ActionsComponent={TablePaginationActions}
+                      />
+                    </TableRow>
+                  </TableFooter>
                 </Table>
               </TableContainer>
             </>

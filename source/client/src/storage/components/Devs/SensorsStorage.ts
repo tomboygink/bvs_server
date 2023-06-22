@@ -48,13 +48,17 @@ export class SensorsStorage {
     @observable old_dev_povs: string = ''; //////////////////////// Поверочный интервал
     @observable start_povs: string = '';
     @observable end_povs: string = '';
+
+    @observable array_control_data: Array<number> = [];
+    @observable array_last_data: Array<number> = [];
     
     constructor(){
         makeAutoObservable(this);
     }
 
+    @action setArrayControlData(val : Array<number>) {this.array_control_data}
+    @computed getArrayControlData() : Array<number> { return this.array_control_data}
 
-   
     @action setTimeDevSessFirst(val : string) {this.time_dev_firstsess = val};
     @computed getTimeDevSessFirst() : string {return this.time_dev_firstsess}; 
 
@@ -188,6 +192,7 @@ export class SensorsStorage {
 
       async set_DevPovs(dt: IWSResult) {
 
+        console.log('DevPovs11', dt);
         
         if(Object.keys(dt.data).length !== 0){
           this.setOldDevPovs(dt.data[0].id);
