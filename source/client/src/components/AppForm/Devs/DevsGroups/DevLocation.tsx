@@ -296,15 +296,8 @@ export class DevLocation extends React.Component<IProps> {
                   <IconButton
                     sx={{color: '#808080'}}
                     aria-label="directions"
-                    onClick={() => {
-                      window.open(
-                        `http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` +
-                          longitude.trim() +
-                          "&lat=" +
-                          latitude.trim()
-                      );
-                    }}
-                  >
+                    onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + latitude.trim() + '&lat=' + longitude.trim())}}>
+
                     <DirectionsIcon />
                   </IconButton>
                 </Link>
@@ -444,9 +437,10 @@ export class DevLocation extends React.Component<IProps> {
                   </Box>
 
                   
-                  <Link sx= {{fontSize:'1rem', display: 'flex', alignItems: 'center', flexDirection: 'row-reverse'}} >Показать на карте               
+                  <Link sx= {{fontSize:'1rem', display: 'flex', alignItems: 'center', flexDirection: 'row-reverse'}} >Показать на карте11               
                                       <IconButton color="primary" aria-label="directions" 
-                                      onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + longitude.trim() + '&lat=' + latitude.trim())}}>
+                                      onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lat=` + latitude.trim() + '&lng=' + longitude.trim())}}>
+
                                       <DirectionsIcon/>
                                       </IconButton>
                   </Link> 
