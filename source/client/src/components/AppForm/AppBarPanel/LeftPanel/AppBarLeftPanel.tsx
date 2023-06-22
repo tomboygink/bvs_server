@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { Drawer, List, Divider, ListItemIcon, MenuItem, ListItemText, Button } from "@mui/material";
+import { Drawer, Divider, ListItemIcon, MenuItem, ListItemText, Button } from "@mui/material";
 
-import IconButton from "@mui/material/IconButton";
+
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 import { APP_STORAGE } from "../../../../storage/AppStorage";
@@ -16,6 +16,7 @@ import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlin
 import EngineeringOutlinedIcon from '@mui/icons-material/EngineeringOutlined';
 
 
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 
@@ -186,6 +187,13 @@ export class AppBarLeftPanel extends React.Component<IProps> {
 
           <Divider light sx={{pb: 1, pt:1}} />
 
+          <MenuItem
+          >
+            <ListItemIcon>
+              <LogoutIcon fontSize="small" />
+            </ListItemIcon>
+            Выход
+          </MenuItem>
    
         </>
       );
@@ -198,10 +206,7 @@ export class AppBarLeftPanel extends React.Component<IProps> {
             </ListItemIcon>{" "}
             Только чтение
           </MenuItem>
-          </>
-      )
-
-    }
+          </> ) }
 
     return (
       <React.Fragment>

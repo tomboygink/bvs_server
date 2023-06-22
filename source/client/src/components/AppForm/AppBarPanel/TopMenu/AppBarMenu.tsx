@@ -59,10 +59,9 @@ export class AccountMenu extends React.Component<IProps> {
                 <Box  sx = {{background: '#fff', borderRadius: '4px',  maxHeight: '52px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: '20px'}} id = 'btnPerfil'onClick={()=>{ APP_STORAGE.app_bar.setAppBarUser(true);  }}>
                 <Avatar sx={{ width: 32, height: 32 }}></Avatar>
                
-                <Typography sx={{  pl: '1rem', color : '#0D1C52'}} > {user.family} {user.name} {user.father}  </Typography>
+                <Typography id='top-menu' sx={{  pl: '1rem', color : '#0D1C52'}} > {user.family} {user.name} {user.father}  </Typography>
                 <ArrowDropDownIcon sx={{color: '#0D1C52'}}/>
-                </Box>
-                
+                </Box>  
             <Menu
                 anchorEl={document.getElementById('btnPerfil')}
                 open={APP_STORAGE.app_bar.getAppBarUser()}
@@ -89,7 +88,7 @@ export class AccountMenu extends React.Component<IProps> {
             <MenuItem  onClick={ ()=>{this.ChangeCUserData();}}>
             <ListItemIcon>
             <PermIdentityIcon fontSize="small"  />
-            </ListItemIcon>  Настройки профиля
+            </ListItemIcon>  Настройка профиля
             </MenuItem>
 
             <MenuItem onClick= {()=> {this.ChangePassword(); }}>

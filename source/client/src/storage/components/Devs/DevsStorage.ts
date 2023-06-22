@@ -5,9 +5,22 @@ import { WSocket } from '../../WSocket';
 import { getCookie, setCookie, deleteCookie } from '../../browserCookes';
 import { info } from 'console';
 import { APP_STORAGE } from '../../AppStorage';
+import { TDGroup } from './DevEntityes';
 
 
 export class DevsStorage {
+
+  @observable gr: TDGroup = {
+    id: 0,
+    parent_id: 0,
+    g_name: '',
+    latitude: '',
+    longitude: '',
+    ord_num: '',
+    org_id: '',
+    g_info: '',
+    deleted: false
+  }
 
   @observable devs: Array<string> = [];
 
@@ -95,6 +108,9 @@ export class DevsStorage {
     makeAutoObservable(this);
   }
   
+  @action setGr(val : TDGroup) { this.gr = val}; /////// Группа устройств
+  @computed getGr(): TDGroup { return this.gr}
+
 
   @action setDeactivateControlSess(val: any) { this.deactivate_constrolsess = val };
   @computed getDeactivateControlSess(): any { return this.deactivate_constrolsess };
@@ -437,6 +453,7 @@ export class DevsStorage {
 
       APP_STORAGE.reg_user.setResulSave('');
       this.setOpenNewdevpovs(false);
+      APP_STORAGE.sensors.get_DevPovs(APP_STORAGE.auth_form.getdt())
     }, 2000)   
   }
 

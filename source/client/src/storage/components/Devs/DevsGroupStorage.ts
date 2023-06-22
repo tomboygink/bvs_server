@@ -210,8 +210,8 @@ export class DevsGroupStorage{
          (await WSocket.get()).send(q);  
     }
 
-    setDevsGroupsAll(dt: IWSResult) { /* -----  Получаем все группы устройств   */
-       
+  setDevsGroupsAll(dt: IWSResult) { /* -----  Получаем все группы устройств   */
+
     let devs_g = [];
     let DevGr = [];
 
@@ -239,10 +239,10 @@ export class DevsGroupStorage{
         }
       }
     }
- 
 
-      this.setDevsGroups(DevGr);
-     }
+
+    this.setDevsGroups(DevGr);
+  }
 
      async set_ChangeDevsGroups(name: string, value: any, _options?: any) { 
         

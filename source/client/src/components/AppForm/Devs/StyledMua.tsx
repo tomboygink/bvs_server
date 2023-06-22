@@ -1,6 +1,6 @@
 import * as React from 'react';
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
-import { alpha, styled,  lighten, darken  } from '@mui/material/styles';
+import { alpha, styled, lighten, darken } from '@mui/material/styles';
 import TreeItem, { TreeItemProps, treeItemClasses } from '@mui/lab/TreeItem';
 import Collapse from '@mui/material/Collapse';
 import Typography from '@mui/material/Typography';
@@ -8,8 +8,8 @@ import Typography from '@mui/material/Typography';
 import { useSpring, animated } from '@react-spring/web';
 import { TransitionProps } from '@mui/material/transitions';
 
-import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
-import ShowChartIcon from '@mui/icons-material/ShowChart';
+
+
 
 
 
@@ -87,8 +87,8 @@ export const StyledMua = styled((props: TreeItemProps) => (
   },
 }));
 
-export const id_dev_sess = async (event: any, node: any) => { 
- APP_STORAGE.sensors.setIdDevSess(node) 
+export const id_dev_sess = async (event: any, node: any) => {
+  APP_STORAGE.sensors.setIdDevSess(node)
 }
 
 export const handleChange = async (event: any, node: any) => {
@@ -97,96 +97,62 @@ export const handleChange = async (event: any, node: any) => {
   APP_STORAGE.sensors.setActiveButtonSortDesc('sort');
   APP_STORAGE.sensors.setdataCharts([]);
   APP_STORAGE.sensors.setDevSession(null);
-  
-   if(node.includes('_dev_id_') === false){
+
+  if (node.includes('_dev_id_') === false) {
     APP_STORAGE.devs_groups.setParentId(node);
     APP_STORAGE.main.setTitle("Показания устройств");
     APP_STORAGE.devs.setIdDevs(node);
     APP_STORAGE.devs_groups.setMiddleForm(1);
-   }
-   
-   if(node.includes('_dev_id_key_') === true){
+  }
+
+  if (node.includes('_dev_id_key_') === true) {
     APP_STORAGE.devs.setIdChild(node);
     APP_STORAGE.sensors.setSessFirstLast([]);
     APP_STORAGE.sensors.setSess_first([])
     APP_STORAGE.sensors.setSess_second([])
-    APP_STORAGE.sensors.setSortDesc('') ;
+    APP_STORAGE.sensors.setSortDesc('');
     APP_STORAGE.sensors.setChoseSessTime('');
     APP_STORAGE.sensors.setAkbSessLast('');
-    APP_STORAGE.devs_groups.setMiddleForm(2)
-   }  
+    APP_STORAGE.devs_groups.setMiddleForm(2);
+  }
 }
 
-
-export const GroupHeader = styled('div')(({ theme }) => ({
-  position: 'sticky',
-  top: '-8px',
-  padding: '4px 10px',
-  color: theme.palette.primary.main,
-  backgroundColor:
-    theme.palette.mode === 'light'
-      ? lighten(theme.palette.primary.light, 0.85)
-      : darken(theme.palette.primary.main, 0.8),
-}));
 
 export const options = async (event: any, node: any) => {
-APP_STORAGE.devs_groups.setParent(node);
-APP_STORAGE.devs.setGroupDevId(String(node));
+  APP_STORAGE.devs_groups.setParent(node);
+  APP_STORAGE.devs.setGroupDevId(String(node));
 }
 
-export const CustomTooltip = ({ active, payload, label }: any) => {
-  if (active && payload && payload.length)
- 
-  {
-    return (
-      <Box sx={{background: '#fff', p: '4px', borderRadius:' 4px', boxShadow: '0px 1px 8px 0px rgba(15, 134, 225, 0.2)'}}>
-        <Box sx ={{display: 'flex', justifyItems: 'center', alignItems: 'center'}}> 
-        <ShowChartIcon sx= {{ color: '#FFAD4E', fontSize: '14px'}}  />
-        <Typography sx= {{color:"#808080",  fontSize: '14px',  mr: '2px'}}>Глубина - </Typography>
-        <Typography sx= {{color:"#266BF1", fontSize: '14px'}}> {`${label}`}  </Typography>
-          </Box>  
 
-          {payload && payload[0]  &&
-          <Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
-          <DeviceThermostatIcon sx={{color: '#8884d8', fontSize: '14px'}}/>
-        <Typography sx= {{color:"#808080", fontSize: '14px', mr: '2px'}}>Температура </Typography>
-        <Typography sx= {{color:"#8884d8", fontSize: '14px'}}> {`${payload[0].value}`}  </Typography>
-          </Box> 
-         }
-          {payload && payload[1]  &&
 
-          <Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
-          <DeviceThermostatIcon sx={{color: '#82ca9d', fontSize: '14px'}}/>
-        <Typography sx= {{color:"#808080", fontSize: '14px', mr: '14px'}}>Температура</Typography>
-        <Typography sx= {{color:"#82ca9d", fontSize: '14px'}}>   {`${payload[1].value}`}  </Typography>
-          </Box>  }
-
-          {payload && payload[2]  &&
-
-<Box sx={{display: 'flex' , justifyItems: 'center', alignItems: 'center'}}> 
-<DeviceThermostatIcon sx={{color: '#FE6F4F', fontSize: '14px'}}/>
-<Typography sx= {{color:"#808080", fontSize: '14px', mr: '14px'}}>Температура </Typography>
-<Typography sx= {{color:"#FE6F4F", fontSize: '14px'}}>   {`${payload[2].value}`}  </Typography>
-</Box>  }
-      </Box>
-    );
-  }
-  return null;
-};
-
- export const customizedGroupTick = (props: any) => {
+export const customizedGroupTick = (props: any) => {
   const { index, x, y, payload } = props;
 
   return (
-   
-          <g>
-         <rect x={x} y ={y}  className ='map'  width="4" height="8" fill="#808080" fontFamily="Verdana" fontSize="14px" />
-        <text dx={x - 35} dy={y + 10} fill="blue" fontSize="12px" textAnchor="middle">
-           {payload.value}
-        </text>
-  </g>
-  ); 
-}; 
+
+    <g>
+      <rect x={x} y={y} className='map' width="4" height="8" fill="#808080" fontFamily="Verdana" fontSize="14px" />
+      <text dx={x - 35} dy={y + 10} fill="blue" fontSize="12px" textAnchor="middle">
+        {payload.value}
+      </text>
+    </g>
+  );
+};
+
+export const handleChangePage = (
+  event: React.MouseEvent<HTMLButtonElement> | null,
+  newPage: number,
+) => {
+  APP_STORAGE.devs.setPage(newPage);
+};
+
+
+export const handleChangeRowsPerPage = (
+  event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+) => {
+  APP_STORAGE.devs.setRowsPerPage(parseInt(event.target.value, 10));
+  APP_STORAGE.devs.setPage(0);
+};
 
 
 

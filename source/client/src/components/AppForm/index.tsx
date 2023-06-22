@@ -1,12 +1,12 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../storage/AppStorage"; //////Хранилище данных
 
 import { AppBarPanel } from "./AppBarPanel/AppBarPanel";
 import { Modal } from "./AppBarPanel/TopMenu/Modal/Modal"; //// Модальное окно для изменения данных пользователя
 import { ModalLeftPanel } from "./AppBarPanel/LeftPanel/RegistationUsers/ModalLeftPanel";
-import {NewDevPovs} from "./Devs/NewDevPovs"
+import { NewDevPovs } from "./Devs/Dev/Menu/NewDevPovs"
 
 import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser"; /////////////Таблица пользователей
 import { UsersMenu } from "./User/UsersMenu"; //////////////////////////// устройства
@@ -19,21 +19,22 @@ import { JobsTitlesMenu } from "./JobsTitles/JobsTitlesMenu";
 import { JobsTitles } from "./JobsTitles/JobsTitles";
 
 
-import { DevsGroupsTree } from "./DevsGroups/DevsGroupsTree"; /////////////////Дерево устройств (левое боковое меню)
-import { DevLocation } from "./DevsGroups/DevLocation"; ////////расположение устройств
-import { ChangeDevsGroups } from "./DevsGroups/ChangeDevsGroups"; /////// Редактировать расположение5 устройств (модальное окно)
-import { MoveDevsGroups } from "./DevsGroups/MoveDevsGroups"; ////////////Переместить расположение устройств (модальное окно)
-import { AddNewGroup } from "./DevsGroups/AddNewGroup"; ////////// Добавить новое расположение
-import { AddNewSubgroup } from "./DevsGroups/AddNewSubgroup"; //////////Добавить новую подгруппу
 
-import { Devs } from "./Devs/Devs"; //////////////////////////// устройства
-import { LeftPanelAdditionalInformation } from "./Sensors/LeftPanelAdditionalInformation"; ///////////////////////////////сенсоры на устройствах
-import { ChangeDevsModal } from "./Devs/ChangeDevsModal"; ////////////////////////////Редактировать устройства
-import { AddNewDevModal } from "./Devs/AddNewDevModal"; //////////////Добавить новое устройство
-import { Calendar } from "./Devs/Calendar";
-import { SelectedSession } from "./Devs/SelectedSession";
+import { DevLocation } from "./Devs/DevsGroups/DevLocation"; ////////расположение устройств
+import { ChangeDevsGroups } from "./Devs/DevsGroups/Menu/ChangeDevsGroups"; /////// Редактировать расположение5 устройств (модальное окно)
+import { MoveDevsGroups } from "./Devs/DevsGroups/Menu/MoveDevsGroups"; ////////////Переместить расположение устройств (модальное окно)
+import { AddNewGroup } from "./Devs/DevsGroups/Menu/AddNewGroup"; ////////// Добавить новое расположение
+import { AddNewSubgroup } from "./Devs/DevsGroups/Menu/AddNewSubgroup"; //////////Добавить новую подгруппу
 
-interface IProps {}
+import { Devs } from "./Devs/Dev/Devs"; //////////////////////////// устройства
+import { SensorsList } from "./Sensors/SensorsList"; ///////////////////////////////сенсоры на устройствах
+import { ChangeDevsModal } from "./Devs/Dev/Menu/ChangeDevsModal"; ////////////////////////////Редактировать устройства
+import { AddNewDevModal } from "./Devs/Dev/Menu/AddNewDevModal"; //////////////Добавить новое устройство
+import { Calendar } from "./Devs/Dev/Calendar";
+import { SelectedSession } from "./Devs/Dev/SelectedSession";
+import { DevsGroupsTree } from "./Devs/DevsGroupsTree";
+
+interface IProps { }
 
 //Компонент формы приложения
 @observer
@@ -41,6 +42,8 @@ export class AppForm extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }
+
+ async BackToTopButton(){}
 
   render(): React.ReactNode {
     let user_r = null;
@@ -86,7 +89,7 @@ export class AppForm extends React.Component<IProps> {
       middle_form = (
         <>
           <Devs />
-         <SelectedSession /> 
+          <SelectedSession />
         </>
       );
       //dev_sess = <DevSess/>
@@ -109,9 +112,9 @@ export class AppForm extends React.Component<IProps> {
       left_form = <JobsTitlesMenu />;
     }
 
-  
-    right_form = <LeftPanelAdditionalInformation />;
- 
+
+    right_form = <SensorsList />;
+
 
     if (APP_STORAGE.auth_form.getUser())
       return (
@@ -132,7 +135,7 @@ export class AppForm extends React.Component<IProps> {
           <Box className="is-grid">
             <Box className="wrapper">
               <Box className="blocks">
-                <Box className="block-wrapp">{left_form}</Box>
+                <Box className="block-wrapp" id='left-form'> {left_form} </Box>
 
                 <Box className="block-wrapp grid">
                   {middle_form}
@@ -140,10 +143,17 @@ export class AppForm extends React.Component<IProps> {
                   {new_group}
                 </Box>
 
-                <Box className="block-wrapp">{right_form}</Box>
+                <Box className="block-wrapp" id='right-form'>{right_form}</Box>
               </Box>
             </Box>
+           
           </Box>
+
+          <Button className="button-back-to-up"
+          onClick={() => {
+            this.BackToTopButton()
+          }}
+          >Back to top</Button>
         </React.Fragment>
       );
   }
