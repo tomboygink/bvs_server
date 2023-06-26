@@ -89,15 +89,15 @@ export class SensorsList extends React.Component<IProps> {
            
             if (gr_devs[i].deleted === true) {
               sensors.push(
-                <>
-                  <TableRow key={"sensors_id" + uniqueChars[key].depth}>
-                    <TableCell>
-                      <SensorsIcon fontSize="small" sx={{ color: "#808080" }} />
-                    </TableCell>
-                    <TableCell>[00{key}]</TableCell>
-                    <TableCell>[{"" + uniqueChars[key].depth}] </TableCell>
-                  </TableRow>
-                </>
+                <TableRow key={"sensors_id" + uniqueChars[key].depth}>
+                  <TableCell sx={{borderBottom: 'none'}}>
+                    <SensorsIcon fontSize="small" sx={{ color: "#808080" }} />
+                  </TableCell>
+                  <TableCell sx={{borderBottom: 'none'}}>[00{key}]</TableCell>
+                  <TableCell sx={{ fontWeight: "700" , borderBottom: 'none'}}>
+                    [{"" + uniqueChars[key].depth}]{" "}
+                  </TableCell>
+                </TableRow>
               );
             }
 
