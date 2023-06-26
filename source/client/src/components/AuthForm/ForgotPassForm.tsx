@@ -14,6 +14,7 @@ import {
   Divider,
   Alert,
   Link,
+  Grid,
 } from "@mui/material";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -55,15 +56,18 @@ export class ForgotPass extends React.Component<IProps> {
 
     return (
       <React.Fragment>
-        <ThemeProvider theme={theme}>
+       <Box className='auth-form'>
+
+  
+
           <Container
             component="main"
             maxWidth="xs"
-            sx={{ border: "1px solid #eeeeee;", padding: "20px", mt: "5%" }}
+            sx={{  padding: "20px", mt: "5%" , alignSelf: 'center'}}
           >
             <CssBaseline />
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography component="h1" variant="h5">
+            <Box sx={{ display: "flex", justifyContent: "space-between" , alignItems: 'center'}}>
+              <Typography component="h1" variant="h5" sx={{color: '#266BF1', fontSize: '36px'}}>
                 Сброс пароля
               </Typography>
               <ArrowRightAltIcon
@@ -97,22 +101,19 @@ export class ForgotPass extends React.Component<IProps> {
               />
 
               <Button
-                sx={{
-                  background: "#edf2ff",
-                  color: "#1976d2;",
-                  mt: "12px",
-                  mb: "12px",
-                }}
+               sx= {{background: '#266BF1', color: '#fff' , mt : '12px', p: '8px'}}
                 type="button"
                 fullWidth
                 onClick={() => {
                   APP_STORAGE.auth_form.set_ForgPass();
                 }}
+                className='auth_button'
               >
                 Получить код
               </Button>
             </Box>
             {alert}
+            <Grid container sx= {{mt: '12px'}}>
             <Link
               href="#"
               variant="body2"
@@ -122,8 +123,16 @@ export class ForgotPass extends React.Component<IProps> {
             >
               Вернуться на форму авторизации
             </Link>
+            </Grid>
           </Container>
-        </ThemeProvider>
+          <Box className='right-panel'>
+                    
+                    {/* <Typography className='right-panel-tittle'> Сервер приема данных</Typography> */}
+                    <Typography sx ={{mb: '12px'}}>© ООО Севербуринструмент 
+                    {/* ({Date.now()})  */}
+                    | e-mail: severburinstrument@mail.ru</Typography>
+                 </Box>
+       </Box>
       </React.Fragment>
     );
   }

@@ -111,7 +111,7 @@ export class ChangeDevsGroups extends React.Component<IProps> {
                 mb: "12px",
               }}
             >
-              <Typography>Редактировать расположение1</Typography>
+              <Typography>Редактировать расположение</Typography>
 
               <CloseIcon
                 sx={{ color: "#1976D2" }}

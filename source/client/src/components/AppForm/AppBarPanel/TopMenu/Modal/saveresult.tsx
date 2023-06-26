@@ -95,7 +95,7 @@ export class Saveresult extends React.Component<IProps> {
           </Typography>
           <Box> 
           <Typography>
-          Для продолжения работы необходимо подтвердите свою учетную запись.
+          Для продолжения работы необходимо подтвердить свою учетную запись.
           Код подтверждения отправлен на адрес <Typography sx={{fontWeight: '500'}}> «{APP_STORAGE.modal.getEmail()}» .</Typography> Если вы не получили письмо, пожалуйста, проверьте папку со спамом.
           </Typography>
           </Box>

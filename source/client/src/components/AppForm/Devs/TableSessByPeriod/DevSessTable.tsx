@@ -25,6 +25,9 @@ import { ExportTable } from "./ExportTable";
 
 import { handleChangePage, handleChangeRowsPerPage } from "../StyledMua";
 
+import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
+
+
 interface IProps { }
 
 //Устройства
@@ -236,9 +239,30 @@ export class DevSessTable extends React.Component<IProps> {
                         <TableCell style={{ width: 160 }} align="center">
                           {row.time_dev.replace("T", " ")}
                         </TableCell>
-                        <TableCell style={{ width: 160 }} align="center">
-                          {row.level_akb}
+                        {Number(row.level_akb) >= Number(2.7) && 
+                           <TableCell style={{ width: 160}} align="center">
+                            <Box sx={{display: 'flex', justifyContent: 'center'}}>
+                            {row.level_akb} <BatteryChargingFullIcon fontSize="small" sx ={{color: '#14AE5C '}}/>
+                            </Box>
+                         </TableCell>
+                        }
+                          {Number(row.level_akb) < Number(2.7) && Number(row.level_akb) >= Number(2.2) && 
+                           <TableCell style={{ width: 160}} align="center">
+                            <Box sx={{display: 'flex', justifyContent: 'center'}}>
+                            {row.level_akb} <BatteryChargingFullIcon fontSize="small" sx ={{color: '#FFCC40'}}/>
+                            </Box>
+                           
+                         </TableCell>
+                        }
+
+                        {Number(row.level_akb) < Number(2.2) && 
+                        <TableCell style={{ width: 160}} align="center">
+                          <Box sx={{display: 'flex', justifyContent: 'center'}}>
+                          {row.level_akb} <BatteryChargingFullIcon fontSize="small" sx ={{color: '#FF4848'}}/>
+                          </Box>
                         </TableCell>
+                        }
+                     
                         {APP_STORAGE.sensors.getIdFirstSess() ===
                           APP_STORAGE.sensors.getIdLastSess() &&
                           APP_STORAGE.sensors.getIdFirstSess() !== row.id && (

@@ -45,10 +45,11 @@ export class ForgotPass extends React.Component<IProps> {
         
         return (
             <React.Fragment>
-                <Container component="main" maxWidth="xs" sx ={{border: '1px solid #eeeeee;' , padding: '20px' , mt: '5%'}}>
+                <Box className='auth-form'>
+                <Container component="main" maxWidth="xs" sx ={{padding: '20px' , mt: '5%', alignSelf: 'center'}}>
             <CssBaseline />
                  <Box sx= {{display: 'flex' , justifyContent: 'space-between'}}> 
-                 <Typography component="h1" variant="h5">
+                 <Typography component="h1" variant="h5" sx={{color: '#266BF1', fontSize: '36px'}}>
                      Сброс пароля
                 </Typography>
                     <ArrowRightAltIcon sx={{color: '#1976D2'}}
@@ -131,7 +132,16 @@ export class ForgotPass extends React.Component<IProps> {
                     
                     Вернуться на форму авторизации
                     </Link>
-                </Container> 
+                </Container>  
+                <Box className='right-panel'>
+                    
+                    {/* <Typography className='right-panel-tittle'> Сервер приема данных</Typography> */}
+                    <Typography sx ={{mb: '12px'}}>© ООО Севербуринструмент 
+                    {/* ({Date.now()})  */}
+                    | e-mail: severburinstrument@mail.ru</Typography>
+                 </Box>
+                </Box>
+             
             </React.Fragment>
         );
     }

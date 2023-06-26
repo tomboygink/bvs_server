@@ -9,23 +9,20 @@ import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 
 export const CustomizedLabel: FunctionComponent<any> = (props: any) => {
   const { x, y, stroke, value } = props;
-    if(Number(1.44) === Number(value)){
+  
+    if(Number(1.44) >= Number(value)){
       return (
-        <text x={x} y={y} dy={-4} fill={'#FF0404'} fontSize={14} color={'red'} textAnchor="middle">
+        <text x={x+ 50} y={y} dy={-4} fill={'#FF0404'} fontSize={10} color={'red'} textAnchor="middle">
          {value} Критично
         </text>
       );
     }
- 
-  
-
 };
 
 export const customizedGroupTick = (props: any) => {
   const { index, x, y, payload } = props;
 
   return (
-   
           <g>
          <rect x={x} y ={y}  className ='map'  width="4" height="8" fill="#808080" fontFamily="Verdana" fontSize="14px" />
         <text dx={x - 35} dy={y + 10} fill="blue" fontSize="12px" textAnchor="middle">
@@ -36,8 +33,6 @@ export const customizedGroupTick = (props: any) => {
 };
 
 export const CustomTooltip = ({ active, payload, label, props }: any) => {
-
-  
   if (active && payload && payload.length)
   {
     return (

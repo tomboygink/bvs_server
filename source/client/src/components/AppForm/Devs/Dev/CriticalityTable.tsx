@@ -16,6 +16,9 @@ import Paper from "@mui/material/Paper";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+
+
 interface IProps {}
 
 //Компонент формы приложения
