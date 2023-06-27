@@ -41,9 +41,11 @@ export class CriticalityTable extends React.Component<IProps> {
         a.push(raznitca);
       }
 
+      
       if (a.length) {
+        
         for (var key in a) {
-          if (a[key] >= 3) {
+          if ( Math.abs(a[key]) >= 3 ) {
             data.push(
               <React.Fragment key={"_depth_key_" + a[key] + key}>
                 <TableCell align="left">
@@ -52,7 +54,7 @@ export class CriticalityTable extends React.Component<IProps> {
                 </TableCell>
               </React.Fragment>
             );
-          } else if (a[key] < 3) {
+          } else if ( Math.abs(a[key]) < 3) {
             data.push(
               <React.Fragment key={"_depth_key_" + a[key] + key}>
                 <TableCell align="center">

@@ -103,7 +103,6 @@ export class JobsTitlesMenu extends React.Component<IProps> {
                     }}
                   >
                   </TreeItem> 
-
               </React.Fragment>
             )
           }
