@@ -30,71 +30,84 @@ export class AuthForm extends React.Component<IProps> {
  
         return (
             <React.Fragment>
-             <Container component="main" maxWidth="xs" sx ={{border: '1px solid #eeeeee;' , padding: '20px' , mt: '5%'}}>
+                <Box className='auth-form'>
+                <Container component="main" maxWidth="xs" sx ={{padding: '20px' , mt: '5%', alignSelf: 'center'}}>
              
-            <CssBaseline />
-            <Box sx= {{display: 'flex' , justifyContent: 'space-between'}}> 
-                 <Typography component="h1" variant="h5">
-                     Авторизация
-                </Typography>     
-            </Box>
-             
-                
-                <Typography sx={{fontSize: '12px', color: 'grey'}}>
-                Пожалуйста, введите ваш логин и пароль.
-                </Typography>
-
-                <Box component="form">
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Логин"
-                        name="login"
-                        autoComplete="login"
-                        autoFocus  
-                        onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
-                        value={ APP_STORAGE.auth_form.getLogin() }
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Пароль"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        onChange={ (e)=>{ APP_STORAGE.auth_form.setPassword(e.target.value); } }
-                        value={ APP_STORAGE.auth_form.getPassword() }
-                    />
+             <CssBaseline />
+             <Box sx= {{display: 'flex' , justifyContent: 'space-between'}}> 
+                  <Typography component="h1" variant="h5" sx={{color: '#266BF1', fontSize: '36px'}} >
+                      Авторизация
+                 </Typography>     
+             </Box>
+              
+                 
+                 <Typography sx={{fontSize: '12px', color: 'grey'}}>
+                 Пожалуйста, введите ваш логин и пароль.
+                 </Typography>
+ 
+                 <Box component="form">
+                     <TextField
+                         variant="outlined"
+                         margin="normal"
+                         required
+                         fullWidth
+                         id="email"
+                         label="Логин"
+                         name="login"
+                         autoComplete="login"
+                         autoFocus  
+                         onChange={ (e)=>{ APP_STORAGE.auth_form.setLogin(e.target.value); } }
+                         value={ APP_STORAGE.auth_form.getLogin() }
+                     />
+                     <TextField
+                         variant="outlined"
+                         margin="normal"
+                         required
+                         fullWidth
+                         name="password"
+                         label="Пароль"
+                         type="password"
+                         id="password"
+                         autoComplete="current-password"
+                         onChange={ (e)=>{ APP_STORAGE.auth_form.setPassword(e.target.value); } }
+                         value={ APP_STORAGE.auth_form.getPassword() }
+                     />
+                     
+                     {/* <Button sx= {{background: '#edf2ff', color: '#1976d2;' , mt : '12px'}} */}
+                     <Button sx= {{background: '#266BF1', color: '#fff' , mt : '12px', p: '8px'}}
+                         type="button"
+                         fullWidth
+                         onClick={ ()=>{  APP_STORAGE.auth_form.get_UserByAuth();}}
+                         className='auth_button'
+                     >
+                         Войти
+                     </Button>
+                         {error_alert}
+                     </Box>
+                     <Grid container sx= {{mt: '12px'}}>
                     
-                    <Button sx= {{background: '#edf2ff', color: '#1976d2;' , mt : '12px'}}
-                        type="button"
-                        fullWidth
-                        onClick={ ()=>{  APP_STORAGE.auth_form.get_UserByAuth();}}
-                    >
-                        Войти
-                    </Button>
-                        {error_alert}
-                    </Box>
-                    <Grid container sx= {{mt: '12px'}}>
-                   
-                    <Link 
-                        href="#" 
-                        variant="body2"
-                        onClick={ () => { APP_STORAGE.auth_form.setForgotPass(true)}}>
+                     <Link 
+                         href="#" 
+                         variant="body2"
+                         onClick={ () => { APP_STORAGE.auth_form.setForgotPass(true)}}>
+                     
+                   Забыли пароль?
+                     </Link>
+                     <Grid item>
+              
+                     </Grid>
+                     </Grid>
+                 </Container> 
+ 
+                 <Box className='right-panel'>
                     
-                  Забыли пароль?
-                    </Link>
-                    <Grid item>
+                    {/* <Typography className='right-panel-tittle'> Сервер приема данных</Typography> */}
+                    <Typography sx ={{mb: '12px'}}>© ООО Севербуринструмент 
+                    {/* ({Date.now()})  */}
+                    | e-mail: severburinstrument@mail.ru</Typography>
+                 </Box>
+                </Box>
              
-                    </Grid>
-                    </Grid>
-                </Container> 
             </React.Fragment>
         );
     }

@@ -94,10 +94,12 @@ export class Saveresult extends React.Component<IProps> {
            Проверьте свою электронную почту
           </Typography>
           <Box> 
+            
           <Typography>
-          Для продолжения работы необходимо подтвердите свою учетную запись.
-          Код подтверждения отправлен на адрес <Typography sx={{fontWeight: '500'}}> «{APP_STORAGE.modal.getEmail()}» .</Typography> Если вы не получили письмо, пожалуйста, проверьте папку со спамом.
-          </Typography>
+          Для продолжения работы необходимо подтвердить свою учетную запись.
+          Код подтверждения отправлен на адрес  «{APP_STORAGE.modal.getEmail()}» .
+          </Typography> 
+          <Typography>  Если вы не получили письмо, пожалуйста, проверьте папку со спамом. </Typography>
           </Box>
           {/* <Typography sx={{ fontSize: "12px", color: "#1976d2" }}>
             Перед повторной отправкой кода убедитесь, что почта введена
@@ -161,6 +163,7 @@ export class Saveresult extends React.Component<IProps> {
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           {button}
           <Button
+            className="close_button"
             sx={{
               background: "#266BF1",
               color: "#fff;",

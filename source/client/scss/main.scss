@@ -381,15 +381,47 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
     }
   }
 }
+///////////////////////////////////////////////////////////////////////// The Auth form
+.auth-form.MuiBox-root.css-0 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+}
 
-.button-back-to-up{
-  border-radius: 24px;
-  background: #C2E0FF;
-  position: absolute;
+.right-panel {
+  background: #266BF1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  color: #d8cccc;
+}
+
+.list_item{
+  border: 1px solid;
+  border-color: #E0E3E7;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}   
+
+.auth_button:hover{
+  color: #266BF1;
+}
+.close_button:hover{
+  color: #266bf1;
 }
 
 @media (max-width: 700px) {
   //////исправить на 500
+  .auth-form.MuiBox-root.css-0 {
+    display: block;
+    height: 70vh;
+  }
+  .right-panel{
+    display: none;
+  }
 
   #left-form {
     display: none;

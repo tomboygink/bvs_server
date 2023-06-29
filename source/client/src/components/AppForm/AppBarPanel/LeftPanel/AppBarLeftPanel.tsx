@@ -117,13 +117,11 @@ export class AppBarLeftPanel extends React.Component<IProps> {
     if (user_w === 2 && user_r === 1) {  
       menu = (
         <>
-        
-
           <MenuItem
            onClick={() => this.OpenListDev()}
           >
-            <ListItemIcon>
-              <FolderOpenIcon fontSize="small" />
+            <ListItemIcon className="list_item">
+              <FolderOpenIcon fontSize="small" sx = {{color: '#007FFF'}}/>
             </ListItemIcon>{" "}
             Устройства
           </MenuItem>
@@ -131,8 +129,8 @@ export class AppBarLeftPanel extends React.Component<IProps> {
           <MenuItem
            onClick={() => this.OpenTableUser(3)}
           >
-            <ListItemIcon>
-              <PeopleOutlineIcon fontSize="small" />
+            <ListItemIcon className="list_item">
+              <PeopleOutlineIcon fontSize="small" sx = {{color: '#007FFF'}}/>
             </ListItemIcon>{" "}
             Пользователи
           </MenuItem>
@@ -140,8 +138,8 @@ export class AppBarLeftPanel extends React.Component<IProps> {
           <MenuItem
            onClick={() => this.OpenListOrg()}
           >
-            <ListItemIcon>
-              <AccountBalanceOutlinedIcon fontSize="small" />
+            <ListItemIcon className="list_item">
+              <AccountBalanceOutlinedIcon fontSize="small" sx = {{color: '#007FFF'}} />
             </ListItemIcon>{" "}
             Организации
           </MenuItem>
@@ -149,8 +147,8 @@ export class AppBarLeftPanel extends React.Component<IProps> {
           <MenuItem
            onClick={() => this.OpenListJobsTitles()}
           >
-            <ListItemIcon>
-              <EngineeringOutlinedIcon fontSize="small" />
+            <ListItemIcon className="list_item">
+              <EngineeringOutlinedIcon fontSize="small" sx = {{color: '#007FFF'}} />
             </ListItemIcon>{" "}
             Должности
           </MenuItem>
@@ -161,8 +159,8 @@ export class AppBarLeftPanel extends React.Component<IProps> {
           <MenuItem
             onClick={() => this.OpenModalRegUser(1, "Добавить пользователя")}
           >
-            <ListItemIcon>
-              <PersonAddAltIcon fontSize="small" />
+            <ListItemIcon className="list_item">
+              <PersonAddAltIcon fontSize="small" sx = {{color: '#007FFF'}} />
             </ListItemIcon>
             Добавить пользователя
           </MenuItem>
@@ -170,8 +168,8 @@ export class AppBarLeftPanel extends React.Component<IProps> {
           <MenuItem
             onClick={() => this.OpenModalRegUser(2, "Добавить организацию")}
           >
-            <ListItemIcon>
-              <BusinessIcon fontSize="small" />
+            <ListItemIcon className="list_item"> 
+              <BusinessIcon fontSize="small"  sx = {{color: '#007FFF'}} />
             </ListItemIcon>
             Добавить организацию
           </MenuItem>
@@ -179,8 +177,8 @@ export class AppBarLeftPanel extends React.Component<IProps> {
           <MenuItem
             onClick={() => this.OpenModalRegUser(3, "Добавить должность")}
           >
-            <ListItemIcon>
-              <WorkOutlineIcon fontSize="small" />
+            <ListItemIcon className="list_item">
+              <WorkOutlineIcon fontSize="small"  sx = {{color: '#007FFF'}} />
             </ListItemIcon>
             Добавить должность
           </MenuItem>

@@ -124,27 +124,7 @@ export class JobsTitlesMenu extends React.Component<IProps> {
             borderRadius: "4px",
           }}
         >
-              <Paper
-      component="form"
-      sx={{ mb: '22px', display: 'flex', alignItems: 'center', boxShadow: 'none', background: '#E3EDFF', borderRadius: '100px' }}
-    >
     
-      <InputBase
-        id="search"
-        sx={{ ml: 1, flex: 1 , fontSize: '14px', pl: '14px'}}
-        placeholder="Поиск по организациям"
-        inputProps={{ 'aria-label': 'search google maps' }}
-        onChange={(e) => {
-          this.SeachFamily(e.target.value);
-          }} 
-      />
-      <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-      <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-      
-  
-    </Paper>
     <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
               <InputLabel className="org" sx={{ fontSize: "12px" }}>
                 Организация

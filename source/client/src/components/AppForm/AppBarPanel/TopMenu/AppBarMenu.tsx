@@ -86,14 +86,14 @@ export class AccountMenu extends React.Component<IProps> {
             <Divider sx ={{m:'16px'}} />
              
             <MenuItem  onClick={ ()=>{this.ChangeCUserData();}}>
-            <ListItemIcon>
-            <PermIdentityIcon fontSize="small"  />
+            <ListItemIcon className='list_item'>
+            <PermIdentityIcon fontSize="small" sx = {{color: '#007FFF'}}  />
             </ListItemIcon>  Настройка профиля
             </MenuItem>
 
             <MenuItem onClick= {()=> {this.ChangePassword(); }}>
-            <ListItemIcon>
-            <LockOpenIcon fontSize="small" />
+            <ListItemIcon className='list_item'>
+            <LockOpenIcon fontSize="small" sx = {{color: '#007FFF'}} />
             </ListItemIcon>  Изменить пароль
             </MenuItem>
             <Divider sx ={{m:'16px'}} />

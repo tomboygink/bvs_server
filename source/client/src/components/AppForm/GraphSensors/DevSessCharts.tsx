@@ -200,7 +200,7 @@ export class DevSessCharts extends React.Component<IProps> {
                 //   bottom: 5,
                 // }}
               >
-                <CartesianGrid strokeDasharray="3 3" />
+              
                 <XAxis
                   type="number"
                   strokeWidth={"0.1mm"}
@@ -242,6 +242,7 @@ export class DevSessCharts extends React.Component<IProps> {
                   stroke="#00B394"
                   // label ={CustomizedLabel}
                 />
+                <CartesianGrid strokeDasharray="3 3" opacity={50} />
               </LineChart>
             </ResponsiveContainer>
           </Box>

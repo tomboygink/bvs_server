@@ -67,9 +67,10 @@ export default function CircularIntegration() {
       <Box sx={{position: 'relative' }}>
         <Button
           fullWidth
-          sx={{mt:'14px', mb: '14px' ,background: '#edf2ff', color: '#1976d2;' }}
+          sx={{mt:'14px', mb: '14px' , background: '#266BF1', color: '#fff'}}
           disabled={loading}
           onClick={set_sendCode}
+          className='auth_button'
         >
           Подтвердить
         </Button>
