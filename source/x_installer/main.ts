@@ -46,13 +46,7 @@ async function run(){
     await db.query(users_table.sql, users_table.args);
     console.log("TABLE \"users\" ADD");
 
-    console.log("ADDING TABLE \"dev_povs\"");
-    await db.query(dev_povs_table.sql, users_table.args);
-    console.log("TABLE \"dev_povs\" ADD");
-
-    console.log("ADDING TABLE \"control_dev_sess\"");
-    await db.query(control_dev_sess_table.sql, control_dev_sess_table.args)
-    console.log("TABLE \"control_dev_sess\" ADD");
+  
 
 
 
@@ -82,6 +76,14 @@ async function run(){
     console.log("ADDING TABLE \"devs\"");
     await db.query(devs_table.sql, devs_table.args);
     console.log("TABLE \"devs\" ADD");
+
+    console.log("ADDING TABLE \"dev_povs\"");
+    await db.query(dev_povs_table.sql, users_table.args);
+    console.log("TABLE \"dev_povs\" ADD");
+
+    console.log("ADDING TABLE \"control_dev_sess\"");
+    await db.query(control_dev_sess_table.sql, control_dev_sess_table.args)
+    console.log("TABLE \"control_dev_sess\" ADD");
 
     console.log("ADDING TABLE \"info_log\"");
     await db.query(info_log_table.sql, info_log_table.args);
