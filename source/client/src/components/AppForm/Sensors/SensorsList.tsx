@@ -21,6 +21,9 @@ import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import {AdditionInfo} from "../AdditionInfo/AdditionInfo"
 import { DevPovs } from "../DevPovs/DevPovs";
 
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+
+
 interface IProps {}
 
 //Компонент формы приложения
@@ -173,6 +176,7 @@ export class SensorsList extends React.Component<IProps> {
                   <TableCell>[{"" + sort_array[k]}] </TableCell>
                 </TableRow>
               );
+              
             }
 
             if (gr_devs[i].deleted === false) {
@@ -231,8 +235,17 @@ const [year_first, month_first, day_first] = FirstData.split('-');
     return (
       <div className="wrapper-sensors">
        {APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
-       
-       <Box sx ={{display: 'flex', justifyContent: 'space-between',  color: '#111111'}}> 
+         <>
+          {APP_STORAGE.sensors.getDeletedDev() === true ? 
+          <Box sx = {{background: '#FC8904', mb : '44px', mt: '40px', borderRadius: '4px', display: 'flex', justifyContent: 'space-around', p: '8px', height: '48px', alignItems: 'center'}}>
+            <ErrorOutlineIcon fontSize="small" sx ={{color: '#fff'}}/>
+         <Typography sx ={{color: 'fff'}}>Это устройство заблокировано</Typography> 
+          </Box>
+          
+          : ''}
+
+
+           <Box sx ={{display: 'flex', justifyContent: 'space-between',  color: '#111111'}}> 
            <Typography sx={{ fontWeight: "600" , color: '#0D1C52', mb : '12px' }}>   Список сенсоров </Typography>
                       <Box sx={{ width: "80px" }}>
 
@@ -255,7 +268,11 @@ const [year_first, month_first, day_first] = FirstData.split('-');
                         /> 
 
                       </Box> 
-                      </Box>}
+                      </Box>
+         </>
+         
+     
+                      }
         <Box
           className=" sensors"
           sx={{

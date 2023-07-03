@@ -115,6 +115,8 @@ export const handleChange = async (event: any, node: any) => {
     APP_STORAGE.sensors.setChoseSessTime('');
     APP_STORAGE.sensors.setAkbSessLast('');
     APP_STORAGE.devs_groups.setMiddleForm(2);
+
+    APP_STORAGE.devs.setTopMenuDev('top_menu-1')
   }
 }
 

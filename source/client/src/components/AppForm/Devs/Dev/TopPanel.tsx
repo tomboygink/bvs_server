@@ -13,7 +13,7 @@ interface IProps { }
 
 const TopPanel = () => {
 
-    const [alignment, setAlignment] = React.useState('top_menu-1');
+  const [alignment, setAlignment] = React.useState('top_menu-1');
  
   const handleChange = (
     
@@ -27,7 +27,7 @@ const TopPanel = () => {
              <Box className='top_panel_div' sx ={{height: '50px', background: '#fff', mb: '28px', width: '100%'}}>
         <ToggleButtonGroup  
         color="primary"
-        value={alignment}
+        value={APP_STORAGE.devs.getTopMenuDev()}
         exclusive
         onChange={handleChange}
         aria-label="Platform"

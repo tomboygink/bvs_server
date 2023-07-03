@@ -165,7 +165,7 @@ export class CriticalityTable extends React.Component<IProps> {
                         ))}
                     </TableCell>
 
-                    {/* <TableCell>{data}</TableCell> */}
+                   <TableCell>{data}</TableCell>
                   </TableRow>
                 </TableBody>
               ) : (

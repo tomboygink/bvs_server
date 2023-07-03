@@ -24,6 +24,7 @@ export class SensorsStorage {
     @observable anchorEl: string = '';
     @observable number: string = '';
     @observable id_dev: string = '';
+    @observable del: boolean = false;
 
     @observable id_dev_sess: string = '';
     @observable chose_sess_time : string = '';
@@ -110,6 +111,9 @@ export class SensorsStorage {
 
     @action setNumber(val: string) {this.number = val}
     @computed getNumber(): string {return this.number;}
+
+    @action setDeletedDev(val: boolean) {this.del = val}
+    @computed getDeletedDev(): boolean {return this.del;}
 
     @action setOpenDevsess(val: boolean) {this.open_devsess = val}
     @computed getOpenDevsess(): boolean {return this.open_devsess;}
