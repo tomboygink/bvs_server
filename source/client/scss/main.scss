@@ -37,12 +37,13 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: #F1F5FC;
+  // background: linear-gradient(
+  //     to bottom,
+  //     transparent,
+  //     rgb(var(--background-end-rgb))
+  //   )
+  //   rgb(var(--background-start-rgb));
 }
 
 .button-back-to-up{
@@ -119,7 +120,9 @@ body {
     }
   }
 }
-
+.datarow{
+  border-style: hidden;
+}
 input#datetime-local {
   font-size: 14px;
 }
@@ -337,17 +340,17 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   background-color: base.$white;
 }
 
-.css-1xmmv5i::-webkit-scrollbar-thumb {
+.css-1xmmv5i::-webkit-scrollbar-thumb , .paper_table::-webkit-scrollbar-thumb{
   width: 1px;
   background-color: #c8cdd3;
 }
 
-.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar {
+.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar, .paper_table::-webkit-scrollbar {
   width: 4px;
   background-color: base.$white;
 }
 
-.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar-thumb {
+.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar-thumb , .paper_table::-webkit-scrollbar-thumb {
   width: 1px;
   background-color: #c8cdd3;
 }
@@ -419,6 +422,15 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
     display: block;
     height: 70vh;
   }
+  #chosen_table{
+    display: none;
+  }
+
+  .is-grid {
+    min-height: 80vh;
+}
+
+
   #button_up{
     display: none;
   }

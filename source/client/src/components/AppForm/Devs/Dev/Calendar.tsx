@@ -50,7 +50,7 @@ export class Calendar extends React.Component<IProps> {
 
     return (
       <React.Fragment>
-        <Divider sx={{ m: "20px" , background: '#8F9DCE;'}} />
+        {/* <Divider sx={{ m: "20px" , background: '#8F9DCE;'}} /> */}
 
         <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
 

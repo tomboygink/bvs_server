@@ -36,7 +36,7 @@ export class AdditionInfo extends React.Component<IProps> {
       <div className="wrapper-sensors">
         {FirstTimeSess && APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
           <>
-            <Typography id="addition" sx={{ fontWeight: "500", color: '#0D1C52', mb: '12px', mt: '40px' }}>  Дополнительная информация </Typography>
+            <Typography id="addition" sx={{ fontWeight: "600", color: '#0D1C52', mb: '12px', mt: '40px' }}>  Дополнительная информация </Typography>
             <Box
               sx={{
                 width: "100%",

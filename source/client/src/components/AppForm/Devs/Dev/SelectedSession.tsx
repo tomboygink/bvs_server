@@ -3,7 +3,13 @@ import * as React from "react";
 import { observer } from "mobx-react";
 import { toJS } from "mobx";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
-import { Typography } from "@mui/material";
+import {
+  Box,
+  Paper,
+  TableContainer,
+  TableHead,
+  Typography,
+} from "@mui/material";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -56,31 +62,40 @@ export class SelectedSession extends React.Component<IProps> {
           String(dev_sess[key].id)
         ) {
           count_sess.push(senso.s.length);
-         /// console.log('senso.s', 
-          let sess_data = senso.s.sort((a: { depth: number; },b: { depth: number; }) =>  b.depth - a.depth );
+          /// console.log('senso.s',
+          let sess_data = senso.s.sort(
+            (a: { depth: number }, b: { depth: number }) => a.depth - b.depth 
+          );
           ses_depth.push(
-           // senso.s.map([].sort((a, b) =>( )
-           sess_data.map((row: any, i: any) => (
+            // senso.s.map([].sort((a, b) =>( )
+            sess_data.map((row: any, i: any) => (
               <React.Fragment key={"data_" + row.data + row.depth}>
-                <TableCell
-                  sx={{ p: "4px", color: "#002757", fontWeight: "500" }}
-                >
-                  {" "}
-                  {"" + row.depth}{" "}
-                </TableCell>
+                <TableRow className="datarow">
+                  <TableCell
+                    align="left"
+                    sx={{ p: "4px", color: "#002757", fontWeight: "500" }}
+                  >
+                    {" "}
+                    {"" + row.depth}{" "}
+                  </TableCell>
+                </TableRow>
               </React.Fragment>
             ))
           );
+
           ses_date.push(
             senso.s.map((row: any, i: any) => (
-              <React.Fragment key={"data_qdsadsd" + row.data + row.depth}>
-                <TableCell
-                  sx={{ p: "4px", color: "#002757", fontWeight: "500" }}
-                >
-                  {" "}
+<React.Fragment key={"data_qd" + row.data + row.depth}>
+<TableRow className="datarow">
+  <TableCell
+    align="left"
+    sx={{ p: "4px", color: "#002757", fontWeight: "500" }}
+  >
+     {" "}
                   {"" + row.data}{" "}
-                </TableCell>
-              </React.Fragment>
+  </TableCell>
+</TableRow>
+</React.Fragment>
             ))
           );
         }
@@ -90,38 +105,42 @@ export class SelectedSession extends React.Component<IProps> {
     return (
       <React.Fragment>
         {ses_depth.length > 0 && (
-          <>
-            <Typography
-              sx={{
-                fontWeight: "500",
-                color: "#111111",
-                mb: "8px",
-                mt: "20px",
-              }}
-            >
-              Выбранная сессия (Кол-во датчиков: {count_sess})
-            </Typography>
+          <Paper
+            style={{ maxHeight: 650, overflow: "auto" }}
+            className="paper_table"
+            elevation={1}
+          >
+            <TableContainer>
+              <Table
+                sx={{ minWidth: 650 }}
+                size="small"
+                aria-label="a dense table"
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Глубина</TableCell>
+                    <TableCell>Выбранная сессия</TableCell>
+                  </TableRow>
+                </TableHead>
 
-            <Table
-              sx={{
-                mb: "20px",
-                p: "12px",
-                background: "#E3EEFA",
-                borderRadius: "4px",
-              }}
-            >
-              <TableBody>
-                <TableRow>
-                  <TableCell>Глубина</TableCell>
-                  {ses_depth}
-                </TableRow>
-                <TableRow>
-                  <TableCell>Температура</TableCell>
-                  {ses_date}
-                </TableRow>
-              </TableBody>
-            </Table>
-          </>
+               
+                  <TableBody>
+                    <TableRow>
+                    <TableCell>{ses_depth}</TableCell>
+                      <TableCell>{ses_date}</TableCell>
+                    </TableRow>
+                  </TableBody>
+               
+                  {/* <Box sx={{ display: "flex", p: "24px" }}>
+                    <Typography sx={{ color: "#266BF1" }}>
+                      {" "}
+                      Нет сессий на устройстве{" "}
+                    </Typography>
+                  </Box> */}
+              
+              </Table>
+            </TableContainer>
+          </Paper>
         )}
       </React.Fragment>
     );

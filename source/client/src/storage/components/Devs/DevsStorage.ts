@@ -48,7 +48,7 @@ export class DevsStorage {
   @observable get_sensors1: Array<any> = [];
   @observable get_sensors2: Array<any> = [];
 
-  @observable array_sensors: Array<any> = []; ////////тестовый массив 
+  @observable array_sensors: Array<any> = []; 
   
   @observable change_sensors: boolean = false;
   ////// Добавление нового устройства
@@ -98,15 +98,17 @@ export class DevsStorage {
 
 
   ///////////////////////////////////////////////////////////////////////////  Таблица сессий
-
-
   @observable rowsPerPage: number = 3;
   @observable page: number = 0;
 
+  @observable top_menu_dev : string = 'top_menu-1';  
 
   constructor() {
     makeAutoObservable(this);
   }
+
+  @action setTopMenuDev(val: string) { this.top_menu_dev = val };
+  @computed getTopMenuDev(): string { return this.top_menu_dev };
   
   @action setGr(val : TDGroup) { this.gr = val}; /////// Группа устройств
   @computed getGr(): TDGroup { return this.gr}

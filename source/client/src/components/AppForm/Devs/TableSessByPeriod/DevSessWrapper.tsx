@@ -198,6 +198,12 @@ export class DevSessWrapper extends React.Component<IProps> {
             </>
           </Box>
         )}
+
+        {APP_STORAGE.sensors.getEmptySession().length &&
+            <Box>
+              <Typography sx ={{ color: '#266BF1', p: '24px'}}> {APP_STORAGE.sensors.getEmptySession()}</Typography>
+            </Box>
+        }
         <ExportTable />
       </React.Fragment>
     );

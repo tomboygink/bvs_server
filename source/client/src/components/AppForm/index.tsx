@@ -34,7 +34,6 @@ import { SensorsList } from "./Sensors/SensorsList"; ///////////////////////////
 import { ChangeDevsModal } from "./Devs/Dev/Menu/ChangeDevsModal"; ////////////////////////////Редактировать устройства
 import { AddNewDevModal } from "./Devs/Dev/Menu/AddNewDevModal"; //////////////Добавить новое устройство
 import { Calendar } from "./Devs/Dev/Calendar";
-import { SelectedSession } from "./Devs/Dev/SelectedSession";
 import { DevsGroupsTree } from "./Devs/DevsGroupsTree";
 
 interface IProps { }
@@ -95,7 +94,6 @@ export class AppForm extends React.Component<IProps> {
       middle_form = (
         <>
           <Devs />
-          <SelectedSession />
         </>
       );
       //dev_sess = <DevSess/>

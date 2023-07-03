@@ -11,7 +11,8 @@ export class SensorsStorage {
     @observable sensors: any = [];
     @observable open_devsess: boolean = false;
 
-    @observable dev_sensors: any = null;
+    @observable dev_sensors: any = '';
+    @observable empty_sess: string = '';
 
     @observable sort_desc: string = '';
     @observable active_button_sort: string = '';
@@ -79,6 +80,9 @@ export class SensorsStorage {
 
     @action setDevSession(val : any) {this.dev_sensors = val};
     @computed getDevSession() : any {return this.dev_sensors};
+
+    @action setEmptySession(val : string) {this.empty_sess= val};
+    @computed getEmptySession() : string {return this.empty_sess};
 
     @action setSensors(val : any) {this.sensors = val};
     @computed getSensors() : any {return this.sensors};
@@ -206,8 +210,14 @@ export class SensorsStorage {
 
 
   async setDevSess(dt: IWSResult) {
+    if(Object.keys(dt.data).length > 0){
     this.setDevSession(dt.data); 
+    this.setEmptySession('')
   }
+  else {
+      this.setEmptySession(' Ничего не найдено ')
+  }
+}
 
 
   async set_DevFirstLastSessions(dt: IWSResult) {
@@ -250,6 +260,7 @@ export class SensorsStorage {
        return Object.values(obj); //обратно преобразуем из объекта в массив
      };
      
+
 
      for(var i in start_sess.s.sort(
       (a: { depth: number }, b: { depth: number }) => b.depth - a.depth

@@ -233,8 +233,7 @@ export class Orgs extends React.Component<IProps> {
                 borderRadius: "4px",
                 width: '100%',
                 background:'#E3EDFF',
-                p:2,
-                border: '1px solid #8F9DCE'
+                p:2
                 
               }}
               onClick={() => this.OpenModalRegUser(2, "Добавить организацию")}

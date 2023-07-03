@@ -233,7 +233,7 @@ const [year_first, month_first, day_first] = FirstData.split('-');
        {APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
        
        <Box sx ={{display: 'flex', justifyContent: 'space-between',  color: '#111111'}}> 
-           <Typography sx={{ fontWeight: "500" , color: '#0D1C52', mb : '12px' }}>   Список сенсоров </Typography>
+           <Typography sx={{ fontWeight: "600" , color: '#0D1C52', mb : '12px' }}>   Список сенсоров </Typography>
                       <Box sx={{ width: "80px" }}>
 
                         <ArrowDownwardIcon
