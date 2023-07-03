@@ -131,17 +131,18 @@ export class SelectedSession extends React.Component<IProps> {
                     </TableRow>
                   </TableBody>
                
-                  {/* <Box sx={{ display: "flex", p: "24px" }}>
-                    <Typography sx={{ color: "#266BF1" }}>
-                      {" "}
-                      Нет сессий на устройстве{" "}
-                    </Typography>
-                  </Box> */}
+        
               
               </Table>
             </TableContainer>
           </Paper>
         )}
+
+{ses_depth.length === 0 && (
+  <>
+  <Typography sx={{color: '#266BF1'}}> Ничего не выбрано</Typography>
+  </>
+)}
       </React.Fragment>
     );
   }
