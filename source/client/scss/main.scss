@@ -416,11 +416,18 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   color: #266bf1;
 }
 
+.top_panel_div{
+  height: 50px;
+}
+
 @media (max-width: 700px) {
   //////исправить на 500
   .auth-form.MuiBox-root.css-0 {
     display: block;
     height: 70vh;
+  }
+  .top_panel_div{
+    height: 100%;
   }
   #chosen_table{
     display: none;

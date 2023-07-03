@@ -24,7 +24,7 @@ const TopPanel = () => {
     APP_STORAGE.devs.setTopMenuDev(newAlignment)
   };
     return(
-             <Box className='top_panel_div' sx ={{height: '50px', background: '#fff', mb: '28px', width: '100%'}}>
+      <Box className='top_panel_div' sx ={{ background: '#fff', mb: '28px', width: '100%'}}>
         <ToggleButtonGroup  
         color="primary"
         value={APP_STORAGE.devs.getTopMenuDev()}
@@ -39,7 +39,7 @@ const TopPanel = () => {
       <ToggleButton sx = {{border: 'none', p: '4px', mr: '24px', textTransform: 'none', fontSize: '12px', borderRadius: '4px'}} value="top_menu-4">Выбранная сессия</ToggleButton>
 
       </ToggleButtonGroup>
-         </Box>
+      </Box>
     )
 }
 
