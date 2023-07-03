@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import SensorsIcon from "@mui/icons-material/Sensors";
 
@@ -15,16 +15,14 @@ import TableRow from "@mui/material/TableRow";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
-
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 
-import {AdditionInfo} from "../AdditionInfo/AdditionInfo"
+import { AdditionInfo } from "../AdditionInfo/AdditionInfo";
 import { DevPovs } from "../DevPovs/DevPovs";
 
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
-
-interface IProps {}
+interface IProps { }
 
 //Компонент формы приложения
 @observer
@@ -71,8 +69,8 @@ export class SensorsList extends React.Component<IProps> {
       var gr_devs = dgr.devs;
 
       for (var i in gr_devs) {
-
-        if ("_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
+        if (
+          "_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
           APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
           APP_STORAGE.sensors.getSortDesc() === ""
         ) {
@@ -89,15 +87,15 @@ export class SensorsList extends React.Component<IProps> {
               sort_array.push(uniqueChars[key].depth);
             }
             APP_STORAGE.setdevs_group_move(sort_array);
-           
+
             if (gr_devs[i].deleted === true) {
               sensors.push(
                 <TableRow key={"sensors_id" + uniqueChars[key].depth}>
-                  <TableCell sx={{borderBottom: 'none'}}>
+                  <TableCell sx={{ borderBottom: "none" }}>
                     <SensorsIcon fontSize="small" sx={{ color: "#808080" }} />
                   </TableCell>
-                  <TableCell sx={{borderBottom: 'none'}}>[00{key}]</TableCell>
-                  <TableCell sx={{ fontWeight: "700" , borderBottom: 'none'}}>
+                  <TableCell sx={{ borderBottom: "none" }}>[00{key}]</TableCell>
+                  <TableCell sx={{ fontWeight: "700", borderBottom: "none" }}>
                     [{"" + uniqueChars[key].depth}]{" "}
                   </TableCell>
                 </TableRow>
@@ -107,11 +105,11 @@ export class SensorsList extends React.Component<IProps> {
             if (gr_devs[i].deleted === false) {
               sensors.push(
                 <TableRow key={"sensors_id" + uniqueChars[key].depth}>
-                  <TableCell sx={{borderBottom: 'none'}}>
+                  <TableCell sx={{ borderBottom: "none" }}>
                     <SensorsIcon fontSize="small" sx={{ color: "#5be95b" }} />
                   </TableCell>
-                  <TableCell sx={{borderBottom: 'none'}}>[00{key}]</TableCell>
-                  <TableCell sx={{ fontWeight: "700" , borderBottom: 'none'}}>
+                  <TableCell sx={{ borderBottom: "none" }}>[00{key}]</TableCell>
+                  <TableCell sx={{ fontWeight: "700", borderBottom: "none" }}>
                     [{"" + uniqueChars[key].depth}]{" "}
                   </TableCell>
                 </TableRow>
@@ -120,14 +118,13 @@ export class SensorsList extends React.Component<IProps> {
           }
         }
 
-
         //////////////////////////////Сортировка..................................................................
 
-        if ("_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
+        if (
+          "_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
           APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
           APP_STORAGE.sensors.getSortDesc() === "1"
         ) {
-
           sort_array = APP_STORAGE.getdevs_group_move();
 
           for (var y in sort_array.sort((a: any, b: any) => b - a)) {
@@ -176,7 +173,6 @@ export class SensorsList extends React.Component<IProps> {
                   <TableCell>[{"" + sort_array[k]}] </TableCell>
                 </TableRow>
               );
-              
             }
 
             if (gr_devs[i].deleted === false) {
@@ -210,69 +206,83 @@ export class SensorsList extends React.Component<IProps> {
     return this.drawSensors(DevGr);
   }
 
-
   render(): React.ReactNode {
+    let FirstData = APP_STORAGE.sensors.getTimeDevSessFirst().split("T")[0]; ///////// Перевернуть дату
+    const [year_first, month_first, day_first] = FirstData.split("-");
+    let FirstSess = `${day_first}.${month_first}.${year_first}`;
+    let FirstTimeSess = APP_STORAGE.sensors.getTimeDevSessFirst().split("T")[1];
 
+    let LastData = APP_STORAGE.sensors.getTimeDevSessLast().split("T")[0]; ///////// Перевернуть дату
+    const [year_last, month_last, day_last] = LastData.split("-");
+    let LastSess = `${day_last}.${month_last}.${year_last}`;
+    let LastTimeSess = APP_STORAGE.sensors.getTimeDevSessLast().split("T")[1];
 
-let FirstData = APP_STORAGE.sensors.getTimeDevSessFirst().split('T')[0]; ///////// Перевернуть дату
-const [year_first, month_first, day_first] = FirstData.split('-');
- let FirstSess = `${day_first}.${month_first}.${year_first}`;
- let FirstTimeSess = APP_STORAGE.sensors.getTimeDevSessFirst().split('T')[1];
-
- let LastData = APP_STORAGE.sensors.getTimeDevSessLast().split('T')[0]; ///////// Перевернуть дату
- const [year_last, month_last, day_last] = LastData.split('-');
- let LastSess = `${day_last}.${month_last}.${year_last}`;
- let LastTimeSess = APP_STORAGE.sensors.getTimeDevSessLast().split('T')[1];
-
- let ChoseData = APP_STORAGE.sensors.getChoseSessTime().split('T')[0]; ///////// Перевернуть дату
- const [year_chose, month_chose, day_chose] = ChoseData.split('-');
- let ChoseSess = `${day_chose}.${month_chose}.${year_chose}`;
- let ChoseTimeSess = APP_STORAGE.sensors.getChoseSessTime().split('T')[1];
-
-
-
+    let ChoseData = APP_STORAGE.sensors.getChoseSessTime().split("T")[0]; ///////// Перевернуть дату
+    const [year_chose, month_chose, day_chose] = ChoseData.split("-");
+    let ChoseSess = `${day_chose}.${month_chose}.${year_chose}`;
+    let ChoseTimeSess = APP_STORAGE.sensors.getChoseSessTime().split("T")[1];
 
     return (
       <div className="wrapper-sensors">
-       {APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
-         <>
-          {APP_STORAGE.sensors.getDeletedDev() === true ? 
-          <Box sx = {{background: '#FC8904', mb : '44px', mt: '40px', borderRadius: '4px', display: 'flex', justifyContent: 'space-around', p: '8px', height: '48px', alignItems: 'center'}}>
-            <ErrorOutlineIcon fontSize="small" sx ={{color: '#fff'}}/>
-         <Typography sx ={{color: 'fff'}}>Это устройство заблокировано</Typography> 
-          </Box>
-          
-          : ''}
+        {APP_STORAGE.devs_groups.getMiddleForm() === 2 && (
+          <>
+            {APP_STORAGE.sensors.getDeletedDev() === true ? (
+              <Box
+                sx={{
+                  background: "#FC8904",
+                  mb: "44px",
+                  mt: "40px",
+                  borderRadius: "4px",
+                  display: "flex",
+                  justifyContent: "space-around",
+                  p: "8px",
+                  height: "48px",
+                  alignItems: "center",
+                }}
+              >
+                <ErrorOutlineIcon fontSize="small" sx={{ color: "#fff" }} />
+                <Typography sx={{ color: "fff" }}>
+                  Это устройство заблокировано
+                </Typography>
+              </Box>
+            ) : (
+              ""
+            )}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                color: "#111111",
+              }}
+            >
+              <Typography
+                sx={{ fontWeight: "600", color: "#0D1C52", mb: "12px" }}
+              >
+                {" "}
+                Список сенсоров{" "}
+              </Typography>
+              <Box sx={{ width: "80px" }}>
+                <ArrowDownwardIcon
+                  className={APP_STORAGE.sensors.getActiveButtonSort()}
+                  fontSize="small"
+                  sx={{ p: "2px" }}
+                  onClick={() => {
+                    this.SortDescSensors("0");
+                  }}
+                />
 
-
-           <Box sx ={{display: 'flex', justifyContent: 'space-between',  color: '#111111'}}> 
-           <Typography sx={{ fontWeight: "600" , color: '#0D1C52', mb : '12px' }}>   Список сенсоров </Typography>
-                      <Box sx={{ width: "80px" }}>
-
-                        <ArrowDownwardIcon
-                          className={APP_STORAGE.sensors.getActiveButtonSort()}
-                          fontSize="small"
-                          sx={{ p: "2px" }}
-                          onClick={() => {
-                            this.SortDescSensors("0");
-                          }}
-                        />
-
-                        <ArrowUpwardIcon
-                          className={APP_STORAGE.sensors.getActiveButtonSortDesc()}
-                          fontSize="small"
-                          sx={{ p: "2px" }}
-                          onClick={() => {
-                            this.SortDescSensors("1");
-                          }}
-                        /> 
-
-                      </Box> 
-                      </Box>
-         </>
-         
-     
-                      }
+                <ArrowUpwardIcon
+                  className={APP_STORAGE.sensors.getActiveButtonSortDesc()}
+                  fontSize="small"
+                  sx={{ p: "2px" }}
+                  onClick={() => {
+                    this.SortDescSensors("1");
+                  }}
+                />
+              </Box>
+            </Box>
+          </>
+        )}
         <Box
           className=" sensors"
           sx={{
@@ -285,7 +295,7 @@ const [year_first, month_first, day_first] = FirstData.split('-');
           <Box
             sx={{
               width: "100%",
-              maxHeight: '300px',
+              maxHeight: "300px",
               background: "#fff",
               borderRadius: "4px",
               display: "flex",
@@ -304,14 +314,11 @@ const [year_first, month_first, day_first] = FirstData.split('-');
           </Box>
         </Box>
 
-        <div id ='addition_info'>
-        <AdditionInfo />
+        <div id="addition_info">
+          <AdditionInfo />
 
-{APP_STORAGE.sensors.getEndPovs()!== '' ? <DevPovs/> : ''}
-
+          {APP_STORAGE.sensors.getEndPovs() !== "" ? <DevPovs /> : ""}
         </div>
-
-
       </div>
     );
   }

@@ -81,8 +81,6 @@ export class Devs extends React.Component<IProps> {
             this.setDevNumber(dev_number, dev_id, del);
           }, 0);
 
-
-
           setTimeout(() => {
             APP_STORAGE.sensors.get_DevFirstLastSessions("sess_id",APP_STORAGE.auth_form.getdt());
             APP_STORAGE.sensors.get_DevPovs(APP_STORAGE.auth_form.getdt());
@@ -213,7 +211,6 @@ export class Devs extends React.Component<IProps> {
                   )}
                 </>
               )}
-
       
         </React.Fragment>
             );

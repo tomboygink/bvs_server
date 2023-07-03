@@ -66,9 +66,7 @@ export class DevPovs extends React.Component<IProps> {
  </Box>
  </>
 }
-
-
-      </div>
+ </div>
     );
   }
 }
