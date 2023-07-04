@@ -413,7 +413,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
     return parent;
   }
 
-  drawDevsTree(): React.ReactNode {
+   drawDevsTree(): React.ReactNode {
     ////////////////////////////// Функция отрисовки дерева
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();

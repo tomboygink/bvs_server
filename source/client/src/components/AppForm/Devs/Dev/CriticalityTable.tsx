@@ -97,6 +97,8 @@ export class CriticalityTable extends React.Component<IProps> {
                 <TableBody>
                   <TableRow>
                     <TableCell>
+                      <Table> 
+                        <TableBody> 
                       {APP_STORAGE.sensors
                         .getSessFirstLast()
                         .map((row: any, i: any) => (
@@ -117,9 +119,13 @@ export class CriticalityTable extends React.Component<IProps> {
                             </TableCell>
                           </TableRow>
                         ))}
+                        </TableBody>
+                        </Table>
                     </TableCell>
 
                     <TableCell>
+                    <Table> 
+                        <TableBody> 
                       {APP_STORAGE.sensors
                         .getSess_first()
                         .map((row: any, i: any) => (
@@ -137,12 +143,18 @@ export class CriticalityTable extends React.Component<IProps> {
                             >
                               {" "}
                               {"" + row.data_f}{" "}
+                          
+                  
                             </TableCell>
                           </TableRow>
                         ))}
+                              </TableBody> 
+                        </Table> 
                     </TableCell>
 
                     <TableCell>
+                    <Table> 
+                        <TableBody> 
                       {APP_STORAGE.sensors
                         .getSessFirstLast()
                         .map((row: any, i: any) => (
@@ -163,9 +175,19 @@ export class CriticalityTable extends React.Component<IProps> {
                             </TableCell>
                           </TableRow>
                         ))}
+                        
+                        </TableBody> 
+                        </Table> 
                     </TableCell>
 
-                   <TableCell>{data}</TableCell>
+                   <TableCell>
+                   <Table> 
+                        <TableBody> 
+                    {data}
+                 
+                        </TableBody> 
+                        </Table> 
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               ) : (
