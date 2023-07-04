@@ -86,10 +86,10 @@ export class CriticalityTable extends React.Component<IProps> {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell>Глубина</TableCell>
-                  <TableCell>Контрольна сессия</TableCell>
-                  <TableCell>Последняя сессия</TableCell>
-                  <TableCell>Критичность</TableCell>
+                  <TableCell >Глубина</TableCell>
+                  <TableCell align= 'center'>Контрольна сессия</TableCell>
+                  <TableCell align= 'center'>Последняя сессия</TableCell>
+                  <TableCell align= 'center'>Критичность</TableCell>
                 </TableRow>
               </TableHead>
 

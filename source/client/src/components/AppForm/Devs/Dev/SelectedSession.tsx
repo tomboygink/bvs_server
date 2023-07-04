@@ -16,7 +16,7 @@ import TableBody from "@mui/material/TableBody";
 import { TableCell } from "@mui/material";
 import TableRow from "@mui/material/TableRow";
 
-interface IProps {}
+interface IProps { }
 
 //Устройства
 @observer
@@ -64,7 +64,7 @@ export class SelectedSession extends React.Component<IProps> {
           count_sess.push(senso.s.length);
           /// console.log('senso.s',
           let sess_data = senso.s.sort(
-            (a: { depth: number }, b: { depth: number }) => a.depth - b.depth 
+            (a: { depth: number }, b: { depth: number }) => a.depth - b.depth
           );
           ses_depth.push(
             // senso.s.map([].sort((a, b) =>( )
@@ -85,17 +85,17 @@ export class SelectedSession extends React.Component<IProps> {
 
           ses_date.push(
             senso.s.map((row: any, i: any) => (
-<React.Fragment key={"data_qd" + row.data + row.depth}>
-<TableRow className="datarow">
-  <TableCell
-    align="left"
-    sx={{ p: "4px", color: "#002757", fontWeight: "500" }}
-  >
-     {" "}
-                  {"" + row.data}{" "}
-  </TableCell>
-</TableRow>
-</React.Fragment>
+              <React.Fragment key={"data_qd" + row.data + row.depth}>
+                <TableRow className="datarow">
+                  <TableCell
+                    align="center"
+                    sx={{ p: "4px", color: "#FD8A04", fontWeight: "500" }}
+                  >
+                    {" "}
+                    {"" + row.data}{" "}
+                  </TableCell>
+                </TableRow>
+              </React.Fragment>
             ))
           );
         }
@@ -118,31 +118,105 @@ export class SelectedSession extends React.Component<IProps> {
               >
                 <TableHead>
                   <TableRow>
-                    <TableCell>Глубина</TableCell>
-                    <TableCell>Выбранная сессия</TableCell>
+                    <TableCell >Глубина</TableCell>
+                    <TableCell  align= 'center'>Контрольная сессия</TableCell>
+                     <TableCell align= 'center'>Последняя сессия</TableCell>
+                    <TableCell align= 'center'>Выбранная сессия</TableCell>
                   </TableRow>
                 </TableHead>
 
-               
-                  <TableBody>
-                    <TableRow>
-                    <TableCell>{ses_depth}</TableCell>
-                      <TableCell>{ses_date}</TableCell>
-                    </TableRow>
-                  </TableBody>
-               
-        
-              
+                <TableBody>
+                  <TableRow>
+                    <TableCell>
+                    <Table> 
+                        <TableBody> 
+                          {ses_depth}
+                        </TableBody>
+                        </Table>
+                        </TableCell>
+
+                        <TableCell>
+                    <Table> 
+                        <TableBody> 
+                      {APP_STORAGE.sensors
+                        .getSess_first()
+                        .map((row: any, i: any) => (
+                          <TableRow
+                            className="datarow"
+                            key={"data_qds" + row.data_f + i + row.data_f}
+                          >
+                            <TableCell
+                              align="center"
+                              sx={{
+                                p: "4px",
+                                color: "#00b394",
+                                fontWeight: "500",
+                              }}
+                            >
+                              {" "}
+                              {"" + row.data_f}{" "}
+                          
+                  
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                              </TableBody> 
+                        </Table> 
+                    </TableCell>
+
+
+                    <TableCell >
+                    <Table> 
+                        <TableBody> 
+                      {APP_STORAGE.sensors
+                        .getSessFirstLast()
+                        .map((row: any, i: any) => (
+                          <TableRow
+                            className="datarow"
+                            key={"data_qdsadsd1212313" + row.data_s + i}
+                          >
+                            <TableCell
+                              align="center"
+                              sx={{
+                                p: "4px",
+                                color: "#9566FB",
+                                fontWeight: "500"
+                              }}
+                            >
+                              {" "}
+                              {"" + row.data_s}{" "}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                        
+                        </TableBody> 
+                        </Table> 
+                    </TableCell>
+
+
+
+                    <TableCell>
+                    <Table> 
+                        <TableBody> 
+                      {ses_date}
+                      </TableBody>
+                        </Table>
+                      </TableCell>
+                  </TableRow>
+                </TableBody>
               </Table>
             </TableContainer>
           </Paper>
         )}
 
-{ses_depth.length === 0 && (
-  <>
-  <Typography sx={{color: '#266BF1'}}> Ничего не выбрано</Typography>
-  </>
-)}
+        {ses_depth.length === 0 && (
+          <>
+            <Typography sx={{ color: "#266BF1" }}>
+              {" "}
+              Ничего не выбрано
+            </Typography>
+          </>
+        )}
       </React.Fragment>
     );
   }
