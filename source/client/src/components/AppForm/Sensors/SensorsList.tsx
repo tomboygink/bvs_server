@@ -264,7 +264,10 @@ const [year_first, month_first, day_first] = FirstData.split('-');
               <Typography sx={{fontSize: '14px', pl: '8px'}}>
                С момента передачи данных прошло -  {APP_STORAGE.devs.getPassedDay()} дней
               </Typography>
-              <Box sx ={{background: '#75A4FF', p: '8px', borderRadius: '4px', height: '100%', display: 'flex', alignItems: 'center'}}>
+              <Box sx ={{background: '#75A4FF', p: '8px', borderRadius: '4px', height: '100%', display: 'flex', alignItems: 'center',
+              borderTopLeftRadius: '0px',
+              borderBottomLeftRadius: '0px'
+            }}>
               <SignalCellularAltIcon/>
               </Box>
               
@@ -290,7 +293,9 @@ const [year_first, month_first, day_first] = FirstData.split('-');
               <Typography sx={{fontSize: '14px', pl: '8px'}}>
                Нет передачи данных
               </Typography>
-              <Box sx ={{background: '#75A4FF', p: '14px', borderRadius: '4px', height: '100%', display: 'flex', alignItems: 'center'}}>
+              <Box sx ={{background: '#75A4FF', p: '14px', borderRadius: '4px', height: '100%', display: 'flex', alignItems: 'center',
+             borderTopLeftRadius: '0px',
+             borderBottomLeftRadius: '0px'}}>
               <SignalCellularAltIcon/>
               </Box>
               
