@@ -225,6 +225,8 @@ export class DevsGroupsTree extends React.Component<IProps> {
         let delta = nowDate.getTime() - otherDate.getTime();
 
         var passedDay = Math.floor(delta / 1000 / 60 / 60 / 24); ///////////////////( new Date( ( new Date() ).toDateString() ) - 86400000 ); // 24*60*60*1000
+          
+      
 
         if (passedDay === 0) {
           return (
@@ -314,6 +316,9 @@ export class DevsGroupsTree extends React.Component<IProps> {
             </React.Fragment>
           );
         }
+
+        APP_STORAGE.devs.setPassedDay(String(passedDay))
+        console.log(passedDay, '7686t87t6')
       }
     }
   }

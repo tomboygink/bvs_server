@@ -96,6 +96,8 @@ export class DevsStorage {
   @observable start_devpovs: string = '';
   @observable end_devpovs: string = '';
 
+  @observable passedDay: string = '';
+
 
   ///////////////////////////////////////////////////////////////////////////  Таблица сессий
   @observable rowsPerPage: number = 3;
@@ -253,6 +255,10 @@ export class DevsStorage {
 
   @action setEndDevPovs(val: string) { this.end_devpovs = val }; //////////////////// Установить поверочный интервал окнчание
   @computed getEndDevPovs(): string { return this.end_devpovs };
+
+  @action setPassedDay(val: string) { this.passedDay = val }; //////////////////// Установить поверочный интервал окнчание
+  @computed getPassedDay(): string { return this.passedDay };
+
 
 
   async get_Devs(name: string, value: any, _options?: any) {

@@ -46,16 +46,25 @@ export class Devs extends React.Component<IProps> {
     super(props);
   }
 
-  async setDevNumber(a: any, id: any, dev : boolean) {
+  async setDevNumber(a: any, id: any, dev : boolean, time_dev: string) {
     APP_STORAGE.sensors.setNumber(a);
     APP_STORAGE.sensors.setIdDev(id);
     APP_STORAGE.sensors.setDeletedDev(dev);
+    if ( time_dev!== ''){
+      let otherDate = new Date(time_dev);
+        let nowDate = new Date();
+        let delta = nowDate.getTime() - otherDate.getTime();
+
+        var passedDay = Math.floor(delta / 1000 / 60 / 60 / 24);
+    }
+    APP_STORAGE.devs.setPassedDay(String(passedDay))
   }
 
   drawDevs(dgrs: TDevsGroup[]): React.ReactNode[] {
     let dev_number: any = 0;
     let dev_id: any = 0;
     let del : any = Boolean;
+    let time_dev: string = ''
     var dev = APP_STORAGE.devs;
     var devs: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
@@ -69,7 +78,8 @@ export class Devs extends React.Component<IProps> {
         if ("_dev_id_key_" + gr_devs[key].id === dev.getIdChild()) {
           dev_number = gr_devs[key].number;
           dev_id = gr_devs[key].id;
-          del = gr_devs[key].deleted
+          del = gr_devs[key].deleted;
+          time_dev = gr_devs[key].time;
           
 
           let longitude = gr_devs[key].longitude;
@@ -78,7 +88,7 @@ export class Devs extends React.Component<IProps> {
           
 
           setTimeout(() => {
-            this.setDevNumber(dev_number, dev_id, del);
+            this.setDevNumber(dev_number, dev_id, del, time_dev);
           }, 0);
 
           setTimeout(() => {
