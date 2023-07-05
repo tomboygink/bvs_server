@@ -21,6 +21,11 @@ import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import {AdditionInfo} from "../AdditionInfo/AdditionInfo"
 import { DevPovs } from "../DevPovs/DevPovs";
 
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
+
+
+
 interface IProps {}
 
 //Компонент формы приложения
@@ -173,6 +178,7 @@ export class SensorsList extends React.Component<IProps> {
                   <TableCell>[{"" + sort_array[k]}] </TableCell>
                 </TableRow>
               );
+              
             }
 
             if (gr_devs[i].deleted === false) {
@@ -231,9 +237,94 @@ const [year_first, month_first, day_first] = FirstData.split('-');
     return (
       <div className="wrapper-sensors">
        {APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
+         <>
+          {APP_STORAGE.sensors.getDeletedDev() === true  && APP_STORAGE.devs.getPassedDay().length? 
+          <Box sx = {{background: '#FC8904', mb : '44px', mt: '40px', borderRadius: '4px', display: 'flex', justifyContent: 'space-around', p: '8px', height: '48px', alignItems: 'center'}}>
+            <ErrorOutlineIcon fontSize="small" sx ={{color: '#fff'}}/>
+         <Typography sx ={{color: 'fff', fontSize: '14px'}}>Это устройство заблокировано</Typography> 
+          </Box>
+          
+          : ''}
+
+          {Number(APP_STORAGE.devs.getPassedDay()) < 1000 ? 
+          (   <Box
+            sx={{
+              background: "#266BF1",
+              mb: "44px",
+              mt: "40px",
+              borderRadius: "4px",
+              display: "flex",
+              justifyContent: "space-between",
+              height: '54px',
+              
+             
+              alignItems: "center",
+            }}
+
+          >
+            <svg className="svg_icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="16" cy="16" r="16" fill="#75A4FF"/>
+<path d="M24 10H8V12H6V10C6 8.89543 6.89543 8 8 8H24C25.1046 8 26 8.89543 26 10V22C26 23.1046 25.1046 24 24 24H19V22H24V10Z" fill="white"/>
+<path d="M6 17C9.86599 17 13 20.134 13 24H11C11 21.2386 8.76142 19 6 19V17Z" fill="white"/>
+<path d="M6 21C7.65685 21 9 22.3431 9 24H6V21Z" fill="white"/>
+<path d="M6 13C12.0751 13 17 17.9249 17 24H15C15 19.0294 10.9706 15 6 15V13Z" fill="white"/>
+</svg>
+       <Box>
+       <Typography sx={{fontSize: '14px', pl: '8px'}}>
+              Прошло -  {APP_STORAGE.devs.getPassedDay()} дней </Typography>
+              <Typography sx={{fontSize: '10px'}}> (с момента приема данных) </Typography>
+       </Box>
+
        
-       <Box sx ={{display: 'flex', justifyContent: 'space-between',  color: '#111111'}}> 
-           <Typography sx={{ fontWeight: "500" , color: '#0D1C52', mb : '12px' }}>   Список сенсоров </Typography>
+              <Box sx ={{background: '#75A4FF', p: '8px', borderRadius: '4px', height: '100%', display: 'flex', alignItems: 'center',
+              borderTopLeftRadius: '0px',
+              borderBottomLeftRadius: '0px'
+            }}>
+              <SignalCellularAltIcon/>
+              </Box>  
+          </Box> 
+          )
+          :
+          (  
+            <Box
+            sx={{
+              background: "#266BF1",
+              mb: "44px",
+              mt: "40px",
+              borderRadius: "4px",
+              display: "flex",
+              justifyContent: "space-between",
+              height: '54px',
+              
+             
+              alignItems: "center",
+            }}
+          >
+                   <svg className="svg_icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="16" cy="16" r="16" fill="#75A4FF"/>
+<path d="M24 10H8V12H6V10C6 8.89543 6.89543 8 8 8H24C25.1046 8 26 8.89543 26 10V22C26 23.1046 25.1046 24 24 24H19V22H24V10Z" fill="white"/>
+<path d="M6 17C9.86599 17 13 20.134 13 24H11C11 21.2386 8.76142 19 6 19V17Z" fill="white"/>
+<path d="M6 21C7.65685 21 9 22.3431 9 24H6V21Z" fill="white"/>
+<path d="M6 13C12.0751 13 17 17.9249 17 24H15C15 19.0294 10.9706 15 6 15V13Z" fill="white"/>
+</svg>
+              <Typography sx={{fontSize: '14px', pl: '8px'}}>
+               Нет данных
+              </Typography>
+              <Box sx ={{background: '#75A4FF', p: '14px', borderRadius: '4px', height: '100%', display: 'flex', alignItems: 'center',
+             borderTopLeftRadius: '0px',
+             borderBottomLeftRadius: '0px'}}>
+              <SignalCellularAltIcon/>
+              </Box>
+              
+          </Box>
+
+          )
+         
+          }
+
+
+           <Box sx ={{display: 'flex', justifyContent: 'space-between',  color: '#111111'}}> 
+           <Typography sx={{ fontWeight: "600" , color: '#0D1C52', mb : '12px' }}>   Список сенсоров </Typography>
                       <Box sx={{ width: "80px" }}>
 
                         <ArrowDownwardIcon
@@ -255,7 +346,11 @@ const [year_first, month_first, day_first] = FirstData.split('-');
                         /> 
 
                       </Box> 
-                      </Box>}
+                      </Box>
+         </>
+         
+     
+                      }
         <Box
           className=" sensors"
           sx={{

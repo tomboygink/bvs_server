@@ -34,8 +34,8 @@ import { SensorsList } from "./Sensors/SensorsList"; ///////////////////////////
 import { ChangeDevsModal } from "./Devs/Dev/Menu/ChangeDevsModal"; ////////////////////////////Редактировать устройства
 import { AddNewDevModal } from "./Devs/Dev/Menu/AddNewDevModal"; //////////////Добавить новое устройство
 import { Calendar } from "./Devs/Dev/Calendar";
-import { SelectedSession } from "./Devs/Dev/SelectedSession";
 import { DevsGroupsTree } from "./Devs/DevsGroupsTree";
+import { DevWrapper } from "./Devs/DevWrapper";
 
 interface IProps { }
 
@@ -94,8 +94,8 @@ export class AppForm extends React.Component<IProps> {
     if (APP_STORAGE.devs_groups.getMiddleForm() === 2) {
       middle_form = (
         <>
-          <Devs />
-          <SelectedSession />
+          {/* <Devs /> */}
+          <DevWrapper/>
         </>
       );
       //dev_sess = <DevSess/>
@@ -136,7 +136,7 @@ export class AppForm extends React.Component<IProps> {
             <ChangeDevsGroups />
             <MoveDevsGroups />
             <AddNewDevModal />{" "}
-            {/*-------------------------Модальное окно - добавить устройство */}
+          
           </Box>
           <Box className="is-grid">
             <Box className="wrapper">
@@ -155,7 +155,7 @@ export class AppForm extends React.Component<IProps> {
            
           </Box>
 
-          <Button className="button-back-to-up"
+          <Button className="button-back-to-up" id='button_up'
           sx={{background: '#C2E0FF', borderRadius: '24px', position: 'absolute'}}
           onClick={() => {
             this.BackToTopButton()

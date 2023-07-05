@@ -29,7 +29,7 @@ const MobaleMenu = () => {
 
   const handleClose =() => {
     setAnchorEl(null)
-    document.getElementById(idEl).style.background  = "#266BF1";0
+    document.getElementById(idEl).style.background  = "#266BF1";
     APP_STORAGE.mobale.setOpenModalMenu(false);
   }
 

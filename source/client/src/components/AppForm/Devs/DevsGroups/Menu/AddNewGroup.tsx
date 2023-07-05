@@ -29,13 +29,12 @@ export class AddNewGroup extends React.Component<IProps> {
                 borderRadius: "4px",
                 width: '100%',
                 background:'#E3EDFF',
-                p:2,
-                border: '1px solid #8F9DCE'
+                p:2
                 
               }}
               onClick={() => this.OpenModal("0", 0)}
             >
-              <Typography sx={{ display: "flex", color:'#266BF1', justifyContent: 'center' }}>
+              <Typography sx={{ display: "flex", color:'#3D7BF2', justifyContent: 'center' }}>
                 {" "}
                 Добавить новое расположение
               </Typography>

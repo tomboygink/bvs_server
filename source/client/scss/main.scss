@@ -37,12 +37,13 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: #F1F5FC;
+  // background: linear-gradient(
+  //     to bottom,
+  //     transparent,
+  //     rgb(var(--background-end-rgb))
+  //   )
+  //   rgb(var(--background-start-rgb));
 }
 
 .button-back-to-up{
@@ -119,7 +120,9 @@ body {
     }
   }
 }
-
+.datarow{
+  border-style: hidden;
+}
 input#datetime-local {
   font-size: 14px;
 }
@@ -337,17 +340,17 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   background-color: base.$white;
 }
 
-.css-1xmmv5i::-webkit-scrollbar-thumb {
+.css-1xmmv5i::-webkit-scrollbar-thumb , .paper_table::-webkit-scrollbar-thumb{
   width: 1px;
   background-color: #c8cdd3;
 }
 
-.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar {
+.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar, .paper_table::-webkit-scrollbar {
   width: 4px;
   background-color: base.$white;
 }
 
-.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar-thumb {
+.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar-thumb , .paper_table::-webkit-scrollbar-thumb {
   width: 1px;
   background-color: #c8cdd3;
 }
@@ -413,11 +416,34 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   color: #266bf1;
 }
 
+.top_panel_div{
+  height: 50px;
+}
+
+svg.svg_icon {
+  margin-left: 8px;
+}
+
 @media (max-width: 700px) {
   //////исправить на 500
   .auth-form.MuiBox-root.css-0 {
     display: block;
     height: 70vh;
+  }
+  .top_panel_div{
+    height: 100%;
+  }
+  #chosen_table{
+    display: none;
+  }
+
+  .is-grid {
+    min-height: 80vh;
+}
+
+
+  #button_up{
+    display: none;
   }
   .right-panel{
     display: none;

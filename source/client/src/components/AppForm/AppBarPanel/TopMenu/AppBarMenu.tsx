@@ -56,11 +56,11 @@ export class AccountMenu extends React.Component<IProps> {
         const  user =  APP_STORAGE.auth_form.getUser();
         return (
             <React.Fragment>
-                <Box  sx = {{background: '#fff', borderRadius: '4px',  maxHeight: '52px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: '20px'}} id = 'btnPerfil'onClick={()=>{ APP_STORAGE.app_bar.setAppBarUser(true);  }}>
+                <Box  sx = {{background: '#266BF1', borderRadius: '4px',  maxHeight: '52px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: '20px'}} id = 'btnPerfil'onClick={()=>{ APP_STORAGE.app_bar.setAppBarUser(true);  }}>
                 <Avatar sx={{ width: 32, height: 32 }}></Avatar>
                
-                <Typography id='top-menu' sx={{  pl: '1rem', color : '#0D1C52'}} > {user.family} {user.name} {user.father}  </Typography>
-                <ArrowDropDownIcon sx={{color: '#0D1C52'}}/>
+                <Typography id='top-menu' sx={{  pl: '1rem', color : '#fff'}} > {user.family} {user.name} {user.father}  </Typography>
+                <ArrowDropDownIcon sx={{color: '#fff'}}/>
                 </Box>  
             <Menu
                 anchorEl={document.getElementById('btnPerfil')}
