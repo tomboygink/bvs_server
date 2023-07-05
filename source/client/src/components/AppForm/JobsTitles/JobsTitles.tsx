@@ -144,7 +144,7 @@ export class JobsTitles extends React.Component<IProps> {
     }
     return (
       <React.Fragment>
-        <Typography sx={{ fontWeight: "500", color: "#111111", mb: "8px" }}>
+        <Typography sx={{ fontWeight: "600", color: "#111111", mb: "8px" }}>
           {" "}
           Подробная информация{" "}
         </Typography>
