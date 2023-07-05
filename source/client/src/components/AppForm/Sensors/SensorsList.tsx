@@ -246,7 +246,7 @@ const [year_first, month_first, day_first] = FirstData.split('-');
           
           : ''}
 
-          {APP_STORAGE.devs.getPassedDay() !== '19542' ? 
+          {Number(APP_STORAGE.devs.getPassedDay()) < 1000 ? 
           (   <Box
             sx={{
               background: "#266BF1",
@@ -269,20 +269,20 @@ const [year_first, month_first, day_first] = FirstData.split('-');
 <path d="M6 21C7.65685 21 9 22.3431 9 24H6V21Z" fill="white"/>
 <path d="M6 13C12.0751 13 17 17.9249 17 24H15C15 19.0294 10.9706 15 6 15V13Z" fill="white"/>
 </svg>
+       <Box>
+       <Typography sx={{fontSize: '14px', pl: '8px'}}>
+              Прошло -  {APP_STORAGE.devs.getPassedDay()} дней </Typography>
+              <Typography sx={{fontSize: '10px'}}> (с момента приема данных) </Typography>
+       </Box>
 
-              <Typography sx={{fontSize: '14px', pl: '8px'}}>
-              Прошло -  {APP_STORAGE.devs.getPassedDay()} дней 
-              <Typography sx={{fontSize: '12px'}}> с момента передачи данных</Typography>
-              </Typography>
+       
               <Box sx ={{background: '#75A4FF', p: '8px', borderRadius: '4px', height: '100%', display: 'flex', alignItems: 'center',
               borderTopLeftRadius: '0px',
               borderBottomLeftRadius: '0px'
             }}>
               <SignalCellularAltIcon/>
-              </Box>
-              
-          </Box>
-
+              </Box>  
+          </Box> 
           )
           :
           (  
@@ -308,7 +308,7 @@ const [year_first, month_first, day_first] = FirstData.split('-');
 <path d="M6 13C12.0751 13 17 17.9249 17 24H15C15 19.0294 10.9706 15 6 15V13Z" fill="white"/>
 </svg>
               <Typography sx={{fontSize: '14px', pl: '8px'}}>
-               Нет передачи данных
+               Нет данных
               </Typography>
               <Box sx ={{background: '#75A4FF', p: '14px', borderRadius: '4px', height: '100%', display: 'flex', alignItems: 'center',
              borderTopLeftRadius: '0px',
