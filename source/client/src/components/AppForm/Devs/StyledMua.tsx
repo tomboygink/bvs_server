@@ -112,6 +112,7 @@ export const handleChange = async (event: any, node: any) => {
     APP_STORAGE.sensors.setSess_first([])
     APP_STORAGE.sensors.setSess_second([])
     APP_STORAGE.sensors.setSortDesc('');
+    APP_STORAGE.sensors.setAkbSessChose('');
     APP_STORAGE.sensors.setChoseSessTime('');
     APP_STORAGE.sensors.setAkbSessLast('');
     APP_STORAGE.devs_groups.setMiddleForm(2);

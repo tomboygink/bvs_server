@@ -28,6 +28,7 @@ export class SensorsStorage {
 
     @observable id_dev_sess: string = '';
     @observable chose_sess_time : string = '';
+    @observable akb_chosesess: string = ''
 
     @observable sessions_period: Array<any>  = [];
 
@@ -41,6 +42,7 @@ export class SensorsStorage {
     
     @observable time_dev_firstsess : string = '';
     @observable time_dev_lastsess : string = '';
+    @observable akb_firstsess: string = '';
     @observable akb_lastsess : string = '';
 
 
@@ -67,11 +69,17 @@ export class SensorsStorage {
     @action setTimeDevSessLast(val : string) {this.time_dev_lastsess = val};
     @computed getTimeDevSessLast() : string {return this.time_dev_lastsess}; 
 
+    @action setAkbSessFirst(val : string) {this.akb_firstsess = val};
+    @computed getAkbSessFirst() : string {return this.akb_firstsess}; 
+
     @action setAkbSessLast(val : string) {this.akb_lastsess = val};
     @computed getAkbSessLast() : string {return this.akb_lastsess}; 
 
     @action setChoseSessTime(val : string) {this.chose_sess_time = val};
     @computed getChoseSessTime() : string {return this.chose_sess_time}; 
+
+    @action setAkbSessChose(val : string) {this.akb_chosesess = val};
+    @computed getAkbSessChose() : string {return this.akb_chosesess}; 
 
     @action setdataCharts(val: Array<any>) { this.sessions_period = val; } 
     @computed getdataCharts(): Array<any> { return this.sessions_period; }
@@ -235,8 +243,8 @@ export class SensorsStorage {
       this.setIdFirstSess(dt.data[1].id); 
       this.setIdLastSess(dt.data[0].id);
 
-
-      this.setAkbSessLast(dt.data[0].level_akb)
+      this.setAkbSessFirst(dt.data[0].level_akb)
+      this.setAkbSessLast(dt.data[1].level_akb)
     
       var obj_first: any = {
         depth: '',
