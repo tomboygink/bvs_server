@@ -47,10 +47,13 @@ export class DevSessTable extends React.Component<IProps> {
     APP_STORAGE.sensors.get_DevPovs(APP_STORAGE.auth_form.getdt())
   }
 
-  async setRowId(e: string, time: string) {
+  async setRowId(e: string, time: string, level_akb: string) {
+
+    console.log(level_akb, 'level_akb')
     APP_STORAGE.sensors.setChoseSessTime(time);
     APP_STORAGE.sensors.setOpenDevsess(true);
     APP_STORAGE.sensors.setIdDevSess(e);
+    APP_STORAGE.sensors.setAkbSessChose(level_akb)
     APP_STORAGE.sensors.get_DevSessions(
       "sess_id",
       APP_STORAGE.auth_form.getdt()
@@ -318,7 +321,7 @@ export class DevSessTable extends React.Component<IProps> {
                           <Button
                             sx={{ fontSize: "12px" }}
                             onClick={() => {
-                              this.setRowId(row.id, row.time_dev);
+                              this.setRowId(row.id, row.time_dev, row.level_akb);
                             }}
                           >
                             {" "}
