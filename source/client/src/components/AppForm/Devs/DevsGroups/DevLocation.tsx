@@ -24,6 +24,8 @@ import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 import DirectionsIcon from '@mui/icons-material/Directions';
 
 import { CONFIG } from '../../../../../../xcore/config';
+import { LeafletMap } from "../Dev/Map";
+import MapStations from "./Map/MapStations";
 
 
 
@@ -147,7 +149,10 @@ export class DevLocation extends React.Component<IProps> {
       );
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
+     APP_STORAGE.devs.setChangeSensors2(dgr.devs);
+     
 
+   
         setTimeout(() => {  //////Сохраню данные в массив
           APP_STORAGE.devs.setGr(gr)
         }, 100);
@@ -155,6 +160,8 @@ export class DevLocation extends React.Component<IProps> {
 
         let longitude = gr.longitude;
         let latitude = gr.latitude;
+
+
         if (gr.deleted === true) {
 /////////////////////////////////////////////////////////////////////////////////////////Если устройство удаленно 
           parent.push(
@@ -310,6 +317,13 @@ export class DevLocation extends React.Component<IProps> {
                   style={{ width: "100%", marginTop: "12px" }}
                   value={gr.g_info || ""}
                 />
+                
+                <Box sx={{ height: "400px", width: "100%" }}>
+                            
+                <MapStations longitude={longitude} latitude={latitude}/>
+
+                          </Box>
+
               </Box>
             </React.Fragment>
           );
@@ -434,7 +448,7 @@ export class DevLocation extends React.Component<IProps> {
                     size="small"
                     value={gr.latitude.trim() || ""}
                     />                 
-                  </Box>
+                </Box>
 
                   
                   <Link sx= {{fontSize:'1rem', display: 'flex', alignItems: 'center', flexDirection: 'row-reverse'}} >Показать на карте               
@@ -452,6 +466,11 @@ export class DevLocation extends React.Component<IProps> {
                   minRows={4}
                   style={{ width: "100%" , marginTop: '12px'}}
                   value={gr.g_info || ""}/>
+
+<Box sx={{ height: "400px", width: "100%" , mt: '8px'}}>
+                            {/* <LeafletMap longitude={longitude} latitude={latitude} /> */}
+                            <MapStations longitude={longitude} latitude={latitude}/>
+                          </Box>
               </Box>
             </React.Fragment>
           );

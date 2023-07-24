@@ -29,6 +29,7 @@ import { CriticalityTable } from "./CriticalityTable";
 import TopPanel from "./TopPanel";
 import { LeafletMap } from "./Map";
 import { SelectedSession } from "./SelectedSession";
+import { toJS } from "mobx";
 
 
 
@@ -86,7 +87,6 @@ export class Devs extends React.Component<IProps> {
           let latitude = gr_devs[key].latitude;
           
           
-
           setTimeout(() => {
             this.setDevNumber(dev_number, dev_id, del, time_dev);
           }, 0);
@@ -217,6 +217,7 @@ export class Devs extends React.Component<IProps> {
                   {APP_STORAGE.devs.setLongitude && (
                     <Box sx={{ height: "400px", width: "100%" }}>
                       <LeafletMap longitude={longitude} latitude={latitude} />
+                      {/* <MapStations latlons={[]}/> */}
                     </Box>
                   )}
                 </>
@@ -346,6 +347,7 @@ export class Devs extends React.Component<IProps> {
                         {APP_STORAGE.devs.setLongitude && (
                           <Box sx={{ height: "400px", width: "100%" }}>
                             <LeafletMap longitude={longitude} latitude={latitude} />
+                            {/* <MapStations latlons={[]}/> */}
                           </Box>
                         )}
                       </>

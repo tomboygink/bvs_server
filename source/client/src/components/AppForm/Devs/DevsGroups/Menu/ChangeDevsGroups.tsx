@@ -181,7 +181,6 @@ export class ChangeDevsGroups extends React.Component<IProps> {
                 // pattern: "[0..9]*[.][0..9]*",
                 fontSize: 12,
               }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
               variant="outlined"
               error={APP_STORAGE.devs_groups.getLongitudeError()}
               helperText={APP_STORAGE.devs_groups.getLongitudeError_mess()}
@@ -205,7 +204,6 @@ export class ChangeDevsGroups extends React.Component<IProps> {
                 // pattern: "[0..9]*[.][0..9]*" ,
                 fontSize: 12,
               }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
               variant="outlined"
               error={APP_STORAGE.devs_groups.getLatitudeError()}
               helperText={APP_STORAGE.devs_groups.getLatitudeError_mess()}

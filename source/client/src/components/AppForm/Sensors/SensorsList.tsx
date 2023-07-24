@@ -231,7 +231,21 @@ const [year_first, month_first, day_first] = FirstData.split('-');
  let ChoseSess = `${day_chose}.${month_chose}.${year_chose}`;
  let ChoseTimeSess = APP_STORAGE.sensors.getChoseSessTime().split('T')[1];
 
+  //  console.log(APP_STORAGE.devs.getPassedDay())
+  //  console.log(APP_STORAGE.devs.getPassedDay().slice(-1), 'последнйи символ строки');
 
+//    switch (APP_STORAGE.devs.getPassedDay().slice(-1)) {
+//     case ('0'): {APP_STORAGE.devs.setDay('дней')}  break;
+//     case ('1'): {APP_STORAGE.devs.setDay('день')}  break;
+//     case ('3'): {APP_STORAGE.devs.setDay('дня')}  break;
+//     case ('4'): {APP_STORAGE.devs.setDay('дня')}  break;
+//     case ('5'): {APP_STORAGE.devs.setDay('дней')}  break;
+//     case ('6'): {APP_STORAGE.devs.setDay('дней')}  break;
+//     case ('7'): {APP_STORAGE.devs.setDay('дней')}  break;
+//     case ('8'): {APP_STORAGE.devs.setDay('дней')}  break;
+//     case ('9'): {APP_STORAGE.devs.setDay('дней')}  break;
+//     default: { } break;
+// }
 
 
     return (
@@ -256,12 +270,8 @@ const [year_first, month_first, day_first] = FirstData.split('-');
               display: "flex",
               justifyContent: "space-between",
               height: '54px',
-              
-             
               alignItems: "center",
-            }}
-
-          >
+            }}>
             <svg className="svg_icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 <circle cx="16" cy="16" r="16" fill="#75A4FF"/>
 <path d="M24 10H8V12H6V10C6 8.89543 6.89543 8 8 8H24C25.1046 8 26 8.89543 26 10V22C26 23.1046 25.1046 24 24 24H19V22H24V10Z" fill="white"/>
@@ -271,7 +281,7 @@ const [year_first, month_first, day_first] = FirstData.split('-');
 </svg>
        <Box>
        <Typography sx={{fontSize: '14px', pl: '8px'}}>
-              Прошло -  {APP_STORAGE.devs.getPassedDay()} дней </Typography>
+              Прошло -  {APP_STORAGE.devs.getPassedDay()} Дней</Typography>
               <Typography sx={{fontSize: '10px'}}> (с момента приема данных) </Typography>
        </Box>
 

@@ -97,7 +97,7 @@ export class DevsStorage {
   @observable end_devpovs: string = '';
 
   @observable passedDay: string = '';
-
+  @observable day: string = ''
 
   ///////////////////////////////////////////////////////////////////////////  Таблица сессий
   @observable rowsPerPage: number = 3;
@@ -259,6 +259,8 @@ export class DevsStorage {
   @action setPassedDay(val: string) { this.passedDay = val }; //////////////////// Установить поверочный интервал окнчание
   @computed getPassedDay(): string { return this.passedDay };
 
+  @action setDay(val: string) { this.day = val};
+  @computed getDay() : string { return this.day}
 
 
   async get_Devs(name: string, value: any, _options?: any) {
@@ -287,6 +289,36 @@ export class DevsStorage {
 
 
   async set_NewDevs(name: string, value: any, _options?: any) {
+
+    let lat:any
+    let lng:any
+       let latnumber = this.getLatitude().replace(/[^\d\.,]/g, ""); //// только цифты
+       let latchar = latnumber.replace(/,/g, "."); //// то
+         if(latchar.match(/\./g).length > 1) {
+             lat = latchar.substr(0, latchar.lastIndexOf("."));
+           }
+           else{
+             lat = latchar
+           }
+ 
+           let lngnumber = this.getLongitude().replace(/[^\d\.,]/g, ""); //// только цифты
+           let lngchar = lngnumber.replace(/,/g, "."); //// то
+             if(lngchar.match(/\./g).length > 1) {
+               lng = lngchar.substr(0, latchar.lastIndexOf("."));
+               }
+               else{
+                 lng = lngchar 
+               }
+
+               if(String(lng) === '.'){
+                lng= Number(0.0)
+              }
+        
+              if(String(lat) === '.'){
+                lat= Number(0.0)
+              }
+               this.setLatitude(lat)
+               this.setLongitude(lng)
 
       if (this.getNumber() === '') {
       this.setNumberError(true);
@@ -336,8 +368,8 @@ export class DevsStorage {
         group_dev_id: this.getIdDevs(),
         number: this.getNumber().replace(/"([^"]*)"/g, '«$1»') || '',
         name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '',
-        latitude: this.getLatitude().replace(/\,/g, '.') || '',
-        longitude: this.getLongitude().replace(/\,/g, '.') || '',
+        latitude: lat || '',
+        longitude: lng || '',
         sensors: '{\"s\":' +  JSON.stringify(this.getArray()) + '}',
         deleted: this.getDeleted() || false,
         info: this.getDeleted() || ''
@@ -375,7 +407,36 @@ export class DevsStorage {
 
 
   async set_ChangeDevs(name: string, value: any, _options?: any) {
-    
+   let lat:any
+   let lng:any
+      let latnumber = this.getLatitude().replace(/[^\d\.,]/g, ""); //// только цифты
+      let latchar = latnumber.replace(/,/g, "."); //// то
+        if(latchar.match(/\./g).length > 1) {
+            lat = latchar.substr(0, latchar.lastIndexOf("."));
+          }
+          else{
+            lat = latchar
+          }
+
+          let lngnumber = this.getLongitude().replace(/[^\d\.,]/g, ""); //// только цифты
+          let lngchar = lngnumber.replace(/,/g, "."); //// то
+            if(lngchar.match(/\./g).length > 1) {
+              lng = lngchar.substr(0, latchar.lastIndexOf("."));
+              }
+              else{
+                lng = lngchar 
+              }
+
+              if(String(lng) === '.'){
+                lng= Number(0.0)
+              }
+        
+              if(String(lat) === '.'){
+                lat= Number(0.0)
+              }
+              this.setLatitude(lat)
+              this.setLongitude(lng)
+
     var sess_code = value;
     if (this.getNumber() === '') {
       this.setNumberError(true);
@@ -424,8 +485,8 @@ export class DevsStorage {
         group_dev_id: this.getGroupDevId() || '',
         number: this.getNumber().replace(/"([^"]*)"/g, '«$1»') || '' || '',
         name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '' || "",
-        latitude: this.getLatitude().replace(/\,/g, '.') || "",
-        longitude: this.getLongitude().replace(/\,/g, '.') || "",
+        latitude: lat || "",
+        longitude: lng || "",
         sensors: '{\"s\":' + JSON.stringify(this.getChangeSensors()) + '}',
         deleted: this.getCheckboxEd(),
         info: this.getInfo() || ""

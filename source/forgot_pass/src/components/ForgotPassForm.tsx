@@ -133,13 +133,7 @@ export class ForgotPass extends React.Component<IProps> {
                     Вернуться на форму авторизации
                     </Link>
                 </Container>  
-                <Box className='right-panel'>
-                    
-                    {/* <Typography className='right-panel-tittle'> Сервер приема данных</Typography> */}
-                    <Typography sx ={{mb: '12px'}}>© ООО Севербуринструмент 
-                    {/* ({Date.now()})  */}
-                    | e-mail: severburinstrument@mail.ru</Typography>
-                 </Box>
+             
                 </Box>
              
             </React.Fragment>
