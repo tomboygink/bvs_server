@@ -74,7 +74,7 @@ export class LeafletMap extends React.Component<IProps>{
           placeholder={<MapPlaceholder />}
         >
           <TileLayer
-             attribution='&copy; <a href="http://osm.org/copyright">ООО Севербуринструмент1</a>'
+             attribution='&copy; <a href="http://osm.org/copyright">ООО Севербуринструмент</a>'
              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
        <Marker position={[Number(splArr), Number(splArr1)]} >
@@ -83,10 +83,6 @@ export class LeafletMap extends React.Component<IProps>{
          Место расположения - Гаспром <br /> Устройстно - 1538
         </Popup> */}
         </Marker>
-
-        
-
-
         </MapContainer>
         );
     }

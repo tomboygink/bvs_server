@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { APP_STORAGE } from  '../../storage/AppStorage'
+import { APP_STORAGE } from "../../storage/AppStorage";
 
 import {
   Avatar,
@@ -48,26 +48,31 @@ export class ForgotPass extends React.Component<IProps> {
       );
     }
 
-    if (APP_STORAGE.auth_form.getError_emain() === true){
-      alert = (
-        <></>
-      );
+    if (APP_STORAGE.auth_form.getError_emain() === true) {
+      alert = <></>;
     }
 
     return (
       <React.Fragment>
-       <Box className='auth-form'>
-
-  
-
+        <Box className="auth-form">
           <Container
             component="main"
             maxWidth="xs"
-            sx={{  padding: "20px", mt: "5%" , alignSelf: 'center'}}
+            sx={{ padding: "20px", mt: "5%", alignSelf: "center" }}
           >
             <CssBaseline />
-            <Box sx={{ display: "flex", justifyContent: "space-between" , alignItems: 'center'}}>
-              <Typography component="h1" variant="h5" sx={{color: '#266BF1', fontSize: '36px'}}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                component="h1"
+                variant="h5"
+                sx={{ color: "#266BF1", fontSize: "36px" }}
+              >
                 Сброс пароля
               </Typography>
               <ArrowRightAltIcon
@@ -101,38 +106,36 @@ export class ForgotPass extends React.Component<IProps> {
               />
 
               <Button
-               sx= {{background: '#266BF1', color: '#fff' , mt : '12px', p: '8px'}}
+                sx={{
+                  background: "#266BF1",
+                  color: "#fff",
+                  mt: "12px",
+                  p: "8px",
+                }}
                 type="button"
                 fullWidth
                 onClick={() => {
                   APP_STORAGE.auth_form.set_ForgPass();
                 }}
-                className='auth_button'
+                className="auth_button"
               >
                 Получить код
               </Button>
             </Box>
             {alert}
-            <Grid container sx= {{mt: '12px'}}>
-            <Link
-              href="#"
-              variant="body2"
-              onClick={() => {
-                APP_STORAGE.auth_form.setForgotPass(false);
-              }}
-            >
-              Вернуться на форму авторизации
-            </Link>
+            <Grid container sx={{ mt: "12px" }}>
+              <Link
+                href="#"
+                variant="body2"
+                onClick={() => {
+                  APP_STORAGE.auth_form.setForgotPass(false);
+                }}
+              >
+                Вернуться на форму авторизации
+              </Link>
             </Grid>
           </Container>
-          <Box className='right-panel'>
-                    
-                    {/* <Typography className='right-panel-tittle'> Сервер приема данных</Typography> */}
-                    <Typography sx ={{mb: '12px'}}>© ООО Севербуринструмент 
-                    {/* ({Date.now()})  */}
-                    | e-mail: severburinstrument@mail.ru</Typography>
-                 </Box>
-       </Box>
+        </Box>
       </React.Fragment>
     );
   }

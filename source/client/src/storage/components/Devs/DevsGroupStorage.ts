@@ -139,6 +139,36 @@ export class DevsGroupStorage{
 
     
     async set_NewDevGroup(name: string, value: any, _options?: any) { ///////// Добавляем новое расположение устройств
+
+      let lat:any;
+      let lng:any;
+      let latnumber = this.getLatitude().replace(/[^\d\.,]/g, ""); //// только цифты
+      let latchar = latnumber.replace(/,/g, "."); //// то
+      if (latchar.match(/\./g).length > 1) {
+        lat = latchar.substr(0, latchar.lastIndexOf("."));
+      } else {
+        lat = latchar;
+      }
+
+      let lngnumber = this.getLongitude().replace(/[^\d\.,]/g, ""); //// только цифты
+      let lngchar = lngnumber.replace(/,/g, "."); //// то
+      if (lngchar.match(/\./g).length > 1) {
+        lng = lngchar.substr(0, latchar.lastIndexOf("."));
+      } else {
+        lng = lngchar;
+      }
+
+      if(String(lng) === '.'){
+        lng= Number(0.0)
+      }
+
+      if(String(lat) === '.'){
+        lat= Number(0.0)
+      }
+
+      this.setLatitude(lat);
+      this.setLongitude(lng);
+
         var sess_code = value;
         var q:IWSQuery = new WSQuery("set_NewDevGroup");
         
@@ -182,8 +212,8 @@ export class DevsGroupStorage{
         if(this.getName() !== '' && this.getLatitude() !== '' && this.getLongitude() !== '' && this.getKeyOrg() !== ''){
           q.args = {
             g_name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '',
-            latitude:this.getLatitude().replace(/\,/g, '.') || '', 
-            longitude:this.getLongitude().replace(/\,/g, '.') || '', 
+            latitude:lat, 
+            longitude: lng || '', 
             org_id:this.getKeyOrg() || '',
             parent_id: this.getParentId(),
             ord_num: 0,
@@ -245,6 +275,33 @@ export class DevsGroupStorage{
   }
 
      async set_ChangeDevsGroups(name: string, value: any, _options?: any) { 
+      let lat:any;
+      let lng:any;
+      let latnumber = this.getLatitude().replace(/[^\d\.,]/g, ""); //// только цифты
+      let latchar = latnumber.replace(/,/g, "."); //// то
+      if (latchar.match(/\./g).length > 1) {
+        lat = latchar.substr(0, latchar.lastIndexOf("."));
+      } else {
+        lat = latchar;
+      }
+
+      let lngnumber = this.getLongitude().replace(/[^\d\.,]/g, ""); //// только цифты
+      let lngchar = lngnumber.replace(/,/g, "."); //// то
+      if (lngchar.match(/\./g).length > 1) {
+        lng = lngchar.substr(0, latchar.lastIndexOf("."));
+      } else {
+        lng = lngchar;
+      }
+      if(String(lng) === '.'){
+        lng= Number(0.0)
+      }
+
+      if(String(lat) === '.'){
+        lat= Number(0.0)
+      }
+      
+      this.setLatitude(lat);
+      this.setLongitude(lng);
         
         var sess_code = value;
         var q: IWSQuery = new WSQuery("set_ChangeDevsGroups");
@@ -289,8 +346,8 @@ export class DevsGroupStorage{
             id: Number(this.getParentId()) || "",
             parent_id: Number(this.getParent()) || 0,
             name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '' || "",
-            latitude: this.getLatitude().replace(/\,/g, '.') || "",
-            longitude: this.getLongitude().replace(/\,/g, '.') || "",
+            latitude: lat || "",
+            longitude: lng || "",
             org_id : Number(this.getKeyOrg()),
             ord_id: 0,
             deleted: this.getCheckboxEd(),

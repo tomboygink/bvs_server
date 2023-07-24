@@ -318,7 +318,6 @@ export class DevsGroupsTree extends React.Component<IProps> {
         }
 
         APP_STORAGE.devs.setPassedDay(String(passedDay))
-        console.log(passedDay, '7686t87t6')
       }
     }
   }
