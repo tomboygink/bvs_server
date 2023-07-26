@@ -106,7 +106,7 @@ export class Change_ModalSensors extends React.Component<IProps> {
                   mb: "12px",
                 }}
               >
-                <Typography>Введите глубину датчика11</Typography>
+                <Typography>Введите глубину датчика</Typography>
 
                 <CloseIcon
                   sx={{ color: "#1976D2" }}
