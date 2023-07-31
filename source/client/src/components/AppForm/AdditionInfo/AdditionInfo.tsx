@@ -66,14 +66,14 @@ export class AdditionInfo extends React.Component<IProps> {
               }
 
               <Divider sx ={{m: '8px'}}/>
-                <Box sx={{ fontSize: '15px', color: '#000', display: 'flex', pb: '12px', justifyContent: 'flex-start', alignItems: 'center' }} >
-                <Battery0BarIcon sx={{ color: '#aaa' }} />  {APP_STORAGE.sensors.getAkbSessFirst()} 
-                <Typography sx={{ color: '#808080', fontSize: '12px', pl: '4px' }}> {''} (заряд- контрольная сессия)   </Typography></Box>
-
                 
                 <Box sx={{ fontSize: '15px', color: '#000', display: 'flex', pb: '12px', justifyContent: 'flex-start', alignItems: 'center' }} >
                 <Battery0BarIcon sx={{ color: '#aaa' }} />  {APP_STORAGE.sensors.getAkbSessLast()} 
-                <Typography sx={{ color: '#808080', fontSize: '12px', pl: '4px' }}> {''} (заряд- последняя сессия)   </Typography></Box> 
+                <Typography sx={{ color: '#808080', fontSize: '12px', pl: '4px' }}> {''} (заряд- контрольная сессия)   </Typography></Box> 
+
+                <Box sx={{ fontSize: '15px', color: '#000', display: 'flex', pb: '12px', justifyContent: 'flex-start', alignItems: 'center' }} >
+                <Battery0BarIcon sx={{ color: '#aaa' }} />  {APP_STORAGE.sensors.getAkbSessFirst()} 
+                <Typography sx={{ color: '#808080', fontSize: '12px', pl: '4px' }}> {''} (заряд- последняя сессия)   </Typography></Box>
            
  { APP_STORAGE.sensors.getAkbSessChose() !== '' && 
     <Box sx={{ fontSize: '15px', color: '#000', display: 'flex', pb: '12px', justifyContent: 'flex-start', alignItems: 'center' }} >

@@ -129,8 +129,6 @@ export class AuthForm extends React.Component<IProps, State> {
                   </IconButton>
                 }
               />
-
-              {/* <Button sx= {{background: '#edf2ff', color: '#1976d2;' , mt : '12px'}} */}
               <Box
                 sx={{
                   display: "flex",
@@ -139,7 +137,7 @@ export class AuthForm extends React.Component<IProps, State> {
                 }}
               >
                 <Link
-                  href="#logh"
+                  href="#forgot_password"
                   variant="body2"
                   onClick={() => {
                     APP_STORAGE.auth_form.setForgotPass(true);
@@ -166,14 +164,6 @@ export class AuthForm extends React.Component<IProps, State> {
             </Box>
             {error_alert}
           </Container>
-          {/*  
-                 <Box className='right-panel'>
-
-                    <Typography> Добро пожаловать на сервер приема данных СБИ</Typography>
-                    
-                    <Typography sx ={{mb: '12px'}}>© ООО Севербуринструмент 
-                    | e-mail: severburinstrument@mail.ru</Typography>
-                 </Box> */}
         </Box>
       </React.Fragment>
     );

@@ -5,6 +5,7 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 
+
 import React from "react";
 import MarkerClusterGroup from "./MarkerClusterGroup";
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
@@ -17,12 +18,14 @@ interface IProps {
     longitude: any;
     latitude: any;
   }
+  // let Logo = require('./mainLogo.png');
 
-//   const myIcon = new Icon({
+
+  const myIcon = new Icon({
     
-//     iconUrl: <AttachMoneyIcon/>,
-//     iconSize: [25, 25]
-//   });
+    iconUrl: `./mainLogo.png`,
+    iconSize: [25, 25]
+  });
 
 function MapStations(props: any) {
 
@@ -47,7 +50,7 @@ function MapStations(props: any) {
 
       {APP_STORAGE.devs.getChangeSensors2().map((row: any) => (
              <React.Fragment key={"_map" + row.id}>
-               <Marker position={[row.latitude.replace(/\,/g, '.'), row.longitude.replace(/\,/g, '.')]} >
+               <Marker position={[row.latitude.replace(/\,/g, '.'), row.longitude.replace(/\,/g, '.')]}  >
 
                <Popup>
         {row.number}

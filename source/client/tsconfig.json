@@ -9,13 +9,15 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "declaration": true
   },
   "include": [
     "src/**/*"
 , "src/components/AppForm/AppBarPanel/TopMenu/Modal/.tsx"  ],
   "exclude": [
     "node_modules",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "./src/*.d.ts"
   ]
 }
