@@ -15,11 +15,16 @@ import {
   Alert,
   Link,
   Grid,
+  FilledInput,
+  IconButton
 } from "@mui/material";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+
 
 interface IProps {}
 
@@ -90,7 +95,7 @@ export class ForgotPass extends React.Component<IProps> {
 
             <Box component="form" noValidate sx={{ mt: 1 }}>
               <TextField
-                variant="outlined"
+                variant="standard"
                 margin="normal"
                 required
                 error={APP_STORAGE.auth_form.getError_emain()}
@@ -105,25 +110,16 @@ export class ForgotPass extends React.Component<IProps> {
                 value={APP_STORAGE.auth_form.getEmail()}
               />
 
-              <Button
-                sx={{
-                  background: "#266BF1",
-                  color: "#fff",
-                  mt: "12px",
-                  p: "8px",
-                }}
-                type="button"
-                fullWidth
-                onClick={() => {
-                  APP_STORAGE.auth_form.set_ForgPass();
-                }}
-                className="auth_button"
-              >
-                Получить код
-              </Button>
+
             </Box>
-            {alert}
-            <Grid container sx={{ mt: "12px" }}>
+           
+            <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
               <Link
                 href="#"
                 variant="body2"
@@ -133,7 +129,24 @@ export class ForgotPass extends React.Component<IProps> {
               >
                 Вернуться на форму авторизации
               </Link>
-            </Grid>
+              <Button
+                sx={{
+                  background: "#266BF1",
+                  color: "#fff",
+                  mt: "12px",
+                  p: "8px",
+                }}
+                type="button"
+                onClick={() => {
+                  APP_STORAGE.auth_form.set_ForgPass();
+                }}
+                className="auth_button"
+              >
+                Получить код
+              </Button>
+              </Box>
+              {alert}
+        
           </Container>
         </Box>
       </React.Fragment>

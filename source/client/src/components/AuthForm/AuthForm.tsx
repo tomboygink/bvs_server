@@ -139,7 +139,7 @@ export class AuthForm extends React.Component<IProps, State> {
                 }}
               >
                 <Link
-                  href="#"
+                  href="#logh"
                   variant="body2"
                   onClick={() => {
                     APP_STORAGE.auth_form.setForgotPass(true);

@@ -64,7 +64,7 @@ export class ForgotPass extends React.Component<IProps> {
                 <Box component="form" noValidate sx={{ mt: 1 }}>
 
                 <TextField
-                        variant="outlined"
+                        variant="standard"
                         margin="normal"
                         required
                         fullWidth
@@ -79,7 +79,7 @@ export class ForgotPass extends React.Component<IProps> {
                     />
                
                     <TextField
-                        variant="outlined"
+                        variant="standard"
                         margin="normal"
                         required
                         fullWidth
@@ -94,7 +94,7 @@ export class ForgotPass extends React.Component<IProps> {
                     />
 
                     <TextField
-                        variant="outlined"
+                        variant="standard"
                         margin="normal"
                         required
                         fullWidth
@@ -109,6 +109,7 @@ export class ForgotPass extends React.Component<IProps> {
                     />    
              
                     <TextField
+                        variant="standard"
                         fullWidth
                         disabled = {true}
                         margin="normal"
@@ -125,13 +126,13 @@ export class ForgotPass extends React.Component<IProps> {
                      
                     </Box>
                     {alert}
-                    <Link 
+                    {/* <Link 
                         href="#" 
                         variant="body2"
                         onClick={ () => { window.location.href = 'http://127.0.0.1:3040'}}>
                     
                     Вернуться на форму авторизации
-                    </Link>
+                    </Link> */}
                 </Container>  
              
                 </Box>
