@@ -49,7 +49,6 @@ export class App extends React.Component<IProps>{
                 <Box  >
                     <Box>{ret_dt}</Box> 
                 </Box>
-                 
             </React.Fragment>
         );
     }
