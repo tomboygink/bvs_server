@@ -314,7 +314,7 @@ export class EditUsersStorage {
     if (
       this.getFamily() &&
       this.getPassword() === this.getRepeatPassword() &&
-      this.getName() 
+      this.getName() && this.getPassword() !== this.getLogin()
     ) { 
     
     q.args = {

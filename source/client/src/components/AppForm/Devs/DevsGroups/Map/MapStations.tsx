@@ -12,6 +12,8 @@ import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import { toJS } from "mobx";
 import { Icon } from "leaflet";
 
+// import {mainLogo} from './mainLogo.png'
+
 interface IProps {
     longitude: any;
     latitude: any;
@@ -56,10 +58,9 @@ function MapStations(props: any) {
                <Popup>
         {row.number}
       </Popup>
-               </Marker>
+           </Marker>
            </React.Fragment>
           ))}
-
       </MarkerClusterGroup> 
     </MapContainer>
   );

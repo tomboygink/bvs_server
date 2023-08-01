@@ -49,7 +49,6 @@ export class DevSessTable extends React.Component<IProps> {
 
   async setRowId(e: string, time: string, level_akb: string) {
 
-    console.log(level_akb, 'level_akb')
     APP_STORAGE.sensors.setChoseSessTime(time);
     APP_STORAGE.sensors.setOpenDevsess(true);
     APP_STORAGE.sensors.setIdDevSess(e);
@@ -218,9 +217,11 @@ export class DevSessTable extends React.Component<IProps> {
                       <TableCell style={{ width: 160 }} align="center">
                         Заряд
                       </TableCell>
-                      <TableCell style={{ width: 160 }} align="center">
-                        Контрольная сессия
-                      </TableCell>
+                      {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleWrite() === 1 && 
+                       <TableCell style={{ width: 160 }} align="center">
+                       Контрольная сессия
+                     </TableCell>
+                      }
                       <TableCell component="th" scope="row">
                         Показать на графике
                       </TableCell>
@@ -266,7 +267,11 @@ export class DevSessTable extends React.Component<IProps> {
                         </TableCell>
                         }
                      
-                        {APP_STORAGE.sensors.getIdFirstSess() ===
+                 
+
+
+                        {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleWrite() === 1 &&
+                        APP_STORAGE.sensors.getIdFirstSess() ===
                           APP_STORAGE.sensors.getIdLastSess() &&
                           APP_STORAGE.sensors.getIdFirstSess() !== row.id && (
                             <TableCell component="th" scope="row">
@@ -286,7 +291,7 @@ export class DevSessTable extends React.Component<IProps> {
                           )}
 
                         {APP_STORAGE.sensors.getIdFirstSess() ===
-                          APP_STORAGE.sensors.getIdLastSess() &&
+                          APP_STORAGE.sensors.getIdLastSess() && APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleWrite() === 1 &&
                           APP_STORAGE.sensors.getIdFirstSess() === row.id && (
                             <TableCell component="th" scope="row">
                               <Button sx={{ fontSize: "12px" }}>
@@ -296,7 +301,7 @@ export class DevSessTable extends React.Component<IProps> {
                           )}
 
                         {APP_STORAGE.sensors.getIdFirstSess() !==
-                          APP_STORAGE.sensors.getIdLastSess() &&
+                          APP_STORAGE.sensors.getIdLastSess() && APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleWrite() === 1 &&
                           String(toJS(APP_STORAGE.sensors.getIdFirstSess())) ===
                           String(row.id) && (
                             <TableCell component="th" scope="row">
