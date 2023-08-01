@@ -36,6 +36,7 @@ import { AddNewDevModal } from "./Devs/Dev/Menu/AddNewDevModal"; //////////////Ð
 import { Calendar } from "./Devs/Dev/Calendar";
 import { DevsGroupsTree } from "./Devs/DevsGroupsTree";
 import { DevWrapper } from "./Devs/DevWrapper";
+import SlideFromContainer  from './UI/Alert'
 
 interface IProps { }
 
@@ -152,8 +153,9 @@ export class AppForm extends React.Component<IProps> {
                 <Box className="block-wrapp" id='right-form'>{right_form}</Box>
               </Box>
             </Box>
-           
           </Box>
+
+          {/* <SlideFromContainer/> */} 
 
           <Button className="button-back-to-up" id='button_up'
           sx={{background: '#C2E0FF', borderRadius: '24px', position: 'absolute'}}

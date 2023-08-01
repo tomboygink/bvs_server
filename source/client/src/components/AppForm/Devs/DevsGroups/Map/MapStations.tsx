@@ -12,8 +12,6 @@ import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import { toJS } from "mobx";
 import { Icon } from "leaflet";
 
-// import userLocationURL from './Vector4.svg';
-
 interface IProps {
     longitude: any;
     latitude: any;
@@ -22,17 +20,20 @@ interface IProps {
 
 
   const myIcon = new Icon({
-    
-    iconUrl: `./mainLogo.png`,
+    iconUrl: `<svg version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 149 178"><path fill="{fillColor}" stroke="{strokeColor}  d="{path}"/></svg>`,
     iconSize: [25, 25]
   });
 
 function MapStations(props: any) {
+  
+  const iconSettings = {
+    mapIconUrl: '<svg version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 149 178"><path fill="{fillColor}" stroke="{strokeColor}  d="{path}"/></svg>',
+  };
 
-    console.log()
   const position = [props.latitude.replace(/\,/g, '.'), props.longitude.replace(/\,/g, '.')] as [number, number];
   return (
     <MapContainer
+      attributionControl={false}
       center={position}
       zoom={12}
       style={{ width: "100%", height: "400px" }}
@@ -50,7 +51,7 @@ function MapStations(props: any) {
 
       {APP_STORAGE.devs.getChangeSensors2().map((row: any) => (
              <React.Fragment key={"_map" + row.id}>
-               <Marker position={[row.latitude.replace(/\,/g, '.'), row.longitude.replace(/\,/g, '.')]}  >
+               <Marker position={[row.latitude.replace(/\,/g, '.'), row.longitude.replace(/\,/g, '.')]} >
 
                <Popup>
         {row.number}
