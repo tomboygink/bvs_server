@@ -67,6 +67,7 @@ export class LeafletMap extends React.Component<IProps>{
       let splArr1 = this.props.longitude.replace(/\,/g, '.');
         return ( 
           <MapContainer key={splArr}
+          attributionControl={false}
           style={styles.mapRoot}
           center={[Number(splArr), Number(splArr1)]}
           zoom={12}
