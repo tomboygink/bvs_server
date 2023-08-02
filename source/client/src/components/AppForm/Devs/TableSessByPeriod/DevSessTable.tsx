@@ -352,6 +352,9 @@ export class DevSessTable extends React.Component<IProps> {
                           25,
                           { label: "Все", value: -1 },
                         ]}
+                        labelDisplayedRows={({ from, to, count }) =>
+                        `${from} из ${count} страниц`
+                      }
                         colSpan={3}
                         count={date.length}
                         rowsPerPage={rowsPerPage}
