@@ -54,7 +54,6 @@ function MapStations(props: any) {
       {APP_STORAGE.devs.getChangeSensors2().map((row: any) => (
              <React.Fragment key={"_map" + row.id}>
                <Marker position={[row.latitude.replace(/\,/g, '.'), row.longitude.replace(/\,/g, '.')]} >
-
                <Popup>
         {row.number}
       </Popup>
