@@ -5,6 +5,7 @@ export declare class DevsStorage {
     devs: Array<string>;
     item: Array<any>;
     array: Array<any>;
+    depth_new_sensors: Array<any>;
     id_devs: string;
     id_devs_ch: string;
     open_modal: boolean;
@@ -80,6 +81,8 @@ export declare class DevsStorage {
     getItem(): Array<any>;
     setArray(val: Array<any>): void;
     getArray(): Array<any>;
+    setDepthNewSensors(val: Array<any>): void;
+    getDepthNewSensors(): Array<any>;
     setIdDevs(val: string): void;
     getIdDevs(): string;
     setIdChild(val: string): void;

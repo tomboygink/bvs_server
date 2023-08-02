@@ -19,17 +19,9 @@ import IconButton from "@mui/material/IconButton";
 
 import DirectionsIcon from "@mui/icons-material/Directions";
 import { MenuDevs } from "./Menu/MenuDevs";
-import { Calendar } from "./Calendar";
-import { DevSessCharts } from "../../GraphSensors/DevSessCharts";
-import { DevSessWrapper } from "../TableSessByPeriod/DevSessWrapper";
 
 import Collapse from "@mui/material/Collapse";
-import { CriticalityTable } from "./CriticalityTable";
-
-import TopPanel from "./TopPanel";
 import { LeafletMap } from "./Map";
-import { SelectedSession } from "./SelectedSession";
-import { toJS } from "mobx";
 
 
 
@@ -99,8 +91,6 @@ export class Devs extends React.Component<IProps> {
           if (gr_devs[key].deleted === true) {
             devs.push(
               <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
-              
-             
               {APP_STORAGE.devs.getTopMenuDev() === "top_menu-1" && (
                 <>
                   <Box

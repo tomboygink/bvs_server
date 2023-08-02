@@ -111,7 +111,8 @@ export class AddNewDevModal extends React.Component<IProps> {
         return o;
       }, []);
 
-     
+       APP_STORAGE.devs.setDepthNewSensors(uniqueChars);
+
       for (var key in uniqueChars) {
         count = uniqueChars.length;
 

@@ -12,6 +12,8 @@ import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import { toJS } from "mobx";
 import { Icon } from "leaflet";
 
+// import {mainLogo} from './mainLogo.png'
+
 interface IProps {
     longitude: any;
     latitude: any;
@@ -52,14 +54,12 @@ function MapStations(props: any) {
       {APP_STORAGE.devs.getChangeSensors2().map((row: any) => (
              <React.Fragment key={"_map" + row.id}>
                <Marker position={[row.latitude.replace(/\,/g, '.'), row.longitude.replace(/\,/g, '.')]} >
-
                <Popup>
         {row.number}
       </Popup>
-               </Marker>
+           </Marker>
            </React.Fragment>
           ))}
-
       </MarkerClusterGroup> 
     </MapContainer>
   );

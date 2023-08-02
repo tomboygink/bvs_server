@@ -27,7 +27,7 @@ export class DevsStorage {
   @observable item: Array<any> = [];
 
   @observable array: Array<any> = [];
-
+  @observable depth_new_sensors: Array<any> = []
   @observable id_devs: string = '';
 
   @observable id_devs_ch: string = null;
@@ -148,6 +148,9 @@ export class DevsStorage {
 
   @action setArray(val: Array<any>) { this.array = val };
   @computed getArray(): Array<any> { return this.array };
+
+  @action setDepthNewSensors(val: Array<any>) { this.depth_new_sensors = val };
+  @computed getDepthNewSensors(): Array<any> { return this.depth_new_sensors };
 
   @action setIdDevs(val: string) { this.id_devs = val };
   @computed getIdDevs(): string { return this.id_devs };
@@ -370,7 +373,7 @@ export class DevsStorage {
         name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '',
         latitude: lat || '',
         longitude: lng || '',
-        sensors: '{\"s\":' +  JSON.stringify(this.getArray()) + '}',
+        sensors: '{\"s\":' +  JSON.stringify(this.getDepthNewSensors()) + '}',
         deleted: this.getDeleted() || false,
         info: this.getDeleted() || ''
       };
