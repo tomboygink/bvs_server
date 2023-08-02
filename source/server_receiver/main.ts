@@ -67,7 +67,9 @@ export class Server_Receiver {
             socket.on('data', (data) => {
 
                 //Название лога
-                var file = 'log ' + new Date().getDate() + '.' + new Date().getMonth() + '.' + new Date().getFullYear() + '.txt';
+                var month = new Date().getMonth()+1
+                var file = 'log ' + new Date().getFullYear() + '.' + month + '.' + new Date().getDate() + '.txt';
+           
                 
                 //Создание файла лога 
                 if (!fs.existsSync(path.join(logs, file))) {

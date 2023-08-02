@@ -60,24 +60,30 @@ var DevsTable = (function () {
     }
     DevsTable.prototype.insertDevs = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var db_res, result, p;
+            var data, db_res, result, p;
+            var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT AddDevs(CAST(" + this.args.group_dev_id + " AS BIGINT), " +
-                            "CAST('" + this.args.number + "' AS VARCHAR(80))," +
-                            "CAST('" + this.args.name + "' AS VARCHAR(250))," +
-                            "CAST('" + this.args.latitude + "' AS VARCHAR(60))," +
-                            "CAST('" + this.args.longitude + "' AS VARCHAR(60))," +
-                            "CAST('" + this.args.sensors + "' AS JSON)," +
-                            "CAST(" + this.args.deleted + " AS BOOLEAN)," +
-                            "CAST('" + this.args.info + "' AS TEXT)) AS id")];
+                    case 0: return [4, this.db.query("SELECT number FROM devs WHERE number = '" + this.args.number + "'")];
                     case 1:
+                        data = _a.sent();
+                        if (!(data.rows.some(function (e) { return e.number !== _this.args.number; }) || data.rows.length === 0)) return [3, 3];
+                        return [4, this.db.query("SELECT AddDevs(CAST(" + this.args.group_dev_id + " AS BIGINT), " +
+                                "CAST('" + this.args.number + "' AS VARCHAR(80))," +
+                                "CAST('" + this.args.name + "' AS VARCHAR(250))," +
+                                "CAST('" + this.args.latitude + "' AS VARCHAR(60))," +
+                                "CAST('" + this.args.longitude + "' AS VARCHAR(60))," +
+                                "CAST('" + this.args.sensors + "' AS JSON)," +
+                                "CAST(" + this.args.deleted + " AS BOOLEAN)," +
+                                "CAST('" + this.args.info + "' AS TEXT)) AS id")];
+                    case 2:
                         db_res = _a.sent();
                         result = new Array();
                         for (p in db_res.rows) {
                             result.push(db_res.rows[p]);
                         }
                         return [2, result];
+                    case 3: return [2];
                 }
             });
         });

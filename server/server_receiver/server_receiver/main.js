@@ -116,7 +116,8 @@ var Server_Receiver = (function () {
                             socket.destroy();
                         });
                         socket.on('data', function (data) {
-                            var file = 'log ' + new Date().getDate() + '.' + new Date().getMonth() + '.' + new Date().getFullYear() + '.txt';
+                            var month = new Date().getMonth() + 1;
+                            var file = 'log ' + new Date().getFullYear() + '.' + month + '.' + new Date().getDate() + '.txt';
                             if (!fs.existsSync(path.join(logs, file))) {
                                 console.log('Create file logs');
                                 fs.createWriteStream(path.join(logs, file), 'utf-8');

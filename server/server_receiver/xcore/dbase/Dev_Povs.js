@@ -36,60 +36,38 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.OrgsTable = exports.OrgsEntity = void 0;
+exports.Dev_povsTable = exports.Dev_povsEntity = void 0;
 var DBase_1 = require("./DBase");
 var DateStr_1 = require("../../xcore/dbase/DateStr");
-var OrgsEntity = (function () {
-    function OrgsEntity() {
+var Dev_povsEntity = (function () {
+    function Dev_povsEntity() {
         this.id = 0;
-        this.name = '';
-        this.full_name = '';
-        this.inn = '';
-        this.address = '';
-        this.latitude = '';
-        this.longitude = '';
-        this.created_at = new Date(Date.now());
-        this.info = '';
+        this.dev_id = 0;
+        this.dev_number = '';
+        this.start_povs = null;
+        this.end_povs = null;
+        this.old_dev_povs = 0;
     }
-    return OrgsEntity;
+    return Dev_povsEntity;
 }());
-exports.OrgsEntity = OrgsEntity;
-var OrgsTable = (function () {
-    function OrgsTable(_args, _sess_code) {
+exports.Dev_povsEntity = Dev_povsEntity;
+var Dev_povsTable = (function () {
+    function Dev_povsTable(_args, _sess_code) {
         this.db = (0, DBase_1.getDB)();
         this.args = _args;
         this.sess_code = _sess_code;
     }
-    OrgsTable.prototype.insertOrgs = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var db_res, result, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT AddOrgs(CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
-                            "CAST ('" + this.args.full_name + "' AS VARCHAR(400)), " +
-                            "CAST ('" + this.args.inn + "' AS VARCHAR(50)), " +
-                            "CAST ('" + this.args.address + "' AS VARCHAR(400)), " +
-                            "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
-                            "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
-                            "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP)," +
-                            "CAST ('" + this.args.info + "' AS TEXT)) AS id")];
-                    case 1:
-                        db_res = _a.sent();
-                        result = new Array();
-                        for (r in db_res.rows) {
-                            result.push(db_res.rows[r]);
-                        }
-                        return [2, result];
-                }
-            });
-        });
-    };
-    OrgsTable.prototype.selectOrgs = function () {
+    Dev_povsTable.prototype.insertDev_povs = function () {
         return __awaiter(this, void 0, void 0, function () {
             var db_res, result, p;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT * FROM SelectOrgs()")];
+                    case 0: return [4, this.db.query("SELECT AddDev_Povs(" +
+                            "CAST (" + this.args.dev_id + " AS BIGINT)," +
+                            "CAST ('" + this.args.dev_number + "' AS VARCHAR(80)), " +
+                            "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(this.args.start_povs)) + "' AS TIMESTAMP), " +
+                            "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(this.args.end_povs)) + "' AS TIMESTAMP), " +
+                            "CAST ('" + this.args.old_dev_povs + "' AS BIGINT)) AS id")];
                     case 1:
                         db_res = _a.sent();
                         result = new Array();
@@ -101,27 +79,43 @@ var OrgsTable = (function () {
             });
         });
     };
-    OrgsTable.prototype.updateOrgs = function () {
+    Dev_povsTable.prototype.selectDev_povs = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var dev_povs, db_res, tzoffset, result, i;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT * FROM UpdateOrgs(" +
-                            "CAST (" + this.args.id + " AS BIGINT), " +
-                            "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
-                            "CAST ('" + this.args.full_name + "' AS VARCHAR(400)), " +
-                            "CAST ('" + this.args.inn + "' AS VARCHAR(50)), " +
-                            "CAST ('" + this.args.address + "' AS VARCHAR(400)), " +
-                            "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
-                            "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
-                            "CAST ('" + this.args.info + "' AS TEXT))")];
+                    case 0:
+                        dev_povs = {
+                            id: 0,
+                            dev_id: 0,
+                            dev_number: '',
+                            start_povs: '',
+                            end_povs: '',
+                            old_dev_povs: 0
+                        };
+                        return [4, this.db.query("SELECT * FROM SelectDev_Povs('" +
+                                this.args.id + "', '" + this.args.dev_number + "')")];
                     case 1:
-                        _a.sent();
-                        return [2];
+                        db_res = _a.sent();
+                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                        result = new Array();
+                        for (i in db_res.rows) {
+                            dev_povs = {
+                                id: db_res.rows[i].id,
+                                dev_id: db_res.rows[i].dev_id,
+                                dev_number: db_res.rows[i].dev_number,
+                                start_povs: (new Date(db_res.rows[i].start_povs - tzoffset)).toISOString().slice(0, -8),
+                                end_povs: (new Date(db_res.rows[i].end_povs - tzoffset)).toISOString().slice(0, -8),
+                                old_dev_povs: db_res.rows[i].old_dev_povs
+                            };
+                            result.push(dev_povs);
+                        }
+                        return [2, result];
                 }
             });
         });
     };
-    return OrgsTable;
+    return Dev_povsTable;
 }());
-exports.OrgsTable = OrgsTable;
-//# sourceMappingURL=Orgs.js.map
+exports.Dev_povsTable = Dev_povsTable;
+//# sourceMappingURL=Dev_Povs.js.map
