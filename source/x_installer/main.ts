@@ -9,13 +9,13 @@ import {jobs_titles_table, insert_jt_admin} from './sql/jobs_titles';
 import {users_roles_table, insert_role} from './sql/users_roles';
 import {sessions_table} from './sql/sessions';
 
-//Таблицы сессий
 import {dev_sess_table} from './sql/dev_sess';
 import {devs_groups_table} from './sql/devs_groups';
 import {devs_table} from './sql/devs';
 import {info_log_table} from './sql/info_log';
 import { dev_povs_table } from './sql/dev_povs';
 import { control_dev_sess_table } from './sql/control_dev_sess';
+import { function_sql } from './sql/function';
 
 
 async function run(){
@@ -23,6 +23,7 @@ async function run(){
 
     var dt = await db.NOW();
     console.log("START INSTALLER", dateTimeToStr(dt));
+    
 
    
     //Создание таблиц пользователя
@@ -88,6 +89,10 @@ async function run(){
     console.log("ADDING TABLE \"info_log\"");
     await db.query(info_log_table.sql, info_log_table.args);
     console.log("TABLE \"info_log\" ADD");
+
+    console.log("CREATING FUNCTION");
+    await db.query(function_sql.sql, function_sql.args);
+    console.log("FUNCTION CREATED");
 
     endDB();
     console.log("END INSTALLER");
