@@ -47,6 +47,9 @@ var dev_sess_1 = require("./sql/dev_sess");
 var devs_groups_1 = require("./sql/devs_groups");
 var devs_1 = require("./sql/devs");
 var info_log_1 = require("./sql/info_log");
+var dev_povs_1 = require("./sql/dev_povs");
+var control_dev_sess_1 = require("./sql/control_dev_sess");
+var function_1 = require("./sql/function");
 function run() {
     return __awaiter(this, void 0, void 0, function () {
         var db, dt;
@@ -114,11 +117,26 @@ function run() {
                 case 13:
                     _a.sent();
                     console.log("TABLE \"devs\" ADD");
-                    console.log("ADDING TABLE \"info_log\"");
-                    return [4, db.query(info_log_1.info_log_table.sql, info_log_1.info_log_table.args)];
+                    console.log("ADDING TABLE \"dev_povs\"");
+                    return [4, db.query(dev_povs_1.dev_povs_table.sql, users_1.users_table.args)];
                 case 14:
                     _a.sent();
+                    console.log("TABLE \"dev_povs\" ADD");
+                    console.log("ADDING TABLE \"control_dev_sess\"");
+                    return [4, db.query(control_dev_sess_1.control_dev_sess_table.sql, control_dev_sess_1.control_dev_sess_table.args)];
+                case 15:
+                    _a.sent();
+                    console.log("TABLE \"control_dev_sess\" ADD");
+                    console.log("ADDING TABLE \"info_log\"");
+                    return [4, db.query(info_log_1.info_log_table.sql, info_log_1.info_log_table.args)];
+                case 16:
+                    _a.sent();
                     console.log("TABLE \"info_log\" ADD");
+                    console.log("CREATING FUNCTION");
+                    return [4, db.query(function_1.function_sql.sql, function_1.function_sql.args)];
+                case 17:
+                    _a.sent();
+                    console.log("FUNCTION CREATED");
                     (0, DBase_1.endDB)();
                     console.log("END INSTALLER");
                     return [2];

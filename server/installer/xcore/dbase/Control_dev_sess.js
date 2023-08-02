@@ -36,60 +36,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.OrgsTable = exports.OrgsEntity = void 0;
+exports.Control_dev_sessTable = exports.Control_Dev_SessEntity = void 0;
 var DBase_1 = require("./DBase");
-var DateStr_1 = require("../../xcore/dbase/DateStr");
-var OrgsEntity = (function () {
-    function OrgsEntity() {
+var Control_Dev_SessEntity = (function () {
+    function Control_Dev_SessEntity() {
         this.id = 0;
-        this.name = '';
-        this.full_name = '';
-        this.inn = '';
-        this.address = '';
-        this.latitude = '';
-        this.longitude = '';
-        this.created_at = new Date(Date.now());
-        this.info = '';
+        this.dev_sess_id = 0;
+        this.dev_id = 0;
+        this.dev_number = '0';
     }
-    return OrgsEntity;
+    return Control_Dev_SessEntity;
 }());
-exports.OrgsEntity = OrgsEntity;
-var OrgsTable = (function () {
-    function OrgsTable(_args, _sess_code) {
+exports.Control_Dev_SessEntity = Control_Dev_SessEntity;
+var Control_dev_sessTable = (function () {
+    function Control_dev_sessTable(_args, _sess_code) {
         this.db = (0, DBase_1.getDB)();
         this.args = _args;
         this.sess_code = _sess_code;
     }
-    OrgsTable.prototype.insertOrgs = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var db_res, result, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT AddOrgs(CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
-                            "CAST ('" + this.args.full_name + "' AS VARCHAR(400)), " +
-                            "CAST ('" + this.args.inn + "' AS VARCHAR(50)), " +
-                            "CAST ('" + this.args.address + "' AS VARCHAR(400)), " +
-                            "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
-                            "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
-                            "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP)," +
-                            "CAST ('" + this.args.info + "' AS TEXT)) AS id")];
-                    case 1:
-                        db_res = _a.sent();
-                        result = new Array();
-                        for (r in db_res.rows) {
-                            result.push(db_res.rows[r]);
-                        }
-                        return [2, result];
-                }
-            });
-        });
-    };
-    OrgsTable.prototype.selectOrgs = function () {
+    Control_dev_sessTable.prototype.insertControl_dev_sess = function () {
         return __awaiter(this, void 0, void 0, function () {
             var db_res, result, p;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT * FROM SelectOrgs()")];
+                    case 0: return [4, this.db.query("SELECT AddControl_Dev_Sess(" +
+                            "CAST (" + this.args.dev_sess_id + " AS BIGINT), " +
+                            "CAST (" + this.args.dev_id + " AS BIGINT), " +
+                            "CAST ('" + this.args.dev_number + "' AS VARCHAR(80))) AS id")];
                     case 1:
                         db_res = _a.sent();
                         result = new Array();
@@ -101,19 +74,11 @@ var OrgsTable = (function () {
             });
         });
     };
-    OrgsTable.prototype.updateOrgs = function () {
+    Control_dev_sessTable.prototype.deleteControl_dev_sess = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT * FROM UpdateOrgs(" +
-                            "CAST (" + this.args.id + " AS BIGINT), " +
-                            "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
-                            "CAST ('" + this.args.full_name + "' AS VARCHAR(400)), " +
-                            "CAST ('" + this.args.inn + "' AS VARCHAR(50)), " +
-                            "CAST ('" + this.args.address + "' AS VARCHAR(400)), " +
-                            "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
-                            "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
-                            "CAST ('" + this.args.info + "' AS TEXT))")];
+                    case 0: return [4, this.db.query("DELETE FROM control_dev_sess WHERE dev_sess_id = ('" + this.args.id + "')")];
                     case 1:
                         _a.sent();
                         return [2];
@@ -121,7 +86,7 @@ var OrgsTable = (function () {
             });
         });
     };
-    return OrgsTable;
+    return Control_dev_sessTable;
 }());
-exports.OrgsTable = OrgsTable;
-//# sourceMappingURL=Orgs.js.map
+exports.Control_dev_sessTable = Control_dev_sessTable;
+//# sourceMappingURL=Control_dev_sess.js.map
