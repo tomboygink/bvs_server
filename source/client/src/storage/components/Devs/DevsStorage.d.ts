@@ -13,7 +13,6 @@ export declare class DevsStorage {
     user_role: boolean;
     org_id: number;
     parent: number;
-    parent1: number;
     add_sensors: boolean;
     get_sensors: Array<any>;
     get_sensors1: Array<any>;
@@ -113,8 +112,6 @@ export declare class DevsStorage {
     getChangeSensorsValue(): string;
     setParent(val: number): void;
     getParent(): number;
-    setParent1(val: number): void;
-    getParent1(): number;
     setIdDev(val: string): void;
     getIdDev(): string;
     setDepthSensors(val: boolean): void;

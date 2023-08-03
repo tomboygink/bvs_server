@@ -100,7 +100,7 @@ export class DevSessCharts extends React.Component<IProps> {
                 stroke="rgb(255 255 255 / 0%)"
                 tick={customizedGroupTick}
               />
-              {/* <YAxis data ={toJS(APP_STORAGE.sensors.getSessFirstLast())}  type="category"  stroke="#266BF1"  tickCount={60}   />  */}
+              {/* <YAxis data ={toJS(APP_STORAGE.sensors.getSessFirstLastChartsCharts())}  type="category"  stroke="#266BF1"  tickCount={60}   />  */}
               <Tooltip content={<CustomTooltip />} />
               {/* <Legend /> */}
 
@@ -133,7 +133,7 @@ export class DevSessCharts extends React.Component<IProps> {
 
     if (
       !toJS(APP_STORAGE.sensors.getdataCharts()).length &&
-      toJS(APP_STORAGE.sensors.getSessFirstLast().length)
+      toJS(APP_STORAGE.sensors.getSessFirstLastCharts().length)
     ) {
       let tick_yaxis = [];
       let tick_xaxis = [];
@@ -144,14 +144,14 @@ export class DevSessCharts extends React.Component<IProps> {
       let mintick_x = null;
       let maxtick_x = null;
 
-      for (var i in APP_STORAGE.sensors.getSessFirstLast()) {
-        tick_yaxis.push(APP_STORAGE.sensors.getSessFirstLast()[i].depth);
-        // mintick = APP_STORAGE.sensors.getSessFirstLast()[i].depth[0];
-        // maxtick = APP_STORAGE.sensors.getSessFirstLast()[i].depth[-1];
+      for (var i in APP_STORAGE.sensors.getSessFirstLastCharts()) {
+        tick_yaxis.push(APP_STORAGE.sensors.getSessFirstLastCharts()[i].depth);
+        // mintick = APP_STORAGE.sensors.getSessFirstLastCharts()[i].depth[0];
+        // maxtick = APP_STORAGE.sensors.getSessFirstLastCharts()[i].depth[-1];
 
         tick_xaxis.push(
-          APP_STORAGE.sensors.getSessFirstLast()[i].data_f,
-          APP_STORAGE.sensors.getSessFirstLast()[i].data_s
+          APP_STORAGE.sensors.getSessFirstLastCharts()[i].data_f,
+          APP_STORAGE.sensors.getSessFirstLastCharts()[i].data_s
         );
       }
 
@@ -192,7 +192,7 @@ export class DevSessCharts extends React.Component<IProps> {
             <ResponsiveContainer className="item-2" width="100%">
               <LineChart
                 layout="vertical"
-                data={toJS(APP_STORAGE.sensors.getSessFirstLast())}
+                data={toJS(APP_STORAGE.sensors.getSessFirstLastCharts())}
                 // margin={{
                 //   top: 20,
                 //   right: 20,
@@ -223,9 +223,9 @@ export class DevSessCharts extends React.Component<IProps> {
                 />
 
                 <Tooltip content={<CustomTooltip />} />
-             
+                <ReferenceLine y={0}  stroke="#8B4513" strokeDasharray="4 4" />
                 {/*
-            <ReferenceLine className="y7676" x="-15" stroke="red" /> */}
+            // <ReferenceLine className="y7676" x="-15" stroke="red" /> */}
                 {/* <Customized component={customizedGroupTick} /> */}
 
                 <Line
@@ -252,7 +252,7 @@ export class DevSessCharts extends React.Component<IProps> {
 
     if (
       !toJS(APP_STORAGE.sensors.getdataCharts()).length &&
-      !toJS(APP_STORAGE.sensors.getSessFirstLast().length)
+      !toJS(APP_STORAGE.sensors.getSessFirstLastCharts().length)
     ) {
       return (
         <Box
@@ -268,7 +268,7 @@ export class DevSessCharts extends React.Component<IProps> {
           <ResponsiveContainer className="item-2" width="100%">
             <LineChart
               layout="vertical"
-              data={toJS(APP_STORAGE.sensors.getSessFirstLast())}
+              data={toJS(APP_STORAGE.sensors.getSessFirstLastCharts())}
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis

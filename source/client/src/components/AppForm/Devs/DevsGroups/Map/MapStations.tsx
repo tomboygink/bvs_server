@@ -12,17 +12,17 @@ import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import { toJS } from "mobx";
 import { Icon } from "leaflet";
 
-// import {mainLogo} from './mainLogo.png'
+import mainLogo from './mainLogo.png'
 
 interface IProps {
     longitude: any;
     latitude: any;
   }
-  // let Logo = require('./mainLogo.png');
+  //  let Logo = require('./mainLogo.png');
 
 
   const myIcon = new Icon({
-    iconUrl: `<svg version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 149 178"><path fill="{fillColor}" stroke="{strokeColor}  d="{path}"/></svg>`,
+    iconUrl: `./mainLogo.png`,
     iconSize: [25, 25]
   });
 
@@ -53,7 +53,7 @@ function MapStations(props: any) {
 
       {APP_STORAGE.devs.getChangeSensors2().map((row: any) => (
              <React.Fragment key={"_map" + row.id}>
-               <Marker position={[row.latitude.replace(/\,/g, '.'), row.longitude.replace(/\,/g, '.')]} >
+               <Marker position={[row.latitude.replace(/\,/g, '.'), row.longitude.replace(/\,/g, '.')]} icon={myIcon}>
                <Popup>
         {row.number}
       </Popup>

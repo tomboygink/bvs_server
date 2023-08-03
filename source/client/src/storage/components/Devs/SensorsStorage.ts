@@ -33,6 +33,7 @@ export class SensorsStorage {
     @observable sessions_period: Array<any>  = [];
 
     @observable sessions_first_last_period: Array<any>  = [];
+    @observable sessions_first_last_period_charts: Array<any>  = []
     @observable sess_first : Array<any>  = [];
     @observable sess_second : Array<any>  = [];
     @observable sess_middle: Array<any> = [];
@@ -133,6 +134,9 @@ export class SensorsStorage {
 
     @action setSessFirstLast(val: Array<any>) { this.sessions_first_last_period = val; } 
     @computed getSessFirstLast(): Array<any> { return this.sessions_first_last_period; }
+
+    @action setSessFirstLastCharts(val: Array<any>) { this.sessions_first_last_period_charts = val; } 
+    @computed getSessFirstLastCharts(): Array<any> { return this.sessions_first_last_period_charts; }
 
     @action setSess_first(val: Array<any>) { this.sess_first = val; } 
     @computed getSess_first(): Array<any> { return this.sess_first; }
@@ -255,9 +259,16 @@ export class SensorsStorage {
       depth: '',
       data1: ''
     };
+
+    var obj_defolt: any = {
+      depth: 0,
+      data2: ''
+    };
     
     var first = new Array();
     var second = new Array();
+
+    var defolt = new Array();
    
       const mergeByProperty = (arrays: any[], property = "depth") => {
        const arr = arrays.flatMap((item) => item); //делаем из всех массивов - один
@@ -292,14 +303,24 @@ export class SensorsStorage {
          }  
          second.push(obj_second)
      }
+        defolt.push(obj_defolt)
+        
      const result = mergeByProperty([first, second]);
+     const data_charts = mergeByProperty([first, second, defolt]);
+    
      this.setSess_first(first.sort(
       (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
     ));
+
      this.setSess_second(second.sort(
       (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
     ));
+
      this.setSessFirstLast(result.sort(
+      (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
+    ));
+    
+     this.setSessFirstLastCharts(data_charts.sort(
       (a: { depth: number }, b: { depth: number }) =>  a.depth - b.depth
     ));
     }

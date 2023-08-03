@@ -30,6 +30,9 @@ declare class AppStorage {
     id_org_user: any;
     role_read: any;
     role_write: any;
+    notifications: boolean;
+    setNotifications(val: boolean): void;
+    getNotifications(): boolean;
     setdevs_group_move(val: Array<any>): void;
     getdevs_group_move(): Array<any>;
     setdt(val: any): void;

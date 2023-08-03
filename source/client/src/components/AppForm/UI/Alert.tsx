@@ -6,43 +6,32 @@ import Slide from '@mui/material/Slide';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Theme } from '@mui/material/styles';
 import { Alert } from '@mui/material';
+import { APP_STORAGE } from '../../../storage/AppStorage';
 
 const icon = (
-<Alert severity="success">Данные успешно сохранены!</Alert>
+<Alert sx = {{width: '100%', pb: '4px'}} severity="success">Данные успешно сохранены!</Alert>
 );
 
 export default function SlideFromContainer() {
   const [checked, setChecked] = React.useState(true);
   const containerRef = React.useRef(null);
 
-  const handleChange = () => {
-    setChecked((prev) => !prev);
-  };
-
   return (
     <Box
       sx={{
-        height: 180,
-        width: 240,
         display: 'flex',
         position: 'relative',
-        padding: 2,
         borderRadius: 1,
-        bgcolor: (theme) =>
-          theme.palette.mode === 'light' ? 'grey.100' : 'grey.900',
         overflow: 'hidden',
       }}
       ref={containerRef}
     >
-      <Box sx={{ width: 200 }}>
-        <FormControlLabel
-          control={<Switch checked={checked} onChange={handleChange} />}
-          label="Show from target"
-        />
-        <Slide direction="up" in={checked} container={containerRef.current}>
+     
+      
+        <Slide direction="up" in={APP_STORAGE.getNotifications()} container={containerRef.current}>
           {icon}
         </Slide>
-      </Box>
+
     </Box>
   );
 }
