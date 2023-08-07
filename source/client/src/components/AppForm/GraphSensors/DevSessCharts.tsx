@@ -263,7 +263,7 @@ export class DevSessCharts extends React.Component<IProps> {
               border: "1px solid #eee"
             }}
           >
-    <Charts/>
+    <Charts/>шгшгн
 
           <ResponsiveContainer className="item-2" width="100%">
             <LineChart
