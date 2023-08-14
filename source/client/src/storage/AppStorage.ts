@@ -46,7 +46,10 @@ class AppStorage {
     @observable role_read: any = null;
     @observable role_write: any = null;
 
-   
+    @observable notifications : boolean = false;
+
+    @action setNotifications(val: boolean) { this.notifications = val; }
+    @computed getNotifications(): boolean { return this.notifications; }
 
     @action setdevs_group_move(val: Array<any>) { this.devs_group_move = val; } ////////////Тест (потом удлаить )
     @computed getdevs_group_move(): Array<any> { return this.devs_group_move; } ////////////Тест (потом удлаить )

@@ -390,7 +390,8 @@ export class DevsGroupsTree extends React.Component<IProps> {
               </Box>
             </React.Fragment>
           );
-        } else {
+        } 
+        else {
           parent.push(
             <React.Fragment key={"_gr_id_key_" + gr.id}>
               <Box sx={{ display: "flex" }}>
@@ -421,10 +422,9 @@ export class DevsGroupsTree extends React.Component<IProps> {
     ////////////////////////////// Функция отрисовки дерева
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
-
     return this.drawDevGroup(DevGr);
   }
-
+ 
   render(): React.ReactNode {
     return (
       <React.Fragment>

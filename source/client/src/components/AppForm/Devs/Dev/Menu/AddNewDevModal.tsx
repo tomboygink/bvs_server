@@ -29,6 +29,7 @@ import SensorsIcon from "@mui/icons-material/Sensors";
 import { ModalSensors } from "./ModalSensors";
 
 import {TDSensor} from '../../../../../storage/components/Devs/DevEntityes';
+import SlideFromContainer from "../../../UI/Alert";
 
 interface IProps {}
 
@@ -62,7 +63,6 @@ export class AddNewDevModal extends React.Component<IProps> {
   render(): React.ReactNode {
     let depth_sensors = [];
     let count: any = "";
-
     let org = null;
     var options_org = [];
     if (APP_STORAGE.reg_user.getOrgAll()) {
@@ -314,7 +314,7 @@ export class AddNewDevModal extends React.Component<IProps> {
                 Сохранить
               </Button>
             </Box>
-          </Box>
+          </Box>          
         </Dialog>
       </React.Fragment>
     );

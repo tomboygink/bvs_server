@@ -40,7 +40,6 @@ export class DevsStorage {
   @observable org_id: number = null;
 
   @observable parent: number = null;
-  @observable parent1: number = null;
 
   @observable add_sensors: boolean = false; ///// модальное окно для добавления сенсоров
   @observable get_sensors: Array<any> = [];
@@ -51,6 +50,7 @@ export class DevsStorage {
   @observable array_sensors: Array<any> = []; 
   
   @observable change_sensors: boolean = false;
+
   ////// Добавление нового устройства
   @observable id: string = '';
   @observable group_dev_id = '';
@@ -197,9 +197,6 @@ export class DevsStorage {
 
   @action setParent(val: number) { this.parent = val };
   @computed getParent(): number { return this.parent };
-
-  @action setParent1(val: number) { this.parent1 = val };
-  @computed getParent1(): number { return this.parent1 };
 
   @action setIdDev(val: string) { this.select_id_dev = val };
   @computed getIdDev(): string { return this.select_id_dev };
@@ -386,7 +383,16 @@ export class DevsStorage {
       this.setInfo('');
       this.setArray([]);
 
-      this.setOpenModal(false);
+      
+      APP_STORAGE.setNotifications(true)
+
+      setTimeout(() => {
+        APP_STORAGE.setNotifications(false)
+      }, 1000);
+      setTimeout(() => {
+        this.setOpenModal(false);
+      }, 1000);
+      
     }
   }
 

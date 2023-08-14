@@ -27,6 +27,7 @@ export default function LeafletMap() {
 
   return (
 <MapContainer
+      attributionControl={false}
       style={styles.mapRoot}
       center={[Number(separ[0]), Number(splArr1[2])]}
       zoom={13}
