@@ -37,6 +37,7 @@ import { Calendar } from "./Devs/Dev/Calendar";
 import { DevsGroupsTree } from "./Devs/DevsGroupsTree";
 import { DevWrapper } from "./Devs/DevWrapper";
 import SlideFromContainer  from './UI/Alert'
+import { Importxlxfife } from "./Devs/DevsGroups/importxlxfife";
 
 interface IProps { }
 
@@ -137,6 +138,8 @@ export class AppForm extends React.Component<IProps> {
             <ChangeDevsGroups />
             <MoveDevsGroups />
             <AddNewDevModal />{" "}
+
+            <Importxlxfife/>
           
           </Box>
           <Box className="is-grid">
