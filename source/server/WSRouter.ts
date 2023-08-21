@@ -327,7 +327,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         case 'set_NewDevs': {
             var dev = new DevsTable(q.args, q.sess_code);
             data = await dev.insertDevs();
-
+            await dev.delete_duplicate();
             if (data === null || data === undefined || data[0].id === 0) {
                 wsres.code = q.sess_code;
                 wsres.data = [];
