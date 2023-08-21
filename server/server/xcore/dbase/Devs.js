@@ -88,6 +88,18 @@ var DevsTable = (function () {
         });
     };
     ;
+    DevsTable.prototype.delete_duplicate = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.db.query("delete from devs WHERE id NOT IN (select MIN(id) from devs group by number);")];
+                    case 1:
+                        _a.sent();
+                        return [2];
+                }
+            });
+        });
+    };
     DevsTable.prototype.selectDevs = function () {
         return __awaiter(this, void 0, void 0, function () {
             var db_res, result, p;

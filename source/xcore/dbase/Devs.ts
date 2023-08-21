@@ -24,10 +24,7 @@ export class DevsTable {
     }
     //Добавление устройства
     async insertDevs(): Promise<DevsEntity[]> {
-
-
         var data = await this.db.query("SELECT number FROM devs WHERE number = '" + this.args.number + "'");
-
         if (data.rows.length === 0 || data.rows[0].number !== this.args.number) {
 
             var db_res = await this.db.query("SELECT AddDevs(CAST(" + this.args.group_dev_id + " AS BIGINT), " +
@@ -44,6 +41,10 @@ export class DevsTable {
         }
 
     };
+
+    async delete_duplicate(){
+        await this.db.query("delete from devs WHERE id NOT IN (select MIN(id) from devs group by number);");
+    }
 
     //Получение устройств по группе устройства при нажатии 
     async selectDevs(): Promise<DevsEntity[]> {
