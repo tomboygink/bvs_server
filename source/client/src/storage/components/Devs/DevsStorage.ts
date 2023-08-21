@@ -289,7 +289,6 @@ export class DevsStorage {
 
 
   async set_NewDevs(name: string, value: any, _options?: any) {
-
     let lat:any
     let lng:any
        let latnumber = this.getLatitude().replace(/[^\d\.,]/g, ""); //// только цифты
@@ -366,7 +365,7 @@ export class DevsStorage {
     if (this.getNumber() !== '' && this.getName() !== '' && this.getLatitude() !== '' && this.getLongitude() !== '') {
       q.args = {
         group_dev_id: this.getIdDevs(),
-        number: this.getNumber().replace(/"([^"]*)"/g, '«$1»') || '',
+        number: this.getNumber() || '',
         name: this.getName().replace(/"([^"]*)"/g, '«$1»') || '',
         latitude: lat || '',
         longitude: lng || '',

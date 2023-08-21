@@ -106,6 +106,7 @@ export class ImportDevStorage {
           lng = "0.0";
         }
 
+        
         q.args = {
           group_dev_id: APP_STORAGE.devs.getIdDevs(),
           number: APP_STORAGE.importdevs.getArrayJsonData()[key][0] || "",

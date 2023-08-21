@@ -59,11 +59,11 @@ export class ModalSensors extends React.Component<IProps> {
                   onClick={() => {
                     APP_STORAGE.devs.setDepthSensors(false);
                   }}
-                />fhfrgdh
+                />
               </Box>
 
               <Divider sx={{ marginBottom: "20px" }} />
-yy
+
               <TextField
                 size="small"
                 fullWidth
