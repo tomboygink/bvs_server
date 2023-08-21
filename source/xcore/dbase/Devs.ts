@@ -24,10 +24,9 @@ export class DevsTable {
     }
     //Добавление устройства
     async insertDevs(): Promise<DevsEntity[]> {
-        var data = await this.db.query("SELECT number FROM devs WHERE number = '"+this.args.number+"'");
+        var data = await this.db.query("SELECT number FROM devs WHERE number = '" + this.args.number + "'");
 
-        if (data.rows.some(e => e.number !== this.args.number) || data.rows.length === 0) {
-
+        if (data.rows.length === 0 || data.rows[0].number !== this.args.number) {
             var db_res = await this.db.query("SELECT AddDevs(CAST(" + this.args.group_dev_id + " AS BIGINT), " +
                 "CAST('" + this.args.number + "' AS VARCHAR(80))," +
                 "CAST('" + this.args.name + "' AS VARCHAR(250))," +
