@@ -48,27 +48,30 @@ export class ImportDevStorage {
     try {
       var m1: any;
       var array_senssors;
+      let array_number:  any
       for (var key in APP_STORAGE.importdevs.getArrayJsonData()) {
         m1 = APP_STORAGE.importdevs
           .getArrayJsonData()
           [key].slice(4, APP_STORAGE.importdevs.getArrayJsonData()[key].length);
 
+       
         array_senssors = m1;
-
+        array_number = array_senssors.filter((item: any) => typeof item === "number")
         var arrKeys = ["depth", "value"];
 
-        var getData = (arrKeys: any[], array_senssors: any) => {
-          return array_senssors.map((val: { toString: () => any }) => ({
+        var getData = (arrKeys: any[], array_number: any) => {
+          return array_number.map((val: { toString: () => any }) => ({
             [arrKeys[0]]: val.toString(),
             [arrKeys[1]]: 1,
           }));
         };
-        let arr = getData(arrKeys, array_senssors);
+        let arr = getData(arrKeys, array_number);
 
         var sess_code = APP_STORAGE.auth_form.getdt();
         var q: IWSQuery = new WSQuery("set_NewDevs");
         let lat: any;
         let lng: any;
+
 
         if (
           Number(APP_STORAGE.importdevs.getArrayJsonData()[key][2] !== 0) &&
