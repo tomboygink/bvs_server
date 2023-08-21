@@ -125,7 +125,7 @@ var Devs_groupsTable = (function () {
                         _c = _b[_i];
                         if (!(_c in _a)) return [3, 10];
                         i = _c;
-                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)];
+                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id + " order by number asc")];
                     case 3: return [4, (_w.sent()).rows];
                     case 4:
                         device = _w.sent();
@@ -197,7 +197,7 @@ var Devs_groupsTable = (function () {
                         _k = _j[_l];
                         if (!(_k in _h)) return [3, 22];
                         i = _k;
-                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)];
+                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id + " order by number asc")];
                     case 15: return [4, (_w.sent()).rows];
                     case 16:
                         device = _w.sent();
@@ -316,7 +316,7 @@ var Devs_groupsTable = (function () {
                         _c = _b[_i];
                         if (!(_c in _a)) return [3, 11];
                         i = _c;
-                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + grs.rows[i].id)];
+                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + grs.rows[i].id + " order by number asc")];
                     case 3: return [4, (_l.sent()).rows];
                     case 4:
                         device = _l.sent();
@@ -468,7 +468,7 @@ var Devs_groupsTable = (function () {
                         return [4, this.db.query("update devs_groups set org_id = " + this.args.org_id + ", deleted = " + this.args.deleted + " where id = " + data.rows[i].id)];
                     case 4:
                         _a.sent();
-                        return [4, this.db.query("SELECT * FROM Devs WHERE group_dev_id=" + data.rows[i].id)];
+                        return [4, this.db.query("SELECT * FROM Devs WHERE group_dev_id=" + data.rows[i].id + " order by number asc")];
                     case 5:
                         data_dev = _a.sent();
                         j = 0;

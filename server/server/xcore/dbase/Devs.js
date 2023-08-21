@@ -61,13 +61,12 @@ var DevsTable = (function () {
     DevsTable.prototype.insertDevs = function () {
         return __awaiter(this, void 0, void 0, function () {
             var data, db_res, result, p;
-            var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, this.db.query("SELECT number FROM devs WHERE number = '" + this.args.number + "'")];
                     case 1:
                         data = _a.sent();
-                        if (!(data.rows.some(function (e) { return e.number !== _this.args.number; }) || data.rows.length === 0)) return [3, 3];
+                        if (!(data.rows.length === 0 || data.rows[0].number !== this.args.number)) return [3, 3];
                         return [4, this.db.query("SELECT AddDevs(CAST(" + this.args.group_dev_id + " AS BIGINT), " +
                                 "CAST('" + this.args.number + "' AS VARCHAR(80))," +
                                 "CAST('" + this.args.name + "' AS VARCHAR(250))," +
