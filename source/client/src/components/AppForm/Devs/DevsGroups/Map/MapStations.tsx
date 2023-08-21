@@ -21,10 +21,10 @@ interface IProps {
   //  let Logo = require('./mainLogo.png');
 
 
-  const myIcon = new Icon({
-    iconUrl: `./mainLogo.png`,
-    iconSize: [25, 25]
-  });
+  // const myIcon = new Icon({
+  //   iconUrl: `./mainLogo.png`,
+  //   iconSize: [25, 25]
+  // });
 
 function MapStations(props: any) {
   
@@ -53,7 +53,7 @@ function MapStations(props: any) {
 
       {APP_STORAGE.devs.getChangeSensors2().map((row: any) => (
              <React.Fragment key={"_map" + row.id}>
-               <Marker position={[row.latitude.replace(/\,/g, '.'), row.longitude.replace(/\,/g, '.')]} icon={myIcon}>
+               <Marker position={[row.latitude.replace(/\,/g, '.'), row.longitude.replace(/\,/g, '.')]}>
                <Popup>
         {row.number}
       </Popup>

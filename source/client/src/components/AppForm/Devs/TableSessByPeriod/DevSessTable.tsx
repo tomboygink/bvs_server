@@ -59,6 +59,7 @@ export class DevSessTable extends React.Component<IProps> {
     );
 
     var data: any[] = []; ////// отображаем сенсоры
+    var qw: any[] = [];
 
     let sess = APP_STORAGE.sensors;
     let sessors;
@@ -89,6 +90,12 @@ export class DevSessTable extends React.Component<IProps> {
         }
       }
     }
+
+    qw.push({
+      depth: 0,
+      "град.": '',
+    });
+
     const mergeByProperty = (arrays: any[], property = "depth") => {
       const arr = arrays.flatMap((item) => item); //делаем из всех массивов - один
 
@@ -104,7 +111,7 @@ export class DevSessTable extends React.Component<IProps> {
     };
 
     const result1 = mergeByProperty([
-      data,
+      data,qw, 
       toJS(APP_STORAGE.sensors.getSessFirstLast()),
     ]);
 

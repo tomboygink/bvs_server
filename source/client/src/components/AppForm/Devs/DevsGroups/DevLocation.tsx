@@ -27,6 +27,8 @@ import { CONFIG } from '../../../../../../xcore/config';
 import { LeafletMap } from "../Dev/Map";
 import MapStations from "./Map/MapStations";
 
+import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
+
 
 
 interface IProps {}
@@ -221,6 +223,13 @@ export class DevLocation extends React.Component<IProps> {
                             Добавить устройство
                           </MenuItem>
 
+                          <MenuItem onClick={() => APP_STORAGE.importdevs.setOpenModal(true)}>
+                            <ListItemIcon>
+                              <PostAddOutlinedIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                              Импортировать список устройств
+                          </MenuItem>
+
                           <MenuItem
                             onClick={() =>
                               this.openModal(
@@ -383,6 +392,13 @@ export class DevLocation extends React.Component<IProps> {
                               <CrisisAlertIcon fontSize="small" />
                             </ListItemIcon>{" "}
                               Добавить устройство
+                          </MenuItem>
+
+                          <MenuItem onClick={() => APP_STORAGE.importdevs.setOpenModal(true)}>
+                            <ListItemIcon>
+                              <PostAddOutlinedIcon  fontSize="small" />
+                            </ListItemIcon>{" "}
+                              Импортировать список устройств
                           </MenuItem>
 
                           <MenuItem
