@@ -224,7 +224,7 @@ export class DevSessTable extends React.Component<IProps> {
                       <TableCell style={{ width: 160 }} align="center">
                         Заряд
                       </TableCell>
-                      {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleWrite() === 1 && 
+                      {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 && 
                        <TableCell style={{ width: 160 }} align="center">
                        Контрольная сессия
                      </TableCell>
@@ -277,7 +277,7 @@ export class DevSessTable extends React.Component<IProps> {
                  
 
 
-                        {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleWrite() === 1 &&
+                        {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1  &&
                         APP_STORAGE.sensors.getIdFirstSess() ===
                           APP_STORAGE.sensors.getIdLastSess() &&
                           APP_STORAGE.sensors.getIdFirstSess() !== row.id && (
@@ -298,7 +298,7 @@ export class DevSessTable extends React.Component<IProps> {
                           )}
 
                         {APP_STORAGE.sensors.getIdFirstSess() ===
-                          APP_STORAGE.sensors.getIdLastSess() && APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleWrite() === 1 &&
+                          APP_STORAGE.sensors.getIdLastSess() && APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 &&
                           APP_STORAGE.sensors.getIdFirstSess() === row.id && (
                             <TableCell component="th" scope="row">
                               <Button sx={{ fontSize: "12px" }}>
@@ -308,7 +308,7 @@ export class DevSessTable extends React.Component<IProps> {
                           )}
 
                         {APP_STORAGE.sensors.getIdFirstSess() !==
-                          APP_STORAGE.sensors.getIdLastSess() && APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleWrite() === 1 &&
+                          APP_STORAGE.sensors.getIdLastSess() && APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 &&
                           String(toJS(APP_STORAGE.sensors.getIdFirstSess())) ===
                           String(row.id) && (
                             <TableCell component="th" scope="row">
