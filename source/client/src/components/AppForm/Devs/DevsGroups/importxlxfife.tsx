@@ -264,7 +264,7 @@ export class Importxlxfife extends React.Component<IProps> {
 </svg>
 
                   <FormHelperText sx = {{pl: '12px'}}>Внимание! После нажатия на кнопку , отменить операцию будет
-                  невожможно</FormHelperText> 
+                  невозможно.</FormHelperText> 
                 </Box>
               </div>
             </form>
