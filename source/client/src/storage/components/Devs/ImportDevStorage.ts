@@ -6,7 +6,11 @@ import { toJS } from "mobx";
 
 export class ImportDevStorage {
   @observable modal: boolean = false;
+  @observable modal_svg: boolean = false;
   @observable jsonData: Array<any> = [];
+
+  @observable svgData: any = [];
+  @observable svgString: string = "";
 
   @observable text_button: string = "";
 
@@ -23,11 +27,31 @@ export class ImportDevStorage {
     return this.modal;
   }
 
+  @action setOpenModalSvg(val: boolean) {
+    this.modal_svg = val;
+  }
+  @computed getOpenModalSvg(): boolean {
+    return this.modal_svg;
+  }
+
   @action setArrayJsonData(val: Array<any>) {
     this.jsonData = val;
   }
   @computed getArrayJsonData(): Array<any> {
     return this.jsonData;
+  }
+
+  @action setArraySvgData(val: any) {
+    this.svgData = val;
+  }
+  @computed getArraySvgData(): any {
+    return this.svgData;
+  }
+  @action setSvg(val: any) {
+    this.svgString = val;
+  }
+  @computed getSvg(): any {
+    return this.svgString;
   }
 
   @action setText_Button(val: string) {
@@ -45,41 +69,48 @@ export class ImportDevStorage {
   }
 
   async Uploadfile() {
+    console.log(toJS(APP_STORAGE.importdevs.getArrayJsonData()), "array");
     try {
       var m1: any;
       var array_senssors;
-      let array_number:  any
+      let array_number: any;
+
       for (var key in APP_STORAGE.importdevs.getArrayJsonData()) {
         m1 = APP_STORAGE.importdevs
           .getArrayJsonData()
-          [key].slice(4, APP_STORAGE.importdevs.getArrayJsonData()[key].length);
+          [key].slice(5, APP_STORAGE.importdevs.getArrayJsonData()[key].length);
 
-       
+        console.log(m1, "m1");
+
         array_senssors = m1;
-        array_number = array_senssors.filter((item: any) => typeof item === "number")
+
+        array_number = array_senssors.filter(
+          (item: any) => typeof item === "number"
+        );
         var arrKeys = ["depth", "value"];
 
         var getData = (arrKeys: any[], array_number: any) => {
           return array_number.map((val: { toString: () => any }) => ({
-            [arrKeys[0]]: val.toString(),
-            [arrKeys[1]]: 1,
+            [arrKeys[1]]: val.toString(),
+            [arrKeys[2]]: 1
           }));
         };
         let arr = getData(arrKeys, array_number);
+
+        console.log("arr", arr);
 
         var sess_code = APP_STORAGE.auth_form.getdt();
         var q: IWSQuery = new WSQuery("set_NewDevs");
         let lat: any;
         let lng: any;
 
-
         if (
-          Number(APP_STORAGE.importdevs.getArrayJsonData()[key][2] !== 0) &&
-          Number(APP_STORAGE.importdevs.getArrayJsonData()[key][3] !== 0)
+          Number(APP_STORAGE.importdevs.getArrayJsonData()[key][3] !== 0) &&
+          Number(APP_STORAGE.importdevs.getArrayJsonData()[key][4] !== 0)
         ) {
           let latnumber = APP_STORAGE.importdevs
             .getArrayJsonData()
-            [key][2].toString()
+            [key][3].toString()
             .replace(/[^\d\.,]/g, ""); //// только цифты
           let latchar = latnumber.replace(/,/g, "."); //// то
           if (latchar.match(/\./g).length > 1) {
@@ -90,7 +121,7 @@ export class ImportDevStorage {
 
           let lngnumber = APP_STORAGE.importdevs
             .getArrayJsonData()
-            [key][3].toString()
+            [key][4].toString()
             .replace(/[^\d\.,]/g, ""); //// только цифты
           let lngchar = lngnumber.replace(/,/g, "."); //// то
           if (lngchar.match(/\./g).length > 1) {
@@ -99,14 +130,13 @@ export class ImportDevStorage {
             lng = lngchar;
           }
         } else if (
-          Number(APP_STORAGE.importdevs.getArrayJsonData()[key][2] === 0) &&
-          Number(APP_STORAGE.importdevs.getArrayJsonData()[key][3] === 0)
+          Number(APP_STORAGE.importdevs.getArrayJsonData()[key][3] === 0) &&
+          Number(APP_STORAGE.importdevs.getArrayJsonData()[key][4] === 0)
         ) {
           lat = "0.0";
           lng = "0.0";
         }
 
-        
         q.args = {
           group_dev_id: APP_STORAGE.devs.getIdDevs(),
           number: APP_STORAGE.importdevs.getArrayJsonData()[key][0] || "",
@@ -116,6 +146,7 @@ export class ImportDevStorage {
           sensors: '{"s":' + JSON.stringify(arr) + "}",
           deleted: false,
           info: "",
+          period_sess: APP_STORAGE.importdevs.getArrayJsonData()[key][2] || ""
         };
         q.sess_code = sess_code;
         (await WSocket.get()).send(q);
@@ -132,5 +163,15 @@ export class ImportDevStorage {
         "Ошибка! Убедитесь, что данные заполнены согласно шаблону"
       );
     }
+  }
+
+  async set_SchemeSvg(sess_code: string) {
+    var q: IWSQuery = new WSQuery("set_SchemeSvg");
+    q.args = {
+      parent_id: Number(APP_STORAGE.devs.getParent()),
+      svg_file: this.getSvg()
+    };
+    q.sess_code = sess_code;
+    (await WSocket.get()).send(q);
   }
 }

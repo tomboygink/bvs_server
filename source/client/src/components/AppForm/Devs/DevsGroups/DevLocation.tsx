@@ -1,8 +1,15 @@
 import React from "react";
 import { observer } from "mobx-react";
-import {toJS} from 'mobx'
+import { toJS } from "mobx";
 
-import { Box, Typography, TextField, ListItemIcon, Link, TextareaAutosize } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  ListItemIcon,
+  Link,
+  TextareaAutosize
+} from "@mui/material";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
 
 import { TDevsGroup } from "../../../../storage/components/Devs/DevEntityes";
@@ -19,20 +26,18 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
 
-import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
+import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 
-import DirectionsIcon from '@mui/icons-material/Directions';
+import DirectionsIcon from "@mui/icons-material/Directions";
 
-import { CONFIG } from '../../../../../../xcore/config';
-import { LeafletMap } from "../Dev/Map";
+import { CONFIG } from "../../../../../../xcore/config";
+
 import MapStations from "./Map/MapStations";
 
-import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
-
-
+import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
+import PhotoSizeSelectLargeIcon from "@mui/icons-material/PhotoSizeSelectLarge";
 
 interface IProps {}
-
 
 //Устройства
 @observer
@@ -56,7 +61,7 @@ export class DevLocation extends React.Component<IProps> {
   }
 
   async moveDeviceLocation(a: any) {
-    APP_STORAGE.devs.setMenu_devs(a)
+    APP_STORAGE.devs.setMenu_devs(a);
     APP_STORAGE.devs_groups.setOpen_menu(false);
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
@@ -70,17 +75,14 @@ export class DevLocation extends React.Component<IProps> {
       var gr: TDGroup = dgr.group;
       var gr_childs = dgr.childs;
 
-
-
       var childs: React.ReactNode[] = new Array();
       if (gr_childs.length > 0) childs = this.getValueCh(gr_childs);
-     
+
       parent.push(childs);
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
-
         APP_STORAGE.devs_groups.setName(String(gr.g_name));
-        
+
         APP_STORAGE.devs_groups.setLongitude(String(gr.longitude));
         APP_STORAGE.devs_groups.setLatitude(String(gr.latitude));
         APP_STORAGE.devs_groups.setInfo(String(gr.g_info));
@@ -93,7 +95,6 @@ export class DevLocation extends React.Component<IProps> {
     }
     return parent;
   }
-
 
   getValueMove(dgrs: TDevsGroup[]) {
     let array = [];
@@ -115,7 +116,7 @@ export class DevLocation extends React.Component<IProps> {
       APP_STORAGE.setdevs_group_move(array);
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
-        APP_STORAGE.devs_groups.setKeyOrg(gr.org_id)
+        APP_STORAGE.devs_groups.setKeyOrg(gr.org_id);
         APP_STORAGE.devs_groups.setParentId(String(gr.id));
         APP_STORAGE.devs_groups.setParent(String(gr.parent_id));
         APP_STORAGE.devs_groups.setName(gr.g_name);
@@ -130,7 +131,6 @@ export class DevLocation extends React.Component<IProps> {
     return parent;
   }
 
-
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
     let parent: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
@@ -139,9 +139,8 @@ export class DevLocation extends React.Component<IProps> {
       var gr_childs = dgr.childs;
       var childs: React.ReactNode[] = new Array();
 
-
       if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
-   /////////////////////////////////////////////////////////////////////////////// Если есть дочерние строки
+      /////////////////////////////////////////////////////////////////////////////// Если есть дочерние строки
       parent.push(
         <React.Fragment key={"_gr_id_key_" + gr.id}>
           <Box sx={{ display: "flex", width: "100%", flexDirection: "column" }}>
@@ -151,21 +150,18 @@ export class DevLocation extends React.Component<IProps> {
       );
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
-     APP_STORAGE.devs.setChangeSensors2(dgr.devs);
-     
+        APP_STORAGE.devs.setChangeSensors2(dgr.devs);
 
-   
-        setTimeout(() => {  //////Сохраню данные в массив
-          APP_STORAGE.devs.setGr(gr)
+        setTimeout(() => {
+          //////Сохраню данные в массив
+          APP_STORAGE.devs.setGr(gr);
         }, 100);
-
 
         let longitude = gr.longitude;
         let latitude = gr.latitude;
 
-
         if (gr.deleted === true) {
-/////////////////////////////////////////////////////////////////////////////////////////Если устройство удаленно 
+          /////////////////////////////////////////////////////////////////////////////////////////Если устройство удаленно
           parent.push(
             <React.Fragment key={String(gr.id)}>
               <Box id="long-button" className="grid__card_middle">
@@ -188,7 +184,7 @@ export class DevLocation extends React.Component<IProps> {
                         <Menu
                           id="long-menu"
                           MenuListProps={{
-                            "aria-labelledby": "long-button",
+                            "aria-labelledby": "long-button"
                           }}
                           anchorEl={document.getElementById("long-button_menu")}
                           open={APP_STORAGE.devs_groups.getOpen_menu()}
@@ -223,11 +219,22 @@ export class DevLocation extends React.Component<IProps> {
                             Добавить устройство
                           </MenuItem>
 
-                          <MenuItem onClick={() => APP_STORAGE.importdevs.setOpenModal(true)}>
+                          <MenuItem
+                            onClick={() =>
+                              APP_STORAGE.importdevs.setOpenModal(true)
+                            }
+                          >
                             <ListItemIcon>
                               <PostAddOutlinedIcon fontSize="small" />
                             </ListItemIcon>{" "}
-                              Импортировать список устройств
+                            Импортировать список устройств
+                          </MenuItem>
+
+                          <MenuItem>
+                            <ListItemIcon>
+                              <PostAddOutlinedIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                            Загрузить схему расположения
                           </MenuItem>
 
                           <MenuItem
@@ -254,7 +261,7 @@ export class DevLocation extends React.Component<IProps> {
                   </Typography>
 
                   <TextField
-                    disabled= {true}
+                    disabled={true}
                     className="box_info"
                     fullWidth
                     inputProps={{ style: { fontSize: 12 } }}
@@ -270,7 +277,7 @@ export class DevLocation extends React.Component<IProps> {
                   </Typography>
 
                   <TextField
-                    disabled= {true}
+                    disabled={true}
                     className="box_info"
                     fullWidth
                     inputProps={{ style: { fontSize: 12 } }}
@@ -286,7 +293,7 @@ export class DevLocation extends React.Component<IProps> {
                   </Typography>
 
                   <TextField
-                    disabled= {true}
+                    disabled={true}
                     className="box_info"
                     fullWidth
                     inputProps={{ style: { fontSize: 12 } }}
@@ -298,22 +305,28 @@ export class DevLocation extends React.Component<IProps> {
                   />
                 </Box>
 
-
                 <Link
                   sx={{
-                    color: '#808080',
+                    color: "#808080",
                     fontSize: "1rem",
                     display: "flex",
                     alignItems: "center",
-                    flexDirection: "row-reverse",
+                    flexDirection: "row-reverse"
                   }}
                 >
                   Показать на карте
                   <IconButton
-                    sx={{color: '#808080'}}
+                    sx={{ color: "#808080" }}
                     aria-label="directions"
-                    onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` + latitude.trim() + '&lat=' + longitude.trim())}}>
-
+                    onClick={() => {
+                      window.open(
+                        `http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` +
+                          latitude.trim() +
+                          "&lat=" +
+                          longitude.trim()
+                      );
+                    }}
+                  >
                     <DirectionsIcon />
                   </IconButton>
                 </Link>
@@ -326,26 +339,23 @@ export class DevLocation extends React.Component<IProps> {
                   style={{ width: "100%", marginTop: "12px" }}
                   value={gr.g_info || ""}
                 />
-                
+
                 <Box sx={{ height: "400px", width: "100%" }}>
-                            
-                <MapStations longitude={longitude} latitude={latitude}/>
-
-                          </Box>
-
+                  <MapStations longitude={longitude} latitude={latitude} />
+                </Box>
               </Box>
             </React.Fragment>
           );
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      } 
-      else {
-/////////////////////////////////////////////////////////////////////////////////////////Если устройство действующее
+          ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        } else {
+          /////////////////////////////////////////////////////////////////////////////////////////Если устройство действующее
           parent.push(
             <React.Fragment key={String(gr.id)}>
               <Box id="long-button" className="grid__card_middle">
-                <Box sx={{display: "flex",flexDirection: "row-reverse",}}>
-                   {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 && (
+                <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
+                  {APP_STORAGE.getRoleWrite() === 2 &&
+                    APP_STORAGE.getRoleRead() === 1 && (
                       <div>
                         <IconButton
                           onClick={() => {
@@ -357,12 +367,12 @@ export class DevLocation extends React.Component<IProps> {
                           aria-expanded={open ? "true" : undefined}
                           aria-haspopup="true"
                         >
-                        <MoreVertIcon />
+                          <MoreVertIcon />
                         </IconButton>
                         <Menu
                           id="long-menu"
                           MenuListProps={{
-                            "aria-labelledby": "long-button",
+                            "aria-labelledby": "long-button"
                           }}
                           anchorEl={document.getElementById("long-button_menu")}
                           open={APP_STORAGE.devs_groups.getOpen_menu()}
@@ -378,7 +388,8 @@ export class DevLocation extends React.Component<IProps> {
                           </MenuItem>
 
                           <MenuItem
-                            onClick={() => this.moveDeviceLocation("3")}>
+                            onClick={() => this.moveDeviceLocation("3")}
+                          >
                             <ListItemIcon>
                               <LogoutRoundedIcon fontSize="small" />
                             </ListItemIcon>{" "}
@@ -387,18 +398,35 @@ export class DevLocation extends React.Component<IProps> {
 
                           <Divider />
 
-                          <MenuItem onClick={() => APP_STORAGE.devs.setOpenModal(true)}>
+                          <MenuItem
+                            onClick={() => APP_STORAGE.devs.setOpenModal(true)}
+                          >
                             <ListItemIcon>
                               <CrisisAlertIcon fontSize="small" />
                             </ListItemIcon>{" "}
-                              Добавить устройство
+                            Добавить устройство
                           </MenuItem>
 
-                          <MenuItem onClick={() => APP_STORAGE.importdevs.setOpenModal(true)}>
+                          <MenuItem
+                            onClick={() =>
+                              APP_STORAGE.importdevs.setOpenModal(true)
+                            }
+                          >
                             <ListItemIcon>
-                              <PostAddOutlinedIcon  fontSize="small" />
+                              <PostAddOutlinedIcon fontSize="small" />
                             </ListItemIcon>{" "}
-                              Импортировать список устройств
+                            Импортировать список устройств
+                          </MenuItem>
+
+                          <MenuItem
+                            onClick={() =>
+                              APP_STORAGE.importdevs.setOpenModalSvg(true)
+                            }
+                          >
+                            <ListItemIcon>
+                              <PhotoSizeSelectLargeIcon fontSize="small" />
+                            </ListItemIcon>{" "}
+                            Загрузить схему расположения
                           </MenuItem>
 
                           <MenuItem
@@ -406,40 +434,40 @@ export class DevLocation extends React.Component<IProps> {
                               this.openModal(
                                 APP_STORAGE.devs.getIdDevs(),
                                 Number(gr.org_id)
-                              ) }
+                              )
+                            }
                           >
                             <ListItemIcon>
                               <CreateNewFolderOutlinedIcon fontSize="small" />
-                              </ListItemIcon>{" "}
+                            </ListItemIcon>{" "}
                             Добавить подруппу
                           </MenuItem>
                         </Menu>
                       </div>
                     )}
-                 </Box>
+                </Box>
 
                 <Box className="wrapper_devlocation_card">
+                  <Typography className="box_info" sx={{ color: "#000" }}>
+                    Место расположения -
+                  </Typography>
 
-                   <Typography className="box_info" sx={{ color: "#000" }}>
-                   Место расположения  -
-                    </Typography>
+                  <TextField
+                    className="box_info"
+                    fullWidth
+                    inputProps={{ style: { fontSize: 12 } }}
+                    InputLabelProps={{ style: { fontSize: 12 } }}
+                    variant="outlined"
+                    margin="normal"
+                    size="small"
+                    value={gr.g_name || ""}
+                  />
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={gr.g_name || ""}
-                    />
+                  <Typography className="box_info" sx={{ color: "#000" }}>
+                    Долгота -
+                  </Typography>
 
-                    <Typography className="box_info" sx={{ color: "#000" }}>
-                    Долгота  -
-                    </Typography>
-
-                    <TextField
+                  <TextField
                     className="box_info"
                     fullWidth
                     inputProps={{ style: { fontSize: 12 } }}
@@ -448,13 +476,13 @@ export class DevLocation extends React.Component<IProps> {
                     margin="normal"
                     size="small"
                     value={gr.longitude.trim() || ""}
-                    />
+                  />
 
-                    <Typography className="box_info" sx={{ color: "#000" }}>
-                    Широта  -
-                    </Typography>
+                  <Typography className="box_info" sx={{ color: "#000" }}>
+                    Широта -
+                  </Typography>
 
-                    <TextField
+                  <TextField
                     className="box_info"
                     fullWidth
                     inputProps={{ style: { fontSize: 12 } }}
@@ -463,30 +491,65 @@ export class DevLocation extends React.Component<IProps> {
                     margin="normal"
                     size="small"
                     value={gr.latitude.trim() || ""}
-                    />                 
+                  />
                 </Box>
 
-                  
-                  <Link sx= {{fontSize:'1rem', display: 'flex', alignItems: 'center', flexDirection: 'row-reverse'}} >Показать на карте               
-                                      <IconButton color="primary" aria-label="directions" 
-                                      onClick={() => {window.open(`http://${CONFIG.host}:${CONFIG.port}/show-map?lat=` + latitude.trim() + '&lng=' + longitude.trim())}}>
+                <Link
+                  sx={{
+                    fontSize: "1rem",
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "row-reverse"
+                  }}
+                >
+                  Показать на карте
+                  <IconButton
+                    color="primary"
+                    aria-label="directions"
+                    onClick={() => {
+                      window.open(
+                        `http://${CONFIG.host}:${CONFIG.port}/show-map?lat=` +
+                          latitude.trim() +
+                          "&lng=" +
+                          longitude.trim()
+                      );
+                    }}
+                  >
+                    <DirectionsIcon />
+                  </IconButton>
+                </Link>
 
-                                      <DirectionsIcon/>
-                                      </IconButton>
-                  </Link> 
-                  
-                  <Divider sx ={{m: '2px'}}/>
+                <Divider sx={{ m: "2px" }} />
+                {gr.g_info.length && (
                   <TextareaAutosize
-                  className="info"
-                  aria-label="minimum height"
-                  minRows={4}
-                  style={{ width: "100%" , marginTop: '12px'}}
-                  value={gr.g_info || ""}/>
+                    className="info"
+                    aria-label="minimum height"
+                    minRows={4}
+                    style={{ width: "100%", marginTop: "12px" }}
+                    value={gr.g_info || ""}
+                  />
+                )}
+                <Box>
+                  <Box
+                    className="svg-container"
+                    sx={{
+                      background: "#F4F4F8",
+                      borderRadius: "4px",
+                      maxWidth: "50%",
+                      display: "flex",
+                      padding: "8px",
+                      justifyContent: "center"
+                    }}
+                  ></Box>
+                  <Box
+                    id="tooltip"
+                    sx={{ position: "absolute", display: "none" }}
+                  ></Box>
+                </Box>
 
-<Box sx={{ height: "400px", width: "100%" , mt: '8px'}}>
-                            {/* <LeafletMap longitude={longitude} latitude={latitude} /> */}
-                            <MapStations longitude={longitude} latitude={latitude}/>
-                          </Box>
+                {/* <Box sx={{ height: "400px", width: "100%", mt: "8px" }}>
+                  <MapStations longitude={longitude} latitude={latitude} />
+                </Box> */}
               </Box>
             </React.Fragment>
           );
@@ -503,12 +566,14 @@ export class DevLocation extends React.Component<IProps> {
   }
 
   render(): React.ReactNode {
-    return <React.Fragment>
-       <Typography sx={{ fontWeight: "600" , color: '#0D1C52', mb : '12px'}}>
-              {" "}
-              Данные по расположению устройства{" "}
-            </Typography>
-      {this.drawDevLocation()}
-      </React.Fragment>;
+    return (
+      <React.Fragment>
+        <Typography sx={{ fontWeight: "600", color: "#0D1C52", mb: "12px" }}>
+          {" "}
+          Данные по расположению устройства{" "}
+        </Typography>
+        {this.drawDevLocation()}
+      </React.Fragment>
+    );
   }
 }

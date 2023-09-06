@@ -10,6 +10,9 @@ import {
   TextareaAutosize,
   Button,
   MenuItem,
+  FormControl,
+  InputLabel,
+  Select
 } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -28,7 +31,7 @@ import SensorsIcon from "@mui/icons-material/Sensors";
 
 import { ModalSensors } from "./ModalSensors";
 
-import {TDSensor} from '../../../../../storage/components/Devs/DevEntityes';
+import { TDSensor } from "../../../../../storage/components/Devs/DevEntityes";
 import SlideFromContainer from "../../../UI/Alert";
 
 interface IProps {}
@@ -53,11 +56,14 @@ export class AddNewDevModal extends React.Component<IProps> {
         APP_STORAGE.auth_form.getdt()
       );
     }, 500);
-   
   }
 
   async SelectedOrg(a: any) {
     APP_STORAGE.devs_groups.setKeyOrg(a);
+  }
+
+  async SelectedPeriodSess(a: any) {
+    APP_STORAGE.devs.setPeriodSess(a);
   }
 
   render(): React.ReactNode {
@@ -90,28 +96,23 @@ export class AddNewDevModal extends React.Component<IProps> {
         let a = devs[key];
 
         if (a.id === APP_STORAGE.devs.getIdChild()) {
-          group_devs.push(
-            <Typography>
-              {" "}Родитель - {a.g_name}{" "}
-            </Typography>
-          );
+          group_devs.push(<Typography> Родитель - {a.g_name} </Typography>);
         }
       }
     }
 
     if (JSON.stringify(APP_STORAGE.devs.getArray())) {
-
-     
       var obj = JSON.parse(JSON.stringify(APP_STORAGE.devs.getArray()));
-       
-      const uniqueChars = obj.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
-        if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
+
+      const uniqueChars = obj.reduce((o: any, i: any) => {
+        ////////////////// Редюсом убираем дубликаты
+        if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
           o.push(i);
         }
         return o;
       }, []);
 
-       APP_STORAGE.devs.setDepthNewSensors(uniqueChars);
+      APP_STORAGE.devs.setDepthNewSensors(uniqueChars);
 
       for (var key in uniqueChars) {
         count = uniqueChars.length;
@@ -123,7 +124,7 @@ export class AddNewDevModal extends React.Component<IProps> {
               display: "flex",
               fontWeight: "700",
               border: "none",
-              p: "4px",
+              p: "4px"
             }}
             align="left"
           >
@@ -145,8 +146,8 @@ export class AddNewDevModal extends React.Component<IProps> {
           PaperProps={{
             sx: {
               width: "100%",
-              maxHeight: "100%",
-            },
+              maxHeight: "100%"
+            }
           }}
         >
           <Box sx={{ p: 2 }}>
@@ -155,7 +156,7 @@ export class AddNewDevModal extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                mb: "12px",
+                mb: "12px"
               }}
             >
               <Typography>Добавить устройство</Typography>
@@ -266,17 +267,16 @@ export class AddNewDevModal extends React.Component<IProps> {
             <Box
               sx={{ border: "1px solid #eee", p: "12px", borderRadius: "4px" }}
             >
-              {count &&
+              {count && (
                 <Box sx={{ pb: "12px" }}>
                   Список сенсоров на устройстве: {count}
-                </Box>}
+                </Box>
+              )}
 
               <TableContainer component={Paper} sx={{ maxHeight: "150px" }}>
                 <Table>
                   <TableBody>
-                    <TableRow key="depth_sensors">
-                      {depth_sensors}
-                    </TableRow>
+                    <TableRow key="depth_sensors">{depth_sensors}</TableRow>
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -289,13 +289,58 @@ export class AddNewDevModal extends React.Component<IProps> {
               >
                 Добавить сенсоры
               </Button>
+
+              <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+                <InputLabel className="org" sx={{ fontSize: "12px" }}>
+                  Период сессии
+                </InputLabel>
+
+                <Select
+                  value={APP_STORAGE.devs.getPeriodSess()}
+                  sx={{ fontSize: "12px" }}
+                  label="Период сессии"
+                  onChange={e => {
+                    this.SelectedPeriodSess(e.target.value);
+                  }}
+                >
+                  <MenuItem
+                    key="4_sess"
+                    sx={{ fontSize: "12px" }}
+                    value="Один раз в день"
+                  >
+                    Один раз в день
+                  </MenuItem>
+                  <MenuItem
+                    key="3_sess"
+                    sx={{ fontSize: "12px" }}
+                    value="Один раз в неделю"
+                  >
+                    Один раз в неделю
+                  </MenuItem>
+                  <MenuItem
+                    key="2_sess"
+                    sx={{ fontSize: "12px" }}
+                    value="Каждые две недели"
+                  >
+                    Каждые две недели
+                  </MenuItem>
+                  <MenuItem
+                    key="1_sess"
+                    sx={{ fontSize: "12px" }}
+                    value="Один раз в месяц"
+                  >
+                    Один раз в месяц
+                  </MenuItem>
+                  <Divider />
+                </Select>
+              </FormControl>
             </Box>
 
             <Box
               sx={{
                 display: "flex",
                 alignItems: "baseline",
-                justifyContent: "flex-end",
+                justifyContent: "flex-end"
               }}
             >
               <Button
@@ -305,7 +350,7 @@ export class AddNewDevModal extends React.Component<IProps> {
                   color: "#fff;",
                   mt: "18px",
                   mb: "18px",
-                  fontSize: "12px",
+                  fontSize: "12px"
                 }}
                 onClick={() => {
                   this.AddDevs();
@@ -314,7 +359,7 @@ export class AddNewDevModal extends React.Component<IProps> {
                 Сохранить
               </Button>
             </Box>
-          </Box>          
+          </Box>
         </Dialog>
       </React.Fragment>
     );

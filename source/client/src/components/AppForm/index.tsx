@@ -2,14 +2,14 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Box, Button, Typography } from "@mui/material";
 
-import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
+import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
 
 import { APP_STORAGE } from "../../storage/AppStorage"; //////Хранилище данных
 
 import { AppBarPanel } from "./AppBarPanel/AppBarPanel";
 import { Modal } from "./AppBarPanel/TopMenu/Modal/Modal"; //// Модальное окно для изменения данных пользователя
 import { ModalLeftPanel } from "./AppBarPanel/LeftPanel/RegistationUsers/ModalLeftPanel";
-import { NewDevPovs } from "./Devs/Dev/Menu/NewDevPovs"
+import { NewDevPovs } from "./Devs/Dev/Menu/NewDevPovs";
 
 import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser"; /////////////Таблица пользователей
 import { UsersMenu } from "./User/UsersMenu"; //////////////////////////// устройства
@@ -20,8 +20,6 @@ import { Orgs } from "./Оrgs/Оrgs";
 
 import { JobsTitlesMenu } from "./JobsTitles/JobsTitlesMenu";
 import { JobsTitles } from "./JobsTitles/JobsTitles";
-
-
 
 import { DevLocation } from "./Devs/DevsGroups/DevLocation"; ////////расположение устройств
 import { ChangeDevsGroups } from "./Devs/DevsGroups/Menu/ChangeDevsGroups"; /////// Редактировать расположение5 устройств (модальное окно)
@@ -36,10 +34,11 @@ import { AddNewDevModal } from "./Devs/Dev/Menu/AddNewDevModal"; //////////////�
 import { Calendar } from "./Devs/Dev/Calendar";
 import { DevsGroupsTree } from "./Devs/DevsGroupsTree";
 import { DevWrapper } from "./Devs/DevWrapper";
-import SlideFromContainer  from './UI/Alert'
+import SlideFromContainer from "./UI/Alert";
 import { Importxlxfife } from "./Devs/DevsGroups/importxlxfife";
+import { Opensvgfile } from "./Devs/DevsGroups/opensvgfile";
 
-interface IProps { }
+interface IProps {}
 
 //Компонент формы приложения
 @observer
@@ -48,10 +47,10 @@ export class AppForm extends React.Component<IProps> {
     super(props);
   }
 
- async BackToTopButton(){
-  let el = document.getElementById('marker-up')
-  el.scrollIntoView(); 
- }
+  async BackToTopButton() {
+    let el = document.getElementById("marker-up");
+    el.scrollIntoView();
+  }
 
   render(): React.ReactNode {
     let user_r = null;
@@ -97,7 +96,7 @@ export class AppForm extends React.Component<IProps> {
       middle_form = (
         <>
           {/* <Devs /> */}
-          <DevWrapper/>
+          <DevWrapper />
         </>
       );
       //dev_sess = <DevSess/>
@@ -120,9 +119,7 @@ export class AppForm extends React.Component<IProps> {
       left_form = <JobsTitlesMenu />;
     }
 
-
     right_form = <SensorsList />;
-
 
     if (APP_STORAGE.auth_form.getUser())
       return (
@@ -131,21 +128,21 @@ export class AppForm extends React.Component<IProps> {
             <AppBarPanel />
             <Modal />
             <ModalLeftPanel />
-            <ChangeDevsModal />{" "}
-            <NewDevPovs />
+            <ChangeDevsModal /> <NewDevPovs />
             {/*-------------------------Модальное окно - редактировать уствройство */}
             <AddNewSubgroup />
             <ChangeDevsGroups />
             <MoveDevsGroups />
-            <AddNewDevModal />{" "}
-
-            <Importxlxfife/>
-          
+            <AddNewDevModal /> <Importxlxfife />
+            <Opensvgfile />
           </Box>
           <Box className="is-grid">
             <Box className="wrapper">
               <Box className="blocks">
-                <Box className="block-wrapp" id='left-form'> {left_form} </Box>
+                <Box className="block-wrapp" id="left-form">
+                  {" "}
+                  {left_form}{" "}
+                </Box>
 
                 <Box className="block-wrapp grid">
                   {middle_form}
@@ -153,20 +150,28 @@ export class AppForm extends React.Component<IProps> {
                   {new_group}
                 </Box>
 
-                <Box className="block-wrapp" id='right-form'>{right_form}</Box>
+                <Box className="block-wrapp" id="right-form">
+                  {right_form}
+                </Box>
               </Box>
             </Box>
           </Box>
 
-          {/* <SlideFromContainer/> */} 
+          {/* <SlideFromContainer/> */}
 
-          <Button className="button-back-to-up" id='button_up'
-          sx={{background: '#C2E0FF', borderRadius: '24px', position: 'absolute'}}
-          onClick={() => {
-            this.BackToTopButton()
-          }}
+          <Button
+            className="button-back-to-up"
+            id="button_up"
+            sx={{
+              background: "#C2E0FF",
+              borderRadius: "24px",
+              position: "absolute"
+            }}
+            onClick={() => {
+              this.BackToTopButton();
+            }}
           >
-           <ExpandLessRoundedIcon sx = {{fontWeight: '800'}}/> 
+            <ExpandLessRoundedIcon sx={{ fontWeight: "800" }} />
           </Button>
         </React.Fragment>
       );
