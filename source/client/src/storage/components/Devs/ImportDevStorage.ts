@@ -168,7 +168,7 @@ export class ImportDevStorage {
   async set_SchemeSvg(sess_code: string) {
     var q: IWSQuery = new WSQuery("set_SchemeSvg");
     q.args = {
-      parent_id: Number(APP_STORAGE.devs.getParent()),
+      id: APP_STORAGE.devs_groups.getParentId(),
       svg_file: this.getSvg()
     };
     q.sess_code = sess_code;
