@@ -459,32 +459,16 @@ export class ChangeDevsModal extends React.Component<IProps> {
                   this.SelectedPeriodSess(e.target.value);
                 }}
               >
-                <MenuItem
-                  key="4_sess"
-                  sx={{ fontSize: "12px" }}
-                  value="Один раз в день"
-                >
+                <MenuItem key="4_sess" sx={{ fontSize: "12px" }} value="1">
                   Один раз в день
                 </MenuItem>
-                <MenuItem
-                  key="3_sess"
-                  sx={{ fontSize: "12px" }}
-                  value="Один раз в неделю"
-                >
+                <MenuItem key="3_sess" sx={{ fontSize: "12px" }} value="7">
                   Один раз в неделю
                 </MenuItem>
-                <MenuItem
-                  key="2_sess"
-                  sx={{ fontSize: "12px" }}
-                  value="Каждые две недели"
-                >
+                <MenuItem key="2_sess" sx={{ fontSize: "12px" }} value="14">
                   Каждые две недели
                 </MenuItem>
-                <MenuItem
-                  key="1_sess"
-                  sx={{ fontSize: "12px" }}
-                  value="Один раз в месяц"
-                >
+                <MenuItem key="1_sess" sx={{ fontSize: "12px" }} value="31">
                   Один раз в месяц
                 </MenuItem>
                 <Divider />
