@@ -37,7 +37,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
 
   static defaultProps: IProps = {
     devs_tree: null,
-    onSelect: (dev: TDevice) => {},
+    onSelect: (dev: TDevice) => {}
   };
 
   componentDidMount(): void {
@@ -225,8 +225,6 @@ export class DevsGroupsTree extends React.Component<IProps> {
         let delta = nowDate.getTime() - otherDate.getTime();
 
         var passedDay = Math.floor(delta / 1000 / 60 / 60 / 24); ///////////////////( new Date( ( new Date() ).toDateString() ) - 86400000 ); // 24*60*60*1000
-          
-      
 
         if (passedDay === 0) {
           return (
@@ -317,7 +315,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
           );
         }
 
-        APP_STORAGE.devs.setPassedDay(String(passedDay))
+        APP_STORAGE.devs.setPassedDay(String(passedDay));
       }
     }
   }
@@ -382,7 +380,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
                   sx={{
                     color: "#222",
                     borderLeft: "1px solid #c1c1c1",
-                    fontSize: "14px",
+                    fontSize: "14px"
                   }}
                 >
                   {childs}
@@ -390,8 +388,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
               </Box>
             </React.Fragment>
           );
-        } 
-        else {
+        } else {
           parent.push(
             <React.Fragment key={"_gr_id_key_" + gr.id}>
               <Box sx={{ display: "flex" }}>
@@ -404,7 +401,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
                   sx={{
                     color: "#808080",
                     borderLeft: "1px solid #c1c1c1",
-                    fontSize: "14px",
+                    fontSize: "14px"
                   }}
                 >
                   {childs}
@@ -418,13 +415,13 @@ export class DevsGroupsTree extends React.Component<IProps> {
     return parent;
   }
 
-   drawDevsTree(): React.ReactNode {
+  drawDevsTree(): React.ReactNode {
     ////////////////////////////// Функция отрисовки дерева
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
     return this.drawDevGroup(DevGr);
   }
- 
+
   render(): React.ReactNode {
     return (
       <React.Fragment>
@@ -437,7 +434,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
             sx={{
               background: "#fff",
               p: "20px",
-              borderRadius: "4px",
+              borderRadius: "4px"
             }}
           >
             <TreeView

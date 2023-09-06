@@ -1,6 +1,5 @@
 @use "base";
 
-
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 241, 245, 252;
@@ -38,7 +37,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: #F1F5FC;
+  background: #f1f5fc;
   // background: linear-gradient(
   //     to bottom,
   //     transparent,
@@ -47,7 +46,7 @@ body {
   //   rgb(var(--background-start-rgb));
 }
 
-.button-back-to-up{
+.button-back-to-up {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -121,7 +120,7 @@ body {
     }
   }
 }
-.datarow{
+.datarow {
   border-style: hidden;
 }
 input#datetime-local {
@@ -341,17 +340,20 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
   background-color: base.$white;
 }
 
-.css-1xmmv5i::-webkit-scrollbar-thumb , .paper_table::-webkit-scrollbar-thumb{
+.css-1xmmv5i::-webkit-scrollbar-thumb,
+.paper_table::-webkit-scrollbar-thumb {
   width: 1px;
   background-color: #c8cdd3;
 }
 
-.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar, .paper_table::-webkit-scrollbar {
+.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar,
+.paper_table::-webkit-scrollbar {
   width: 4px;
   background-color: base.$white;
 }
 
-.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar-thumb , .paper_table::-webkit-scrollbar-thumb {
+.MuiTableContainer-root.css-rorn0c-MuiTableContainer-root::-webkit-scrollbar-thumb,
+.paper_table::-webkit-scrollbar-thumb {
   width: 1px;
   background-color: #c8cdd3;
 }
@@ -393,31 +395,31 @@ ul.MuiList-root.MuiList-padding.MuiMenu-list.css-6hp17o-MuiList-root-MuiMenu-lis
 }
 
 .right-panel {
-  background: #266BF1;
+  background: #266bf1;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   color: #d8cccc;
 }
 
-.list_item{
+.list_item {
   border: 1px solid;
-  border-color: #E0E3E7;
+  border-color: #e0e3e7;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 8px;
-}   
-
-.auth_button:hover{
-  color: #266BF1;
 }
-.close_button:hover{
+
+.auth_button:hover {
+  color: #266bf1;
+}
+.close_button:hover {
   color: #266bf1;
 }
 
-.top_panel_div{
+.top_panel_div {
   height: 50px;
 }
 
@@ -431,33 +433,33 @@ svg.svg_icon {
     display: block;
     height: 70vh;
   }
-  .top_panel_div{
+  .top_panel_div {
     height: 100%;
   }
-  #chosen_table{
+  #chosen_table {
     display: none;
   }
 
   .is-grid {
     min-height: 80vh;
-}
+  }
 
-
-  #button_up{
+  #button_up {
     display: none;
   }
-  .right-panel{
+  .right-panel {
     display: none;
   }
 
   #left-form {
     display: none;
   }
-  #addition_info{
+  #addition_info {
     display: none;
   }
 
-  #addition, #devpovs{
+  #addition,
+  #devpovs {
     margin-top: 0;
   }
   #top-menu {
@@ -493,110 +495,124 @@ svg.svg_icon {
   }
 }
 ///////////////////////////////////////////////////////////////////////
-/// 
-/// 
+///
+///
 /// @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
+#tooltip {
+  background: #fff;
+  border-radius: 5px;
+  padding: 8px;
+  color: #000;
+  font-size: 14px;
+  box-shadow: -1px 2px 8px 0px rgba(7, 133, 231, 0.2);
+}
 
 .upload-files-container {
-	padding: 30px 60px;
-	display: flex;
-   	align-items: center;
-   	justify-content: center;
-	flex-direction: column;
+  padding: 30px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 .drag-file-area {
-	border: 2px dashed #266BF1;
-	border-radius: 4px;
-	margin: 10px 0 15px;
-	padding: 12px;
+  border: 2px dashed #266bf1;
+  border-radius: 4px;
+  margin: 10px 0 15px;
+  padding: 12px;
   padding-bottom: 22px;
-	width: 350px;
-	text-align: center;
+  width: 350px;
+  text-align: center;
 }
 .drag-file-area .upload-icon {
-	font-size: 50px;
+  font-size: 50px;
 }
 .drag-file-area h3 {
-	font-size: 26px;
-	margin: 15px 0;
+  font-size: 26px;
+  margin: 15px 0;
 }
 .drag-file-area label {
-	font-size: 19px;
+  font-size: 19px;
 }
 .drag-file-area label .browse-files-text {
-	color: #266BF1;
-	font-weight: bolder;
-	cursor: pointer;
+  color: #266bf1;
+  font-weight: bolder;
+  cursor: pointer;
 }
 .browse-files span {
-	position: relative;
-	top: -25px;
+  position: relative;
+  top: -25px;
 }
 .default-file-input {
-	opacity: 0;
+  opacity: 0;
 }
 .cannot-upload-message {
-	background-color: #ffc6c4;
-	font-size: 17px;
-	display: flex;
-	align-items: center;
-	margin: 5px 0;
-	padding: 5px 10px 5px 30px;
-	border-radius: 5px;
-	color: #BB0000;
-	display: none;
+  background-color: #ffc6c4;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+  padding: 5px 10px 5px 30px;
+  border-radius: 5px;
+  color: #bb0000;
+  display: none;
 }
 @keyframes fadeIn {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
-.cannot-upload-message span, .upload-button-icon {
-	padding-right: 10px;
+.cannot-upload-message span,
+.upload-button-icon {
+  padding-right: 10px;
 }
 .cannot-upload-message span:last-child {
-	padding-left: 20px;
-	cursor: pointer;
+  padding-left: 20px;
+  cursor: pointer;
 }
 .file-block {
-	color: #000;
-	 background-color: #E5F4FF;
-  	transition: all 1s;
-	position: relative;
-	display: none;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
+  color: #000;
+  background-color: #e5f4ff;
+  transition: all 1s;
+  position: relative;
+  display: none;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   padding: 4px;
-	border-radius: 4px;
-	cursor: pointer;
+  border-radius: 4px;
+  cursor: pointer;
   margin-bottom: 12px;
 }
 .file-info {
-	display: flex;
-	align-items: center;
-	font-size: 15px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
 }
 .file-icon {
-	margin-right: 10px;
+  margin-right: 10px;
 }
-.file-name, .file-size {
-	padding: 0 3px;
+.file-name,
+.file-size {
+  padding: 0 3px;
 }
 .remove-file-icon {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .upload-button {
-	font-family: 'Montserrat';
-	background-color: #266BF1;
-	color: #f7fff7;
-	display: flex;
-	align-items: center;
-	font-size: 18px;
-	border: none;
-	border-radius: 4px;
-	margin: 10px;
-	padding: 7.5px 50px;
-	cursor: pointer;
+  font-family: "Montserrat";
+  background-color: #266bf1;
+  color: #f7fff7;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+  margin: 10px;
+  padding: 7.5px 50px;
+  cursor: pointer;
 }
