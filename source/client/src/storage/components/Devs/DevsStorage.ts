@@ -777,4 +777,15 @@ export class DevsStorage {
       APP_STORAGE.auth_form.getdt()
     );
   }
+
+  async set_SchemeSvg(sess_code: string) {
+    alert("hjg11");
+    var q: IWSQuery = new WSQuery("set_SchemeSvg");
+    q.args = {
+      id: APP_STORAGE.devs_groups.getParentId(),
+      svg_file: "APP_STORAGE.importdevs.getSvg()"
+    };
+    q.sess_code = sess_code;
+    (await WSocket.get()).send(q);
+  }
 }

@@ -1,6 +1,7 @@
 import { observable, action, computed, makeAutoObservable } from "mobx";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
+
 import { APP_STORAGE } from "../../AppStorage";
 import { toJS } from "mobx";
 
@@ -69,7 +70,6 @@ export class ImportDevStorage {
   }
 
   async Uploadfile() {
-    console.log(toJS(APP_STORAGE.importdevs.getArrayJsonData()), "array");
     try {
       var m1: any;
       var array_senssors;
@@ -79,8 +79,6 @@ export class ImportDevStorage {
         m1 = APP_STORAGE.importdevs
           .getArrayJsonData()
           [key].slice(5, APP_STORAGE.importdevs.getArrayJsonData()[key].length);
-
-        console.log(m1, "m1");
 
         array_senssors = m1;
 
@@ -96,8 +94,6 @@ export class ImportDevStorage {
           }));
         };
         let arr = getData(arrKeys, array_number);
-
-        console.log("arr", arr);
 
         var sess_code = APP_STORAGE.auth_form.getdt();
         var q: IWSQuery = new WSQuery("set_NewDevs");
@@ -169,7 +165,7 @@ export class ImportDevStorage {
     var q: IWSQuery = new WSQuery("set_SchemeSvg");
     q.args = {
       id: APP_STORAGE.devs_groups.getParentId(),
-      svg_file: this.getSvg()
+      svg_file: "data:image/svg+xml;utf8," + encodeURIComponent(this.getSvg())
     };
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);

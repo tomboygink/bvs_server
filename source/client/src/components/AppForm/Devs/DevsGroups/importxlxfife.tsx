@@ -304,6 +304,7 @@ export class Importxlxfife extends React.Component<IProps> {
             <TableRow key={"dsafsafasfd" + 1}>
               <TableCell key="121212"> 300001 </TableCell>
               <TableCell key="12121ewe2"> 300001 - УПСВм (ТС №4)</TableCell>
+              <TableCell key="121u"> 7</TableCell>
               <TableCell key="121weeew212"> 55.455900</TableCell>
               <TableCell key="121weeew21212">65.349242</TableCell>
               <TableCell key="qw1"> 0.1</TableCell>
@@ -317,6 +318,7 @@ export class Importxlxfife extends React.Component<IProps> {
             <TableRow key={"dsafssfd" + 1}>
               <TableCell key="12"> 300002 </TableCell>
               <TableCell key="1212"> 300002 - УПСВм (ТС №4)</TableCell>
+              <TableCell key="121"> 31</TableCell>
               <TableCell key="12ew212"> 55.455900 </TableCell>
               <TableCell key="121wew21212"> 65.349242</TableCell>
               <TableCell key="1212eqe2"> 0.1</TableCell>
