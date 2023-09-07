@@ -59,7 +59,7 @@ var SchemeSvgTable = (function () {
             var db_res, result, p;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT AddScheme_Svg(" +
+                    case 0: return [4, this.db.query("SELECT UpdateScheme_Svg(" +
                             "CAST (" + this.args.id + " AS BIGINT), " +
                             "CAST ('" + this.args.svg_file + "' AS TEXT), " +
                             "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP)) AS id")];
