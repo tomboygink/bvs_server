@@ -81,9 +81,11 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 	            //console.log("im admin")
 	            //var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ");
 				var roots_gr = await this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg ON devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 ");
-				//console.log(roots_gr.rows[0]);
 
 	            for (var i in roots_gr.rows) {
+					//console.log(roots_gr.rows[i]);
+
+
 	                var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id + " order by number asc")).rows;
 	                devs = new Array();
 	                for (var j in device) {
@@ -116,12 +118,12 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 						scheme_svg: roots_gr.rows[i].scheme_svg
 	                })
 	            }
-	            //console.log(groups.childs);
+	            
 	        }
 	        else {
 	            //console.log("im user")
 	            //var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id);
-				var roots_gr = await this.db.query("SELECT * FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 AND org_id= " + this.args.org_id);
+				var roots_gr = await this.db.query("SELECT devs_groups.*, scheme_svg.svg INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 AND org_id= " + this.args.org_id);
 	            for (var i in roots_gr.rows) {
 	                var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id  + " order by number asc")).rows;
 	                devs = new Array();
@@ -191,11 +193,14 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 	        var devs = new Array();
 	
 
-	        //var grs = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=" + childs.id);
-			var grs = await this.db.query("SELECT * FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=" + childs.id);
+			
+	        
+			var grs = await this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=" + childs.id);
+			
 	        for (var i in grs.rows) {
 	           // console.log(grs.rows[i].id + " " + grs.rows[i].g_name)
 	            var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + grs.rows[i].id  + " order by number asc")).rows;
+				
 	            
 	            var devs = new Array();
 	
