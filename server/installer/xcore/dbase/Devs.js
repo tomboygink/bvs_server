@@ -75,8 +75,8 @@ var DevsTable = (function () {
                                 "CAST('" + this.args.longitude + "' AS VARCHAR(60))," +
                                 "CAST('" + this.args.sensors + "' AS JSON)," +
                                 "CAST(" + this.args.deleted + " AS BOOLEAN)," +
-                                "CAST('" + this.args.info + "' AS TEXT))," +
-                                "CAST('" + this.args.period_sess + "' AS BIGINT) AS id")];
+                                "CAST('" + this.args.info + "' AS TEXT)," +
+                                "CAST('" + this.args.period_sess + "' AS BIGINT)) AS id")];
                     case 2:
                         db_res = _a.sent();
                         result = new Array();
@@ -132,7 +132,7 @@ var DevsTable = (function () {
                             "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
                             "CAST ('" + this.args.sensors + "' AS JSON), " +
                             "CAST ('" + this.args.deleted + "' AS BOOLEAN), " +
-                            "CAST ('" + this.args.info + "' AS TEXT)" +
+                            "CAST ('" + this.args.info + "' AS TEXT)," +
                             "CAST ('" + this.args.period_sess + "' AS BIGINT))")];
                     case 1:
                         _a.sent();

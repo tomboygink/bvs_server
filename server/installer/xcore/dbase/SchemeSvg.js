@@ -61,8 +61,8 @@ var SchemeSvgTable = (function () {
                 switch (_a.label) {
                     case 0: return [4, this.db.query("SELECT AddScheme_Svg(" +
                             "CAST (" + this.args.id + " AS BIGINT), " +
-                            "CAST (" + this.args.svg + " AS TEXT), " +
-                            "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP)) as id")];
+                            "CAST ('" + this.args.svg_file + "' AS TEXT), " +
+                            "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP)) AS id")];
                     case 1:
                         db_res = _a.sent();
                         result = new Array();
