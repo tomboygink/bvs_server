@@ -16,7 +16,7 @@ export class SchemeSvgTable {
     }
 
     async insertSchemeSVG() {
-        var db_res = await this.db.query("SELECT AddScheme_Svg(" +
+        var db_res = await this.db.query("SELECT UpdateScheme_Svg(" +
             "CAST (" + this.args.id + " AS BIGINT), " +
             "CAST ('" + this.args.svg_file + "' AS TEXT), " +
             "CAST ('" + dateTimeToSQL(new Date(Date.now())) + "' AS TIMESTAMP)) AS id")

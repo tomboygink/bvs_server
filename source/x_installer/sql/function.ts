@@ -658,6 +658,29 @@ export const function_sql = {
     	RETURNING id
     $$
     LANGUAGE SQL;
+
+
+
+
+    --------------------------------------------------------------------------------------------Функция обновления схем проктов
+    DROP FUNCTION IF EXISTS UpdateScheme_Svg;
+    CREATE OR REPLACE FUNCTION UpdateScheme_Svg(
+    	c_id_devs_groups BIGINT,
+    	c_svg TEXT,
+    	c_created_at TIMESTAMP
+    ) RETURNS VOID
+    AS $$
+    UPDATE Scheme_Svg
+    SET
+    svg = c_svg, 
+    created_at = c_created_at
+    WHERE id = c_id_devs_groups
+    $$
+    LANGUAGE SQL;
+
     `,
+
+
+    
     args: new Array()
 };

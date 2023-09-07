@@ -123,7 +123,6 @@ var Devs_groupsTable = (function () {
                         return [4, this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg ON devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 ")];
                     case 1:
                         roots_gr = _w.sent();
-                        console.log(roots_gr.rows[0]);
                         _a = roots_gr.rows;
                         _b = [];
                         for (_c in _a)
