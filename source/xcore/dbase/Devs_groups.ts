@@ -11,8 +11,6 @@ import { DBase, getDB } from "./DBase";
 	    org_num: number = 0;
 	    deleted: boolean = false;
 	    g_info: string = '';
-	
-
 	    constructor() { }
 	}
 	
@@ -45,7 +43,6 @@ import { DBase, getDB } from "./DBase";
 	
 
 	    //Получение группы устройства 
-	    //Получение группы устройства 
 	    async selectDevsGroups() {
 	        var dev: any = {
 	            id: 0,
@@ -57,7 +54,8 @@ import { DBase, getDB } from "./DBase";
 	            sensors: '',
 	            deleted: false,
 	            info: '',
-	            time: ''
+	            time: '',
+				period_sess: 0,
 	        };
 
 	        var groups: any = {
@@ -66,13 +64,16 @@ import { DBase, getDB } from "./DBase";
 	            p_id: 0,
 	            childs: new Array(),
 	            devs: new Array(),
-	            update: false
+	            update: false,
+				//тестово
+				scheme_svg: ""
 	        }
 	        var devs = new Array();
 	        var t;
 	        if (this.args.users_w === true) {
 	            //console.log("im admin")
-	            var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ");
+	            //var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ");
+				var roots_gr = await this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg ON devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 ");
 	            for (var i in roots_gr.rows) {
 	                var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id + " order by number asc")).rows;
 	                devs = new Array();
@@ -91,7 +92,8 @@ import { DBase, getDB } from "./DBase";
 	                        sensors: device[j].sensors,
 	                        deleted: device[j].deleted,
 	                        info: device[j].info,
-	                        time: t
+	                        time: t,
+							period_sess: device[j].period_sess
 	                    }
 	                    devs.push(dev);
 	                }
@@ -101,14 +103,16 @@ import { DBase, getDB } from "./DBase";
 	                    p_id: roots_gr.rows[i].parent_id,
 	                    childs: new Array(),
 	                    devs: devs,
-	                    update: false
+	                    update: false,
+						scheme_svg: roots_gr.rows[i].scheme_svg
 	                })
 	            }
 	            //console.log(groups.childs);
 	        }
 	        else {
 	            //console.log("im user")
-	            var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id);
+	            //var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id);
+				var roots_gr = await this.db.query("SELECT * FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 AND org_id= " + this.args.org_id);
 	            for (var i in roots_gr.rows) {
 	                var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id  + " order by number asc")).rows;
 	                devs = new Array();
@@ -127,7 +131,8 @@ import { DBase, getDB } from "./DBase";
 	                        sensors: device[j].sensors,
 	                        deleted: device[j].deleted,
 	                        info: device[j].info,
-	                        time: t
+	                        time: t,
+							period_sess: device[j].period_sess
 	                    }
 	                    devs.push(dev);
 	                }
@@ -137,7 +142,9 @@ import { DBase, getDB } from "./DBase";
 	                    p_id: roots_gr.rows[i].parent_id,
 	                    childs: new Array(),
 	                    devs: devs,
-	                    update: false
+	                    update: false,
+						scheme_svg: roots_gr.rows[i].scheme_svg
+
 	                })
 	            
 	            }
@@ -154,9 +161,6 @@ import { DBase, getDB } from "./DBase";
 
 	    }
 	
-
-	
-
 	    //Преобразоватие в дерево 
 	    async _d_tree(childs: any) {
 	        var reti = new Array();
@@ -170,14 +174,16 @@ import { DBase, getDB } from "./DBase";
 	            sensors: '',
 	            deleted: false,
 	            info: '',
-	            time: ''
+	            time: '',
+				period_sess: 0
 	        };
 	        
 	        var t;
 	        var devs = new Array();
 	
 
-	        var grs = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=" + childs.id);
+	        //var grs = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=" + childs.id);
+			var grs = await this.db.query("SELECT * FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=" + childs.id);
 	        for (var i in grs.rows) {
 	           // console.log(grs.rows[i].id + " " + grs.rows[i].g_name)
 	            var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + grs.rows[i].id  + " order by number asc")).rows;
@@ -201,7 +207,8 @@ import { DBase, getDB } from "./DBase";
 	                    sensors: device[j].sensors,
 	                    deleted: device[j].deleted,
 	                    info: device[j].info,
-	                    time: t
+	                    time: t,
+						period_sess:device[j].period_sess
 	                }
 	                devs.push(dev);
 	            }
@@ -213,15 +220,13 @@ import { DBase, getDB } from "./DBase";
 	                pid: grs.rows[i].parent_id,
 	                childs: await this._d_tree(grs.rows[i]),
 	                devs: devs,
-	                updated: false
+	                updated: false,
+					scheme_svg: grs.rows[i].scheme_svg
 	            });
 	        }
 	        return reti;
 	    }
 	
-
-	
-
 	    objToString(obj: any, isArray?: boolean) {
 	        var isArray = isArray || false; // что нужно вернуть - массив или объект
 	
@@ -318,12 +323,6 @@ import { DBase, getDB } from "./DBase";
 	                await this.db.query("UPDATE Devs SET " +
 	                    "deleted = " + this.args.deleted + " WHERE id=" + data_dev.rows[j].id);
 	            }
-	
-
-	
-
-	
-
 	        }
 	    }
 	}

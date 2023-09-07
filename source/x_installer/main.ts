@@ -4,28 +4,29 @@ import { dateTimeToStr } from '../xcore/dbase/DateStr';
 
 //Таблицы пользователя
 import { users_table, insert_admin } from './sql/users';
-import {orgs_table, org_insert_admin} from './sql/orgs';
-import {jobs_titles_table, insert_jt_admin} from './sql/jobs_titles';
-import {users_roles_table, insert_role} from './sql/users_roles';
-import {sessions_table} from './sql/sessions';
+import { orgs_table, org_insert_admin } from './sql/orgs';
+import { jobs_titles_table, insert_jt_admin } from './sql/jobs_titles';
+import { users_roles_table, insert_role } from './sql/users_roles';
+import { sessions_table } from './sql/sessions';
 
-import {dev_sess_table} from './sql/dev_sess';
-import {devs_groups_table} from './sql/devs_groups';
-import {devs_table} from './sql/devs';
-import {info_log_table} from './sql/info_log';
+import { dev_sess_table } from './sql/dev_sess';
+import { devs_groups_table } from './sql/devs_groups';
+import { devs_table } from './sql/devs';
+import { info_log_table } from './sql/info_log';
 import { dev_povs_table } from './sql/dev_povs';
 import { control_dev_sess_table } from './sql/control_dev_sess';
 import { function_sql } from './sql/function';
+import { scheme_svg_table } from './sql/scheme_svg';
 
 
-async function run(){
-    var db:DBase = getDB();
+async function run() {
+    var db: DBase = getDB();
 
     var dt = await db.NOW();
     console.log("START INSTALLER", dateTimeToStr(dt));
-    
 
-   
+
+
     //Создание таблиц пользователя
     console.log("ADDING TABLE \"orgs\"");
     await db.query(orgs_table.sql);
@@ -47,24 +48,24 @@ async function run(){
     await db.query(users_table.sql, users_table.args);
     console.log("TABLE \"users\" ADD");
 
-  
+
 
 
 
     //Создание пользователя
     console.log("CREATE ROLE");
     await db.query(insert_role.sql, insert_role.args);
-    
+
     console.log("CREATE ORG");
     await db.query(org_insert_admin.sql, org_insert_admin.args);
-    
+
     console.log("CREATE JOB_TITLE");
     await db.query(insert_jt_admin.sql, insert_jt_admin.args);
 
     console.log("CREATE USER");
     await db.query(insert_admin.sql, insert_admin.args);
 
-    
+
     //Создание таблиц устройств и сессий
     console.log("ADDING TABLE \"dev_sess\"");
     await db.query(dev_sess_table.sql, dev_sess_table.args);
@@ -89,10 +90,19 @@ async function run(){
     console.log("ADDING TABLE \"info_log\"");
     await db.query(info_log_table.sql, info_log_table.args);
     console.log("TABLE \"info_log\" ADD");
+   
 
+    //Создание таблицы схем месторождений 
+    console.log("CREATING \"scheme_svg\"");
+    await db.query(scheme_svg_table.sql, scheme_svg_table.args);
+    console.log("TABLE \"scheme_svg\" ADD");
+
+
+    //Добавление функций
     console.log("CREATING FUNCTION");
     await db.query(function_sql.sql, function_sql.args);
     console.log("FUNCTION CREATED");
+
 
     endDB();
     console.log("END INSTALLER");

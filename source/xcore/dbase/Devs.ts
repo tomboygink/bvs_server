@@ -5,6 +5,7 @@ export class DevsEntity {
     group_dev_id: number = 0;
     number: string = '';
     name: string = '';
+    period_sess: number = 0;
     latitude: string = '';
     longitude: string = '';
     sensors: Object = {};
@@ -34,7 +35,8 @@ export class DevsTable {
                 "CAST('" + this.args.longitude + "' AS VARCHAR(60))," +
                 "CAST('" + this.args.sensors + "' AS JSON)," +
                 "CAST(" + this.args.deleted + " AS BOOLEAN)," +
-                "CAST('" + this.args.info + "' AS TEXT)) AS id");
+                "CAST('" + this.args.info + "' AS TEXT),"+
+                "CAST('" + this.args.period_sess + "' AS BIGINT)) AS id");
             var result: DevsEntity[] = new Array();
             for (var p in db_res.rows) { result.push(db_res.rows[p]); }
             return result;
@@ -65,6 +67,7 @@ export class DevsTable {
             "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
             "CAST ('" + this.args.sensors + "' AS JSON), " +
             "CAST ('" + this.args.deleted + "' AS BOOLEAN), " +
-            "CAST ('" + this.args.info + "' AS TEXT))");
+            "CAST ('" + this.args.info + "' AS TEXT),"+
+            "CAST ('" + this.args.period_sess + "' AS BIGINT))");
     }
 }
