@@ -99,7 +99,8 @@ var Devs_groupsTable = (function () {
                             sensors: '',
                             deleted: false,
                             info: '',
-                            time: ''
+                            time: '',
+                            period_sess: 0
                         };
                         groups = {
                             group: {},
@@ -107,11 +108,12 @@ var Devs_groupsTable = (function () {
                             p_id: 0,
                             childs: new Array(),
                             devs: new Array(),
-                            update: false
+                            update: false,
+                            scheme_svg: ""
                         };
                         devs = new Array();
                         if (!(this.args.users_w === true)) return [3, 12];
-                        return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ")];
+                        return [4, this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg ON devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 ")];
                     case 1:
                         roots_gr = _w.sent();
                         _a = roots_gr.rows;
@@ -162,7 +164,8 @@ var Devs_groupsTable = (function () {
                             sensors: device[j].sensors,
                             deleted: device[j].deleted,
                             info: device[j].info,
-                            time: t
+                            time: t,
+                            period_sess: device[j].period_sess
                         };
                         devs.push(dev);
                         _w.label = 8;
@@ -176,14 +179,15 @@ var Devs_groupsTable = (function () {
                             p_id: roots_gr.rows[i].parent_id,
                             childs: new Array(),
                             devs: devs,
-                            update: false
+                            update: false,
+                            scheme_svg: roots_gr.rows[i].scheme_svg
                         });
                         _w.label = 10;
                     case 10:
                         _i++;
                         return [3, 2];
                     case 11: return [3, 23];
-                    case 12: return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id)];
+                    case 12: return [4, this.db.query("SELECT * FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 AND org_id= " + this.args.org_id)];
                     case 13:
                         roots_gr = _w.sent();
                         _h = roots_gr.rows;
@@ -234,7 +238,8 @@ var Devs_groupsTable = (function () {
                             sensors: device[j].sensors,
                             deleted: device[j].deleted,
                             info: device[j].info,
-                            time: t
+                            time: t,
+                            period_sess: device[j].period_sess
                         };
                         devs.push(dev);
                         _w.label = 20;
@@ -248,7 +253,8 @@ var Devs_groupsTable = (function () {
                             p_id: roots_gr.rows[i].parent_id,
                             childs: new Array(),
                             devs: devs,
-                            update: false
+                            update: false,
+                            scheme_svg: roots_gr.rows[i].scheme_svg
                         });
                         _w.label = 22;
                     case 22:
@@ -299,10 +305,11 @@ var Devs_groupsTable = (function () {
                             sensors: '',
                             deleted: false,
                             info: '',
-                            time: ''
+                            time: '',
+                            period_sess: 0
                         };
                         devs = new Array();
-                        return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=" + childs.id)];
+                        return [4, this.db.query("SELECT * FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=" + childs.id)];
                     case 1:
                         grs = _l.sent();
                         _a = grs.rows;
@@ -353,7 +360,8 @@ var Devs_groupsTable = (function () {
                             sensors: device[j].sensors,
                             deleted: device[j].deleted,
                             info: device[j].info,
-                            time: t
+                            time: t,
+                            period_sess: device[j].period_sess
                         };
                         devs.push(dev);
                         _l.label = 8;
@@ -372,6 +380,7 @@ var Devs_groupsTable = (function () {
                         _j.apply(_h, [(_k.childs = _l.sent(),
                                 _k.devs = devs,
                                 _k.updated = false,
+                                _k.scheme_svg = grs.rows[i].scheme_svg,
                                 _k)]);
                         _l.label = 11;
                     case 11:

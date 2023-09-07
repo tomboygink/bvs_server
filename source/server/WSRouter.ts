@@ -14,6 +14,9 @@ import { DevsTable } from '../xcore/dbase/Devs';
 import { Dev_sessTable } from '../xcore/dbase/Dev_sess';
 import { Dev_povsTable } from '../xcore/dbase/Dev_Povs';
 import { Control_dev_sessTable } from '../xcore/dbase/Control_dev_sess';
+import { SchemeSvgTable } from '../xcore/dbase/SchemeSvg';
+
+
 
 
 export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
@@ -374,7 +377,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         } break;
 
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ КОНТРОЛЬНОЙ СЕСССИИ 
-        case 'set_NewControlDevSess': { 
+        case 'set_NewControlDevSess': {
             var control_dev = new Control_dev_sessTable(q.args, q.sess_code);
             data = await control_dev.insertControl_dev_sess();
             if (data === null || data === undefined || data[0].id === 0) {
@@ -390,14 +393,14 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         } break;
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КОНТРОЛЬНОЙ СЕСССИИ 
-        case 'deleteControlDevSess':{
+        case 'deleteControlDevSess': {
             var deleteControlDevSess = new Control_dev_sessTable(q.args, q.sess_code);
             deleteControlDevSess.deleteControl_dev_sess();
             wsres.code = '';
             wsres.data = [];
             wsres.error = null;
 
-        }break;
+        } break;
 
 
         //Изменение устройства
@@ -407,8 +410,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             wsres.error = null;
             wsres.code = q.sess_code;
             wsres.data = [];
-        }
-            break;
+        } break;
 
 
         //------------------------------------------------------------------------ПОЛУЧЕНИЕ ПЕРВОЙ И ПОСЛЕДНЕЙ СЕССИИ 
@@ -419,8 +421,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             wsres.code = q.sess_code;
             wsres.data = data;
 
-        }
-            break;
+        } break;
 
 
 
@@ -433,9 +434,25 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             wsres.code = q.sess_code;
             //console.log(data);
             wsres.data = data;
-            
-        }
-            break;
+
+        } break;
+
+
+        //------------------------------------------------------------------------ДОБАВЛЕНИЕ СХЕМЫ ПРОЕКТА 
+        case 'set_SchemeSvg': {
+            var schemeSvg = new SchemeSvgTable(q.args);
+            data = await schemeSvg.insertSchemeSVG();
+            if (data[0].id == 0 || data == null || data == undefined) {
+                //wsres.code = q.sess_code;
+                wsres.data = [];
+                wsres.error = "Ошибка добавления схемы проекта"
+            }
+            else {
+                //wsres.code = q.sess_code;
+                wsres.data = data;
+                wsres.error = null;
+            }
+        }break;
 
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА
@@ -445,6 +462,10 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
             wsres.code = '';
             wsres.data = [];
         } break;
+
+
+
+
 
         //------------------------------------------------------------------------ДРУГИЕ КОДЫ КОТОРЫЕ НЕ ПРОПИСАННЫ
         default: {

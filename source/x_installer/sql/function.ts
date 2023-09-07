@@ -23,11 +23,6 @@ export const function_sql = {
     	SELECT * FROM devs_groups WHERE CAST(org_id AS TEXT) LIKE c_org_id
     $$
     LANGUAGE SQL;
-    --НЕОБХОДИМО УСЛОВИЯ WRITE В ДОСТУПЕ 
-    --Для пользователя SELECT * FROM SelectDevs_Group_OrgId('2');
-    --Для админа SELECT * FROM SelectDevs_Group_OrgId('%');
-
-
 
     --------------------------------------------------------------------------------------------Функция добавленя группы устройства
     DROP FUNCTION IF EXISTS AddDevs_Group;
@@ -91,7 +86,8 @@ export const function_sql = {
     	longitude VARCHAR(60),
     	sensors JSON,
     	deleted BOOLEAN,
-    	info TEXT
+    	info TEXT,
+        period_sess BIGINT
     )
     AS $$
     SELECT * FROM devs WHERE group_dev_id = c_group_dev_id
@@ -108,12 +104,13 @@ export const function_sql = {
 	    c_longitude VARCHAR(60),
 	    c_sensors JSON,
 	    c_deleted BOOLEAN,
-	    c_info TEXT
+	    c_info TEXT,
+        c_period_sess BIGINT
     )
     RETURNS BIGINT
     AS $$
-	    INSERT INTO devs (group_dev_id, number, name, latitude, longitude, sensors, deleted, info)
-	    VALUES (c_group_dev_id, c_number, c_name, c_latitude, c_longitude, c_sensors, c_deleted, c_info)
+	    INSERT INTO devs (group_dev_id, number, name, latitude, longitude, sensors, deleted, info, period_sess)
+	    VALUES (c_group_dev_id, c_number, c_name, c_latitude, c_longitude, c_sensors, c_deleted, c_info, c_period_sess)
 	    RETURNING id
     $$ LANGUAGE SQL;
 
@@ -129,7 +126,8 @@ export const function_sql = {
 	    c_longitude VARCHAR(60),
 	    c_sensors JSON,
 	    c_deleted BOOLEAN,
-	    c_info TEXT
+	    c_info TEXT,
+        c_period_sess BIGINT
     )
     RETURNS VOID 
     AS $$
@@ -141,8 +139,9 @@ export const function_sql = {
     	longitude=c_longitude,
     	sensors=c_sensors,
     	deleted=c_deleted,
-    	info = c_info 
-    	WHERE id = c_id	
+    	info = c_info,
+        period_sess= c_period_sess
+    	WHERE id = c_id
     $$
     LANGUAGE SQL; 
 
@@ -644,6 +643,21 @@ export const function_sql = {
     	WHERE id = c_id
     $$
     LANGUAGE SQL; 
+
+
+    --------------------------------------------------------------------------------------------Функция добавлния схем проктов
+    DROP FUNCTION IF EXISTS AddScheme_Svg;
+    CREATE OR REPLACE FUNCTION AddScheme_Svg(
+    	c_id_devs_groups BIGINT,
+    	c_svg TEXT,
+    	c_created_at TIMESTAMP
+    ) RETURNS BIGINT
+    AS $$
+    	INSERT INTO scheme_svg(id_devs_groups, svg, created_at)
+    	VALUES(c_id_devs_groups, c_svg, c_created_at)
+    	RETURNING id
+    $$
+    LANGUAGE SQL;
     `,
     args: new Array()
 };

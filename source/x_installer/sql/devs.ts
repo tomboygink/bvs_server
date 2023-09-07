@@ -12,7 +12,8 @@ export const devs_table = {
         "longitude" CHARACTER VARYING(60) NOT NULL DEFAULT('0.0'),
         "sensors" JSON NOT NULL DEFAULT('{"s":[]}'),
         "deleted" BOOLEAN DEFAULT (false),
-        "info" TEXT NOT NULL DEFAULT('')
+        "info" TEXT NOT NULL DEFAULT(''),
+        "period_sess" BIGINT DEFAULT(0)
     );
     COMMENT ON TABLE devs IS 'Устройства по группам';
     COMMENT ON COLUMN devs.group_dev_id IS 'Идентификатор группы';
@@ -23,6 +24,7 @@ export const devs_table = {
     COMMENT ON COLUMN devs.sensors IS 'Сенсоры на устройстве';
     COMMENT ON COLUMN devs.deleted IS 'Удаление утройства';
     COMMENT ON COLUMN devs.info IS 'Информация об устройстве';
+    COMMENT ON COLUMN devs.period_sess IS 'Установленный период передачи';
     `,
     args: new Array()
 }

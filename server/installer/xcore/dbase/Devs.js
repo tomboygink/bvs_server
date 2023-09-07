@@ -44,6 +44,7 @@ var DevsEntity = (function () {
         this.group_dev_id = 0;
         this.number = '';
         this.name = '';
+        this.period_sess = 0;
         this.latitude = '';
         this.longitude = '';
         this.sensors = {};
@@ -61,13 +62,12 @@ var DevsTable = (function () {
     DevsTable.prototype.insertDevs = function () {
         return __awaiter(this, void 0, void 0, function () {
             var data, db_res, result, p;
-            var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, this.db.query("SELECT number FROM devs WHERE number = '" + this.args.number + "'")];
                     case 1:
                         data = _a.sent();
-                        if (!(data.rows.some(function (e) { return e.number !== _this.args.number; }) || data.rows.length === 0)) return [3, 3];
+                        if (!(data.rows.length === 0 || data.rows[0].number !== this.args.number)) return [3, 3];
                         return [4, this.db.query("SELECT AddDevs(CAST(" + this.args.group_dev_id + " AS BIGINT), " +
                                 "CAST('" + this.args.number + "' AS VARCHAR(80))," +
                                 "CAST('" + this.args.name + "' AS VARCHAR(250))," +
@@ -75,7 +75,8 @@ var DevsTable = (function () {
                                 "CAST('" + this.args.longitude + "' AS VARCHAR(60))," +
                                 "CAST('" + this.args.sensors + "' AS JSON)," +
                                 "CAST(" + this.args.deleted + " AS BOOLEAN)," +
-                                "CAST('" + this.args.info + "' AS TEXT)) AS id")];
+                                "CAST('" + this.args.info + "' AS TEXT))," +
+                                "CAST('" + this.args.period_sess + "' AS BIGINT) AS id")];
                     case 2:
                         db_res = _a.sent();
                         result = new Array();
@@ -89,6 +90,18 @@ var DevsTable = (function () {
         });
     };
     ;
+    DevsTable.prototype.delete_duplicate = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.db.query("delete from devs WHERE id NOT IN (select MIN(id) from devs group by number);")];
+                    case 1:
+                        _a.sent();
+                        return [2];
+                }
+            });
+        });
+    };
     DevsTable.prototype.selectDevs = function () {
         return __awaiter(this, void 0, void 0, function () {
             var db_res, result, p;
@@ -119,7 +132,8 @@ var DevsTable = (function () {
                             "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
                             "CAST ('" + this.args.sensors + "' AS JSON), " +
                             "CAST ('" + this.args.deleted + "' AS BOOLEAN), " +
-                            "CAST ('" + this.args.info + "' AS TEXT))")];
+                            "CAST ('" + this.args.info + "' AS TEXT)" +
+                            "CAST ('" + this.args.period_sess + "' AS BIGINT))")];
                     case 1:
                         _a.sent();
                         return [2];
