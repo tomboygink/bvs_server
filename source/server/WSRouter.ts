@@ -283,6 +283,7 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         case 'set_NewDevGroup': {
             var dg = new Devs_groupsTable(q.args, q.sess_code);
             data = await dg.insertDevsGroups();
+            
             if (data[0].id == 0 || data == null || data == undefined) {
                 wsres.code = q.sess_code;
                 wsres.data = [];
@@ -441,17 +442,12 @@ export async function WSRoute(_ws: WebSocket, q: IWSQuery) {
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ СХЕМЫ ПРОЕКТА 
         case 'set_SchemeSvg': {
             var schemeSvg = new SchemeSvgTable(q.args);
-            data = await schemeSvg.insertSchemeSVG();
-            if (data[0].id == 0 || data == null || data == undefined) {
-                //wsres.code = q.sess_code;
-                wsres.data = [];
-                wsres.error = "Ошибка добавления схемы проекта"
-            }
-            else {
-                //wsres.code = q.sess_code;
-                wsres.data = data;
-                wsres.error = null;
-            }
+            await schemeSvg.insertSchemeSVG();
+            
+            wsres.code = '';
+            wsres.data = [];
+            wsres.error = null;
+            
         }break;
 
 

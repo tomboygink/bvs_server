@@ -194,7 +194,7 @@ var Devs_groupsTable = (function () {
                         _i++;
                         return [3, 2];
                     case 11: return [3, 23];
-                    case 12: return [4, this.db.query("SELECT devs_groups.*, scheme_svg.svg INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 AND org_id= " + this.args.org_id)];
+                    case 12: return [4, this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 AND org_id= " + this.args.org_id)];
                     case 13:
                         roots_gr = _w.sent();
                         _h = roots_gr.rows;
