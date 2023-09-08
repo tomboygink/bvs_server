@@ -674,7 +674,7 @@ export const function_sql = {
     SET
     svg = c_svg, 
     created_at = c_created_at
-    WHERE id = c_id_devs_groups
+    WHERE id_devs_groups = c_id_devs_groups
     $$
     LANGUAGE SQL;
 

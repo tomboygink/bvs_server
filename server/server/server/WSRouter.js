@@ -486,15 +486,10 @@ function WSRoute(_ws, q) {
                     schemeSvg = new SchemeSvg_1.SchemeSvgTable(q.args);
                     return [4, schemeSvg.insertSchemeSVG()];
                 case 69:
-                    data = _c.sent();
-                    if (data[0].id == 0 || data == null || data == undefined) {
-                        wsres.data = [];
-                        wsres.error = "Ошибка добавления схемы проекта";
-                    }
-                    else {
-                        wsres.data = data;
-                        wsres.error = null;
-                    }
+                    _c.sent();
+                    wsres.code = '';
+                    wsres.data = [];
+                    wsres.error = null;
                     return [3, 72];
                 case 70:
                     {
