@@ -37,9 +37,7 @@ export class Importxlxfife extends React.Component<IProps> {
 
   async removeFileButton() {
     let uploadIcon = document.querySelector(".upload-icon") as HTMLInputElement;
-    let dragDropText = document.querySelector(
-      ".dynamic-message"
-    ) as HTMLInputElement;
+
     let fileInput = document.querySelector(
       ".default-file-input"
     ) as HTMLInputElement;
@@ -48,9 +46,6 @@ export class Importxlxfife extends React.Component<IProps> {
       ".file-block"
     ) as HTMLInputElement;
 
-    let uploadButton = document.querySelector(
-      ".upload-button"
-    ) as HTMLInputElement;
     uploadedFile.style.cssText = "display: none;";
     fileInput.value = "";
     uploadIcon.innerHTML = "file_upload";
@@ -58,10 +53,6 @@ export class Importxlxfife extends React.Component<IProps> {
 
   private _handleFile = async (e: any) => {
     APP_STORAGE.importdevs.setSuccessfully_text("");
-    let uploadIcon = document.querySelector(".upload-icon") as HTMLInputElement;
-    let dragDropText = document.querySelector(
-      ".dynamic-message"
-    ) as HTMLInputElement;
     let fileInput = document.querySelector(
       ".default-file-input"
     ) as HTMLInputElement;
@@ -71,13 +62,6 @@ export class Importxlxfife extends React.Component<IProps> {
     ) as HTMLInputElement;
     let fileName = document.querySelector(".file-name") as HTMLInputElement;
     let fileSize = document.querySelector(".file-size") as HTMLInputElement;
-    let progressBar = document.querySelector(
-      ".progress-bar"
-    ) as HTMLInputElement;
-
-    let uploadButton = document.querySelector(
-      ".upload-button"
-    ) as HTMLInputElement;
 
     fileName.innerHTML = fileInput.files[0].name;
     fileSize.innerHTML = (fileInput.files[0].size / 1024).toFixed(1) + " KB";
