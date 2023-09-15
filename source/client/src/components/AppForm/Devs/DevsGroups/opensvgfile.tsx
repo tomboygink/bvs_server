@@ -1,30 +1,19 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import DoneIcon from "@mui/icons-material/Done";
-import * as XLSX from "xlsx";
-
 import CloseIcon from "@mui/icons-material/Close";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 import {
-  TextField,
   Box,
   Dialog,
   Divider,
   Typography,
   Button,
-  FormHelperText,
-  Table,
-  TableBody,
-  TableRow,
-  TableCell
+  FormHelperText
 } from "@mui/material";
-import Autocomplete from "@mui/material/Autocomplete";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
-import { toJS } from "mobx";
 
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 interface IProps {}
 
@@ -36,88 +25,62 @@ export class Opensvgfile extends React.Component<IProps> {
   }
 
   async uploadfile() {
-    APP_STORAGE.importdevs.set_SchemeSvg(APP_STORAGE.auth_form.getdt());
-    var element = document.createElement("div");
-    element.id = "svg";
-    document.getElementsByClassName("svg-container")[0].innerHTML = "";
-    document.getElementsByClassName("svg-container")[0].appendChild(element);
-    var newSvg = document.getElementById("svg");
-    newSvg.outerHTML = APP_STORAGE.importdevs.getSvg();
-    APP_STORAGE.importdevs.setOpenModalSvg(false);
-    var hrefs = document.getElementsByClassName("well");
-
-    for (let i in hrefs) {
-      hrefs.item(Number(i)).addEventListener("mouseout", function (e) {
-        e.preventDefault(); /*use if you want to prevent the original link following action*/
-        var tooltip = document.getElementById("tooltip");
-        tooltip.style.display = "none";
-      });
-
-      hrefs.item(Number(i)).addEventListener("mousemove", function (e) {
-        e.preventDefault(); /*use if you want to prevent the original link following action*/
-
-        for (var j in APP_STORAGE.devs.getChangeSensors2()) {
-          if (
-            String(hrefs[i].id) ===
-            String(APP_STORAGE.devs.getChangeSensors2()[j].id)
-          ) {
-            var clientRectangle = document
-              .getElementById(hrefs[i].id)
-              .getBoundingClientRect();
-            let tooltip = document.getElementById("tooltip");
-            tooltip.innerHTML =
-              "Номер косы" +
-              "-" +
-              APP_STORAGE.devs.getChangeSensors2()[j].number;
-            tooltip.style.display = "block";
-            tooltip.style.left = clientRectangle.left + "px";
-            tooltip.style.top = clientRectangle.top + "px";
-          }
-        }
-      });
-
-      hrefs.item(Number(i)).addEventListener("click", function (e) {
-        e.preventDefault(); /*use if you want to prevent the original link following action*/
-
-        for (var j in APP_STORAGE.devs.getChangeSensors2()) {
-          if (
-            String(hrefs[i].id) ===
-            String(APP_STORAGE.devs.getChangeSensors2()[j].id)
-          ) {
-            APP_STORAGE.devs.setIdChild("_dev_id_key_" + hrefs[i].id);
-            APP_STORAGE.sensors.setEmptySession("");
-            APP_STORAGE.sensors.setSessFirstLast([]);
-            APP_STORAGE.sensors.setSessFirstLastCharts([]);
-            APP_STORAGE.sensors.setSess_first([]);
-            APP_STORAGE.sensors.setSess_second([]);
-            APP_STORAGE.sensors.setSortDesc("");
-            APP_STORAGE.sensors.setAkbSessChose("");
-            APP_STORAGE.sensors.setChoseSessTime("");
-            APP_STORAGE.sensors.setAkbSessLast("");
-            APP_STORAGE.devs_groups.setMiddleForm(2);
-
-            APP_STORAGE.devs.setTopMenuDev("top_menu-1");
-          }
-        }
-      });
+    try {
+      var svg = atob(
+        APP_STORAGE.importdevs
+          .getArraySvgData()
+          .replace(/data:image\/svg\+xml;base64,/, "")
+      );
+      if (svg) {
+        APP_STORAGE.importdevs.set_SchemeSvg(APP_STORAGE.auth_form.getdt());
+      }
+    } catch (err) {
+      APP_STORAGE.importdevs.setSuccessfully_text(
+        "Ошибка! Убедитесь, что загружаемый файл в формате .svg"
+      );
     }
+  }
+  async removeFileButton() {
+    let uploadIcon = document.querySelector(".upload-icon") as HTMLInputElement;
+    APP_STORAGE.importdevs.setSuccessfully_text("");
+
+    let fileInput = document.querySelector(
+      ".default-file-input"
+    ) as HTMLInputElement;
+
+    let uploadedFile = document.querySelector(
+      ".file-block"
+    ) as HTMLInputElement;
+
+    uploadedFile.style.cssText = "display: none;";
+    fileInput.value = "";
+    uploadIcon.innerHTML = "file_upload";
   }
 
   private _handleFile = async (e: any) => {
     let fileToUpload = e.target.files[0];
-    var xlinkNS = "http://www.w3.org/1999/xlink";
-    //Show image preview
     let reader = new FileReader();
-    reader.onload = (event: any) => {
-      var svg = atob(
-        event.target.result.replace(/data:image\/svg\+xml;base64,/, "")
-      ); ///// SVG
-      // var doc = new DOMParser().parseFromString(svg, "text/xml");
-      APP_STORAGE.importdevs.setSvg(svg);
-    };
-    reader.readAsDataURL(fileToUpload);
 
-    ///setTimeout(() => this.uploadfile(), 500);
+    reader.onload = (event: any) => {
+      APP_STORAGE.importdevs.setArraySvgData(event.target.result);
+    };
+
+    let fileInput = document.querySelector(
+      ".default-file-input"
+    ) as HTMLInputElement;
+
+    let uploadedFile = document.querySelector(
+      ".file-block"
+    ) as HTMLInputElement;
+    let fileName = document.querySelector(".file-name") as HTMLInputElement;
+    let fileSize = document.querySelector(".file-size") as HTMLInputElement;
+
+    fileName.innerHTML = fileInput.files[0].name;
+    fileSize.innerHTML = (fileInput.files[0].size / 1024).toFixed(1) + " KB";
+    uploadedFile.style.cssText = "display: flex;";
+    // progressBar.style.width = '0';
+
+    reader.readAsDataURL(fileToUpload);
   };
 
   async onClose() {
@@ -141,7 +104,7 @@ export class Opensvgfile extends React.Component<IProps> {
                 m: "12px"
               }}
             >
-              <Typography>Загрузить схему расположения</Typography>
+              <Typography>Импортировать список устройств</Typography>
 
               <CloseIcon
                 sx={{ color: "#1976D2" }}
@@ -151,7 +114,6 @@ export class Opensvgfile extends React.Component<IProps> {
               />
             </Box>
             <Divider sx={{ m: "20px 20px" }} />
-            <Box sx={{ display: "flex", alignItems: "center" }}></Box>
 
             <form className="form-container">
               <div className="upload-files-container">
@@ -167,27 +129,101 @@ export class Opensvgfile extends React.Component<IProps> {
                         id="fileInput"
                         className="default-file-input"
                       />
-                      <Box sx={{ display: "flex" }}>
+                      <Box sx={{ display: "flex", justifyContent: "center" }}>
                         <Box sx={{ display: "flex" }}>
                           <Typography
-                            sx={{ color: "#1976D2", fontWeight: "600" }}
+                            sx={{ color: "#474747", fontWeight: "600" }}
                           >
                             {" "}
-                            выберите файл (SVG)
+                            выберите файл
                           </Typography>
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M3 5C3 3.34315 4.34315 2 6 2H14C17.866 2 21 5.13401 21 9V19C21 20.6569 19.6569 22 18 22H6C4.34315 22 3 20.6569 3 19V5ZM18.584 7C17.9413 5.52906 16.6113 4.4271 15 4.10002V7H18.584Z"
+                              fill="#6D6D6D"
+                            />
+                            <path
+                              d="M9.23168 12V12.736H7.34889V13.6629H8.98681V14.3596H7.34889V16H6.5V12H9.23168Z"
+                              fill="white"
+                            />
+                            <path
+                              d="M10.58 12V16H9.72563V12H10.58Z"
+                              fill="white"
+                            />
+                            <path
+                              d="M14.073 15.2472V16H11.3305V12H12.1794V15.2472H14.073Z"
+                              fill="white"
+                            />
+                            <path
+                              d="M17.4619 12V12.7191H15.3995V13.5899H17.2932V14.2809H15.3995V15.264H17.5V16H14.5561V12H17.4619Z"
+                              fill="white"
+                            />
+                          </svg>
                         </Box>{" "}
-                        <Typography sx={{ pl: "4px" }}>с устройства</Typography>
+                        <Typography>с устройства</Typography>
                       </Box>
                     </span>{" "}
                   </label>
                 </div>
+                <span className="cannot-upload-message">
+                  {" "}
+                  <span className="material-icons-outlined">Ошибка</span>{" "}
+                  Необходимо выбрать файл{" "}
+                  <span className="material-icons-outlined cancel-alert-button">
+                    cancel
+                  </span>{" "}
+                </span>
+                <div className="file-block">
+                  <div className="file-info">
+                    {" "}
+                    <span className="material-icons-outlined file-icon"></span>{" "}
+                    <span className="file-name"> </span> |{" "}
+                    <span className="file-size"> </span>{" "}
+                  </div>
+                  <span
+                    className="material-icons remove-file-icon"
+                    onClick={() => {
+                      this.removeFileButton();
+                    }}
+                  >
+                    {" "}
+                    <DeleteOutlineOutlinedIcon />
+                  </span>
+                  <div className="progress-bar"> </div>
+                </div>
+                {APP_STORAGE.importdevs.getSuccessfully_text() && (
+                  <Typography
+                    sx={{
+                      p: "4px",
+                      m: "8px",
+                      textAlign: "center",
+                      color: "#FF0000",
+                      border: "1px solid #DF4040",
+                      borderColor: "#DF4040",
+                      borderRadius: "4px",
+                      background: "#FFD4D4",
+                      fontSize: "small"
+                    }}
+                  >
+                    {" "}
+                    {APP_STORAGE.importdevs.getSuccessfully_text()}
+                  </Typography>
+                )}
 
                 {/* <button type="button" className="upload-button" onClick={() => (this.uploadfile())}> Загрузить файл </button> */}
                 <Button onClick={() => this.uploadfile()} variant="contained">
                   {" "}
                   Сохранить
                 </Button>
-                {/* 
+
                 <Box
                   sx={{
                     m: "8px",
@@ -197,7 +233,35 @@ export class Opensvgfile extends React.Component<IProps> {
                     borderRadius: "4px",
                     p: "8px"
                   }}
-                ></Box> */}
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 6C12.5523 6 13 6.44772 13 7V13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13V7C11 6.44772 11.4477 6 12 6Z"
+                      fill="#8d8989"
+                    />
+                    <path
+                      d="M12 16C11.4477 16 11 16.4477 11 17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17C13 16.4477 12.5523 16 12 16Z"
+                      fill="#8d8989"
+                    />
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12Z"
+                      fill="#8d8989"
+                    />
+                  </svg>
+
+                  <FormHelperText sx={{ pl: "12px" }}>
+                    Внимание! После нажатия на кнопку , отменить операцию будет
+                    невозможно.
+                  </FormHelperText>
+                </Box>
               </div>
             </form>
           </Box>

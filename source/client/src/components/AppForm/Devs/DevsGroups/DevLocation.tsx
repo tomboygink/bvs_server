@@ -138,7 +138,6 @@ export class DevLocation extends React.Component<IProps> {
       var gr: TDGroup = dgr.group;
       var gr_childs = dgr.childs;
       var childs: React.ReactNode[] = new Array();
-
       if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
       /////////////////////////////////////////////////////////////////////////////// Если есть дочерние строки
       parent.push(
@@ -159,6 +158,16 @@ export class DevLocation extends React.Component<IProps> {
 
         let longitude = gr.longitude;
         let latitude = gr.latitude;
+
+        if (gr.svg) {
+          var svg = atob(gr.svg.replace(/data:image\/svg\+xml;base64,/, ""));
+          APP_STORAGE.importdevs.setSvg(svg);
+          setTimeout(() => {
+            APP_STORAGE.importdevs.uploadfile();
+          }, 100);
+        }
+
+        // let svg = gr.svg;
 
         if (gr.deleted === true) {
           /////////////////////////////////////////////////////////////////////////////////////////Если устройство удаленно
@@ -530,21 +539,27 @@ export class DevLocation extends React.Component<IProps> {
                   />
                 )}
                 <Box>
-                  <Box
-                    className="svg-container"
-                    sx={{
-                      background: "#F4F4F8",
-                      borderRadius: "4px",
-                      maxWidth: "50%",
-                      display: "flex",
-                      padding: "8px",
-                      justifyContent: "center"
-                    }}
-                  ></Box>
-                  <Box
-                    id="tooltip"
-                    sx={{ position: "absolute", display: "none" }}
-                  ></Box>
+                  {APP_STORAGE.importdevs.getSvg().length && (
+                    <>
+                      <Box
+                        className="svg-container"
+                        sx={{
+                          maxHeight: "600px",
+                          height: "100%",
+                          background: "#F4F4F8",
+                          borderRadius: "4px",
+                          maxWidth: "50%",
+                          display: "flex",
+                          padding: "8px",
+                          justifyContent: "center"
+                        }}
+                      ></Box>
+                      <Box
+                        id="tooltip"
+                        sx={{ position: "absolute", display: "none" }}
+                      ></Box>
+                    </>
+                  )}
                 </Box>
 
                 {/* <Box sx={{ height: "400px", width: "100%", mt: "8px" }}>

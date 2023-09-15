@@ -66,7 +66,6 @@ export class Devs extends React.Component<IProps> {
       for (var key in gr_devs) {
         ///////////////////////////////////////////////// Все устройства
         if ("_dev_id_key_" + gr_devs[key].id === dev.getIdChild()) {
-          console.log("iusduyausdf", dev.getIdChild());
           dev_number = gr_devs[key].number;
           dev_id = gr_devs[key].id;
           del = gr_devs[key].deleted;

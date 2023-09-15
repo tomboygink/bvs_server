@@ -17,6 +17,8 @@ export class ImportDevStorage {
 
   @observable successfully_text = "";
 
+  @observable base64 = "";
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -67,6 +69,13 @@ export class ImportDevStorage {
   }
   @computed getSuccessfully_text(): string {
     return this.successfully_text;
+  }
+
+  @action setBase4(val: string) {
+    this.base64 = val;
+  }
+  @computed getBase4(): string {
+    return this.base64;
   }
 
   async Uploadfile() {
@@ -161,13 +170,90 @@ export class ImportDevStorage {
     }
   }
 
+  async uploadfile() {
+    var element = document.createElement("div");
+    element.id = "svg";
+    document.getElementsByClassName("svg-container")[0].innerHTML = "";
+    document.getElementsByClassName("svg-container")[0].appendChild(element);
+    var newSvg = document.getElementById("svg");
+
+    newSvg.outerHTML = APP_STORAGE.importdevs.getSvg();
+
+    APP_STORAGE.importdevs.setOpenModalSvg(false);
+    var hrefs = document.getElementsByClassName("well");
+
+    for (let i in hrefs) {
+      hrefs.item(Number(i)).addEventListener("mouseout", function (e) {
+        document.getElementById(hrefs[i].id).style.stroke = "";
+        e.preventDefault(); /*use if you want to prevent the original link following action*/
+        var tooltip = document.getElementById("tooltip");
+        tooltip.style.display = "none";
+      });
+
+      hrefs.item(Number(i)).addEventListener("mousemove", function (e) {
+        e.preventDefault(); /*use if you want to prevent the original link following action*/
+
+        for (var j in APP_STORAGE.devs.getChangeSensors2()) {
+          if (
+            String(hrefs[i].id) ===
+            String(APP_STORAGE.devs.getChangeSensors2()[j].id)
+          ) {
+            document.getElementById(hrefs[i].id).style.stroke = "#25E48B";
+            var clientRectangle = document
+              .getElementById(hrefs[i].id)
+              .getBoundingClientRect();
+            let tooltip = document.getElementById("tooltip");
+            tooltip.innerHTML =
+              "Номер косы" +
+              "-" +
+              APP_STORAGE.devs.getChangeSensors2()[j].number;
+            tooltip.style.display = "block";
+            tooltip.style.left = clientRectangle.left + "px";
+            tooltip.style.top = clientRectangle.top + "px";
+          }
+        }
+      });
+
+      hrefs.item(Number(i)).addEventListener("click", function (e) {
+        e.preventDefault(); /*use if you want to prevent the original link following action*/
+
+        for (var j in APP_STORAGE.devs.getChangeSensors2()) {
+          if (
+            String(hrefs[i].id) ===
+            String(APP_STORAGE.devs.getChangeSensors2()[j].id)
+          ) {
+            APP_STORAGE.devs.setIdChild("_dev_id_key_" + hrefs[i].id);
+            APP_STORAGE.sensors.setEmptySession("");
+            APP_STORAGE.sensors.setSessFirstLast([]);
+            APP_STORAGE.sensors.setSessFirstLastCharts([]);
+            APP_STORAGE.sensors.setSess_first([]);
+            APP_STORAGE.sensors.setSess_second([]);
+            APP_STORAGE.sensors.setSortDesc("");
+            APP_STORAGE.sensors.setAkbSessChose("");
+            APP_STORAGE.sensors.setChoseSessTime("");
+            APP_STORAGE.sensors.setAkbSessLast("");
+            APP_STORAGE.devs_groups.setMiddleForm(2);
+
+            APP_STORAGE.devs.setTopMenuDev("top_menu-1");
+          }
+        }
+      });
+    }
+  }
+
   async set_SchemeSvg(sess_code: string) {
     var q: IWSQuery = new WSQuery("set_SchemeSvg");
     q.args = {
       id: APP_STORAGE.devs_groups.getParentId(),
-      svg_file: "data:image/svg+xml;utf8," + encodeURIComponent(this.getSvg())
+      svg_file: this.getArraySvgData() ////data:image\/svg\+xml;base64
     };
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);
+    setTimeout(() => {
+      APP_STORAGE.devs_groups.get_DevsGroups(
+        "sess_id",
+        APP_STORAGE.auth_form.getdt()
+      );
+    }, 100);
   }
 }
