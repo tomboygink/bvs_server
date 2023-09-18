@@ -349,10 +349,35 @@ export class DevLocation extends React.Component<IProps> {
                   value={gr.g_info || ""}
                 />
 
-                <Box sx={{ height: "400px", width: "100%" }}>
+                {/* <Box sx={{ height: "400px", width: "100%" }}>
                   <MapStations longitude={longitude} latitude={latitude} />
-                </Box>
+                </Box> */}
               </Box>
+              {APP_STORAGE.importdevs.getSvg().length && (
+                <>
+                  <Typography
+                    sx={{ fontWeight: "600", color: "#0D1C52", mb: "12px" }}
+                  >
+                    {" "}
+                    Схема изделий на полигоне{" "}
+                  </Typography>
+                  <Box
+                    className="svg-container"
+                    sx={{
+                      borderRadius: "4px",
+                      background: "#fff",
+                      display: "flex",
+                      padding: "8px",
+                      pl: "22px",
+                      mb: "22px"
+                    }}
+                  ></Box>
+                  <Box
+                    id="tooltip"
+                    sx={{ position: "absolute", display: "none" }}
+                  ></Box>
+                </>
+              )}
             </React.Fragment>
           );
 
@@ -538,34 +563,38 @@ export class DevLocation extends React.Component<IProps> {
                     value={gr.g_info || ""}
                   />
                 )}
-                <Box>
-                  {APP_STORAGE.importdevs.getSvg().length && (
-                    <>
-                      <Box
-                        className="svg-container"
-                        sx={{
-                          maxHeight: "600px",
-                          height: "100%",
-                          background: "#F4F4F8",
-                          borderRadius: "4px",
-                          maxWidth: "50%",
-                          display: "flex",
-                          padding: "8px",
-                          justifyContent: "center"
-                        }}
-                      ></Box>
-                      <Box
-                        id="tooltip"
-                        sx={{ position: "absolute", display: "none" }}
-                      ></Box>
-                    </>
-                  )}
-                </Box>
+                <Box></Box>
 
                 {/* <Box sx={{ height: "400px", width: "100%", mt: "8px" }}>
                   <MapStations longitude={longitude} latitude={latitude} />
                 </Box> */}
               </Box>
+
+              {APP_STORAGE.importdevs.getSvg().length && (
+                <>
+                  <Typography
+                    sx={{ fontWeight: "600", color: "#0D1C52", mb: "12px" }}
+                  >
+                    {" "}
+                    Схема изделий на полигоне{" "}
+                  </Typography>
+                  <Box
+                    className="svg-container"
+                    sx={{
+                      borderRadius: "4px",
+                      background: "#fff",
+                      display: "flex",
+                      padding: "8px",
+                      pl: "22px",
+                      mb: "22px"
+                    }}
+                  ></Box>
+                  <Box
+                    id="tooltip"
+                    sx={{ position: "absolute", display: "none" }}
+                  ></Box>
+                </>
+              )}
             </React.Fragment>
           );
         }
