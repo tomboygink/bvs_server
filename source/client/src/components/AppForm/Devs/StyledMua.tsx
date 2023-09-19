@@ -1,25 +1,16 @@
-import * as React from 'react';
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
-import { alpha, styled, lighten, darken } from '@mui/material/styles';
-import TreeItem, { TreeItemProps, treeItemClasses } from '@mui/lab/TreeItem';
-import Collapse from '@mui/material/Collapse';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
+import { alpha, styled, lighten, darken } from "@mui/material/styles";
+import TreeItem, { TreeItemProps, treeItemClasses } from "@mui/lab/TreeItem";
+import Collapse from "@mui/material/Collapse";
+import Typography from "@mui/material/Typography";
 
-import { useSpring, animated } from '@react-spring/web';
-import { TransitionProps } from '@mui/material/transitions';
-
-
-
-
-
+import { useSpring, animated } from "@react-spring/web";
+import { TransitionProps } from "@mui/material/transitions";
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
-import { Box } from '@mui/material';
-import { Cross, Rectangle } from 'recharts';
-
-
-
-
+import { Box } from "@mui/material";
+import { Cross, Rectangle } from "recharts";
 
 export function MinusSquare(props: SvgIconProps) {
   return (
@@ -57,12 +48,12 @@ export function TransitionComponent(props: TransitionProps) {
   const style = useSpring({
     from: {
       opacity: 0,
-      transform: 'translate3d(20px,0,0)',
+      transform: "translate3d(20px,0,0)"
     },
     to: {
       opacity: props.in ? 1 : 0,
-      transform: `translate3d(${props.in ? 0 : 20}px,0,0)`,
-    },
+      transform: `translate3d(${props.in ? 0 : 20}px,0,0)`
+    }
   });
 
   return (
@@ -76,68 +67,79 @@ export const StyledMua = styled((props: TreeItemProps) => (
   <TreeItem {...props} TransitionComponent={TransitionComponent} />
 ))(({ theme }) => ({
   [`& .${treeItemClasses.iconContainer}`]: {
-    '& .close': {
-      opacity: 0.3,
-    },
+    "& .close": {
+      opacity: 0.3
+    }
   },
   [`& .${treeItemClasses.group}`]: {
     marginLeft: 15,
     paddingLeft: 18,
-    borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
-  },
+    borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`
+  }
 }));
 
 export const id_dev_sess = async (event: any, node: any) => {
-  APP_STORAGE.sensors.setIdDevSess(node)
-}
+  APP_STORAGE.sensors.setIdDevSess(node);
+};
 
 export const handleChange = async (event: any, node: any) => {
-
-  APP_STORAGE.sensors.setActiveButtonSort('sort');
-  APP_STORAGE.sensors.setActiveButtonSortDesc('sort');
+  APP_STORAGE.sensors.setActiveButtonSort("sort");
+  APP_STORAGE.sensors.setActiveButtonSortDesc("sort");
   APP_STORAGE.sensors.setdataCharts([]);
   APP_STORAGE.sensors.setDevSession(null);
 
-  if (node.includes('_dev_id_') === false) {
+  if (node.includes("_dev_id_") === false) {
     APP_STORAGE.devs_groups.setParentId(node);
     APP_STORAGE.main.setTitle("Показания устройств");
     APP_STORAGE.devs.setIdDevs(node);
     APP_STORAGE.devs_groups.setMiddleForm(1);
+    APP_STORAGE.importdevs.setSvg("");
   }
 
-  if (node.includes('_dev_id_key_') === true) {
+  if (node.includes("_dev_id_key_") === true) {
     APP_STORAGE.devs.setIdChild(node);
-    APP_STORAGE.sensors.setEmptySession('')
+    APP_STORAGE.sensors.setEmptySession("");
     APP_STORAGE.sensors.setSessFirstLast([]);
     APP_STORAGE.sensors.setSessFirstLastCharts([]);
-    APP_STORAGE.sensors.setSess_first([])
-    APP_STORAGE.sensors.setSess_second([])
-    APP_STORAGE.sensors.setSortDesc('');
-    APP_STORAGE.sensors.setAkbSessChose('');
-    APP_STORAGE.sensors.setChoseSessTime('');
-    APP_STORAGE.sensors.setAkbSessLast('');
+    APP_STORAGE.sensors.setSess_first([]);
+    APP_STORAGE.sensors.setSess_second([]);
+    APP_STORAGE.sensors.setSortDesc("");
+    APP_STORAGE.sensors.setAkbSessChose("");
+    APP_STORAGE.sensors.setChoseSessTime("");
+    APP_STORAGE.sensors.setAkbSessLast("");
     APP_STORAGE.devs_groups.setMiddleForm(2);
 
-    APP_STORAGE.devs.setTopMenuDev('top_menu-1')
+    APP_STORAGE.devs.setTopMenuDev("top_menu-1");
   }
-}
-
+};
 
 export const options = async (event: any, node: any) => {
   APP_STORAGE.devs_groups.setParent(node);
   APP_STORAGE.devs.setGroupDevId(String(node));
-}
-
-
+};
 
 export const customizedGroupTick = (props: any) => {
   const { index, x, y, payload } = props;
 
   return (
-
     <g>
-      <rect x={x} y={y} className='map' width="4" height="8" fill="#808080" fontFamily="Verdana" fontSize="14px" />
-      <text dx={x - 35} dy={y + 10} fill="blue" fontSize="12px" textAnchor="middle">
+      <rect
+        x={x}
+        y={y}
+        className="map"
+        width="4"
+        height="8"
+        fill="#808080"
+        fontFamily="Verdana"
+        fontSize="14px"
+      />
+      <text
+        dx={x - 35}
+        dy={y + 10}
+        fill="blue"
+        fontSize="12px"
+        textAnchor="middle"
+      >
         {payload.value}
       </text>
     </g>
@@ -146,25 +148,14 @@ export const customizedGroupTick = (props: any) => {
 
 export const handleChangePage = (
   event: React.MouseEvent<HTMLButtonElement> | null,
-  newPage: number,
+  newPage: number
 ) => {
   APP_STORAGE.devs.setPage(newPage);
 };
 
-
 export const handleChangeRowsPerPage = (
-  event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 ) => {
   APP_STORAGE.devs.setRowsPerPage(parseInt(event.target.value, 10));
   APP_STORAGE.devs.setPage(0);
 };
-
-
-
-
-
-
-
-
-
-
