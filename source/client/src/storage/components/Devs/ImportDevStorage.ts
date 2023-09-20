@@ -222,7 +222,7 @@ export class ImportDevStorage {
             String(hrefs[i].id.slice(5)) ===
             String(APP_STORAGE.devs.getChangeSensors2()[j].id)
           ) {
-            APP_STORAGE.devs.setIdChild("_dev_id_key_" + hrefs[i].id);
+            APP_STORAGE.devs.setIdChild("_dev_id_key_" + hrefs[i].id.slice(5));
             APP_STORAGE.sensors.setEmptySession("");
             APP_STORAGE.sensors.setSessFirstLast([]);
             APP_STORAGE.sensors.setSessFirstLastCharts([]);
