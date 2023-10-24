@@ -13,7 +13,7 @@
   },
   "include": [
     "src/**/*"
-, "src/components/AppForm/AppBarPanel/TopMenu/Modal/.tsx"  ],
+, "src/components/AppForm/Modal/.tsx"  ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts"

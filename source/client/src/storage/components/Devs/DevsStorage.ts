@@ -98,7 +98,7 @@ export class DevsStorage {
 
   @observable top_menu_dev: string = "top_menu-1";
 
-  @observable period_sess: string = "";
+  @observable period_sess: number = 0;
 
   constructor() {
     makeAutoObservable(this);
@@ -452,10 +452,10 @@ export class DevsStorage {
     return this.day;
   }
 
-  @action setPeriodSess(val: string) {
+  @action setPeriodSess(val: number) {
     this.period_sess = val;
   }
-  @computed getPeriodSess(): string {
+  @computed getPeriodSess(): number {
     return this.period_sess;
   }
 
@@ -471,17 +471,17 @@ export class DevsStorage {
     (await WSocket.get()).send(q);
   }
 
-  async get_Devs11(name: string, value: any, _options?: any) {
-    var sess_code = value;
-    var q: IWSQuery = new WSQuery("get_Devs");
-    q.args = {
-      org_id: this.getOrgId(),
-      dev_group_id: this.getIdChild(),
-      user_w: this.getUserRole()
-    };
-    q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
-  }
+  // async get_Devs11(name: string, value: any, _options?: any) {
+  //   var sess_code = value;
+  //   var q: IWSQuery = new WSQuery("get_Devs");
+  //   q.args = {
+  //     org_id: this.getOrgId(),
+  //     dev_group_id: this.getIdChild(),
+  //     user_w: this.getUserRole()
+  //   };
+  //   q.sess_code = sess_code;
+  //   (await WSocket.get()).send(q);
+  // }
 
   async set_NewDevs(name: string, value: any, _options?: any) {
     let lat: any;
@@ -693,7 +693,7 @@ export class DevsStorage {
         sensors: '{"s":' + JSON.stringify(this.getChangeSensors()) + "}",
         deleted: this.getCheckboxEd(),
         info: this.getInfo() || "",
-        period_sess: this.getPeriodSess() || ""
+        period_sess: this.getPeriodSess() || 0
       };
 
       q.sess_code = sess_code;

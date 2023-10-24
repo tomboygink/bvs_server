@@ -34,7 +34,6 @@ import { AddNewDevModal } from "./Devs/Dev/Menu/AddNewDevModal"; //////////////Ð
 import { Calendar } from "./Devs/Dev/Calendar";
 import { DevsGroupsTree } from "./Devs/DevsGroupsTree";
 import { DevWrapper } from "./Devs/DevWrapper";
-import SlideFromContainer from "./UI/Alert";
 import { Importxlxfife } from "./Devs/DevsGroups/importxlxfife";
 import { Opensvgfile } from "./Devs/DevsGroups/opensvgfile";
 

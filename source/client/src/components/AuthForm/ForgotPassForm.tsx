@@ -4,27 +4,21 @@ import { observer } from "mobx-react";
 import { APP_STORAGE } from "../../storage/AppStorage";
 
 import {
-  Avatar,
   Button,
   TextField,
   Box,
   Container,
   CssBaseline,
   Typography,
-  Divider,
   Alert,
-  Link,
-  Grid,
-  FilledInput,
-  IconButton
+  Link
 } from "@mui/material";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
 interface IProps {}
 
@@ -70,7 +64,7 @@ export class ForgotPass extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                alignItems: "center",
+                alignItems: "center"
               }}
             >
               <Typography
@@ -104,22 +98,20 @@ export class ForgotPass extends React.Component<IProps> {
                 label="email"
                 name="email"
                 autoComplete="email"
-                onChange={(e) => {
+                onChange={e => {
                   APP_STORAGE.auth_form.setEmail(e.target.value);
                 }}
                 value={APP_STORAGE.auth_form.getEmail()}
               />
-
-
             </Box>
-           
+
             <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}
+            >
               <Link
                 href="#"
                 variant="body2"
@@ -134,7 +126,7 @@ export class ForgotPass extends React.Component<IProps> {
                   background: "#266BF1",
                   color: "#fff",
                   mt: "12px",
-                  p: "8px",
+                  p: "8px"
                 }}
                 type="button"
                 onClick={() => {
@@ -144,9 +136,8 @@ export class ForgotPass extends React.Component<IProps> {
               >
                 Получить код
               </Button>
-              </Box>
-              {alert}
-        
+            </Box>
+            {alert}
           </Container>
         </Box>
       </React.Fragment>

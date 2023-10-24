@@ -32,7 +32,6 @@ import SensorsIcon from "@mui/icons-material/Sensors";
 import { ModalSensors } from "./ModalSensors";
 
 import { TDSensor } from "../../../../../storage/components/Devs/DevEntityes";
-import SlideFromContainer from "../../../UI/Alert";
 
 interface IProps {}
 
