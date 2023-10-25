@@ -16,9 +16,7 @@ import Paper from "@mui/material/Paper";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
-import ReportProblemIcon from "@mui/icons-material/ReportProblem";
-
-interface IProps { }
+interface IProps {}
 
 //Компонент формы приложения
 @observer
@@ -86,10 +84,10 @@ export class CriticalityTable extends React.Component<IProps> {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell >Глубина</TableCell>
-                  <TableCell align= 'center'>Контрольна сессия</TableCell>
-                  <TableCell align= 'center'>Последняя сессия</TableCell>
-                  <TableCell align= 'center'>Критичность</TableCell>
+                  <TableCell>Глубина</TableCell>
+                  <TableCell align="center">Контрольна сессия</TableCell>
+                  <TableCell align="center">Последняя сессия</TableCell>
+                  <TableCell align="center">Критичность</TableCell>
                 </TableRow>
               </TableHead>
 
@@ -97,96 +95,90 @@ export class CriticalityTable extends React.Component<IProps> {
                 <TableBody>
                   <TableRow>
                     <TableCell>
-                      <Table> 
-                        <TableBody> 
-                      {APP_STORAGE.sensors
-                        .getSessFirstLast()
-                        .map((row: any, i: any) => (
-                          <TableRow
-                            className="datarow"
-                            key={"data_qd" + row.depth + row}
-                          >
-                            <TableCell
-                              align="left"
-                              sx={{
-                                p: "4px",
-                                color: "#002757",
-                                fontWeight: "500",
-                              }}
-                            >
-                              {" "}
-                              {"" + row.depth}{" "}
-                            </TableCell>
-                          </TableRow>
-                        ))}
+                      <Table>
+                        <TableBody>
+                          {APP_STORAGE.sensors
+                            .getSessFirstLast()
+                            .map((row: any, i: any) => (
+                              <TableRow
+                                className="datarow"
+                                key={"data_qd" + row.depth + row}
+                              >
+                                <TableCell
+                                  align="left"
+                                  sx={{
+                                    p: "4px",
+                                    color: "#002757",
+                                    fontWeight: "500"
+                                  }}
+                                >
+                                  {" "}
+                                  {"" + row.depth}{" "}
+                                </TableCell>
+                              </TableRow>
+                            ))}
                         </TableBody>
-                        </Table>
+                      </Table>
                     </TableCell>
 
                     <TableCell>
-                    <Table> 
-                        <TableBody> 
-                      {APP_STORAGE.sensors
-                        .getSess_first()
-                        .map((row: any, i: any) => (
-                          <TableRow
-                            className="datarow"
-                            key={"data_qds" + row.data_f + i + row.data_f}
-                          >
-                            <TableCell
-                              align="center"
-                              sx={{
-                                p: "4px",
-                                color: "#002757",
-                                fontWeight: "500",
-                              }}
-                            >
-                              {" "}
-                              {"" + row.data_f}{" "}
-                          
-                  
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                              </TableBody> 
-                        </Table> 
+                      <Table>
+                        <TableBody>
+                          {APP_STORAGE.sensors
+                            .getSess_first()
+                            .map((row: any, i: any) => (
+                              <TableRow
+                                className="datarow"
+                                key={"data_qds" + row.data_f + i + row.data_f}
+                              >
+                                <TableCell
+                                  align="center"
+                                  sx={{
+                                    p: "4px",
+                                    color: "#002757",
+                                    fontWeight: "500"
+                                  }}
+                                >
+                                  {" "}
+                                  {"" + row.data_f}{" "}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                        </TableBody>
+                      </Table>
                     </TableCell>
 
                     <TableCell>
-                    <Table> 
-                        <TableBody> 
-                      {APP_STORAGE.sensors
-                        .getSessFirstLast()
-                        .map((row: any, i: any) => (
-                          <TableRow
-                            className="datarow"
-                            key={"data_qdsadsd1212313" + row.data_s + i}
-                          >
-                            <TableCell
-                              align="center"
-                              sx={{
-                                p: "4px",
-                                color: "#002757",
-                                fontWeight: "500",
-                              }}
-                            >
-                              {" "}
-                              {"" + row.data_s}{" "}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                        
-                        </TableBody> 
-                        </Table> 
+                      <Table>
+                        <TableBody>
+                          {APP_STORAGE.sensors
+                            .getSessFirstLast()
+                            .map((row: any, i: any) => (
+                              <TableRow
+                                className="datarow"
+                                key={"data_qdsadsd1212313" + row.data_s + i}
+                              >
+                                <TableCell
+                                  align="center"
+                                  sx={{
+                                    p: "4px",
+                                    color: "#002757",
+                                    fontWeight: "500"
+                                  }}
+                                >
+                                  {" "}
+                                  {"" + row.data_s}{" "}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                        </TableBody>
+                      </Table>
                     </TableCell>
 
-                   <TableCell>
-                   <Table> 
-                        <TableBody> 
-                    {data}
-                 
-                        </TableBody> 
-                        </Table> 
+                    <TableCell>
+                      <Table>
+                        <TableBody>{data}</TableBody>
+                      </Table>
                     </TableCell>
                   </TableRow>
                 </TableBody>

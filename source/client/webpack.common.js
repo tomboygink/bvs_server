@@ -55,8 +55,7 @@ module.exports = {
     },
     output: {
       filename: OUT_FILENAME,
-      path: path.resolve(__dirname, OUT_DIR),
-      sourceMapFilename: "[name].js.map"
+      path: path.resolve(__dirname, OUT_DIR), 
     },
 }
 

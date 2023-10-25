@@ -55,6 +55,7 @@ export class Devs extends React.Component<IProps> {
     let dev_id: any = 0;
     let del: any = Boolean;
     let time_dev: string = "";
+    let period_ses: number = 0;
     var dev = APP_STORAGE.devs;
     var devs: React.ReactNode[] = new Array();
     for (var ii in dgrs) {
@@ -69,6 +70,7 @@ export class Devs extends React.Component<IProps> {
           dev_number = gr_devs[key].number;
           dev_id = gr_devs[key].id;
           del = gr_devs[key].deleted;
+          period_ses = gr_devs[key].period_sess;
           time_dev = gr_devs[key].time;
 
           let longitude = gr_devs[key].longitude;
@@ -84,6 +86,7 @@ export class Devs extends React.Component<IProps> {
               APP_STORAGE.auth_form.getdt()
             );
             APP_STORAGE.sensors.get_DevPovs(APP_STORAGE.auth_form.getdt());
+            APP_STORAGE.devs.setPeriodSess(period_ses);
           }, 0);
 
           if (gr_devs[key].deleted === true) {

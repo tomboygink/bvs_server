@@ -139,6 +139,7 @@ export class DevLocation extends React.Component<IProps> {
       var gr_childs = dgr.childs;
       var childs: React.ReactNode[] = new Array();
       if (gr_childs.length > 0) childs = this.drawDevGroup(gr_childs);
+
       /////////////////////////////////////////////////////////////////////////////// Если есть дочерние строки
       parent.push(
         <React.Fragment key={"_gr_id_key_" + gr.id}>
@@ -166,8 +167,6 @@ export class DevLocation extends React.Component<IProps> {
             APP_STORAGE.importdevs.uploadfile();
           }, 100);
         }
-
-        // let svg = gr.svg;
 
         if (gr.deleted === true) {
           /////////////////////////////////////////////////////////////////////////////////////////Если устройство удаленно
