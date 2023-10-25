@@ -1,21 +1,26 @@
-import {observable, action, computed, makeAutoObservable, makeObservable} from "mobx";
+import {
+  observable,
+  action,
+  computed,
+  makeAutoObservable,
+  makeObservable
+} from "mobx";
 
 import { IWSQuery, WSQuery, IWSResult } from "../../../../xcore/WSQuery";
 import { WSocket } from "../WSocket";
 
-import { APP_STORAGE } from '../AppStorage';
-
+import { APP_STORAGE } from "../AppStorage";
 
 export class EditUsersStorage {
   @observable modal_edit_user: boolean = false;
   @observable id_rows: any = "";
-  
-  @observable open_search: boolean = false;  /// открываем строку поиска
- 
-  @observable search_famaly: any = '';
-  @observable search_name: any = '';
-  @observable search_father : any = '';
-  @observable search_login : any = '';
+
+  @observable open_search: boolean = false; /// открываем строку поиска
+
+  @observable search_famaly: any = "";
+  @observable search_name: any = "";
+  @observable search_father: any = "";
+  @observable search_login: any = "";
   @observable search_telephone: any = "";
   @observable search_email: any = "";
 
@@ -32,8 +37,6 @@ export class EditUsersStorage {
   @observable repeat_password: string = "";
   @observable info: string = "";
 
-
-  
   @observable key_org: any = "";
   @observable key_jobs: any = "";
 
@@ -41,7 +44,6 @@ export class EditUsersStorage {
   @observable active_user_id: any = "";
   @observable u_act_mail: boolean = false;
 
-  
   @observable error_family: boolean = false;
   @observable texthelp_family: string = "";
   @observable error_name: boolean = false;
@@ -53,124 +55,256 @@ export class EditUsersStorage {
   @observable error_repeat_password: boolean = false;
   @observable texthelp_repeat_password: string = "";
 
-
   constructor() {
     makeAutoObservable(this);
   }
 
+  @action setOpenSearch(val: boolean) {
+    this.open_search = val;
+  }
+  @computed getOpenSearch(): boolean {
+    return this.open_search;
+  } //// строка поиска (таблица пользователей)
 
-  @action setOpenSearch (val: boolean) {this.open_search = val}
-  @computed getOpenSearch() : boolean {return this.open_search} //// строка поиска (таблица пользователей)
+  @action setSearchFamaly(val: any) {
+    this.search_famaly = val;
+  }
+  @computed getSearchFamaly(): any {
+    return this.search_famaly;
+  }
 
-  @action setSearchFamaly(val: any) {this.search_famaly = val}
-  @computed getSearchFamaly() : any {return this.search_famaly}
+  @action setSearchName(val: any) {
+    this.search_name = val;
+  }
+  @computed getSearchName(): any {
+    return this.search_name;
+  }
 
-  @action setSearchName(val: any) {this.search_name = val}
-  @computed getSearchName() : any {return this.search_name}
+  @action setSearchFather(val: any) {
+    this.search_father = val;
+  }
+  @computed getSearchFather(): any {
+    return this.search_father;
+  }
 
-  @action setSearchFather(val: any) {this.search_father = val}
-  @computed getSearchFather() : any {return this.search_father}
+  @action setSearchLogin(val: any) {
+    this.search_login = val;
+  }
+  @computed getSearchLogin(): any {
+    return this.search_login;
+  }
 
-  @action setSearchLogin(val: any) {this.search_login = val}
-  @computed getSearchLogin() : any {return this.search_login}
+  @action setSearchTelephone(val: any) {
+    this.search_telephone = val;
+  }
+  @computed getSearchTelephone(): any {
+    return this.search_telephone;
+  }
 
-  @action setSearchTelephone(val: any) {this.search_telephone = val}
-  @computed getSearchTelephone() : any {return this.search_telephone}
-
-  @action setSearchEmail(val: any) {this.search_email = val}
-  @computed getSearchEmail() : any {return this.search_email}
-
+  @action setSearchEmail(val: any) {
+    this.search_email = val;
+  }
+  @computed getSearchEmail(): any {
+    return this.search_email;
+  }
 
   /////опции для организации
-  @action setKeyOrg(val: any) {this.key_org = val;}
-  @computed getKeyOrg(): any {return this.key_org;}
+  @action setKeyOrg(val: any) {
+    this.key_org = val;
+  }
+  @computed getKeyOrg(): any {
+    return this.key_org;
+  }
 
-  @action setKeyJobs(val: any) {this.key_jobs = val;}
-  @computed getKeyJobs(): any {return this.key_jobs;}
+  @action setKeyJobs(val: any) {
+    this.key_jobs = val;
+  }
+  @computed getKeyJobs(): any {
+    return this.key_jobs;
+  }
 
-  @action setCheckboxEd(val: boolean) {this.checkbox_editing = val;}
-  @action getCheckboxEd(): boolean {return this.checkbox_editing;}
+  @action setCheckboxEd(val: boolean) {
+    this.checkbox_editing = val;
+  }
+  @action getCheckboxEd(): boolean {
+    return this.checkbox_editing;
+  }
 
-  @action setCheckboxRead(val: boolean) {this.checkbox_reading = val;}
-  @action getCheckboxRead(): boolean {return this.checkbox_reading;}
+  @action setCheckboxRead(val: boolean) {
+    this.checkbox_reading = val;
+  }
+  @action getCheckboxRead(): boolean {
+    return this.checkbox_reading;
+  }
 
-  @action setModalEditUser(val: boolean) {this.modal_edit_user = val;} /// Для открытия модального окна (Регистрация пользователя)
-  @computed getModalEditUser(): boolean {return this.modal_edit_user;}
+  @action setModalEditUser(val: boolean) {
+    this.modal_edit_user = val;
+  } /// Для открытия модального окна (Регистрация пользователя)
+  @computed getModalEditUser(): boolean {
+    return this.modal_edit_user;
+  }
 
-  @action setIdRows(val: any) {this.id_rows = val;}
-  @computed getIdRows(): any {return this.id_rows;}
+  @action setIdRows(val: any) {
+    this.id_rows = val;
+  }
+  @computed getIdRows(): any {
+    return this.id_rows;
+  }
 
-  @action setFamily(val: string) {this.family = val;}
-  @computed getFamily(): string {return this.family;}
+  @action setFamily(val: string) {
+    this.family = val;
+  }
+  @computed getFamily(): string {
+    return this.family;
+  }
 
-  @action setName(val: string) {this.name = val;}
-  @computed getName(): string {return this.name;}
-  @action setFather(val: string) {this.father = val;}
-  @computed getFather(): string {return this.father;}
+  @action setName(val: string) {
+    this.name = val;
+  }
+  @computed getName(): string {
+    return this.name;
+  }
+  @action setFather(val: string) {
+    this.father = val;
+  }
+  @computed getFather(): string {
+    return this.father;
+  }
 
-  @action setEmail(val: string) {this.email = val;}
-  @computed getEmail(): string {return this.email;}
+  @action setEmail(val: string) {
+    this.email = val;
+  }
+  @computed getEmail(): string {
+    return this.email;
+  }
 
-  @action setTelephone(val: string) {this.telephone = val;}
-  @computed getTelephone(): string {return this.telephone;}
+  @action setTelephone(val: string) {
+    this.telephone = val;
+  }
+  @computed getTelephone(): string {
+    return this.telephone;
+  }
 
-  @action setLogin(val: string) {this.login = val;}
-  @computed getLogin(): string {return this.login;}
+  @action setLogin(val: string) {
+    this.login = val;
+  }
+  @computed getLogin(): string {
+    return this.login;
+  }
 
-  @action setPassword(val: string) {this.password = val;}
-  @computed getPassword(): string {return this.password;}
+  @action setPassword(val: string) {
+    this.password = val;
+  }
+  @computed getPassword(): string {
+    return this.password;
+  }
 
-  @action setRepeatPassword(val: string) {this.repeat_password = val;}
-  @computed getRepeatPassword(): string {return this.repeat_password;}
+  @action setRepeatPassword(val: string) {
+    this.repeat_password = val;
+  }
+  @computed getRepeatPassword(): string {
+    return this.repeat_password;
+  }
 
-  @action setStateActive(val: boolean) {this.active_user = val;}
-  @action getStateActive(): boolean {return this.active_user;}
+  @action setStateActive(val: boolean) {
+    this.active_user = val;
+  }
+  @action getStateActive(): boolean {
+    return this.active_user;
+  }
 
-  @action setActive(val: any) {this.active_user_id = val;}
-  @action getActive(): any {return this.active_user_id;} 
-  
-  @action setActMail(val: any) {this.u_act_mail = val;}
-  @action getActMail(): any {return this.u_act_mail;}
+  @action setActive(val: any) {
+    this.active_user_id = val;
+  }
+  @action getActive(): any {
+    return this.active_user_id;
+  }
 
-  @action setInfo(val: string) {this.info = val;}
-  @computed getInfo(): string {return this.info;}
+  @action setActMail(val: any) {
+    this.u_act_mail = val;
+  }
+  @action getActMail(): any {
+    return this.u_act_mail;
+  }
 
+  @action setInfo(val: string) {
+    this.info = val;
+  }
+  @computed getInfo(): string {
+    return this.info;
+  }
 
-  @action setErrorFamily(val: boolean) {this.error_family = val;}
-  @computed getErrorFamily(): boolean {return this.error_family;}
-  @action setTextHelpFamily(val: string) {this.texthelp_family = val;}
-  @computed getTextHelpFamily(): string {return this.texthelp_family;}
+  @action setErrorFamily(val: boolean) {
+    this.error_family = val;
+  }
+  @computed getErrorFamily(): boolean {
+    return this.error_family;
+  }
+  @action setTextHelpFamily(val: string) {
+    this.texthelp_family = val;
+  }
+  @computed getTextHelpFamily(): string {
+    return this.texthelp_family;
+  }
 
-  @action setErrorName(val: boolean) {this.error_name = val;}
-  @computed getErrorName(): boolean {return this.error_name;}
-  @action setTextHelpName(val: string) {this.texthelp_name = val;}
-  @computed getTextHelpName(): string {return this.texthelp_name;}
+  @action setErrorName(val: boolean) {
+    this.error_name = val;
+  }
+  @computed getErrorName(): boolean {
+    return this.error_name;
+  }
+  @action setTextHelpName(val: string) {
+    this.texthelp_name = val;
+  }
+  @computed getTextHelpName(): string {
+    return this.texthelp_name;
+  }
 
-  @action setErrorFather(val: boolean) {this.error_father = val;}
-  @computed getErrorFather(): boolean {return this.error_father;}
-  @action setTextHelpFather(val: string) {this.texthelp_father = val;}
-  @computed getTextHelpFather(): string {return this.texthelp_father;}
+  @action setErrorFather(val: boolean) {
+    this.error_father = val;
+  }
+  @computed getErrorFather(): boolean {
+    return this.error_father;
+  }
+  @action setTextHelpFather(val: string) {
+    this.texthelp_father = val;
+  }
+  @computed getTextHelpFather(): string {
+    return this.texthelp_father;
+  }
 
+  @action setErrorPassword(val: boolean) {
+    this.error_password = val;
+  }
+  @computed getErrorPassword(): boolean {
+    return this.error_password;
+  }
+  @action setTextHelpPassword(val: string) {
+    this.texthelp_password = val;
+  }
+  @computed getTextHelpPassword(): string {
+    return this.texthelp_password;
+  }
 
-  @action setErrorPassword(val: boolean) {this.error_password = val;}
-  @computed getErrorPassword(): boolean {return this.error_password;}
-  @action setTextHelpPassword(val: string) {this.texthelp_password = val;}
-  @computed getTextHelpPassword(): string {return this.texthelp_password;}
+  @action setErrorRepeatPassword(val: boolean) {
+    this.error_repeat_password = val;
+  }
+  @computed getErrorRepeatPassword(): boolean {
+    return this.error_repeat_password;
+  }
+  @action setTextHelpRepeatPassword(val: string) {
+    this.texthelp_repeat_password = val;
+  }
+  @computed getTextHelpRepeatPassword(): string {
+    return this.texthelp_repeat_password;
+  }
 
-  @action setErrorRepeatPassword(val: boolean) {this.error_repeat_password = val;}
-  @computed getErrorRepeatPassword(): boolean {return this.error_repeat_password;}
-  @action setTextHelpRepeatPassword(val: string) {this.texthelp_repeat_password = val;}
-  @computed getTextHelpRepeatPassword(): string {return this.texthelp_repeat_password;}
-
-
-
-
-  
-  async get_Jobs(name: string, value: any, _options?: any) {/* -----  Открываем модальное  (Редактировать пользователя)  */
+  async get_Jobs(name: string, value: any, _options?: any) {
+    /* -----  Открываем модальное  (Редактировать пользователя)  */
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_Jobs");
     q.args = {
-      id_org: this.getKeyOrg() || "",
+      id_org: this.getKeyOrg() || ""
     };
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);
@@ -205,9 +339,7 @@ export class EditUsersStorage {
       this.setKeyOrg(user_selected[0].u_org_id);
       this.setKeyJobs(user_selected[0].u_job_title_id);
       this.setStateActive(user_selected[0].u_deleted);
-      this.setActMail(user_selected[0].u_act_mail)
-      
-      
+      this.setActMail(user_selected[0].u_act_mail);
 
       let role = user_selected[0].u_roles_ids;
       for (var key in role) {
@@ -225,104 +357,95 @@ export class EditUsersStorage {
         this.setCheckboxEd(true);
       }
 
-      if(this.getStateActive() === false) {
-        this.setActive(1)
+      if (this.getStateActive() === false) {
+        this.setActive(1);
       }
 
-      if(this.getStateActive() === true) {
-        this.setActive(2)
+      if (this.getStateActive() === true) {
+        this.setActive(2);
       }
 
       this.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
 
       setTimeout(() => {
         this.setModalEditUser(true);
-    }, 100)
+      }, 100);
     }
   }
 
-
-   
-  async  set_ActMail (name: string, value: any, _options?: any) {
+  async set_ActMail(name: string, value: any, _options?: any) {
     var sess_code = value;
-    var q:IWSQuery = new WSQuery("set_ActMail");
+    var q: IWSQuery = new WSQuery("set_ActMail");
     q.args = {
-        login:this.getLogin(),
-        email:this.getEmail(),
-     }; 
-      q.sess_code = sess_code;
-     (await WSocket.get()).send(q);
+      login: this.getLogin(),
+      email: this.getEmail()
+    };
+    q.sess_code = sess_code;
+    (await WSocket.get()).send(q);
+  }
 
-}
-
-  
   async set_ChangeUser(name: string, value: any, _options?: any) {
     var sess_code = value;
     var q: IWSQuery = new WSQuery("set_ChangeUser");
-    if(this.getActive() === 1){
-        this.setStateActive(false)
+    if (this.getActive() === 1) {
+      this.setStateActive(false);
     }
-    if(this.getActive() === 2){
-        this.setStateActive(true)
+    if (this.getActive() === 2) {
+      this.setStateActive(true);
     }
 
-        /// Проверка на пустые значения формы
-        if (this.getFamily() === "") {
-          this.setErrorFamily(true);
-          this.setTextHelpFamily("Заполните поле");
-        } else {
-          this.setErrorFamily(false);
-          this.setTextHelpFamily("");
-        }
+    /// Проверка на пустые значения формы
+    if (this.getFamily() === "") {
+      this.setErrorFamily(true);
+      this.setTextHelpFamily("Заполните поле");
+    } else {
+      this.setErrorFamily(false);
+      this.setTextHelpFamily("");
+    }
 
-        if (this.getName() === "") {
-          this.setErrorName(true);
-          this.setTextHelpName("Заполните поле");
-        } else {
-          this.setErrorName(false);
-          this.setTextHelpName("");
-        }
+    if (this.getName() === "") {
+      this.setErrorName(true);
+      this.setTextHelpName("Заполните поле");
+    } else {
+      this.setErrorName(false);
+      this.setTextHelpName("");
+    }
 
-       
+    // if (this.getPassword().length < 7) {
+    //   this.setErrorPassword(true);
+    //   this.setTextHelpPassword("используйте 6 или более символов");
+    // }
+    if (this.getPassword() === this.getLogin()) {
+      this.setErrorPassword(true);
+      this.setTextHelpPassword("Пароль должен отличаться от логина");
+    } else {
+      this.setErrorPassword(false);
+      this.setTextHelpPassword("");
+    }
 
-        // if (this.getPassword().length < 7) {
-        //   this.setErrorPassword(true);
-        //   this.setTextHelpPassword("используйте 6 или более символов");
-        // }
-       if (this.getPassword() === this.getLogin()){
-          this.setErrorPassword(true);
-          this.setTextHelpPassword("Пароль должен отличаться от логина");
-        }
-        else {
-          this.setErrorPassword(false);
-          this.setTextHelpPassword("");
-        }
-    
-      if (
-          this.getPassword() !== this.getRepeatPassword()
-        ) {
-          this.setErrorRepeatPassword(true);
-          this.setTextHelpRepeatPassword("Пароли не совпадают");
-         } 
-       else if (this.getPassword() === this.getRepeatPassword() && this.getPassword().length > 6 ) {
-          this.setErrorRepeatPassword(false);
-          this.setTextHelpRepeatPassword("");
-        }
-    
-     
-    
+    if (this.getPassword() !== this.getRepeatPassword()) {
+      this.setErrorRepeatPassword(true);
+      this.setTextHelpRepeatPassword("Пароли не совпадают");
+    } else if (
+      this.getPassword() === this.getRepeatPassword() &&
+      this.getPassword().length > 6
+    ) {
+      this.setErrorRepeatPassword(false);
+      this.setTextHelpRepeatPassword("");
+    }
+
     if (
       this.getFamily() &&
       this.getPassword() === this.getRepeatPassword() &&
-      this.getName() && this.getPassword() !== this.getLogin()
-    ) { 
-    
-    q.args = {
+      this.getName() &&
+      this.getPassword() !== this.getLogin()
+    ) {
+      q.args = {
         family: this.getFamily() || "",
         name: this.getName() || "",
         father: this.getFather() || "",
         email: this.getEmail() || "",
-        act_mail : this.getActMail(),
+        act_mail: this.getActMail(),
         telephone: this.getTelephone() || "",
         id_org: this.getKeyOrg() || "",
         id_job: this.getKeyJobs() || "",
@@ -331,17 +454,16 @@ export class EditUsersStorage {
         new_password_repeat: this.getRepeatPassword() || "",
         deleted: this.getStateActive(),
         users_w: this.getCheckboxEd(),
-        users_r: this.getCheckboxRead() ,
-        info: this.getInfo(),
+        users_r: this.getCheckboxRead(),
+        info: this.getInfo()
       };
       q.sess_code = sess_code;
       (await WSocket.get()).send(q);
-      APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());
-      this.setModalEditUser(false)
+      APP_STORAGE.reg_user.get_AllUsers(
+        "sess_id",
+        APP_STORAGE.auth_form.getdt()
+      );
+      this.setModalEditUser(false);
     }
- 
   }
 }
-
-
-

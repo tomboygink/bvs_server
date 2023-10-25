@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import SensorsIcon from "@mui/icons-material/Sensors";
 
@@ -15,16 +15,15 @@ import TableRow from "@mui/material/TableRow";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
-
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 
-import {AdditionInfo} from "../AdditionInfo/AdditionInfo"
+import { AdditionInfo } from "../AdditionInfo/AdditionInfo";
 import { DevPovs } from "../DevPovs/DevPovs";
 
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 
-
+import LeakAddIcon from "@mui/icons-material/LeakAdd";
 
 interface IProps {}
 
@@ -73,8 +72,8 @@ export class SensorsList extends React.Component<IProps> {
       var gr_devs = dgr.devs;
 
       for (var i in gr_devs) {
-
-        if ("_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
+        if (
+          "_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
           APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
           APP_STORAGE.sensors.getSortDesc() === ""
         ) {
@@ -91,15 +90,15 @@ export class SensorsList extends React.Component<IProps> {
               sort_array.push(uniqueChars[key].depth);
             }
             APP_STORAGE.setdevs_group_move(sort_array);
-           
+
             if (gr_devs[i].deleted === true) {
               sensors.push(
                 <TableRow key={"sensors_id" + uniqueChars[key].depth}>
-                  <TableCell sx={{borderBottom: 'none'}}>
+                  <TableCell sx={{ borderBottom: "none" }}>
                     <SensorsIcon fontSize="small" sx={{ color: "#808080" }} />
                   </TableCell>
-                  <TableCell sx={{borderBottom: 'none'}}>[00{key}]</TableCell>
-                  <TableCell sx={{ fontWeight: "700" , borderBottom: 'none'}}>
+                  <TableCell sx={{ borderBottom: "none" }}>[00{key}]</TableCell>
+                  <TableCell sx={{ fontWeight: "700", borderBottom: "none" }}>
                     [{"" + uniqueChars[key].depth}]{" "}
                   </TableCell>
                 </TableRow>
@@ -109,11 +108,11 @@ export class SensorsList extends React.Component<IProps> {
             if (gr_devs[i].deleted === false) {
               sensors.push(
                 <TableRow key={"sensors_id" + uniqueChars[key].depth}>
-                  <TableCell sx={{borderBottom: 'none'}}>
+                  <TableCell sx={{ borderBottom: "none" }}>
                     <SensorsIcon fontSize="small" sx={{ color: "#5be95b" }} />
                   </TableCell>
-                  <TableCell sx={{borderBottom: 'none'}}>[00{key}]</TableCell>
-                  <TableCell sx={{ fontWeight: "700" , borderBottom: 'none'}}>
+                  <TableCell sx={{ borderBottom: "none" }}>[00{key}]</TableCell>
+                  <TableCell sx={{ fontWeight: "700", borderBottom: "none" }}>
                     [{"" + uniqueChars[key].depth}]{" "}
                   </TableCell>
                 </TableRow>
@@ -122,14 +121,13 @@ export class SensorsList extends React.Component<IProps> {
           }
         }
 
-
         //////////////////////////////Сортировка..................................................................
 
-        if ("_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
+        if (
+          "_dev_id_key_" + gr_devs[i].id === APP_STORAGE.devs.getIdChild() &&
           APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
           APP_STORAGE.sensors.getSortDesc() === "1"
         ) {
-
           sort_array = APP_STORAGE.getdevs_group_move();
 
           for (var y in sort_array.sort((a: any, b: any) => b - a)) {
@@ -178,7 +176,6 @@ export class SensorsList extends React.Component<IProps> {
                   <TableCell>[{"" + sort_array[k]}] </TableCell>
                 </TableRow>
               );
-              
             }
 
             if (gr_devs[i].deleted === false) {
@@ -212,174 +209,301 @@ export class SensorsList extends React.Component<IProps> {
     return this.drawSensors(DevGr);
   }
 
-
   render(): React.ReactNode {
+    let FirstData = APP_STORAGE.sensors.getTimeDevSessFirst().split("T")[0]; ///////// Перевернуть дату
+    const [year_first, month_first, day_first] = FirstData.split("-");
+    let FirstSess = `${day_first}.${month_first}.${year_first}`;
+    let FirstTimeSess = APP_STORAGE.sensors.getTimeDevSessFirst().split("T")[1];
 
+    let LastData = APP_STORAGE.sensors.getTimeDevSessLast().split("T")[0]; ///////// Перевернуть дату
+    const [year_last, month_last, day_last] = LastData.split("-");
+    let LastSess = `${day_last}.${month_last}.${year_last}`;
+    let LastTimeSess = APP_STORAGE.sensors.getTimeDevSessLast().split("T")[1];
 
-let FirstData = APP_STORAGE.sensors.getTimeDevSessFirst().split('T')[0]; ///////// Перевернуть дату
-const [year_first, month_first, day_first] = FirstData.split('-');
- let FirstSess = `${day_first}.${month_first}.${year_first}`;
- let FirstTimeSess = APP_STORAGE.sensors.getTimeDevSessFirst().split('T')[1];
+    let ChoseData = APP_STORAGE.sensors.getChoseSessTime().split("T")[0]; ///////// Перевернуть дату
+    const [year_chose, month_chose, day_chose] = ChoseData.split("-");
+    let ChoseSess = `${day_chose}.${month_chose}.${year_chose}`;
+    let ChoseTimeSess = APP_STORAGE.sensors.getChoseSessTime().split("T")[1];
 
- let LastData = APP_STORAGE.sensors.getTimeDevSessLast().split('T')[0]; ///////// Перевернуть дату
- const [year_last, month_last, day_last] = LastData.split('-');
- let LastSess = `${day_last}.${month_last}.${year_last}`;
- let LastTimeSess = APP_STORAGE.sensors.getTimeDevSessLast().split('T')[1];
+    let periodSess;
 
- let ChoseData = APP_STORAGE.sensors.getChoseSessTime().split('T')[0]; ///////// Перевернуть дату
- const [year_chose, month_chose, day_chose] = ChoseData.split('-');
- let ChoseSess = `${day_chose}.${month_chose}.${year_chose}`;
- let ChoseTimeSess = APP_STORAGE.sensors.getChoseSessTime().split('T')[1];
+    if (Number(APP_STORAGE.devs.getPeriodSess()) === Number(0)) {
+      periodSess = (
+        <Typography
+          sx={{ fontSize: "12px", color: "#4a4b42", fontWeight: "700" }}
+        >
+          {" "}
+          Период сессии - Не установлен{" "}
+        </Typography>
+      );
+    }
 
-  //  console.log(APP_STORAGE.devs.getPassedDay())
-  //  console.log(APP_STORAGE.devs.getPassedDay().slice(-1), 'последнйи символ строки');
+    if (Number(APP_STORAGE.devs.getPeriodSess()) === Number(1)) {
+      periodSess = (
+        <Typography
+          sx={{ fontSize: "12px", color: "#4a4b42", fontWeight: "700" }}
+        >
+          {" "}
+          Период сессии - Один раз в день{" "}
+        </Typography>
+      );
+    }
 
-//    switch (APP_STORAGE.devs.getPassedDay().slice(-1)) {
-//     case ('0'): {APP_STORAGE.devs.setDay('дней')}  break;
-//     case ('1'): {APP_STORAGE.devs.setDay('день')}  break;
-//     case ('3'): {APP_STORAGE.devs.setDay('дня')}  break;
-//     case ('4'): {APP_STORAGE.devs.setDay('дня')}  break;
-//     case ('5'): {APP_STORAGE.devs.setDay('дней')}  break;
-//     case ('6'): {APP_STORAGE.devs.setDay('дней')}  break;
-//     case ('7'): {APP_STORAGE.devs.setDay('дней')}  break;
-//     case ('8'): {APP_STORAGE.devs.setDay('дней')}  break;
-//     case ('9'): {APP_STORAGE.devs.setDay('дней')}  break;
-//     default: { } break;
-// }
+    if (Number(APP_STORAGE.devs.getPeriodSess()) === Number(7)) {
+      periodSess = (
+        <Typography
+          sx={{ fontSize: "12px", color: "#4a4b42", fontWeight: "700" }}
+        >
+          {" "}
+          Период сессии - Один раз в неделю{" "}
+        </Typography>
+      );
+    }
 
+    if (Number(APP_STORAGE.devs.getPeriodSess()) === Number(14)) {
+      periodSess = (
+        <Typography
+          sx={{ fontSize: "12px", color: "#4a4b42", fontWeight: "700" }}
+        >
+          {" "}
+          Период сессии - Каждые две недели{" "}
+        </Typography>
+      );
+    }
+
+    if (Number(APP_STORAGE.devs.getPeriodSess()) === Number(31)) {
+      periodSess = (
+        <Typography
+          sx={{ fontSize: "12px", color: "#4a4b42", fontWeight: "700" }}
+        >
+          {" "}
+          Период сессии - Один раз в месяц{" "}
+        </Typography>
+      );
+    }
 
     return (
       <div className="wrapper-sensors">
-       {APP_STORAGE.devs_groups.getMiddleForm() === 2 &&
-         <>
-          {APP_STORAGE.sensors.getDeletedDev() === true  && APP_STORAGE.devs.getPassedDay().length? 
-          <Box sx = {{background: '#FC8904', mb : '44px', mt: '40px', borderRadius: '4px', display: 'flex', justifyContent: 'space-around', p: '8px', height: '48px', alignItems: 'center'}}>
-            <ErrorOutlineIcon fontSize="small" sx ={{color: '#fff'}}/>
-         <Typography sx ={{color: 'fff', fontSize: '14px'}}>Это устройство заблокировано</Typography> 
-          </Box>
-          
-          : ''}
-
-          {Number(APP_STORAGE.devs.getPassedDay()) < 1000 ? 
-          (   <Box
-            sx={{
-              background: "#266BF1",
-              mb: "44px",
-              mt: "40px",
-              borderRadius: "4px",
-              display: "flex",
-              justifyContent: "space-between",
-              height: '54px',
-              alignItems: "center",
-            }}>
-            <svg className="svg_icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="16" cy="16" r="16" fill="#75A4FF"/>
-<path d="M24 10H8V12H6V10C6 8.89543 6.89543 8 8 8H24C25.1046 8 26 8.89543 26 10V22C26 23.1046 25.1046 24 24 24H19V22H24V10Z" fill="white"/>
-<path d="M6 17C9.86599 17 13 20.134 13 24H11C11 21.2386 8.76142 19 6 19V17Z" fill="white"/>
-<path d="M6 21C7.65685 21 9 22.3431 9 24H6V21Z" fill="white"/>
-<path d="M6 13C12.0751 13 17 17.9249 17 24H15C15 19.0294 10.9706 15 6 15V13Z" fill="white"/>
-</svg>
-       <Box>
-       <Typography sx={{fontSize: '14px', pl: '8px'}}>
-              Прошло -  {APP_STORAGE.devs.getPassedDay()} Дней</Typography>
-              <Typography sx={{fontSize: '10px'}}> (с момента приема данных) </Typography>
-       </Box>
-
-       
-              <Box sx ={{background: '#75A4FF', p: '8px', borderRadius: '4px', height: '100%', display: 'flex', alignItems: 'center',
-              borderTopLeftRadius: '0px',
-              borderBottomLeftRadius: '0px'
-            }}>
-              <SignalCellularAltIcon/>
-              </Box>  
-          </Box> 
-          )
-          :
-          (  
-            <Box
-            sx={{
-              background: "#266BF1",
-              mb: "44px",
-              mt: "40px",
-              borderRadius: "4px",
-              display: "flex",
-              justifyContent: "space-between",
-              height: '54px',
-              
-             
-              alignItems: "center",
-            }}
-          >
-                   <svg className="svg_icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="16" cy="16" r="16" fill="#75A4FF"/>
-<path d="M24 10H8V12H6V10C6 8.89543 6.89543 8 8 8H24C25.1046 8 26 8.89543 26 10V22C26 23.1046 25.1046 24 24 24H19V22H24V10Z" fill="white"/>
-<path d="M6 17C9.86599 17 13 20.134 13 24H11C11 21.2386 8.76142 19 6 19V17Z" fill="white"/>
-<path d="M6 21C7.65685 21 9 22.3431 9 24H6V21Z" fill="white"/>
-<path d="M6 13C12.0751 13 17 17.9249 17 24H15C15 19.0294 10.9706 15 6 15V13Z" fill="white"/>
-</svg>
-              <Typography sx={{fontSize: '14px', pl: '8px'}}>
-               Нет данных
-              </Typography>
-              <Box sx ={{background: '#75A4FF', p: '14px', borderRadius: '4px', height: '100%', display: 'flex', alignItems: 'center',
-             borderTopLeftRadius: '0px',
-             borderBottomLeftRadius: '0px'}}>
-              <SignalCellularAltIcon/>
+        {APP_STORAGE.devs_groups.getMiddleForm() === 2 && (
+          <>
+            {APP_STORAGE.sensors.getDeletedDev() === true &&
+            APP_STORAGE.devs.getPassedDay().length ? (
+              <Box
+                sx={{
+                  background: "#FC8904",
+                  mb: "18px",
+                  mt: "40px",
+                  borderRadius: "4px",
+                  display: "flex",
+                  padding: "12px",
+                  height: "48px",
+                  alignItems: "center"
+                }}
+              >
+                <ErrorOutlineIcon
+                  fontSize="small"
+                  sx={{ color: "#fff", mr: "5px" }}
+                />
+                <Typography sx={{ color: "fff", fontSize: "14px" }}>
+                  Это устройство заблокировано
+                </Typography>
               </Box>
-              
-          </Box>
+            ) : (
+              ""
+            )}
 
-          )
-         
-          }
+            {Number(APP_STORAGE.devs.getPassedDay()) < 1000 ? (
+              <Box
+                sx={{
+                  background: "#266BF1",
+                  mb: "20px",
+                  mt: "20px",
+                  borderRadius: "4px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  height: "54px",
+                  alignItems: "center"
+                }}
+              >
+                <svg
+                  className="svg_icon"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="16" cy="16" r="16" fill="#75A4FF" />
+                  <path
+                    d="M24 10H8V12H6V10C6 8.89543 6.89543 8 8 8H24C25.1046 8 26 8.89543 26 10V22C26 23.1046 25.1046 24 24 24H19V22H24V10Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M6 17C9.86599 17 13 20.134 13 24H11C11 21.2386 8.76142 19 6 19V17Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M6 21C7.65685 21 9 22.3431 9 24H6V21Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M6 13C12.0751 13 17 17.9249 17 24H15C15 19.0294 10.9706 15 6 15V13Z"
+                    fill="white"
+                  />
+                </svg>
+                <Box>
+                  <Typography sx={{ fontSize: "14px", pl: "8px" }}>
+                    Прошло - {APP_STORAGE.devs.getPassedDay()} Дней
+                  </Typography>
+                  <Typography sx={{ fontSize: "10px" }}>
+                    {" "}
+                    (с момента приема данных){" "}
+                  </Typography>
+                </Box>
 
+                <Box
+                  sx={{
+                    background: "#75A4FF",
+                    p: "8px",
+                    borderRadius: "4px",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    borderTopLeftRadius: "0px",
+                    borderBottomLeftRadius: "0px"
+                  }}
+                >
+                  <SignalCellularAltIcon />
+                </Box>
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  background: "#266BF1",
+                  mb: "20px",
+                  mt: "20px",
+                  borderRadius: "4px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  height: "54px",
 
-           <Box sx ={{display: 'flex', justifyContent: 'space-between',  color: '#111111'}}> 
-           <Typography sx={{ fontWeight: "600" , color: '#0D1C52', mb : '12px' }}>   Список сенсоров </Typography>
-                      <Box sx={{ width: "80px" }}>
+                  alignItems: "center"
+                }}
+              >
+                <svg
+                  className="svg_icon"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="16" cy="16" r="16" fill="#75A4FF" />
+                  <path
+                    d="M24 10H8V12H6V10C6 8.89543 6.89543 8 8 8H24C25.1046 8 26 8.89543 26 10V22C26 23.1046 25.1046 24 24 24H19V22H24V10Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M6 17C9.86599 17 13 20.134 13 24H11C11 21.2386 8.76142 19 6 19V17Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M6 21C7.65685 21 9 22.3431 9 24H6V21Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M6 13C12.0751 13 17 17.9249 17 24H15C15 19.0294 10.9706 15 6 15V13Z"
+                    fill="white"
+                  />
+                </svg>
+                <Typography sx={{ fontSize: "14px", pl: "8px" }}>
+                  Нет данных
+                </Typography>
+                <Box
+                  sx={{
+                    background: "#75A4FF",
+                    p: "14px",
+                    borderRadius: "4px",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    borderTopLeftRadius: "0px",
+                    borderBottomLeftRadius: "0px"
+                  }}
+                >
+                  <SignalCellularAltIcon />
+                </Box>
+              </Box>
+            )}
 
-                        <ArrowDownwardIcon
-                          className={APP_STORAGE.sensors.getActiveButtonSort()}
-                          fontSize="small"
-                          sx={{ p: "2px" }}
-                          onClick={() => {
-                            this.SortDescSensors("0");
-                          }}
-                        />
+            <Box
+              sx={{
+                background: "#fff",
+                mb: "44px",
+                padding: "12px",
+                borderRadius: "4px",
+                display: "flex",
+                alignItems: "center"
+              }}
+            >
+              <LeakAddIcon sx={{ color: "#808080", mr: "5px" }} />
+              {periodSess}
+            </Box>
 
-                        <ArrowUpwardIcon
-                          className={APP_STORAGE.sensors.getActiveButtonSortDesc()}
-                          fontSize="small"
-                          sx={{ p: "2px" }}
-                          onClick={() => {
-                            this.SortDescSensors("1");
-                          }}
-                        /> 
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                color: "#111111"
+              }}
+            >
+              <Typography
+                sx={{ fontWeight: "600", color: "#0D1C52", mb: "12px" }}
+              >
+                {" "}
+                Список сенсоров{" "}
+              </Typography>
+              <Box sx={{ width: "80px" }}>
+                <ArrowDownwardIcon
+                  className={APP_STORAGE.sensors.getActiveButtonSort()}
+                  fontSize="small"
+                  sx={{ p: "2px" }}
+                  onClick={() => {
+                    this.SortDescSensors("0");
+                  }}
+                />
 
-                      </Box> 
-                      </Box>
-         </>
-         
-     
-                      }
+                <ArrowUpwardIcon
+                  className={APP_STORAGE.sensors.getActiveButtonSortDesc()}
+                  fontSize="small"
+                  sx={{ p: "2px" }}
+                  onClick={() => {
+                    this.SortDescSensors("1");
+                  }}
+                />
+              </Box>
+            </Box>
+          </>
+        )}
         <Box
           className=" sensors"
           sx={{
             display: "flex",
             flexDirection: "column;",
             alignItems: "flex-start;",
-            width: "100%",
+            width: "100%"
           }}
         >
           <Box
             sx={{
               width: "100%",
-              maxHeight: '300px',
+              maxHeight: "300px",
               background: "#fff",
               borderRadius: "4px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              overflow: "auto",
+              overflow: "auto"
             }}
           >
             <TableContainer className="table_container sensors">
@@ -392,14 +516,11 @@ const [year_first, month_first, day_first] = FirstData.split('-');
           </Box>
         </Box>
 
-        <div id ='addition_info'>
-        <AdditionInfo />
+        <div id="addition_info">
+          <AdditionInfo />
 
-{APP_STORAGE.sensors.getEndPovs()!== '' ? <DevPovs/> : ''}
-
+          {APP_STORAGE.sensors.getEndPovs() !== "" ? <DevPovs /> : ""}
         </div>
-
-
       </div>
     );
   }
