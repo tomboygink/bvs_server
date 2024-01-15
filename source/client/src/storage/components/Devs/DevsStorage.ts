@@ -1,6 +1,7 @@
 import { observable, action, computed, makeAutoObservable, toJS } from "mobx";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
+import { api } from "../../../utils/api";
 import { APP_STORAGE } from "../../AppStorage";
 import { TDGroup } from "./DevEntityes";
 
@@ -15,7 +16,7 @@ export class DevsStorage {
     org_id: "",
     g_info: "",
     deleted: false,
-    svg: ""
+    svg: "",
   };
 
   @observable devs: Array<string> = [];
@@ -465,7 +466,7 @@ export class DevsStorage {
     q.args = {
       org_id: this.getOrgId(),
       dev_group_id: this.getIdDevs(),
-      user_w: this.getUserRole()
+      user_w: this.getUserRole(),
     };
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);
@@ -486,8 +487,12 @@ export class DevsStorage {
   async set_NewDevs(name: string, value: any, _options?: any) {
     let lat: any;
     let lng: any;
+
     let latnumber = this.getLatitude().replace(/[^\d\.,]/g, ""); //// только цифты
     let latchar = latnumber.replace(/,/g, "."); //// то
+
+    console.log("latchar=>", latchar);
+
     if (latchar.match(/\./g).length > 1) {
       lat = latchar.substr(0, latchar.lastIndexOf("."));
     } else {
@@ -496,6 +501,7 @@ export class DevsStorage {
 
     let lngnumber = this.getLongitude().replace(/[^\d\.,]/g, ""); //// только цифты
     let lngchar = lngnumber.replace(/,/g, "."); //// то
+
     if (lngchar.match(/\./g).length > 1) {
       lng = lngchar.substr(0, latchar.lastIndexOf("."));
     } else {
@@ -570,10 +576,14 @@ export class DevsStorage {
         sensors: '{"s":' + JSON.stringify(this.getDepthNewSensors()) + "}",
         deleted: this.getDeleted() || false,
         info: this.getDeleted() || "",
-        period_sess: this.getPeriodSess() || ""
+        period_sess: this.getPeriodSess() || "",
       };
       q.sess_code = sess_code;
       (await WSocket.get()).send(q);
+      // api
+      //   .fetch(q)
+
+      //   .catch((e) => console.log("error=>", e));
       this.setName("");
       this.setNumber("");
       this.setLatitude("");
@@ -693,14 +703,19 @@ export class DevsStorage {
         sensors: '{"s":' + JSON.stringify(this.getChangeSensors()) + "}",
         deleted: this.getCheckboxEd(),
         info: this.getInfo() || "",
-        period_sess: this.getPeriodSess() || 0
+        period_sess: this.getPeriodSess() || 0,
       };
 
       q.sess_code = sess_code;
-      (await WSocket.get()).send(q);
-      setTimeout(() => {
-        this.setOpenModalChange(false);
-      }, 2000);
+      // (await WSocket.get()).send(q);
+      api
+        .fetch(q)
+        .then(() => this.setOpenModalChange(false))
+        .catch((e) => console.log("error=>", e)); // fetch-запрос
+
+      // setTimeout(() => {
+      //   this.setOpenModalChange(false);
+      // }, 2000);
     }
   }
 
@@ -714,12 +729,18 @@ export class DevsStorage {
       dev_number: this.getNumber(),
       start_povs: this.getStartDevPovs(),
       end_povs: this.getEndDevPovs(),
-      old_dev_povs: APP_STORAGE.sensors.getOldDevPovs()
+      old_dev_povs: APP_STORAGE.sensors.getOldDevPovs(),
     };
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+    // (await WSocket.get()).send(q);
+    api
+      .fetch(q)
+      .then((data) => {
+        APP_STORAGE.reg_user.setResulSave("Поверочный интервал установлен");
+      })
+      .catch((e) => console.log("error=>", e));
 
-    APP_STORAGE.reg_user.setResulSave("Поверочный интервал установлен");
+    // APP_STORAGE.reg_user.setResulSave("Поверочный интервал установлен");
     setTimeout(() => {
       APP_STORAGE.reg_user.setResulSave("");
       this.setOpenNewdevpovs(false);
@@ -741,7 +762,7 @@ export class DevsStorage {
     q.args = {
       dev_sess_id: id_sess,
       dev_id: dev_id,
-      dev_number: dev_number
+      dev_number: dev_number,
     };
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);
@@ -752,7 +773,7 @@ export class DevsStorage {
     var q: IWSQuery = new WSQuery("deleteControlDevSess");
 
     q.args = {
-      id: APP_STORAGE.sensors.getIdFirstSess()
+      id: APP_STORAGE.sensors.getIdFirstSess(),
     };
 
     q.sess_code = sess_code;
@@ -781,7 +802,7 @@ export class DevsStorage {
     var q: IWSQuery = new WSQuery("set_SchemeSvg");
     q.args = {
       id: APP_STORAGE.devs_groups.getParentId(),
-      svg_file: "APP_STORAGE.importdevs.getSvg()"
+      svg_file: "APP_STORAGE.importdevs.getSvg()",
     };
     q.sess_code = sess_code;
     (await WSocket.get()).send(q);

@@ -1,7 +1,9 @@
 import * as React from "react";
-import TreeItem from "@mui/lab/TreeItem";
+// import TreeItem from "@mui/lab/TreeItem";
 
-import TreeView from "@mui/lab/TreeView";
+// import TreeView from "@mui/lab/TreeView";
+
+import { TreeView, TreeItem } from "@mui/x-tree-view";
 
 import { Box, Typography } from "@mui/material";
 
@@ -11,14 +13,13 @@ import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import DirectionsIcon from '@mui/icons-material/Directions';
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import DirectionsIcon from "@mui/icons-material/Directions";
 
 interface IProps {}
 
@@ -32,17 +33,17 @@ export class UsersMenu extends React.Component<IProps> {
     APP_STORAGE.reg_user.setNodeidUser(node);
   }
 
-  async SeachFamily(a: any) { 
-
-  let filter = (document.getElementById('search') as HTMLInputElement).value.toUpperCase();
-  let lis = document.getElementsByTagName('li');
-  for (var i = 0; i < lis.length; i++) {
-    var name = lis[i].innerText;
-    if (name.toUpperCase().indexOf(filter) == 0) 
-      lis[i].style.display = 'list-item';
-    else
-      lis[i].style.display = 'none';
-}
+  async SeachFamily(a: any) {
+    let filter = (
+      document.getElementById("search") as HTMLInputElement
+    ).value.toUpperCase();
+    let lis = document.getElementsByTagName("li");
+    for (var i = 0; i < lis.length; i++) {
+      var name = lis[i].innerText;
+      if (name.toUpperCase().indexOf(filter) == 0)
+        lis[i].style.display = "list-item";
+      else lis[i].style.display = "none";
+    }
   }
 
   render(): React.ReactNode {
@@ -52,41 +53,36 @@ export class UsersMenu extends React.Component<IProps> {
       let users = JSON.parse(
         JSON.stringify(APP_STORAGE.reg_user.getAllUsers())
       );
+      console.log("users=>", users);
       for (var key in users) {
         let row = users[key];
         if (row.u_deleted === false) {
           table_rows.push(
-       
             <React.Fragment key={"_gr_id_key_" + row.u_id}>
-            
-                <TreeItem
-                  nodeId={String(row.u_id)}
-                  label={row.u_family + " " + row.u_name + " " + row.u_father}
-                  icon={<AccountCircleOutlinedIcon sx ={{color: '#266BF1'}}/>}
-                  sx={{
-                    color: "#222",
-                    fontSize: "14px",
-                  }}
-                >
-                </TreeItem> 
+              <TreeItem
+                nodeId={String(row.u_id)}
+                label={row.u_family + " " + row.u_name + " " + row.u_father}
+                icon={<AccountCircleOutlinedIcon sx={{ color: "#266BF1" }} />}
+                sx={{
+                  color: "#222",
+                  fontSize: "14px",
+                }}
+              ></TreeItem>
             </React.Fragment>
-          )
+          );
         } else {
           table_rows.push(
             <React.Fragment key={"_gr_id_key_" + row.u_id}>
-            
-                <TreeItem
-                  draggable="true"
-                  nodeId={String(row.u_id)}
-                  label={row.u_family}
-                  icon={<AccountCircleOutlinedIcon sx={{color: '#808080'}}/>}
-                  sx={{
-                    color: "#808080",
-                    fontSize: "14px",
-                  }}
-                >
-                </TreeItem>
-            
+              <TreeItem
+                draggable="true"
+                nodeId={String(row.u_id)}
+                label={row.u_family}
+                icon={<AccountCircleOutlinedIcon sx={{ color: "#808080" }} />}
+                sx={{
+                  color: "#808080",
+                  fontSize: "14px",
+                }}
+              ></TreeItem>
             </React.Fragment>
           );
         }
@@ -106,28 +102,32 @@ export class UsersMenu extends React.Component<IProps> {
             borderRadius: "4px",
           }}
         >
-              <Paper
-      component="form"
-      sx={{ mb: '22px', display: 'flex', alignItems: 'center', boxShadow: 'none', background: '#E3EDFF', borderRadius: '100px' }}
-    >
-    
-      <InputBase
-        id="search"
-        sx={{ ml: 1, flex: 1 , fontSize: '14px', pl: '14px'}}
-        placeholder="Поиск по пользователям"
-        inputProps={{ 'aria-label': 'search google maps' }}
-        onChange={(e) => {
-          this.SeachFamily(e.target.value);
-          }} 
-      />
-      <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-      <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-      
-  
-    </Paper>
-          <TreeView 
+          <Paper
+            component="form"
+            sx={{
+              mb: "22px",
+              display: "flex",
+              alignItems: "center",
+              boxShadow: "none",
+              background: "#E3EDFF",
+              borderRadius: "100px",
+            }}
+          >
+            <InputBase
+              id="search"
+              sx={{ ml: 1, flex: 1, fontSize: "14px", pl: "14px" }}
+              placeholder="Поиск по пользователям"
+              inputProps={{ "aria-label": "search google maps" }}
+              onChange={(e) => {
+                this.SeachFamily(e.target.value);
+              }}
+            />
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+          </Paper>
+          <TreeView
             className="wrapper_treeviw"
             onNodeSelect={this.handleChange}
             aria-label="customized"
@@ -135,8 +135,6 @@ export class UsersMenu extends React.Component<IProps> {
           >
             {table_rows}
           </TreeView>
-
-
         </Box>
       </React.Fragment>
     );

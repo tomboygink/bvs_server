@@ -20,12 +20,13 @@ import {
   FormControl,
   InputLabel,
   Checkbox,
-  Alert
+  Alert,
 } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import Stack from "@mui/material/Stack";
 
-interface IProps {}
+// Экспортировано для запуска
+export interface IProps {}
 
 @observer
 export class EditUser extends React.Component<IProps> {
@@ -142,7 +143,7 @@ export class EditUser extends React.Component<IProps> {
                 autoComplete="фамилия"
                 autoFocus
                 size="small"
-                onChange={e => {
+                onChange={(e) => {
                   APP_STORAGE.edit_user.setFamily(e.target.value);
                 }}
                 value={APP_STORAGE.edit_user.getFamily() || ""}
@@ -160,7 +161,7 @@ export class EditUser extends React.Component<IProps> {
                 autoComplete="имя"
                 autoFocus
                 size="small"
-                onChange={e => {
+                onChange={(e) => {
                   APP_STORAGE.edit_user.setName(e.target.value);
                 }}
                 value={APP_STORAGE.edit_user.getName() || ""}
@@ -176,7 +177,7 @@ export class EditUser extends React.Component<IProps> {
                 autoComplete="отчество"
                 autoFocus
                 size="small"
-                onChange={e => {
+                onChange={(e) => {
                   APP_STORAGE.edit_user.setFather(e.target.value);
                 }}
                 value={APP_STORAGE.edit_user.getFather() || ""}
@@ -195,7 +196,7 @@ export class EditUser extends React.Component<IProps> {
                 autoComplete="email"
                 autoFocus
                 size="small"
-                onChange={e => {
+                onChange={(e) => {
                   APP_STORAGE.edit_user.setEmail(e.target.value);
                 }}
                 value={APP_STORAGE.edit_user.getEmail() || ""}
@@ -219,7 +220,7 @@ export class EditUser extends React.Component<IProps> {
               autoComplete="телефон"
               autoFocus
               size="small"
-              onChange={e => {
+              onChange={(e) => {
                 APP_STORAGE.edit_user.setTelephone(e.target.value);
               }}
               value={APP_STORAGE.edit_user.getTelephone() || ""}
@@ -238,7 +239,7 @@ export class EditUser extends React.Component<IProps> {
                 sx={{ fontSize: "12px" }}
                 value={APP_STORAGE.edit_user.getKeyOrg()}
                 label="организация"
-                onChange={e => {
+                onChange={(e) => {
                   this.SelectedOrg(e.target.value);
                 }}
               >
@@ -253,7 +254,7 @@ export class EditUser extends React.Component<IProps> {
                 sx={{ fontSize: "12px" }}
                 value={APP_STORAGE.edit_user.getKeyJobs()}
                 label="должность"
-                onChange={e => {
+                onChange={(e) => {
                   this.SelectedJobs(e.target.value);
                 }}
               >
@@ -265,7 +266,7 @@ export class EditUser extends React.Component<IProps> {
                     display: "flex",
                     justifyContent: "flex-end",
                     m: 1,
-                    borderRadius: "4px"
+                    borderRadius: "4px",
                   }}
                 >
                   {/* <MenuItem
@@ -309,7 +310,7 @@ export class EditUser extends React.Component<IProps> {
                 autoFocus
                 type="password"
                 size="small"
-                onChange={e => {
+                onChange={(e) => {
                   APP_STORAGE.edit_user.setPassword(e.target.value);
                 }}
                 value={APP_STORAGE.edit_user.getPassword() || ""}
@@ -334,7 +335,7 @@ export class EditUser extends React.Component<IProps> {
                 autoFocus
                 type="password"
                 size="small"
-                onChange={e => {
+                onChange={(e) => {
                   APP_STORAGE.edit_user.setRepeatPassword(e.target.value);
                 }}
                 value={APP_STORAGE.edit_user.getRepeatPassword() || ""}
@@ -352,7 +353,7 @@ export class EditUser extends React.Component<IProps> {
                 sx={{ fontSize: "12px" }}
                 value={APP_STORAGE.edit_user.getActive() || ""}
                 label="активность"
-                onChange={e => {
+                onChange={(e) => {
                   this.ActivityState(e.target.value);
                 }}
               >
@@ -377,9 +378,10 @@ export class EditUser extends React.Component<IProps> {
                 </Typography>
                 <AntSwitch
                   checked={APP_STORAGE.edit_user.getCheckboxEd()}
-                  onChange={editing => {
-                    this.ChekedForEdit(editing);
-                  }}
+                  // Закомментировано для запуска
+                  // onChange={editing => {
+                  //   this.ChekedForEdit(editing);
+                  // }}
                 />
               </Stack>
 
@@ -396,7 +398,8 @@ export class EditUser extends React.Component<IProps> {
                 </Typography>
                 <AntSwitch
                   checked={APP_STORAGE.edit_user.getCheckboxRead()}
-                  onChange={readind => {
+                  // Добавлен тип any для запуска
+                  onChange={(readind: any) => {
                     this.ChekedForRead(readind);
                   }}
                 />
@@ -412,7 +415,7 @@ export class EditUser extends React.Component<IProps> {
               aria-label="minimum height"
               minRows={4}
               style={{ width: "100%" }}
-              onChange={e => {
+              onChange={(e) => {
                 APP_STORAGE.edit_user.setInfo(e.target.value);
               }}
               value={APP_STORAGE.edit_user.getInfo() || ""}
@@ -422,7 +425,7 @@ export class EditUser extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 alignItems: "baseline",
-                justifyContent: "flex-end"
+                justifyContent: "flex-end",
               }}
             >
               <Button
@@ -431,7 +434,7 @@ export class EditUser extends React.Component<IProps> {
                   color: "#fff;",
                   mt: "18px",
                   mb: "18px",
-                  fontSize: "12px"
+                  fontSize: "12px",
                 }}
                 onClick={() => {
                   this.ChangeUser();
@@ -447,7 +450,7 @@ export class EditUser extends React.Component<IProps> {
                   background: "#EDF7ED",
                   color: "#1E4620",
                   p: "12px",
-                  borderRadius: "4px"
+                  borderRadius: "4px",
                 }}
               >
                 {" "}

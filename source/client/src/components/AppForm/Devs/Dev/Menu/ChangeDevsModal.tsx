@@ -11,7 +11,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Select
+  Select,
 } from "@mui/material";
 
 import FormGroup from "@mui/material/FormGroup";
@@ -119,6 +119,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
     var options_org = [];
     if (APP_STORAGE.reg_user.getOrgAll()) {
       org = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll()));
+
       for (var key in org) {
         if (org.hasOwnProperty(key)) {
           let a = org[key];
@@ -171,7 +172,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
                 sx={{
                   display: "flex",
                   fontWeight: "700",
-                  border: "none"
+                  border: "none",
                 }}
                 align="left"
               >
@@ -193,7 +194,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               <TableCell
                 align="left"
                 sx={{ color: "#1976D2" }}
-                onClick={e => {
+                onClick={(e) => {
                   this.AddSensors(
                     /////// Добавление сенсоров
                     (
@@ -210,7 +211,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               <TableCell
                 align="left"
                 sx={{ color: "#1976D2" }}
-                onClick={e => {
+                onClick={(e) => {
                   this.ChangeSensors(
                     (
                       document.getElementById(
@@ -226,7 +227,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               <TableCell
                 align="left"
                 sx={{ color: "#FF4848" }}
-                onClick={e => {
+                onClick={(e) => {
                   this.DeleteSensors(
                     (
                       document.getElementById(
@@ -250,7 +251,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 fontWeight: "700",
-                border: "none"
+                border: "none",
               }}
               align="left"
             >
@@ -273,7 +274,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
             <TableCell
               align="left"
               sx={{ color: "#1976D2" }}
-              onClick={e => {
+              onClick={(e) => {
                 this.AddSensors(1);
               }}
             >
@@ -300,8 +301,8 @@ export class ChangeDevsModal extends React.Component<IProps> {
           PaperProps={{
             sx: {
               width: "100%",
-              maxHeight: "100%"
-            }
+              maxHeight: "100%",
+            },
           }}
         >
           <Box sx={{ p: 2 }}>
@@ -310,7 +311,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                mb: "12px"
+                mb: "12px",
               }}
             >
               <Typography>Редактировать устройство</Typography>
@@ -339,7 +340,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               autoComplete="Номер устройства"
               autoFocus
               size="small"
-              onChange={e => {
+              onChange={(e) => {
                 APP_STORAGE.devs.setNumber(e.target.value);
               }}
               value={APP_STORAGE.devs.getNumber()}
@@ -358,7 +359,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               autoComplete="Название устройства"
               autoFocus
               size="small"
-              onChange={e => {
+              onChange={(e) => {
                 APP_STORAGE.devs.setName(e.target.value);
               }}
               value={APP_STORAGE.devs.getName()}
@@ -377,7 +378,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               autoComplete="долгота"
               autoFocus
               size="small"
-              onChange={e => {
+              onChange={(e) => {
                 APP_STORAGE.devs.setLongitude(e.target.value);
               }}
               value={APP_STORAGE.devs.getLongitude()}
@@ -396,7 +397,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               autoComplete="широта"
               autoFocus
               size="small"
-              onChange={e => {
+              onChange={(e) => {
                 APP_STORAGE.devs.setLatitude(e.target.value);
               }}
               value={APP_STORAGE.devs.getLatitude()}
@@ -411,7 +412,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               aria-label="minimum height"
               minRows={4}
               style={{ width: "100%" }}
-              onChange={e => {
+              onChange={(e) => {
                 APP_STORAGE.devs.setInfo(e.target.value);
               }}
               value={APP_STORAGE.devs.getInfo()}
@@ -439,9 +440,10 @@ export class ChangeDevsModal extends React.Component<IProps> {
                 </Typography>
                 <AntSwitch
                   checked={APP_STORAGE.devs.getCheckboxEd()}
-                  onChange={editing => {
-                    this.ChekedForEdit(editing);
-                  }}
+                  // Закомментировано для запуска
+                  // onChange={editing => {
+                  //   this.ChekedForEdit(editing);
+                  // }}
                 />
               </Stack>
             </FormGroup>
@@ -455,7 +457,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
                 value={APP_STORAGE.devs.getPeriodSess()}
                 sx={{ fontSize: "12px" }}
                 label="Период сессии"
-                onChange={e => {
+                onChange={(e) => {
                   this.SelectedPeriodSess(e.target.value);
                 }}
               >
@@ -479,7 +481,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 alignItems: "baseline",
-                justifyContent: "flex-end"
+                justifyContent: "flex-end",
               }}
             >
               <Button
@@ -488,7 +490,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
                   color: "#fff;",
                   mt: "18px",
                   mb: "18px",
-                  fontSize: "12px"
+                  fontSize: "12px",
                 }}
                 onClick={() => {
                   this.ChangeDevs();

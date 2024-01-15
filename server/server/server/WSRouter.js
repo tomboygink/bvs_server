@@ -64,36 +64,36 @@ function WSRoute(_ws, q) {
                     console.log(q);
                     _a = q.cmd;
                     switch (_a) {
-                        case 'get_UserBySessionCode': return [3, 1];
-                        case 'get_UserByAuth': return [3, 4];
-                        case 'set_CUserData': return [3, 7];
-                        case 'set_ChangePass': return [3, 9];
-                        case 'set_ActMail': return [3, 12];
-                        case 'set_MailCode': return [3, 13];
-                        case 'set_ForgPass': return [3, 18];
-                        case 'set_SaveNewPass': return [3, 20];
-                        case 'set_ChangeUser': return [3, 22];
-                        case 'get_Org': return [3, 24];
-                        case 'set_NewOrg': return [3, 26];
-                        case 'set_ChangeOrg': return [3, 31];
-                        case 'get_Jobs': return [3, 32];
-                        case 'set_NewJobTitle': return [3, 34];
-                        case 'set_ChangeJobs_Titles': return [3, 39];
-                        case 'set_NewUser': return [3, 40];
-                        case 'get_AllUser': return [3, 42];
-                        case 'set_NewDevGroup': return [3, 44];
-                        case 'get_DevsGroups': return [3, 49];
-                        case 'set_ChangeDevsGroups': return [3, 51];
-                        case 'set_NewDevs': return [3, 53];
-                        case 'set_NewDevPovs': return [3, 56];
-                        case 'get_DevPovs': return [3, 58];
-                        case 'set_NewControlDevSess': return [3, 60];
-                        case 'deleteControlDevSess': return [3, 62];
-                        case 'set_ChangeDevs': return [3, 63];
-                        case 'get_DevFirstLastSessions': return [3, 64];
-                        case 'get_DevSessions': return [3, 66];
-                        case 'set_SchemeSvg': return [3, 68];
-                        case 'deleteCookie': return [3, 70];
+                        case "get_UserBySessionCode": return [3, 1];
+                        case "get_UserByAuth": return [3, 4];
+                        case "set_CUserData": return [3, 7];
+                        case "set_ChangePass": return [3, 9];
+                        case "set_ActMail": return [3, 12];
+                        case "set_MailCode": return [3, 13];
+                        case "set_ForgPass": return [3, 18];
+                        case "set_SaveNewPass": return [3, 20];
+                        case "set_ChangeUser": return [3, 22];
+                        case "get_Org": return [3, 24];
+                        case "set_NewOrg": return [3, 26];
+                        case "set_ChangeOrg": return [3, 31];
+                        case "get_Jobs": return [3, 32];
+                        case "set_NewJobTitle": return [3, 34];
+                        case "set_ChangeJobs_Titles": return [3, 39];
+                        case "set_NewUser": return [3, 40];
+                        case "get_AllUser": return [3, 42];
+                        case "set_NewDevGroup": return [3, 44];
+                        case "get_DevsGroups": return [3, 49];
+                        case "set_ChangeDevsGroups": return [3, 51];
+                        case "set_NewDevs": return [3, 53];
+                        case "set_NewDevPovs": return [3, 56];
+                        case "get_DevPovs": return [3, 58];
+                        case "set_NewControlDevSess": return [3, 60];
+                        case "deleteControlDevSess": return [3, 62];
+                        case "set_ChangeDevs": return [3, 63];
+                        case "get_DevFirstLastSessions": return [3, 64];
+                        case "get_DevSessions": return [3, 66];
+                        case "set_SchemeSvg": return [3, 68];
+                        case "deleteCookie": return [3, 70];
                     }
                     return [3, 71];
                 case 1:
@@ -123,8 +123,9 @@ function WSRoute(_ws, q) {
                     return [4, ut.selectUser()];
                 case 6:
                     data = _c.sent();
-                    if (sess_code === '' && data[0] === undefined) {
-                        wsres.error = "Пользователя не существует или введены не верные данные";
+                    if (sess_code === "" && data[0] === undefined) {
+                        wsres.error =
+                            "Пользователя не существует или введены не верные данные";
                     }
                     else {
                         wsres.code = sess_code;
@@ -149,22 +150,28 @@ function WSRoute(_ws, q) {
                     return [4, ut.selectUserLoginEmail()];
                 case 10:
                     data = _c.sent();
-                    old_pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(q.args.old_password).digest('hex');
-                    pass = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(q.args.new_password).digest('hex');
+                    old_pass = crypto_1["default"]
+                        .createHmac("sha256", config_1.CONFIG.key_code)
+                        .update(q.args.old_password)
+                        .digest("hex");
+                    pass = crypto_1["default"]
+                        .createHmac("sha256", config_1.CONFIG.key_code)
+                        .update(q.args.new_password)
+                        .digest("hex");
                     if (data[0].password === pass) {
-                        wsres.error = 'Новый пароль не должен повторять старый';
+                        wsres.error = "Новый пароль не должен повторять старый";
                         wsres.data = [];
                         wsres.code = q.sess_code;
                         return [3, 72];
                     }
                     if (q.args.login === q.args.new_password) {
-                        wsres.error = 'Пароль не должен совпадать с логином';
+                        wsres.error = "Пароль не должен совпадать с логином";
                         wsres.data = [];
                         wsres.code = q.sess_code;
                         return [3, 72];
                     }
                     if (data[0].password !== old_pass) {
-                        wsres.error = 'Старый пароль не верен';
+                        wsres.error = "Старый пароль не верен";
                         wsres.code = q.sess_code;
                         wsres.data = [];
                         return [3, 72];
@@ -178,7 +185,7 @@ function WSRoute(_ws, q) {
                     return [3, 72];
                 case 12:
                     {
-                        if (q.args.email !== '') {
+                        if (q.args.email !== "") {
                             sendMail = new sendMail_1.SendMail(q.args, q.sess_code);
                             sendMail.sendConfirmMail();
                         }
@@ -210,14 +217,16 @@ function WSRoute(_ws, q) {
                 case 19:
                     data = _c.sent();
                     if (data[0] == undefined) {
-                        wsres.error = 'Такого email не существует, проверте введенные данные или обратитесть к администратору системы';
+                        wsres.error =
+                            "Такого email не существует, проверте введенные данные или обратитесть к администратору системы";
                     }
                     else {
                         if (data[0].act_mail === true) {
                             sendMail.sendRePassword();
                         }
                         else {
-                            wsres.error = 'Данный email не был подтвержден, обращайтесь к администратору системы';
+                            wsres.error =
+                                "Данный email не был подтвержден, обращайтесь к администратору системы";
                         }
                     }
                     return [3, 72];
@@ -227,7 +236,8 @@ function WSRoute(_ws, q) {
                 case 21:
                     data = _c.sent();
                     if (q.args.code !== data[0].re_password_code) {
-                        wsres.error = 'Код подтверждения неверен, проверте правильность введеного кода';
+                        wsres.error =
+                            "Код подтверждения неверен, проверте правильность введеного кода";
                     }
                     else {
                         ut = new Users_1.UserTable(q.args, q.sess_code);
@@ -252,8 +262,7 @@ function WSRoute(_ws, q) {
                     }
                     else {
                         wsres.code = q.sess_code;
-                        wsres.data = [],
-                            wsres.error = 'Организации отсутвуют';
+                        (wsres.data = []), (wsres.error = "Организации отсутвуют");
                     }
                     return [3, 72];
                 case 26:
@@ -295,8 +304,8 @@ function WSRoute(_ws, q) {
                     }
                     else {
                         wsres.code = q.sess_code;
-                        wsres.data = [],
-                            wsres.error = 'У организации отсутствуют должности';
+                        (wsres.data = []),
+                            (wsres.error = "У организации отсутствуют должности");
                     }
                     return [3, 72];
                 case 34:
@@ -349,7 +358,7 @@ function WSRoute(_ws, q) {
                     data = _c.sent();
                     wsres.code = q.sess_code;
                     wsres.data = data;
-                    wsres.error = '';
+                    wsres.error = "";
                     return [3, 72];
                 case 44:
                     dg = new Devs_groups_1.Devs_groupsTable(q.args, q.sess_code);
@@ -375,6 +384,7 @@ function WSRoute(_ws, q) {
                     data = _c.sent();
                     wsres.code = q.sess_code;
                     wsres.error = null;
+                    console.log(data);
                     wsres.data = [data];
                     return [3, 72];
                 case 51:
@@ -450,7 +460,7 @@ function WSRoute(_ws, q) {
                     {
                         deleteControlDevSess = new Control_dev_sess_1.Control_dev_sessTable(q.args, q.sess_code);
                         deleteControlDevSess.deleteControl_dev_sess();
-                        wsres.code = '';
+                        wsres.code = "";
                         wsres.data = [];
                         wsres.error = null;
                     }
@@ -487,7 +497,7 @@ function WSRoute(_ws, q) {
                     return [4, schemeSvg.insertSchemeSVG()];
                 case 69:
                     _c.sent();
-                    wsres.code = '';
+                    wsres.code = "";
                     wsres.data = [];
                     wsres.error = null;
                     return [3, 72];
@@ -495,7 +505,7 @@ function WSRoute(_ws, q) {
                     {
                         st = new Sessions_1.SessionsTable(q.args);
                         st.deleteSess();
-                        wsres.code = '';
+                        wsres.code = "";
                         wsres.data = [];
                     }
                     return [3, 72];

@@ -11,7 +11,7 @@ import {
   CssBaseline,
   Typography,
   Alert,
-  Link
+  Link,
 } from "@mui/material";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -64,7 +64,7 @@ export class ForgotPass extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <Typography
@@ -98,7 +98,7 @@ export class ForgotPass extends React.Component<IProps> {
                 label="email"
                 name="email"
                 autoComplete="email"
-                onChange={e => {
+                onChange={(e) => {
                   APP_STORAGE.auth_form.setEmail(e.target.value);
                 }}
                 value={APP_STORAGE.auth_form.getEmail()}
@@ -109,7 +109,7 @@ export class ForgotPass extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <Link
@@ -126,7 +126,7 @@ export class ForgotPass extends React.Component<IProps> {
                   background: "#266BF1",
                   color: "#fff",
                   mt: "12px",
-                  p: "8px"
+                  p: "8px",
                 }}
                 type="button"
                 onClick={() => {

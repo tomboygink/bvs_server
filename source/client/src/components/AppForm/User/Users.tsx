@@ -1,10 +1,15 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Box, Typography, TextField, ListItemIcon, Link, TextareaAutosize } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  ListItemIcon,
+  Link,
+  TextareaAutosize,
+} from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-
-
 
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -14,8 +19,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Divider from "@mui/material/Divider";
 
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
-import { EditUser } from "../AppBarPanel/LeftPanel/EditUsers/EditUser";
-
+import { EditUser } from "../AppBarPanel/LeftPanel/EditUsers/EditUser.1";
+import { userAPI } from "../../../storage/services/userApi";
 
 interface IProps {}
 
@@ -27,18 +32,15 @@ export class Users extends React.Component<IProps> {
   }
 
   async OpenModalRegUser(e: any, tittle: string) {
-    
-
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
 
-  APP_STORAGE.reg_user.setTakeModal(e); // идентификатор модального окна
-  APP_STORAGE.reg_user.setTittleModal(tittle); // заголовок модального окна
-  APP_STORAGE.reg_user.setModalRegUser(true);
-  APP_STORAGE.app_bar.setSetOpenAppBar(false);
-  APP_STORAGE.reg_user.setOpenTableUsers(false);
-  APP_STORAGE.reg_user.setOpenTableUsers(false);
- 
-}
+    APP_STORAGE.reg_user.setTakeModal(e); // идентификатор модального окна
+    APP_STORAGE.reg_user.setTittleModal(tittle); // заголовок модального окна
+    APP_STORAGE.reg_user.setModalRegUser(true);
+    APP_STORAGE.app_bar.setSetOpenAppBar(false);
+    APP_STORAGE.reg_user.setOpenTableUsers(false);
+    APP_STORAGE.reg_user.setOpenTableUsers(false);
+  }
 
   render(): React.ReactNode {
     let table_rows = [];
@@ -46,6 +48,7 @@ export class Users extends React.Component<IProps> {
       let users = JSON.parse(
         JSON.stringify(APP_STORAGE.reg_user.getAllUsers())
       );
+      console.log("usersComponent", users);
       for (var key in users) {
         let row = users[key];
         if (String(row.u_id) === APP_STORAGE.reg_user.getNodeidUser()) {
@@ -66,7 +69,7 @@ export class Users extends React.Component<IProps> {
                           aria-expanded={open ? "true" : undefined}
                           aria-haspopup="true"
                         >
-                        <MoreVertIcon />
+                          <MoreVertIcon />
                         </IconButton>
                         <Menu
                           id="long-menu"
@@ -203,18 +206,15 @@ export class Users extends React.Component<IProps> {
                     />
                   </Box>
 
-                  <Divider  sx ={{mt: '12px'}}/>
-
-                 
+                  <Divider sx={{ mt: "12px" }} />
 
                   <TextareaAutosize
-        
-          className="info"
-          aria-label="minimum height"
-          minRows={4}
-          style={{ width: "100%" , marginTop: '12px'}}
-          value={row.u_info || ""}
-        />
+                    className="info"
+                    aria-label="minimum height"
+                    minRows={4}
+                    style={{ width: "100%", marginTop: "12px" }}
+                    value={row.u_info || ""}
+                  />
                 </Box>
               </Box>
             </React.Fragment>
@@ -231,19 +231,21 @@ export class Users extends React.Component<IProps> {
         {table_rows}
         <EditUser />
         <Box
-              sx={{
-                borderRadius: "4px",
-                width: '100%',
-                background:'#E3EDFF',
-                p:2  
-              }}
-              onClick={() => this.OpenModalRegUser(1, "Добавить пользователя")}
-            >
-              <Typography sx={{ display: "flex", color:'#266BF1', justifyContent: 'center' }}>
-                {" "}
-                Добавить пользователя
-              </Typography>
-            </Box>
+          sx={{
+            borderRadius: "4px",
+            width: "100%",
+            background: "#E3EDFF",
+            p: 2,
+          }}
+          onClick={() => this.OpenModalRegUser(1, "Добавить пользователя")}
+        >
+          <Typography
+            sx={{ display: "flex", color: "#266BF1", justifyContent: "center" }}
+          >
+            {" "}
+            Добавить пользователя
+          </Typography>
+        </Box>
       </React.Fragment>
     );
   }
