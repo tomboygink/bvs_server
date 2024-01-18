@@ -1,9 +1,17 @@
 import * as React from "react";
-import TreeItem from "@mui/lab/TreeItem";
+// import TreeItem from "@mui/lab/TreeItem";
 
-import TreeView from "@mui/lab/TreeView";
+// import TreeView from "@mui/lab/TreeView";
+import { TreeView, TreeItem } from "@mui/x-tree-view";
 
-import { Box, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
@@ -11,14 +19,13 @@ import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-
-import Paper from '@mui/material/Paper';
-import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import DirectionsIcon from '@mui/icons-material/Directions';
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import DirectionsIcon from "@mui/icons-material/Directions";
 
 interface IProps {}
 
@@ -39,22 +46,20 @@ export class JobsTitlesMenu extends React.Component<IProps> {
     APP_STORAGE.reg_user.setJobsAll([]);
     APP_STORAGE.edit_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
   }
-  async SeachFamily(a: any) { 
-
-  let filter = (document.getElementById('search') as HTMLInputElement).value.toUpperCase();
-  let lis = document.getElementsByTagName('li');
-  for (var i = 0; i < lis.length; i++) {
-    var name = lis[i].innerText;
-    if (name.toUpperCase().indexOf(filter) == 0) 
-      lis[i].style.display = 'list-item';
-    else
-      lis[i].style.display = 'none';
-}
+  async SeachFamily(a: any) {
+    let filter = (
+      document.getElementById("search") as HTMLInputElement
+    ).value.toUpperCase();
+    let lis = document.getElementsByTagName("li");
+    for (var i = 0; i < lis.length; i++) {
+      var name = lis[i].innerText;
+      if (name.toUpperCase().indexOf(filter) == 0)
+        lis[i].style.display = "list-item";
+      else lis[i].style.display = "none";
+    }
   }
 
-  
   render(): React.ReactNode {
-
     let options_org = [];
     let options_jobs = [];
     let org = null;
@@ -78,33 +83,27 @@ export class JobsTitlesMenu extends React.Component<IProps> {
     let rows_search: React.ReactNode = <></>;
     let table_rows = [];
     if (APP_STORAGE.reg_user.getOrgAll()) {
-      let org = JSON.parse(
-        JSON.stringify(APP_STORAGE.reg_user.getOrgAll())
-      );
-      
+      let org = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll()));
 
       if (APP_STORAGE.reg_user.getJobsAll()) {
         jobs = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getJobsAll()));
         for (var key in jobs) {
           if (jobs.hasOwnProperty(key)) {
             let a = jobs[key];
-  
+
             table_rows.push(
-       
               <React.Fragment key={"_org_id_key_" + a.id}>
-              
-                  <TreeItem
-                    nodeId={String(a.id)}
-                    label={a.name}
-                    icon={<AccountCircleOutlinedIcon sx ={{color: '#266BF1'}}/>}
-                    sx={{
-                      color: "#222",
-                      fontSize: "14px",
-                    }}
-                  >
-                  </TreeItem> 
+                <TreeItem
+                  nodeId={String(a.id)}
+                  label={a.name}
+                  icon={<AccountCircleOutlinedIcon sx={{ color: "#266BF1" }} />}
+                  sx={{
+                    color: "#222",
+                    fontSize: "14px",
+                  }}
+                ></TreeItem>
               </React.Fragment>
-            )
+            );
           }
         }
       }
@@ -123,32 +122,29 @@ export class JobsTitlesMenu extends React.Component<IProps> {
             borderRadius: "4px",
           }}
         >
-    
-    <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
-              <InputLabel className="org" sx={{ fontSize: "12px" }}>
-                Организация
-              </InputLabel>
+          <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+            <InputLabel className="org" sx={{ fontSize: "12px" }}>
+              Организация
+            </InputLabel>
 
-              <Select
-                sx={{ fontSize: "12px" }}
-                value={APP_STORAGE.edit_user.getKeyOrg()}
-                label="организация"
-                onChange={(e) => {
-                  this.SelectedOrg(e.target.value);
-                }}
-              >
-                {options_org}
-                <Divider />
-              </Select>
-              
-            </FormControl>
-          <TreeView 
+            <Select
+              sx={{ fontSize: "12px" }}
+              value={APP_STORAGE.edit_user.getKeyOrg()}
+              label="организация"
+              onChange={(e) => {
+                this.SelectedOrg(e.target.value);
+              }}
+            >
+              {options_org}
+              <Divider />
+            </Select>
+          </FormControl>
+          <TreeView
             className="wrapper_treeviw"
             onNodeSelect={this.handleChange}
             aria-label="customized"
             sx={{ flexGrow: 1, maxWidth: 400, overflow: "auto" }}
           >
-      
             {table_rows}
           </TreeView>
         </Box>

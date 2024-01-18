@@ -2,18 +2,19 @@ import { Alert } from "@mui/material";
 import { fail } from "assert";
 import { observable, action, computed, makeAutoObservable } from "mobx";
 import { toJS } from "mobx";
-import { APP_STORAGE } from '../../storage/AppStorage';
+import { APP_STORAGE } from "../../storage/AppStorage";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../xcore/WSQuery";
 import { WSocket } from "../WSocket";
+import { api } from "../../api/api";
 
 export class ModalLeftPanel {
-  @observable table_user: boolean = false;  //// открываем таблицу пользователей
+  @observable table_user: boolean = false; //// открываем таблицу пользователей
 
   @observable modal_registration_user: boolean = false;
   @observable take_data: any = null; /// пушим в модальное окно форму, в зависимоти от выбора пользователя
   @observable modal_tittle: string = " ";
 
-  @observable result_save:string = '';
+  @observable result_save: string = "";
 
   @observable organization: Array<string> = [];
   @observable jobs_titles: Array<string> = [];
@@ -56,7 +57,6 @@ export class ModalLeftPanel {
   @observable texthelp_password: string = "";
   @observable error_repeat_password: boolean = false;
   @observable texthelp_repeat_password: string = "";
-  
 
   //////////////////////добавление организации
 
@@ -92,245 +92,529 @@ export class ModalLeftPanel {
   @observable error_inn_double: boolean = false;
   @observable texthelp_inn_double: string = "";
 
-  @observable nodeid_user: string = '';
-  @observable nodeid_org: string = '';
-  @observable nodeid_jobstitles: string = '';
+  @observable nodeid_user: string = "";
+  @observable nodeid_org: string = "";
+  @observable nodeid_jobstitles: string = "";
 
-
-  
   constructor() {
     makeAutoObservable(this);
     Map<string, string>;
   }
 
-  @action setNodeidUser(val: string) {this.nodeid_user = val;} /// UserMenu
-  @computed getNodeidUser(): string {return this.nodeid_user;}
+  @action setNodeidUser(val: string) {
+    this.nodeid_user = val;
+  } /// UserMenu
+  @computed getNodeidUser(): string {
+    return this.nodeid_user;
+  }
 
-  @action setNodeidOrg(val: string) {this.nodeid_org = val;} /// OrgMenu
-  @computed getNodeidOrg(): string {return this.nodeid_org;}
+  @action setNodeidOrg(val: string) {
+    this.nodeid_org = val;
+  } /// OrgMenu
+  @computed getNodeidOrg(): string {
+    return this.nodeid_org;
+  }
 
-  @action setNodeidJobsTitles(val: string) {this.nodeid_jobstitles = val;} /// OrgMenu
-  @computed getNodeidJobsTitles(): string {return this.nodeid_jobstitles;}
+  @action setNodeidJobsTitles(val: string) {
+    this.nodeid_jobstitles = val;
+  } /// OrgMenu
+  @computed getNodeidJobsTitles(): string {
+    return this.nodeid_jobstitles;
+  }
 
+  @action setOpenTableUsers(val: boolean) {
+    this.table_user = val;
+  } //// открываем таблицу пользователей
+  @action getOpenTableUsers(): boolean {
+    return this.table_user;
+  }
 
-  @action setOpenTableUsers(val: boolean) {this.table_user = val;} //// открываем таблицу пользователей
-  @action getOpenTableUsers(): boolean {return this.table_user;}
+  @action setCheckboxEd(val: boolean) {
+    this.checkbox_editing = val;
+  }
+  @action getCheckboxEd(): boolean {
+    return this.checkbox_editing;
+  }
 
-  @action setCheckboxEd(val: boolean) {this.checkbox_editing = val;}
-  @action getCheckboxEd(): boolean {return this.checkbox_editing;}
+  @action setCheckboxRead(val: boolean) {
+    this.checkbox_reading = val;
+  }
+  @action getCheckboxRead(): boolean {
+    return this.checkbox_reading;
+  }
 
-  @action setCheckboxRead(val: boolean) { this.checkbox_reading = val;}
-  @action getCheckboxRead(): boolean {return this.checkbox_reading;}
+  @action setKeyOrg(val: any) {
+    this.key_org = val;
+  }
+  @computed getKeyOrg(): any {
+    return this.key_org;
+  }
 
-  @action setKeyOrg(val: any) { this.key_org = val;}
-  @computed getKeyOrg(): any {return this.key_org;}
+  @action setKeyJobs(val: any) {
+    this.key_jobs = val;
+  }
+  @computed getKeyJobs(): any {
+    return this.key_jobs;
+  }
 
-  @action setKeyJobs(val: any) {this.key_jobs = val;}
-  @computed getKeyJobs(): any {return this.key_jobs;}
+  @action setOrgAll(val: Array<string>) {
+    this.organization = val;
+  }
+  @computed getOrgAll(): Array<string> {
+    return this.organization;
+  }
 
-  @action setOrgAll(val: Array<string>) {this.organization = val;}
-  @computed getOrgAll(): Array<string> {return this.organization;}
+  @action setJobsAll(val: Array<string>) {
+    this.jobs_titles = val;
+  }
+  @computed getJobsAll(): Array<string> {
+    return this.jobs_titles;
+  }
+  @action setJobsAllError(val: string) {
+    this.jobs_titles_error = val;
+  }
+  @computed getJobsAllError(): string {
+    return this.jobs_titles_error;
+  }
+  @action setAllUsers(val: Array<string>) {
+    this.users = val;
+  }
+  @computed getAllUsers(): Array<string> {
+    return this.users;
+  }
 
-  @action setJobsAll(val: Array<string>) {this.jobs_titles = val;}
-  @computed getJobsAll(): Array<string> {return this.jobs_titles;}
-  @action setJobsAllError(val: string) {this.jobs_titles_error = val;}
-  @computed getJobsAllError(): string {return this.jobs_titles_error;}
-  @action setAllUsers(val: Array<string>) {this.users = val;}
-  @computed getAllUsers(): Array<string> {return this.users;}
+  @action setModalRegUser(val: boolean) {
+    this.modal_registration_user = val;
+  } /// Для открытия модального окна (Регистрация пользователя)
+  @computed getModalRegUser(): boolean {
+    return this.modal_registration_user;
+  }
 
-  @action setModalRegUser(val: boolean) {this.modal_registration_user = val;} /// Для открытия модального окна (Регистрация пользователя)
-  @computed getModalRegUser(): boolean {return this.modal_registration_user;}
-  
+  @action setTakeModal(val: any) {
+    this.take_data = val;
+  } /// пушим в модальное окно форму, в зависимоти от выбора пользователя
+  @computed getTakeModal(): any {
+    return this.take_data;
+  }
 
-  @action setTakeModal(val: any) {this.take_data = val;} /// пушим в модальное окно форму, в зависимоти от выбора пользователя
-  @computed getTakeModal(): any { return this.take_data;}
-
-  @action setTittleModal(val: string) {this.modal_tittle = val;} /// пушим в модальное окно форму, в зависимоти от выбора пользователя
-  @computed getTittleModal(): string {return this.modal_tittle;}
+  @action setTittleModal(val: string) {
+    this.modal_tittle = val;
+  } /// пушим в модальное окно форму, в зависимоти от выбора пользователя
+  @computed getTittleModal(): string {
+    return this.modal_tittle;
+  }
 
   ////////////////////////////////////////////регистрация пользователя
 
-  @action setFamily(val: string) {this.family = val;}
-  @computed getFamily(): string {return this.family;}
+  @action setFamily(val: string) {
+    this.family = val;
+  }
+  @computed getFamily(): string {
+    return this.family;
+  }
 
-  @action setName(val: string) {this.name = val;}
-  @computed getName(): string {return this.name;}
-  @action setFather(val: string) {this.father = val;}
-  @computed getFather(): string {return this.father;}
+  @action setName(val: string) {
+    this.name = val;
+  }
+  @computed getName(): string {
+    return this.name;
+  }
+  @action setFather(val: string) {
+    this.father = val;
+  }
+  @computed getFather(): string {
+    return this.father;
+  }
 
-  @action setEmail(val: string) {this.email = val;}
-  @computed getEmail(): string {return this.email;}
+  @action setEmail(val: string) {
+    this.email = val;
+  }
+  @computed getEmail(): string {
+    return this.email;
+  }
 
-  @action setTelephone(val: string) {this.telephone = val;}
-  @computed getTelephone(): string {return this.telephone;}
+  @action setTelephone(val: string) {
+    this.telephone = val;
+  }
+  @computed getTelephone(): string {
+    return this.telephone;
+  }
 
-  @action setLogin(val: string) { this.login = val;}
-  @computed getLogin(): string {return this.login;}
+  @action setLogin(val: string) {
+    this.login = val;
+  }
+  @computed getLogin(): string {
+    return this.login;
+  }
 
-  @action setPassword(val: string) {this.password = val;}
-  @computed getPassword(): string {return this.password;}
+  @action setPassword(val: string) {
+    this.password = val;
+  }
+  @computed getPassword(): string {
+    return this.password;
+  }
 
-  @action setRepeatPassword(val: string) {this.repeat_password = val;}
-  @computed getRepeatPassword(): string {return this.repeat_password;}
+  @action setRepeatPassword(val: string) {
+    this.repeat_password = val;
+  }
+  @computed getRepeatPassword(): string {
+    return this.repeat_password;
+  }
 
-  @action setInfo(val: string) {this.info = val;}
-  @computed getInfo(): string {return this.info;}
+  @action setInfo(val: string) {
+    this.info = val;
+  }
+  @computed getInfo(): string {
+    return this.info;
+  }
 
   /////проверка формы (user)
 
-  @action setErrorFamily(val: boolean) {this.error_family = val;}
-  @computed getErrorFamily(): boolean {return this.error_family;}
-  @action setTextHelpFamily(val: string) {this.texthelp_family = val;}
-  @computed getTextHelpFamily(): string {return this.texthelp_family;}
+  @action setErrorFamily(val: boolean) {
+    this.error_family = val;
+  }
+  @computed getErrorFamily(): boolean {
+    return this.error_family;
+  }
+  @action setTextHelpFamily(val: string) {
+    this.texthelp_family = val;
+  }
+  @computed getTextHelpFamily(): string {
+    return this.texthelp_family;
+  }
 
-  @action setErrorName(val: boolean) {this.error_name = val;}
-  @computed getErrorName(): boolean {return this.error_name;}
-  @action setTextHelpName(val: string) {this.texthelp_name = val;}
-  @computed getTextHelpName(): string {return this.texthelp_name;}
+  @action setErrorName(val: boolean) {
+    this.error_name = val;
+  }
+  @computed getErrorName(): boolean {
+    return this.error_name;
+  }
+  @action setTextHelpName(val: string) {
+    this.texthelp_name = val;
+  }
+  @computed getTextHelpName(): string {
+    return this.texthelp_name;
+  }
 
-  @action setErrorFather(val: boolean) {this.error_father = val;}
-  @computed getErrorFather(): boolean {return this.error_father;}
-  @action setTextHelpFather(val: string) {this.texthelp_father = val;}
-  @computed getTextHelpFather(): string {return this.texthelp_father;}
+  @action setErrorFather(val: boolean) {
+    this.error_father = val;
+  }
+  @computed getErrorFather(): boolean {
+    return this.error_father;
+  }
+  @action setTextHelpFather(val: string) {
+    this.texthelp_father = val;
+  }
+  @computed getTextHelpFather(): string {
+    return this.texthelp_father;
+  }
 
-  @action setErrorEmail(val: boolean) {this.error_email = val;}
-  @computed getErrorEmail(): boolean {return this.error_email;}
-  @action setTextHelpEmail(val: string) {this.texthelp_email = val;}
-  @computed getTextHelpEmail(): string {return this.texthelp_email;}
+  @action setErrorEmail(val: boolean) {
+    this.error_email = val;
+  }
+  @computed getErrorEmail(): boolean {
+    return this.error_email;
+  }
+  @action setTextHelpEmail(val: string) {
+    this.texthelp_email = val;
+  }
+  @computed getTextHelpEmail(): string {
+    return this.texthelp_email;
+  }
 
-  @action setErrorTelephone(val: boolean) {this.error_telephone = val;}
-  @computed getErrorTelephone(): boolean {return this.error_telephone;}
-  @action setTextHelpTelephone(val: string) {this.texthelp_telephone = val;}
-  @computed getTextHelpTelephone(): string {return this.texthelp_telephone;}
+  @action setErrorTelephone(val: boolean) {
+    this.error_telephone = val;
+  }
+  @computed getErrorTelephone(): boolean {
+    return this.error_telephone;
+  }
+  @action setTextHelpTelephone(val: string) {
+    this.texthelp_telephone = val;
+  }
+  @computed getTextHelpTelephone(): string {
+    return this.texthelp_telephone;
+  }
 
-  @action setErrorLogin(val: boolean) {this.error_login = val;}
-  @computed getErrorLogin(): boolean {return this.error_login;}
-  @action setTextHelpLogin(val: string) {this.texthelp_login = val;}
-  @computed getTextHelpLogin(): string {return this.texthelp_login;}
+  @action setErrorLogin(val: boolean) {
+    this.error_login = val;
+  }
+  @computed getErrorLogin(): boolean {
+    return this.error_login;
+  }
+  @action setTextHelpLogin(val: string) {
+    this.texthelp_login = val;
+  }
+  @computed getTextHelpLogin(): string {
+    return this.texthelp_login;
+  }
   /// проверка , если такой логин уже есть
-  @action setErrorLoginDouble(val: boolean) {this.error_login_double = val;}
-  @computed getErrorLoginDouble(): boolean {return this.error_login_double;}
-  @action setTextHelpLoginDouble(val: string) {this.texthelp_login_double = val;}
-  @computed getTextHelpLoginDouble(): string {return this.texthelp_login_double;}
+  @action setErrorLoginDouble(val: boolean) {
+    this.error_login_double = val;
+  }
+  @computed getErrorLoginDouble(): boolean {
+    return this.error_login_double;
+  }
+  @action setTextHelpLoginDouble(val: string) {
+    this.texthelp_login_double = val;
+  }
+  @computed getTextHelpLoginDouble(): string {
+    return this.texthelp_login_double;
+  }
 
-  @action setErrorPassword(val: boolean) {this.error_password = val;}
-  @computed getErrorPassword(): boolean {return this.error_password;}
-  @action setTextHelpPassword(val: string) {this.texthelp_password = val;}
-  @computed getTextHelpPassword(): string {return this.texthelp_password;}
+  @action setErrorPassword(val: boolean) {
+    this.error_password = val;
+  }
+  @computed getErrorPassword(): boolean {
+    return this.error_password;
+  }
+  @action setTextHelpPassword(val: string) {
+    this.texthelp_password = val;
+  }
+  @computed getTextHelpPassword(): string {
+    return this.texthelp_password;
+  }
 
-  @action setErrorRepeatPassword(val: boolean) {this.error_repeat_password = val;}
-  @computed getErrorRepeatPassword(): boolean {return this.error_repeat_password;}
-  @action setTextHelpRepeatPassword(val: string) {this.texthelp_repeat_password = val;}
-  @computed getTextHelpRepeatPassword(): string {return this.texthelp_repeat_password;}
+  @action setErrorRepeatPassword(val: boolean) {
+    this.error_repeat_password = val;
+  }
+  @computed getErrorRepeatPassword(): boolean {
+    return this.error_repeat_password;
+  }
+  @action setTextHelpRepeatPassword(val: string) {
+    this.texthelp_repeat_password = val;
+  }
+  @computed getTextHelpRepeatPassword(): string {
+    return this.texthelp_repeat_password;
+  }
 
   //////////////////////добавление организации
 
-  @action setFullNameOrg(val: string) {this.full_name_org = val;}
-  @computed getFullNameOrg(): string {return this.full_name_org;}
+  @action setFullNameOrg(val: string) {
+    this.full_name_org = val;
+  }
+  @computed getFullNameOrg(): string {
+    return this.full_name_org;
+  }
 
-  @action setNameOrg(val: string) {this.name_org = val;}
-  @computed getNameOrg(): string {return this.name_org;}
+  @action setNameOrg(val: string) {
+    this.name_org = val;
+  }
+  @computed getNameOrg(): string {
+    return this.name_org;
+  }
 
-  @action setInn(val: string) {this.inn = val;}
-  @computed getInn(): string {return this.inn;}
+  @action setInn(val: string) {
+    this.inn = val;
+  }
+  @computed getInn(): string {
+    return this.inn;
+  }
 
-  @action setAddress(val: string) {this.address = val;}
-  @computed getAddress(): string {return this.address;}
+  @action setAddress(val: string) {
+    this.address = val;
+  }
+  @computed getAddress(): string {
+    return this.address;
+  }
 
-  @action setLatitude(val: string) {this.latitude = val;}
-  @computed getLatitude(): string {return this.latitude;}
+  @action setLatitude(val: string) {
+    this.latitude = val;
+  }
+  @computed getLatitude(): string {
+    return this.latitude;
+  }
 
-  @action setLongitude(val: string) {this.longitude = val;}
-  @computed getLongitude(): string {return this.longitude;}
+  @action setLongitude(val: string) {
+    this.longitude = val;
+  }
+  @computed getLongitude(): string {
+    return this.longitude;
+  }
 
-  @action setInfOrg(val: string) {this.info_org = val}
-  @computed getInfOrg(): string {return this.info_org;}
+  @action setInfOrg(val: string) {
+    this.info_org = val;
+  }
+  @computed getInfOrg(): string {
+    return this.info_org;
+  }
 
   /////проверка формы (AddOrg)
-  @action setErrorFullName(val: boolean) {this.error_full_name = val;} /// проверка полного наименования организации
-  @computed getErrorFullName(): boolean {return this.error_full_name;}
-  @action setTextHelpFullName(val: string) {this.texthelp_full_name = val;}
-  @computed getTextHelpFullName(): string {return this.texthelp_full_name;}
+  @action setErrorFullName(val: boolean) {
+    this.error_full_name = val;
+  } /// проверка полного наименования организации
+  @computed getErrorFullName(): boolean {
+    return this.error_full_name;
+  }
+  @action setTextHelpFullName(val: string) {
+    this.texthelp_full_name = val;
+  }
+  @computed getTextHelpFullName(): string {
+    return this.texthelp_full_name;
+  }
 
-  @action setErrorFullNameDouble(val: boolean) {this.error_full_name_double = val;} /// проверка -  есть ли такая организация (полное наименование )
-  @computed getErrorFullNameDouble(): boolean {return this.error_full_name_double;}
-  @action setTextHelpFullNameDouble(val: string) {this.texthelp_full_name_double = val;}
-  @computed getTextHelpFullNameDouble(): string {return this.texthelp_full_name_double;}
+  @action setErrorFullNameDouble(val: boolean) {
+    this.error_full_name_double = val;
+  } /// проверка -  есть ли такая организация (полное наименование )
+  @computed getErrorFullNameDouble(): boolean {
+    return this.error_full_name_double;
+  }
+  @action setTextHelpFullNameDouble(val: string) {
+    this.texthelp_full_name_double = val;
+  }
+  @computed getTextHelpFullNameDouble(): string {
+    return this.texthelp_full_name_double;
+  }
 
-  @action setErrorNameOrg(val: boolean) {this.error_name_org = val;} /// проверка  наименования организации
-  @computed getErrorNameOrg(): boolean {return this.error_name_org;}
-  @action setTextHelpNameOrg(val: string) {this.texthelp_name_org = val;}
-  @computed getTextHelpNameOrg(): string {return this.texthelp_name_org;}
+  @action setErrorNameOrg(val: boolean) {
+    this.error_name_org = val;
+  } /// проверка  наименования организации
+  @computed getErrorNameOrg(): boolean {
+    return this.error_name_org;
+  }
+  @action setTextHelpNameOrg(val: string) {
+    this.texthelp_name_org = val;
+  }
+  @computed getTextHelpNameOrg(): string {
+    return this.texthelp_name_org;
+  }
 
-  @action setErrorNameDouble(val: boolean) {this.error_name_double = val;} /// проверка -  есть ли такая организация
-  @computed getErrorNameDouble(): boolean {return this.error_name_double;}
-  @action setTextHelpNameDouble(val: string) {this.texthelp_name_double = val;}
-  @computed getTextHelpNameDouble(): string {return this.texthelp_name_double;}
+  @action setErrorNameDouble(val: boolean) {
+    this.error_name_double = val;
+  } /// проверка -  есть ли такая организация
+  @computed getErrorNameDouble(): boolean {
+    return this.error_name_double;
+  }
+  @action setTextHelpNameDouble(val: string) {
+    this.texthelp_name_double = val;
+  }
+  @computed getTextHelpNameDouble(): string {
+    return this.texthelp_name_double;
+  }
 
-  @action setErrorInn(val: boolean) {this.error_inn = val;} /// проверка инн на ввод данных (только цифры)
-  @computed getErrorInn(): boolean {return this.error_inn;}
-  @action setTextHelpInn(val: string) {this.texthelp_inn = val;}
-  @computed getTextHelpInn(): string {return this.texthelp_inn;}
+  @action setErrorInn(val: boolean) {
+    this.error_inn = val;
+  } /// проверка инн на ввод данных (только цифры)
+  @computed getErrorInn(): boolean {
+    return this.error_inn;
+  }
+  @action setTextHelpInn(val: string) {
+    this.texthelp_inn = val;
+  }
+  @computed getTextHelpInn(): string {
+    return this.texthelp_inn;
+  }
 
-  @action setErrorInnDouble(val: boolean) {this.error_inn_double = val;} 
-  @computed getErrorInnDouble(): boolean {return this.error_inn_double;}
-  @action setTextHelpInnDouble(val: string) {this.texthelp_inn_double = val;}
-  @computed getTextHelpInnDouble(): string {return this.texthelp_inn_double;}
+  @action setErrorInnDouble(val: boolean) {
+    this.error_inn_double = val;
+  }
+  @computed getErrorInnDouble(): boolean {
+    return this.error_inn_double;
+  }
+  @action setTextHelpInnDouble(val: string) {
+    this.texthelp_inn_double = val;
+  }
+  @computed getTextHelpInnDouble(): string {
+    return this.texthelp_inn_double;
+  }
 
-  @action setErrorAddress(val: boolean) {this.error_address = val;} /// проверка адреса на ввод данных (только цифры)
-  @computed getErrorAddress(): boolean {return this.error_address;}
-  @action setTextHelpAddress(val: string) {this.texthelp_address = val; }
-  @computed getTextHelpAddress(): string {return this.texthelp_address;}
+  @action setErrorAddress(val: boolean) {
+    this.error_address = val;
+  } /// проверка адреса на ввод данных (только цифры)
+  @computed getErrorAddress(): boolean {
+    return this.error_address;
+  }
+  @action setTextHelpAddress(val: string) {
+    this.texthelp_address = val;
+  }
+  @computed getTextHelpAddress(): string {
+    return this.texthelp_address;
+  }
 
-  @action setNewJobsTitles(val: string) {this.jobs_titles_new = val;}
-  @computed getNewJobsTitles(): string {return this.jobs_titles_new;}
+  @action setNewJobsTitles(val: string) {
+    this.jobs_titles_new = val;
+  }
+  @computed getNewJobsTitles(): string {
+    return this.jobs_titles_new;
+  }
 
-  @action setResulSave(val: string) {this.result_save = val;}
-  @computed getResulSave(): string {return this.result_save;}
+  @action setResulSave(val: string) {
+    this.result_save = val;
+  }
+  @computed getResulSave(): string {
+    return this.result_save;
+  }
 
   ////Добавление должности
 
-  @action setErrorOrg(val: boolean) {this.error_org = val;} /// проверка адреса на ввод данных (только цифры)
-  @computed getErrorOrg(): boolean {return this.error_org;}
-  @action setTextHelpOrg(val: string) {this.texthelp_org = val; }
-  @computed getTextHelpOrg(): string {return this.texthelp_org;}
+  @action setErrorOrg(val: boolean) {
+    this.error_org = val;
+  } /// проверка адреса на ввод данных (только цифры)
+  @computed getErrorOrg(): boolean {
+    return this.error_org;
+  }
+  @action setTextHelpOrg(val: string) {
+    this.texthelp_org = val;
+  }
+  @computed getTextHelpOrg(): string {
+    return this.texthelp_org;
+  }
 
-  @action setErrorJobs(val: boolean) {this.error_jobs = val;} /// проверка адреса на ввод данных (только цифры)
-  @computed getErrorJobs(): boolean {return this.error_jobs;}
-  @action setTextHelpJobs(val: string) {this.texthelp_jobs = val; }
-  @computed getTextHelpJobs(): string {return this.texthelp_jobs;}
+  @action setErrorJobs(val: boolean) {
+    this.error_jobs = val;
+  } /// проверка адреса на ввод данных (только цифры)
+  @computed getErrorJobs(): boolean {
+    return this.error_jobs;
+  }
+  @action setTextHelpJobs(val: string) {
+    this.texthelp_jobs = val;
+  }
+  @computed getTextHelpJobs(): string {
+    return this.texthelp_jobs;
+  }
 
-
-  async get_AllUsers(name: string, value: any, _options?: any) {/* -----  Отправляем запрос на получение всех пользователей   */
+  async get_AllUsers(name: string, value: any, _options?: any) {
+    /* -----  Отправляем запрос на получение всех пользователей   */
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_AllUser");
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+
+    // (await WSocket.get()).send(q);
+    // api.fetch(q).then((data) => this.setUsersAll(data));
+    api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
   }
-  
-  setUsersAll(dt: IWSResult) { /* -----  Получаем всех пользователей   */
+
+  setUsersAll(dt: IWSResult) {
+    /* -----  Получаем всех пользователей   */
     this.setAllUsers(dt.data);
   }
 
-  async get_Org(name: string, value: any, _options?: any) { /* -----  Отправляем запрос на получение всех организаций   */
+  async get_Org(name: string, value: any, _options?: any) {
+    /* -----  Отправляем запрос на получение всех организаций   */
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_Org");
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+
+    // (await WSocket.get()).send(q);
+    // api.fetch(q).then((data) => this.setOrgAll(data.data));
+    api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
   }
 
-  setAllOrganization(dt: IWSResult) { /* -----  Получаем всех пользователей   */
+  setAllOrganization(dt: IWSResult) {
+    /* -----  Получаем все организации   */
     this.setOrgAll(dt.data);
   }
 
-  async get_Jobs(name: string, value: any, _options?: any) {/* -----  Отправляем запрос на получение всех должностей   */
+  async get_Jobs(name: string, value: any, _options?: any) {
+    /* -----  Отправляем запрос на получение всех должностей   */
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_Jobs");
     q.args = {
       id_org: this.getKeyOrg() || "",
     };
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+    // (await WSocket.get()).send(q);
+    // api.fetch(q).then((data) => this.setJobsAll(data.data));
+    api.fetch(q).catch((e) => console.log("error=>", e)); //fetch-запрос
   }
   setAllJobsTitle(dt: IWSResult) {
     /* -----  Получаем все должности   */
@@ -359,14 +643,14 @@ export class ModalLeftPanel {
           user_login = a.u_login;
           this.setErrorLoginDouble(true);
           this.setTextHelpLoginDouble("Такой логин уже есть");
-        } 
+        }
       }
     }
 
     if (user_login !== this.getLogin()) {
       this.setErrorLoginDouble(false);
       this.setTextHelpLoginDouble("");
-    } 
+    }
     /// Проверка на пустые значения формы
     if (this.getFamily() === "") {
       this.setErrorFamily(true);
@@ -384,7 +668,6 @@ export class ModalLeftPanel {
       this.setTextHelpName("");
     }
 
-  
     if (email === null) {
       this.setErrorEmail(true);
       this.setTextHelpEmail(
@@ -467,28 +750,28 @@ export class ModalLeftPanel {
         info: this.getInfo(),
       };
       q.sess_code = sess_code;
-      (await WSocket.get()).send(q);
-     
+      // (await WSocket.get()).send(q);
+      api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
 
-      this.setResulSave('Данные успешно сохранены')
+      this.setResulSave("Данные успешно сохранены");
       setTimeout(() => {
-        this.setFamily('') ,
-        this.setName('') ,
-        this.setFather(''),
-        this.setEmail(''),
-        this.setTelephone(''),
-        this.setKeyOrg('') ,
-        this.setKeyJobs('') ,
-        this.setLogin('') ,
-        this.setPassword(''),
-        this.setRepeatPassword(''),
-        this.setCheckboxEd(false),
-        this.setCheckboxRead(true),
-        this.setInfo(''),
-        this.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());
-        this.setResulSave('');
+        this.setFamily(""),
+          this.setName(""),
+          this.setFather(""),
+          this.setEmail(""),
+          this.setTelephone(""),
+          this.setKeyOrg(""),
+          this.setKeyJobs(""),
+          this.setLogin(""),
+          this.setPassword(""),
+          this.setRepeatPassword(""),
+          this.setCheckboxEd(false),
+          this.setCheckboxRead(true),
+          this.setInfo(""),
+          this.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());
+        this.setResulSave("");
         this.setModalRegUser(false);
-      }, 2000)
+      }, 2000);
     }
   }
 
@@ -510,7 +793,7 @@ export class ModalLeftPanel {
       var full_name = "";
       var name_double = "";
       var inn_double = "";
-      
+
       let org = JSON.parse(JSON.stringify(this.getOrgAll())); /// получаем все организации
       // разделяем обьект на ключ значение и проверяем,  есть ли уже такая организация в бд
       for (var key in org) {
@@ -525,13 +808,13 @@ export class ModalLeftPanel {
           name_double = a.name;
           this.setErrorNameDouble(true);
           this.setTextHelpNameDouble("Такая организация уже есть");
-        } 
+        }
 
         if (a.inn === this.getInn()) {
           inn_double = a.inn;
           this.setErrorInnDouble(true);
           this.setTextHelpInnDouble("Такой инн уже есть");
-        } 
+        }
       }
     }
 
@@ -596,22 +879,32 @@ export class ModalLeftPanel {
       q.args = {
         name: this.getNameOrg() || "",
         full_name: this.getFullNameOrg() || "",
-        inn: this.getInn() || "", 
+        inn: this.getInn() || "",
         address: this.getAddress() || "",
         latitude: this.getLatitude() || "",
         longitude: this.getLongitude() || "",
         info: this.getInfOrg() || "",
       };
       q.sess_code = sess_code;
-      (await WSocket.get()).send(q);
-      this.get_Org("sess_id", value); 
-       
-      this.setResulSave('Данные успешно сохранены')
-      
-      setTimeout(() => {
-        this.setResulSave('');
-        this.setModalRegUser(false);
-      }, 2000);
+      // (await WSocket.get()).send(q);
+      api
+        .fetch(q)
+        .then(() => {
+          this.get_Org("sess_id", value);
+          this.setResulSave("Данные успешно сохранены");
+          setTimeout(() => {
+            this.setResulSave("");
+            this.setModalRegUser(false);
+          }, 2000);
+        })
+        .catch((e) => console.log("error =>", e));
+      // this.get_Org("sess_id", value);
+      // this.setResulSave("Данные успешно сохранены");
+
+      // setTimeout(() => {
+      //   this.setResulSave("");
+      //   this.setModalRegUser(false);
+      // }, 2000);
     }
   }
   /* ----- Добавляем должность 
@@ -621,39 +914,46 @@ export class ModalLeftPanel {
   async set_NewJobTitle(name: string, value: any, _options?: any) {
     var sess_code = value; ////// передаем код сессии
 
-   if(this.getKeyOrg() === null){
-    this.setErrorOrg(true);
-   }
-   else{
-    this.setErrorOrg(false);
-   }
+    if (this.getKeyOrg() === null) {
+      this.setErrorOrg(true);
+    } else {
+      this.setErrorOrg(false);
+    }
 
-   if(this.getNewJobsTitles() === ''){
-    this.setErrorJobs(true);
-    this.setTextHelpJobs('Обязательные поля должны быть заполнены')
-   }
-   else{
-    this.setErrorJobs(false);
-    this.setTextHelpJobs('')
-   }
+    if (this.getNewJobsTitles() === "") {
+      this.setErrorJobs(true);
+      this.setTextHelpJobs("Обязательные поля должны быть заполнены");
+    } else {
+      this.setErrorJobs(false);
+      this.setTextHelpJobs("");
+    }
 
-   if(this.getKeyOrg() !== null && this.getNewJobsTitles() !== '') {
-    var q: IWSQuery = new WSQuery("set_NewJobTitle");
-    q.args = {
-      id_org: this.getKeyOrg() || "",
-      job_title: this.getNewJobsTitles() || "",
-      info: this.getInfo() || "",
-    };
-    q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+    if (this.getKeyOrg() !== null && this.getNewJobsTitles() !== "") {
+      var q: IWSQuery = new WSQuery("set_NewJobTitle");
+      q.args = {
+        id_org: this.getKeyOrg() || "",
+        job_title: this.getNewJobsTitles() || "",
+        info: this.getInfo() || "",
+      };
+      q.sess_code = sess_code;
 
-     this.setResulSave('Данные успешно сохранены')
-      
-     setTimeout(() => {
-       this.setResulSave('');
-       this.setModalRegUser(false);
-     }, 2000);
-   }
-    
+      // (await WSocket.get()).send(q);
+      api
+        .fetch(q)
+        .then(() => {
+          this.setResulSave("Данные успешно сохранены");
+          setTimeout(() => {
+            this.setResulSave("");
+            this.setModalRegUser(false);
+          }, 2000);
+        })
+        .catch((e) => console.log("error=>", e)); //fetch-запрос
+      // this.setResulSave("Данные успешно сохранены");
+
+      // setTimeout(() => {
+      //   this.setResulSave("");
+      //   this.setModalRegUser(false);
+      // }, 2000);
+    }
   }
 }

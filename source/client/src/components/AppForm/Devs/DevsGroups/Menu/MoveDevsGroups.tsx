@@ -27,10 +27,11 @@ import { TDevsGroup } from "../../../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../../../storage/components/Devs/DevEntityes";
 import { options } from "../../StyledMua";
 
-import TreeView from "@mui/lab/TreeView";
+// import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import TreeItem from "@mui/lab/TreeItem";
+// import TreeItem from "@mui/lab/TreeItem";
+import { TreeView, TreeItem } from "@mui/x-tree-view";
 
 interface IProps {}
 
@@ -42,20 +43,20 @@ export class MoveDevsGroups extends React.Component<IProps> {
   }
 
   componentDidMount(): void {
-  //  APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());
+    //  APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());
   }
 
   async closeModal() {
     APP_STORAGE.devs_groups.setOpenModalMoveDevsGr(false);
-     
-    APP_STORAGE.devs_groups.setParentId('');
-    APP_STORAGE.devs_groups.setParent('');
-    APP_STORAGE.devs_groups.setName('');
-    APP_STORAGE.devs_groups.setLatitude('');
-    APP_STORAGE.devs_groups.setLongitude('');
-    APP_STORAGE.devs.setInfo('');
-    APP_STORAGE.devs_groups.setKeyOrg('');
-    APP_STORAGE.devs_groups.setParentId('')
+
+    APP_STORAGE.devs_groups.setParentId("");
+    APP_STORAGE.devs_groups.setParent("");
+    APP_STORAGE.devs_groups.setName("");
+    APP_STORAGE.devs_groups.setLatitude("");
+    APP_STORAGE.devs_groups.setLongitude("");
+    APP_STORAGE.devs.setInfo("");
+    APP_STORAGE.devs_groups.setKeyOrg("");
+    APP_STORAGE.devs_groups.setParentId("");
   }
 
   async SelectedOrg(a: any) {
@@ -102,11 +103,8 @@ export class MoveDevsGroups extends React.Component<IProps> {
               </Box>
             </React.Fragment>
           );
-        }
-
-       else  if (
-          String(APP_STORAGE.devs_groups.getParentId()) ===
-            String('key-09') 
+        } else if (
+          String(APP_STORAGE.devs_groups.getParentId()) === String("key-09")
         ) {
           parent.push(
             <React.Fragment key={"_gr_id_key_" + gr.id}>
@@ -118,7 +116,6 @@ export class MoveDevsGroups extends React.Component<IProps> {
             </React.Fragment>
           );
         }
-        
       }
     }
     return parent;
@@ -129,17 +126,29 @@ export class MoveDevsGroups extends React.Component<IProps> {
   }
 
   async SaveChangeDevsGroups(a: any) {
+    // Если a === 0 => перемещение в корень
     if (Number(0) === Number(a)) {
+      console.log("block 1", a);
       APP_STORAGE.devs_groups.setParent(String(0));
-      APP_STORAGE.devs_groups.set_ChangeDevsGroups("sess_id",APP_STORAGE.auth_form.getdt());
+      APP_STORAGE.devs_groups.set_ChangeDevsGroups(
+        "sess_id",
+        APP_STORAGE.auth_form.getdt()
+      );
     }
 
-    if (APP_STORAGE.devs.getMenu_devs() === "2") { ////// Перемещение для устройств
+    if (APP_STORAGE.devs.getMenu_devs() === "2") {
+      console.log("block 2");
+      ////// Перемещение для устройств
       APP_STORAGE.devs.set_ChangeDevs("sess_id", APP_STORAGE.auth_form.getdt());
     }
 
-    if (APP_STORAGE.devs.getMenu_devs() === "3") { ////// Перемещение дял групп устройств
-      APP_STORAGE.devs_groups.set_ChangeDevsGroups("sess_id",APP_STORAGE.auth_form.getdt());
+    if (APP_STORAGE.devs.getMenu_devs() === "3") {
+      console.log("block 3");
+      ////// Перемещение для групп устройств
+      APP_STORAGE.devs_groups.set_ChangeDevsGroups(
+        "sess_id",
+        APP_STORAGE.auth_form.getdt()
+      );
     }
 
     setTimeout(() => {
@@ -184,7 +193,9 @@ export class MoveDevsGroups extends React.Component<IProps> {
                 mb: "12px",
               }}
             >
-              <Typography>Переместить  { APP_STORAGE.devs_groups.getName()}</Typography>
+              <Typography>
+                Переместить {APP_STORAGE.devs_groups.getName()}
+              </Typography>
 
               <CloseIcon
                 sx={{ color: "#1976D2" }}
@@ -231,9 +242,8 @@ export class MoveDevsGroups extends React.Component<IProps> {
                   background: "#f1f5fcad",
                   p: "20px",
                   borderRadius: "4px",
-                  maxHeight: '200px',
-                  overflow: 'auto'
-
+                  maxHeight: "200px",
+                  overflow: "auto",
                 }}
               >
                 <Typography sx={{}}>Переместить в: </Typography>
@@ -250,57 +260,56 @@ export class MoveDevsGroups extends React.Component<IProps> {
               </Box>
             )}
 
- <Box sx={{ display: "flex" }}>
- { APP_STORAGE.devs.getMenu_devs() === "3" && 
- <Box
-   sx={{
-     display: "flex",
-     alignItems: "baseline",
-     justifyContent: "flex-end",
-     mr: "40px",
-   }}
-   onClick={() => {
-     this.SaveChangeDevsGroups(0);
-   }}
- >
-   <Button
-     sx={{
-       background: "#F1F5FC",
-       color: "#000;",
-       mt: "18px",
-       mb: "18px",
-       fontSize: "12px",
-     }}
-   >
-     Переместить в корень
-   </Button>
- </Box>
- }
+            <Box sx={{ display: "flex" }}>
+              {APP_STORAGE.devs.getMenu_devs() === "3" && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "baseline",
+                    justifyContent: "flex-end",
+                    mr: "40px",
+                  }}
+                  onClick={() => {
+                    this.SaveChangeDevsGroups(0);
+                  }}
+                >
+                  <Button
+                    sx={{
+                      background: "#F1F5FC",
+                      color: "#000;",
+                      mt: "18px",
+                      mb: "18px",
+                      fontSize: "12px",
+                    }}
+                  >
+                    Переместить в корень
+                  </Button>
+                </Box>
+              )}
 
-<Box
-   sx={{
-     display: "flex",
-     alignItems: "baseline",
-     justifyContent: "flex-end",
-   }}
-   onClick={() => {
-     this.SaveChangeDevsGroups(1);
-   }}
- >
-   <Button
-     sx={{
-       background: "#266BF1",
-       color: "#fff;",
-       mt: "18px",
-       mb: "18px",
-       fontSize: "12px",
-     }}
-   >
-     Сохранить
-   </Button>
- </Box>
- </Box>
-            
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  justifyContent: "flex-end",
+                }}
+                onClick={() => {
+                  this.SaveChangeDevsGroups(1);
+                }}
+              >
+                <Button
+                  sx={{
+                    background: "#266BF1",
+                    color: "#fff;",
+                    mt: "18px",
+                    mb: "18px",
+                    fontSize: "12px",
+                  }}
+                >
+                  Сохранить
+                </Button>
+              </Box>
+            </Box>
           </Box>
         </Dialog>
       </React.Fragment>

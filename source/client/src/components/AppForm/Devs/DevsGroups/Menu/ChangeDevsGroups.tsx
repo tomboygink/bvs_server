@@ -37,15 +37,15 @@ export class ChangeDevsGroups extends React.Component<IProps> {
 
   async closeModal() {
     APP_STORAGE.devs_groups.setOpenModalChDevsGr(false);
-    APP_STORAGE.devs_groups.setName('');
+    APP_STORAGE.devs_groups.setName("");
     APP_STORAGE.devs_groups.setNameError(false);
-    APP_STORAGE.devs_groups.setNameError_mess('');
-    APP_STORAGE.devs_groups.setLongitude('');
+    APP_STORAGE.devs_groups.setNameError_mess("");
+    APP_STORAGE.devs_groups.setLongitude("");
     APP_STORAGE.devs_groups.setLongitudeError(false);
-    APP_STORAGE.devs_groups.setLongitudeError_mess('')
-    APP_STORAGE.devs_groups.setLatitude('');
+    APP_STORAGE.devs_groups.setLongitudeError_mess("");
+    APP_STORAGE.devs_groups.setLatitude("");
     APP_STORAGE.devs_groups.setLatitudeError(false);
-    APP_STORAGE.devs_groups.setLatitudeError_mess('')
+    APP_STORAGE.devs_groups.setLatitudeError_mess("");
   }
 
   async SelectedOrg(a: any) {
@@ -139,7 +139,7 @@ export class ChangeDevsGroups extends React.Component<IProps> {
               onChange={(e) => {
                 APP_STORAGE.devs_groups.setName(e.target.value);
               }}
-              value={APP_STORAGE.devs_groups.getName() || ''} 
+              value={APP_STORAGE.devs_groups.getName() || ""}
             />
 
             <FormControl
@@ -193,7 +193,7 @@ export class ChangeDevsGroups extends React.Component<IProps> {
               onChange={(e) => {
                 APP_STORAGE.devs_groups.setLongitude(e.target.value);
               }}
-              value={APP_STORAGE.devs_groups.getLongitude() || '' }
+              value={APP_STORAGE.devs_groups.getLongitude() || ""}
             />
 
             <TextField
@@ -243,9 +243,10 @@ export class ChangeDevsGroups extends React.Component<IProps> {
                 </Typography>
                 <AntSwitch
                   checked={APP_STORAGE.devs_groups.getCheckboxEd()}
-                  onChange={(editing) => {
-                    this.ChekedForEdit(editing);
-                  }}
+                  // Закомментировано для запуска
+                  // onChange={(editing) => {
+                  //   this.ChekedForEdit(editing);
+                  // }}
                 />
               </Stack>
             </FormGroup>

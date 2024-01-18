@@ -6,9 +6,11 @@ import { observer } from "mobx-react";
 import { Box, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-import TreeItem from "@mui/lab/TreeItem";
+// import TreeItem from "@mui/lab/TreeItem";
 
-import TreeView from "@mui/lab/TreeView";
+// import TreeView from "@mui/lab/TreeView";
+
+import { TreeView, TreeItem } from "@mui/x-tree-view";
 
 import { handleChange } from "./StyledMua";
 
@@ -37,7 +39,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
 
   static defaultProps: IProps = {
     devs_tree: null,
-    onSelect: (dev: TDevice) => {}
+    onSelect: (dev: TDevice) => {},
   };
 
   componentDidMount(): void {
@@ -278,7 +280,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
                   sx={{
                     color: "#222",
                     borderLeft: "1px solid #c1c1c1",
-                    fontSize: "14px"
+                    fontSize: "14px",
                   }}
                 >
                   {childs}
@@ -299,7 +301,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
                   sx={{
                     color: "#808080",
                     borderLeft: "1px solid #c1c1c1",
-                    fontSize: "14px"
+                    fontSize: "14px",
                   }}
                 >
                   {childs}
@@ -332,7 +334,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
             sx={{
               background: "#fff",
               p: "20px",
-              borderRadius: "4px"
+              borderRadius: "4px",
             }}
           >
             <TreeView

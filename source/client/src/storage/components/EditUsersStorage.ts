@@ -3,11 +3,13 @@ import {
   action,
   computed,
   makeAutoObservable,
-  makeObservable
+  makeObservable,
 } from "mobx";
 
 import { IWSQuery, WSQuery, IWSResult } from "../../../../xcore/WSQuery";
 import { WSocket } from "../WSocket";
+
+import { api } from "../../api/api";
 
 import { APP_STORAGE } from "../AppStorage";
 
@@ -304,10 +306,12 @@ export class EditUsersStorage {
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_Jobs");
     q.args = {
-      id_org: this.getKeyOrg() || ""
+      id_org: this.getKeyOrg() || "",
     };
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+    // (await WSocket.get()).send(q);
+    // api.fetch(q).then((data) => APP_STORAGE.reg_user.setAllJobsTitle(data));
+    api.fetch(q); // fetch-запрос
   }
 
   async set_IdRows(a: any) {
@@ -378,10 +382,11 @@ export class EditUsersStorage {
     var q: IWSQuery = new WSQuery("set_ActMail");
     q.args = {
       login: this.getLogin(),
-      email: this.getEmail()
+      email: this.getEmail(),
     };
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+    api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
+    // (await WSocket.get()).send(q);
   }
 
   async set_ChangeUser(name: string, value: any, _options?: any) {
@@ -455,14 +460,15 @@ export class EditUsersStorage {
         deleted: this.getStateActive(),
         users_w: this.getCheckboxEd(),
         users_r: this.getCheckboxRead(),
-        info: this.getInfo()
+        info: this.getInfo(),
       };
       q.sess_code = sess_code;
-      (await WSocket.get()).send(q);
-      APP_STORAGE.reg_user.get_AllUsers(
-        "sess_id",
-        APP_STORAGE.auth_form.getdt()
-      );
+      // (await WSocket.get()).send(q);
+      // APP_STORAGE.reg_user.get_AllUsers(
+      //   "sess_id",
+      //   APP_STORAGE.auth_form.getdt()
+      // );
+      api.fetch(q);
       this.setModalEditUser(false);
     }
   }

@@ -32,38 +32,44 @@ export class NewUserRegistration extends React.Component<IProps> {
     super(props);
   }
 
-  async AddNewUser() {  
-    APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());/// передаем данные с формы на сервер  (ДОБАВЛЯЕМ ПОЛЬЗОВАТЕЛЯ)
-   
+  async AddNewUser() {
+    APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt()); /// передаем данные с формы на сервер  (ДОБАВЛЯЕМ ПОЛЬЗОВАТЕЛЯ)
+
     setTimeout(() => {
-      APP_STORAGE.reg_user.set_NewUser("sess_id", APP_STORAGE.auth_form.getdt());
-    }, 1000)
+      APP_STORAGE.reg_user.set_NewUser(
+        "sess_id",
+        APP_STORAGE.auth_form.getdt()
+      );
+    }, 1000);
   }
 
-  async ChekedForEdit(editing: any) { /// Переключатель (разрешить редактирование)
+  async ChekedForEdit(editing: any) {
+    /// Переключатель (разрешить редактирование)
     APP_STORAGE.reg_user.setCheckboxEd(editing.target.checked);
   }
 
-  async ChekedForRead(readind: any) {  /// Переключатель (только чтение)
+  async ChekedForRead(readind: any) {
+    /// Переключатель (только чтение)
     APP_STORAGE.reg_user.setCheckboxRead(readind.target.checked);
   }
 
-  async SelectedOrg(a: any) {    //// Сохраняем , то что выбрал пользователь из выпадающего списка Организации
+  async SelectedOrg(a: any) {
+    //// Сохраняем , то что выбрал пользователь из выпадающего списка Организации
     APP_STORAGE.reg_user.setKeyOrg(a);
-    APP_STORAGE.reg_user.setKeyJobs(null); 
+    APP_STORAGE.reg_user.setKeyJobs(null);
     APP_STORAGE.reg_user.setJobsAll([]);
     APP_STORAGE.reg_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
   }
 
-  async SelectedJobs(a: any) 
-  { 
+  async SelectedJobs(a: any) {
     APP_STORAGE.reg_user.setKeyJobs(a);
   }
 
-  async OpenModalRegUser(e: any, tittle: string) {  /// Функция для открытия модашльного окна
-    APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt());  // как только модальное окно открылось, отправляем запрос на получение всех организаций
- 
-    APP_STORAGE.reg_user.setTakeModal(e);  // передаем идентифкатор
+  async OpenModalRegUser(e: any, tittle: string) {
+    /// Функция для открытия модашльного окна
+    APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); // как только модальное окно открылось, отправляем запрос на получение всех организаций
+
+    APP_STORAGE.reg_user.setTakeModal(e); // передаем идентифкатор
     APP_STORAGE.reg_user.setTittleModal(tittle); // передаем заголовок в модальное окно
     APP_STORAGE.reg_user.setModalRegUser(true);
     APP_STORAGE.app_bar.setSetOpenAppBar(false); // полсе того , как появилось модальное окно, закрываем меню слева (APP BAR)
@@ -74,14 +80,15 @@ export class NewUserRegistration extends React.Component<IProps> {
     let jobs = null;
     var options_org = [];
     var options_jobs = [];
-///// разделяем обьект на ключ значение - Организации
+    ///// разделяем обьект на ключ значение - Организации
     if (APP_STORAGE.reg_user.getOrgAll()) {
       org = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll()));
       for (var key in org) {
         if (org.hasOwnProperty(key)) {
           let a = org[key];
 
-          options_org.push(  /// создаем опции выбора для выпадающего списка - организации
+          options_org.push(
+            /// создаем опции выбора для выпадающего списка - организации
             <MenuItem key={a.id} sx={{ fontSize: "12px" }} value={a.id}>
               {a.full_name}
             </MenuItem>
@@ -89,14 +96,15 @@ export class NewUserRegistration extends React.Component<IProps> {
         }
       }
     }
-///// разделяем обьект на ключ значение - Должности
+    ///// разделяем обьект на ключ значение - Должности
     if (APP_STORAGE.reg_user.getJobsAll()) {
       jobs = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getJobsAll()));
       for (var key in jobs) {
         if (jobs.hasOwnProperty(key)) {
           let a = jobs[key];
 
-          options_jobs.push( /// создаем опции выбора для выпадающего списка - должности
+          options_jobs.push(
+            /// создаем опции выбора для выпадающего списка - должности
             <MenuItem key={a.id} sx={{ fontSize: "12px" }} value={a.id}>
               {a.name}
             </MenuItem>
@@ -250,7 +258,7 @@ export class NewUserRegistration extends React.Component<IProps> {
               this.SelectedJobs(e.target.value);
             }}
           >
-            {options_jobs} 
+            {options_jobs}
             <Divider />
 
             <Box
@@ -279,8 +287,14 @@ export class NewUserRegistration extends React.Component<IProps> {
           InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
           variant="outlined"
           required
-          error={APP_STORAGE.reg_user.getErrorLogin() || APP_STORAGE.reg_user.getErrorLoginDouble() }
-          helperText={APP_STORAGE.reg_user.getTextHelpLogin() || APP_STORAGE.reg_user.getTextHelpLoginDouble()}
+          error={
+            APP_STORAGE.reg_user.getErrorLogin() ||
+            APP_STORAGE.reg_user.getErrorLoginDouble()
+          }
+          helperText={
+            APP_STORAGE.reg_user.getTextHelpLogin() ||
+            APP_STORAGE.reg_user.getTextHelpLoginDouble()
+          }
           fullWidth
           label="Логин"
           autoComplete="логин"
@@ -345,9 +359,10 @@ export class NewUserRegistration extends React.Component<IProps> {
             </Typography>
             <AntSwitch
               checked={APP_STORAGE.reg_user.getCheckboxEd()}
-              onChange={(editing) => {
-                this.ChekedForEdit(editing);
-              }}
+              // Закомментировано для запуска
+              // onChange={(editing) => {
+              //   this.ChekedForEdit(editing);
+              // }}
             />
           </Stack>
 
@@ -362,9 +377,10 @@ export class NewUserRegistration extends React.Component<IProps> {
             </Typography>
             <AntSwitch
               checked={APP_STORAGE.reg_user.getCheckboxRead()}
-              onChange={(readind) => {
-                this.ChekedForRead(readind);
-              }}
+              // Закомментировано для запуска
+              // onChange={(readind) => {
+              //   this.ChekedForRead(readind);
+              // }}
             />
           </Stack>
         </FormGroup>
@@ -406,9 +422,19 @@ export class NewUserRegistration extends React.Component<IProps> {
             Сохранить
           </Button>
         </Box>
-        {APP_STORAGE.reg_user.getResulSave().length > 0 &&
-       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> {APP_STORAGE.reg_user.getResulSave()}</Typography>
-      }
+        {APP_STORAGE.reg_user.getResulSave().length > 0 && (
+          <Typography
+            sx={{
+              background: "#EDF7ED",
+              color: "#1E4620",
+              p: "12px",
+              borderRadius: "4px",
+            }}
+          >
+            {" "}
+            {APP_STORAGE.reg_user.getResulSave()}
+          </Typography>
+        )}
       </React.Fragment>
     );
   }

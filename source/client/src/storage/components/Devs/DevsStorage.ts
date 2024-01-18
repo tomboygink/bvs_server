@@ -1,6 +1,7 @@
 import { observable, action, computed, makeAutoObservable, toJS } from "mobx";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
+import { api } from "../../../api/api";
 import { APP_STORAGE } from "../../AppStorage";
 import { TDGroup } from "./DevEntityes";
 
@@ -15,7 +16,7 @@ export class DevsStorage {
     org_id: "",
     g_info: "",
     deleted: false,
-    svg: ""
+    svg: "",
   };
 
   @observable devs: Array<string> = [];
@@ -459,16 +460,18 @@ export class DevsStorage {
     return this.period_sess;
   }
 
+  // Где используется?
   async get_Devs(name: string, value: any, _options?: any) {
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_Devs");
     q.args = {
       org_id: this.getOrgId(),
       dev_group_id: this.getIdDevs(),
-      user_w: this.getUserRole()
+      user_w: this.getUserRole(),
     };
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+    // (await WSocket.get()).send(q);
+    api.fetch(q).catch((e) => console.log("error=>", e)); //fetch-запрос
   }
 
   // async get_Devs11(name: string, value: any, _options?: any) {
@@ -486,18 +489,27 @@ export class DevsStorage {
   async set_NewDevs(name: string, value: any, _options?: any) {
     let lat: any;
     let lng: any;
+
     let latnumber = this.getLatitude().replace(/[^\d\.,]/g, ""); //// только цифты
     let latchar = latnumber.replace(/,/g, "."); //// то
-    if (latchar.match(/\./g).length > 1) {
-      lat = latchar.substr(0, latchar.lastIndexOf("."));
+
+    let latArr = latchar.match(/\./g) || [];
+    // if (latchar.match(/\./g).length > 1)
+    if (latArr.length > 1) {
+      // lat = latchar.substr(0, latchar.lastIndexOf("."));
+      lat = latchar.substring(0, latchar.lastIndexOf("."));
     } else {
       lat = latchar;
     }
 
     let lngnumber = this.getLongitude().replace(/[^\d\.,]/g, ""); //// только цифты
     let lngchar = lngnumber.replace(/,/g, "."); //// то
-    if (lngchar.match(/\./g).length > 1) {
-      lng = lngchar.substr(0, latchar.lastIndexOf("."));
+    let lngArr = lngchar.match(/\./g) || [];
+
+    //if (lngchar.match(/\./g).length > 1)
+    if (lngArr.length > 1) {
+      // lng = lngchar.substr(0, latchar.lastIndexOf("."));
+      lng = lngchar.substring(0, latchar.lastIndexOf("."));
     } else {
       lng = lngchar;
     }
@@ -570,25 +582,45 @@ export class DevsStorage {
         sensors: '{"s":' + JSON.stringify(this.getDepthNewSensors()) + "}",
         deleted: this.getDeleted() || false,
         info: this.getDeleted() || "",
-        period_sess: this.getPeriodSess() || ""
+        period_sess: this.getPeriodSess() || "",
       };
       q.sess_code = sess_code;
-      (await WSocket.get()).send(q);
-      this.setName("");
-      this.setNumber("");
-      this.setLatitude("");
-      this.setLongitude("");
-      this.setInfo("");
-      this.setArray([]);
+      // (await WSocket.get()).send(q);
+      api
+        .fetch(q)
+        .then(() => {
+          this.setName("");
+          this.setNumber("");
+          this.setLatitude("");
+          this.setLongitude("");
+          this.setInfo("");
+          this.setArray([]);
 
-      APP_STORAGE.setNotifications(true);
+          APP_STORAGE.setNotifications(true);
 
-      setTimeout(() => {
-        APP_STORAGE.setNotifications(false);
-      }, 1000);
-      setTimeout(() => {
-        this.setOpenModal(false);
-      }, 1000);
+          setTimeout(() => {
+            APP_STORAGE.setNotifications(false);
+          }, 1000);
+          setTimeout(() => {
+            this.setOpenModal(false);
+          }, 1000);
+        })
+        .catch((e) => console.log("error=>", e)); //fetch-запрос
+      // this.setName("");
+      // this.setNumber("");
+      // this.setLatitude("");
+      // this.setLongitude("");
+      // this.setInfo("");
+      // this.setArray([]);
+
+      // APP_STORAGE.setNotifications(true);
+
+      // setTimeout(() => {
+      //   APP_STORAGE.setNotifications(false);
+      // }, 1000);
+      // setTimeout(() => {
+      //   this.setOpenModal(false);
+      // }, 1000);
     }
   }
 
@@ -693,14 +725,19 @@ export class DevsStorage {
         sensors: '{"s":' + JSON.stringify(this.getChangeSensors()) + "}",
         deleted: this.getCheckboxEd(),
         info: this.getInfo() || "",
-        period_sess: this.getPeriodSess() || 0
+        period_sess: this.getPeriodSess() || 0,
       };
 
       q.sess_code = sess_code;
-      (await WSocket.get()).send(q);
-      setTimeout(() => {
-        this.setOpenModalChange(false);
-      }, 2000);
+      // (await WSocket.get()).send(q);
+      api
+        .fetch(q)
+        .then(() => this.setOpenModalChange(false))
+        .catch((e) => console.log("error=>", e)); // fetch-запрос
+
+      // setTimeout(() => {
+      //   this.setOpenModalChange(false);
+      // }, 2000);
     }
   }
 
@@ -714,12 +751,18 @@ export class DevsStorage {
       dev_number: this.getNumber(),
       start_povs: this.getStartDevPovs(),
       end_povs: this.getEndDevPovs(),
-      old_dev_povs: APP_STORAGE.sensors.getOldDevPovs()
+      old_dev_povs: APP_STORAGE.sensors.getOldDevPovs(),
     };
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+    // (await WSocket.get()).send(q);
+    api
+      .fetch(q)
+      .then((data) => {
+        APP_STORAGE.reg_user.setResulSave("Поверочный интервал установлен");
+      })
+      .catch((e) => console.log("error=>", e));
 
-    APP_STORAGE.reg_user.setResulSave("Поверочный интервал установлен");
+    // APP_STORAGE.reg_user.setResulSave("Поверочный интервал установлен");
     setTimeout(() => {
       APP_STORAGE.reg_user.setResulSave("");
       this.setOpenNewdevpovs(false);
@@ -741,10 +784,11 @@ export class DevsStorage {
     q.args = {
       dev_sess_id: id_sess,
       dev_id: dev_id,
-      dev_number: dev_number
+      dev_number: dev_number,
     };
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+    // (await WSocket.get()).send(q);
+    api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
   }
 
   async deleteControlDevSess(value: any, id_sess: any) {
@@ -752,18 +796,27 @@ export class DevsStorage {
     var q: IWSQuery = new WSQuery("deleteControlDevSess");
 
     q.args = {
-      id: APP_STORAGE.sensors.getIdFirstSess()
+      id: APP_STORAGE.sensors.getIdFirstSess(),
     };
 
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
-    setTimeout(() => {
-      ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
-      APP_STORAGE.sensors.get_DevFirstLastSessions(
-        "sess_id",
-        APP_STORAGE.auth_form.getdt()
-      );
-    }, 100);
+    api
+      .fetch(q)
+      .then(() => {
+        APP_STORAGE.sensors.get_DevFirstLastSessions(
+          "sess_id",
+          APP_STORAGE.auth_form.getdt()
+        );
+      })
+      .catch((e) => console.log("error=>", e)); // fetch-запрос
+    // (await WSocket.get()).send(q);
+    // setTimeout(() => {
+    //   ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
+    //   APP_STORAGE.sensors.get_DevFirstLastSessions(
+    //     "sess_id",
+    //     APP_STORAGE.auth_form.getdt()
+    //   );
+    // }, 100);
   }
 
   async get_NewControlDevSess(dt: IWSResult) {
@@ -781,9 +834,10 @@ export class DevsStorage {
     var q: IWSQuery = new WSQuery("set_SchemeSvg");
     q.args = {
       id: APP_STORAGE.devs_groups.getParentId(),
-      svg_file: "APP_STORAGE.importdevs.getSvg()"
+      svg_file: "APP_STORAGE.importdevs.getSvg()",
     };
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+    // (await WSocket.get()).send(q);
+    api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
   }
 }

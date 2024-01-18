@@ -13,6 +13,7 @@ import { NewDevPovs } from "./Devs/Dev/Menu/NewDevPovs";
 
 import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser"; /////////////Таблица пользователей
 import { UsersMenu } from "./User/UsersMenu"; //////////////////////////// устройства
+// import UsersMenu from "./User/UsersMenuFC";
 import { Users } from "./User/Users";
 
 import { OrgsMenu } from "./Оrgs/OrgsMenu";
@@ -47,7 +48,8 @@ export class AppForm extends React.Component<IProps> {
   }
 
   async BackToTopButton() {
-    let el = document.getElementById("marker-up");
+    // let el = document.getElementById("marker-up");
+    let el = document.getElementById("button_up");
     el.scrollIntoView();
   }
 
@@ -55,15 +57,18 @@ export class AppForm extends React.Component<IProps> {
     let user_r = null;
     let user_w = null;
     var roles = null;
+
     if (APP_STORAGE.auth_form.getUser().roles_ids) {
       APP_STORAGE.devs_groups.setOrgId(APP_STORAGE.auth_form.getUser().org_id);
       APP_STORAGE.devs.setOrgId(APP_STORAGE.auth_form.getUser().org_id);
       roles = JSON.parse(
         JSON.stringify(APP_STORAGE.auth_form.getUser().roles_ids)
       );
+
       for (var key in roles) {
         if (roles.hasOwnProperty(key)) {
           let a = roles[key];
+
           user_r = a[0];
           user_w = a[1];
         }
@@ -90,7 +95,6 @@ export class AppForm extends React.Component<IProps> {
       new_group = <AddNewGroup />;
       left_form = <DevsGroupsTree />;
     }
-
     if (APP_STORAGE.devs_groups.getMiddleForm() === 2) {
       middle_form = (
         <>
@@ -164,7 +168,7 @@ export class AppForm extends React.Component<IProps> {
             sx={{
               background: "#C2E0FF",
               borderRadius: "24px",
-              position: "absolute"
+              position: "absolute",
             }}
             onClick={() => {
               this.BackToTopButton();

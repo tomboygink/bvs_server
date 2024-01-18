@@ -1,6 +1,7 @@
 import { observable, action, computed, makeAutoObservable } from "mobx";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
+import { api } from "../../../api/api";
 
 import { APP_STORAGE } from "../../AppStorage";
 import { toJS } from "mobx";
@@ -99,7 +100,7 @@ export class ImportDevStorage {
         var getData = (arrKeys: any[], array_number: any) => {
           return array_number.map((val: { toString: () => any }) => ({
             [arrKeys[1]]: val.toString(),
-            [arrKeys[2]]: 1
+            [arrKeys[2]]: 1,
           }));
         };
         let arr = getData(arrKeys, array_number);
@@ -151,18 +152,30 @@ export class ImportDevStorage {
           sensors: '{"s":' + JSON.stringify(arr) + "}",
           deleted: false,
           info: "",
-          period_sess: APP_STORAGE.importdevs.getArrayJsonData()[key][2] || ""
+          period_sess: APP_STORAGE.importdevs.getArrayJsonData()[key][2] || "",
         };
         q.sess_code = sess_code;
-        (await WSocket.get()).send(q);
+        // (await WSocket.get()).send(q);
+        // setTimeout(() => {
+        //   APP_STORAGE.devs_groups.get_DevsGroups(
+        //     "sess_id",
+        //     APP_STORAGE.auth_form.getdt()
+        //   );
+        // }, 1000);
+        // APP_STORAGE.importdevs.setOpenModal(false);
+        api
+          .fetch(q)
+          .then(() => {
+            setTimeout(() => {
+              APP_STORAGE.devs_groups.get_DevsGroups(
+                "sess_id",
+                APP_STORAGE.auth_form.getdt()
+              );
+            }, 1000);
+            APP_STORAGE.importdevs.setOpenModal(false);
+          })
+          .catch((e) => console.log("error=>", e)); // fetch-запрос
       }
-      setTimeout(() => {
-        APP_STORAGE.devs_groups.get_DevsGroups(
-          "sess_id",
-          APP_STORAGE.auth_form.getdt()
-        );
-      }, 1000);
-      APP_STORAGE.importdevs.setOpenModal(false);
     } catch (err) {
       this.setSuccessfully_text(
         "Ошибка! Убедитесь, что данные заполнены согласно шаблону"
@@ -245,15 +258,20 @@ export class ImportDevStorage {
     var q: IWSQuery = new WSQuery("set_SchemeSvg");
     q.args = {
       id: APP_STORAGE.devs_groups.getParentId(),
-      svg_file: this.getArraySvgData() ////data:image\/svg\+xml;base64
+      svg_file: this.getArraySvgData(), ////data:image\/svg\+xml;base64
     };
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
-    setTimeout(() => {
-      APP_STORAGE.devs_groups.get_DevsGroups(
-        "sess_id",
-        APP_STORAGE.auth_form.getdt()
-      );
-    }, 100);
+    api.fetch(q).then(() => {
+      APP_STORAGE.devs_groups
+        .get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt())
+        .catch((e) => console.log("error=>", e));
+    });
+    // (await WSocket.get()).send(q);
+    // setTimeout(() => {
+    //   APP_STORAGE.devs_groups.get_DevsGroups(
+    //     "sess_id",
+    //     APP_STORAGE.auth_form.getdt()
+    //   );
+    // }, 100);
   }
 }

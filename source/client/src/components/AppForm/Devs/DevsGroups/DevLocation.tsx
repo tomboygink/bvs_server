@@ -8,7 +8,7 @@ import {
   TextField,
   ListItemIcon,
   Link,
-  TextareaAutosize
+  TextareaAutosize,
 } from "@mui/material";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
 
@@ -192,7 +192,7 @@ export class DevLocation extends React.Component<IProps> {
                         <Menu
                           id="long-menu"
                           MenuListProps={{
-                            "aria-labelledby": "long-button"
+                            "aria-labelledby": "long-button",
                           }}
                           anchorEl={document.getElementById("long-button_menu")}
                           open={APP_STORAGE.devs_groups.getOpen_menu()}
@@ -319,7 +319,7 @@ export class DevLocation extends React.Component<IProps> {
                     fontSize: "1rem",
                     display: "flex",
                     alignItems: "center",
-                    flexDirection: "row-reverse"
+                    flexDirection: "row-reverse",
                   }}
                 >
                   Показать на карте
@@ -368,7 +368,7 @@ export class DevLocation extends React.Component<IProps> {
                       display: "flex",
                       padding: "8px",
                       pl: "22px",
-                      mb: "22px"
+                      mb: "22px",
                     }}
                   ></Box>
                   <Box
@@ -405,7 +405,7 @@ export class DevLocation extends React.Component<IProps> {
                         <Menu
                           id="long-menu"
                           MenuListProps={{
-                            "aria-labelledby": "long-button"
+                            "aria-labelledby": "long-button",
                           }}
                           anchorEl={document.getElementById("long-button_menu")}
                           open={APP_STORAGE.devs_groups.getOpen_menu()}
@@ -532,7 +532,7 @@ export class DevLocation extends React.Component<IProps> {
                     fontSize: "1rem",
                     display: "flex",
                     alignItems: "center",
-                    flexDirection: "row-reverse"
+                    flexDirection: "row-reverse",
                   }}
                 >
                   Показать на карте
@@ -585,7 +585,7 @@ export class DevLocation extends React.Component<IProps> {
                       display: "flex",
                       padding: "8px",
                       pl: "22px",
-                      mb: "22px"
+                      mb: "22px",
                     }}
                   ></Box>
                   <Box

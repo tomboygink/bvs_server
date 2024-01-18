@@ -1,6 +1,7 @@
 import { observable, action, computed, makeAutoObservable } from "mobx";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
+import { api } from "../../../api/api";
 import { APP_STORAGE } from "../../AppStorage";
 import { toJS } from "mobx";
 
@@ -302,11 +303,12 @@ export class SensorsStorage {
       q.args = {
         dev_number: this.getNumber() || "",
         sess_period_start: this.getSessPeriodStart() || "",
-        sess_period_end: this.getSessPeriodEnd() || ""
+        sess_period_end: this.getSessPeriodEnd() || "",
       };
 
       q.sess_code = sess_code;
-      (await WSocket.get()).send(q);
+      api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
+      // (await WSocket.get()).send(q);
     }
   }
 
@@ -315,10 +317,11 @@ export class SensorsStorage {
     var q: IWSQuery = new WSQuery("get_DevFirstLastSessions");
     {
       q.args = {
-        dev_number: this.getNumber() || ""
+        dev_number: this.getNumber() || "",
       };
       q.sess_code = sess_code;
-      (await WSocket.get()).send(q);
+      // (await WSocket.get()).send(q);
+      api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
     }
   }
 
@@ -329,19 +332,35 @@ export class SensorsStorage {
     {
       q.args = {
         id: APP_STORAGE.sensors.getIdDev(),
-        dev_number: APP_STORAGE.sensors.getNumber()
+        dev_number: APP_STORAGE.sensors.getNumber(),
       };
       q.sess_code = sess_code;
-      (await WSocket.get()).send(q);
+      // (await WSocket.get()).send(q);
+      api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
     }
   }
 
   async set_DevPovs(dt: IWSResult) {
-    if (Object.keys(dt.data).length !== 0) {
+    // Для работы с fetch-запросом dt.data преобразован в объект:
+    let data = new Object(dt.data);
+
+    // Для Websocket
+    // if (Object.keys(dt.data).length !== 0) {
+    //   this.setOldDevPovs(dt.data[0].id);
+    //   this.setStartPovs(dt.data[0].start_povs);
+    //   this.setEndPovs(dt.data[0].end_povs);
+    // } else if (Object.keys(dt.data).length === 0) {
+    //   this.setOldDevPovs("0");
+    //   this.setStartPovs("");
+    //   this.setEndPovs("");
+    // }
+
+    // Для fetch
+    if (Object.keys(data).length !== 0) {
       this.setOldDevPovs(dt.data[0].id);
       this.setStartPovs(dt.data[0].start_povs);
       this.setEndPovs(dt.data[0].end_povs);
-    } else if (Object.keys(dt.data).length === 0) {
+    } else {
       this.setOldDevPovs("0");
       this.setStartPovs("");
       this.setEndPovs("");
@@ -372,17 +391,17 @@ export class SensorsStorage {
 
       var obj_first: any = {
         depth: "",
-        data: ""
+        data: "",
       };
 
       var obj_second: any = {
         depth: "",
-        data1: ""
+        data1: "",
       };
 
       var obj_defolt: any = {
         depth: 0,
-        data2: ""
+        data2: "",
       };
 
       var first = new Array();
@@ -391,13 +410,13 @@ export class SensorsStorage {
       var defolt = new Array();
 
       const mergeByProperty = (arrays: any[], property = "depth") => {
-        const arr = arrays.flatMap(item => item); //делаем из всех массивов - один
+        const arr = arrays.flatMap((item) => item); //делаем из всех массивов - один
 
         const obj = arr.reduce((acc, item) => {
           return {
             // делаем из массива - объект, чтобы повторения перезаписывались
             ...acc,
-            [item[property]]: { ...acc[item[property]], ...item }
+            [item[property]]: { ...acc[item[property]], ...item },
           };
         }, {});
 
@@ -409,7 +428,7 @@ export class SensorsStorage {
       )) {
         obj_first = {
           data_f: start_sess.s[i].data,
-          depth: start_sess.s[i].depth
+          depth: start_sess.s[i].depth,
         };
         first.push(obj_first);
       }
@@ -418,7 +437,7 @@ export class SensorsStorage {
       )) {
         obj_second = {
           data_s: end_sess.s[j].data,
-          depth: end_sess.s[j].depth
+          depth: end_sess.s[j].depth,
         };
         second.push(obj_second);
       }

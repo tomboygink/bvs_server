@@ -13,7 +13,7 @@ import {
   getCookie,
   setCookie,
   deleteCookie,
-  deleteAllCookies
+  deleteAllCookies,
 } from "./browserCookes";
 import { UsersEntity } from "../../../xcore/dbase/Users";
 import { DevsGroupStorage } from "./components/Devs/DevsGroupStorage";
@@ -25,6 +25,7 @@ import { OrgStorage } from "./components/Orgs/OrgStorage"; /////// Вкладк�
 import { JobsTitlesStorage } from "./components/JobsTitles/JobsTitlesStorage";
 
 import { ImportDevStorage } from "./components/Devs/ImportDevStorage";
+import { api } from "../api/api";
 
 // ********************************************************************************************************************************************************
 // ХРАНИЛИЩЕ
@@ -124,6 +125,7 @@ class AppStorage {
 
   @action async onWSData(dt: IWSResult) {
     console.log("SOCKET RESULT", toJS(dt));
+
     switch (dt.cmd) {
       case "get_UserByAuth":
         {
@@ -222,7 +224,8 @@ class AppStorage {
     var ss_code = getCookie("sess_id");
     if (ss_code === undefined) return deleteAllCookies();
     var q: IWSQuery = new WSQuery("get_UserBySessionCode", { code: ss_code });
-    (await WSocket.get()).send(q);
+    // (await WSocket.get()).send(q);
+    api.fetch(q).catch((e) => console.log("error=>", e));
   }
 }
 
