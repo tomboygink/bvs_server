@@ -5,7 +5,7 @@ import { toJS } from "mobx";
 import { APP_STORAGE } from "../../storage/AppStorage";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../xcore/WSQuery";
 import { WSocket } from "../WSocket";
-import { api } from "../../utils/api";
+import { api } from "../../api/api";
 
 export class ModalLeftPanel {
   @observable table_user: boolean = false; //// открываем таблицу пользователей

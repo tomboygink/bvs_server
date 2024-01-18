@@ -2,7 +2,7 @@ import { observable, action, computed, makeAutoObservable } from "mobx";
 
 import { IWSQuery, WSQuery, IWSResult } from "../../../../xcore/WSQuery";
 import { WSocket } from "../WSocket";
-import { api } from "../../utils/api";
+import { api } from "../../api/api";
 
 import { APP_STORAGE } from "../AppStorage";
 

@@ -1,7 +1,7 @@
 import { observable, action, computed, makeAutoObservable, toJS } from "mobx";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
-import { api } from "../../../utils/api";
+import { api } from "../../../api/api";
 import { APP_STORAGE } from "../../AppStorage";
 import { TDGroup } from "./DevEntityes";
 
@@ -460,6 +460,7 @@ export class DevsStorage {
     return this.period_sess;
   }
 
+  // Где используется?
   async get_Devs(name: string, value: any, _options?: any) {
     var sess_code = value;
     var q: IWSQuery = new WSQuery("get_Devs");
@@ -469,7 +470,8 @@ export class DevsStorage {
       user_w: this.getUserRole(),
     };
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+    // (await WSocket.get()).send(q);
+    api.fetch(q).catch((e) => console.log("error=>", e)); //fetch-запрос
   }
 
   // async get_Devs11(name: string, value: any, _options?: any) {
@@ -491,19 +493,23 @@ export class DevsStorage {
     let latnumber = this.getLatitude().replace(/[^\d\.,]/g, ""); //// только цифты
     let latchar = latnumber.replace(/,/g, "."); //// то
 
-    console.log("latchar=>", latchar);
-
-    if (latchar.match(/\./g).length > 1) {
-      lat = latchar.substr(0, latchar.lastIndexOf("."));
+    let latArr = latchar.match(/\./g) || [];
+    // if (latchar.match(/\./g).length > 1)
+    if (latArr.length > 1) {
+      // lat = latchar.substr(0, latchar.lastIndexOf("."));
+      lat = latchar.substring(0, latchar.lastIndexOf("."));
     } else {
       lat = latchar;
     }
 
     let lngnumber = this.getLongitude().replace(/[^\d\.,]/g, ""); //// только цифты
     let lngchar = lngnumber.replace(/,/g, "."); //// то
+    let lngArr = lngchar.match(/\./g) || [];
 
-    if (lngchar.match(/\./g).length > 1) {
-      lng = lngchar.substr(0, latchar.lastIndexOf("."));
+    //if (lngchar.match(/\./g).length > 1)
+    if (lngArr.length > 1) {
+      // lng = lngchar.substr(0, latchar.lastIndexOf("."));
+      lng = lngchar.substring(0, latchar.lastIndexOf("."));
     } else {
       lng = lngchar;
     }
@@ -579,26 +585,42 @@ export class DevsStorage {
         period_sess: this.getPeriodSess() || "",
       };
       q.sess_code = sess_code;
-      (await WSocket.get()).send(q);
-      // api
-      //   .fetch(q)
+      // (await WSocket.get()).send(q);
+      api
+        .fetch(q)
+        .then(() => {
+          this.setName("");
+          this.setNumber("");
+          this.setLatitude("");
+          this.setLongitude("");
+          this.setInfo("");
+          this.setArray([]);
 
-      //   .catch((e) => console.log("error=>", e));
-      this.setName("");
-      this.setNumber("");
-      this.setLatitude("");
-      this.setLongitude("");
-      this.setInfo("");
-      this.setArray([]);
+          APP_STORAGE.setNotifications(true);
 
-      APP_STORAGE.setNotifications(true);
+          setTimeout(() => {
+            APP_STORAGE.setNotifications(false);
+          }, 1000);
+          setTimeout(() => {
+            this.setOpenModal(false);
+          }, 1000);
+        })
+        .catch((e) => console.log("error=>", e)); //fetch-запрос
+      // this.setName("");
+      // this.setNumber("");
+      // this.setLatitude("");
+      // this.setLongitude("");
+      // this.setInfo("");
+      // this.setArray([]);
 
-      setTimeout(() => {
-        APP_STORAGE.setNotifications(false);
-      }, 1000);
-      setTimeout(() => {
-        this.setOpenModal(false);
-      }, 1000);
+      // APP_STORAGE.setNotifications(true);
+
+      // setTimeout(() => {
+      //   APP_STORAGE.setNotifications(false);
+      // }, 1000);
+      // setTimeout(() => {
+      //   this.setOpenModal(false);
+      // }, 1000);
     }
   }
 
@@ -765,7 +787,8 @@ export class DevsStorage {
       dev_number: dev_number,
     };
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+    // (await WSocket.get()).send(q);
+    api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
   }
 
   async deleteControlDevSess(value: any, id_sess: any) {
@@ -777,14 +800,23 @@ export class DevsStorage {
     };
 
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
-    setTimeout(() => {
-      ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
-      APP_STORAGE.sensors.get_DevFirstLastSessions(
-        "sess_id",
-        APP_STORAGE.auth_form.getdt()
-      );
-    }, 100);
+    api
+      .fetch(q)
+      .then(() => {
+        APP_STORAGE.sensors.get_DevFirstLastSessions(
+          "sess_id",
+          APP_STORAGE.auth_form.getdt()
+        );
+      })
+      .catch((e) => console.log("error=>", e)); // fetch-запрос
+    // (await WSocket.get()).send(q);
+    // setTimeout(() => {
+    //   ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
+    //   APP_STORAGE.sensors.get_DevFirstLastSessions(
+    //     "sess_id",
+    //     APP_STORAGE.auth_form.getdt()
+    //   );
+    // }, 100);
   }
 
   async get_NewControlDevSess(dt: IWSResult) {
@@ -805,6 +837,7 @@ export class DevsStorage {
       svg_file: "APP_STORAGE.importdevs.getSvg()",
     };
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+    // (await WSocket.get()).send(q);
+    api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
   }
 }

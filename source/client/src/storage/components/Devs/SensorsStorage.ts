@@ -1,7 +1,7 @@
 import { observable, action, computed, makeAutoObservable } from "mobx";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
-import { api } from "../../../utils/api";
+import { api } from "../../../api/api";
 import { APP_STORAGE } from "../../AppStorage";
 import { toJS } from "mobx";
 
@@ -307,7 +307,8 @@ export class SensorsStorage {
       };
 
       q.sess_code = sess_code;
-      (await WSocket.get()).send(q);
+      api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
+      // (await WSocket.get()).send(q);
     }
   }
 

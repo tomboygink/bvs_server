@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
-import { BASE_URL } from "../../utils/constans";
+import { BASE_URL } from "../../../utils/consts";
 
 export const userAPI = createApi({
   reducerPath: "userApi",
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: `http://${BASE_URL.host}:${BASE_URL.port}`,
+  }),
   tagTypes: ["Users"],
   endpoints: (build) => ({
     fetchAllUsers: build.query({

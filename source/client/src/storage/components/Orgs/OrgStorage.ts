@@ -3,7 +3,7 @@ import { observable, action, computed, makeAutoObservable } from "mobx";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
-import { api } from "../../../utils/api";
+import { api } from "../../../api/api";
 import { Apartment } from "@mui/icons-material";
 
 export class OrgStorage {
@@ -152,6 +152,7 @@ export class OrgStorage {
       info: "APP_STORAGE.jobs.getInfo()" || "",
     };
     q.sess_code = sess_code;
-    (await WSocket.get()).send(q);
+    api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
+    // (await WSocket.get()).send(q);
   }
 }

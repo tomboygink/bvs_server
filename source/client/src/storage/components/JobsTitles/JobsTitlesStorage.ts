@@ -3,7 +3,7 @@ import { observable, action, computed, makeAutoObservable } from "mobx";
 import { APP_STORAGE } from "../../AppStorage";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
-import { api } from "../../../utils/api";
+import { api } from "../../../api/api";
 
 export class JobsTitlesStorage {
   @observable modal_edit_jobstitle: boolean = false;

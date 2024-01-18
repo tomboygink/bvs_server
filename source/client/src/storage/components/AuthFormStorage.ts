@@ -2,7 +2,7 @@ import { observable, action, computed, makeAutoObservable } from "mobx";
 import { UsersEntity } from "../../../../xcore/dbase/Users";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../xcore/WSQuery";
 import { WSocket } from "../WSocket";
-import { api } from "../../utils/api";
+import { api } from "../../api/api";
 import {
   getCookie,
   setCookie,
@@ -235,11 +235,10 @@ export class AuthFormStorage {
       q.args = {
         email: this.getEmail(),
       };
-      (await WSocket.get()).send(q);
+      api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
+      //(await WSocket.get()).send(q);
     }
   }
-
-  // Где используется?
 
   async set_SaveNewPass() {
     if (
@@ -256,8 +255,11 @@ export class AuthFormStorage {
         repeat_password: this.getRepeatPass(),
         code: this.getCode(),
       };
-      (await WSocket.get()).send(q);
+      // (await WSocket.get()).send(q);
+      api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
+      
     }
+
   }
 
   setUserWS(dt: IWSResult) {
