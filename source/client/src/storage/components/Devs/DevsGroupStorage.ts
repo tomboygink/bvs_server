@@ -284,11 +284,10 @@ export class DevsGroupStorage {
       this.setNameError(false);
       this.setNameError_mess("");
       console.log("Есть название места");
-    
     } else {
-        this.setNameError(true);
-        this.setNameError_mess("Поле не может быть пустым");
-        console.log("Нет названия места");
+      this.setNameError(true);
+      this.setNameError_mess("Поле не может быть пустым");
+      console.log("Нет названия места");
     }
     //   if (this.getName() === "") {
     //     this.setNameError(true);
@@ -308,7 +307,6 @@ export class DevsGroupStorage {
     if (this.getLatitude() === "") {
       this.setLatitudeError(true);
       this.setLatitudeError_mess("Поле не должно быть пустым");
-       console.log("Нет широты");
     }
 
     if (this.getLatitude() !== "") {
@@ -319,7 +317,6 @@ export class DevsGroupStorage {
     if (this.getLongitude() === "") {
       this.setLongitudeError(true);
       this.setLongitudeError_mess("Поле не должно быть пустым");
-       console.log("Нет долготы");
     }
 
     if (this.getLongitude() !== "") {
@@ -335,7 +332,7 @@ export class DevsGroupStorage {
     ) {
       q.args = {
         g_name: this.getName().replace(/"([^"]*)"/g, "«$1»") || "",
-        latitude: lat, // почему тут нет альтернативы в виде пустой строки?
+        latitude: lat,
         longitude: lng || "",
         org_id: this.getKeyOrg() || "",
         parent_id: this.getParentId(),
@@ -344,14 +341,14 @@ export class DevsGroupStorage {
         g_info: this.getInfo() || "",
       };
       q.sess_code = sess_code;
-      console.log("q=>", q)
+      console.log("q=>", q);
 
       // (await WSocket.get()).send(q);
       // this.setOpenModal(false);
-      // api
-      //   .fetch(q)
-      //   .then(() => this.setOpenModal(false))
-      //   .catch((e) => console.log("error=>", e));
+      api
+        .fetch(q)
+        .then(() => this.setOpenModal(false))
+        .catch((e) => console.log("error=>", e));
     }
   }
 
