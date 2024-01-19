@@ -42,80 +42,55 @@ exports.__esModule = true;
 var path_1 = __importDefault(require("path"));
 var express_1 = __importDefault(require("express"));
 var http_1 = __importDefault(require("http"));
-var ws_1 = __importDefault(require("ws"));
 var hbs_1 = __importDefault(require("hbs"));
-var DBase_1 = require("../xcore/dbase/DBase");
+var body_parser_1 = __importDefault(require("body-parser"));
+var cors_1 = __importDefault(require("cors"));
 var config_1 = require("../xcore/config");
-var WSRouter_1 = require("./WSRouter");
+var router_1 = require("./router");
 var AppServer = (function () {
     function AppServer() {
-        var _this = this;
         this.app = null;
         this.server = null;
-        this.wss = null;
-        this.DB = null;
         this.app = (0, express_1["default"])();
         this.server = http_1["default"].createServer(this.app);
-        this.wss = new ws_1["default"].Server({ server: this.server });
-        this.app.set('view engine', 'hbs');
-        this.app.set('views', path_1["default"].normalize(path_1["default"].join(__dirname, '..', '..', 'views')));
-        hbs_1["default"].registerPartials(path_1["default"].normalize(path_1["default"].join(__dirname, '..', '..', 'views', 'partials')));
-        this.app.use('/static', express_1["default"].static(path_1["default"].normalize(path_1["default"].join(__dirname, '..', '..', 'public'))));
-        this.DB = (0, DBase_1.getDB)();
-        this.DB.NOW();
-        this.server.on("close", function () { _this.onCloseServer(); });
+        this.app.set("view engine", "hbs");
+        console.log(path_1["default"].normalize(path_1["default"].join(__dirname, "..", "..", "views")));
+        this.app.set("views", path_1["default"].normalize(path_1["default"].join(__dirname, "..", "..", "views")));
+        hbs_1["default"].registerPartials(path_1["default"].normalize(path_1["default"].join(__dirname, "..", "..", "views", "partials")));
+        this.app.use("/static", express_1["default"].static(path_1["default"].normalize(path_1["default"].join(__dirname, "..", "..", "public"))));
     }
     AppServer.prototype.run = function () {
-        var _this = this;
         if (this.app === null)
             return;
         if (this.server === null)
             return;
-        if (this.wss === null)
-            return;
         this.route();
-        this.wss.on('connection', function (_ws) {
-            _ws.on('message', function (message) { try {
-                (0, WSRouter_1.WSRoute)(_ws, JSON.parse(message));
-            }
-            catch (_a) { } });
-        });
-        this.server.listen(process.env.PORT || config_1.CONFIG.port, function () {
-            var addr = _this.server.address();
-            var family = (typeof addr === 'string') ? "IP4" : addr.family;
-            var address = (typeof addr === 'string') ? "none" : addr.address;
-            var port = (typeof addr === 'string') ? "none" : addr.port;
-            var out_res = (typeof addr === 'string') ? 'http://127.0.0.1' : "".concat(family, " ").concat(address).concat(port);
-            console.log("Server started on http://127.0.0.1:".concat(port, " -- ").concat(out_res, ")"));
+        this.server.listen(config_1.CONFIG.port, function () {
+            console.log("\u0421\u043B\u0443\u0448\u0430\u044E \u043F\u043E\u0440\u0442 ".concat(config_1.CONFIG.port));
         });
     };
     AppServer.prototype.route = function () {
         var _this = this;
-        this.app.all("/", function (req, res) {
-            res.render('index.hbs', { title: "---" });
+        this.app.get("/", function (req, res) {
+            res.render("index.hbs", { title: "Система визуализации СДС" });
         });
-        this.app.all("/confirm_mail", function (req, res) {
-            res.render('confirm_mail.hbs', { title: "Подтверждение почты" });
-        });
-        this.app.all("/forgot_pass", function (req, res) {
-            res.render('forgot_pass.hbs', { title: "Восстановление пароля" });
-        });
-        this.app.all("/show-map", function (req, res) {
-            res.render('show-map.hbs', { title: "Устройство на карте" });
-        });
-        this.app.all('/quit', function (req, res) { res.send('QUIT SERVER'); _this.server.close(); });
-    };
-    AppServer.prototype.onCloseServer = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, (0, DBase_1.endDB)()];
+        this.app.use((0, cors_1["default"])());
+        this.app.use(body_parser_1["default"].json());
+        this.app.post("/api", (0, cors_1["default"])(), function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        console.log("req.metod ", req.method);
+                        console.log("req.body", req.body);
+                        _b = (_a = res).send;
+                        return [4, (0, router_1.router)(req.body)];
                     case 1:
-                        _a.sent();
+                        _b.apply(_a, [_c.sent()]);
                         return [2];
                 }
             });
-        });
+        }); });
     };
     return AppServer;
 }());

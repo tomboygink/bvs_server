@@ -1,6 +1,7 @@
 import { DBase, getDB } from "./DBase";
 import crypto from 'crypto';
 import { CONFIG } from '../../xcore/config';
+//import config from "../../config.json"
 import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 
 

@@ -61,10 +61,13 @@ var DevsTable = (function () {
     }
     DevsTable.prototype.insertDevs = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var data, db_res, result, p;
+            var result, data, db_res, p;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT number FROM devs WHERE number = '" + this.args.number + "'")];
+                    case 0:
+                        result = new Array();
+                        if (!(this.args.period_sess !== '')) return [3, 3];
+                        return [4, this.db.query("SELECT number FROM devs WHERE number = '" + this.args.number + "'")];
                     case 1:
                         data = _a.sent();
                         if (!(data.rows.length === 0 || data.rows[0].number !== this.args.number)) return [3, 3];
@@ -79,12 +82,11 @@ var DevsTable = (function () {
                                 "CAST('" + this.args.period_sess + "' AS BIGINT)) AS id")];
                     case 2:
                         db_res = _a.sent();
-                        result = new Array();
                         for (p in db_res.rows) {
                             result.push(db_res.rows[p]);
                         }
-                        return [2, result];
-                    case 3: return [2];
+                        _a.label = 3;
+                    case 3: return [2, result];
                 }
             });
         });

@@ -25,26 +25,29 @@ export class DevsTable {
     }
     //Добавление устройства
     async insertDevs(): Promise<DevsEntity[]> {
-        var data = await this.db.query("SELECT number FROM devs WHERE number = '" + this.args.number + "'");
-        if (data.rows.length === 0 || data.rows[0].number !== this.args.number) {
+        var result: DevsEntity[] = new Array();
+        if (this.args.period_sess !== '') {
+            var data = await this.db.query("SELECT number FROM devs WHERE number = '" + this.args.number + "'");
+            if (data.rows.length === 0 || data.rows[0].number !== this.args.number) {
 
-            var db_res = await this.db.query("SELECT AddDevs(CAST(" + this.args.group_dev_id + " AS BIGINT), " +
-                "CAST('" + this.args.number + "' AS VARCHAR(80))," +
-                "CAST('" + this.args.name + "' AS VARCHAR(250))," +
-                "CAST('" + this.args.latitude + "' AS VARCHAR(60))," +
-                "CAST('" + this.args.longitude + "' AS VARCHAR(60))," +
-                "CAST('" + this.args.sensors + "' AS JSON)," +
-                "CAST(" + this.args.deleted + " AS BOOLEAN)," +
-                "CAST('" + this.args.info + "' AS TEXT),"+
-                "CAST('" + this.args.period_sess + "' AS BIGINT)) AS id");
-            var result: DevsEntity[] = new Array();
-            for (var p in db_res.rows) { result.push(db_res.rows[p]); }
-            return result;
+                var db_res = await this.db.query("SELECT AddDevs(CAST(" + this.args.group_dev_id + " AS BIGINT), " +
+                    "CAST('" + this.args.number + "' AS VARCHAR(80))," +
+                    "CAST('" + this.args.name + "' AS VARCHAR(250))," +
+                    "CAST('" + this.args.latitude + "' AS VARCHAR(60))," +
+                    "CAST('" + this.args.longitude + "' AS VARCHAR(60))," +
+                    "CAST('" + this.args.sensors + "' AS JSON)," +
+                    "CAST(" + this.args.deleted + " AS BOOLEAN)," +
+                    "CAST('" + this.args.info + "' AS TEXT)," +
+                    "CAST('" + this.args.period_sess + "' AS BIGINT)) AS id");
+
+                for (var p in db_res.rows) { result.push(db_res.rows[p]); }
+                
+            }
         }
-
+        return result;
     };
 
-    async delete_duplicate(){
+    async delete_duplicate() {
         await this.db.query("delete from devs WHERE id NOT IN (select MIN(id) from devs group by number);");
     }
 
@@ -67,7 +70,7 @@ export class DevsTable {
             "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
             "CAST ('" + this.args.sensors + "' AS JSON), " +
             "CAST ('" + this.args.deleted + "' AS BOOLEAN), " +
-            "CAST ('" + this.args.info + "' AS TEXT),"+
+            "CAST ('" + this.args.info + "' AS TEXT)," +
             "CAST ('" + this.args.period_sess + "' AS BIGINT))");
     }
 }

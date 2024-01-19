@@ -79,13 +79,9 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 	        var t;
 	        if (this.args.users_w === true) {
 	            //console.log("im admin")
-	            //var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ");
 				var roots_gr = await this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg ON devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 ");
 
-	            for (var i in roots_gr.rows) {
-					//console.log(roots_gr.rows[i]);
-
-
+				for (var i in roots_gr.rows) {
 	                var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id + " order by number asc")).rows;
 	                devs = new Array();
 	                for (var j in device) {
@@ -122,7 +118,6 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 	        }
 	        else {
 	            //console.log("im user")
-	            //var roots_gr = await this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id);
 				var roots_gr = await this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 AND org_id= " + this.args.org_id);
 	            for (var i in roots_gr.rows) {
 	                var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id  + " order by number asc")).rows;
@@ -155,9 +150,7 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 	                    devs: devs,
 	                    update: false,
 						scheme_svg: roots_gr.rows[i].scheme_svg
-
 	                })
-	            
 	            }
 	        }
 	
@@ -166,10 +159,7 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 	            groups.childs[i].childs = await this._d_tree(groups.childs[i]);
 	        }
 	        var result = this.objToString(groups);
-	        //console.log(result);
 	        return result
-	
-
 	    }
 	
 	    //Преобразоватие в дерево 
@@ -198,17 +188,13 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 			var grs = await this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=" + childs.id);
 			
 	        for (var i in grs.rows) {
-	           // console.log(grs.rows[i].id + " " + grs.rows[i].g_name)
 	            var device = await (await this.db.query("SELECT * FROM devs WHERE group_dev_id = " + grs.rows[i].id  + " order by number asc")).rows;
-				
-	            
 	            var devs = new Array();
-	
-
 	            for (var j in device) {
 	                var time_srv = await (await this.db.query("SELECT time_srv as time from dev_sess WHERE dev_number = '" + device[j].number + "' order by id desc limit 1;")).rows;
 	                var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
-	                if (time_srv[0] === undefined) { t = null }
+	                
+					if (time_srv[0] === undefined) { t = null }
 	                else { t = (new Date(time_srv[0].time - tzoffset)).toISOString().slice(0, -8) }
 	                
 	                dev = {
@@ -226,7 +212,6 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 	                }
 	                devs.push(dev);
 	            }
-	
 
 	            reti.push({
 	                group: grs.rows[i],
@@ -243,31 +228,19 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 	
 	    objToString(obj: any, isArray?: boolean) {
 	        var isArray = isArray || false; // что нужно вернуть - массив или объект
-	
 
-	        var sstr = "";
+			var sstr = "";
 	        if (isArray) { sstr += "["; } else { sstr += "{"; }
-	
 
-	        var first = true;
+			var first = true;
 	        for (var k in obj) {
-	
-
 	            if (typeof obj[k] == 'function') continue; // не включает методы - только JSON для переноса данных
-	
-
 	            if (first) {
 	                first = false;
 	            } else {
 	                sstr += ',';
 	            }
-	
-
-	
-
 	            if (!isArray) { sstr += `"${k}":`; } // ключи для объекта
-	
-
 	            // значения
 	            if (obj[k] === null) {
 	                sstr += 'null'
@@ -297,8 +270,6 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 
 	    //Редактирование группы 
 	    async updateDevsGroups() {
-	        //КОСТЫЛЬ НО ПРИЯТНО КОГДА РАБОТАЕТ
-	
 
 	        //Редактирование основной группы пользователем 
 	        await this.db.query("SELECT * FROM UpdateDevs_Group(" +
@@ -311,9 +282,6 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 	            "CAST (" + this.args.ord_id + " AS INTEGER), " +
 	            "CAST ('" + this.args.deleted + "' AS BOOLEAN), " +
 	            "CAST ('" + this.args.info + "' AS TEXT))");
-	
-
-	
 
 	        //Рекурсивный запрос на получение подгрупп 
 	        var data = await this.db.query("with recursive temp1 (id, parent_id, g_name, latitude, longitude, org_id, ord_num, deleted, g_info, path) " +
@@ -322,12 +290,10 @@ import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
 	            "select t2.id, t2.parent_id, t2.g_name, t2.latitude, t2.longitude, t2.org_id, t2.ord_num, t2.deleted, t2.g_info, cast (temp1.path || '->'|| t2.g_name as varchar(50)) " +
 	            "from devs_groups t2 inner join temp1 on (temp1.id = t2.parent_id)) " +
 	            "select * from temp1");
-	
 
 	        //обновление данных подгрупп и устройств
 	        for (var i = 0; i < data.rows.length; i++) {
 	            await this.db.query("update devs_groups set org_id = " + this.args.org_id + ", deleted = " + this.args.deleted + " where id = " + data.rows[i].id);
-	
 
 	            //Получение устройств
 	            var data_dev = await this.db.query("SELECT * FROM Devs WHERE group_dev_id=" + data.rows[i].id  + " order by number asc");

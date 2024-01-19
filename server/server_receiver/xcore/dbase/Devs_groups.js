@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.Devs_groupsTable = exports.Devs_groupsEntity = void 0;
 var DBase_1 = require("./DBase");
+var DateStr_1 = require("../../xcore/dbase/DateStr");
 var Devs_groupsEntity = (function () {
     function Devs_groupsEntity() {
         this.id = 0;
@@ -74,6 +75,12 @@ var Devs_groupsTable = (function () {
                             "CAST('" + this.args.g_info + "' AS TEXT)) AS id")];
                     case 1:
                         db_res = _a.sent();
+                        return [4, this.db.query("SELECT AddScheme_Svg(" +
+                                "CAST (" + db_res.rows[0].id + " AS BIGINT), " +
+                                "CAST ('' AS TEXT), " +
+                                "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP)) AS id")];
+                    case 2:
+                        _a.sent();
                         result = new Array();
                         for (p in db_res.rows) {
                             result.push(db_res.rows[p]);
@@ -99,7 +106,8 @@ var Devs_groupsTable = (function () {
                             sensors: '',
                             deleted: false,
                             info: '',
-                            time: ''
+                            time: '',
+                            period_sess: 0
                         };
                         groups = {
                             group: {},
@@ -107,11 +115,12 @@ var Devs_groupsTable = (function () {
                             p_id: 0,
                             childs: new Array(),
                             devs: new Array(),
-                            update: false
+                            update: false,
+                            scheme_svg: ""
                         };
                         devs = new Array();
                         if (!(this.args.users_w === true)) return [3, 12];
-                        return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 ")];
+                        return [4, this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg ON devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 ")];
                     case 1:
                         roots_gr = _w.sent();
                         _a = roots_gr.rows;
@@ -125,7 +134,7 @@ var Devs_groupsTable = (function () {
                         _c = _b[_i];
                         if (!(_c in _a)) return [3, 10];
                         i = _c;
-                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)];
+                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id + " order by number asc")];
                     case 3: return [4, (_w.sent()).rows];
                     case 4:
                         device = _w.sent();
@@ -162,7 +171,8 @@ var Devs_groupsTable = (function () {
                             sensors: device[j].sensors,
                             deleted: device[j].deleted,
                             info: device[j].info,
-                            time: t
+                            time: t,
+                            period_sess: device[j].period_sess
                         };
                         devs.push(dev);
                         _w.label = 8;
@@ -176,14 +186,15 @@ var Devs_groupsTable = (function () {
                             p_id: roots_gr.rows[i].parent_id,
                             childs: new Array(),
                             devs: devs,
-                            update: false
+                            update: false,
+                            scheme_svg: roots_gr.rows[i].scheme_svg
                         });
                         _w.label = 10;
                     case 10:
                         _i++;
                         return [3, 2];
                     case 11: return [3, 23];
-                    case 12: return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=0 and org_id=" + this.args.org_id)];
+                    case 12: return [4, this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 AND org_id= " + this.args.org_id)];
                     case 13:
                         roots_gr = _w.sent();
                         _h = roots_gr.rows;
@@ -197,7 +208,7 @@ var Devs_groupsTable = (function () {
                         _k = _j[_l];
                         if (!(_k in _h)) return [3, 22];
                         i = _k;
-                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id)];
+                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id + " order by number asc")];
                     case 15: return [4, (_w.sent()).rows];
                     case 16:
                         device = _w.sent();
@@ -234,7 +245,8 @@ var Devs_groupsTable = (function () {
                             sensors: device[j].sensors,
                             deleted: device[j].deleted,
                             info: device[j].info,
-                            time: t
+                            time: t,
+                            period_sess: device[j].period_sess
                         };
                         devs.push(dev);
                         _w.label = 20;
@@ -248,7 +260,8 @@ var Devs_groupsTable = (function () {
                             p_id: roots_gr.rows[i].parent_id,
                             childs: new Array(),
                             devs: devs,
-                            update: false
+                            update: false,
+                            scheme_svg: roots_gr.rows[i].scheme_svg
                         });
                         _w.label = 22;
                     case 22:
@@ -299,10 +312,11 @@ var Devs_groupsTable = (function () {
                             sensors: '',
                             deleted: false,
                             info: '',
-                            time: ''
+                            time: '',
+                            period_sess: 0
                         };
                         devs = new Array();
-                        return [4, this.db.query("SELECT * FROM devs_groups WHERE parent_id=" + childs.id)];
+                        return [4, this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=" + childs.id)];
                     case 1:
                         grs = _l.sent();
                         _a = grs.rows;
@@ -316,7 +330,7 @@ var Devs_groupsTable = (function () {
                         _c = _b[_i];
                         if (!(_c in _a)) return [3, 11];
                         i = _c;
-                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + grs.rows[i].id)];
+                        return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + grs.rows[i].id + " order by number asc")];
                     case 3: return [4, (_l.sent()).rows];
                     case 4:
                         device = _l.sent();
@@ -353,7 +367,8 @@ var Devs_groupsTable = (function () {
                             sensors: device[j].sensors,
                             deleted: device[j].deleted,
                             info: device[j].info,
-                            time: t
+                            time: t,
+                            period_sess: device[j].period_sess
                         };
                         devs.push(dev);
                         _l.label = 8;
@@ -372,6 +387,7 @@ var Devs_groupsTable = (function () {
                         _j.apply(_h, [(_k.childs = _l.sent(),
                                 _k.devs = devs,
                                 _k.updated = false,
+                                _k.scheme_svg = grs.rows[i].scheme_svg,
                                 _k)]);
                         _l.label = 11;
                     case 11:
@@ -468,7 +484,7 @@ var Devs_groupsTable = (function () {
                         return [4, this.db.query("update devs_groups set org_id = " + this.args.org_id + ", deleted = " + this.args.deleted + " where id = " + data.rows[i].id)];
                     case 4:
                         _a.sent();
-                        return [4, this.db.query("SELECT * FROM Devs WHERE group_dev_id=" + data.rows[i].id)];
+                        return [4, this.db.query("SELECT * FROM Devs WHERE group_dev_id=" + data.rows[i].id + " order by number asc")];
                     case 5:
                         data_dev = _a.sent();
                         j = 0;

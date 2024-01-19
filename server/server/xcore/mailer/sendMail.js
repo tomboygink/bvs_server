@@ -46,27 +46,27 @@ var config_1 = require("../../xcore/config");
 var Users_1 = require("../dbase/Users");
 var SendMail = (function () {
     function SendMail(_args, _sess_code) {
+        this.transporter = nodemailer_1["default"].createTransport({
+            host: "smtp.mail.ru",
+            port: 465,
+            secure: true,
+            auth: {
+                user: 'noreplay@burvodstroy45.ru',
+                pass: 'hPvWrFhP4iV2Mm1KdmV7'
+            }
+        });
         this.args = _args;
         this.sess_code = _sess_code;
     }
     SendMail.prototype.sendConfirmMail = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var a, transporter;
+            var a;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         a = '';
                         a = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex');
-                        transporter = nodemailer_1["default"].createTransport({
-                            host: "smtp.yandex.ru",
-                            port: 465,
-                            secure: true,
-                            auth: {
-                                user: 'noreplay@bvs45.ru',
-                                pass: 'TH0TMx2F'
-                            }
-                        });
-                        return [4, transporter.sendMail({
+                        return [4, this.transporter.sendMail({
                                 from: 'noreplay@bvs45.ru',
                                 to: this.args.email,
                                 subject: 'Activate mail',
@@ -81,7 +81,7 @@ var SendMail = (function () {
     };
     SendMail.prototype.sendRePassword = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var ut, data, transporter;
+            var ut, data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -89,16 +89,7 @@ var SendMail = (function () {
                         return [4, ut.selectUserLoginEmail()];
                     case 1:
                         data = _a.sent();
-                        transporter = nodemailer_1["default"].createTransport({
-                            host: "smtp.yandex.ru",
-                            port: 465,
-                            secure: true,
-                            auth: {
-                                user: 'noreplay@bvs45.ru',
-                                pass: 'TH0TMx2F'
-                            }
-                        });
-                        return [4, transporter.sendMail({
+                        return [4, this.transporter.sendMail({
                                 from: 'noreplay@bvs45.ru',
                                 to: this.args.email,
                                 subject: 'Forgot password',
