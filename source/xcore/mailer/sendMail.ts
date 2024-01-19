@@ -21,7 +21,7 @@ export class SendMail {
         secure: true, // true for 465, false for other ports
         auth: {
             user: 'noreplay@burvodstroy45.ru', // generated ethereal user
-            pass: 'hPvWrFhP4iV2Mm1KdmV7' // generated ethereal password
+            pass: 'RPWH8qhtD0YpY21sWWjY' // generated ethereal password
         }
     });
 

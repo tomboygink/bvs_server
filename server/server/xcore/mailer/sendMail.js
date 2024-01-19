@@ -52,7 +52,7 @@ var SendMail = (function () {
             secure: true,
             auth: {
                 user: 'noreplay@burvodstroy45.ru',
-                pass: 'hPvWrFhP4iV2Mm1KdmV7'
+                pass: 'RPWH8qhtD0YpY21sWWjY'
             }
         });
         this.args = _args;
