@@ -1,5 +1,5 @@
 import { Pool, Client, QueryResult } from 'pg';
-import { CONFIG } from '../config';
+import {CONFIG} from "../../xcore/config"
 import { dateTimeToSQL, dateTimeToStr } from './DateStr';
 
 const DB_HOST = 'localhost';

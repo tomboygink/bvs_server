@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.DBase = exports.endDB = exports.getDB = void 0;
 var pg_1 = require("pg");
-var config_1 = require("../config");
+var config_1 = require("../../xcore/config");
 var DB_HOST = 'localhost';
 var DB_PORT = 5432;
 var DB_USER = 'postgres';

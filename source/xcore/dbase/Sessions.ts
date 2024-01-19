@@ -3,6 +3,7 @@ import { dateTimeToSQL } from "../dbase/DateStr"
 
 import crypto from 'crypto';
 import { CONFIG } from '../../xcore/config';
+//import config from "../../config.json"
 
 export class SessionsEntity {
     id: number = 0;

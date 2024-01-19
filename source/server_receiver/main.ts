@@ -19,7 +19,7 @@ export class Server_Receiver {
         this.debug = true;
         this.timeout = 10000;
         this.host = "0.0.0.0";
-        this.port = 3041;
+        this.port = 85;
         this.server = net.createServer();
         this.scount = 0;
     }

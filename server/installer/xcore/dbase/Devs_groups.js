@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.Devs_groupsTable = exports.Devs_groupsEntity = void 0;
 var DBase_1 = require("./DBase");
+var DateStr_1 = require("../../xcore/dbase/DateStr");
 var Devs_groupsEntity = (function () {
     function Devs_groupsEntity() {
         this.id = 0;
@@ -74,6 +75,12 @@ var Devs_groupsTable = (function () {
                             "CAST('" + this.args.g_info + "' AS TEXT)) AS id")];
                     case 1:
                         db_res = _a.sent();
+                        return [4, this.db.query("SELECT AddScheme_Svg(" +
+                                "CAST (" + db_res.rows[0].id + " AS BIGINT), " +
+                                "CAST ('' AS TEXT), " +
+                                "CAST ('" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "' AS TIMESTAMP)) AS id")];
+                    case 2:
+                        _a.sent();
                         result = new Array();
                         for (p in db_res.rows) {
                             result.push(db_res.rows[p]);
@@ -187,7 +194,7 @@ var Devs_groupsTable = (function () {
                         _i++;
                         return [3, 2];
                     case 11: return [3, 23];
-                    case 12: return [4, this.db.query("SELECT * FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 AND org_id= " + this.args.org_id)];
+                    case 12: return [4, this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 AND org_id= " + this.args.org_id)];
                     case 13:
                         roots_gr = _w.sent();
                         _h = roots_gr.rows;
@@ -309,7 +316,7 @@ var Devs_groupsTable = (function () {
                             period_sess: 0
                         };
                         devs = new Array();
-                        return [4, this.db.query("SELECT * FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=" + childs.id)];
+                        return [4, this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=" + childs.id)];
                     case 1:
                         grs = _l.sent();
                         _a = grs.rows;
