@@ -4,7 +4,7 @@ import time
 
 def sendMSG(msg):
     sock = socket()
-    sock.connect(("127.0.0.1", 3041))
+    sock.connect(("127.0.0.1", 85))
     sock.sendall(msg+b"\n")
     print(sock.recv(2))
     sock.close()

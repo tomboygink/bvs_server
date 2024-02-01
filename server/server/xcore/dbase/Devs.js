@@ -123,22 +123,28 @@ var DevsTable = (function () {
     };
     DevsTable.prototype.updateDevs = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("SELECT * FROM UpdateDevs(" +
-                            "CAST (" + this.args.id + " AS BIGINT), " +
-                            "CAST (" + this.args.group_dev_id + " AS BIGINT), " +
-                            "CAST ('" + this.args.number + "' AS VARCHAR(80)), " +
-                            "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
-                            "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
-                            "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
-                            "CAST ('" + this.args.sensors + "' AS JSON), " +
-                            "CAST ('" + this.args.deleted + "' AS BOOLEAN), " +
-                            "CAST ('" + this.args.info + "' AS TEXT)," +
-                            "CAST ('" + this.args.period_sess + "' AS BIGINT))")];
+                    case 0: return [4, this.db.query("select * from devs where number = \'" + this.args.number + "\' ")];
                     case 1:
+                        data = _a.sent();
+                        if (!(data.rows[0] === undefined || data.rows[0].id === this.args.id)) return [3, 3];
+                        return [4, this.db.query("SELECT * FROM UpdateDevs(" +
+                                "CAST (" + this.args.id + " AS BIGINT), " +
+                                "CAST (" + this.args.group_dev_id + " AS BIGINT), " +
+                                "CAST ('" + this.args.number + "' AS VARCHAR(80)), " +
+                                "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
+                                "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
+                                "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
+                                "CAST ('" + this.args.sensors + "' AS JSON), " +
+                                "CAST ('" + this.args.deleted + "' AS BOOLEAN), " +
+                                "CAST ('" + this.args.info + "' AS TEXT)," +
+                                "CAST ('" + this.args.period_sess + "' AS BIGINT))")];
+                    case 2:
                         _a.sent();
-                        return [2];
+                        return [2, true];
+                    case 3: return [2, false];
                 }
             });
         });
