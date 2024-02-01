@@ -18,7 +18,9 @@ import {
   Table,
   TableBody,
   TableRow,
-  TableCell
+  TableCell,
+  Stack,
+  Alert,
 } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
@@ -35,8 +37,10 @@ export class Importxlxfife extends React.Component<IProps> {
     super(props);
   }
 
+  getAlert = () => {};
+
   async removeFileButton() {
-    let uploadIcon = document.querySelector(".upload-icon") as HTMLInputElement;
+    //let uploadIcon = document.querySelector(".upload-icon") as HTMLInputElement;
 
     let fileInput = document.querySelector(
       ".default-file-input"
@@ -48,7 +52,7 @@ export class Importxlxfife extends React.Component<IProps> {
 
     uploadedFile.style.cssText = "display: none;";
     fileInput.value = "";
-    uploadIcon.innerHTML = "file_upload";
+    //uploadIcon.innerHTML = "file_upload";
   }
 
   private _handleFile = async (e: any) => {
@@ -71,10 +75,17 @@ export class Importxlxfife extends React.Component<IProps> {
     console.log("reading input file:");
     const file = e.target.files[0];
     const data = await file.arrayBuffer();
+
     const workbook = XLSX.read(data);
+
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+
+    // const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+    //   header: 1,
+    // });
     const jsonData = XLSX.utils.sheet_to_json(worksheet, {
-      header: 1
+      header: 1,
+      blankrows: false,
     });
 
     APP_STORAGE.importdevs.setArrayJsonData(jsonData);
@@ -94,9 +105,27 @@ export class Importxlxfife extends React.Component<IProps> {
   async onClose() {
     APP_STORAGE.importdevs.setOpenModal(false);
     APP_STORAGE.importdevs.setSuccessfully_text("");
+    APP_STORAGE.importdevs.clearDuplicates();
+    APP_STORAGE.importdevs.clearInvalid_devs();
+    APP_STORAGE.importdevs.clearValid_devs();
   }
 
   render(): React.ReactNode {
+    let alert;
+    const serverErrorMess = APP_STORAGE.shared_store.getErrorResponseMess();
+    const saveErrorMess = APP_STORAGE.importdevs.getErrorSave_mess();
+    const duplicatesErrorMess = APP_STORAGE.importdevs.getDuplicates();
+    const invalidDevsErrorMess = APP_STORAGE.importdevs.getInvalid_devs();
+    const validDevs = APP_STORAGE.importdevs.getValid_devs();
+    if (saveErrorMess.length !== 0) {
+      const alert = (
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          <Alert severity="error">
+            {APP_STORAGE.importdevs.getErrorSave_mess()}
+          </Alert>
+        </Stack>
+      );
+    }
     return (
       <React.Fragment>
         <Dialog
@@ -110,7 +139,7 @@ export class Importxlxfife extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                m: "12px"
+                m: "12px",
               }}
             >
               <Typography>Импортировать список устройств</Typography>
@@ -138,13 +167,15 @@ export class Importxlxfife extends React.Component<IProps> {
             <form className="form-container">
               <div className="upload-files-container">
                 <div className="drag-file-area">
-                  {/* <span className="material-icons-outlined upload-icon">  </span> */}
+                  {/* <span className="material-icons-outlined upload-icon">
+                    
+                  </span> */}
 
                   <label className="label">
                     {" "}
                     <span className="browse-files">
                       <input
-                        onInput={e => this._handleFile(e)}
+                        onInput={(e) => this._handleFile(e)}
                         type="file"
                         id="fileInput"
                         className="default-file-input"
@@ -215,7 +246,7 @@ export class Importxlxfife extends React.Component<IProps> {
                   </span>
                   <div className="progress-bar"> </div>
                 </div>
-                {APP_STORAGE.importdevs.getSuccessfully_text() && (
+                {/* {APP_STORAGE.importdevs.getSuccessfully_text() && (
                   <Typography
                     sx={{
                       p: "4px",
@@ -226,28 +257,83 @@ export class Importxlxfife extends React.Component<IProps> {
                       borderColor: "#DF4040",
                       borderRadius: "4px",
                       background: "#FFD4D4",
-                      fontSize: "small"
+                      fontSize: "small",
                     }}
                   >
                     {" "}
                     {APP_STORAGE.importdevs.getSuccessfully_text()}
                   </Typography>
-                )}
+                )} */}
 
                 {/* <button type="button" className="upload-button" onClick={() => (this.uploadfile())}> Загрузить файл </button> */}
-                <Button onClick={() => this.uploadfile()} variant="contained">
+                <Button
+                  onClick={() => this.uploadfile()}
+                  variant="contained"
+                  sx={{ marginBottom: "15px" }}
+                >
                   {" "}
                   Импортировать файл
                 </Button>
 
-                <Box
+                {APP_STORAGE.shared_store.getErrorResponseMess().length > 0 &&
+                  APP_STORAGE.importdevs.getDuplicates().length === 0 && (
+                    <Stack sx={{ width: "100%" }} spacing={2}>
+                      <Alert severity="error">
+                        {APP_STORAGE.shared_store.getErrorResponseMess()}
+                      </Alert>
+                    </Stack>
+                  )}
+                {APP_STORAGE.importdevs.getDuplicates().length !== 0 && (
+                  <Stack sx={{ width: "100%" }} spacing={2}>
+                    <Alert severity="error">
+                      Устройства с номерами:&nbsp;
+                      {APP_STORAGE.importdevs.getDuplicates().map((item) => {
+                        return `${item}, `;
+                      })}
+                      уже существуют и не будут добавлены
+                    </Alert>
+                  </Stack>
+                )}
+                {APP_STORAGE.importdevs.getErrorSave_mess().length > 0 && (
+                  <Stack sx={{ width: "100%" }} spacing={2}>
+                    <Alert severity="error">
+                      {APP_STORAGE.importdevs.getErrorSave_mess()}
+                    </Alert>
+                  </Stack>
+                )}
+                {APP_STORAGE.importdevs.getSuccessSave_mess().length > 0 && (
+                  <Stack sx={{ width: "100%" }} spacing={2}>
+                    <Alert severity="success">
+                      {APP_STORAGE.importdevs.getSuccessSave_mess()}
+                    </Alert>
+                  </Stack>
+                )}
+
+                {APP_STORAGE.importdevs.getInvalid_devs().length !== 0 && (
+                  <Stack sx={{ width: "100%" }} spacing={2}>
+                    <Alert severity="error">
+                      Устройства с номерами:&nbsp;
+                      {APP_STORAGE.importdevs.getInvalid_devs().map((item) => {
+                        return `${item}, `;
+                      })}
+                      не соответствуют шаблону и не будут добавлены
+                    </Alert>
+                  </Stack>
+                )}
+                <Stack sx={{ width: "100%" }} spacing={2}>
+                  <Alert severity="warning">
+                    Внимание! После нажатия на кнопку, отменить операцию будет
+                    невозможно.
+                  </Alert>
+                </Stack>
+                {/* <Box
                   sx={{
                     m: "8px",
                     background: "#eee",
                     display: "flex",
                     alignItems: "center",
                     borderRadius: "4px",
-                    p: "8px"
+                    p: "8px",
                   }}
                 >
                   <svg
@@ -277,7 +363,7 @@ export class Importxlxfife extends React.Component<IProps> {
                     Внимание! После нажатия на кнопку , отменить операцию будет
                     невозможно.
                   </FormHelperText>
-                </Box>
+                </Box> */}
               </div>
             </form>
           </Box>

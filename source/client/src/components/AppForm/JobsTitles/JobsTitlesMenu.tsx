@@ -42,9 +42,11 @@ export class JobsTitlesMenu extends React.Component<IProps> {
   async SelectedOrg(a: any) {
     //// Сохраняем , то что выбрал пользователь из выпадающего списка Организации
     APP_STORAGE.edit_user.setKeyOrg(a);
-    APP_STORAGE.edit_user.setKeyJobs(null);
+    APP_STORAGE.edit_user.setKeyJobs(null); // Почему null?
     APP_STORAGE.reg_user.setJobsAll([]);
     APP_STORAGE.edit_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
+
+    console.log("JobsTitlesMenu=>");
   }
   async SeachFamily(a: any) {
     let filter = (

@@ -1,14 +1,13 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { TextField, Box, Dialog, Divider, Typography } from "@mui/material";
-
-import CloseIcon from "@mui/icons-material/Close";
-
-
-import NativeSelect from "@mui/material/NativeSelect";
-
 import {
+  TextField,
+  Box,
+  Dialog,
+  Divider,
+  Typography,
+  Alert,
   Link,
   Button,
   FormHelperText,
@@ -18,8 +17,11 @@ import {
   FormControl,
   InputLabel,
   Checkbox,
-  Alert,
 } from "@mui/material";
+
+import CloseIcon from "@mui/icons-material/Close";
+
+import NativeSelect from "@mui/material/NativeSelect";
 import FormGroup from "@mui/material/FormGroup";
 import Stack from "@mui/material/Stack";
 import { APP_STORAGE } from "../../../storage/AppStorage";
@@ -33,12 +35,16 @@ export class EditJobsTitles extends React.Component<IProps> {
   }
 
   async EditJobs_Titles() {
-    APP_STORAGE.jobs.setChangeJobs_Titles("sess_id",APP_STORAGE.auth_form.getdt());
+    APP_STORAGE.jobs.setChangeJobs_Titles(
+      "sess_id",
+      APP_STORAGE.auth_form.getdt()
+    );
   }
 
   async SelectedOrg(a: any) {
     //// Сохраняем , то что выбрал пользователь из выпадающего списка Организации
     APP_STORAGE.jobs.setIdOrg(a);
+
     // APP_STORAGE.edit_user.setKeyJobs(null);
     // APP_STORAGE.reg_user.setJobsAll([]);
     // APP_STORAGE.edit_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
@@ -63,21 +69,22 @@ export class EditJobsTitles extends React.Component<IProps> {
         }
       }
     }
-   
+
     return (
       <React.Fragment>
-        <Dialog className="wrapper_modal"
+        <Dialog
+          className="wrapper_modal"
           BackdropProps={{ style: { background: "rgba(0 0 0 / 12%)" } }}
           open={APP_STORAGE.jobs.getModalEditJobsTitles()}
           fullWidth
-          PaperProps={{ sx: { justifyContent: 'flex-end'} }}
+          PaperProps={{ sx: { justifyContent: "flex-end" } }}
         >
           <Box sx={{ p: 2 }}>
             <Box
               className="ModalTitle"
               sx={{ display: "flex", justifyContent: "space-between" }}
             >
-             <Typography>Изменить должность</Typography> 
+              <Typography>Изменить должность</Typography>
 
               <CloseIcon
                 sx={{ color: "#1976D2" }}
@@ -88,27 +95,26 @@ export class EditJobsTitles extends React.Component<IProps> {
             </Box>
             <Divider sx={{ marginBottom: "20px" }} />
 
+            <TextField
+              inputProps={{ style: { fontSize: 12 } }}
+              InputLabelProps={{ style: { fontSize: 12 } }}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              // error={APP_STORAGE.reg_user.getErrorFullName() || APP_STORAGE.reg_user.getErrorFullNameDouble() }
+              // helperText={APP_STORAGE.reg_user.getTextHelpFullName() || APP_STORAGE.reg_user.getTextHelpFullNameDouble()}
+              label="Наименование должности"
+              autoComplete="Наименование должности"
+              autoFocus
+              size="small"
+              onChange={(e) => {
+                APP_STORAGE.jobs.setJobsTitles(e.target.value);
+              }}
+              value={APP_STORAGE.jobs.getJobsTitles() || ""}
+            />
 
-              <TextField
-                inputProps={{ style: { fontSize: 12 } }} 
-                InputLabelProps={{ style: { fontSize: 12 } }}
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                // error={APP_STORAGE.reg_user.getErrorFullName() || APP_STORAGE.reg_user.getErrorFullNameDouble() }
-                // helperText={APP_STORAGE.reg_user.getTextHelpFullName() || APP_STORAGE.reg_user.getTextHelpFullNameDouble()}
-                label="Наименование должности"
-                autoComplete="Наименование должности"
-                autoFocus
-                size="small"
-                onChange={(e) => {
-                  APP_STORAGE.jobs.setJobsTitles(e.target.value);
-                }}
-                value={APP_STORAGE.jobs.getJobsTitles() || ""}
-              />
-
-<FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+            <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
               <InputLabel className="org" sx={{ fontSize: "12px" }}>
                 Организация
               </InputLabel>
@@ -124,13 +130,13 @@ export class EditJobsTitles extends React.Component<IProps> {
                 {options_org}
                 <Divider />
               </Select>
-              
             </FormControl>
 
-                
             <Divider sx={{ padding: "12px" }} />
-            <Typography sx={{ color: "#999999" }} variant="caption">
-            </Typography>
+            <Typography
+              sx={{ color: "#999999" }}
+              variant="caption"
+            ></Typography>
 
             <TextareaAutosize
               className="info"
@@ -143,30 +149,39 @@ export class EditJobsTitles extends React.Component<IProps> {
               value={APP_STORAGE.jobs.getInfo() || ""}
             />
 
-
-               <Box
-          sx={{
-            display: "flex",
-            alignItems: "baseline",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Button
-            sx={{
-              background: "#266BF1",
-              color: "#fff;",
-              mt: "18px",
-              mb: "18px",
-              fontSize: "12px",
-            }}
-            onClick={() => {
-              this.EditJobs_Titles();
-            }}
-          >
-            Сохранить
-          </Button>
-        </Box>
-        {APP_STORAGE.reg_user.getResulSave().length > 0 && (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Button
+                sx={{
+                  background: "#266BF1",
+                  color: "#fff;",
+                  mt: "18px",
+                  mb: "18px",
+                  fontSize: "12px",
+                }}
+                onClick={() => {
+                  this.EditJobs_Titles();
+                }}
+              >
+                Сохранить
+              </Button>
+            </Box>
+            {APP_STORAGE.edit_user.getSuccessSave_mess().length > 0 && (
+              <Alert severity="success">
+                {APP_STORAGE.edit_user.getSuccessSave_mess()}
+              </Alert>
+            )}
+            {APP_STORAGE.edit_user.getErrorSave_mess().length > 0 && (
+              <Alert severity="error">
+                {APP_STORAGE.edit_user.getErrorSave_mess()}
+              </Alert>
+            )}
+            {/* {APP_STORAGE.reg_user.getResulSave().length > 0 && (
               <Typography
                 sx={{
                   background: "#EDF7ED",
@@ -178,11 +193,8 @@ export class EditJobsTitles extends React.Component<IProps> {
                 {" "}
                 {APP_STORAGE.reg_user.getResulSave()}
               </Typography>
-            )}
-      
+            )} */}
           </Box>
-
-       
         </Dialog>
       </React.Fragment>
     );

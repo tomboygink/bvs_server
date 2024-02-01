@@ -9,7 +9,7 @@ import {
   Divider,
   Typography,
   Button,
-  FormHelperText
+  FormHelperText,
 } from "@mui/material";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
 
@@ -101,10 +101,10 @@ export class Opensvgfile extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                m: "12px"
+                m: "12px",
               }}
             >
-              <Typography>Импортировать список устройств</Typography>
+              <Typography>Загрузить схему расположения</Typography>
 
               <CloseIcon
                 sx={{ color: "#1976D2" }}
@@ -124,7 +124,7 @@ export class Opensvgfile extends React.Component<IProps> {
                     {" "}
                     <span className="browse-files">
                       <input
-                        onInput={e => this._handleFile(e)}
+                        onInput={(e) => this._handleFile(e)}
                         type="file"
                         id="fileInput"
                         className="default-file-input"
@@ -210,7 +210,7 @@ export class Opensvgfile extends React.Component<IProps> {
                       borderColor: "#DF4040",
                       borderRadius: "4px",
                       background: "#FFD4D4",
-                      fontSize: "small"
+                      fontSize: "small",
                     }}
                   >
                     {" "}
@@ -231,7 +231,7 @@ export class Opensvgfile extends React.Component<IProps> {
                     display: "flex",
                     alignItems: "center",
                     borderRadius: "4px",
-                    p: "8px"
+                    p: "8px",
                   }}
                 >
                   <svg

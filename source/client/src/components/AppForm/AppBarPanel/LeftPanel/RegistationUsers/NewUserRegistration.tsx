@@ -14,6 +14,7 @@ import {
   InputLabel,
   Checkbox,
   Alert,
+  Input,
 } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import Stack from "@mui/material/Stack";
@@ -22,6 +23,7 @@ import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import AddIcon from "@mui/icons-material/Add";
+import TelInput from "../../../../shared/TelInput";
 import { AntSwitch } from "./switch";
 
 interface IProps {}
@@ -33,14 +35,20 @@ export class NewUserRegistration extends React.Component<IProps> {
   }
 
   async AddNewUser() {
-    APP_STORAGE.reg_user.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt()); /// передаем данные с формы на сервер  (ДОБАВЛЯЕМ ПОЛЬЗОВАТЕЛЯ)
+    /// сначала получаем всех пользователей для проверки на совпадения логина
+    await APP_STORAGE.reg_user.get_AllUsers(
+      "sess_id",
+      APP_STORAGE.auth_form.getdt()
+    );
 
-    setTimeout(() => {
-      APP_STORAGE.reg_user.set_NewUser(
-        "sess_id",
-        APP_STORAGE.auth_form.getdt()
-      );
-    }, 1000);
+    // затем передаем данные с формы на сервер  (ДОБАВЛЯЕМ ПОЛЬЗОВАТЕЛЯ)
+    APP_STORAGE.reg_user.set_NewUser("sess_id", APP_STORAGE.auth_form.getdt());
+    // setTimeout(() => {
+    //   APP_STORAGE.reg_user.set_NewUser(
+    //     "sess_id",
+    //     APP_STORAGE.auth_form.getdt()
+    //   );
+    // }, 1000);
   }
 
   async ChekedForEdit(editing: any) {
@@ -125,7 +133,6 @@ export class NewUserRegistration extends React.Component<IProps> {
             error={APP_STORAGE.reg_user.getErrorFamily()}
             helperText={APP_STORAGE.reg_user.getTextHelpFamily()}
             label="Фамилия"
-            autoComplete="фамилия"
             autoFocus
             size="small"
             onChange={(e) => {
@@ -143,8 +150,6 @@ export class NewUserRegistration extends React.Component<IProps> {
             error={APP_STORAGE.reg_user.getErrorName()}
             helperText={APP_STORAGE.reg_user.getTextHelpName()}
             label="Имя"
-            autoComplete="имя"
-            autoFocus
             size="small"
             onChange={(e) => {
               APP_STORAGE.reg_user.setName(e.target.value);
@@ -161,8 +166,6 @@ export class NewUserRegistration extends React.Component<IProps> {
             error={APP_STORAGE.reg_user.getErrorFather()}
             helperText={APP_STORAGE.reg_user.getTextHelpFather()}
             label="Отчество"
-            autoComplete="отчество"
-            autoFocus
             size="small"
             onChange={(e) => {
               APP_STORAGE.reg_user.setFather(e.target.value);
@@ -181,8 +184,6 @@ export class NewUserRegistration extends React.Component<IProps> {
           error={APP_STORAGE.reg_user.getErrorEmail()}
           helperText={APP_STORAGE.reg_user.getTextHelpEmail()}
           label="email"
-          autoComplete="email"
-          autoFocus
           size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setEmail(e.target.value);
@@ -190,7 +191,7 @@ export class NewUserRegistration extends React.Component<IProps> {
           value={APP_STORAGE.reg_user.getEmail()}
         />
 
-        <TextField
+        {/* <TextField
           sx={{ mt: "14px" }}
           inputProps={{ style: { fontSize: 12 } }} // font size of input text
           InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
@@ -211,16 +212,44 @@ export class NewUserRegistration extends React.Component<IProps> {
 
         <FormHelperText sx={{ ml: "12px" }}>
           номер телефона должен содержать 10 символов.
-        </FormHelperText>
-
-        <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+        </FormHelperText> */}
+        <TextField
+          sx={{ mt: "14px" }}
+          variant="outlined"
+          fullWidth
+          required
+          label="Телефон"
+          size="small"
+          InputLabelProps={{
+            style: {
+              fontSize: 12,
+            },
+          }}
+          InputProps={{
+            inputComponent: TelInput as any,
+            style: { fontSize: 12 },
+          }}
+          error={APP_STORAGE.reg_user.getErrorTelephone()}
+          helperText={APP_STORAGE.reg_user.getTextHelpTelephone()}
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setTelephone(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getTelephone()}
+        />
+        <FormControl
+          error={APP_STORAGE.reg_user.getErrorOrg()}
+          fullWidth
+          size="small"
+          sx={{ mt: "14px" }}
+        >
           <InputLabel className="org" sx={{ fontSize: "12px" }}>
-            Организация
+            Организация*
           </InputLabel>
           <Select
+            required
             sx={{ fontSize: "12px" }}
             value={APP_STORAGE.reg_user.getKeyOrg() || ""}
-            label="организация"
+            label="Организация"
             onChange={(e) => {
               this.SelectedOrg(e.target.value);
             }}
@@ -246,10 +275,18 @@ export class NewUserRegistration extends React.Component<IProps> {
               </MenuItem>
             </Box>
           </Select>
+          <FormHelperText>
+            {APP_STORAGE.reg_user.getTextHelpOrg()}
+          </FormHelperText>
         </FormControl>
 
-        <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
-          <InputLabel sx={{ fontSize: "12px" }}>Должность</InputLabel>
+        <FormControl
+          error={APP_STORAGE.reg_user.getErrorJobs()}
+          fullWidth
+          size="small"
+          sx={{ mt: "14px" }}
+        >
+          <InputLabel sx={{ fontSize: "12px" }}>Должность*</InputLabel>
           <Select
             sx={{ fontSize: "12px" }}
             value={APP_STORAGE.reg_user.getKeyJobs() || ""}
@@ -257,6 +294,7 @@ export class NewUserRegistration extends React.Component<IProps> {
             onChange={(e) => {
               this.SelectedJobs(e.target.value);
             }}
+            required
           >
             {options_jobs}
             <Divider />
@@ -279,6 +317,9 @@ export class NewUserRegistration extends React.Component<IProps> {
               </MenuItem>
             </Box>
           </Select>
+          <FormHelperText>
+            {APP_STORAGE.reg_user.getTextHelpJobs()}
+          </FormHelperText>
         </FormControl>
 
         <TextField
@@ -297,8 +338,6 @@ export class NewUserRegistration extends React.Component<IProps> {
           }
           fullWidth
           label="Логин"
-          autoComplete="логин"
-          autoFocus
           size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setLogin(e.target.value);
@@ -316,8 +355,6 @@ export class NewUserRegistration extends React.Component<IProps> {
             helperText={APP_STORAGE.reg_user.getTextHelpPassword()}
             fullWidth
             label="Пароль"
-            autoComplete="пароль"
-            autoFocus
             type="password"
             size="small"
             onChange={(e) => {
@@ -340,8 +377,6 @@ export class NewUserRegistration extends React.Component<IProps> {
             helperText={APP_STORAGE.reg_user.getTextHelpRepeatPassword()}
             fullWidth
             label="Повторите пароль"
-            autoComplete="повторите пароль"
-            autoFocus
             type="password"
             size="small"
             onChange={(e) => {
@@ -360,9 +395,9 @@ export class NewUserRegistration extends React.Component<IProps> {
             <AntSwitch
               checked={APP_STORAGE.reg_user.getCheckboxEd()}
               // Закомментировано для запуска
-              // onChange={(editing) => {
-              //   this.ChekedForEdit(editing);
-              // }}
+              onChange={(editing) => {
+                this.ChekedForEdit(editing);
+              }}
             />
           </Stack>
 
@@ -378,9 +413,9 @@ export class NewUserRegistration extends React.Component<IProps> {
             <AntSwitch
               checked={APP_STORAGE.reg_user.getCheckboxRead()}
               // Закомментировано для запуска
-              // onChange={(readind) => {
-              //   this.ChekedForRead(readind);
-              // }}
+              onChange={(readind) => {
+                this.ChekedForRead(readind);
+              }}
             />
           </Stack>
         </FormGroup>
@@ -422,7 +457,21 @@ export class NewUserRegistration extends React.Component<IProps> {
             Сохранить
           </Button>
         </Box>
-        {APP_STORAGE.reg_user.getResulSave().length > 0 && (
+        {APP_STORAGE.reg_user.getSuccessSave_mess().length > 0 && (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert severity="success">
+              {APP_STORAGE.reg_user.getSuccessSave_mess()}
+            </Alert>
+          </Stack>
+        )}
+        {APP_STORAGE.reg_user.getErrorSave_mess().length > 0 && (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert severity="error">
+              {APP_STORAGE.reg_user.getErrorSave_mess()}
+            </Alert>
+          </Stack>
+        )}
+        {/* {APP_STORAGE.reg_user.getResulSave().length > 0 && (
           <Typography
             sx={{
               background: "#EDF7ED",
@@ -434,7 +483,7 @@ export class NewUserRegistration extends React.Component<IProps> {
             {" "}
             {APP_STORAGE.reg_user.getResulSave()}
           </Typography>
-        )}
+        )} */}
       </React.Fragment>
     );
   }

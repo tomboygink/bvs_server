@@ -16,24 +16,28 @@ class Api {
   }
 
   // Общий запрос
-  async fetch(data: WSQuery) {
-    const res = await fetch(`${this._baseUrl}/api`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    const dt = await this._checkResponse(res);
-    return await APP_STORAGE.onWSData(dt);
-  }
-  // fetch(data: WSQuery) {
-  //   return fetch(`${this._baseUrl}/api`, {
+  // async fetch(data: WSQuery) {
+  //   const res = await fetch(`${this._baseUrl}/api`, {
   //     method: "POST",
   //     headers: { "Content-Type": "application/json" },
   //     body: JSON.stringify(data),
-  //   })
-  //     .then(this._checkResponse)
-  //     .then((dt) => APP_STORAGE.onWSData(dt));
+  //   });
+  //   const dt = await this._checkResponse(res);
+  //   return await APP_STORAGE.onWSData(dt);
   // }
+  fetch(data: WSQuery) {
+    return fetch(`${this._baseUrl}/api`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then(this._checkResponse)
+      .then((dt) => {
+        APP_STORAGE.onWSData(dt);
+      });
+  }
 }
 
 export const api = new Api(`http://${BASE_URL.host}:${BASE_URL.port}`);
+
+export const api1 = new Api(`http://localhost:3040}`);

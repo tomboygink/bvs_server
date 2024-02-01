@@ -3,7 +3,8 @@ import { observable, action, computed, makeAutoObservable } from "mobx";
 import { APP_STORAGE } from "../../AppStorage";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
-import { api } from "../../../api/api";
+import { api, api1 } from "../../../api/api";
+import { SAVE_SUCCESS, SAVE_ERROR } from "../../../../utils/consts";
 
 export class JobsTitlesStorage {
   @observable modal_edit_jobstitle: boolean = false;
@@ -52,7 +53,7 @@ export class JobsTitlesStorage {
   @computed getIdOrg(): string {
     return this.id_org;
   }
-
+  // Запрос на изменение наименования должности
   async setChangeJobs_Titles(name: string, value: any, _options?: any) {
     var sess_code = value;
     var q: IWSQuery = new WSQuery("set_ChangeJobs_Titles");
@@ -64,6 +65,23 @@ export class JobsTitlesStorage {
     };
     q.sess_code = sess_code;
     // (await WSocket.get()).send(q);
-    api.fetch(q).catch((e) => console.log("error=>", e)); //fetch-запрос
+    api
+      .fetch(q)
+      .then(() => {
+        APP_STORAGE.edit_user.setSuccessSave_mess(SAVE_SUCCESS);
+        APP_STORAGE.edit_user.get_Jobs("sess_id", value);
+        setTimeout(() => {
+          this.setModalEditJobsTitles(false);
+          APP_STORAGE.edit_user.setSuccessSave_mess("");
+        }, 2000);
+      })
+
+      .catch((e) => {
+        APP_STORAGE.edit_user.setErrorSave_mess(SAVE_ERROR);
+        console.log("error=>", e);
+        setTimeout(() => {
+          APP_STORAGE.edit_user.setErrorSave_mess("");
+        }, 2000);
+      }); //fetch-запрос
   }
 }

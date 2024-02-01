@@ -5,6 +5,7 @@ import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
 import { api } from "../../../api/api";
 import { Apartment } from "@mui/icons-material";
+import { SAVE_SUCCESS } from "../../../../utils/consts";
 
 export class OrgStorage {
   @observable modal_edit_org: boolean = false;
@@ -120,9 +121,11 @@ export class OrgStorage {
       api
         .fetch(q)
         .then(() => {
-          APP_STORAGE.reg_user.setResulSave("Данные успешное сохранены");
+          APP_STORAGE.edit_user.setSuccessSave_mess(SAVE_SUCCESS);
+          // APP_STORAGE.reg_user.get_Org("sess_id", value);
+
           setTimeout(() => {
-            APP_STORAGE.reg_user.setResulSave("");
+            APP_STORAGE.edit_user.setSuccessSave_mess("");
             APP_STORAGE.reg_user.setModalRegUser(false);
             APP_STORAGE.org.setModalEditOrg(false);
           }, 2000);

@@ -13,6 +13,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Alert,
 } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -129,7 +130,7 @@ export class ChangeDevsGroups extends React.Component<IProps> {
               InputLabelProps={{ style: { fontSize: 12 } }}
               variant="outlined"
               error={APP_STORAGE.devs_groups.getNameError()}
-              helperText={APP_STORAGE.devs_groups.getNamaError_mess()}
+              helperText={APP_STORAGE.devs_groups.getNameError_mess()}
               fullWidth
               required
               label="Место расположения"
@@ -244,9 +245,9 @@ export class ChangeDevsGroups extends React.Component<IProps> {
                 <AntSwitch
                   checked={APP_STORAGE.devs_groups.getCheckboxEd()}
                   // Закомментировано для запуска
-                  // onChange={(editing) => {
-                  //   this.ChekedForEdit(editing);
-                  // }}
+                  onChange={(editing) => {
+                    this.ChekedForEdit(editing);
+                  }}
                 />
               </Stack>
             </FormGroup>
@@ -273,6 +274,20 @@ export class ChangeDevsGroups extends React.Component<IProps> {
                 Сохранить
               </Button>
             </Box>
+            {APP_STORAGE.devs_groups.getSuccessSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="success">
+                  {APP_STORAGE.devs_groups.getSuccessSave_mess()}
+                </Alert>
+              </Stack>
+            )}
+            {APP_STORAGE.devs_groups.getErrorSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">
+                  {APP_STORAGE.devs_groups.getErrorSave_mess()}
+                </Alert>
+              </Stack>
+            )}
           </Box>
         </Dialog>
       </React.Fragment>

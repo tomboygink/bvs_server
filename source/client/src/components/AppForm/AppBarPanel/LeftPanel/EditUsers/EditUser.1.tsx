@@ -1,10 +1,12 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
-import { TextField, Box, Dialog, Divider, Typography } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { AntSwitch } from "../RegistationUsers/switch";
 import {
+  TextField,
+  Box,
+  Dialog,
+  Divider,
+  Typography,
   Button,
   FormHelperText,
   TextareaAutosize,
@@ -13,9 +15,14 @@ import {
   FormControl,
   InputLabel,
   Checkbox,
+  FormGroup,
+  Stack,
+  Alert,
 } from "@mui/material";
-import FormGroup from "@mui/material/FormGroup";
-import Stack from "@mui/material/Stack";
+import CloseIcon from "@mui/icons-material/Close";
+import { AntSwitch } from "../RegistationUsers/switch";
+import TelInput from "../../../../shared/TelInput";
+
 import { IProps } from "./EditUser";
 
 @observer
@@ -130,7 +137,6 @@ export class EditUser extends React.Component<IProps> {
                 error={APP_STORAGE.edit_user.getErrorFamily()}
                 helperText={APP_STORAGE.edit_user.getTextHelpFamily()}
                 label="Фамилия"
-                autoComplete="фамилия"
                 autoFocus
                 size="small"
                 onChange={(e) => {
@@ -148,8 +154,6 @@ export class EditUser extends React.Component<IProps> {
                 error={APP_STORAGE.edit_user.getErrorName()}
                 helperText={APP_STORAGE.edit_user.getTextHelpName()}
                 label="Имя"
-                autoComplete="имя"
-                autoFocus
                 size="small"
                 onChange={(e) => {
                   APP_STORAGE.edit_user.setName(e.target.value);
@@ -164,8 +168,6 @@ export class EditUser extends React.Component<IProps> {
                 margin="normal"
                 required
                 label="Отчество"
-                autoComplete="отчество"
-                autoFocus
                 size="small"
                 onChange={(e) => {
                   APP_STORAGE.edit_user.setFather(e.target.value);
@@ -182,9 +184,9 @@ export class EditUser extends React.Component<IProps> {
                 variant="outlined"
                 fullWidth
                 required
+                error={APP_STORAGE.edit_user.getErrorEmail()}
+                helperText={APP_STORAGE.edit_user.getTextHelpEmail()}
                 label="email"
-                autoComplete="email"
-                autoFocus
                 size="small"
                 onChange={(e) => {
                   APP_STORAGE.edit_user.setEmail(e.target.value);
@@ -199,7 +201,7 @@ export class EditUser extends React.Component<IProps> {
               />
             </Box>
 
-            <TextField
+            {/* <TextField
               sx={{ mt: "14px" }}
               inputProps={{ style: { fontSize: 12 } }} // font size of input text
               InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
@@ -218,7 +220,30 @@ export class EditUser extends React.Component<IProps> {
 
             <FormHelperText sx={{ ml: "12px" }}>
               номер телефона должен содержать 10 символов.
-            </FormHelperText>
+            </FormHelperText> */}
+            <TextField
+              sx={{ mt: "14px" }}
+              variant="outlined"
+              fullWidth
+              required
+              label="Телефон"
+              size="small"
+              InputLabelProps={{
+                style: {
+                  fontSize: 12,
+                },
+              }}
+              InputProps={{
+                inputComponent: TelInput as any,
+                style: { fontSize: 12 },
+              }}
+              error={APP_STORAGE.edit_user.getErrorTelephone()}
+              helperText={APP_STORAGE.edit_user.getTextHelpTelephone()}
+              onChange={(e) => {
+                APP_STORAGE.edit_user.setTelephone(e.target.value);
+              }}
+              value={APP_STORAGE.edit_user.getTelephone()}
+            />
 
             <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
               <InputLabel className="org" sx={{ fontSize: "12px" }}>
@@ -278,8 +303,6 @@ export class EditUser extends React.Component<IProps> {
               variant="outlined"
               fullWidth
               label="Логин"
-              autoComplete="логин"
-              autoFocus
               size="small"
               disabled={true}
               value={APP_STORAGE.edit_user.getLogin() || ""}
@@ -296,8 +319,6 @@ export class EditUser extends React.Component<IProps> {
                 helperText={APP_STORAGE.edit_user.getTextHelpPassword()}
                 fullWidth
                 label="Новый пароль"
-                autoComplete="Новый пароль"
-                autoFocus
                 type="password"
                 size="small"
                 onChange={(e) => {
@@ -321,8 +342,6 @@ export class EditUser extends React.Component<IProps> {
                 helperText={APP_STORAGE.edit_user.getTextHelpRepeatPassword()}
                 fullWidth
                 label="Повторите пароль"
-                autoComplete="повторите пароль"
-                autoFocus
                 type="password"
                 size="small"
                 onChange={(e) => {
@@ -368,10 +387,10 @@ export class EditUser extends React.Component<IProps> {
                 </Typography>
                 <AntSwitch
                   checked={APP_STORAGE.edit_user.getCheckboxEd()}
-                  // Закомментировано для запуска
-                  // onChange={(editing) => {
-                  //   this.ChekedForEdit(editing);
-                  // }}
+                  //Закомментировано для запуска
+                  onChange={(editing) => {
+                    this.ChekedForEdit(editing);
+                  }}
                 />
               </Stack>
 
@@ -389,9 +408,9 @@ export class EditUser extends React.Component<IProps> {
                 <AntSwitch
                   checked={APP_STORAGE.edit_user.getCheckboxRead()}
                   // Закомментировано для запуска
-                  // onChange={(readind) => {
-                  //   this.ChekedForRead(readind);
-                  // }}
+                  onChange={(readind) => {
+                    this.ChekedForRead(readind);
+                  }}
                 />
               </Stack>
             </FormGroup>
@@ -433,8 +452,22 @@ export class EditUser extends React.Component<IProps> {
                 Сохранить
               </Button>
             </Box>
+            {APP_STORAGE.edit_user.getSuccessSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="success">
+                  {APP_STORAGE.edit_user.getSuccessSave_mess()}
+                </Alert>
+              </Stack>
+            )}
+            {APP_STORAGE.edit_user.getErrorSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">
+                  {APP_STORAGE.edit_user.getErrorSave_mess()}
+                </Alert>
+              </Stack>
+            )}
 
-            {APP_STORAGE.reg_user.getResulSave().length > 0 && (
+            {/* {APP_STORAGE.reg_user.getResulSave().length > 0 && (
               <Typography
                 sx={{
                   background: "#EDF7ED",
@@ -446,7 +479,7 @@ export class EditUser extends React.Component<IProps> {
                 {" "}
                 {APP_STORAGE.reg_user.getResulSave()}
               </Typography>
-            )}
+            )} */}
           </Box>
         </Dialog>
       </React.Fragment>

@@ -352,7 +352,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               InputLabelProps={{ style: { fontSize: 12 } }}
               variant="outlined"
               error={APP_STORAGE.devs.getNameError()}
-              helperText={APP_STORAGE.devs.getNamaError_mess()}
+              helperText={APP_STORAGE.devs.getNameError_mess()}
               fullWidth
               required
               label="Название устройства "
