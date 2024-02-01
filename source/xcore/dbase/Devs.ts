@@ -41,7 +41,7 @@ export class DevsTable {
                     "CAST('" + this.args.period_sess + "' AS BIGINT)) AS id");
 
                 for (var p in db_res.rows) { result.push(db_res.rows[p]); }
-                
+
             }
         }
         return result;
@@ -61,16 +61,25 @@ export class DevsTable {
 
     //Редактирование устройства
     async updateDevs() {
-        await this.db.query("SELECT * FROM UpdateDevs(" +
-            "CAST (" + this.args.id + " AS BIGINT), " +
-            "CAST (" + this.args.group_dev_id + " AS BIGINT), " +
-            "CAST ('" + this.args.number + "' AS VARCHAR(80)), " +
-            "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
-            "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
-            "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
-            "CAST ('" + this.args.sensors + "' AS JSON), " +
-            "CAST ('" + this.args.deleted + "' AS BOOLEAN), " +
-            "CAST ('" + this.args.info + "' AS TEXT)," +
-            "CAST ('" + this.args.period_sess + "' AS BIGINT))");
+
+        var data = await this.db.query("select * from devs where number = \'" + this.args.number + "\' ");
+
+        if (data.rows[0] === undefined || data.rows[0].id === this.args.id) {
+            await this.db.query("SELECT * FROM UpdateDevs(" +
+                "CAST (" + this.args.id + " AS BIGINT), " +
+                "CAST (" + this.args.group_dev_id + " AS BIGINT), " +
+                "CAST ('" + this.args.number + "' AS VARCHAR(80)), " +
+                "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
+                "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
+                "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
+                "CAST ('" + this.args.sensors + "' AS JSON), " +
+                "CAST ('" + this.args.deleted + "' AS BOOLEAN), " +
+                "CAST ('" + this.args.info + "' AS TEXT)," +
+                "CAST ('" + this.args.period_sess + "' AS BIGINT))");
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

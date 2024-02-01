@@ -95,12 +95,12 @@ function router(body) {
                         case 'set_NewControlDevSess': return [3, 60];
                         case 'deleteControlDevSess': return [3, 62];
                         case 'set_ChangeDevs': return [3, 63];
-                        case 'get_DevFirstLastSessions': return [3, 64];
-                        case 'get_DevSessions': return [3, 66];
-                        case 'set_SchemeSvg': return [3, 68];
-                        case 'deleteCookie': return [3, 70];
+                        case 'get_DevFirstLastSessions': return [3, 65];
+                        case 'get_DevSessions': return [3, 67];
+                        case 'set_SchemeSvg': return [3, 69];
+                        case 'deleteCookie': return [3, 71];
                     }
-                    return [3, 71];
+                    return [3, 72];
                 case 1:
                     ut = new Users_1.UserTable(body.args, body.sess_code);
                     st = new Sessions_1.SessionsTable(body.args);
@@ -122,7 +122,7 @@ function router(body) {
                         res.error = null;
                         res.data = data;
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 4:
                     st = new Sessions_1.SessionsTable(body.args);
                     ut = new Users_1.UserTable(body.args, body.sess_code);
@@ -144,7 +144,7 @@ function router(body) {
                         res.error = null;
                         res.data = data;
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 7:
                     ut = new Users_1.UserTable(body.args, body.sess_code);
                     return [4, ut.updateUser()];
@@ -162,7 +162,7 @@ function router(body) {
                         res.data = data;
                         res.error = null;
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 9:
                     ut = new Users_1.UserTable(body.args, body.sess_code);
                     return [4, ut.selectUserLoginEmail()];
@@ -175,21 +175,21 @@ function router(body) {
                         res.code = body.sess_code;
                         res.data = null;
                         res.error = "Новый пароль не должен повторять старый";
-                        return [3, 72];
+                        return [3, 73];
                     }
                     if (body.args.login === body.args.new_password) {
                         res.cmd = body.cmd;
                         res.code = body.sess_code;
                         res.data = null;
                         res.error = "Пароль не должен совпадать с логином";
-                        return [3, 72];
+                        return [3, 73];
                     }
                     if (data[0].password !== old_pass) {
                         res.cmd = body.cmd;
                         res.code = body.sess_code;
                         res.data = null;
                         res.error = "Старый пароль не верен";
-                        return [3, 72];
+                        return [3, 73];
                     }
                     return [4, ut.changePass()];
                 case 11:
@@ -198,7 +198,7 @@ function router(body) {
                     res.code = body.sess_code;
                     res.data = data;
                     res.error = null;
-                    return [3, 72];
+                    return [3, 73];
                 case 12:
                     {
                         if (body.args.email !== '') {
@@ -212,7 +212,7 @@ function router(body) {
                             res.error = "Введите email";
                         }
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 13:
                     ut = new Users_1.UserTable(body.args, body.sess_code);
                     return [4, ut.updateMail()];
@@ -233,7 +233,7 @@ function router(body) {
                     _b.data = _c.sent();
                     res.error = null;
                     _c.label = 17;
-                case 17: return [3, 72];
+                case 17: return [3, 73];
                 case 18:
                     ut = new Users_1.UserTable(body.args, body.sess_code);
                     sendMail = new sendMail_1.SendMail(body.args, body.sess_code);
@@ -257,7 +257,7 @@ function router(body) {
                             res.error = "Данный email не был подтвержден, обращайтесь к администратору системы";
                         }
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 20:
                     ut = new Users_1.UserTable(body.args, body.sess_code);
                     return [4, ut.selectUserLoginEmail()];
@@ -273,13 +273,13 @@ function router(body) {
                         ut = new Users_1.UserTable(body.args, body.sess_code);
                         ut.forgPass();
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 22:
                     ut = new Users_1.UserTable(body.args, body.sess_code);
                     return [4, ut.updateUserAdmin()];
                 case 23:
                     _c.sent();
-                    return [3, 72];
+                    return [3, 73];
                 case 24:
                     orgs = new Orgs_1.OrgsTable(body.args, body.sess_code);
                     return [4, orgs.selectOrgs()];
@@ -297,7 +297,7 @@ function router(body) {
                         res.data = null;
                         res.error = "Организации отсутвуют";
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 26:
                     orgs = new Orgs_1.OrgsTable(body.args, body.sess_code);
                     return [4, orgs.insertOrgs()];
@@ -317,7 +317,7 @@ function router(body) {
                     res.data = data;
                     res.error = null;
                     _c.label = 30;
-                case 30: return [3, 72];
+                case 30: return [3, 73];
                 case 31:
                     {
                         orgs = new Orgs_1.OrgsTable(body.args, body.sess_code);
@@ -327,7 +327,7 @@ function router(body) {
                         res.data = null;
                         res.error = null;
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 32:
                     jobs = new Jobs_titles_1.Jobs_titlesTable(body.args, body.sess_code);
                     return [4, jobs.selectJobs_title()];
@@ -345,7 +345,7 @@ function router(body) {
                         res.data = null;
                         res.error = "У организации отсутствуют должности";
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 34:
                     jobs = new Jobs_titles_1.Jobs_titlesTable(body.args, body.sess_code);
                     return [4, jobs.insertJobs_title()];
@@ -365,7 +365,7 @@ function router(body) {
                     res.data = data;
                     res.error = null;
                     _c.label = 38;
-                case 38: return [3, 72];
+                case 38: return [3, 73];
                 case 39:
                     {
                         jobs = new Jobs_titles_1.Jobs_titlesTable(body.args, body.sess_code);
@@ -375,7 +375,7 @@ function router(body) {
                         res.data = null;
                         res.error = null;
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 40:
                     ut = new Users_1.UserTable(body.args, body.sess_code);
                     return [4, ut.insertUser()];
@@ -393,7 +393,7 @@ function router(body) {
                         res.data = null;
                         res.error = null;
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 42:
                     ut = new Users_1.UserTable(body.args, body.sess_code);
                     return [4, ut.selectAllUsers()];
@@ -403,7 +403,7 @@ function router(body) {
                     res.code = body.sess_code;
                     res.data = data;
                     res.error = null;
-                    return [3, 72];
+                    return [3, 73];
                 case 44:
                     dg = new Devs_groups_1.Devs_groupsTable(body.args, body.sess_code);
                     return [4, dg.insertDevsGroups()];
@@ -423,7 +423,7 @@ function router(body) {
                     res.data = null;
                     res.error = null;
                     _c.label = 48;
-                case 48: return [3, 72];
+                case 48: return [3, 73];
                 case 49:
                     dg = new Devs_groups_1.Devs_groupsTable(body.args, body.sess_code);
                     return [4, dg.selectDevsGroups()];
@@ -433,7 +433,7 @@ function router(body) {
                     res.code = body.sess_code;
                     res.data = data;
                     res.error = null;
-                    return [3, 72];
+                    return [3, 73];
                 case 51:
                     dg = new Devs_groups_1.Devs_groupsTable(body.args, body.sess_code);
                     return [4, dg.updateDevsGroups()];
@@ -443,7 +443,7 @@ function router(body) {
                     res.code = body.sess_code;
                     res.data = null;
                     res.error = null;
-                    return [3, 72];
+                    return [3, 73];
                 case 53:
                     dev = new Devs_1.DevsTable(body.args, body.sess_code);
                     return [4, dev.insertDevs()];
@@ -464,7 +464,7 @@ function router(body) {
                         res.data = null;
                         res.error = null;
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 56:
                     dev_povs = new Dev_Povs_1.Dev_povsTable(body.args, body.sess_code);
                     return [4, dev_povs.insertDev_povs()];
@@ -482,7 +482,7 @@ function router(body) {
                         res.data = null;
                         res.error = null;
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 58:
                     dev_povs = new Dev_Povs_1.Dev_povsTable(body.args, body.sess_code);
                     return [4, dev_povs.selectDev_povs()];
@@ -492,7 +492,7 @@ function router(body) {
                     res.code = body.sess_code;
                     res.data = data;
                     res.error = null;
-                    return [3, 72];
+                    return [3, 73];
                 case 60:
                     control_dev = new Control_dev_sess_1.Control_dev_sessTable(body.args, body.sess_code);
                     return [4, control_dev.insertControl_dev_sess()];
@@ -510,7 +510,7 @@ function router(body) {
                         res.data = body.args.dev_sess_id;
                         res.error = null;
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 62:
                     {
                         deleteControlDevSess = new Control_dev_sess_1.Control_dev_sessTable(body.args, body.sess_code);
@@ -520,48 +520,56 @@ function router(body) {
                         res.data = null;
                         res.error = null;
                     }
-                    return [3, 72];
+                    return [3, 73];
                 case 63:
-                    {
-                        dev = new Devs_1.DevsTable(body.args, body.sess_code);
-                        dev.updateDevs();
+                    dev = new Devs_1.DevsTable(body.args, body.sess_code);
+                    return [4, dev.updateDevs()];
+                case 64:
+                    data = _c.sent();
+                    if (data === true) {
                         res.cmd = body.cmd;
                         res.code = body.sess_code;
                         res.data = null;
                         res.error = null;
                     }
-                    return [3, 72];
-                case 64:
+                    else {
+                        res.cmd = body.cmd;
+                        res.code = body.sess_code;
+                        res.data = null;
+                        res.error = "Произошла ошибка редактирования";
+                    }
+                    return [3, 73];
+                case 65:
                     fl_sess = new Dev_sess_1.Dev_sessTable(body.args, body.sess_code);
                     return [4, fl_sess.selectFirstLastSess()];
-                case 65:
+                case 66:
                     data = _c.sent();
                     res.cmd = body.cmd;
                     res.code = body.sess_code;
                     res.data = data;
                     res.error = null;
-                    return [3, 72];
-                case 66:
+                    return [3, 73];
+                case 67:
                     dev_sess = new Dev_sess_1.Dev_sessTable(body.args, body.sess_code);
                     return [4, dev_sess.selectDevSess()];
-                case 67:
+                case 68:
                     data = _c.sent();
                     res.cmd = body.cmd;
                     res.code = body.sess_code;
                     res.data = data;
                     res.error = null;
-                    return [3, 72];
-                case 68:
+                    return [3, 73];
+                case 69:
                     schemeSvg = new SchemeSvg_1.SchemeSvgTable(body.args);
                     return [4, schemeSvg.insertSchemeSVG()];
-                case 69:
+                case 70:
                     _c.sent();
                     res.cmd = body.cmd;
                     res.code = body.sess_code;
                     res.data = null;
                     res.error = null;
-                    return [3, 72];
-                case 70:
+                    return [3, 73];
+                case 71:
                     {
                         st = new Sessions_1.SessionsTable(body.args);
                         st.deleteSess();
@@ -570,16 +578,16 @@ function router(body) {
                         res.data = null;
                         res.error = null;
                     }
-                    return [3, 72];
-                case 71:
+                    return [3, 73];
+                case 72:
                     {
                         res.cmd = body.cmd;
                         res.code = null;
                         res.data = null;
                         res.error = "\u041A\u043E\u043C\u0430\u043D\u0434\u0430 \"".concat(body.cmd, "\" \u043D\u0435 \u0440\u0430\u0441\u043F\u043E\u0437\u043D\u0430\u043D\u0430");
                     }
-                    return [3, 72];
-                case 72: return [2, JSON.stringify(res)];
+                    return [3, 73];
+                case 73: return [2, JSON.stringify(res)];
             }
         });
     });

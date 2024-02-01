@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import {CONFIG} from '../xcore/config'
+import { CONFIG } from '../xcore/config'
 import { UserTable } from '../xcore/dbase/Users';
 import { SessionsTable } from '../xcore/dbase/Sessions';
 import { OrgsTable } from '../xcore/dbase/Orgs'
@@ -460,11 +460,21 @@ export async function router(body: any) {
         //Изменение устройства
         case 'set_ChangeDevs': {
             var dev = new DevsTable(body.args, body.sess_code);
-            dev.updateDevs();
-            res.cmd = body.cmd;
-            res.code = body.sess_code;
-            res.data = null;
-            res.error = null;
+            data = await dev.updateDevs();
+
+            if (data === true) {
+                res.cmd = body.cmd;
+                res.code = body.sess_code;
+                res.data = null;
+                res.error = null;
+            }
+            else{
+                res.cmd = body.cmd;
+                res.code = body.sess_code;
+                res.data = null;
+                res.error = "Произошла ошибка редактирования"
+            }
+
         } break;
 
 
@@ -523,7 +533,7 @@ export async function router(body: any) {
             res.cmd = body.cmd;
             res.code = null;
             res.data = null;
-            res.error = `Команда "${body.cmd}" не распознана`;            
+            res.error = `Команда "${body.cmd}" не распознана`;
         } break;
 
     }
