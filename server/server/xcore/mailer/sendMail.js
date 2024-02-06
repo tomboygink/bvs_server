@@ -51,8 +51,8 @@ var SendMail = (function () {
             port: 465,
             secure: true,
             auth: {
-                user: 'noreplay@burvodstroy45.ru',
-                pass: 'RPWH8qhtD0YpY21sWWjY'
+                user: "noreplay@burvodstroy45.ru",
+                pass: "RPWH8qhtD0YpY21sWWjY"
             }
         });
         this.args = _args;
@@ -64,13 +64,22 @@ var SendMail = (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        a = '';
-                        a = crypto_1["default"].createHmac('sha256', config_1.CONFIG.key_code).update(this.args.login + "_" + this.args.email).digest('hex');
+                        a = "";
+                        a = crypto_1["default"]
+                            .createHmac("sha256", config_1.CONFIG.key_code)
+                            .update(this.args.login + "_" + this.args.email)
+                            .digest("hex");
                         return [4, this.transporter.sendMail({
-                                from: 'noreplay@bvs45.ru',
+                                from: "noreplay@bvs45.ru",
                                 to: this.args.email,
-                                subject: 'Activate mail',
-                                html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://' + config_1.CONFIG.host + ':' + config_1.CONFIG.port + '/confirm_mail?code= ' + a + '">Click this link</a></h1>'
+                                subject: "Activate mail",
+                                html: 'This message was sent from bvs_server to activate mail. <h1><a href="http://' +
+                                    config_1.CONFIG.host +
+                                    ":" +
+                                    config_1.CONFIG.port +
+                                    "/confirm_mail?code= " +
+                                    a +
+                                    '">Click this link</a></h1>'
                             })];
                     case 1:
                         _a.sent();
@@ -90,10 +99,16 @@ var SendMail = (function () {
                     case 1:
                         data = _a.sent();
                         return [4, this.transporter.sendMail({
-                                from: 'noreplay@bvs45.ru',
+                                from: "noreplay@bvs45.ru",
                                 to: this.args.email,
-                                subject: 'Forgot password',
-                                html: 'This message was sent from bvs_server to reset your password. <h1><a href="http://' + config_1.CONFIG.host + ':' + config_1.CONFIG.port + '/forgot_pass?code= ' + data[0].re_password_code + '">Click this link</a></h1>'
+                                subject: "Forgot password",
+                                html: 'This message was sent from bvs_server to reset your password. <h1><a href="http://' +
+                                    config_1.CONFIG.host +
+                                    ":" +
+                                    config_1.CONFIG.port +
+                                    "/forgot_pass?code= " +
+                                    data[0].re_password_code +
+                                    '">Click this link</a></h1>'
                             })];
                     case 2:
                         _a.sent();

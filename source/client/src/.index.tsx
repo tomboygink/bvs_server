@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+//import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 
 import { App } from "./App";
 
@@ -14,7 +16,9 @@ const root = ReactDOM.createRoot(
 );
 const store = setupStore();
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
 );

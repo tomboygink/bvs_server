@@ -1,6 +1,7 @@
 import { WSQuery } from "../../../xcore/WSQuery";
 import { APP_STORAGE } from "../storage/AppStorage";
 import { BASE_URL } from "../../utils/consts";
+import { CONFIG } from "../../../xcore/config";
 
 export { WSQuery, IWSQuery } from "../../../xcore/WSQuery";
 class Api {
@@ -38,6 +39,6 @@ class Api {
   }
 }
 
-export const api = new Api(`http://${BASE_URL.host}:${BASE_URL.port}`);
+export const api = new Api(`http://${CONFIG.host}:${CONFIG.port}`);
 
 export const api1 = new Api(`http://localhost:3040}`);

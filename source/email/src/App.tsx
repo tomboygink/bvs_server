@@ -43,7 +43,7 @@ export class App extends React.Component<IProps> {
               mt: "10%",
               borderRadius: "4px",
               display: "grid",
-              boxShadow: "1px 3px 20px -1px rgb(3 131 229 / 20%);"
+              boxShadow: "1px 3px 20px -1px rgb(3 131 229 / 20%);",
             }}
           >
             <Typography
@@ -61,7 +61,7 @@ export class App extends React.Component<IProps> {
               disabled
               id="outlined-disabled"
               label="код подтверждения"
-              onChange={e => {
+              onChange={(e) => {
                 APP_STORAGE.setCode(e.target.value);
               }}
               value={APP_STORAGE.getCode() || ""}

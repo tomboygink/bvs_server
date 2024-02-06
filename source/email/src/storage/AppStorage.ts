@@ -2,6 +2,7 @@ import { observable, action, computed, makeAutoObservable } from "mobx";
 import { IWSQuery, IWSResult, WSQuery } from "../../../xcore/WSQuery";
 import { WSocket } from "./WSocket";
 import { api } from "../../../client/src/api/api";
+import { CONFIG } from "../../../xcore/config";
 
 import { getCookie, setCookie, deleteCookie } from "../storage/browserCookes";
 
@@ -62,7 +63,9 @@ class AppStorage {
       q.sess_code = ss_code;
       api
         .fetch(q)
-        .then(() => window.location.assign("http://127.0.0.1:3040/"))
+        .then(() =>
+          window.location.assign(`http://${CONFIG.host}:${CONFIG.port}`)
+        )
         .catch((e) => console.log("error=>", e));
       // (await WSocket.get()).send(q);
       // window.location.assign('http://127.0.0.1:3040/');
