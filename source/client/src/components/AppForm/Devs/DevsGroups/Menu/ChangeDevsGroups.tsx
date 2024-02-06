@@ -21,6 +21,9 @@ import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import FormGroup from "@mui/material/FormGroup";
 import Stack from "@mui/material/Stack";
 
+import LatInput from "../../../../shared/LatInput";
+import LongInput from "../../../../shared/LongInput";
+
 import { AntSwitch } from "../../../AppBarPanel/LeftPanel/RegistationUsers/switch";
 
 interface IProps {}
@@ -176,11 +179,10 @@ export class ChangeDevsGroups extends React.Component<IProps> {
 
             <TextField
               sx={{ mt: "14px" }}
-              inputProps={{
-                inputMode: "decimal",
-                step: 0.1,
-                // pattern: "[0..9]*[.][0..9]*",
-                fontSize: 12,
+              InputLabelProps={{ style: { fontSize: 12 } }}
+              InputProps={{
+                inputComponent: LongInput as any,
+                style: { fontSize: 12 },
               }}
               variant="outlined"
               error={APP_STORAGE.devs_groups.getLongitudeError()}
@@ -188,8 +190,6 @@ export class ChangeDevsGroups extends React.Component<IProps> {
               fullWidth
               required
               label="Долгота"
-              autoComplete="долгота"
-              autoFocus
               size="small"
               onChange={(e) => {
                 APP_STORAGE.devs_groups.setLongitude(e.target.value);
@@ -199,11 +199,10 @@ export class ChangeDevsGroups extends React.Component<IProps> {
 
             <TextField
               sx={{ mt: "14px" }}
-              inputProps={{
-                inputMode: "decimal",
-                step: 0.1,
-                // pattern: "[0..9]*[.][0..9]*" ,
-                fontSize: 12,
+              InputLabelProps={{ style: { fontSize: 12 } }}
+              InputProps={{
+                inputComponent: LatInput as any,
+                style: { fontSize: 12 },
               }}
               variant="outlined"
               error={APP_STORAGE.devs_groups.getLatitudeError()}

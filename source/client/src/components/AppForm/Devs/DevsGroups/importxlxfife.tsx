@@ -53,6 +53,12 @@ export class Importxlxfife extends React.Component<IProps> {
     uploadedFile.style.cssText = "display: none;";
     fileInput.value = "";
     //uploadIcon.innerHTML = "file_upload";
+
+    APP_STORAGE.importdevs.clearDuplicates();
+    APP_STORAGE.importdevs.clearInvalid_devs();
+    APP_STORAGE.importdevs.clearValid_devs();
+    APP_STORAGE.importdevs.clearErrorSaved_devs();
+    APP_STORAGE.shared_store.setErrorResponseMess("");
   }
 
   private _handleFile = async (e: any) => {
@@ -108,24 +114,26 @@ export class Importxlxfife extends React.Component<IProps> {
     APP_STORAGE.importdevs.clearDuplicates();
     APP_STORAGE.importdevs.clearInvalid_devs();
     APP_STORAGE.importdevs.clearValid_devs();
+    APP_STORAGE.importdevs.clearErrorSaved_devs();
+    APP_STORAGE.shared_store.setErrorResponseMess("");
   }
 
   render(): React.ReactNode {
-    let alert;
-    const serverErrorMess = APP_STORAGE.shared_store.getErrorResponseMess();
-    const saveErrorMess = APP_STORAGE.importdevs.getErrorSave_mess();
-    const duplicatesErrorMess = APP_STORAGE.importdevs.getDuplicates();
-    const invalidDevsErrorMess = APP_STORAGE.importdevs.getInvalid_devs();
-    const validDevs = APP_STORAGE.importdevs.getValid_devs();
-    if (saveErrorMess.length !== 0) {
-      const alert = (
-        <Stack sx={{ width: "100%" }} spacing={2}>
-          <Alert severity="error">
-            {APP_STORAGE.importdevs.getErrorSave_mess()}
-          </Alert>
-        </Stack>
-      );
-    }
+    // let alert;
+    // const serverErrorMess = APP_STORAGE.shared_store.getErrorResponseMess();
+    // const saveErrorMess = APP_STORAGE.importdevs.getErrorSave_mess();
+    // const duplicatesErrorMess = APP_STORAGE.importdevs.getDuplicates();
+    // const invalidDevsErrorMess = APP_STORAGE.importdevs.getInvalid_devs();
+    // const validDevs = APP_STORAGE.importdevs.getValid_devs();
+    // if (saveErrorMess.length !== 0) {
+    //   const alert = (
+    //     <Stack sx={{ width: "100%" }} spacing={2}>
+    //       <Alert severity="error">
+    //         {APP_STORAGE.importdevs.getErrorSave_mess()}
+    //       </Alert>
+    //     </Stack>
+    //   );
+    // }
     return (
       <React.Fragment>
         <Dialog
@@ -274,6 +282,17 @@ export class Importxlxfife extends React.Component<IProps> {
                   {" "}
                   Импортировать файл
                 </Button>
+                {APP_STORAGE.importdevs.getValid_devs().length !== 0 && (
+                  <Stack sx={{ width: "100%" }} spacing={2}>
+                    <Alert severity="success">
+                      Устройства с номерами:&nbsp;
+                      {APP_STORAGE.importdevs.getValid_devs().map((item) => {
+                        return `${item}, `;
+                      })}
+                      успешно добавлены
+                    </Alert>
+                  </Stack>
+                )}
 
                 {APP_STORAGE.shared_store.getErrorResponseMess().length > 0 &&
                   APP_STORAGE.importdevs.getDuplicates().length === 0 && (
@@ -283,6 +302,19 @@ export class Importxlxfife extends React.Component<IProps> {
                       </Alert>
                     </Stack>
                   )}
+                {APP_STORAGE.importdevs.getErrorSaved_devs().length !== 0 && (
+                  <Stack sx={{ width: "100%" }} spacing={2}>
+                    <Alert severity="error">
+                      Произошла ошибка при добавлении устройств с
+                      номерами:&nbsp;
+                      {APP_STORAGE.importdevs
+                        .getErrorSaved_devs()
+                        .map((item) => {
+                          return `${item}, `;
+                        })}
+                    </Alert>
+                  </Stack>
+                )}
                 {APP_STORAGE.importdevs.getDuplicates().length !== 0 && (
                   <Stack sx={{ width: "100%" }} spacing={2}>
                     <Alert severity="error">
@@ -294,20 +326,21 @@ export class Importxlxfife extends React.Component<IProps> {
                     </Alert>
                   </Stack>
                 )}
-                {APP_STORAGE.importdevs.getErrorSave_mess().length > 0 && (
+
+                {/* {APP_STORAGE.importdevs.getErrorSave_mess().length > 0 && (
                   <Stack sx={{ width: "100%" }} spacing={2}>
                     <Alert severity="error">
                       {APP_STORAGE.importdevs.getErrorSave_mess()}
                     </Alert>
                   </Stack>
-                )}
-                {APP_STORAGE.importdevs.getSuccessSave_mess().length > 0 && (
+                )} */}
+                {/* {APP_STORAGE.importdevs.getSuccessSave_mess().length > 0 && (
                   <Stack sx={{ width: "100%" }} spacing={2}>
                     <Alert severity="success">
                       {APP_STORAGE.importdevs.getSuccessSave_mess()}
                     </Alert>
                   </Stack>
-                )}
+                )} */}
 
                 {APP_STORAGE.importdevs.getInvalid_devs().length !== 0 && (
                   <Stack sx={{ width: "100%" }} spacing={2}>

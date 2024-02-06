@@ -51,6 +51,10 @@ export class ModalLeftPanel extends React.Component<IProps> {
     APP_STORAGE.reg_user.setTextHelpRepeatPassword("");
     APP_STORAGE.reg_user.setErrorInn(false);
     APP_STORAGE.reg_user.setTextHelpInn("");
+    APP_STORAGE.reg_user.setErrorOrg(false);
+    APP_STORAGE.reg_user.setTextHelpOrg("");
+    APP_STORAGE.reg_user.setErrorJobs(false);
+    APP_STORAGE.reg_user.setTextHelpJobs("");
   }
 
   render(): React.ReactNode {

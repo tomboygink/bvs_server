@@ -15,11 +15,15 @@ import {
   PASSWORDS_NOT_MATCH,
   DOUBL_LOGIN_ERROR,
   MATCHING_LOGIN_AND_PASS_ERROR,
+  DOUBLE_NAME_ORG_ERROR,
+  DOUBLE_INN_ERROR,
+  INVALID_INN_ERROR,
 } from "../../../utils/consts";
 import {
   regexp_email,
   regexp_dash,
   regexp_password,
+  regexp_inn,
 } from "../../../utils/consts";
 
 export class ModalLeftPanel {
@@ -111,6 +115,10 @@ export class ModalLeftPanel {
   @observable texthelp_name_double: string = "";
   @observable error_inn_double: boolean = false;
   @observable texthelp_inn_double: string = "";
+  @observable error_latitude: boolean = false;
+  @observable texthelp_latitude: string = "";
+  @observable error_longitude: boolean = false;
+  @observable texthelp_longitude: string = "";
 
   @observable nodeid_user: string = "";
   @observable nodeid_org: string = "";
@@ -568,6 +576,38 @@ export class ModalLeftPanel {
     return this.texthelp_address;
   }
 
+  @action setErrorLatitude(val: boolean) {
+    this.error_latitude = val;
+  }
+
+  @computed getErrorLatitude(): boolean {
+    return this.error_latitude;
+  }
+
+  @action setTextHelpLatitude(val: string) {
+    this.texthelp_latitude;
+  }
+
+  @computed getTextHelpLatitude(): string {
+    return this.texthelp_latitude;
+  }
+
+  @action setErrorLongitude(val: boolean) {
+    this.error_longitude = val;
+  }
+
+  @computed getErrorLongitude(): boolean {
+    return this.error_longitude;
+  }
+
+  @action setTextHelpLongitude(val: string) {
+    this.texthelp_longitude = val;
+  }
+
+  @computed getTextHelpLongitude(): string {
+    return this.texthelp_longitude;
+  }
+
   @action setNewJobsTitles(val: string) {
     this.jobs_titles_new = val;
   }
@@ -963,7 +1003,7 @@ export class ModalLeftPanel {
 
   async set_NewOrg(name: string, value: any, _options?: any) {
     var sess_code = value;
-    const regexp_inn = /^[0-9]+$/; /// регулярное выражение для ввода только цифр для поля ИНН
+    //const regexp_inn = /^[0-9]+$/; /// регулярное выражение для ввода только цифр для поля ИНН
     const inn = this.getInn().match(regexp_inn);
 
     if (
@@ -983,19 +1023,19 @@ export class ModalLeftPanel {
         if (a.full_name === this.getFullNameOrg()) {
           full_name = a.full_name;
           this.setErrorFullNameDouble(true);
-          this.setTextHelpFullNameDouble("Такая организация уже есть");
+          this.setTextHelpFullNameDouble(DOUBLE_NAME_ORG_ERROR);
         }
 
         if (a.name === this.getNameOrg()) {
           name_double = a.name;
           this.setErrorNameDouble(true);
-          this.setTextHelpNameDouble("Такая организация уже есть");
+          this.setTextHelpNameDouble(DOUBLE_NAME_ORG_ERROR);
         }
 
         if (a.inn === this.getInn()) {
           inn_double = a.inn;
           this.setErrorInnDouble(true);
-          this.setTextHelpInnDouble("Такой инн уже есть");
+          this.setTextHelpInnDouble(DOUBLE_INN_ERROR);
         }
       }
     }
@@ -1016,47 +1056,77 @@ export class ModalLeftPanel {
     }
 
     ////// проверка на пустые значения
-    if (this.getFullNameOrg() === "") {
-      this.setErrorFullName(true);
-      this.setTextHelpFullName("Поле не может быть пустым");
-    } else {
+
+    if (this.getFullNameOrg().trim()) {
       this.setErrorFullName(false);
-      this.setTextHelpFullName(null);
+      this.setTextHelpFullName("");
+    } else {
+      this.setErrorFullName(true);
+      this.setTextHelpFullName(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getNameOrg() === "") {
-      this.setErrorNameOrg(true);
-      this.setTextHelpNameOrg("Поле не может быть пустым");
-    } else {
+    if (this.getNameOrg().trim()) {
       this.setErrorNameOrg(false);
       this.setTextHelpNameOrg(null);
+    } else {
+      this.setErrorNameOrg(true);
+      this.setTextHelpNameOrg(EMPTY_FIELD_ERROR);
     }
 
-    if (inn === null) {
-      this.setErrorInn(true);
-      this.setTextHelpInn("Только цифры");
-    } else {
+    if (inn) {
       this.setErrorInn(false);
       this.setTextHelpInn(null);
+    } else {
+      this.setErrorInn(true);
+      this.setTextHelpInn(INVALID_INN_ERROR);
+    }
+    if (this.getAddress().trim()) {
+      this.setErrorAddress(false);
+      this.setTextHelpAddress("");
+    } else {
+      this.setErrorAddress(true);
+      this.setTextHelpAddress(EMPTY_FIELD_ERROR);
+    }
+    if (this.getLatitude()) {
+      this.setErrorLatitude(false);
+      this.setTextHelpLatitude("");
+    } else {
+      this.setErrorLatitude(true);
+      this.setTextHelpLatitude(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getAddress() === "") {
-      this.setErrorAddress(true);
-      this.setTextHelpAddress("Поле не может быть пустым");
+    if (this.getLongitude()) {
+      this.setErrorLongitude(false);
+      this.setTextHelpLongitude("");
     } else {
-      this.setErrorAddress(false);
-      this.setTextHelpAddress(null);
+      this.setErrorLongitude(true);
+      this.setTextHelpLongitude(EMPTY_FIELD_ERROR);
     }
+
+    const isValidValues = () => {
+      return (
+        !this.getErrorFullName() &&
+        !this.getErrorFullNameDouble() &&
+        !this.getErrorNameOrg() &&
+        !this.getErrorNameDouble() &&
+        !this.getErrorInn() &&
+        !this.getErrorInnDouble() &&
+        !this.getErrorLatitude() &&
+        !this.getErrorLongitude()
+      );
+    };
+
     //// Отправляем данные с формы на сервер
-    var q: IWSQuery = new WSQuery("set_NewOrg");
+    const q: IWSQuery = new WSQuery("set_NewOrg");
     if (
-      this.getAddress() !== "" &&
-      inn !== null &&
-      full_name !== this.getFullNameOrg() &&
-      name_double !== this.getNameOrg() &&
-      inn_double !== this.getInn() &&
-      this.getFullNameOrg() !== "" &&
-      this.getNameOrg() !== ""
+      isValidValues()
+      // this.getAddress() !== "" &&
+      // inn !== null &&
+      // full_name !== this.getFullNameOrg() &&
+      // name_double !== this.getNameOrg() &&
+      // inn_double !== this.getInn() &&
+      // this.getFullNameOrg() !== "" &&
+      // this.getNameOrg() !== ""
     ) {
       q.args = {
         name: this.getNameOrg() || "",
@@ -1069,17 +1139,29 @@ export class ModalLeftPanel {
       };
       q.sess_code = sess_code;
       // (await WSocket.get()).send(q);
+
       api
         .fetch(q)
         .then(() => {
           this.get_Org("sess_id", value);
-          this.setResulSave("Данные успешно сохранены");
+          this.setSuccessSave_mess(SAVE_SUCCESS);
           setTimeout(() => {
-            this.setResulSave("");
+            this.setSuccessSave_mess("");
             this.setModalRegUser(false);
+            this.setFullNameOrg("");
+            this.setNameOrg("");
+            this.setInn("");
+            this.setInfo("");
+            this.setAddress("");
+            this.setLatitude("");
+            this.setLongitude("");
           }, 2000);
         })
-        .catch((e) => console.log("error =>", e));
+        .catch((e) => {
+          console.log("error =>", e);
+          this.setErrorSave_mess(SAVE_ERROR);
+          setTimeout(() => this.setErrorSave_mess(""), 2000);
+        });
       // this.get_Org("sess_id", value);
       // this.setResulSave("Данные успешно сохранены");
 
@@ -1096,21 +1178,23 @@ export class ModalLeftPanel {
   async set_NewJobTitle(name: string, value: any, _options?: any) {
     var sess_code = value; ////// передаем код сессии
 
-    if (this.getKeyOrg() === null) {
-      this.setErrorOrg(true);
-    } else {
+    if (this.getKeyOrg()) {
       this.setErrorOrg(false);
+      this.setTextHelpOrg("");
+    } else {
+      this.setErrorOrg(true);
+      this.setTextHelpOrg(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getNewJobsTitles() === "") {
-      this.setErrorJobs(true);
-      this.setTextHelpJobs("Обязательные поля должны быть заполнены");
-    } else {
+    if (this.getNewJobsTitles().trim()) {
       this.setErrorJobs(false);
       this.setTextHelpJobs("");
+    } else {
+      this.setErrorJobs(true);
+      this.setTextHelpJobs(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getKeyOrg() !== null && this.getNewJobsTitles() !== "") {
+    if (this.getKeyOrg() && this.getNewJobsTitles().trim()) {
       var q: IWSQuery = new WSQuery("set_NewJobTitle");
       q.args = {
         id_org: this.getKeyOrg() || "",
@@ -1120,26 +1204,28 @@ export class ModalLeftPanel {
       q.sess_code = sess_code;
 
       // (await WSocket.get()).send(q);
+      // setTimeout(() => {
+      //   this.setResulSave("");
+      //   this.setModalRegUser(false);
+      // }, 2000);
 
       api
         .fetch(q)
         .then(() => {
           this.setSuccessSave_mess(SAVE_SUCCESS);
-
           this.get_Jobs("sess_id", value);
-
           setTimeout(() => {
             this.setSuccessSave_mess("");
-            this.setModalRegUser(false); // Проверить, какое модальное окно закрывается
+            this.setModalRegUser(false);
           }, 2000);
         })
-        .catch((e) => console.log("error=>", e)); //fetch-запрос
-      // this.setResulSave("Данные успешно сохранены");
-
-      // setTimeout(() => {
-      //   this.setResulSave("");
-      //   this.setModalRegUser(false);
-      // }, 2000);
+        .catch((e) => {
+          console.log("error=>", e);
+          this.setErrorSave_mess(SAVE_ERROR);
+          setTimeout(() => {
+            this.setErrorSave_mess("");
+          }, 2000);
+        }); //fetch-запрос
     }
   }
 }

@@ -5,7 +5,6 @@ import { TextField, Box, Dialog, Divider, Typography } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
 
-
 import NativeSelect from "@mui/material/NativeSelect";
 
 import {
@@ -18,11 +17,15 @@ import {
   FormControl,
   InputLabel,
   Checkbox,
+  Stack,
   Alert,
 } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
-import Stack from "@mui/material/Stack";
+
 import { APP_STORAGE } from "../../../storage/AppStorage";
+import IdInput from "../../shared/IdInput";
+import LatInput from "../../shared/LatInput";
+import LongInput from "../../shared/LongInput";
 
 interface IProps {}
 
@@ -33,25 +36,25 @@ export class EditOrg extends React.Component<IProps> {
   }
 
   async EditOrg() {
-    APP_STORAGE.org.set_ChangeOrg("sess_id",APP_STORAGE.auth_form.getdt());
+    APP_STORAGE.org.set_ChangeOrg("sess_id", APP_STORAGE.auth_form.getdt());
   }
 
   render(): React.ReactNode {
-   
     return (
       <React.Fragment>
-        <Dialog className="wrapper_modal"
+        <Dialog
+          className="wrapper_modal"
           BackdropProps={{ style: { background: "rgba(0 0 0 / 12%)" } }}
           open={APP_STORAGE.org.getModalEditOrg()}
           fullWidth
-          PaperProps={{ sx: { justifyContent: 'flex-end'} }}
+          PaperProps={{ sx: { justifyContent: "flex-end" } }}
         >
           <Box sx={{ p: 2 }}>
             <Box
               className="ModalTitle"
               sx={{ display: "flex", justifyContent: "space-between" }}
             >
-             <Typography>Изменить данные организации </Typography> 
+              <Typography>Изменить данные организации </Typography>
 
               <CloseIcon
                 sx={{ color: "#1976D2" }}
@@ -62,122 +65,117 @@ export class EditOrg extends React.Component<IProps> {
             </Box>
             <Divider sx={{ marginBottom: "20px" }} />
 
+            <TextField
+              inputProps={{ style: { fontSize: 12 } }}
+              InputLabelProps={{ style: { fontSize: 12 } }}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              error={APP_STORAGE.org.getErrorFullNameOrg()}
+              helperText={APP_STORAGE.org.getHelpTextFullNameOrg()}
+              label="Полное наименование"
+              autoFocus
+              size="small"
+              onChange={(e) => {
+                APP_STORAGE.org.setFullNameOrg(e.target.value);
+              }}
+              value={APP_STORAGE.org.getFullNameOrg() || ""}
+            />
 
-              <TextField
-                inputProps={{ style: { fontSize: 12 } }} 
-                InputLabelProps={{ style: { fontSize: 12 } }}
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                // error={APP_STORAGE.reg_user.getErrorFullName() || APP_STORAGE.reg_user.getErrorFullNameDouble() }
-                // helperText={APP_STORAGE.reg_user.getTextHelpFullName() || APP_STORAGE.reg_user.getTextHelpFullNameDouble()}
-                label="Полное наименование"
-                autoComplete="Полное наименование"
-                autoFocus
-                size="small"
-                onChange={(e) => {
-                  APP_STORAGE.org.setFullNameOrg(e.target.value);
-                }}
-                value={APP_STORAGE.org.getFullNameOrg() || ""}
-              />
+            <TextField
+              inputProps={{ style: { fontSize: 12 } }}
+              InputLabelProps={{ style: { fontSize: 12 } }}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              error={APP_STORAGE.org.getErrorNameOrg()}
+              helperText={APP_STORAGE.org.getHelpTextNameOrg()}
+              label="Наименование"
+              size="small"
+              onChange={(e) => {
+                APP_STORAGE.org.setNameOrg(e.target.value);
+              }}
+              value={APP_STORAGE.org.getNameOrg() || ""}
+            />
+            <TextField
+              InputProps={{
+                inputComponent: IdInput as any,
+                style: { fontSize: 12 },
+              }}
+              InputLabelProps={{ style: { fontSize: 12 } }}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              label="ИНН"
+              size="small"
+              error={APP_STORAGE.org.getErrorInn()}
+              helperText={APP_STORAGE.org.getHelpTextInn()}
+              onChange={(e) => {
+                APP_STORAGE.org.setInn(e.target.value);
+              }}
+              value={APP_STORAGE.org.getInn() || ""}
+            />
 
+            <TextField
+              inputProps={{ style: { fontSize: 12 } }}
+              InputLabelProps={{ style: { fontSize: 12 } }}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              error={APP_STORAGE.org.getErrorAddress()}
+              helperText={APP_STORAGE.org.getHelpTextAddress()}
+              label="Адрес"
+              size="small"
+              onChange={(e) => {
+                APP_STORAGE.org.setAddress(e.target.value);
+              }}
+              value={APP_STORAGE.org.getAddress() || ""}
+            />
 
+            <TextField
+              InputProps={{
+                inputComponent: LatInput as any,
+                style: { fontSize: 12 },
+              }}
+              InputLabelProps={{ style: { fontSize: 12 } }}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              error={APP_STORAGE.org.getErrorLatitude()}
+              helperText={APP_STORAGE.org.getHelpTextLatitude()}
+              label="Широта"
+              autoComplete="Широта"
+              size="small"
+              onChange={(e) => {
+                APP_STORAGE.org.setLatitude(e.target.value);
+              }}
+              value={APP_STORAGE.org.getLatitude() || ""}
+            />
 
-              <TextField
-                inputProps={{ style: { fontSize: 12 } }} 
-                InputLabelProps={{ style: { fontSize: 12 } }} 
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                // error={APP_STORAGE.reg_user.getErrorNameOrg() || APP_STORAGE.reg_user.getErrorNameDouble()}
-                // helperText={APP_STORAGE.reg_user.getTextHelpNameDouble()}
-                label="Наименование"
-                autoComplete="Наименование"
-                size="small"
-                onChange={(e) => {
-                  APP_STORAGE.org.setNameOrg(e.target.value);
-                }}
-                value={APP_STORAGE.org.getNameOrg() || ""}
-              />
-
-
-
-              <TextField
-                inputProps={{ style: { fontSize: 12 } }} 
-                InputLabelProps={{ style: { fontSize: 12 } }} 
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                // error={
-                //   APP_STORAGE.reg_user.getErrorInn() ||
-                //   APP_STORAGE.reg_user.getErrorInnDouble()
-                // }
-                // helperText={
-                //   APP_STORAGE.reg_user.getTextHelpInn() ||
-                //   APP_STORAGE.reg_user.getTextHelpInnDouble()
-                // }
-                label="Инн"
-                autoComplete="Инн"
-                size="small"
-                onChange={(e) => {
-                  APP_STORAGE.org.setInn(e.target.value);
-                }}
-                value={APP_STORAGE.org.getInn() || ""}
-              />
-
-                <TextField
-                inputProps={{ style: { fontSize: 12 } }} 
-                InputLabelProps={{ style: { fontSize: 12 } }} 
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                // error={APP_STORAGE.reg_user.getErrorAddress()}
-                // helperText={APP_STORAGE.reg_user.getTextHelpAddress()}
-                label="Адрес"
-                autoComplete="Адрес"
-                size="small"
-                onChange={(e) => {
-                  APP_STORAGE.org.setAddress(e.target.value);
-                }}
-                value={APP_STORAGE.org.getAddress() || ""}
-                />
-
-                <TextField
-                inputProps={{ style: { fontSize: 12 } }} 
-                InputLabelProps={{ style: { fontSize: 12 } }} 
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-
-                label="Широта"
-                autoComplete="Широта"
-                size="small"
-                onChange={(e) => {
-                  APP_STORAGE.org.setLatitude(e.target.value);
-                }}
-                value={APP_STORAGE.org.getLatitude() || ""}
-                />
-
-                <TextField
-                inputProps={{ style: { fontSize: 12 } }} 
-                InputLabelProps={{ style: { fontSize: 12 } }} 
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                required
-                label="Долгота"
-                autoComplete="Долгота"
-                size="small"
-                onChange={(e) => {
-                  APP_STORAGE.org.setLongitude(e.target.value);
-                }}
-                value={APP_STORAGE.org.getLongitude() || ""}
-                />
+            <TextField
+              InputProps={{
+                inputComponent: LongInput as any,
+                style: { fontSize: 12 },
+              }}
+              InputLabelProps={{ style: { fontSize: 12 } }}
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              error={APP_STORAGE.org.getErrorLongitude()}
+              helperText={APP_STORAGE.org.getHelpTextLongitude()}
+              required
+              label="Долгота"
+              size="small"
+              onChange={(e) => {
+                APP_STORAGE.org.setLongitude(e.target.value);
+              }}
+              value={APP_STORAGE.org.getLongitude() || ""}
+            />
             <Divider sx={{ padding: "12px" }} />
             <Typography sx={{ color: "#999999" }} variant="caption">
               Информация:
@@ -194,46 +192,43 @@ export class EditOrg extends React.Component<IProps> {
               value={APP_STORAGE.org.getInfOrg() || ""}
             />
 
-
-               <Box
-          sx={{
-            display: "flex",
-            alignItems: "baseline",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Button
-            sx={{
-              background: "#266BF1",
-              color: "#fff;",
-              mt: "18px",
-              mb: "18px",
-              fontSize: "12px",
-            }}
-            onClick={() => {
-              this.EditOrg();
-            }}
-          >
-            Сохранить
-          </Button>
-        </Box>
-        {APP_STORAGE.reg_user.getResulSave().length > 0 && (
-              <Typography
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Button
                 sx={{
-                  background: "#EDF7ED",
-                  color: "#1E4620",
-                  p: "12px",
-                  borderRadius: "4px",
+                  background: "#266BF1",
+                  color: "#fff;",
+                  mt: "18px",
+                  mb: "18px",
+                  fontSize: "12px",
+                }}
+                onClick={() => {
+                  this.EditOrg();
                 }}
               >
-                {" "}
-                {APP_STORAGE.reg_user.getResulSave()}
-              </Typography>
+                Сохранить
+              </Button>
+            </Box>
+            {APP_STORAGE.org.getSuccessSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="success">
+                  {APP_STORAGE.org.getSuccessSave_mess()}
+                </Alert>
+              </Stack>
             )}
-      
+            {APP_STORAGE.org.getErrorSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">
+                  {APP_STORAGE.org.getErrorSave_mess()}
+                </Alert>
+              </Stack>
+            )}
           </Box>
-
-       
         </Dialog>
       </React.Fragment>
     );

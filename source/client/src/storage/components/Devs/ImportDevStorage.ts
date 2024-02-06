@@ -254,21 +254,9 @@ export class ImportDevStorage {
           };
           q.sess_code = sess_code;
 
-          api1
+          api
             .fetch(q)
             .then(() => {
-              if (!APP_STORAGE.shared_store.getErrorResponseMess()) {
-                // this.setSuccessSave_mess(SAVE_SUCCESS);
-                setTimeout(() => {
-                  // APP_STORAGE.importdevs.setOpenModal(false);
-                  this.setSuccessSave_mess("");
-                }, 2000);
-              } else {
-                setTimeout(
-                  () => APP_STORAGE.shared_store.setErrorResponseMess(""),
-                  2000
-                );
-              }
               APP_STORAGE.devs_groups.get_DevsGroups(
                 "sess_id",
                 APP_STORAGE.auth_form.getdt()
@@ -276,15 +264,7 @@ export class ImportDevStorage {
             })
             .catch((e) => {
               console.log("error=>", e.message);
-              this.setErrorSave_mess(SAVE_ERROR);
               this.setErrorSaved_devs(String(item[0]));
-              setTimeout(() => {
-                this.setErrorSave_mess("");
-                this.clearDuplicates();
-                this.clearInvalid_devs();
-                this.clearValid_devs();
-                this.clearErrorSaved_devs();
-              }, 5000);
             }); // fetch-запрос
         }
       });
@@ -389,6 +369,8 @@ export class ImportDevStorage {
       setTimeout(() => {
         this.setErrorSave_mess("");
       }, 3000);
+    } finally {
+      APP_STORAGE.importdevs.setArrayJsonData([]);
     }
   }
 
@@ -464,17 +446,32 @@ export class ImportDevStorage {
   }
 
   async set_SchemeSvg(sess_code: string) {
+    console.log("this block");
     var q: IWSQuery = new WSQuery("set_SchemeSvg");
     q.args = {
       id: APP_STORAGE.devs_groups.getParentId(),
       svg_file: this.getArraySvgData(), ////data:image\/svg\+xml;base64
     };
     q.sess_code = sess_code;
-    api.fetch(q).then(() => {
-      APP_STORAGE.devs_groups
-        .get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt())
-        .catch((e) => console.log("error=>", e));
-    });
+    api
+      .fetch(q)
+      .then(() => {
+        APP_STORAGE.devs_groups.get_DevsGroups(
+          "sess_id",
+          APP_STORAGE.auth_form.getdt()
+        );
+        this.setSuccessSave_mess(SAVE_SUCCESS);
+        setTimeout(() => {
+          this.setSuccessSave_mess("");
+        }, 2000);
+      })
+      .catch((e) => {
+        console.log("error=>", e.message);
+        this.setErrorSave_mess(SAVE_ERROR);
+        setTimeout(() => {
+          this.setErrorSave_mess("");
+        }, 2000);
+      });
     // (await WSocket.get()).send(q);
     // setTimeout(() => {
     //   APP_STORAGE.devs_groups.get_DevsGroups(

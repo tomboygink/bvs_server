@@ -51,12 +51,6 @@ export class AddNewDevModal extends React.Component<IProps> {
 
   async AddDevs() {
     APP_STORAGE.devs.set_NewDevs("sess_id", APP_STORAGE.auth_form.getdt());
-    setTimeout(() => {
-      APP_STORAGE.devs_groups.get_DevsGroups(
-        "sess_id",
-        APP_STORAGE.auth_form.getdt()
-      );
-    }, 500);
   }
 
   async SelectedOrg(a: any) {

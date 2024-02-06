@@ -102,10 +102,9 @@ export class EditJobsTitles extends React.Component<IProps> {
               margin="normal"
               required
               fullWidth
-              // error={APP_STORAGE.reg_user.getErrorFullName() || APP_STORAGE.reg_user.getErrorFullNameDouble() }
-              // helperText={APP_STORAGE.reg_user.getTextHelpFullName() || APP_STORAGE.reg_user.getTextHelpFullNameDouble()}
+              error={APP_STORAGE.jobs.getErrorTitle()}
+              helperText={APP_STORAGE.jobs.getTextHelpTitle()}
               label="Наименование должности"
-              autoComplete="Наименование должности"
               autoFocus
               size="small"
               onChange={(e) => {
@@ -114,7 +113,12 @@ export class EditJobsTitles extends React.Component<IProps> {
               value={APP_STORAGE.jobs.getJobsTitles() || ""}
             />
 
-            <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+            <FormControl
+              fullWidth
+              size="small"
+              sx={{ mt: "14px" }}
+              error={APP_STORAGE.jobs.getErrorOrg()}
+            >
               <InputLabel className="org" sx={{ fontSize: "12px" }}>
                 Организация
               </InputLabel>
@@ -130,6 +134,9 @@ export class EditJobsTitles extends React.Component<IProps> {
                 {options_org}
                 <Divider />
               </Select>
+              <FormHelperText>
+                {APP_STORAGE.jobs.getTextHelpOrg()}
+              </FormHelperText>
             </FormControl>
 
             <Divider sx={{ padding: "12px" }} />
@@ -181,19 +188,6 @@ export class EditJobsTitles extends React.Component<IProps> {
                 {APP_STORAGE.edit_user.getErrorSave_mess()}
               </Alert>
             )}
-            {/* {APP_STORAGE.reg_user.getResulSave().length > 0 && (
-              <Typography
-                sx={{
-                  background: "#EDF7ED",
-                  color: "#1E4620",
-                  p: "12px",
-                  borderRadius: "4px",
-                }}
-              >
-                {" "}
-                {APP_STORAGE.reg_user.getResulSave()}
-              </Typography>
-            )} */}
           </Box>
         </Dialog>
       </React.Fragment>

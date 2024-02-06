@@ -12,10 +12,12 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Alert,
+  Stack,
 } from "@mui/material";
 
 import FormGroup from "@mui/material/FormGroup";
-import Stack from "@mui/material/Stack";
+
 import { AntSwitch } from "../../../AppBarPanel/LeftPanel/RegistationUsers/switch";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -100,12 +102,6 @@ export class ChangeDevsModal extends React.Component<IProps> {
 
   async ChangeDevs() {
     APP_STORAGE.devs.set_ChangeDevs("sess_id", APP_STORAGE.auth_form.getdt());
-    setTimeout(() => {
-      APP_STORAGE.devs_groups.get_DevsGroups(
-        "sess_id",
-        APP_STORAGE.auth_form.getdt()
-      );
-    }, 500);
   }
 
   async SelectedPeriodSess(a: any) {
@@ -337,7 +333,6 @@ export class ChangeDevsModal extends React.Component<IProps> {
               fullWidth
               required
               label="Номер устройства"
-              autoComplete="Номер устройства"
               autoFocus
               size="small"
               onChange={(e) => {
@@ -356,8 +351,6 @@ export class ChangeDevsModal extends React.Component<IProps> {
               fullWidth
               required
               label="Название устройства "
-              autoComplete="Название устройства"
-              autoFocus
               size="small"
               onChange={(e) => {
                 APP_STORAGE.devs.setName(e.target.value);
@@ -441,9 +434,9 @@ export class ChangeDevsModal extends React.Component<IProps> {
                 <AntSwitch
                   checked={APP_STORAGE.devs.getCheckboxEd()}
                   // Закомментировано для запуска
-                  // onChange={editing => {
-                  //   this.ChekedForEdit(editing);
-                  // }}
+                  onChange={(editing) => {
+                    this.ChekedForEdit(editing);
+                  }}
                 />
               </Stack>
             </FormGroup>
@@ -499,6 +492,20 @@ export class ChangeDevsModal extends React.Component<IProps> {
                 Сохранить
               </Button>
             </Box>
+            {APP_STORAGE.devs.getSuccessSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="success">
+                  {APP_STORAGE.devs.getSuccessSave_mess()}
+                </Alert>
+              </Stack>
+            )}
+            {APP_STORAGE.devs.getErrorSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">
+                  {APP_STORAGE.devs.getErrorSave_mess()}
+                </Alert>
+              </Stack>
+            )}
           </Box>
         </Dialog>
       </React.Fragment>

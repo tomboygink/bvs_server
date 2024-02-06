@@ -12,6 +12,8 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  Alert,
+  Stack,
 } from "@mui/material";
 
 import { observer } from "mobx-react";
@@ -68,14 +70,20 @@ export class NewJobsTittle extends React.Component<IProps> {
 
     return (
       <React.Fragment>
-        <FormControl fullWidth size="small" sx={{ mt: "14px" }} error = {APP_STORAGE.reg_user.getErrorOrg()}>
+        <FormControl
+          fullWidth
+          size="small"
+          sx={{ mt: "14px" }}
+          error={APP_STORAGE.reg_user.getErrorOrg()}
+        >
           <InputLabel className="org" sx={{ fontSize: "12px" }}>
-            Организация
+            Организация*
           </InputLabel>
           <Select
             sx={{ fontSize: "12px" }}
             value={APP_STORAGE.reg_user.getKeyOrg() || ""}
             label="организация"
+            autoFocus
             onChange={(e) => {
               this.SelectedOrg(e.target.value);
             }}
@@ -101,20 +109,21 @@ export class NewJobsTittle extends React.Component<IProps> {
               </MenuItem>
             </Box>
           </Select>
+          <FormHelperText>
+            {APP_STORAGE.reg_user.getTextHelpOrg()}
+          </FormHelperText>
         </FormControl>
 
         <TextField
           sx={{ mt: "12px", mb: "12px" }}
           inputProps={{ style: { fontSize: 12 } }} // font size of input text
           InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-          error = {APP_STORAGE.reg_user.getErrorJobs()}
-          helperText= {APP_STORAGE.reg_user.getTextHelpJobs()}
+          error={APP_STORAGE.reg_user.getErrorJobs()}
+          helperText={APP_STORAGE.reg_user.getTextHelpJobs()}
           variant="outlined"
           fullWidth
           required
-          label="должность"
-          autoComplete="должность"
-          autoFocus
+          label="Должность"
           size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setNewJobsTitles(e.target.value);
@@ -159,9 +168,20 @@ export class NewJobsTittle extends React.Component<IProps> {
             Сохранить
           </Button>
         </Box>
-        {APP_STORAGE.reg_user.getResulSave().length > 0 &&
-       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> {APP_STORAGE.reg_user.getResulSave()}</Typography>
-      }
+        {APP_STORAGE.reg_user.getSuccessSave_mess().length > 0 && (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert severity="success">
+              {APP_STORAGE.reg_user.getSuccessSave_mess()}
+            </Alert>
+          </Stack>
+        )}
+        {APP_STORAGE.reg_user.getErrorSave_mess().length > 0 && (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert severity="error">
+              {APP_STORAGE.reg_user.getErrorSave_mess()}
+            </Alert>
+          </Stack>
+        )}
       </React.Fragment>
     );
   }

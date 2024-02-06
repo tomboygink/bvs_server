@@ -14,7 +14,7 @@ const LongInput = React.forwardRef<HTMLInputElement, IProps>(
       <IMaskInput
         {...other}
         mask="0[00].0{00000000000000000000000}"
-        placeholder={"53.45454464..."}
+        placeholder={"112.45454464..."}
         inputRef={ref}
         onAccept={(value: any) =>
           onChange({ target: { name: props.name, value } })
