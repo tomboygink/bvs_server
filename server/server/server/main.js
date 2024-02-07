@@ -199,6 +199,10 @@ var AppServer = (function () {
     this.app.get("/confirm_mail", function (req, res) {
       res.render("confirm_mail.hbs", { title: "Подтверждение e-mail" });
     });
+
+    this.app.get("/forgot_pass", function (req, res) {
+      res.render("forgot_pass.hbs", { title: "Восстановление пароля" });
+    });
     this.app.use((0, cors_1["default"])());
     this.app.use(body_parser_1["default"].json());
     this.app.post("/api", (0, cors_1["default"])(), function (req, res) {
