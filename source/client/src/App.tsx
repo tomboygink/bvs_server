@@ -25,6 +25,14 @@ export class App extends React.Component<IProps> {
   componentWillUnmount(): void {}
 
   render(): React.ReactNode {
+    // const distance = 163;
+    // const quantity = 3;
+    // const towns = [50, 55, 56, 57, 58];
+    // function chooseBestSum(t, k, ls) {
+
+    // }
+
+    // console.log("solution=>", chooseBestSum(distance, quantity, towns));
     document.title = APP_STORAGE.main.getTitle();
 
     var ret_dt: React.ReactNode = <></>;

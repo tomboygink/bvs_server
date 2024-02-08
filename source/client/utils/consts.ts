@@ -23,6 +23,7 @@ export const INVALID_PASSWORD_ERROR =
 export const MATCHING_TEMPLATE_ERROR =
   "Ошибка! Убедитесь, что данные заполнены согласно шаблону";
 export const INVALID_INN_ERROR = "Введите последовательность из 10 цифр";
+
 // RegExp
 
 // email

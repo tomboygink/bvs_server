@@ -109,7 +109,9 @@ export class EditUser extends React.Component<IProps> {
       <React.Fragment>
         <Dialog
           className="wrapper_modal"
-          BackdropProps={{ style: { background: "rgba(0 0 0 / 12%)" } }}
+          componentsProps={{
+            backdrop: { style: { backgroundColor: "rgba(0 0 0 / 35%)" } },
+          }}
           open={APP_STORAGE.edit_user.getModalEditUser()}
           fullWidth
           PaperProps={{ sx: { justifyContent: "flex-end" } }}

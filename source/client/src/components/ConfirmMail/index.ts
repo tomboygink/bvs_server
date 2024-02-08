@@ -1,1 +1,0 @@
-export { ConfirmMail } from "./ConfirmMail";

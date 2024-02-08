@@ -23,6 +23,7 @@ import Stack from "@mui/material/Stack";
 
 import LatInput from "../../../../shared/LatInput";
 import LongInput from "../../../../shared/LongInput";
+import { TextInput } from "../../../../shared/TextInput";
 
 import { AntSwitch } from "../../../AppBarPanel/LeftPanel/RegistationUsers/switch";
 
@@ -102,7 +103,9 @@ export class ChangeDevsGroups extends React.Component<IProps> {
     return (
       <React.Fragment>
         <Dialog
-          BackdropProps={{ style: { background: "rgba(0 0 0 / 12%)" } }}
+          componentsProps={{
+            backdrop: { style: { backgroundColor: "rgba(0 0 0 / 35%)" } },
+          }}
           open={APP_STORAGE.devs_groups.getOpenModalChDevsGr()}
           fullWidth
         >
