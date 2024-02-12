@@ -714,6 +714,7 @@ export class ModalLeftPanel {
     //const telephone = this.getTelephone().match(regexp_ph);
     const telephone = this.getTelephone().replace(regexp_dash, "");
     const isValidPassword = regexp_password.test(this.getPassword()); // убрать дефисы и пробелы
+
     /// проверяем , есть ли пользователь с таким логином
 
     if (this.getAllUsers() && this.getLogin() !== "") {

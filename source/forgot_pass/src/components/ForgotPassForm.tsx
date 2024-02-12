@@ -54,9 +54,9 @@ export const ForgotPass: FC<IProps> = observer(() => {
         <Typography sx={{ fontSize: "12px", color: "grey" }}>
           Для сброса пароля , пожалуйста, укажите ваш логин и новый пароль.{" "}
         </Typography>
-        <Typography sx={{ fontSize: "12px", color: "#1976d2" }}>
+        {/* <Typography sx={{ fontSize: "12px", color: "#1976d2" }}>
           (код подтверждения - введен автоматически)
-        </Typography>
+        </Typography> */}
 
         <Box component="form" noValidate sx={{ mt: 1 }}>
           <TextField
@@ -68,7 +68,6 @@ export const ForgotPass: FC<IProps> = observer(() => {
             helperText={APP_STORAGE.auth_form.getLogin_message()}
             label="Логин"
             name="login"
-            autoComplete="login"
             autoFocus
             onChange={(e) => {
               APP_STORAGE.auth_form.setLogin(e.target.value);
@@ -86,7 +85,6 @@ export const ForgotPass: FC<IProps> = observer(() => {
             helperText={APP_STORAGE.auth_form.getError_new_message()}
             label="Новый пароль"
             type="password"
-            autoComplete="current-password"
             onChange={(e) => {
               APP_STORAGE.auth_form.setNewPass(e.target.value);
             }}
@@ -103,7 +101,6 @@ export const ForgotPass: FC<IProps> = observer(() => {
             name="password"
             label="Повторите пароль"
             type="password"
-            autoComplete="current-password"
             onChange={(e) => {
               APP_STORAGE.auth_form.setRepeatPass(e.target.value);
             }}
@@ -111,6 +108,8 @@ export const ForgotPass: FC<IProps> = observer(() => {
           />
 
           <TextField
+            InputProps={{ type: "hidden" }}
+            sx={{ display: "none" }}
             variant="standard"
             fullWidth
             disabled={true}
@@ -122,7 +121,7 @@ export const ForgotPass: FC<IProps> = observer(() => {
             onChange={(e) => {
               APP_STORAGE.auth_form.setCode(e.target.value);
             }}
-            value={APP_STORAGE.auth_form.getCode() || ""}
+            // value={APP_STORAGE.auth_form.getCode() || ""}
           />
 
           <CircularIntegration />

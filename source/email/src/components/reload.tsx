@@ -32,7 +32,7 @@ export default function CircularIntegration() {
   const set_sendCode = () => {
     if (APP_STORAGE.getCode() === null) {
       APP_STORAGE.setError(true);
-      APP_STORAGE.setErrorMass("Введите код подтверждения");
+      APP_STORAGE.setErrorMess("Введите код подтверждения");
     }
 
     if (!loading && APP_STORAGE.getCode() !== null) {

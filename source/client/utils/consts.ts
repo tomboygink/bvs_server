@@ -13,8 +13,10 @@ export const DOUBLE_NAME_ORG_ERROR =
   "Организация с таким название уже существует";
 export const DOUBLE_INN_ERROR = "Организация с таким ИНН уже существует";
 export const EMPTY_FIELD_ERROR = "Заполните это поле";
+export const EMPTY_CONFIRM_CODE_ERROR = "Введите код подтверждения";
 export const INVALID_EMAIL_ERROR =
   "Введите корректный e-mail (в формате mail@mail.ru)";
+export const INVALID_TELEPHONE_ERROR = "Введите корректный номер телефона";
 export const MATCHING_LOGIN_AND_PASS_ERROR =
   "Пароль и логин не должны совпадать";
 export const PASSWORDS_NOT_MATCH = "Пароли не совпадают";
@@ -34,7 +36,7 @@ export const regexp_dash = /[\s-]/g;
 
 //буквы + цифры + спецсимволы + не менее 6
 export const regexp_password =
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_-\W])[A-Za-z\d@$!%*#?&_-\W]{6,}$/;
 
 //только цифры
 export const regexp_number = /[^\d\.,]/g;

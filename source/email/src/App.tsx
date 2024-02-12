@@ -5,11 +5,8 @@ import Container from "@mui/material/Container";
 
 import { observer } from "mobx-react";
 import { APP_STORAGE } from "./storage/AppStorage";
-import CircularIntegration from "./components/reload";
 
-import { TextField, Box, Typography, Alert } from "@mui/material";
-
-//  import {ConfirmMail} from '../../client/src/components/AppForm/ConfirmMail/ConfirmMail'
+import { TextField, Box, Typography, Alert, Button } from "@mui/material";
 
 interface IProps {}
 
@@ -23,7 +20,7 @@ export class App extends React.Component<IProps> {
 
   componentWillUnmount(): void {}
 
-  async set_sendCode() {
+  async handleSubmit() {
     APP_STORAGE.set_SendCode();
   }
 
@@ -50,23 +47,38 @@ export class App extends React.Component<IProps> {
               sx={{ p: "20px", color: "#1976D2", justifySelf: "center" }}
             >
               {" "}
-              Подтвердите код
+              Нажмите для подтверждения
             </Typography>
             <TextField
-              sx={{ justifySelf: "center" }}
-              error={APP_STORAGE.getError()}
-              helperText={APP_STORAGE.getErorMass()}
-              fullWidth
-              size="small"
+              InputProps={{ type: "hidden" }}
+              sx={{ display: "none" }}
+              // error={APP_STORAGE.getError()}
+              // helperText={APP_STORAGE.getErorrMess()}
               disabled
-              id="outlined-disabled"
-              label="код подтверждения"
               onChange={(e) => {
                 APP_STORAGE.setCode(e.target.value);
               }}
-              value={APP_STORAGE.getCode() || ""}
             />
-            <CircularIntegration />
+            <Button
+              fullWidth
+              onClick={this.handleSubmit}
+              sx={{
+                mt: "14px",
+                mb: "14px",
+                background: "#edf2ff",
+                color: "#1976d2;",
+              }}
+            >
+              Подтвердить
+            </Button>
+            {APP_STORAGE.getSuccessSave_mess().length > 0 && (
+              <Alert severity="success">
+                {APP_STORAGE.getSuccessSave_mess()}
+              </Alert>
+            )}
+            {APP_STORAGE.getErrorSave_mess().length > 0 && (
+              <Alert severity="error">{APP_STORAGE.getErrorSave_mess()}</Alert>
+            )}
           </Box>
         </Container>
       </React.Fragment>

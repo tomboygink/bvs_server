@@ -272,10 +272,10 @@ export class AuthFormStorage {
 
   async set_SaveNewPass() {
     if (
-      this.getLogin() !== "" &&
-      this.getNewPass() !== "" &&
-      this.getRepeatPass() !== "" &&
-      this.getNewPass() === this.getRepeatPass() &&
+      // this.getLogin() !== "" &&
+      // this.getNewPass() !== "" &&
+      // this.getRepeatPass() !== "" &&
+      // this.getNewPass() === this.getRepeatPass() &&
       this.getCode() !== ""
     ) {
       var q: IWSQuery = new WSQuery("set_SaveNewPass");
@@ -289,11 +289,9 @@ export class AuthFormStorage {
       api
         .fetch(q)
         .then(() => {
-          // this.setIsLoad(false);
-
           this.setSuccessSave_mess(SAVE_SUCCESS);
           setTimeout(() => {
-            this.setIsLoad(false);
+            window.location.assign(`http://${CONFIG.host}:${CONFIG.port}`);
             this.setSuccessSave_mess("");
           }, 2000);
         })
@@ -303,8 +301,7 @@ export class AuthFormStorage {
           setTimeout(() => {
             this.setErrorSave_mess("");
           }, 2000);
-        })
-        .finally(() => this.setIsLoad(false)); // fetch-запрос
+        }); // fetch-запрос
     }
   }
 

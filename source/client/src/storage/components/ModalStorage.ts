@@ -2,9 +2,16 @@ import { observable, action, computed, makeAutoObservable } from "mobx";
 
 import { IWSQuery, WSQuery, IWSResult } from "../../../../xcore/WSQuery";
 import { WSocket } from "../WSocket";
-import { api } from "../../api/api";
+import { api, api1 } from "../../api/api";
 
 import { APP_STORAGE } from "../AppStorage";
+import {
+  EMPTY_FIELD_ERROR,
+  INVALID_EMAIL_ERROR,
+  INVALID_PASSWORD_ERROR,
+  INVALID_TELEPHONE_ERROR,
+} from "../../../utils/consts";
+import { regexp_email, regexp_dash } from "../../../utils/consts";
 
 export class ModalStorage {
   @observable PersonalAccaunt: boolean = false;
@@ -43,6 +50,10 @@ export class ModalStorage {
   @observable checked_email: boolean = false; /// потдверждение  пароля
   ////////////////////////////////////валидация формы
 
+  @observable family_err: boolean = false;
+  @observable family_err_mess: string = "";
+  @observable name_err: boolean = false;
+  @observable name_err_mess: string = "";
   @observable email_err: boolean = false; ///ошибка при вводе адреса электронной почты
   @observable email_err_mess: string = ""; ///сообщение об ошибке адреса электронной почты
 
@@ -117,17 +128,48 @@ export class ModalStorage {
   }
 
   /////////////Проверка формы перед отправкой на сервер (Валидация формы)
-  @action setError_emain(val: boolean) {
+  @action setError_family(val: boolean) {
+    this.family_err = val;
+  }
+
+  @computed getError_family(): boolean {
+    return this.family_err;
+  }
+
+  @action setTextHelpFamily(val: string) {
+    this.family_err_mess = val;
+  }
+
+  @computed getTextHelpFamily(): string {
+    return this.family_err_mess;
+  }
+  @action setError_name(val: boolean) {
+    this.name_err = val;
+  }
+
+  @computed getError_name(): boolean {
+    return this.name_err;
+  }
+
+  @action setTextHelpName(val: string) {
+    this.name_err_mess = val;
+  }
+
+  @computed getTextHelpName(): string {
+    return this.name_err_mess;
+  }
+
+  @action setError_email(val: boolean) {
     this.email_err = val;
   }
-  @computed getError_emain(): boolean {
+  @computed getError_email(): boolean {
     return this.email_err;
   } /////передаем ошибку
 
-  @action set_emain(val: boolean) {
+  @action set_email(val: boolean) {
     this.act_mail_message = val;
   } /// если почта не подтверждена, то передаем сообщение пользователю
-  @computed get_emain(): boolean {
+  @computed get_email(): boolean {
     return this.act_mail_message;
   } /////передаем ошибку
 
@@ -311,46 +353,70 @@ export class ModalStorage {
   async set_CUserData(name: string, value: any, _options?: any) {
     var sess_code = value;
     var q: IWSQuery = new WSQuery("set_CUserData");
+    const email = this.getEmail().match(regexp_email);
+    const telephone = this.getTelephone().replace(regexp_dash, "");
+    // const email = this.getEmail();
+    // const phone = this.getTelephone();
+    // const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    // const regexp_ph = /^((\+7|7|8)+([0-9]){10})$/;
+    // const matches = email.match(regexp);
+    // const matchesnum = phone.match(regexp_ph);
 
-    const email = this.getEmail();
-    const phone = this.getTelephone();
-    const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    const regexp_ph = /^((\+7|7|8)+([0-9]){10})$/;
-    const matches = email.match(regexp);
-    const matchesnum = phone.match(regexp_ph);
-
-    if (matches === null) {
-      this.setError_emain(true);
-      this.setEmail_message(
-        'Адрес электронной почты должен содержать символ "@"'
-      );
+    if (this.getFamily().trim()) {
+      this.setError_family(false);
+      this.setTextHelpFamily("");
     } else {
-      this.setError_emain(false);
-      this.setEmail_message("");
+      this.setError_family(true);
+      this.setTextHelpFamily(EMPTY_FIELD_ERROR);
     }
 
-    if (matches !== null && this.getActMail() === false) {
-      this.set_emain(true);
+    if (this.getName().trim()) {
+      this.setError_name(false);
+      this.setTextHelpName("");
+    } else {
+      this.setError_name(true);
+      this.setTextHelpName(EMPTY_FIELD_ERROR);
+    }
+
+    if (email !== null) {
+      this.setError_email(false);
+      this.setEmail_message("");
+    } else {
+      this.setError_email(true);
+      this.setEmail_message(INVALID_EMAIL_ERROR);
+    }
+
+    if (email !== null && this.getActMail() === false) {
+      this.set_email(true);
       this.set_ActMail("sess_id", value);
     }
 
-    if (matchesnum === null) {
-      this.setError_phone(true);
-      this.setPhone_message("Введите корректный номер телефона");
-    } else {
+    if (this.getTelephone()) {
       this.setError_phone(false);
       this.setPhone_message("");
+    } else {
+      this.setError_phone(true);
+      this.setPhone_message(EMPTY_FIELD_ERROR);
     }
 
-    if (
-      this.getFamily() !== "" &&
-      this.getName() !== "" &&
-      this.getFather() !== "" &&
-      this.getTelephone() !== "" &&
-      this.getEmail() !== "" &&
-      this.getError_phone() == false &&
-      this.getError_emain() === false
-    ) {
+    if (telephone.length === 12) {
+      this.setError_phone(false);
+      this.setPhone_message("");
+    } else {
+      this.setError_phone(true);
+      this.setPhone_message(INVALID_TELEPHONE_ERROR);
+    }
+
+    const isValidValues = () => {
+      return (
+        !this.getError_family() &&
+        !this.getError_name() &&
+        !this.getError_email() &&
+        !this.getError_phone()
+      );
+    };
+
+    if (isValidValues()) {
       q.args = {
         family: this.getFamily(),
         login: this.getLogin(),
@@ -367,7 +433,9 @@ export class ModalStorage {
         .fetch(q)
         .then(() => {
           if (this.getActMail() && !this.getSpawnAlert()) {
-            this.setPersonalAccaunt(false);
+            setTimeout(() => {
+              this.setPersonalAccaunt(false);
+            }, 2000);
           }
         })
         .catch((e) => console.log("error=>", e)); // fetch-запрос

@@ -7,14 +7,16 @@ interface Props {
   label: string;
   InputProps?: object;
   InputLabelProps?: object;
-  error: boolean;
-  helperText: string;
+  error?: boolean;
+  helperText?: string;
   onChange: (
     event: ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => void;
-  value: string;
+  value?: string;
+  variant?: "outlined" | "filled" | "standard";
+  fullWidth?: boolean;
 }
 export const TextInput: FC<Props> = ({
   name,
@@ -26,15 +28,17 @@ export const TextInput: FC<Props> = ({
   helperText,
   onChange,
   value,
+  variant = "outlined",
+  fullWidth = true,
 }) => {
   return (
     <TextField
       required={required}
       sx={{ mt: "14px" }}
-      variant="outlined"
+      variant={variant}
       label={label}
       size="small"
-      fullWidth
+      fullWidth={fullWidth}
       InputLabelProps={InputLabelProps}
       InputProps={InputProps}
       error={error}
