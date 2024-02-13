@@ -9,7 +9,9 @@ import {
   Divider,
   Typography,
   Button,
-  FormHelperText
+  FormHelperText,
+  Stack,
+  Alert,
 } from "@mui/material";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
 
@@ -35,14 +37,13 @@ export class Opensvgfile extends React.Component<IProps> {
         APP_STORAGE.importdevs.set_SchemeSvg(APP_STORAGE.auth_form.getdt());
       }
     } catch (err) {
-      APP_STORAGE.importdevs.setSuccessfully_text(
+      APP_STORAGE.importdevs.setErrorSave_mess(
         "Ошибка! Убедитесь, что загружаемый файл в формате .svg"
       );
     }
   }
   async removeFileButton() {
     let uploadIcon = document.querySelector(".upload-icon") as HTMLInputElement;
-    APP_STORAGE.importdevs.setSuccessfully_text("");
 
     let fileInput = document.querySelector(
       ".default-file-input"
@@ -54,7 +55,9 @@ export class Opensvgfile extends React.Component<IProps> {
 
     uploadedFile.style.cssText = "display: none;";
     fileInput.value = "";
-    uploadIcon.innerHTML = "file_upload";
+    // uploadIcon.innerHTML = "file_upload";
+
+    APP_STORAGE.importdevs.setErrorSave_mess("");
   }
 
   private _handleFile = async (e: any) => {
@@ -91,7 +94,9 @@ export class Opensvgfile extends React.Component<IProps> {
     return (
       <React.Fragment>
         <Dialog
-          BackdropProps={{ style: { background: "rgba(0 0 0 / 12%)" } }}
+          componentsProps={{
+            backdrop: { style: { backgroundColor: "rgba(0 0 0 / 35%)" } },
+          }}
           open={APP_STORAGE.importdevs.getOpenModalSvg()}
           fullWidth
         >
@@ -101,10 +106,10 @@ export class Opensvgfile extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                m: "12px"
+                m: "12px",
               }}
             >
-              <Typography>Импортировать список устройств</Typography>
+              <Typography>Загрузить схему расположения</Typography>
 
               <CloseIcon
                 sx={{ color: "#1976D2" }}
@@ -124,7 +129,7 @@ export class Opensvgfile extends React.Component<IProps> {
                     {" "}
                     <span className="browse-files">
                       <input
-                        onInput={e => this._handleFile(e)}
+                        onInput={(e) => this._handleFile(e)}
                         type="file"
                         id="fileInput"
                         className="default-file-input"
@@ -199,39 +204,44 @@ export class Opensvgfile extends React.Component<IProps> {
                   </span>
                   <div className="progress-bar"> </div>
                 </div>
-                {APP_STORAGE.importdevs.getSuccessfully_text() && (
-                  <Typography
-                    sx={{
-                      p: "4px",
-                      m: "8px",
-                      textAlign: "center",
-                      color: "#FF0000",
-                      border: "1px solid #DF4040",
-                      borderColor: "#DF4040",
-                      borderRadius: "4px",
-                      background: "#FFD4D4",
-                      fontSize: "small"
-                    }}
-                  >
-                    {" "}
-                    {APP_STORAGE.importdevs.getSuccessfully_text()}
-                  </Typography>
-                )}
 
                 {/* <button type="button" className="upload-button" onClick={() => (this.uploadfile())}> Загрузить файл </button> */}
-                <Button onClick={() => this.uploadfile()} variant="contained">
+                <Button
+                  onClick={() => this.uploadfile()}
+                  variant="contained"
+                  sx={{ marginBottom: "12px" }}
+                >
                   {" "}
                   Сохранить
                 </Button>
-
-                <Box
+                {APP_STORAGE.importdevs.getErrorSave_mess().length > 0 && (
+                  <Stack sx={{ width: "100%" }} spacing={2}>
+                    <Alert severity="error">
+                      {APP_STORAGE.importdevs.getErrorSave_mess()}
+                    </Alert>
+                  </Stack>
+                )}
+                {APP_STORAGE.importdevs.getSuccessSave_mess().length > 0 && (
+                  <Stack sx={{ width: "100%" }} spacing={2}>
+                    <Alert severity="success">
+                      {APP_STORAGE.importdevs.getSuccessSave_mess()}
+                    </Alert>
+                  </Stack>
+                )}
+                <Stack sx={{ width: "100%" }} spacing={2}>
+                  <Alert severity="warning">
+                    Внимание! После нажатия на кнопку, отменить операцию будет
+                    невозможно.
+                  </Alert>
+                </Stack>
+                {/* <Box
                   sx={{
                     m: "8px",
                     background: "#eee",
                     display: "flex",
                     alignItems: "center",
                     borderRadius: "4px",
-                    p: "8px"
+                    p: "8px",
                   }}
                 >
                   <svg
@@ -261,7 +271,7 @@ export class Opensvgfile extends React.Component<IProps> {
                     Внимание! После нажатия на кнопку , отменить операцию будет
                     невозможно.
                   </FormHelperText>
-                </Box>
+                </Box> */}
               </div>
             </form>
           </Box>

@@ -2,15 +2,16 @@ import { observable, action, computed, makeAutoObservable } from "mobx";
 import { UsersEntity } from "../../../../xcore/dbase/Users";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../xcore/WSQuery";
 import { WSocket } from "../WSocket";
-import { api } from "../../api/api";
+import { api, api1 } from "../../api/api";
 import {
   getCookie,
   setCookie,
   deleteCookie,
   deleteAllCookies,
 } from "../browserCookes";
-import { ThumbUpSharp } from "@mui/icons-material";
+import { StoreMallDirectory, ThumbUpSharp } from "@mui/icons-material";
 import { CONFIG } from "../../../../xcore/config";
+import { SAVE_ERROR, SAVE_SUCCESS } from "../../../utils/consts";
 
 export class AuthFormStorage {
   @observable login: string = ""; //observable определяет отслеживаемое поле, в котором хранится состояние.
@@ -46,6 +47,11 @@ export class AuthFormStorage {
 
   @observable error_code: boolean = false; /// если поле КОД пусто,  помечаем поле как error
   @observable error_code_mess: string = ""; /// если поле КОД пусто, то отправляем сообщение об ошибке
+
+  @observable succesSave_mess: string = "";
+  @observable errorSave_mess: string = "";
+
+  @observable isLoad: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -207,6 +213,30 @@ export class AuthFormStorage {
     return this.code;
   }
 
+  @action setSuccessSave_mess(val: string) {
+    this.succesSave_mess = val;
+  }
+
+  @computed getSuccessSave_mess(): string {
+    return this.succesSave_mess;
+  }
+
+  @action setErrorSave_mess(val: string) {
+    this.errorSave_mess = val;
+  }
+
+  @computed getErrorSave_mess(): string {
+    return this.errorSave_mess;
+  }
+
+  @action setIsLoad(val: boolean) {
+    this.isLoad = val;
+  }
+
+  @computed getIsLoad(): boolean {
+    return this.isLoad;
+  }
+
   async get_UserByAuth() {
     var q: IWSQuery = new WSQuery("get_UserByAuth");
     q.args = { login: this.getLogin(), password: this.getPassword() };
@@ -242,10 +272,10 @@ export class AuthFormStorage {
 
   async set_SaveNewPass() {
     if (
-      this.getLogin() !== "" &&
-      this.getNewPass() !== "" &&
-      this.getRepeatPass() !== "" &&
-      this.getNewPass() === this.getRepeatPass() &&
+      // this.getLogin() !== "" &&
+      // this.getNewPass() !== "" &&
+      // this.getRepeatPass() !== "" &&
+      // this.getNewPass() === this.getRepeatPass() &&
       this.getCode() !== ""
     ) {
       var q: IWSQuery = new WSQuery("set_SaveNewPass");
@@ -256,10 +286,23 @@ export class AuthFormStorage {
         code: this.getCode(),
       };
       // (await WSocket.get()).send(q);
-      api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
-      
+      api
+        .fetch(q)
+        .then(() => {
+          this.setSuccessSave_mess(SAVE_SUCCESS);
+          setTimeout(() => {
+            window.location.assign(`http://${CONFIG.host}:${CONFIG.port}`);
+            this.setSuccessSave_mess("");
+          }, 2000);
+        })
+        .catch((e) => {
+          console.log("error=>", e);
+          this.setErrorSave_mess(SAVE_ERROR);
+          setTimeout(() => {
+            this.setErrorSave_mess("");
+          }, 2000);
+        }); // fetch-запрос
     }
-
   }
 
   setUserWS(dt: IWSResult) {

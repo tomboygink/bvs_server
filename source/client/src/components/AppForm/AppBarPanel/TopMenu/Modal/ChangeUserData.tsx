@@ -16,6 +16,8 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import SaveIcon from "@mui/icons-material/Save";
 
 import { Route } from "react-router-dom";
+import { TextInput } from "../../../../shared/TextInput";
+import TelInput from "../../../../shared/TelInput";
 
 interface IProps {}
 
@@ -62,48 +64,30 @@ export class ChangeUserData extends React.Component<IProps> {
     return (
       <React.Fragment>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <TextField
-            inputProps={{ style: { fontSize: 12 } }} // font size of input text
-            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-            variant="outlined"
-            margin="normal"
-            required
+          <TextInput
             label="Фамилия"
-            autoComplete="фамилия"
-            autoFocus
-            size="small"
+            fullWidth={false}
+            error={APP_STORAGE.modal.getError_family()}
+            helperText={APP_STORAGE.modal.getTextHelpFamily()}
             onChange={(e) => {
               APP_STORAGE.modal.setFamily(e.target.value);
             }}
             value={APP_STORAGE.modal.getFamily() || ""}
           />
-
-          <TextField
-            inputProps={{ style: { fontSize: 12 } }} // font size of input text
-            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-            variant="outlined"
-            margin="normal"
-            required
+          <TextInput
             label="Имя"
-            autoComplete="имя"
-            autoFocus
-            size="small"
+            fullWidth={false}
+            error={APP_STORAGE.modal.getError_name()}
+            helperText={APP_STORAGE.modal.getTextHelpName()}
             onChange={(e) => {
               APP_STORAGE.modal.setName(e.target.value);
             }}
             value={APP_STORAGE.modal.getName() || ""}
           />
-
-          <TextField
-            inputProps={{ style: { fontSize: 12 } }} 
-            InputLabelProps={{ style: { fontSize: 12 } }}
-            variant="outlined"
-            margin="normal"
-            required
+          <TextInput
             label="Отчество"
-            autoComplete="отчество"
-            autoFocus
-            size="small"
+            required={false}
+            fullWidth={false}
             onChange={(e) => {
               APP_STORAGE.modal.setFather(e.target.value);
             }}
@@ -112,10 +96,22 @@ export class ChangeUserData extends React.Component<IProps> {
         </Box>
 
         <Box sx={{ display: "flex" }}>
-          <TextField
+          <TextInput
+            label="E-mail"
+            error={APP_STORAGE.modal.getError_email()}
+            helperText={
+              APP_STORAGE.modal.getEmail_message() ||
+              APP_STORAGE.modal.getCmdErrData()
+            }
+            onChange={(e) => {
+              APP_STORAGE.modal.setEmail(e.target.value);
+            }}
+            value={APP_STORAGE.modal.getEmail() || ""}
+          />
+          {/* <TextField
             sx={{ mt: "12px" }}
-            inputProps={{ style: { fontSize: 12 } }} 
-            InputLabelProps={{ style: { fontSize: 12 } }} 
+            inputProps={{ style: { fontSize: 12 } }}
+            InputLabelProps={{ style: { fontSize: 12 } }}
             variant="outlined"
             fullWidth
             required
@@ -132,7 +128,7 @@ export class ChangeUserData extends React.Component<IProps> {
               APP_STORAGE.modal.setEmail(e.target.value);
             }}
             value={APP_STORAGE.modal.getEmail() || ""}
-          />
+          /> */}
           <Checkbox
             checked={APP_STORAGE.auth_form.getUser().act_mail}
             id="myCheck"
@@ -140,11 +136,24 @@ export class ChangeUserData extends React.Component<IProps> {
             inputProps={{ "aria-label": "controlled" }}
           />
         </Box>
+        <TextInput
+          label="Телефон"
+          InputProps={{
+            inputComponent: TelInput as any,
+            style: { fontSize: 12 },
+          }}
+          error={APP_STORAGE.modal.getError_phone()}
+          helperText={APP_STORAGE.modal.getPhone_message()}
+          onChange={(e) => {
+            APP_STORAGE.modal.setTelephone(e.target.value);
+          }}
+          value={APP_STORAGE.modal.getTelephone()}
+        />
 
-        <TextField
+        {/* <TextField
           sx={{ mt: "14px" }}
-          inputProps={{ style: { fontSize: 12 } }} 
-          InputLabelProps={{ style: { fontSize: 12 } }} 
+          inputProps={{ style: { fontSize: 12 } }}
+          InputLabelProps={{ style: { fontSize: 12 } }}
           variant="outlined"
           fullWidth
           required
@@ -158,10 +167,7 @@ export class ChangeUserData extends React.Component<IProps> {
             APP_STORAGE.modal.setTelephone(e.target.value);
           }}
           value={APP_STORAGE.modal.getTelephone()}
-        />
-        <FormHelperText sx={{ ml: "12px" }}>
-          номер телефона должен содержать 10 символов.
-        </FormHelperText>
+        /> */}
 
         <Box>
           <Box

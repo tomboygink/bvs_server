@@ -1,24 +1,26 @@
 import * as React from "react";
 
-import { Divider, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material";
+import {
+  Divider,
+  IconButton,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { observer } from "mobx-react";
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
 
-import { TDGroup, TDevsGroup } from "../../../../../storage/components/Devs/DevEntityes";
+import {
+  TDGroup,
+  TDevsGroup,
+} from "../../../../../storage/components/Devs/DevEntityes";
 
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices';
+import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-
-
-
-
-
-
-
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 interface IProps {}
 
@@ -29,22 +31,23 @@ export class MenuDevs extends React.Component<IProps> {
     super(props);
   }
 
-  async editDevice(a:any) { /////////////////////////////////////////Кнопка редактирования
+  async editDevice(a: any) {
+    /////////////////////////////////////////Кнопка редактирования
     APP_STORAGE.devs.setMenu_devs(a);
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
-    return this.PassValueEditForm(DevGr); 
+    return this.PassValueEditForm(DevGr);
   }
-
- 
 
   async set_NewControlDevSess() {
     //APP_STORAGE.devs.set_NewControlDevSess("sess_id", APP_STORAGE.auth_form.getdt())
   }
 
-  async deleteControlDevSess(){
-     APP_STORAGE.devs.deleteControlDevSess("sess_id", APP_STORAGE.auth_form.getdt())
-
+  async deleteControlDevSess() {
+    APP_STORAGE.devs.deleteControlDevSess(
+      "sess_id",
+      APP_STORAGE.auth_form.getdt()
+    );
   }
 
   PassValueEditForm(dgrs: TDevsGroup[]) {
@@ -62,13 +65,15 @@ export class MenuDevs extends React.Component<IProps> {
       parent.push(childs);
       for (var key in gr_devs) {
         if (
-          "_dev_id_key_" + gr_devs[key].id === APP_STORAGE.devs.getIdChild()
+          "_dev_id_key_" + gr_devs[key].id ===
+          APP_STORAGE.devs.getIdChild()
         ) {
           dev.setNumber(String(gr_devs[key].number));
-          devGr.setParentId('key-09');
+          dev.setDefaultNumber(String(gr_devs[key].number));
+          devGr.setParentId("key-09");
           dev.setName(String(gr_devs[key].name));
           APP_STORAGE.devs_groups.setName(gr_devs[key].name);
-          APP_STORAGE.devs_groups.setKeyOrg(gr.org_id)
+          APP_STORAGE.devs_groups.setKeyOrg(gr.org_id);
           dev.setLongitude(String(gr_devs[key].longitude));
           dev.setLatitude(String(gr_devs[key].latitude));
           dev.setInfo(String(gr_devs[key].info));
@@ -76,137 +81,117 @@ export class MenuDevs extends React.Component<IProps> {
           dev.setId(String(gr_devs[key].id));
           dev.setGroupDevId(String(gr_devs[key].group_dev_id));
           dev.setCheckboxEd(gr_devs[key].deleted);
-            
 
-      if(dev.getMenu_devs() === '1')
-          {dev.setOpenModalChange(true);
+          if (dev.getMenu_devs() === "1") {
+            dev.setOpenModalChange(true);
             devGr.setOpen_menu(false);
           }
-      if(dev.getMenu_devs() === '2'){
-        devGr.setOpenModalMoveDevsGr(true);APP_STORAGE.devs.getOpenNewdevpovs()
-        devGr.setOpen_menu(false);
+          if (dev.getMenu_devs() === "2") {
+            devGr.setOpenModalMoveDevsGr(true);
+            APP_STORAGE.devs.getOpenNewdevpovs();
+            devGr.setOpen_menu(false);
           }
-        
-      if(dev.getMenu_devs() === '3'){
-        // this.set_NewDevPovs()
-        APP_STORAGE.devs.setOpenNewdevpovs(true);
-      }
 
-      if(dev.getMenu_devs() === '4'){
-        this.set_NewControlDevSess();
-      }
+          if (dev.getMenu_devs() === "3") {
+            // this.set_NewDevPovs()
+            APP_STORAGE.devs.setOpenNewdevpovs(true);
+          }
 
-      if(dev.getMenu_devs() === '5'){
-         this.deleteControlDevSess();
+          if (dev.getMenu_devs() === "4") {
+            this.set_NewControlDevSess();
+          }
 
-     
-      }
+          if (dev.getMenu_devs() === "5") {
+            this.deleteControlDevSess();
+          }
         }
       }
     }
     return parent;
   }
 
-
-
   render(): React.ReactNode {
     var devGr = APP_STORAGE.devs_groups;
 
-
-
     return (
-<div>
-                                      <IconButton
-                                      onClick={() => {
-                                        devGr.setOpen_menu(true);
-                                      }}
-                                      id="long-button555"
-                                      aria-label="more"
-                                      aria-controls={open ? "long-menu" : undefined}
-                                      aria-expanded={open ? "true" : undefined}
-                                      aria-haspopup="true"
-                                      >
-                                      <MoreVertIcon />
-                                      </IconButton>
-                                      <Menu
-                                      id="long-menu"
-                                      MenuListProps={{
-                                      "aria-labelledby": "long-button",
-                                      }}
-                                      anchorEl={document.getElementById("long-button555")}
-                                      open={devGr.getOpen_menu()}
-                                      onClose={() => {
-                                      devGr.setOpen_menu(false);
-                                      }}
-                                      >
-                                      <MenuItem onClick={() => this.editDevice('1')}>
-                                      <ListItemIcon>
-                                      <ModeEditRoundedIcon fontSize="small" />
-                                      </ListItemIcon>{" "}
-                                      Редактировать
-                                      </MenuItem>
+      <div>
+        <IconButton
+          onClick={() => {
+            devGr.setOpen_menu(true);
+          }}
+          id="long-button555"
+          aria-label="more"
+          aria-controls={open ? "long-menu" : undefined}
+          aria-expanded={open ? "true" : undefined}
+          aria-haspopup="true"
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          id="long-menu"
+          MenuListProps={{
+            "aria-labelledby": "long-button",
+          }}
+          anchorEl={document.getElementById("long-button555")}
+          open={devGr.getOpen_menu()}
+          onClose={() => {
+            devGr.setOpen_menu(false);
+          }}
+        >
+          <MenuItem onClick={() => this.editDevice("1")}>
+            <ListItemIcon>
+              <ModeEditRoundedIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            Редактировать
+          </MenuItem>
 
-                                      <MenuItem onClick={() => this.editDevice('2')} >
-                                      <ListItemIcon>
-                                      <LogoutRoundedIcon fontSize="small" />
-                                      </ListItemIcon>{" "}
-                                      Переместить
-                                      </MenuItem>
+          <MenuItem onClick={() => this.editDevice("2")}>
+            <ListItemIcon>
+              <LogoutRoundedIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            Переместить
+          </MenuItem>
 
-                                      <Divider/>
+          <Divider />
 
-                                      <MenuItem onClick={() => this.editDevice('3')} >
-                                      <ListItemIcon>
-                                      <MiscellaneousServicesIcon fontSize="small" />
-                                      </ListItemIcon>{" "}
-                                      Поверочный интервал
-                                      </MenuItem>
+          <MenuItem onClick={() => this.editDevice("3")}>
+            <ListItemIcon>
+              <MiscellaneousServicesIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            Поверочный интервал
+          </MenuItem>
 
-                                   
-                  {APP_STORAGE.sensors.getIdFirstSess() !== APP_STORAGE.sensors.getIdLastSess() && 
+          {APP_STORAGE.sensors.getIdFirstSess() !==
+            APP_STORAGE.sensors.getIdLastSess() && (
+            <MenuItem onClick={() => this.editDevice("5")} sx={{ mb: "8px" }}>
+              <ListItemIcon>
+                <DeleteOutlineIcon fontSize="small" />
+                Удалить контрольную сессию
+              </ListItemIcon>
+            </MenuItem>
+          )}
 
-<MenuItem onClick={() => this.editDevice('5')} sx = {{mb: '8px'}}>
-<ListItemIcon>
-  <DeleteOutlineIcon fontSize= "small" />
-  Удалить контрольную сессию
-</ListItemIcon>
-</MenuItem >
-                  }
+          {APP_STORAGE.sensors.getIdFirstSess() ===
+            APP_STORAGE.sensors.getIdLastSess() && (
+            <MenuItem
+              onClick={() => this.editDevice("5")}
+              sx={{ mb: "8px", color: "#212121" }}
+            >
+              <ListItemIcon>
+                <DeleteOutlineIcon fontSize="small" />
+                Контрольная сессия не установлена
+              </ListItemIcon>
+            </MenuItem>
+          )}
 
-{APP_STORAGE.sensors.getIdFirstSess() === APP_STORAGE.sensors.getIdLastSess() && 
-
-<MenuItem onClick={() => this.editDevice('5')} sx = {{mb: '8px', color: '#212121'}}>
-<ListItemIcon>
-  <DeleteOutlineIcon fontSize= "small" />
-  Контрольная сессия не установлена
-</ListItemIcon>
-
-
-</MenuItem >
-                  }
-                                  
-
-                                      {/* <TableCell component="th" scope="row"  >
+          {/* <TableCell component="th" scope="row"  >
                             <Button  sx={{fontSize: '12px'}} onClick={() => {
                             this.set_NewControlDevSess(row.id, row.dev_id, row.dev_number);
                           }}> установить </Button>
                             
                           </TableCell> */}
-                                      </Menu>
-                                      </div>
-    
+        </Menu>
+      </div>
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-

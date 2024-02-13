@@ -16,14 +16,21 @@ class AppServer {
     this.server = http.createServer(this.app);
     this.app.set("view engine", "hbs");
 
-    console.log(path.normalize(path.join(__dirname,"..","..","views")));
+    console.log(path.normalize(path.join(__dirname, "..", "..", "views")));
 
-    this.app.set("views", path.normalize(path.join(__dirname,"..","..","views"))); // путь к шаблонам
-    hbs.registerPartials(path.normalize(path.join(__dirname, "..", "..", "views", "partials"))); // путь к частичным представлениям
+    this.app.set(
+      "views",
+      path.normalize(path.join(__dirname, "..", "..", "views"))
+    ); // путь к шаблонам
+    hbs.registerPartials(
+      path.normalize(path.join(__dirname, "..", "..", "views", "partials"))
+    ); // путь к частичным представлениям
 
-    this.app.use("/static", express.static(path.normalize(path.join(__dirname, "..", "..", "public")))); // статика
+    this.app.use(
+      "/static",
+      express.static(path.normalize(path.join(__dirname, "..", "..", "public")))
+    ); // статика
   }
-
 
   run() {
     if (this.app === null) return;

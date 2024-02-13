@@ -12,32 +12,27 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Alert,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  FormGroup,
 } from "@mui/material";
 
-import FormGroup from "@mui/material/FormGroup";
-import Stack from "@mui/material/Stack";
 import { AntSwitch } from "../../../AppBarPanel/LeftPanel/RegistationUsers/switch";
-
-import CloseIcon from "@mui/icons-material/Close";
-import { APP_STORAGE } from "../../../../../storage/AppStorage";
-
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import { TableCell } from "@mui/material";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-
-import Paper from "@mui/material/Paper";
-
-import SensorsIcon from "@mui/icons-material/Sensors";
-
-import { Change_ModalSensors } from "./AddSensorsModal";
-
 import AddIcon from "@mui/icons-material/Add";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-
-import { TDSensor } from "../../../../../storage/components/Devs/DevEntityes";
+import CloseIcon from "@mui/icons-material/Close";
+import { APP_STORAGE } from "../../../../../storage/AppStorage";
+import { Change_ModalSensors } from "./AddSensorsModal";
+import LongInput from "../../../../shared/LongInput";
+import LatInput from "../../../../shared/LatInput";
+import { TextInput } from "../../../../shared/TextInput";
 
 interface IProps {}
 
@@ -100,12 +95,6 @@ export class ChangeDevsModal extends React.Component<IProps> {
 
   async ChangeDevs() {
     APP_STORAGE.devs.set_ChangeDevs("sess_id", APP_STORAGE.auth_form.getdt());
-    setTimeout(() => {
-      APP_STORAGE.devs_groups.get_DevsGroups(
-        "sess_id",
-        APP_STORAGE.auth_form.getdt()
-      );
-    }, 500);
   }
 
   async SelectedPeriodSess(a: any) {
@@ -296,7 +285,9 @@ export class ChangeDevsModal extends React.Component<IProps> {
     return (
       <React.Fragment>
         <Dialog
-          BackdropProps={{ style: { background: "rgba(0 0 0 / 12%)" } }}
+          componentsProps={{
+            backdrop: { style: { backgroundColor: "rgba(0 0 0 / 35%)" } },
+          }}
           open={APP_STORAGE.devs.getOpenModalChange()}
           PaperProps={{
             sx: {
@@ -326,6 +317,15 @@ export class ChangeDevsModal extends React.Component<IProps> {
             <Divider sx={{ marginBottom: "20px" }} />
 
             {group_devs}
+            {/* <TextInput
+              label="Номер устройства"
+              error={APP_STORAGE.devs.getNumberError()}
+              helperText={APP_STORAGE.devs.getNumberError_mess()}
+              onChange={(e) => {
+                APP_STORAGE.devs.setNumber(e.target.value);
+              }}
+              value={APP_STORAGE.devs.getNumber()}
+            /> */}
 
             <TextField
               sx={{ mt: "14px" }}
@@ -337,7 +337,6 @@ export class ChangeDevsModal extends React.Component<IProps> {
               fullWidth
               required
               label="Номер устройства"
-              autoComplete="Номер устройства"
               autoFocus
               size="small"
               onChange={(e) => {
@@ -352,12 +351,10 @@ export class ChangeDevsModal extends React.Component<IProps> {
               InputLabelProps={{ style: { fontSize: 12 } }}
               variant="outlined"
               error={APP_STORAGE.devs.getNameError()}
-              helperText={APP_STORAGE.devs.getNamaError_mess()}
+              helperText={APP_STORAGE.devs.getNameError_mess()}
               fullWidth
               required
               label="Название устройства "
-              autoComplete="Название устройства"
-              autoFocus
               size="small"
               onChange={(e) => {
                 APP_STORAGE.devs.setName(e.target.value);
@@ -367,26 +364,10 @@ export class ChangeDevsModal extends React.Component<IProps> {
 
             <TextField
               sx={{ mt: "14px" }}
-              inputProps={{ style: { fontSize: 12 } }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
-              error={APP_STORAGE.devs.getLongitudeError()}
-              helperText={APP_STORAGE.devs.getLongitudeError_mess()}
-              fullWidth
-              required
-              label="Долгота"
-              autoComplete="долгота"
-              autoFocus
-              size="small"
-              onChange={(e) => {
-                APP_STORAGE.devs.setLongitude(e.target.value);
+              InputProps={{
+                style: { fontSize: 12 },
+                inputComponent: LatInput as any,
               }}
-              value={APP_STORAGE.devs.getLongitude()}
-            />
-
-            <TextField
-              sx={{ mt: "14px" }}
-              inputProps={{ style: { fontSize: 12 } }}
               InputLabelProps={{ style: { fontSize: 12 } }}
               variant="outlined"
               error={APP_STORAGE.devs.getLatitudeError()}
@@ -394,13 +375,29 @@ export class ChangeDevsModal extends React.Component<IProps> {
               fullWidth
               required
               label="Широта"
-              autoComplete="широта"
-              autoFocus
               size="small"
               onChange={(e) => {
                 APP_STORAGE.devs.setLatitude(e.target.value);
               }}
               value={APP_STORAGE.devs.getLatitude()}
+            />
+            <TextField
+              sx={{ mt: "14px", fontSize: "12px" }}
+              InputProps={{
+                inputComponent: LongInput as any,
+              }}
+              InputLabelProps={{ style: { fontSize: 12 } }}
+              variant="outlined"
+              error={APP_STORAGE.devs.getLongitudeError()}
+              helperText={APP_STORAGE.devs.getLongitudeError_mess()}
+              fullWidth
+              required
+              label="Долгота"
+              size="small"
+              onChange={(e) => {
+                APP_STORAGE.devs.setLongitude(e.target.value);
+              }}
+              value={APP_STORAGE.devs.getLongitude()}
             />
             <Divider sx={{ padding: "12px" }} />
             <Typography sx={{ color: "#999999" }} variant="caption">
@@ -420,9 +417,9 @@ export class ChangeDevsModal extends React.Component<IProps> {
             <Box
               sx={{ border: "1px solid #eee", p: "12px", borderRadius: "4px" }}
             >
-              <Box sx={{ pb: "12px" }}>
+              <Typography sx={{ pb: "12px", fontSize: "12px" }}>
                 Список сенсоров на устройстве : {count}
-              </Box>
+              </Typography>
               <TableContainer component={Paper} sx={{ maxHeight: "150px" }}>
                 <Table aria-label="caption table">
                   <TableBody>{depth_sensors}</TableBody>
@@ -441,9 +438,9 @@ export class ChangeDevsModal extends React.Component<IProps> {
                 <AntSwitch
                   checked={APP_STORAGE.devs.getCheckboxEd()}
                   // Закомментировано для запуска
-                  // onChange={editing => {
-                  //   this.ChekedForEdit(editing);
-                  // }}
+                  onChange={(editing) => {
+                    this.ChekedForEdit(editing);
+                  }}
                 />
               </Stack>
             </FormGroup>
@@ -499,6 +496,20 @@ export class ChangeDevsModal extends React.Component<IProps> {
                 Сохранить
               </Button>
             </Box>
+            {APP_STORAGE.devs.getSuccessSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="success">
+                  {APP_STORAGE.devs.getSuccessSave_mess()}
+                </Alert>
+              </Stack>
+            )}
+            {APP_STORAGE.devs.getErrorSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">
+                  {APP_STORAGE.devs.getErrorSave_mess()}
+                </Alert>
+              </Stack>
+            )}
           </Box>
         </Dialog>
       </React.Fragment>

@@ -1,9 +1,15 @@
 import { observable, action, computed, makeAutoObservable, toJS } from "mobx";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
-import { api } from "../../../api/api";
+import { api, api1 } from "../../../api/api";
 import { APP_STORAGE } from "../../AppStorage";
 import { TDGroup } from "./DevEntityes";
+import {
+  EMPTY_FIELD_ERROR,
+  SAVE_ERROR,
+  SAVE_SUCCESS,
+  DOEBL_NUMBER_ERROR,
+} from "../../../../utils/consts";
 
 export class DevsStorage {
   @observable gr: TDGroup = {
@@ -52,6 +58,7 @@ export class DevsStorage {
   @observable id: string = "";
   @observable group_dev_id = "";
   @observable number: string = "";
+  @observable default_number: string = "";
   @observable name: string = "";
   @observable latitude: string = "";
   @observable longitude: string = "";
@@ -99,7 +106,11 @@ export class DevsStorage {
 
   @observable top_menu_dev: string = "top_menu-1";
 
-  @observable period_sess: number = 0;
+  @observable period_sess: number = 1;
+
+  @observable errorSave_mess: string = "";
+
+  @observable successSave_mess: string = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -252,7 +263,12 @@ export class DevsStorage {
   @computed getNumber(): string {
     return this.number;
   }
-
+  @action setDefaultNumber(val: string) {
+    this.default_number = val;
+  }
+  @computed getDefaultNumber(): string {
+    return this.default_number;
+  }
   @action setName(val: string) {
     this.name = val;
   }
@@ -388,7 +404,7 @@ export class DevsStorage {
   @action setNameError_mess(val: string) {
     this.name_err_mess = val;
   }
-  @computed getNamaError_mess(): string {
+  @computed getNameError_mess(): string {
     return this.name_err_mess;
   }
 
@@ -460,6 +476,23 @@ export class DevsStorage {
     return this.period_sess;
   }
 
+  //Сообщение при отправке формы
+
+  @action setSuccessSave_mess(val: string) {
+    this.successSave_mess = val;
+  }
+
+  @computed getSuccessSave_mess(): string {
+    return this.successSave_mess;
+  }
+
+  @action setErrorSave_mess(val: string) {
+    this.errorSave_mess = val;
+  }
+
+  @computed getErrorSave_mess(): string {
+    return this.errorSave_mess;
+  }
   // Где используется?
   async get_Devs(name: string, value: any, _options?: any) {
     var sess_code = value;
@@ -523,55 +556,95 @@ export class DevsStorage {
     }
     this.setLatitude(lat);
     this.setLongitude(lng);
-
-    if (this.getNumber() === "") {
-      this.setNumberError(true);
-      this.setNumberError_mess("Поле не может быть пустым");
-    }
-
-    if (this.getNumber() !== "") {
+    if (this.getNumber().trim()) {
       this.setNumberError(false);
       this.setNumberError_mess("");
+    } else {
+      this.setNumberError(true);
+      this.setNumberError_mess(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getName() === "") {
-      this.setNameError(true);
-      this.setNameError_mess("Поле не может быть пустым");
-    }
-
-    if (this.getName() !== "") {
+    if (this.getName().trim()) {
       this.setNameError(false);
       this.setNameError_mess("");
+    } else {
+      this.setNameError(true);
+      this.setNameError_mess(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getLatitude() === "") {
-      this.setLatitudeError(true);
-      this.setLatitudeError_mess("Поле не может быть пустым");
-    }
-
-    if (this.getLatitude() !== "") {
+    if (this.getLatitude()) {
       this.setLatitudeError(false);
       this.setLatitudeError_mess("");
+    } else {
+      this.setLatitudeError(true);
+      this.setLatitudeError_mess(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getLongitude() === "") {
-      this.setLongitudeError(true);
-      this.setLongitudeError_mess("Поле не может быть пустым");
-    }
-
-    if (this.getLongitude() !== "") {
+    if (this.getLongitude()) {
       this.setLongitudeError(false);
       this.setLongitudeError_mess("");
+    } else {
+      this.setLongitudeError(true);
+      this.setLongitudeError_mess(EMPTY_FIELD_ERROR);
     }
+    const isValidValues = () => {
+      return (
+        !this.getNumberError() &&
+        !this.getNameError() &&
+        !this.getLongitudeError() &&
+        !this.getLatitudeError()
+      );
+    };
+
+    // if (this.getNumber() === "") {
+    //   this.setNumberError(true);
+    //   this.setNumberError_mess("Поле не может быть пустым");
+    // }
+
+    // if (this.getNumber() !== "") {
+    //   this.setNumberError(false);
+    //   this.setNumberError_mess("");
+    // }
+
+    // if (this.getName() === "") {
+    //   this.setNameError(true);
+    //   this.setNameError_mess("Поле не может быть пустым");
+    // }
+
+    // if (this.getName() !== "") {
+    //   this.setNameError(false);
+    //   this.setNameError_mess("");
+    // }
+
+    // if (this.getLatitude() === "") {
+    //   this.setLatitudeError(true);
+    //   this.setLatitudeError_mess("Поле не может быть пустым");
+    // }
+
+    // if (this.getLatitude() !== "") {
+    //   this.setLatitudeError(false);
+    //   this.setLatitudeError_mess("");
+    // }
+
+    // if (this.getLongitude() === "") {
+    //   this.setLongitudeError(true);
+    //   this.setLongitudeError_mess("Поле не может быть пустым");
+    // }
+
+    // if (this.getLongitude() !== "") {
+    //   this.setLongitudeError(false);
+    //   this.setLongitudeError_mess("");
+    // }
 
     var sess_code = value;
     var q: IWSQuery = new WSQuery("set_NewDevs");
 
     if (
-      this.getNumber() !== "" &&
-      this.getName() !== "" &&
-      this.getLatitude() !== "" &&
-      this.getLongitude() !== ""
+      isValidValues()
+      // this.getNumber() !== "" &&
+      // this.getName() !== "" &&
+      // this.getLatitude() !== "" &&
+      // this.getLongitude() !== ""
     ) {
       q.args = {
         group_dev_id: this.getIdDevs(),
@@ -586,26 +659,43 @@ export class DevsStorage {
       };
       q.sess_code = sess_code;
       // (await WSocket.get()).send(q);
+
       api
         .fetch(q)
         .then(() => {
+          APP_STORAGE.devs_groups.get_DevsGroups(
+            "sess_id",
+            APP_STORAGE.auth_form.getdt()
+          );
+          if (!APP_STORAGE.shared_store.getErrorResponseMess()) {
+            this.setSuccessSave_mess(SAVE_SUCCESS);
+          } else {
+            setTimeout(() => {
+              APP_STORAGE.shared_store.setErrorResponseMess("");
+            }, 2000);
+          }
           this.setName("");
           this.setNumber("");
           this.setLatitude("");
           this.setLongitude("");
           this.setInfo("");
           this.setArray([]);
+          APP_STORAGE.setNotifications(true); // нужно?
 
-          APP_STORAGE.setNotifications(true);
-
-          setTimeout(() => {
-            APP_STORAGE.setNotifications(false);
-          }, 1000);
           setTimeout(() => {
             this.setOpenModal(false);
-          }, 1000);
+            this.setSuccessSave_mess("");
+            this.setErrorSave_mess("");
+            APP_STORAGE.setNotifications(false);
+          }, 2000);
         })
-        .catch((e) => console.log("error=>", e)); //fetch-запрос
+        .catch((e) => {
+          console.log("error=>", e);
+          this.setErrorSave_mess(SAVE_ERROR);
+          setTimeout(() => {
+            this.setErrorSave_mess("");
+          }, 2000);
+        }); //fetch-запрос
       // this.setName("");
       // this.setNumber("");
       // this.setLatitude("");
@@ -643,20 +733,30 @@ export class DevsStorage {
   }
 
   async set_ChangeDevs(name: string, value: any, _options?: any) {
+    const numbers = APP_STORAGE.devs_groups.getNumbers();
     let lat: any;
     let lng: any;
+
     let latnumber = this.getLatitude().replace(/[^\d\.,]/g, ""); //// только цифты
     let latchar = latnumber.replace(/,/g, "."); //// то
-    if (latchar.match(/\./g).length > 1) {
-      lat = latchar.substr(0, latchar.lastIndexOf("."));
+
+    let latArr = latchar.match(/\./g) || [];
+    // if (latchar.match(/\./g).length > 1)
+    if (latArr.length > 1) {
+      // lat = latchar.substr(0, latchar.lastIndexOf("."));
+      lat = latchar.substring(0, latchar.lastIndexOf("."));
     } else {
       lat = latchar;
     }
 
     let lngnumber = this.getLongitude().replace(/[^\d\.,]/g, ""); //// только цифты
     let lngchar = lngnumber.replace(/,/g, "."); //// то
-    if (lngchar.match(/\./g).length > 1) {
-      lng = lngchar.substr(0, latchar.lastIndexOf("."));
+    let lngArr = lngchar.match(/\./g) || [];
+
+    //if (lngchar.match(/\./g).length > 1)
+    if (lngArr.length > 1) {
+      // lng = lngchar.substr(0, latchar.lastIndexOf("."));
+      lng = lngchar.substring(0, latchar.lastIndexOf("."));
     } else {
       lng = lngchar;
     }
@@ -672,48 +772,70 @@ export class DevsStorage {
     this.setLongitude(lng);
 
     var sess_code = value;
-    if (this.getNumber() === "") {
-      this.setNumberError(true);
-      this.setNumberError_mess("Необходимо ввести номер устройства");
+
+    // if (this.getNumber().trim()) {
+    //   this.setNumberError(false);
+    //   this.setNumberError_mess("");
+    // } else {
+    //   this.setNumberError(true);
+    //   this.setNumberError_mess(EMPTY_FIELD_ERROR);
+    // }
+
+    if (this.getName().trim()) {
+      this.setNameError(false);
+      this.setNameError_mess("");
+    } else {
+      this.setNameError(true);
+      this.setNameError_mess(EMPTY_FIELD_ERROR);
     }
-    if (this.getNumber() !== "") {
+
+    if (this.getLatitude()) {
+      this.setLatitudeError(false);
+      this.setLatitudeError_mess("");
+    } else {
+      this.setLatitudeError(true);
+      this.setLatitudeError_mess(EMPTY_FIELD_ERROR);
+    }
+
+    if (this.getLongitude()) {
+      this.setLongitudeError(false);
+      this.setLongitudeError_mess("");
+    } else {
+      this.setLongitudeError(true);
+      this.setLongitudeError_mess(EMPTY_FIELD_ERROR);
+    }
+
+    // Проверка на совпадения по номерам
+    if (!this.getNumber().trim()) {
+      this.setNumberError(true);
+      this.setNumberError_mess(EMPTY_FIELD_ERROR);
+    } else if (
+      this.getNumber() !== this.getDefaultNumber() &&
+      numbers.includes(this.getNumber())
+    ) {
+      this.setNumberError(true);
+      this.setNumberError_mess(DOEBL_NUMBER_ERROR);
+    } else {
       this.setNumberError(false);
       this.setNumberError_mess("");
     }
 
-    if (this.getName() === "") {
-      this.setNameError(true);
-      this.setNameError_mess("Необходимо ввести название устройства");
-    }
-    if (this.getName() !== "") {
-      this.setNameError(false);
-      this.setNameError_mess("");
-    }
-
-    if (this.getLatitude() === "") {
-      this.setLatitudeError(true);
-      this.setLatitudeError_mess("Поле не должно быть пустым");
-    }
-    if (this.getLatitude() !== "") {
-      this.setLatitudeError(false);
-      this.setLatitudeError_mess("");
-    }
-
-    if (this.getLongitude() === "") {
-      this.setLongitudeError(true);
-      this.setLongitudeError_mess("Поле не должно быть пустым");
-    }
-    if (this.getLongitude() !== "") {
-      this.setLongitudeError(false);
-      this.setLongitudeError_mess("");
-    }
+    const isValidValues = () => {
+      return (
+        !this.getNumberError() &&
+        !this.getNameError() &&
+        !this.getLongitudeError() &&
+        !this.getLatitudeError()
+      );
+    };
 
     var q: IWSQuery = new WSQuery("set_ChangeDevs");
     if (
-      this.getNumber() &&
-      this.getName() !== "" &&
-      this.getLatitude() !== "" &&
-      this.getLongitude() !== ""
+      isValidValues()
+      // this.getNumber() &&
+      // this.getName() !== "" &&
+      // this.getLatitude() !== "" &&
+      // this.getLongitude() !== ""
     ) {
       q.args = {
         id: this.getId() || "",
@@ -732,8 +854,31 @@ export class DevsStorage {
       // (await WSocket.get()).send(q);
       api
         .fetch(q)
-        .then(() => this.setOpenModalChange(false))
-        .catch((e) => console.log("error=>", e)); // fetch-запрос
+        .then(() => {
+          if (APP_STORAGE.shared_store.getErrorResponseMess().length === 0) {
+            APP_STORAGE.devs_groups.get_DevsGroups(
+              "sess_id",
+              APP_STORAGE.auth_form.getdt()
+            );
+            this.setSuccessSave_mess(SAVE_SUCCESS);
+            setTimeout(() => {
+              this.setSuccessSave_mess("");
+              this.setOpenModalChange(false);
+            }, 2000);
+          } else {
+            this.setErrorSave_mess(SAVE_ERROR);
+            setTimeout(() => {
+              this.setErrorSave_mess("");
+            }, 2000);
+          }
+        })
+        .catch((e) => {
+          console.log("error=>", e);
+          this.setErrorSave_mess(SAVE_ERROR);
+          setTimeout(() => {
+            this.setErrorSave_mess("");
+          }, 2000);
+        }); // fetch-запрос
 
       // setTimeout(() => {
       //   this.setOpenModalChange(false);

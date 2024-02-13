@@ -615,6 +615,7 @@ export class DevLocation extends React.Component<IProps> {
           {" "}
           Данные по расположению устройства{" "}
         </Typography>
+
         {this.drawDevLocation()}
       </React.Fragment>
     );

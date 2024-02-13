@@ -9,9 +9,23 @@ import {
 import { IWSQuery, WSQuery, IWSResult } from "../../../../xcore/WSQuery";
 import { WSocket } from "../WSocket";
 
-import { api } from "../../api/api";
+import { api, api1 } from "../../api/api";
 
 import { APP_STORAGE } from "../AppStorage";
+import {
+  SAVE_ERROR,
+  SAVE_SUCCESS,
+  EMPTY_FIELD_ERROR,
+  MATCHING_LOGIN_AND_PASS_ERROR,
+  PASSWORDS_NOT_MATCH,
+  INVALID_EMAIL_ERROR,
+  INVALID_PASSWORD_ERROR,
+} from "../../../utils/consts";
+import {
+  regexp_email,
+  regexp_dash,
+  regexp_password,
+} from "../../../utils/consts";
 
 export class EditUsersStorage {
   @observable modal_edit_user: boolean = false;
@@ -56,6 +70,13 @@ export class EditUsersStorage {
   @observable texthelp_password: string = "";
   @observable error_repeat_password: boolean = false;
   @observable texthelp_repeat_password: string = "";
+  @observable error_email: boolean = false;
+  @observable texthelp_email: string = "";
+  @observable error_telephone: boolean = false;
+  @observable texthelp_telephone: string = "";
+
+  @observable successSave_mess: string = "";
+  @observable errorSave_mess: string = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -301,6 +322,53 @@ export class EditUsersStorage {
     return this.texthelp_repeat_password;
   }
 
+  @action setErrorEmail(val: boolean) {
+    this.error_email = val;
+  }
+
+  @computed getErrorEmail(): boolean {
+    return this.error_email;
+  }
+
+  @action setTextHelpEmail(val: string) {
+    this.texthelp_email = val;
+  }
+
+  @computed getTextHelpEmail(): string {
+    return this.texthelp_email;
+  }
+  @action setErrorTelephone(val: boolean) {
+    this.error_telephone = val;
+  }
+
+  @computed getErrorTelephone(): boolean {
+    return this.error_telephone;
+  }
+
+  @action setTextHelpTelephone(val: string) {
+    this.texthelp_telephone = val;
+  }
+
+  @computed getTextHelpTelephone(): string {
+    return this.texthelp_telephone;
+  }
+
+  @action setSuccessSave_mess(val: string) {
+    return (this.successSave_mess = val);
+  }
+
+  @computed getSuccessSave_mess() {
+    return this.successSave_mess;
+  }
+
+  @action setErrorSave_mess(val: string) {
+    return (this.errorSave_mess = val);
+  }
+
+  @computed getErrorSave_mess() {
+    return this.errorSave_mess;
+  }
+
   async get_Jobs(name: string, value: any, _options?: any) {
     /* -----  Открываем модальное  (Редактировать пользователя)  */
     var sess_code = value;
@@ -311,7 +379,7 @@ export class EditUsersStorage {
     q.sess_code = sess_code;
     // (await WSocket.get()).send(q);
     // api.fetch(q).then((data) => APP_STORAGE.reg_user.setAllJobsTitle(data));
-    api.fetch(q); // fetch-запрос
+    api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
   }
 
   async set_IdRows(a: any) {
@@ -390,6 +458,9 @@ export class EditUsersStorage {
   }
 
   async set_ChangeUser(name: string, value: any, _options?: any) {
+    const email = this.getEmail().match(regexp_email);
+    const telephone = this.getTelephone().replace(regexp_dash, ""); // Убрать дефисы и пробелы
+    const isValidPassword = regexp_password.test(this.getPassword());
     var sess_code = value;
     var q: IWSQuery = new WSQuery("set_ChangeUser");
     if (this.getActive() === 1) {
@@ -400,51 +471,133 @@ export class EditUsersStorage {
     }
 
     /// Проверка на пустые значения формы
-    if (this.getFamily() === "") {
-      this.setErrorFamily(true);
-      this.setTextHelpFamily("Заполните поле");
-    } else {
+
+    if (this.getFamily().trim()) {
       this.setErrorFamily(false);
       this.setTextHelpFamily("");
+    } else {
+      this.setErrorFamily(true);
+      this.setTextHelpFamily(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getName() === "") {
-      this.setErrorName(true);
-      this.setTextHelpName("Заполните поле");
-    } else {
+    if (this.getName().trim()) {
       this.setErrorName(false);
       this.setTextHelpName("");
+    } else {
+      this.setErrorName(true);
+      this.setTextHelpName(EMPTY_FIELD_ERROR);
     }
+
+    if (email !== null) {
+      this.setErrorEmail(false);
+      this.setTextHelpEmail("");
+    } else {
+      this.setErrorEmail(true);
+      this.setTextHelpEmail(INVALID_EMAIL_ERROR);
+    }
+
+    if (this.getTelephone()) {
+      this.setErrorTelephone(false);
+      this.setTextHelpTelephone("");
+    } else {
+      this.setErrorTelephone(true);
+      this.setTextHelpTelephone(EMPTY_FIELD_ERROR);
+    }
+
+    if (this.getPassword()) {
+      if (this.getPassword().length < 6) {
+        this.setErrorPassword(true);
+        this.setTextHelpPassword(INVALID_PASSWORD_ERROR);
+      } else if (!isValidPassword) {
+        this.setErrorPassword(true);
+        this.setTextHelpPassword(INVALID_PASSWORD_ERROR);
+      } else if (this.getPassword() !== this.getRepeatPassword()) {
+        this.setErrorRepeatPassword(true);
+        this.setTextHelpRepeatPassword(PASSWORDS_NOT_MATCH);
+        this.setErrorPassword(false);
+        this.setTextHelpPassword("");
+      } else if (this.getPassword() === this.getLogin()) {
+        this.setErrorPassword(true);
+        this.setTextHelpPassword(MATCHING_LOGIN_AND_PASS_ERROR);
+      } else {
+        this.setErrorPassword(false);
+        this.setTextHelpPassword("");
+        this.setErrorRepeatPassword(false);
+        this.setTextHelpRepeatPassword("");
+      }
+    }
+
+    // if (this.getPassword() && this.getPassword().length >= 6) {
+    //   this.setErrorPassword(false);
+    //   this.setTextHelpPassword("");
+
+    // } else {
+    //   this.setErrorPassword(true);
+    //   this.setTextHelpPassword(INVALID_PASSWORD_ERROR);
+    // }
+
+    // if (this.getFamily()) {
+    //   this.setErrorFamily(true);
+    //   this.setTextHelpFamily(EMPTY_FIELD_ERROR);
+    // } else {
+    //   this.setErrorFamily(false);
+    //   this.setTextHelpFamily("");
+    // }
+
+    // if (this.getName() === "") {
+    //   this.setErrorName(true);
+    //   this.setTextHelpName(EMPTY_FIELD_ERROR);
+    // } else {
+    //   this.setErrorName(false);
+    //   this.setTextHelpName("");
+    // }
 
     // if (this.getPassword().length < 7) {
     //   this.setErrorPassword(true);
     //   this.setTextHelpPassword("используйте 6 или более символов");
     // }
-    if (this.getPassword() === this.getLogin()) {
-      this.setErrorPassword(true);
-      this.setTextHelpPassword("Пароль должен отличаться от логина");
-    } else {
-      this.setErrorPassword(false);
-      this.setTextHelpPassword("");
-    }
+    // if (this.getPassword() === this.getLogin()) {
+    //   this.setErrorPassword(true);
+    //   this.setTextHelpPassword(MATCHING_LOGIN_AND_PASS_ERROR);
+    // } else {
+    //   this.setErrorPassword(false);
+    //   this.setTextHelpPassword("");
+    // }
 
-    if (this.getPassword() !== this.getRepeatPassword()) {
-      this.setErrorRepeatPassword(true);
-      this.setTextHelpRepeatPassword("Пароли не совпадают");
-    } else if (
-      this.getPassword() === this.getRepeatPassword() &&
-      this.getPassword().length > 6
-    ) {
-      this.setErrorRepeatPassword(false);
-      this.setTextHelpRepeatPassword("");
-    }
+    // if (this.getPassword() !== this.getRepeatPassword()) {
+    //   this.setErrorRepeatPassword(true);
+    //   this.setTextHelpRepeatPassword(PASSWORDS_NOT_MATCH);
+    // } else if (this.getPassword() === this.getLogin()) {
+    //   this.setErrorPassword(true);
+    //   this.setTextHelpPassword(MATCHING_LOGIN_AND_PASS_ERROR);
+    // } else if (
+    //   this.getPassword() &&
+    //   this.getPassword() === this.getRepeatPassword() &&
+    //   this.getPassword().length < 6
+    // ) {
+    //   this.setErrorPassword(true);
+    //   this.setTextHelpPassword(INVALID_PASSWORD_ERROR);
+    //   this.setErrorRepeatPassword(false);
+    //   this.setTextHelpRepeatPassword("");
+    // } else {
+    //   this.setErrorPassword(false);
+    //   this.setErrorRepeatPassword(false);
+    //   this.setTextHelpPassword("");
+    //   this.setTextHelpRepeatPassword("");
+    // }
 
-    if (
-      this.getFamily() &&
-      this.getPassword() === this.getRepeatPassword() &&
-      this.getName() &&
-      this.getPassword() !== this.getLogin()
-    ) {
+    const isValidValues = () => {
+      return (
+        !this.getErrorFamily() &&
+        !this.getErrorName() &&
+        !this.getErrorPassword() &&
+        !this.getErrorRepeatPassword() &&
+        !this.getErrorTelephone() &&
+        !this.getErrorEmail()
+      );
+    };
+
+    if (isValidValues()) {
       q.args = {
         family: this.getFamily() || "",
         name: this.getName() || "",
@@ -468,8 +621,28 @@ export class EditUsersStorage {
       //   "sess_id",
       //   APP_STORAGE.auth_form.getdt()
       // );
-      api.fetch(q);
-      this.setModalEditUser(false);
+      // this.setModalEditUser(false);
+
+      api
+        .fetch(q)
+        .then(() => {
+          this.setSuccessSave_mess(SAVE_SUCCESS);
+          APP_STORAGE.reg_user.get_AllUsers(
+            "sess_id",
+            APP_STORAGE.auth_form.getdt()
+          );
+          this.setPassword("");
+          this.setRepeatPassword("");
+          setTimeout(() => {
+            this.setModalEditUser(false);
+            this.setSuccessSave_mess("");
+          }, 2000);
+        })
+        .catch((e) => {
+          this.setErrorSave_mess(SAVE_ERROR);
+          console.log("error=>", e);
+          setTimeout(() => this.setErrorSave_mess(""), 2000);
+        });
     }
   }
 }

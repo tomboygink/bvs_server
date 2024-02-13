@@ -23,7 +23,7 @@ import { SensorsStorage } from "./components/Devs/SensorsStorage";
 import { MobaleStorage } from "../storage/components/MobaleVersion/MobaleStorage";
 import { OrgStorage } from "./components/Orgs/OrgStorage"; /////// Вкладка организации
 import { JobsTitlesStorage } from "./components/JobsTitles/JobsTitlesStorage";
-
+import { SharedSrorage } from "./SharedStorage";
 import { ImportDevStorage } from "./components/Devs/ImportDevStorage";
 import { api } from "../api/api";
 
@@ -44,6 +44,7 @@ class AppStorage {
   @observable jobs: JobsTitlesStorage = null;
   @observable importdevs: ImportDevStorage = null;
   @observable mobale: MobaleStorage = null; ////////////////////// Для мобильных устройств
+  @observable shared_store: SharedSrorage = null;
 
   @observable devs_group_move: Array<any>; /////////////////////////////////////Тест(потом нужно удалить)
 
@@ -118,13 +119,14 @@ class AppStorage {
     this.jobs = new JobsTitlesStorage();
     this.mobale = new MobaleStorage();
     this.importdevs = new ImportDevStorage();
+    this.shared_store = new SharedSrorage();
     makeAutoObservable(this);
 
     // WSocket.get();
   }
 
   @action async onWSData(dt: IWSResult) {
-    console.log("SOCKET RESULT", toJS(dt));
+    console.log("SOCKET RESULT",  (dt));
 
     switch (dt.cmd) {
       case "get_UserByAuth":
@@ -213,6 +215,9 @@ class AppStorage {
         {
         }
         break;
+    }
+    if (dt.error) {
+      this.shared_store.setResponseErrorMess(dt);
     }
   }
 

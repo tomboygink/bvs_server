@@ -13,12 +13,17 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Alert,
 } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import FormGroup from "@mui/material/FormGroup";
 import Stack from "@mui/material/Stack";
+
+import LatInput from "../../../../shared/LatInput";
+import LongInput from "../../../../shared/LongInput";
+import { TextInput } from "../../../../shared/TextInput";
 
 import { AntSwitch } from "../../../AppBarPanel/LeftPanel/RegistationUsers/switch";
 
@@ -98,7 +103,9 @@ export class ChangeDevsGroups extends React.Component<IProps> {
     return (
       <React.Fragment>
         <Dialog
-          BackdropProps={{ style: { background: "rgba(0 0 0 / 12%)" } }}
+          componentsProps={{
+            backdrop: { style: { backgroundColor: "rgba(0 0 0 / 35%)" } },
+          }}
           open={APP_STORAGE.devs_groups.getOpenModalChDevsGr()}
           fullWidth
         >
@@ -129,7 +136,7 @@ export class ChangeDevsGroups extends React.Component<IProps> {
               InputLabelProps={{ style: { fontSize: 12 } }}
               variant="outlined"
               error={APP_STORAGE.devs_groups.getNameError()}
-              helperText={APP_STORAGE.devs_groups.getNamaError_mess()}
+              helperText={APP_STORAGE.devs_groups.getNameError_mess()}
               fullWidth
               required
               label="Место расположения"
@@ -175,11 +182,10 @@ export class ChangeDevsGroups extends React.Component<IProps> {
 
             <TextField
               sx={{ mt: "14px" }}
-              inputProps={{
-                inputMode: "decimal",
-                step: 0.1,
-                // pattern: "[0..9]*[.][0..9]*",
-                fontSize: 12,
+              InputLabelProps={{ style: { fontSize: 12 } }}
+              InputProps={{
+                inputComponent: LongInput as any,
+                style: { fontSize: 12 },
               }}
               variant="outlined"
               error={APP_STORAGE.devs_groups.getLongitudeError()}
@@ -187,8 +193,6 @@ export class ChangeDevsGroups extends React.Component<IProps> {
               fullWidth
               required
               label="Долгота"
-              autoComplete="долгота"
-              autoFocus
               size="small"
               onChange={(e) => {
                 APP_STORAGE.devs_groups.setLongitude(e.target.value);
@@ -198,11 +202,10 @@ export class ChangeDevsGroups extends React.Component<IProps> {
 
             <TextField
               sx={{ mt: "14px" }}
-              inputProps={{
-                inputMode: "decimal",
-                step: 0.1,
-                // pattern: "[0..9]*[.][0..9]*" ,
-                fontSize: 12,
+              InputLabelProps={{ style: { fontSize: 12 } }}
+              InputProps={{
+                inputComponent: LatInput as any,
+                style: { fontSize: 12 },
               }}
               variant="outlined"
               error={APP_STORAGE.devs_groups.getLatitudeError()}
@@ -244,9 +247,9 @@ export class ChangeDevsGroups extends React.Component<IProps> {
                 <AntSwitch
                   checked={APP_STORAGE.devs_groups.getCheckboxEd()}
                   // Закомментировано для запуска
-                  // onChange={(editing) => {
-                  //   this.ChekedForEdit(editing);
-                  // }}
+                  onChange={(editing) => {
+                    this.ChekedForEdit(editing);
+                  }}
                 />
               </Stack>
             </FormGroup>
@@ -273,6 +276,20 @@ export class ChangeDevsGroups extends React.Component<IProps> {
                 Сохранить
               </Button>
             </Box>
+            {APP_STORAGE.devs_groups.getSuccessSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="success">
+                  {APP_STORAGE.devs_groups.getSuccessSave_mess()}
+                </Alert>
+              </Stack>
+            )}
+            {APP_STORAGE.devs_groups.getErrorSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">
+                  {APP_STORAGE.devs_groups.getErrorSave_mess()}
+                </Alert>
+              </Stack>
+            )}
           </Box>
         </Dialog>
       </React.Fragment>

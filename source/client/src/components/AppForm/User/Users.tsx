@@ -48,7 +48,7 @@ export class Users extends React.Component<IProps> {
       let users = JSON.parse(
         JSON.stringify(APP_STORAGE.reg_user.getAllUsers())
       );
-      console.log("usersComponent", users);
+
       for (var key in users) {
         let row = users[key];
         if (String(row.u_id) === APP_STORAGE.reg_user.getNodeidUser()) {

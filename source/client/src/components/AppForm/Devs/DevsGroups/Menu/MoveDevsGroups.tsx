@@ -13,6 +13,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Alert,
 } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 
@@ -180,7 +181,9 @@ export class MoveDevsGroups extends React.Component<IProps> {
     return (
       <React.Fragment>
         <Dialog
-          BackdropProps={{ style: { background: "rgba(0 0 0 / 12%)" } }}
+          componentsProps={{
+            backdrop: { style: { backgroundColor: "rgba(0 0 0 / 35%)" } },
+          }}
           open={APP_STORAGE.devs_groups.getOpenModalMoveDevsGr()}
           fullWidth
         >
@@ -310,6 +313,20 @@ export class MoveDevsGroups extends React.Component<IProps> {
                 </Button>
               </Box>
             </Box>
+            {APP_STORAGE.devs_groups.getSuccessSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="success">
+                  {APP_STORAGE.devs_groups.getSuccessSave_mess()}
+                </Alert>
+              </Stack>
+            )}
+            {APP_STORAGE.devs_groups.getErrorSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">
+                  {APP_STORAGE.devs_groups.getErrorSave_mess()}
+                </Alert>
+              </Stack>
+            )}
           </Box>
         </Dialog>
       </React.Fragment>

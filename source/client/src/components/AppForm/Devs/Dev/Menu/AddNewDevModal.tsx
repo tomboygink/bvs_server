@@ -12,7 +12,9 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Select
+  Select,
+  Alert,
+  Stack,
 } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -49,12 +51,6 @@ export class AddNewDevModal extends React.Component<IProps> {
 
   async AddDevs() {
     APP_STORAGE.devs.set_NewDevs("sess_id", APP_STORAGE.auth_form.getdt());
-    setTimeout(() => {
-      APP_STORAGE.devs_groups.get_DevsGroups(
-        "sess_id",
-        APP_STORAGE.auth_form.getdt()
-      );
-    }, 500);
   }
 
   async SelectedOrg(a: any) {
@@ -123,7 +119,7 @@ export class AddNewDevModal extends React.Component<IProps> {
               display: "flex",
               fontWeight: "700",
               border: "none",
-              p: "4px"
+              p: "4px",
             }}
             align="left"
           >
@@ -140,13 +136,15 @@ export class AddNewDevModal extends React.Component<IProps> {
     return (
       <React.Fragment>
         <Dialog
-          BackdropProps={{ style: { background: "rgba(0 0 0 / 12%)" } }}
+          componentsProps={{
+            backdrop: { style: { backgroundColor: "rgba(0 0 0 / 35%)" } },
+          }}
           open={APP_STORAGE.devs.getOpenModal()}
           PaperProps={{
             sx: {
               width: "100%",
-              maxHeight: "100%"
-            }
+              maxHeight: "100%",
+            },
           }}
         >
           <Box sx={{ p: 2 }}>
@@ -155,7 +153,7 @@ export class AddNewDevModal extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                mb: "12px"
+                mb: "12px",
               }}
             >
               <Typography>Добавить устройство</Typography>
@@ -182,10 +180,9 @@ export class AddNewDevModal extends React.Component<IProps> {
               fullWidth
               required
               label="Номер устройства"
-              autoComplete="Номер устройства"
               autoFocus
               size="small"
-              onChange={e => {
+              onChange={(e) => {
                 APP_STORAGE.devs.setNumber(e.target.value);
               }}
               value={APP_STORAGE.devs.getNumber()}
@@ -197,14 +194,12 @@ export class AddNewDevModal extends React.Component<IProps> {
               InputLabelProps={{ style: { fontSize: 12 } }}
               variant="outlined"
               error={APP_STORAGE.devs.getNameError()}
-              helperText={APP_STORAGE.devs.getNamaError_mess()}
+              helperText={APP_STORAGE.devs.getNameError_mess()}
               fullWidth
               required
               label="Название устройства "
-              autoComplete="Название устройства"
-              autoFocus
               size="small"
-              onChange={e => {
+              onChange={(e) => {
                 APP_STORAGE.devs.setName(e.target.value);
               }}
               value={APP_STORAGE.devs.getName()}
@@ -220,10 +215,8 @@ export class AddNewDevModal extends React.Component<IProps> {
               fullWidth
               required
               label="Долгота"
-              autoComplete="долгота"
-              autoFocus
               size="small"
-              onChange={e => {
+              onChange={(e) => {
                 APP_STORAGE.devs.setLongitude(e.target.value);
               }}
               value={APP_STORAGE.devs.getLongitude()}
@@ -239,10 +232,8 @@ export class AddNewDevModal extends React.Component<IProps> {
               fullWidth
               required
               label="Широта"
-              autoComplete="широта"
-              autoFocus
               size="small"
-              onChange={e => {
+              onChange={(e) => {
                 APP_STORAGE.devs.setLatitude(e.target.value);
               }}
               value={APP_STORAGE.devs.getLatitude()}
@@ -257,7 +248,7 @@ export class AddNewDevModal extends React.Component<IProps> {
               aria-label="minimum height"
               minRows={4}
               style={{ width: "100%" }}
-              onChange={e => {
+              onChange={(e) => {
                 APP_STORAGE.devs.setInfo(e.target.value);
               }}
               value={APP_STORAGE.devs.getInfo()}
@@ -298,7 +289,7 @@ export class AddNewDevModal extends React.Component<IProps> {
                   value={APP_STORAGE.devs.getPeriodSess()}
                   sx={{ fontSize: "12px" }}
                   label="Период сессии"
-                  onChange={e => {
+                  onChange={(e) => {
                     this.SelectedPeriodSess(e.target.value);
                   }}
                 >
@@ -323,7 +314,7 @@ export class AddNewDevModal extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 alignItems: "baseline",
-                justifyContent: "flex-end"
+                justifyContent: "flex-end",
               }}
             >
               <Button
@@ -333,7 +324,7 @@ export class AddNewDevModal extends React.Component<IProps> {
                   color: "#fff;",
                   mt: "18px",
                   mb: "18px",
-                  fontSize: "12px"
+                  fontSize: "12px",
                 }}
                 onClick={() => {
                   this.AddDevs();
@@ -342,6 +333,27 @@ export class AddNewDevModal extends React.Component<IProps> {
                 Сохранить
               </Button>
             </Box>
+            {APP_STORAGE.devs.getSuccessSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="success">
+                  {APP_STORAGE.devs.getSuccessSave_mess()}
+                </Alert>
+              </Stack>
+            )}
+            {APP_STORAGE.devs.getErrorSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">
+                  {APP_STORAGE.devs.getErrorSave_mess()}
+                </Alert>
+              </Stack>
+            )}
+            {APP_STORAGE.shared_store.getErrorResponseMess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">
+                  {APP_STORAGE.shared_store.getErrorResponseMess()}
+                </Alert>
+              </Stack>
+            )}
           </Box>
         </Dialog>
       </React.Fragment>

@@ -5,7 +5,26 @@ import { toJS } from "mobx";
 import { APP_STORAGE } from "../../storage/AppStorage";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../xcore/WSQuery";
 import { WSocket } from "../WSocket";
-import { api } from "../../api/api";
+import { api, api1 } from "../../api/api";
+import {
+  SAVE_SUCCESS,
+  SAVE_ERROR,
+  INVALID_EMAIL_ERROR,
+  EMPTY_FIELD_ERROR,
+  INVALID_PASSWORD_ERROR,
+  PASSWORDS_NOT_MATCH,
+  DOUBL_LOGIN_ERROR,
+  MATCHING_LOGIN_AND_PASS_ERROR,
+  DOUBLE_NAME_ORG_ERROR,
+  DOUBLE_INN_ERROR,
+  INVALID_INN_ERROR,
+} from "../../../utils/consts";
+import {
+  regexp_email,
+  regexp_dash,
+  regexp_password,
+  regexp_inn,
+} from "../../../utils/consts";
 
 export class ModalLeftPanel {
   @observable table_user: boolean = false; //// открываем таблицу пользователей
@@ -58,6 +77,11 @@ export class ModalLeftPanel {
   @observable error_repeat_password: boolean = false;
   @observable texthelp_repeat_password: string = "";
 
+  //Алерт при отправке формы
+
+  @observable successSave_mess: string = "";
+  @observable errorSave_mess: string = "";
+
   //////////////////////добавление организации
 
   @observable full_name_org: string = "";
@@ -91,6 +115,10 @@ export class ModalLeftPanel {
   @observable texthelp_name_double: string = "";
   @observable error_inn_double: boolean = false;
   @observable texthelp_inn_double: string = "";
+  @observable error_latitude: boolean = false;
+  @observable texthelp_latitude: string = "";
+  @observable error_longitude: boolean = false;
+  @observable texthelp_longitude: string = "";
 
   @observable nodeid_user: string = "";
   @observable nodeid_org: string = "";
@@ -387,6 +415,24 @@ export class ModalLeftPanel {
     return this.texthelp_repeat_password;
   }
 
+  //Отправка формы
+
+  @action setSuccessSave_mess(val: string) {
+    this.successSave_mess = val;
+  }
+
+  @computed getSuccessSave_mess() {
+    return this.successSave_mess;
+  }
+
+  @action setErrorSave_mess(val: string) {
+    this.errorSave_mess = val;
+  }
+
+  @computed getErrorSave_mess() {
+    return this.errorSave_mess;
+  }
+
   //////////////////////добавление организации
 
   @action setFullNameOrg(val: string) {
@@ -530,6 +576,38 @@ export class ModalLeftPanel {
     return this.texthelp_address;
   }
 
+  @action setErrorLatitude(val: boolean) {
+    this.error_latitude = val;
+  }
+
+  @computed getErrorLatitude(): boolean {
+    return this.error_latitude;
+  }
+
+  @action setTextHelpLatitude(val: string) {
+    this.texthelp_latitude;
+  }
+
+  @computed getTextHelpLatitude(): string {
+    return this.texthelp_latitude;
+  }
+
+  @action setErrorLongitude(val: boolean) {
+    this.error_longitude = val;
+  }
+
+  @computed getErrorLongitude(): boolean {
+    return this.error_longitude;
+  }
+
+  @action setTextHelpLongitude(val: string) {
+    this.texthelp_longitude = val;
+  }
+
+  @computed getTextHelpLongitude(): string {
+    return this.texthelp_longitude;
+  }
+
   @action setNewJobsTitles(val: string) {
     this.jobs_titles_new = val;
   }
@@ -613,7 +691,7 @@ export class ModalLeftPanel {
     };
     q.sess_code = sess_code;
     // (await WSocket.get()).send(q);
-    // api.fetch(q).then((data) => this.setJobsAll(data.data));
+
     api.fetch(q).catch((e) => console.log("error=>", e)); //fetch-запрос
   }
   setAllJobsTitle(dt: IWSResult) {
@@ -629,20 +707,27 @@ export class ModalLeftPanel {
     var user_login = "";
     var q: IWSQuery = new WSQuery("set_NewUser");
     var sess_code = value;
-    const regexp_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; /// регулярное выражение для ввода email
-    const regexp_ph = /^((\+7|7|8)+([0-9]){10})$/; /// регулярное выражение для ввода номера телефона
+    //const regexp_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; /// регулярное выражение для ввода email
+    // const regexp_ph = /^((\+7|7|8)+([0-9]){10})$/; /// регулярное выражение для ввода номера телефона
     const email = this.getEmail().match(regexp_email);
-    const telephone = this.getTelephone().match(regexp_ph);
+    // const dash = /[\s-]/g;
+    //const telephone = this.getTelephone().match(regexp_ph);
+    const telephone = this.getTelephone().replace(regexp_dash, "");
+    const isValidPassword = regexp_password.test(this.getPassword()); // убрать дефисы и пробелы
+
     /// проверяем , есть ли пользователь с таким логином
+
     if (this.getAllUsers() && this.getLogin() !== "") {
       let users = JSON.parse(JSON.stringify(this.getAllUsers()));
+
       for (var key in users) {
         let a = users[key];
         if (a.u_login === this.getLogin()) {
           /// если такой логин уже есть, то выводим сообщение об ошибке
+
           user_login = a.u_login;
           this.setErrorLoginDouble(true);
-          this.setTextHelpLoginDouble("Такой логин уже есть");
+          this.setTextHelpLoginDouble(DOUBL_LOGIN_ERROR);
         }
       }
     }
@@ -652,86 +737,193 @@ export class ModalLeftPanel {
       this.setTextHelpLoginDouble("");
     }
     /// Проверка на пустые значения формы
-    if (this.getFamily() === "") {
-      this.setErrorFamily(true);
-      this.setTextHelpFamily("Заполните поле");
-    } else {
+    if (this.getFamily().trim()) {
       this.setErrorFamily(false);
       this.setTextHelpFamily("");
+    } else {
+      this.setErrorFamily(true);
+      this.setTextHelpFamily(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getName() === "") {
-      this.setErrorName(true);
-      this.setTextHelpName("Заполните поле");
-    } else {
+    if (this.getName().trim()) {
       this.setErrorName(false);
       this.setTextHelpName("");
+    } else {
+      this.setErrorName(true);
+      this.setTextHelpName(EMPTY_FIELD_ERROR);
     }
 
-    if (email === null) {
-      this.setErrorEmail(true);
-      this.setTextHelpEmail(
-        'Адрес электронной почты должен содержать символ "@"'
-      );
-    } else {
+    if (email !== null) {
       this.setErrorEmail(false);
       this.setTextHelpEmail("");
+    } else {
+      this.setErrorEmail(true);
+      this.setTextHelpEmail(INVALID_EMAIL_ERROR);
     }
 
-    if (telephone === null) {
-      this.setErrorTelephone(true);
-      this.setTextHelpTelephone("Введите корректный номер телефона");
-    } else {
+    if (this.getTelephone()) {
       this.setErrorTelephone(false);
       this.setTextHelpTelephone("");
+    } else {
+      this.setErrorTelephone(true);
+      this.setTextHelpTelephone(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getLogin() === "") {
-      this.setErrorLogin(true);
-      this.setTextHelpLogin("Заполните поле");
+    if (this.getKeyOrg()) {
+      this.setErrorOrg(false);
+      this.setTextHelpOrg("");
     } else {
+      this.setErrorOrg(true);
+      this.setTextHelpOrg(EMPTY_FIELD_ERROR);
+    }
+
+    if (this.getKeyJobs()) {
+      this.setErrorJobs(false);
+      this.setTextHelpJobs("");
+    } else {
+      this.setErrorJobs(true);
+      this.setTextHelpJobs(EMPTY_FIELD_ERROR);
+    }
+
+    if (this.getLogin().trim()) {
       this.setErrorLogin(false);
       this.setTextHelpLogin("");
-    }
-    if (this.getPassword() === "") {
-      this.setErrorPassword(true);
-      this.setTextHelpPassword("Заполните поле");
-    } else if (this.getPassword().length < 6) {
-      this.setErrorPassword(true);
-      this.setTextHelpPassword("используйте 6 или более символов");
     } else {
-      this.setErrorPassword(false);
-      this.setTextHelpPassword("");
+      this.setErrorLogin(true);
+      this.setTextHelpLogin(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getRepeatPassword() === "") {
-      this.setErrorRepeatPassword(true);
-      this.setTextHelpRepeatPassword("Заполните поле");
-    } else if (
-      this.getPassword() !== "" &&
-      this.getPassword() !== this.getRepeatPassword()
-    ) {
-      this.setErrorRepeatPassword(true);
-      this.setTextHelpRepeatPassword("Пароли не совпадают");
+    if (this.getPassword()) {
+      if (this.getPassword().length < 6) {
+        this.setErrorPassword(true);
+        this.setTextHelpPassword(INVALID_PASSWORD_ERROR);
+      } else if (!isValidPassword) {
+        this.setErrorPassword(true);
+        this.setTextHelpPassword(INVALID_PASSWORD_ERROR);
+      } else if (this.getPassword() !== this.getRepeatPassword()) {
+        this.setErrorRepeatPassword(true);
+        this.setTextHelpRepeatPassword(PASSWORDS_NOT_MATCH);
+        this.setErrorPassword(false);
+        this.setTextHelpPassword("");
+      } else if (this.getPassword() === this.getLogin()) {
+        this.setErrorPassword(true);
+        this.setTextHelpPassword(MATCHING_LOGIN_AND_PASS_ERROR);
+      } else {
+        this.setErrorPassword(false);
+        this.setTextHelpPassword("");
+        this.setErrorRepeatPassword(false);
+        this.setTextHelpRepeatPassword("");
+      }
     } else {
-      this.setErrorRepeatPassword(false);
-      this.setTextHelpRepeatPassword("");
-      this.setErrorPassword(false);
-      this.setTextHelpPassword("");
+      this.setErrorPassword(true);
+      this.setTextHelpPassword(EMPTY_FIELD_ERROR);
     }
+
+    const isValidValues = () => {
+      return (
+        !this.getErrorLoginDouble() &&
+        !this.getErrorFamily() &&
+        !this.getErrorName() &&
+        !this.getErrorEmail() &&
+        !this.getErrorTelephone() &&
+        !this.getErrorOrg() &&
+        !this.getErrorJobs() &&
+        !this.getErrorLogin() &&
+        !this.getErrorPassword() &&
+        !this.getErrorRepeatPassword() &&
+        user_login !== this.getLogin()
+      );
+    };
+
+    // if (this.getFamily() === "") {
+    //   this.setErrorFamily(true);
+    //   this.setTextHelpFamily(EMPTY_FIELD_ERROR);
+    // } else {
+    //   this.setErrorFamily(false);
+    //   this.setTextHelpFamily("");
+    // }
+
+    // if (this.getName() === "") {
+    //   this.setErrorName(true);
+    //   this.setTextHelpName(EMPTY_FIELD_ERROR);
+    // } else {
+    //   this.setErrorName(false);
+    //   this.setTextHelpName("");
+    // }
+
+    // if (email === null) {
+    //   this.setErrorEmail(true);
+    //   this.setTextHelpEmail(INVALID_EMAIL_ERROR);
+    // } else {
+    //   this.setErrorEmail(false);
+    //   this.setTextHelpEmail("");
+    // }
+
+    // if (this.getTelephone() === "") {
+    //   this.setErrorTelephone(true);
+    //   this.setTextHelpTelephone(EMPTY_FIELD_ERROR);
+    //   //this.setTextHelpTelephone("Введите корректный номер телефона");
+    // } else {
+    //   this.setErrorTelephone(false);
+    //   this.setTextHelpTelephone("");
+    // }
+
+    // if (telephone === null) {
+    //   this.setErrorTelephone(true);
+    //   this.setTextHelpTelephone("Введите корректный номер телефона");
+    // } else {
+    //   this.setErrorTelephone(false);
+    //   this.setTextHelpTelephone("");
+    // }
+
+    // if (this.getLogin() === "") {
+    //   this.setErrorLogin(true);
+    //   this.setTextHelpLogin(EMPTY_FIELD_ERROR);
+    // } else {
+    //   this.setErrorLogin(false);
+    //   this.setTextHelpLogin("");
+    // }
+    // if (this.getPassword() === "") {
+    //   this.setErrorPassword(true);
+    //   this.setTextHelpPassword(EMPTY_FIELD_ERROR);
+    // } else if (this.getPassword().length < 6) {
+    //   this.setErrorPassword(true);
+    //   this.setTextHelpPassword(INVALID_PASSWORD_ERROR);
+    // } else {
+    //   this.setErrorPassword(false);
+    //   this.setTextHelpPassword("");
+    // }
+
+    // if (this.getRepeatPassword() === "") {
+    //   this.setErrorRepeatPassword(true);
+    //   this.setTextHelpRepeatPassword(EMPTY_FIELD_ERROR);
+    // } else if (
+    //   this.getPassword() !== "" &&
+    //   this.getPassword() !== this.getRepeatPassword()
+    // ) {
+    //   this.setErrorRepeatPassword(true);
+    //   this.setTextHelpRepeatPassword(PASSWORDS_NOT_MATCH);
+    // } else {
+    //   this.setErrorRepeatPassword(false);
+    //   this.setTextHelpRepeatPassword("");
+    //   this.setErrorPassword(false);
+    //   this.setTextHelpPassword("");
+    // }
     if (
-      this.getFamily() &&
-      email !== null &&
-      telephone !== null &&
-      this.getPassword() === this.getRepeatPassword() &&
-      this.getPassword().length >= 6 &&
-      this.getName() &&
-      this.getEmail() &&
-      this.getTelephone() &&
-      this.getLogin() &&
-      this.getPassword() &&
-      this.getRepeatPassword() &&
-      user_login !== this.getLogin()
+      isValidValues()
+      // this.getFamily() &&
+      // email !== null &&
+      // // telephone !== null &&
+      // this.getTelephone() &&
+      // this.getPassword() === this.getRepeatPassword() &&
+      // this.getPassword().length >= 6 &&
+      // this.getName() &&
+      // this.getEmail() &&
+      // this.getTelephone() &&
+      // this.getLogin() &&
+      // this.getPassword() &&
+      // this.getRepeatPassword() &&
+      // user_login !== this.getLogin()
     ) {
       //// Отправляем данные с формы на сервер
       q.args = {
@@ -739,7 +931,8 @@ export class ModalLeftPanel {
         name: this.getName() || "",
         father: this.getFather() || "",
         email: this.getEmail() || "",
-        telephone: this.getTelephone() || "",
+        // telephone: this.getTelephone() || "",
+        telephone: telephone || "",
         id_org: this.getKeyOrg() || "",
         id_job: this.getKeyJobs() || "",
         login: this.getLogin().trim() || "",
@@ -750,28 +943,58 @@ export class ModalLeftPanel {
         info: this.getInfo(),
       };
       q.sess_code = sess_code;
-      // (await WSocket.get()).send(q);
-      api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
 
-      this.setResulSave("Данные успешно сохранены");
-      setTimeout(() => {
-        this.setFamily(""),
-          this.setName(""),
-          this.setFather(""),
-          this.setEmail(""),
-          this.setTelephone(""),
-          this.setKeyOrg(""),
-          this.setKeyJobs(""),
-          this.setLogin(""),
-          this.setPassword(""),
-          this.setRepeatPassword(""),
-          this.setCheckboxEd(false),
-          this.setCheckboxRead(true),
-          this.setInfo(""),
-          this.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());
-        this.setResulSave("");
-        this.setModalRegUser(false);
-      }, 2000);
+      // (await WSocket.get()).send(q);
+      //  this.setResulSave("Данные успешно сохранены");
+
+      //  setTimeout(() => {
+      //    this.setFamily(""),
+      //      this.setName(""),
+      //      this.setFather(""),
+      //      this.setEmail(""),
+      //      this.setTelephone(""),
+      //      this.setKeyOrg(""),
+      //      this.setKeyJobs(""),
+      //      this.setLogin(""),
+      //      this.setPassword(""),
+      //      this.setRepeatPassword(""),
+      //      this.setCheckboxEd(false),
+      //      this.setCheckboxRead(true),
+      //      this.setInfo(""),
+      //      this.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());
+      //    this.setResulSave("");
+      //    this.setModalRegUser(false);
+      //  }, 2000);
+
+      api
+        .fetch(q)
+        .then(() => {
+          this.setSuccessSave_mess(SAVE_SUCCESS);
+          this.setFamily(""),
+            this.setName(""),
+            this.setFather(""),
+            this.setEmail(""),
+            this.setTelephone(""),
+            this.setKeyOrg(""),
+            this.setKeyJobs(""),
+            this.setLogin(""),
+            this.setPassword(""),
+            this.setRepeatPassword(""),
+            this.setCheckboxEd(false),
+            this.setCheckboxRead(true),
+            this.setInfo(""),
+            this.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());
+
+          setTimeout(() => {
+            this.setSuccessSave_mess("");
+            this.setModalRegUser(false);
+          }, 2000);
+        })
+        .catch((e) => {
+          this.setErrorSave_mess(SAVE_ERROR);
+          console.log("error=>", e);
+          setTimeout(() => this.setErrorSave_mess(""), 2000);
+        }); // fetch-запрос
     }
   }
 
@@ -781,7 +1004,7 @@ export class ModalLeftPanel {
 
   async set_NewOrg(name: string, value: any, _options?: any) {
     var sess_code = value;
-    const regexp_inn = /^[0-9]+$/; /// регулярное выражение для ввода только цифр для поля ИНН
+    //const regexp_inn = /^[0-9]+$/; /// регулярное выражение для ввода только цифр для поля ИНН
     const inn = this.getInn().match(regexp_inn);
 
     if (
@@ -801,19 +1024,19 @@ export class ModalLeftPanel {
         if (a.full_name === this.getFullNameOrg()) {
           full_name = a.full_name;
           this.setErrorFullNameDouble(true);
-          this.setTextHelpFullNameDouble("Такая организация уже есть");
+          this.setTextHelpFullNameDouble(DOUBLE_NAME_ORG_ERROR);
         }
 
         if (a.name === this.getNameOrg()) {
           name_double = a.name;
           this.setErrorNameDouble(true);
-          this.setTextHelpNameDouble("Такая организация уже есть");
+          this.setTextHelpNameDouble(DOUBLE_NAME_ORG_ERROR);
         }
 
         if (a.inn === this.getInn()) {
           inn_double = a.inn;
           this.setErrorInnDouble(true);
-          this.setTextHelpInnDouble("Такой инн уже есть");
+          this.setTextHelpInnDouble(DOUBLE_INN_ERROR);
         }
       }
     }
@@ -834,47 +1057,77 @@ export class ModalLeftPanel {
     }
 
     ////// проверка на пустые значения
-    if (this.getFullNameOrg() === "") {
-      this.setErrorFullName(true);
-      this.setTextHelpFullName("Поле не может быть пустым");
-    } else {
+
+    if (this.getFullNameOrg().trim()) {
       this.setErrorFullName(false);
-      this.setTextHelpFullName(null);
+      this.setTextHelpFullName("");
+    } else {
+      this.setErrorFullName(true);
+      this.setTextHelpFullName(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getNameOrg() === "") {
-      this.setErrorNameOrg(true);
-      this.setTextHelpNameOrg("Поле не может быть пустым");
-    } else {
+    if (this.getNameOrg().trim()) {
       this.setErrorNameOrg(false);
       this.setTextHelpNameOrg(null);
+    } else {
+      this.setErrorNameOrg(true);
+      this.setTextHelpNameOrg(EMPTY_FIELD_ERROR);
     }
 
-    if (inn === null) {
-      this.setErrorInn(true);
-      this.setTextHelpInn("Только цифры");
-    } else {
+    if (inn) {
       this.setErrorInn(false);
       this.setTextHelpInn(null);
+    } else {
+      this.setErrorInn(true);
+      this.setTextHelpInn(INVALID_INN_ERROR);
+    }
+    if (this.getAddress().trim()) {
+      this.setErrorAddress(false);
+      this.setTextHelpAddress("");
+    } else {
+      this.setErrorAddress(true);
+      this.setTextHelpAddress(EMPTY_FIELD_ERROR);
+    }
+    if (this.getLatitude()) {
+      this.setErrorLatitude(false);
+      this.setTextHelpLatitude("");
+    } else {
+      this.setErrorLatitude(true);
+      this.setTextHelpLatitude(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getAddress() === "") {
-      this.setErrorAddress(true);
-      this.setTextHelpAddress("Поле не может быть пустым");
+    if (this.getLongitude()) {
+      this.setErrorLongitude(false);
+      this.setTextHelpLongitude("");
     } else {
-      this.setErrorAddress(false);
-      this.setTextHelpAddress(null);
+      this.setErrorLongitude(true);
+      this.setTextHelpLongitude(EMPTY_FIELD_ERROR);
     }
+
+    const isValidValues = () => {
+      return (
+        !this.getErrorFullName() &&
+        !this.getErrorFullNameDouble() &&
+        !this.getErrorNameOrg() &&
+        !this.getErrorNameDouble() &&
+        !this.getErrorInn() &&
+        !this.getErrorInnDouble() &&
+        !this.getErrorLatitude() &&
+        !this.getErrorLongitude()
+      );
+    };
+
     //// Отправляем данные с формы на сервер
-    var q: IWSQuery = new WSQuery("set_NewOrg");
+    const q: IWSQuery = new WSQuery("set_NewOrg");
     if (
-      this.getAddress() !== "" &&
-      inn !== null &&
-      full_name !== this.getFullNameOrg() &&
-      name_double !== this.getNameOrg() &&
-      inn_double !== this.getInn() &&
-      this.getFullNameOrg() !== "" &&
-      this.getNameOrg() !== ""
+      isValidValues()
+      // this.getAddress() !== "" &&
+      // inn !== null &&
+      // full_name !== this.getFullNameOrg() &&
+      // name_double !== this.getNameOrg() &&
+      // inn_double !== this.getInn() &&
+      // this.getFullNameOrg() !== "" &&
+      // this.getNameOrg() !== ""
     ) {
       q.args = {
         name: this.getNameOrg() || "",
@@ -887,17 +1140,29 @@ export class ModalLeftPanel {
       };
       q.sess_code = sess_code;
       // (await WSocket.get()).send(q);
+
       api
         .fetch(q)
         .then(() => {
           this.get_Org("sess_id", value);
-          this.setResulSave("Данные успешно сохранены");
+          this.setSuccessSave_mess(SAVE_SUCCESS);
           setTimeout(() => {
-            this.setResulSave("");
+            this.setSuccessSave_mess("");
             this.setModalRegUser(false);
+            this.setFullNameOrg("");
+            this.setNameOrg("");
+            this.setInn("");
+            this.setInfo("");
+            this.setAddress("");
+            this.setLatitude("");
+            this.setLongitude("");
           }, 2000);
         })
-        .catch((e) => console.log("error =>", e));
+        .catch((e) => {
+          console.log("error =>", e);
+          this.setErrorSave_mess(SAVE_ERROR);
+          setTimeout(() => this.setErrorSave_mess(""), 2000);
+        });
       // this.get_Org("sess_id", value);
       // this.setResulSave("Данные успешно сохранены");
 
@@ -914,21 +1179,23 @@ export class ModalLeftPanel {
   async set_NewJobTitle(name: string, value: any, _options?: any) {
     var sess_code = value; ////// передаем код сессии
 
-    if (this.getKeyOrg() === null) {
-      this.setErrorOrg(true);
-    } else {
+    if (this.getKeyOrg()) {
       this.setErrorOrg(false);
+      this.setTextHelpOrg("");
+    } else {
+      this.setErrorOrg(true);
+      this.setTextHelpOrg(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getNewJobsTitles() === "") {
-      this.setErrorJobs(true);
-      this.setTextHelpJobs("Обязательные поля должны быть заполнены");
-    } else {
+    if (this.getNewJobsTitles().trim()) {
       this.setErrorJobs(false);
       this.setTextHelpJobs("");
+    } else {
+      this.setErrorJobs(true);
+      this.setTextHelpJobs(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getKeyOrg() !== null && this.getNewJobsTitles() !== "") {
+    if (this.getKeyOrg() && this.getNewJobsTitles().trim()) {
       var q: IWSQuery = new WSQuery("set_NewJobTitle");
       q.args = {
         id_org: this.getKeyOrg() || "",
@@ -938,22 +1205,28 @@ export class ModalLeftPanel {
       q.sess_code = sess_code;
 
       // (await WSocket.get()).send(q);
-      api
-        .fetch(q)
-        .then(() => {
-          this.setResulSave("Данные успешно сохранены");
-          setTimeout(() => {
-            this.setResulSave("");
-            this.setModalRegUser(false);
-          }, 2000);
-        })
-        .catch((e) => console.log("error=>", e)); //fetch-запрос
-      // this.setResulSave("Данные успешно сохранены");
-
       // setTimeout(() => {
       //   this.setResulSave("");
       //   this.setModalRegUser(false);
       // }, 2000);
+
+      api
+        .fetch(q)
+        .then(() => {
+          this.setSuccessSave_mess(SAVE_SUCCESS);
+          this.get_Jobs("sess_id", value);
+          setTimeout(() => {
+            this.setSuccessSave_mess("");
+            this.setModalRegUser(false);
+          }, 2000);
+        })
+        .catch((e) => {
+          console.log("error=>", e);
+          this.setErrorSave_mess(SAVE_ERROR);
+          setTimeout(() => {
+            this.setErrorSave_mess("");
+          }, 2000);
+        }); //fetch-запрос
     }
   }
 }

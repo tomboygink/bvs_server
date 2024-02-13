@@ -1,7 +1,19 @@
 import { observable, action, computed, makeAutoObservable } from "mobx";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
-import { api } from "../../../api/api";
+import { api, api1 } from "../../../api/api";
+import { regexp_number } from "../../../../utils/consts";
+import { APP_STORAGE } from "../../AppStorage";
+import {
+  SAVE_ERROR,
+  SAVE_SUCCESS,
+  EMPTY_FIELD_ERROR,
+  MATCHING_LOGIN_AND_PASS_ERROR,
+  PASSWORDS_NOT_MATCH,
+  INVALID_EMAIL_ERROR,
+  INVALID_PASSWORD_ERROR,
+} from "../../../../utils/consts";
+import { ThirtyFpsTwoTone, ThreeSixty } from "@mui/icons-material";
 
 export class DevsGroupStorage {
   @observable search: any;
@@ -46,7 +58,12 @@ export class DevsGroupStorage {
   @observable open_modal_change: boolean = false; ////////////////меню редактирования (Редактировать расположение)
   @observable open_modal_move: boolean = false; //////////////// (Переместить расположение)
 
+  @observable successSave_mess: string = ""; // Алерт в форме при успешном сохранении
+  @observable errorSave_mess: string = ""; // Алерт в форме при ошибке
+
   @observable devs_groups: Array<string> = [];
+
+  @observable devs_numbers: Array<string> = [];
   constructor() {
     makeAutoObservable(this);
   }
@@ -203,7 +220,7 @@ export class DevsGroupStorage {
   @action setNameError_mess(val: string) {
     this.name_err_mess = val;
   }
-  @computed getNamaError_mess(): string {
+  @computed getNameError_mess(): string {
     return this.name_err_mess;
   }
 
@@ -238,6 +255,40 @@ export class DevsGroupStorage {
   }
   @computed getOrgError(): boolean {
     return this.org_err;
+  }
+
+  @action setOrgError_mess(val: string) {
+    this.org_err_mess = val;
+  }
+  @computed getOrgError_mess(): string {
+    return this.org_err_mess;
+  }
+
+  // Сообщение при сохранении данных в форме
+  @action setSuccessSave_mess(val: string) {
+    return (this.successSave_mess = val);
+  }
+
+  @computed getSuccessSave_mess() {
+    return this.successSave_mess;
+  }
+
+  // Сообщение при ошибке сохранения данных в форме
+  @action setErrorSave_mess(val: string) {
+    return (this.errorSave_mess = val);
+  }
+
+  @computed getErrorSave_mess() {
+    return this.errorSave_mess;
+  }
+
+  // Массив номеров всех устройств
+  @action setNumbers(val: Array<string>) {
+    this.devs_numbers = val;
+  }
+
+  @computed getNumbers(): Array<string> {
+    return this.devs_numbers;
   }
 
   async set_NewDevGroup(name: string, value: any, _options?: any) {
@@ -283,11 +334,29 @@ export class DevsGroupStorage {
     if (this.getName().trim()) {
       this.setNameError(false);
       this.setNameError_mess("");
-      console.log("Есть название места");
     } else {
       this.setNameError(true);
-      this.setNameError_mess("Поле не может быть пустым");
-      console.log("Нет названия места");
+      this.setNameError_mess(EMPTY_FIELD_ERROR);
+    }
+
+    if (this.getKeyOrg()) {
+      this.setOrgError(false);
+    } else this.setOrgError(true);
+
+    if (this.getLatitude()) {
+      this.setLatitudeError(false);
+      this.setLatitudeError_mess("");
+    } else {
+      this.setLatitudeError(true);
+      this.setLatitudeError_mess(EMPTY_FIELD_ERROR);
+    }
+
+    if (this.getLongitude()) {
+      this.setLongitudeError(false);
+      this.setLongitudeError_mess("");
+    } else {
+      this.setLongitudeError(true);
+      this.setLongitudeError_mess(EMPTY_FIELD_ERROR);
     }
     //   if (this.getName() === "") {
     //     this.setNameError(true);
@@ -300,35 +369,44 @@ export class DevsGroupStorage {
     //   this.setNameError_mess("");
     // }
 
-    if (this.getKeyOrg() !== "") {
-      this.setOrgError(false);
-    }
+    // if (this.getKeyOrg() !== "") {
+    //   this.setOrgError(false);
+    // }
 
-    if (this.getLatitude() === "") {
-      this.setLatitudeError(true);
-      this.setLatitudeError_mess("Поле не должно быть пустым");
-    }
+    // if (this.getLatitude() === "") {
+    //   this.setLatitudeError(true);
+    //   this.setLatitudeError_mess("Поле не должно быть пустым");
+    // }
 
-    if (this.getLatitude() !== "") {
-      this.setLatitudeError(false);
-      this.setLatitudeError_mess("");
-    }
+    // if (this.getLatitude() !== "") {
+    //   this.setLatitudeError(false);
+    //   this.setLatitudeError_mess("");
+    // }
 
-    if (this.getLongitude() === "") {
-      this.setLongitudeError(true);
-      this.setLongitudeError_mess("Поле не должно быть пустым");
-    }
+    // if (this.getLongitude() === "") {
+    //   this.setLongitudeError(true);
+    //   this.setLongitudeError_mess("Поле не должно быть пустым");
+    // }
 
-    if (this.getLongitude() !== "") {
-      this.setLongitudeError(false);
-      this.setLongitudeError_mess("");
-    }
+    // if (this.getLongitude() !== "") {
+    //   this.setLongitudeError(false);
+    //   this.setLongitudeError_mess("");
+    // }
+    const isValidValue = () => {
+      return (
+        !this.getNameError() &&
+        !this.getLatitudeError() &&
+        !this.getLongitudeError() &&
+        !this.getOrgError()
+      );
+    };
 
     if (
-      this.getName() !== "" &&
-      this.getLatitude() !== "" &&
-      this.getLongitude() !== "" &&
-      this.getKeyOrg() !== ""
+      isValidValue()
+      // this.getName() !== "" &&
+      // this.getLatitude() !== "" &&
+      // this.getLongitude() !== "" &&
+      // this.getKeyOrg() !== ""
     ) {
       q.args = {
         g_name: this.getName().replace(/"([^"]*)"/g, "«$1»") || "",
@@ -341,14 +419,28 @@ export class DevsGroupStorage {
         g_info: this.getInfo() || "",
       };
       q.sess_code = sess_code;
-      console.log("q=>", q);
 
       // (await WSocket.get()).send(q);
       // this.setOpenModal(false);
       api
         .fetch(q)
-        .then(() => this.setOpenModal(false))
-        .catch((e) => console.log("error=>", e));
+        .then(() => {
+          this.setSuccessSave_mess(SAVE_SUCCESS);
+          this.get_DevsGroups("sess_id", APP_STORAGE.auth_form.getdt());
+          this.setName("");
+          this.setKeyOrg("");
+          this.setLatitude("");
+          this.setLongitude("");
+          setTimeout(() => {
+            this.setOpenModal(false);
+            this.setSuccessSave_mess("");
+          }, 2000);
+        })
+        .catch((e) => {
+          console.log("error=>", e);
+          this.setErrorSave_mess(SAVE_ERROR);
+          setTimeout(() => this.setErrorSave_mess(""), 2000);
+        });
     }
   }
 
@@ -407,12 +499,31 @@ export class DevsGroupStorage {
     }
 
     this.setDevsGroups(DevGr);
+
+    // const arr = DevGr.reduce((acc, { devs }) => {
+    //   return [...acc, ...devs];
+    // }, []);
+
+    let allDevs: any[] = [];
+    const recursion = (arr: any[]) => {
+      for (let elem of arr) {
+        allDevs.push(...elem.devs);
+        if (elem.childs.length !== 0) {
+          recursion(elem.childs);
+        }
+      }
+    };
+    recursion(DevGr);
+    const allNumbers = allDevs.map((dev) => {
+      return dev.number;
+    });
+    this.setNumbers(allNumbers);
   }
 
   async set_ChangeDevsGroups(name: string, value: any, _options?: any) {
     let lat: any;
     let lng: any;
-    let latnumber = this.getLatitude().replace(/[^\d\.,]/g, ""); //// только цифты
+    let latnumber = this.getLatitude().replace(regexp_number, ""); //// только цифты
     let latchar = latnumber.replace(/,/g, "."); //// то
     let latArr = latchar.match(/\./g) || [];
     if (latArr.length > 1) {
@@ -423,7 +534,7 @@ export class DevsGroupStorage {
       lat = latchar;
     }
 
-    let lngnumber = this.getLongitude().replace(/[^\d\.,]/g, ""); //// только цифты
+    let lngnumber = this.getLongitude().replace(regexp_number, ""); //// только цифты
     let lngchar = lngnumber.replace(/,/g, "."); //// то
     let lngArr = lngchar.match(/\./g) || [];
     // if (lngchar.match(/\./g).length > 1)
@@ -447,44 +558,82 @@ export class DevsGroupStorage {
     var sess_code = value;
     var q: IWSQuery = new WSQuery("set_ChangeDevsGroups");
 
-    if (this.getName() === "") {
-      this.setNameError(true);
-      this.setNameError_mess("Поле не может быть пустым");
-    }
-
-    if (this.getName() !== "") {
+    if (this.getName().trim()) {
       this.setNameError(false);
       this.setNameError_mess("");
+    } else {
+      this.setNameError(true);
+      this.setNameError_mess(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getKeyOrg() !== "") {
+    if (this.getKeyOrg()) {
       this.setOrgError(false);
-    }
+    } else this.setOrgError(true);
 
-    if (this.getLatitude() === "") {
-      this.setLatitudeError(true);
-      this.setLatitudeError_mess("Поле не должно быть пустым");
-    }
-
-    if (this.getLatitude() !== "") {
+    if (this.getLatitude()) {
       this.setLatitudeError(false);
       this.setLatitudeError_mess("");
+    } else {
+      this.setLatitudeError(true);
+      this.setLatitudeError_mess(EMPTY_FIELD_ERROR);
     }
 
-    if (this.getLongitude() === "") {
-      this.setLongitudeError(true);
-      this.setLongitudeError_mess("Поле не должно быть пустым");
-    }
-
-    if (this.getLongitude() !== "") {
+    if (this.getLongitude()) {
       this.setLongitudeError(false);
       this.setLongitudeError_mess("");
+    } else {
+      this.setLongitudeError(true);
+      this.setLongitudeError_mess(EMPTY_FIELD_ERROR);
     }
+
+    // if (this.getName() === "") {
+    //   this.setNameError(true);
+    //   this.setNameError_mess("Поле не может быть пустым");
+    // }
+
+    // if (this.getName() !== "") {
+    //   this.setNameError(false);
+    //   this.setNameError_mess("");
+    // }
+
+    // if (this.getKeyOrg() !== "") {
+    //   this.setOrgError(false);
+    // }
+
+    // if (this.getLatitude() === "") {
+    //   this.setLatitudeError(true);
+    //   this.setLatitudeError_mess("Поле не должно быть пустым");
+    // }
+
+    // if (this.getLatitude() !== "") {
+    //   this.setLatitudeError(false);
+    //   this.setLatitudeError_mess("");
+    // }
+
+    // if (this.getLongitude() === "") {
+    //   this.setLongitudeError(true);
+    //   this.setLongitudeError_mess("Поле не должно быть пустым");
+    // }
+
+    // if (this.getLongitude() !== "") {
+    //   this.setLongitudeError(false);
+    //   this.setLongitudeError_mess("");
+    // }
+    const isValidValue = () => {
+      return (
+        !this.getNameError() &&
+        !this.getLatitudeError() &&
+        !this.getLongitudeError() &&
+        !this.getOrgError()
+      );
+    };
+
     if (
-      this.getName() !== "" &&
-      this.getLatitude() !== "" &&
-      this.getLongitude() !== "" &&
-      this.getKeyOrg() !== ""
+      isValidValue()
+      // this.getName() !== "" &&
+      // this.getLatitude() !== "" &&
+      // this.getLongitude() !== "" &&
+      // this.getKeyOrg() !== ""
     ) {
       q.args = {
         id: Number(this.getParentId()) || "",
@@ -500,11 +649,23 @@ export class DevsGroupStorage {
 
       q.sess_code = sess_code;
       //(await WSocket.get()).send(q);
+      // this.setOpenModalChDevsGr(false);
+
       api
         .fetch(q)
-        .then(() => this.setOpenModalChDevsGr(false))
-        .catch((e) => console.log("error=>", e)); // fetch-запрос
-      this.setOpenModalChDevsGr(false);
+        .then(() => {
+          this.setSuccessSave_mess(SAVE_SUCCESS);
+          setTimeout(() => {
+            this.setOpenModalChDevsGr(false);
+            this.setOpenModalMoveDevsGr(false);
+            this.setSuccessSave_mess("");
+          }, 2000);
+        })
+        .catch((e) => {
+          this.setErrorSave_mess(SAVE_ERROR);
+          setTimeout(() => this.setErrorSave_mess(""), 2000);
+          console.log("error=>", e);
+        }); // fetch-запрос
     }
   }
 }

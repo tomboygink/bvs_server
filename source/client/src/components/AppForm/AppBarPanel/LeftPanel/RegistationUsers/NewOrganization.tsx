@@ -6,16 +6,19 @@ import {
   TextareaAutosize,
   Typography,
   Divider,
+  Stack,
+  Alert,
 } from "@mui/material";
 
 import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import { Padding } from "@mui/icons-material";
+import IdInput from "../../../../shared/IdInput";
+import LongInput from "../../../../shared/LongInput";
+import LatInput from "../../../../shared/LatInput";
 
 interface IProps {}
-
-
 
 @observer
 export class NewOrganization extends React.Component<IProps> {
@@ -28,55 +31,70 @@ export class NewOrganization extends React.Component<IProps> {
   }
 
   render(): React.ReactNode {
-
-    
-   
     return (
       <React.Fragment>
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <TextField
-            inputProps={{ style: { fontSize: 12 } }} // font size of input text
-            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-            variant="outlined"
-            margin="normal"
-            required
-            error={APP_STORAGE.reg_user.getErrorFullName() || APP_STORAGE.reg_user.getErrorFullNameDouble() }
-            helperText={APP_STORAGE.reg_user.getTextHelpFullName() || APP_STORAGE.reg_user.getTextHelpFullNameDouble()}
-            label="Полное наименование"
-            autoComplete="полное наименование"
-            autoFocus
-            size="small"
-            onChange={(e) => {
-              APP_STORAGE.reg_user.setFullNameOrg(e.target.value);
-            }}
-            value={APP_STORAGE.reg_user.getFullNameOrg() || ""}
-          />
-
-          <TextField
-            inputProps={{ style: { fontSize: 12 } }} // font size of input text
-            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-            variant="outlined"
-            margin="normal"
-            required
-            error={APP_STORAGE.reg_user.getErrorNameOrg() || APP_STORAGE.reg_user.getErrorNameDouble()}
-            helperText={APP_STORAGE.reg_user.getTextHelpNameDouble()}
-            label="Наименование"
-            autoComplete="наименование"
-            autoFocus
-            size="small"
-            onChange={(e) => {
-              APP_STORAGE.reg_user.setNameOrg(e.target.value);
-            }}
-            value={APP_STORAGE.reg_user.getNameOrg() || ""}
-          />
-        </Box>
+        <TextField
+          inputProps={{ style: { fontSize: 12 } }} // font size of input text
+          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+          variant="outlined"
+          sx={{ mt: "12px" }}
+          fullWidth
+          required
+          error={
+            APP_STORAGE.reg_user.getErrorFullName() ||
+            APP_STORAGE.reg_user.getErrorFullNameDouble()
+          }
+          helperText={
+            APP_STORAGE.reg_user.getTextHelpFullName() ||
+            APP_STORAGE.reg_user.getTextHelpFullNameDouble()
+          }
+          label="Полное наименование"
+          autoFocus
+          size="small"
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setFullNameOrg(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getFullNameOrg() || ""}
+        />
 
         <TextField
           inputProps={{ style: { fontSize: 12 } }} // font size of input text
           InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
           variant="outlined"
-          margin="normal"
+          sx={{ mt: "12px" }}
+          fullWidth
           required
+          error={
+            APP_STORAGE.reg_user.getErrorNameOrg() ||
+            APP_STORAGE.reg_user.getErrorNameDouble()
+          }
+          helperText={
+            APP_STORAGE.reg_user.getTextHelpNameDouble() ||
+            APP_STORAGE.reg_user.getTextHelpNameOrg()
+          }
+          label="Наименование"
+          size="small"
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setNameOrg(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getNameOrg() || ""}
+        />
+
+        <TextField
+          variant="outlined"
+          required
+          label="ИНН"
+          size="small"
+          sx={{ mt: "12px" }}
+          InputLabelProps={{
+            style: {
+              fontSize: 12,
+            },
+          }}
+          InputProps={{
+            inputComponent: IdInput as any,
+            style: { fontSize: 12 },
+          }}
           error={
             APP_STORAGE.reg_user.getErrorInn() ||
             APP_STORAGE.reg_user.getErrorInnDouble()
@@ -85,10 +103,6 @@ export class NewOrganization extends React.Component<IProps> {
             APP_STORAGE.reg_user.getTextHelpInn() ||
             APP_STORAGE.reg_user.getTextHelpInnDouble()
           }
-          label="ИНН"
-          autoComplete="инн"
-          autoFocus
-          size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setInn(e.target.value);
           }}
@@ -105,16 +119,54 @@ export class NewOrganization extends React.Component<IProps> {
           error={APP_STORAGE.reg_user.getErrorAddress()}
           helperText={APP_STORAGE.reg_user.getTextHelpAddress()}
           label="Адрес"
-          autoComplete="адрес"
-          autoFocus
           size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setAddress(e.target.value);
           }}
           value={APP_STORAGE.reg_user.getAddress() || ""}
         />
-
         <TextField
+          sx={{ mt: "12px" }}
+          InputProps={{
+            inputComponent: LatInput as any,
+            style: { fontSize: 12 },
+          }}
+          InputLabelProps={{ style: { fontSize: 12 } }}
+          variant="outlined"
+          error={APP_STORAGE.reg_user.getErrorLatitude()}
+          helperText={APP_STORAGE.reg_user.getTextHelpLatitude()}
+          fullWidth
+          required
+          type="number"
+          label="Широта"
+          size="small"
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setLatitude(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getLatitude() || ""}
+        />
+        <TextField
+          sx={{ mt: "12px" }}
+          InputProps={{
+            inputComponent: LongInput as any,
+            style: { fontSize: 12 },
+          }}
+          InputLabelProps={{ style: { fontSize: 12 } }}
+          variant="outlined"
+          error={APP_STORAGE.reg_user.getErrorLongitude()}
+          helperText={APP_STORAGE.reg_user.getTextHelpLongitude()}
+          fullWidth
+          required
+          type="number"
+          label="Долгота"
+          size="small"
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setLongitude(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getLongitude() || ""}
+        />
+
+        {/* <TextField
           sx={{ mt: "12px" }}
           inputProps={{ style: { fontSize: 12 } }} // font size of input text
           InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
@@ -122,8 +174,6 @@ export class NewOrganization extends React.Component<IProps> {
           fullWidth
           required
           label="Широта"
-          autoComplete="широта"
-          autoFocus
           size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setLatitude(e.target.value);
@@ -139,14 +189,12 @@ export class NewOrganization extends React.Component<IProps> {
           fullWidth
           required
           label="Долгота"
-          autoComplete="долгота"
-          autoFocus
           size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setLongitude(e.target.value);
           }}
           value={APP_STORAGE.reg_user.getLongitude() || ""}
-        />
+        /> */}
 
         <Divider sx={{ padding: "12px" }} />
         <Typography sx={{ color: "#999999" }} variant="caption">
@@ -186,9 +234,20 @@ export class NewOrganization extends React.Component<IProps> {
             Сохранить
           </Button>
         </Box>
-        {APP_STORAGE.reg_user.getResulSave().length > 0 &&
-       <Typography sx= {{background: '#EDF7ED', color : '#1E4620', p: '12px', borderRadius: '4px'}}> {APP_STORAGE.reg_user.getResulSave()}</Typography>
-      }
+        {APP_STORAGE.reg_user.getSuccessSave_mess().length > 0 && (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert severity="success">
+              {APP_STORAGE.reg_user.getSuccessSave_mess()}
+            </Alert>
+          </Stack>
+        )}
+        {APP_STORAGE.reg_user.getErrorSave_mess().length > 0 && (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert severity="error">
+              {APP_STORAGE.reg_user.getErrorSave_mess()}
+            </Alert>
+          </Stack>
+        )}
       </React.Fragment>
     );
   }

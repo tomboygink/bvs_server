@@ -53,7 +53,7 @@ export class UsersMenu extends React.Component<IProps> {
       let users = JSON.parse(
         JSON.stringify(APP_STORAGE.reg_user.getAllUsers())
       );
-      console.log("users=>", users);
+
       for (var key in users) {
         let row = users[key];
         if (row.u_deleted === false) {

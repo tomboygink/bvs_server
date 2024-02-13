@@ -90,7 +90,7 @@ export class AuthForm extends React.Component<IProps, State> {
                 onChange={(e) => {
                   APP_STORAGE.auth_form.setLogin(e.target.value);
                 }}
-                value={APP_STORAGE.auth_form.getLogin()}
+                // value={APP_STORAGE.auth_form.getLogin()}
                 placeholder="Введите логин*"
                 sx={{ background: "#fff", mt: "8px" }}
                 fullWidth
@@ -109,7 +109,7 @@ export class AuthForm extends React.Component<IProps, State> {
                 onChange={(e) => {
                   APP_STORAGE.auth_form.setPassword(e.target.value);
                 }}
-                value={APP_STORAGE.auth_form.getPassword()}
+                // value={APP_STORAGE.auth_form.getPassword()}
                 placeholder="Введите пароль"
                 sx={{ background: "#fff", mt: "8px" }}
                 fullWidth
