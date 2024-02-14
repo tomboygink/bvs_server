@@ -20,6 +20,8 @@ export const INVALID_TELEPHONE_ERROR = "Введите корректный но
 export const MATCHING_LOGIN_AND_PASS_ERROR =
   "Пароль и логин не должны совпадать";
 export const PASSWORDS_NOT_MATCH = "Пароли не совпадают";
+export const MATCHING_OLD_PASSWORD_ERROR =
+  "Новый пароль не должен совпадать со старым";
 export const INVALID_PASSWORD_ERROR =
   "Используйте 6 или более символов, сочетая буквы, цифры и символы";
 export const MATCHING_TEMPLATE_ERROR =

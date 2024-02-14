@@ -18,6 +18,7 @@ import {
   DOUBLE_NAME_ORG_ERROR,
   DOUBLE_INN_ERROR,
   INVALID_INN_ERROR,
+  INVALID_TELEPHONE_ERROR,
 } from "../../../utils/consts";
 import {
   regexp_email,
@@ -767,6 +768,14 @@ export class ModalLeftPanel {
     } else {
       this.setErrorTelephone(true);
       this.setTextHelpTelephone(EMPTY_FIELD_ERROR);
+    }
+
+    if (telephone.length === 12) {
+      this.setErrorTelephone(false);
+      this.setTextHelpTelephone("");
+    } else {
+      this.setErrorTelephone(true);
+      this.setTextHelpTelephone(INVALID_TELEPHONE_ERROR);
     }
 
     if (this.getKeyOrg()) {

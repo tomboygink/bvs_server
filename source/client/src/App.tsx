@@ -6,6 +6,13 @@ import { APP_STORAGE } from "./storage/AppStorage";
 import { AuthForm } from "./components/AuthForm/AuthForm";
 import { AppForm } from "./components/AppForm/index";
 import { ForgotPass } from "./components/AuthForm/ForgotPassForm";
+import { createRoot } from "react-dom/client";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+  Link,
+} from "react-router-dom";
 
 import { Box, Typography } from "@mui/material";
 
@@ -25,14 +32,6 @@ export class App extends React.Component<IProps> {
   componentWillUnmount(): void {}
 
   render(): React.ReactNode {
-    // const distance = 163;
-    // const quantity = 3;
-    // const towns = [50, 55, 56, 57, 58];
-    // function chooseBestSum(t, k, ls) {
-
-    // }
-
-    // console.log("solution=>", chooseBestSum(distance, quantity, towns));
     document.title = APP_STORAGE.main.getTitle();
 
     var ret_dt: React.ReactNode = <></>;

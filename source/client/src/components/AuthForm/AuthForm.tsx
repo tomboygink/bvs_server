@@ -40,7 +40,7 @@ export class AuthForm extends React.Component<IProps, State> {
     };
   }
 
-  async handleClickShowPassword() {
+  handleClickShowPassword() {
     this.state.showPassword
       ? this.setState({ showPassword: false })
       : this.setState({ showPassword: true });

@@ -108,27 +108,6 @@ export class ChangeUserData extends React.Component<IProps> {
             }}
             value={APP_STORAGE.modal.getEmail() || ""}
           />
-          {/* <TextField
-            sx={{ mt: "12px" }}
-            inputProps={{ style: { fontSize: 12 } }}
-            InputLabelProps={{ style: { fontSize: 12 } }}
-            variant="outlined"
-            fullWidth
-            required
-            error={APP_STORAGE.modal.getError_emain()}
-            helperText={
-              APP_STORAGE.modal.getEmail_message() ||
-              APP_STORAGE.modal.getCmdErrData()
-            }
-            label="email"
-            autoComplete="email"
-            autoFocus
-            size="small"
-            onChange={(e) => {
-              APP_STORAGE.modal.setEmail(e.target.value);
-            }}
-            value={APP_STORAGE.modal.getEmail() || ""}
-          /> */}
           <Checkbox
             checked={APP_STORAGE.auth_form.getUser().act_mail}
             id="myCheck"
@@ -149,25 +128,6 @@ export class ChangeUserData extends React.Component<IProps> {
           }}
           value={APP_STORAGE.modal.getTelephone()}
         />
-
-        {/* <TextField
-          sx={{ mt: "14px" }}
-          inputProps={{ style: { fontSize: 12 } }}
-          InputLabelProps={{ style: { fontSize: 12 } }}
-          variant="outlined"
-          fullWidth
-          required
-          error={APP_STORAGE.modal.getError_phone()}
-          helperText={APP_STORAGE.modal.getPhone_message()}
-          label="Телефон"
-          autoComplete="телефон"
-          autoFocus
-          size="small"
-          onChange={(e) => {
-            APP_STORAGE.modal.setTelephone(e.target.value);
-          }}
-          value={APP_STORAGE.modal.getTelephone()}
-        /> */}
 
         <Box>
           <Box
