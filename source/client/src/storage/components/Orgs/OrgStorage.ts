@@ -14,8 +14,22 @@ import {
   SAVE_ERROR,
   EMPTY_FIELD_ERROR,
   INVALID_INN_ERROR,
+  DOUBLE_NAME_ORG_ERROR,
+  DOUBLE_INN_ERROR,
 } from "../../../../utils/consts";
 
+import { regexp_inn } from "../../../../utils/consts";
+
+type Org = {
+  id: string;
+  name: string;
+  full_name: string;
+  inn: string;
+  address: string;
+  latitude: string;
+  longitude: string;
+  info: string;
+};
 export class OrgStorage {
   @observable modal_edit_org: boolean = false;
 
@@ -46,6 +60,12 @@ export class OrgStorage {
   @observable longitude_help_text: string = "";
   @observable successSave_mess: string = "";
   @observable errorSave_mess: string = "";
+  @observable full_name_double_error: boolean = false;
+  @observable full_name_double_help_text: string = "";
+  @observable name_double_error: boolean = false;
+  @observable name_double_help_text: string = "";
+  @observable inn_double_error: boolean = false;
+  @observable inn_double_help_text: string = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -223,6 +243,55 @@ export class OrgStorage {
   @computed getErrorSave_mess(): string {
     return this.errorSave_mess;
   }
+
+  @action setErrorFullNameDouble(val: boolean) {
+    this.full_name_double_error = val;
+  }
+
+  @computed getErrorFullNameDouble(): boolean {
+    return this.full_name_double_error;
+  }
+
+  @action setHelpTextFullNameDouble(val: string) {
+    this.full_name_double_help_text = val;
+  }
+
+  @computed getHelpTextFullNameDouble(): string {
+    return this.full_name_double_help_text;
+  }
+
+  @action setErrorNameDouble(val: boolean) {
+    this.name_double_error = val;
+  }
+
+  @computed getErrorNameDouble(): boolean {
+    return this.name_double_error;
+  }
+
+  @action setHelpTextNameDouble(val: string) {
+    this.name_double_help_text = val;
+  }
+
+  @computed getHelpTextNameDouble(): string {
+    return this.name_double_help_text;
+  }
+
+  @action setErrorInnDouble(val: boolean) {
+    this.inn_double_error = val;
+  }
+
+  @computed getErrorInnDouble(): boolean {
+    return this.inn_double_error;
+  }
+
+  @action setHelpTextInnDouble(val: string) {
+    this.inn_double_help_text = val;
+  }
+
+  @computed getHelpTextInnDouble(): string {
+    return this.inn_double_help_text;
+  }
+
   ///////////////////////изменение организации
 
   async get_ChangeOrg(dt: IWSResult) {
@@ -232,8 +301,50 @@ export class OrgStorage {
   }
 
   async set_ChangeOrg(name: string, value: any, _options?: any) {
-    const regexp_inn = /^[0-9]+$/; /// регулярное выражение для ввода только цифр для поля ИНН
     const inn = this.getInn().match(regexp_inn);
+    const orgs = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll()));
+
+    let full_name;
+    let name_double;
+    let inn_double;
+    if (orgs && this.getFullNameOrg() && this.getNameOrg() && this.getInn()) {
+      orgs.forEach((org: Org) => {
+        if (org.id !== this.getKeyOrg()) {
+          if (org.full_name === this.getFullNameOrg()) {
+            full_name = org.full_name;
+            this.setErrorFullNameDouble(true);
+            this.setHelpTextFullNameDouble(DOUBLE_NAME_ORG_ERROR);
+          }
+
+          if (org.name === this.getNameOrg()) {
+            name_double = org.name;
+            this.setErrorNameDouble(true);
+            this.setHelpTextNameDouble(DOUBLE_NAME_ORG_ERROR);
+          }
+
+          if (org.inn === this.getInn()) {
+            inn_double = org.inn;
+            this.setErrorInnDouble(true);
+            this.setHelpTextInnDouble(DOUBLE_INN_ERROR);
+          }
+        }
+      });
+    }
+
+    if (full_name !== this.getFullNameOrg()) {
+      this.setErrorFullNameDouble(false);
+      this.setHelpTextFullNameDouble("");
+    }
+
+    if (name_double !== this.getNameOrg()) {
+      this.setErrorNameDouble(false);
+      this.setHelpTextNameDouble("");
+    }
+
+    if (inn_double !== this.getInn()) {
+      this.setErrorInnDouble(false);
+      this.setHelpTextInnDouble("");
+    }
 
     if (this.getFullNameOrg().trim()) {
       this.setErrorFullNameOrg(false);
@@ -289,18 +400,14 @@ export class OrgStorage {
         !this.getErrorNameOrg() &&
         !this.getErrorInn() &&
         !this.getErrorLatitude() &&
-        !this.getErrorLongitude()
+        !this.getErrorLongitude() &&
+        !this.getErrorFullNameDouble() &&
+        !this.getErrorNameDouble() &&
+        !this.getErrorInnDouble()
       );
     };
-    console.log("isValid=>", isValidValues());
 
-    if (
-      isValidValues()
-      // this.getAddress() !== "" &&
-      // this.getFullNameOrg() !== "" &&
-      // this.getNameOrg() !== "" &&
-      // this.getInn() !== ""
-    ) {
+    if (isValidValues()) {
       var sess_code = value;
       var q: IWSQuery = new WSQuery("set_ChangeOrg");
       q.args = {

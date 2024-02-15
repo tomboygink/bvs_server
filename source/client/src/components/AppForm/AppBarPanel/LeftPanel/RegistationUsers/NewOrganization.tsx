@@ -17,6 +17,7 @@ import { Padding } from "@mui/icons-material";
 import IdInput from "../../../../shared/IdInput";
 import LongInput from "../../../../shared/LongInput";
 import LatInput from "../../../../shared/LatInput";
+import { TextInput } from "../../../../shared/TextInput";
 
 interface IProps {}
 
@@ -33,13 +34,8 @@ export class NewOrganization extends React.Component<IProps> {
   render(): React.ReactNode {
     return (
       <React.Fragment>
-        <TextField
-          inputProps={{ style: { fontSize: 12 } }} // font size of input text
-          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-          variant="outlined"
-          sx={{ mt: "12px" }}
-          fullWidth
-          required
+        <TextInput
+          label="Полное наименование"
           error={
             APP_STORAGE.reg_user.getErrorFullName() ||
             APP_STORAGE.reg_user.getErrorFullNameDouble()
@@ -48,22 +44,14 @@ export class NewOrganization extends React.Component<IProps> {
             APP_STORAGE.reg_user.getTextHelpFullName() ||
             APP_STORAGE.reg_user.getTextHelpFullNameDouble()
           }
-          label="Полное наименование"
-          autoFocus
-          size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setFullNameOrg(e.target.value);
           }}
           value={APP_STORAGE.reg_user.getFullNameOrg() || ""}
         />
 
-        <TextField
-          inputProps={{ style: { fontSize: 12 } }} // font size of input text
-          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-          variant="outlined"
-          sx={{ mt: "12px" }}
-          fullWidth
-          required
+        <TextInput
+          label="Наименование"
           error={
             APP_STORAGE.reg_user.getErrorNameOrg() ||
             APP_STORAGE.reg_user.getErrorNameDouble()
@@ -72,25 +60,14 @@ export class NewOrganization extends React.Component<IProps> {
             APP_STORAGE.reg_user.getTextHelpNameDouble() ||
             APP_STORAGE.reg_user.getTextHelpNameOrg()
           }
-          label="Наименование"
-          size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setNameOrg(e.target.value);
           }}
           value={APP_STORAGE.reg_user.getNameOrg() || ""}
         />
 
-        <TextField
-          variant="outlined"
-          required
+        <TextInput
           label="ИНН"
-          size="small"
-          sx={{ mt: "12px" }}
-          InputLabelProps={{
-            style: {
-              fontSize: 12,
-            },
-          }}
           InputProps={{
             inputComponent: IdInput as any,
             style: { fontSize: 12 },
@@ -109,92 +86,41 @@ export class NewOrganization extends React.Component<IProps> {
           value={APP_STORAGE.reg_user.getInn() || ""}
         />
 
-        <TextField
-          sx={{ mt: "12px" }}
-          inputProps={{ style: { fontSize: 12 } }} // font size of input text
-          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-          variant="outlined"
-          fullWidth
-          required
+        <TextInput
+          label="Адрес"
           error={APP_STORAGE.reg_user.getErrorAddress()}
           helperText={APP_STORAGE.reg_user.getTextHelpAddress()}
-          label="Адрес"
-          size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setAddress(e.target.value);
           }}
           value={APP_STORAGE.reg_user.getAddress() || ""}
         />
-        <TextField
-          sx={{ mt: "12px" }}
+        <TextInput
+          label="Широта"
           InputProps={{
             inputComponent: LatInput as any,
             style: { fontSize: 12 },
           }}
-          InputLabelProps={{ style: { fontSize: 12 } }}
-          variant="outlined"
           error={APP_STORAGE.reg_user.getErrorLatitude()}
           helperText={APP_STORAGE.reg_user.getTextHelpLatitude()}
-          fullWidth
-          required
-          type="number"
-          label="Широта"
-          size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setLatitude(e.target.value);
           }}
           value={APP_STORAGE.reg_user.getLatitude() || ""}
         />
-        <TextField
-          sx={{ mt: "12px" }}
+        <TextInput
+          label="Долгота"
           InputProps={{
             inputComponent: LongInput as any,
             style: { fontSize: 12 },
           }}
-          InputLabelProps={{ style: { fontSize: 12 } }}
-          variant="outlined"
           error={APP_STORAGE.reg_user.getErrorLongitude()}
           helperText={APP_STORAGE.reg_user.getTextHelpLongitude()}
-          fullWidth
-          required
-          type="number"
-          label="Долгота"
-          size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setLongitude(e.target.value);
           }}
           value={APP_STORAGE.reg_user.getLongitude() || ""}
         />
-
-        {/* <TextField
-          sx={{ mt: "12px" }}
-          inputProps={{ style: { fontSize: 12 } }} // font size of input text
-          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-          variant="outlined"
-          fullWidth
-          required
-          label="Широта"
-          size="small"
-          onChange={(e) => {
-            APP_STORAGE.reg_user.setLatitude(e.target.value);
-          }}
-          value={APP_STORAGE.reg_user.getLatitude() || ""}
-        />
-
-        <TextField
-          sx={{ mt: "12px" }}
-          inputProps={{ style: { fontSize: 12 } }} // font size of input text
-          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-          variant="outlined"
-          fullWidth
-          required
-          label="Долгота"
-          size="small"
-          onChange={(e) => {
-            APP_STORAGE.reg_user.setLongitude(e.target.value);
-          }}
-          value={APP_STORAGE.reg_user.getLongitude() || ""}
-        /> */}
 
         <Divider sx={{ padding: "12px" }} />
         <Typography sx={{ color: "#999999" }} variant="caption">

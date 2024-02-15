@@ -869,6 +869,7 @@ export class DevsStorage {
             this.setErrorSave_mess(SAVE_ERROR);
             setTimeout(() => {
               this.setErrorSave_mess("");
+              APP_STORAGE.shared_store.setErrorResponseMess("");
             }, 2000);
           }
         })

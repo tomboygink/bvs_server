@@ -55,6 +55,16 @@ export class ModalLeftPanel extends React.Component<IProps> {
     APP_STORAGE.reg_user.setTextHelpOrg("");
     APP_STORAGE.reg_user.setErrorJobs(false);
     APP_STORAGE.reg_user.setTextHelpJobs("");
+    APP_STORAGE.reg_user.setErrorFullName(false);
+    APP_STORAGE.reg_user.setTextHelpFullName("");
+    APP_STORAGE.reg_user.setErrorNameOrg(false);
+    APP_STORAGE.reg_user.setTextHelpNameOrg("");
+    APP_STORAGE.reg_user.setErrorAddress(false);
+    APP_STORAGE.reg_user.setTextHelpAddress("");
+    APP_STORAGE.reg_user.setErrorLatitude(false);
+    APP_STORAGE.reg_user.setTextHelpLatitude("");
+    APP_STORAGE.reg_user.setErrorLongitude(false);
+    APP_STORAGE.reg_user.setTextHelpLongitude("");
   }
 
   render(): React.ReactNode {
