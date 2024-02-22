@@ -678,9 +678,43 @@ export const function_sql = {
     $$
     LANGUAGE SQL;
 
+
+
+    --------------------------------------------------------------------------------------------Функция добавления схемы термокосы
+    DROP FUNCTION IF EXISTS AddScheme_ThermoStreamer_Svg;
+    CREATE OR REPLACE FUNCTION AddScheme_ThermoStreamer_Svg(
+    	c_id_devs BIGINT,
+    	c_svg TEXT,
+    	c_created_at TIMESTAMP
+    ) RETURNS BIGINT
+    AS $$
+    	INSERT INTO scheme_thermostreamer_svg(id_devs, svg, created_at)
+    	VALUES(c_id_devs, c_svg, c_created_at)
+    	RETURNING id
+    $$
+    LANGUAGE SQL;
+
+
+
+
+    --------------------------------------------------------------------------------------------Функция обновления схемы термокосы
+    DROP FUNCTION IF EXISTS UpdateScheme_ThermoStreamer_Svg;
+    CREATE OR REPLACE FUNCTION UpdateScheme_ThermoStreamer_Svg(
+    	c_id_devs BIGINT,
+    	c_svg TEXT,
+    	c_created_at TIMESTAMP
+    ) RETURNS VOID
+    AS $$
+    UPDATE scheme_thermostreamer_Svg
+    SET
+    svg = c_svg, 
+    created_at = c_created_at
+    WHERE id_devs = c_id_devs
+    $$
+    LANGUAGE SQL;
+
     `,
-
-
+    
     
     args: new Array()
 };

@@ -1,4 +1,6 @@
 import { DBase, getDB } from "./DBase";
+import { dateTimeToSQL } from '../../xcore/dbase/DateStr'
+
 
 export class DevsEntity {
     id: number = 0;
@@ -40,6 +42,14 @@ export class DevsTable {
                     "CAST('" + this.args.info + "' AS TEXT)," +
                     "CAST('" + this.args.period_sess + "' AS BIGINT)) AS id");
 
+                //Добавление схемы термокосы с пустым значением по умолчанию
+                await this.db.query("SELECT AddScheme_ThermoStreamer_Svg(" +
+                    "CAST (" + db_res.rows[0].id + " AS BIGINT), " +
+                    "CAST ('' AS TEXT), " +
+                    "CAST ('" + dateTimeToSQL(new Date(Date.now())) + "' AS TIMESTAMP)) AS id")
+
+
+
                 for (var p in db_res.rows) { result.push(db_res.rows[p]); }
 
             }
@@ -62,9 +72,27 @@ export class DevsTable {
     //Редактирование устройства
     async updateDevs() {
 
+
+
+        //Запрос на получение данных
         var data = await this.db.query("select * from devs where number = \'" + this.args.number + "\' ");
 
+
+        
+        var add = (await this.db.query("select * from devs order by id")).rows;
+        //ДОБАВЛЕНИЕ ВРЕМЕННОЕ
+        for (var i = 0; i < add.length; i++) {
+            
+            await this.db.query("SELECT AddScheme_ThermoStreamer_Svg(" +
+                "CAST (" + add[i].id + " AS BIGINT), " +
+                "CAST ('' AS TEXT), " +
+                "CAST ('" + dateTimeToSQL(new Date(Date.now())) + "' AS TIMESTAMP)) AS id")
+        }
+
+
+
         if (data.rows[0] === undefined || data.rows[0].id === this.args.id) {
+            //обновление устройства
             await this.db.query("SELECT * FROM UpdateDevs(" +
                 "CAST (" + this.args.id + " AS BIGINT), " +
                 "CAST (" + this.args.group_dev_id + " AS BIGINT), " +
@@ -76,6 +104,13 @@ export class DevsTable {
                 "CAST ('" + this.args.deleted + "' AS BOOLEAN), " +
                 "CAST ('" + this.args.info + "' AS TEXT)," +
                 "CAST ('" + this.args.period_sess + "' AS BIGINT))");
+
+
+            //Обновление устройства в контрольной сессии 
+            await this.db.query("UPDATE control_dev_sess SET dev_number = '" + this.args.number + "' WHERE dev_id = " + this.args.id + "")
+            //обновление устройства в принятых сессиях
+            await this.db.query("UPDATE dev_sess SET dev_number = '" + this.args.number + "' WHERE dev_id=" + this.args.id + "")
+
             return true;
         }
         else {

@@ -11,6 +11,7 @@ import { Control_dev_sessTable } from '../xcore/dbase/Control_dev_sess';
 import { Dev_sessTable } from '../xcore/dbase/Dev_sess';
 import { SchemeSvgTable } from '../xcore/dbase/SchemeSvg';
 import { SendMail } from '../xcore/mailer/sendMail'
+import { SchemeThermoStreamerSvgTable } from '../xcore/dbase/Scheme_Thermostreamer_Svg';
 
 
 var res: any = {
@@ -511,6 +512,19 @@ export async function router(body: any) {
             res.data = null;
             res.error = null;
         } break;
+
+        
+        //------------------------------------------------------------------------ДОБАВЛЕНИЕ СХЕМЫ ТЕРМОКОСЫ 
+        case 'set_ThermoStreamer_Svg': {
+            var schemeThermoStreamerSvg = new SchemeThermoStreamerSvgTable(body.args);
+            await schemeThermoStreamerSvg.insertSchemeThermoStreamerSVG();
+            res.cmd = body.cmd;
+            res.code = body.sess_code;
+            res.data = null;
+            res.error = null;
+        } break;
+
+        
 
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА

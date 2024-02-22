@@ -58,6 +58,7 @@ export class Dev_sessTable {
     }
 
     async selectFirstLastSess() {
+
         var dev_sess: any = {
             id: 0,
             time_dev: '',
@@ -67,14 +68,22 @@ export class Dev_sessTable {
             level_akb: 0.0,
             sess_data: ''
         };
+
+        var result =
+        {
+            svg: "",
+            dev_result
+        }
+
         var db_res_last = await this.db.query("SELECT * FROM dev_sess where dev_number = '" + this.args.dev_number + "' order by id desc limit 1;"); //last
         var db_res_first = await this.db.query("SELECT dev_sess.* FROM dev_sess INNER JOIN control_dev_sess ON dev_sess.id = control_dev_sess.dev_sess_id " +
             "WHERE dev_sess.dev_number = '" + this.args.dev_number + "'");
 
         
 
+        var dev_result: Dev_sessEntity[] = new Array();
 
-        var result: Dev_sessEntity[] = new Array();
+
         for (var i in db_res_last.rows) {
 
             var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
@@ -88,7 +97,7 @@ export class Dev_sessTable {
                 level_akb: db_res_last.rows[i].level_akb,
                 sess_data: db_res_last.rows[i].sess_data
             }
-            result.push(dev_sess);
+            dev_result.push(dev_sess);
 
             if (db_res_first.rows[i] !== undefined) {
                 dev_sess = {
@@ -102,9 +111,18 @@ export class Dev_sessTable {
                 }
             }
 
-            result.push(dev_sess);
+            dev_result.push(dev_sess);
+            
+            var svg = await this.db.query("select svg from scheme_thermostreamer_svg where id_devs="+db_res_last.rows[i].dev_id+"");
+
+            result = {
+                svg:svg.rows[0],
+                dev_result:dev_result
+            }
 
         }
+        //console.log("-----------------------------------------------------------------------------------------------------------------------------------")
+        //console.log(sess)
         return result;
 
     }
