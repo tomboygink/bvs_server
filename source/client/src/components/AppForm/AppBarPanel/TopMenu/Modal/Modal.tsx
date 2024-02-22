@@ -1,6 +1,13 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { TextField, Box, Dialog, Divider, Typography } from "@mui/material";
+import {
+  TextField,
+  Box,
+  Dialog,
+  Divider,
+  Typography,
+  IconButton,
+} from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -9,6 +16,7 @@ import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import { ChangePassword } from "./ChangePassword";
 import { ChangeUserData } from "./ChangeUserData";
 import { Saveresult } from "./saveresult";
+import { CloseButton } from "../../../../shared/CloseButton";
 interface IProps {}
 
 @observer
@@ -92,13 +100,7 @@ export class Modal extends React.Component<IProps> {
               }}
             >
               <Typography>{APP_STORAGE.modal.getModalTitle()}</Typography>
-
-              <CloseIcon
-                sx={{ color: "#1976D2" }}
-                onClick={() => {
-                  this.closeModal();
-                }}
-              />
+              <CloseButton onClose={this.closeModal} />
             </Box>
 
             <Divider sx={{ marginBottom: "20px" }} />

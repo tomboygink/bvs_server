@@ -14,17 +14,15 @@ import {
   Select,
   MenuItem,
   Alert,
+  FormGroup,
+  Stack,
 } from "@mui/material";
 
-import CloseIcon from "@mui/icons-material/Close";
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
-import FormGroup from "@mui/material/FormGroup";
-import Stack from "@mui/material/Stack";
-
 import LatInput from "../../../../shared/LatInput";
 import LongInput from "../../../../shared/LongInput";
 import { TextInput } from "../../../../shared/TextInput";
-
+import { CloseButton } from "../../../../shared/CloseButton";
 import { AntSwitch } from "../../../AppBarPanel/LeftPanel/RegistationUsers/switch";
 
 interface IProps {}
@@ -119,10 +117,8 @@ export class ChangeDevsGroups extends React.Component<IProps> {
               }}
             >
               <Typography>Редактировать расположение</Typography>
-
-              <CloseIcon
-                sx={{ color: "#1976D2" }}
-                onClick={() => {
+              <CloseButton
+                onClose={() => {
                   this.closeModal();
                 }}
               />
@@ -130,19 +126,10 @@ export class ChangeDevsGroups extends React.Component<IProps> {
 
             <Divider sx={{ marginBottom: "20px" }} />
 
-            <TextField
-              sx={{ mt: "14px" }}
-              inputProps={{ style: { fontSize: 12 } }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
+            <TextInput
               error={APP_STORAGE.devs_groups.getNameError()}
               helperText={APP_STORAGE.devs_groups.getNameError_mess()}
-              fullWidth
-              required
               label="Место расположения"
-              autoComplete="место расположения"
-              autoFocus
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.devs_groups.setName(e.target.value);
               }}
@@ -180,42 +167,28 @@ export class ChangeDevsGroups extends React.Component<IProps> {
               </Select>
             </FormControl>
 
-            <TextField
-              sx={{ mt: "14px" }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
+            <TextInput
               InputProps={{
                 inputComponent: LongInput as any,
                 style: { fontSize: 12 },
               }}
-              variant="outlined"
               error={APP_STORAGE.devs_groups.getLongitudeError()}
               helperText={APP_STORAGE.devs_groups.getLongitudeError_mess()}
-              fullWidth
-              required
               label="Долгота"
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.devs_groups.setLongitude(e.target.value);
               }}
               value={APP_STORAGE.devs_groups.getLongitude() || ""}
             />
 
-            <TextField
-              sx={{ mt: "14px" }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
+            <TextInput
               InputProps={{
                 inputComponent: LatInput as any,
                 style: { fontSize: 12 },
               }}
-              variant="outlined"
               error={APP_STORAGE.devs_groups.getLatitudeError()}
               helperText={APP_STORAGE.devs_groups.getLatitudeError_mess()}
-              fullWidth
-              required
               label="Широта"
-              autoComplete="широта"
-              autoFocus
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.devs_groups.setLatitude(e.target.value);
               }}

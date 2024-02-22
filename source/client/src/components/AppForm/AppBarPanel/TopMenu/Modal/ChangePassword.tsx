@@ -1,17 +1,9 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import {
-  TextField,
-  Box,
-  Button,
-  Typography,
-  Divider,
-  Alert,
-  InputAdornment,
-} from "@mui/material";
+import { Box, Button, Alert, InputAdornment } from "@mui/material";
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
-import SaveIcon from "@mui/icons-material/Save";
+
 import { TextInput } from "../../../../shared/TextInput";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
@@ -25,7 +17,7 @@ type State = {
   showRepeatPassword: boolean;
 };
 
-//Компонент формы приложения
+//Компонент формы приложени  я
 @observer
 export class ChangePassword extends React.Component<IProps, State> {
   constructor(props: any) {

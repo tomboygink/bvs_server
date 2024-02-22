@@ -20,6 +20,7 @@ import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import AddIcon from "@mui/icons-material/Add";
+import { TextInput } from "../../../../shared/TextInput";
 
 interface IProps {}
 
@@ -114,17 +115,10 @@ export class NewJobsTittle extends React.Component<IProps> {
           </FormHelperText>
         </FormControl>
 
-        <TextField
-          sx={{ mt: "12px", mb: "12px" }}
-          inputProps={{ style: { fontSize: 12 } }} // font size of input text
-          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
+        <TextInput
           error={APP_STORAGE.reg_user.getErrorJobs()}
           helperText={APP_STORAGE.reg_user.getTextHelpJobs()}
-          variant="outlined"
-          fullWidth
-          required
           label="Должность"
-          size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setNewJobsTitles(e.target.value);
           }}

@@ -1,29 +1,20 @@
 import React from "react";
-import { toJS } from "mobx";
 
 import { observer } from "mobx-react";
 
 import { Box, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-// import TreeItem from "@mui/lab/TreeItem";
-
-// import TreeView from "@mui/lab/TreeView";
-
 import { TreeView, TreeItem } from "@mui/x-tree-view";
 
 import { handleChange } from "./StyledMua";
-
+import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
+import FolderZipIcon from "@mui/icons-material/FolderZip";
 import FolderIcon from "@mui/icons-material/Folder";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDevice } from "../../../storage/components/Devs/DevEntityes";
-
-import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
-import FolderZipIcon from "@mui/icons-material/FolderZip";
-
-import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 
 interface IProps {
   devs_tree: TDevsGroup;

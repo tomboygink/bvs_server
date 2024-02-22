@@ -341,7 +341,11 @@ export class DevsGroupStorage {
 
     if (this.getKeyOrg()) {
       this.setOrgError(false);
-    } else this.setOrgError(true);
+      this.setOrgError_mess("");
+    } else {
+      this.setOrgError(true);
+      this.setOrgError_mess(EMPTY_FIELD_ERROR);
+    }
 
     if (this.getLatitude()) {
       this.setLatitudeError(false);
@@ -358,40 +362,7 @@ export class DevsGroupStorage {
       this.setLongitudeError(true);
       this.setLongitudeError_mess(EMPTY_FIELD_ERROR);
     }
-    //   if (this.getName() === "") {
-    //     this.setNameError(true);
-    //     this.setNameError_mess("Поле не может быть пустым");
-    //     console.log("Нет названия места");
-    //   }
 
-    // if (this.getName() !== "") {
-    //   this.setNameError(false);
-    //   this.setNameError_mess("");
-    // }
-
-    // if (this.getKeyOrg() !== "") {
-    //   this.setOrgError(false);
-    // }
-
-    // if (this.getLatitude() === "") {
-    //   this.setLatitudeError(true);
-    //   this.setLatitudeError_mess("Поле не должно быть пустым");
-    // }
-
-    // if (this.getLatitude() !== "") {
-    //   this.setLatitudeError(false);
-    //   this.setLatitudeError_mess("");
-    // }
-
-    // if (this.getLongitude() === "") {
-    //   this.setLongitudeError(true);
-    //   this.setLongitudeError_mess("Поле не должно быть пустым");
-    // }
-
-    // if (this.getLongitude() !== "") {
-    //   this.setLongitudeError(false);
-    //   this.setLongitudeError_mess("");
-    // }
     const isValidValue = () => {
       return (
         !this.getNameError() &&

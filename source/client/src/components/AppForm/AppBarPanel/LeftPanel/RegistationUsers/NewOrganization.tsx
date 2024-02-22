@@ -1,7 +1,6 @@
 import * as React from "react";
 import {
   Box,
-  TextField,
   Button,
   TextareaAutosize,
   Typography,
@@ -13,7 +12,6 @@ import {
 import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
-import { Padding } from "@mui/icons-material";
 import IdInput from "../../../../shared/IdInput";
 import LongInput from "../../../../shared/LongInput";
 import LatInput from "../../../../shared/LatInput";

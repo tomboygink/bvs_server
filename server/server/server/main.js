@@ -203,6 +203,9 @@ var AppServer = (function () {
     this.app.get("/forgot_pass", function (req, res) {
       res.render("forgot_pass.hbs", { title: "Востановление пароля" });
     });
+    this.app.get("/show-map", function (req, res) {
+      res.render("show-map.hbs", { title: "Устройство на карте" });
+    });
 
     this.app.use((0, cors_1["default"])());
     this.app.use(body_parser_1["default"].json());

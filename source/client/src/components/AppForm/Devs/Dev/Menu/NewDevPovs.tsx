@@ -12,6 +12,8 @@ import {
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import CloseIcon from "@mui/icons-material/Close";
+import { CloseButton } from "../../../../shared/CloseButton";
+import { TextInput } from "../../../../shared/TextInput";
 
 interface IProps {}
 
@@ -59,12 +61,8 @@ export class NewDevPovs extends React.Component<IProps> {
                 Установить поверочный интервал -{" "}
                 {APP_STORAGE.devs_groups.getName()}
               </Typography>
-
-              <CloseIcon
-                sx={{ color: "#1976D2" }}
-                onClick={() => {
-                  APP_STORAGE.devs.setOpenNewdevpovs(false);
-                }}
+              <CloseButton
+                onClose={() => APP_STORAGE.devs.setOpenNewdevpovs(false)}
               />
             </Box>
 

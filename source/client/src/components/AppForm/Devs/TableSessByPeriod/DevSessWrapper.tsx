@@ -5,18 +5,10 @@ import { toJS } from "mobx";
 import { observer } from "mobx-react";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
 
-import { TableCell } from "@mui/material";
-
-
-
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import { ExportTable } from "./ExportTable";
 
-import { DevSessTable } from './DevSessTable'; ////////////////////// Таблица сессий
-
-
-
-
+import { DevSessTable } from "./DevSessTable"; ////////////////////// Таблица сессий
 
 interface IProps {}
 
@@ -58,12 +50,14 @@ export class DevSessWrapper extends React.Component<IProps> {
     a.click();
   }
 
-
   async set_NewControlDevSess(id: any, dev_id: any, dev_number: any) {
-    APP_STORAGE.devs.set_NewControlDevSess(APP_STORAGE.auth_form.getdt(), id, dev_id, dev_number)
+    APP_STORAGE.devs.set_NewControlDevSess(
+      APP_STORAGE.auth_form.getdt(),
+      id,
+      dev_id,
+      dev_number
+    );
   }
-
-  
 
   async setDevSess() {
     let sess = APP_STORAGE.sensors;
@@ -103,10 +97,8 @@ export class DevSessWrapper extends React.Component<IProps> {
       dev_sess = toJS(sess.getDevSession());
 
       for (var key in dev_sess) {
-  
         date.push(dev_sess[key]);
 
-        
         count = Object.keys(dev_sess).length;
 
         if (document.getElementById(dev_sess[key].id)) {
@@ -136,7 +128,6 @@ export class DevSessWrapper extends React.Component<IProps> {
                 className="session_pediod"
                 sx={{ display: "flex", justifyContent: "space-between" }}
               >
-                
                 <Typography
                   sx={{
                     fontSize: "12px",
@@ -147,8 +138,8 @@ export class DevSessWrapper extends React.Component<IProps> {
                 </Typography>
               </Box>
 
-            <DevSessTable />
-              
+              <DevSessTable />
+
               <Button
                 className="setDevSess"
                 sx={{
@@ -171,8 +162,6 @@ export class DevSessWrapper extends React.Component<IProps> {
                   }}
                 />
               </Button>
-
-
 
               <Button
                 className="setDevSess"
@@ -199,11 +188,14 @@ export class DevSessWrapper extends React.Component<IProps> {
           </Box>
         )}
 
-        {APP_STORAGE.sensors.getEmptySession().length &&
-            <Box>
-              <Typography sx ={{ color: '#266BF1', p: '24px'}}> {APP_STORAGE.sensors.getEmptySession()}</Typography>
-            </Box>
-        }
+        {APP_STORAGE.sensors.getEmptySession().length && (
+          <Box>
+            <Typography sx={{ color: "#266BF1", p: "24px" }}>
+              {" "}
+              {APP_STORAGE.sensors.getEmptySession()}
+            </Typography>
+          </Box>
+        )}
         <ExportTable />
       </React.Fragment>
     );

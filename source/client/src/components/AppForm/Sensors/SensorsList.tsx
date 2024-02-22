@@ -297,7 +297,7 @@ export class SensorsList extends React.Component<IProps> {
                   display: "flex",
                   padding: "12px",
                   height: "48px",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <ErrorOutlineIcon
@@ -322,7 +322,7 @@ export class SensorsList extends React.Component<IProps> {
                   display: "flex",
                   justifyContent: "space-between",
                   height: "54px",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <svg
@@ -370,7 +370,7 @@ export class SensorsList extends React.Component<IProps> {
                     display: "flex",
                     alignItems: "center",
                     borderTopLeftRadius: "0px",
-                    borderBottomLeftRadius: "0px"
+                    borderBottomLeftRadius: "0px",
                   }}
                 >
                   <SignalCellularAltIcon />
@@ -387,7 +387,7 @@ export class SensorsList extends React.Component<IProps> {
                   justifyContent: "space-between",
                   height: "54px",
 
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <svg
@@ -428,7 +428,7 @@ export class SensorsList extends React.Component<IProps> {
                     display: "flex",
                     alignItems: "center",
                     borderTopLeftRadius: "0px",
-                    borderBottomLeftRadius: "0px"
+                    borderBottomLeftRadius: "0px",
                   }}
                 >
                   <SignalCellularAltIcon />
@@ -443,7 +443,7 @@ export class SensorsList extends React.Component<IProps> {
                 padding: "12px",
                 borderRadius: "4px",
                 display: "flex",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <LeakAddIcon sx={{ color: "#808080", mr: "5px" }} />
@@ -454,7 +454,7 @@ export class SensorsList extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                color: "#111111"
+                color: "#111111",
               }}
             >
               <Typography
@@ -491,7 +491,7 @@ export class SensorsList extends React.Component<IProps> {
             display: "flex",
             flexDirection: "column;",
             alignItems: "flex-start;",
-            width: "100%"
+            width: "100%",
           }}
         >
           <Box
@@ -503,7 +503,7 @@ export class SensorsList extends React.Component<IProps> {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              overflow: "auto"
+              overflow: "auto",
             }}
           >
             <TableContainer className="table_container sensors">

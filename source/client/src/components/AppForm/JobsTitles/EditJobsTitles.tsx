@@ -2,13 +2,11 @@ import React from "react";
 import { observer } from "mobx-react";
 
 import {
-  TextField,
   Box,
   Dialog,
   Divider,
   Typography,
   Alert,
-  Link,
   Button,
   FormHelperText,
   TextareaAutosize,
@@ -16,15 +14,11 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Checkbox,
 } from "@mui/material";
 
-import CloseIcon from "@mui/icons-material/Close";
-
-import NativeSelect from "@mui/material/NativeSelect";
-import FormGroup from "@mui/material/FormGroup";
-import Stack from "@mui/material/Stack";
 import { APP_STORAGE } from "../../../storage/AppStorage";
+import { CloseButton } from "../../shared/CloseButton";
+import { TextInput } from "../../shared/TextInput";
 
 interface IProps {}
 
@@ -84,31 +78,25 @@ export class EditJobsTitles extends React.Component<IProps> {
           <Box sx={{ p: 2 }}>
             <Box
               className="ModalTitle"
-              sx={{ display: "flex", justifyContent: "space-between" }}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
               <Typography>Изменить должность</Typography>
-
-              <CloseIcon
-                sx={{ color: "#1976D2" }}
-                onClick={() => {
+              <CloseButton
+                onClose={() => {
                   APP_STORAGE.jobs.setModalEditJobsTitles(false);
                 }}
               />
             </Box>
             <Divider sx={{ marginBottom: "20px" }} />
 
-            <TextField
-              inputProps={{ style: { fontSize: 12 } }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
+            <TextInput
               error={APP_STORAGE.jobs.getErrorTitle()}
               helperText={APP_STORAGE.jobs.getTextHelpTitle()}
               label="Наименование должности"
-              autoFocus
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.jobs.setJobsTitles(e.target.value);
               }}

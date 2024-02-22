@@ -27,6 +27,7 @@ import IdInput from "../../shared/IdInput";
 import LatInput from "../../shared/LatInput";
 import LongInput from "../../shared/LongInput";
 import { TextInput } from "../../shared/TextInput";
+import { CloseButton } from "../../shared/CloseButton";
 
 interface IProps {}
 
@@ -55,15 +56,16 @@ export class EditOrg extends React.Component<IProps> {
           <Box sx={{ p: 2 }}>
             <Box
               className="ModalTitle"
-              sx={{ display: "flex", justifyContent: "space-between" }}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
               <Typography>Изменить данные организации </Typography>
 
-              <CloseIcon
-                sx={{ color: "#1976D2" }}
-                onClick={() => {
-                  APP_STORAGE.org.setModalEditOrg(false);
-                }}
+              <CloseButton
+                onClose={() => APP_STORAGE.org.setModalEditOrg(false)}
               />
             </Box>
             <Divider sx={{ marginBottom: "20px" }} />

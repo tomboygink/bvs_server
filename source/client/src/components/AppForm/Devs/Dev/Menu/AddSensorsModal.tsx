@@ -1,15 +1,18 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { toJS } from 'mobx';
-
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { Button, Divider, TextField } from "@mui/material";
-
+import {
+  Box,
+  Typography,
+  Button,
+  Divider,
+  TextField,
+  Modal,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
+import { CloseButton } from "../../../../shared/CloseButton";
+import { TextInput } from "../../../../shared/TextInput";
 
 interface IProps {}
 
@@ -21,48 +24,48 @@ export class Change_ModalSensors extends React.Component<IProps> {
   }
 
   async Change_sensors() {
-    if(APP_STORAGE.devs.getChangeSensorsValue() === 'add'){
-      APP_STORAGE.devs.get_sensors.push(
-        {"depth": APP_STORAGE.devs.getSensors(), "value" : 0 }
-      );
-      
-      var q = APP_STORAGE.devs.get_sensors
-      const uniqueChars = q.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
-        if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
+    if (APP_STORAGE.devs.getChangeSensorsValue() === "add") {
+      APP_STORAGE.devs.get_sensors.push({
+        depth: APP_STORAGE.devs.getSensors(),
+        value: 0,
+      });
+
+      var q = APP_STORAGE.devs.get_sensors;
+      const uniqueChars = q.reduce((o: any, i: any) => {
+        ////////////////// Редюсом убираем дубликаты
+        if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
           o.push(i);
         }
         return o;
       }, []);
-      
-      APP_STORAGE.devs.setChangeSensors(JSON.parse(JSON.stringify(uniqueChars)));
-    }
 
-    else if(APP_STORAGE.devs.getChangeSensorsValue() !== 'add'){
+      APP_STORAGE.devs.setChangeSensors(
+        JSON.parse(JSON.stringify(uniqueChars))
+      );
+    } else if (APP_STORAGE.devs.getChangeSensorsValue() !== "add") {
       var q = APP_STORAGE.devs.get_sensors;
 
-      let array = (JSON.parse(JSON.stringify(q)));
-      for ( var key in array){
-         if(Number( APP_STORAGE.devs.getChangeSensorsValue()) === Number(array[key].depth)){
+      let array = JSON.parse(JSON.stringify(q));
+      for (var key in array) {
+        if (
+          Number(APP_STORAGE.devs.getChangeSensorsValue()) ===
+          Number(array[key].depth)
+        ) {
           array[key].depth = APP_STORAGE.devs.getSensors();
-         } 
-   
-    
+        }
       }
-      const uniqueChars = array.reduce((o:any, i:any) => { ////////////////// Редюсом убираем дубликаты
-        if (!o.find((v: { depth: any; }) => v.depth == i.depth)) {
-          
+      const uniqueChars = array.reduce((o: any, i: any) => {
+        ////////////////// Редюсом убираем дубликаты
+        if (!o.find((v: { depth: any }) => v.depth == i.depth)) {
           o.push(i);
         }
         return o;
       }, []);
-      APP_STORAGE.devs.setChangeSensors(JSON.parse(JSON.stringify(uniqueChars)));
+      APP_STORAGE.devs.setChangeSensors(
+        JSON.parse(JSON.stringify(uniqueChars))
+      );
     }
-
   }
-
-
-
-
 
   render(): React.ReactNode {
     return (
@@ -88,16 +91,6 @@ export class Change_ModalSensors extends React.Component<IProps> {
                 outline: "none",
               }}
             >
-              {/* <Box sx={{ display: "grid", justifyItems: "end" }}>
-                <CloseIcon
-                  fontSize="small"
-                  onClick={() => {
-                    APP_STORAGE.devs.setDepthSensors_Ch(false);
-                  }}
-                />
-              </Box> */}
-              
-
               <Box
                 className="ModalTitle"
                 sx={{
@@ -107,30 +100,23 @@ export class Change_ModalSensors extends React.Component<IProps> {
                 }}
               >
                 <Typography>Введите глубину датчика</Typography>
-
-                <CloseIcon
-                  sx={{ color: "#1976D2" }}
-                  onClick={() => {
-                    APP_STORAGE.devs.setDepthSensors_Ch(false);
-                  }}
+                <CloseButton
+                  onClose={() => APP_STORAGE.devs.setDepthSensors_Ch(false)}
                 />
               </Box>
 
               <Divider sx={{ marginBottom: "20px" }} />
 
-              <TextField
-                size="small"
-                fullWidth
-                id="outlined-number"
+              <TextInput
                 label="Глубина"
-                type="number"
                 InputLabelProps={{
                   shrink: true,
                 }}
-                inputProps={{
+                InputProps={{
                   inputMode: "decimal",
                   step: 0.1,
                   pattern: "[0..9]*[.][0..9]*",
+                  type: "number",
                 }}
                 onChange={(e) => {
                   APP_STORAGE.devs.setSensors(Number(e.target.value));
@@ -138,19 +124,6 @@ export class Change_ModalSensors extends React.Component<IProps> {
                 // value={APP_STORAGE.devs.getSensors() || ""}
                 // sx={{ mt: 2 }}
               />
-
-
-       
-
-
-              {/* <Typography
-                id="modal-modal-description"
-                sx={{ mt: 2 }}
-                onClick={() => {
-                  this.Change_sensors();
-                }}>
-                Сохранить
-              </Typography> */}
 
               <Box
                 sx={{
@@ -175,7 +148,6 @@ export class Change_ModalSensors extends React.Component<IProps> {
                   Сохранить( Сенсоры )
                 </Button>
               </Box>
-
             </Box>
           </Modal>
         </Box>

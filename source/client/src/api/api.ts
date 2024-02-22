@@ -5,11 +5,7 @@ import { CONFIG } from "../../../xcore/config";
 
 export { WSQuery, IWSQuery } from "../../../xcore/WSQuery";
 class Api {
-  private _baseUrl: string;
-
-  constructor(baseUrl: string) {
-    this._baseUrl = baseUrl;
-  }
+  constructor(private baseUrl: string) {}
 
   // Обработка ответа сервера
   _checkResponse(res: any) {
@@ -27,7 +23,7 @@ class Api {
   //   return await APP_STORAGE.onWSData(dt);
   // }
   fetch(data: WSQuery) {
-    return fetch(`${this._baseUrl}/api`, {
+    return fetch(`${this.baseUrl}/api`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

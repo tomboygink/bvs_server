@@ -5,30 +5,23 @@ import { toJS } from "mobx";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
 import {
   Box,
-  Typography,
-  TextField,
   Button,
-  Link,
   TableHead,
   Paper,
   TableFooter,
   TablePagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
 } from "@mui/material";
-
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import { TableCell } from "@mui/material";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-
-import { ExportTable } from "./ExportTable";
 
 import { handleChangePage, handleChangeRowsPerPage } from "../StyledMua";
 
-import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
+import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
 
-
-interface IProps { }
+interface IProps {}
 
 //Устройства
 @observer
@@ -44,15 +37,14 @@ export class DevSessTable extends React.Component<IProps> {
       dev_id,
       dev_number
     );
-    APP_STORAGE.sensors.get_DevPovs(APP_STORAGE.auth_form.getdt())
+    APP_STORAGE.sensors.get_DevPovs(APP_STORAGE.auth_form.getdt());
   }
 
   async setRowId(e: string, time: string, level_akb: string) {
-
     APP_STORAGE.sensors.setChoseSessTime(time);
     APP_STORAGE.sensors.setOpenDevsess(true);
     APP_STORAGE.sensors.setIdDevSess(e);
-    APP_STORAGE.sensors.setAkbSessChose(level_akb)
+    APP_STORAGE.sensors.setAkbSessChose(level_akb);
     APP_STORAGE.sensors.get_DevSessions(
       "sess_id",
       APP_STORAGE.auth_form.getdt()
@@ -93,7 +85,7 @@ export class DevSessTable extends React.Component<IProps> {
 
     qw.push({
       depth: 0,
-      "град.": '',
+      "град.": "",
     });
 
     const mergeByProperty = (arrays: any[], property = "depth") => {
@@ -111,7 +103,8 @@ export class DevSessTable extends React.Component<IProps> {
     };
 
     const result1 = mergeByProperty([
-      data,qw, 
+      data,
+      qw,
       toJS(APP_STORAGE.sensors.getSessFirstLast()),
     ]);
 
@@ -210,7 +203,7 @@ export class DevSessTable extends React.Component<IProps> {
         {date.length > 0 && (
           <Box sx={{ mt: "8px" }}>
             <>
-              <TableContainer component={Paper} id='table-paper'>
+              <TableContainer component={Paper} id="table-paper">
                 <Table>
                   <TableHead>
                     <TableRow key={"row_key"}>
@@ -224,11 +217,12 @@ export class DevSessTable extends React.Component<IProps> {
                       <TableCell style={{ width: 160 }} align="center">
                         Заряд
                       </TableCell>
-                      {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 && 
-                       <TableCell style={{ width: 160 }} align="center">
-                       Контрольная сессия
-                     </TableCell>
-                      }
+                      {APP_STORAGE.getRoleWrite() === 2 &&
+                        APP_STORAGE.getRoleRead() === 1 && (
+                          <TableCell style={{ width: 160 }} align="center">
+                            Контрольная сессия
+                          </TableCell>
+                        )}
                       <TableCell component="th" scope="row">
                         Показать на графике
                       </TableCell>
@@ -237,9 +231,9 @@ export class DevSessTable extends React.Component<IProps> {
                   <TableBody>
                     {(rowsPerPage > 0
                       ? date.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage
+                        )
                       : date
                     ).map((row) => (
                       <TableRow id={row.id} key={row.id}>
@@ -250,36 +244,55 @@ export class DevSessTable extends React.Component<IProps> {
                         <TableCell style={{ width: 160 }} align="center">
                           {row.time_dev.replace("T", " ")}
                         </TableCell>
-                        {Number(row.level_akb) >= Number(2.7) && 
-                           <TableCell style={{ width: 160}} align="center">
-                            <Box sx={{display: 'flex', justifyContent: 'center'}}>
-                            {row.level_akb} <BatteryChargingFullIcon fontSize="small" sx ={{color: '#14AE5C '}}/>
+                        {Number(row.level_akb) >= Number(2.7) && (
+                          <TableCell style={{ width: 160 }} align="center">
+                            <Box
+                              sx={{ display: "flex", justifyContent: "center" }}
+                            >
+                              {row.level_akb}{" "}
+                              <BatteryChargingFullIcon
+                                fontSize="small"
+                                sx={{ color: "#14AE5C " }}
+                              />
                             </Box>
-                         </TableCell>
-                        }
-                          {Number(row.level_akb) < Number(2.7) && Number(row.level_akb) >= Number(2.2) && 
-                           <TableCell style={{ width: 160}} align="center">
-                            <Box sx={{display: 'flex', justifyContent: 'center'}}>
-                            {row.level_akb} <BatteryChargingFullIcon fontSize="small" sx ={{color: '#FFCC40'}}/>
+                          </TableCell>
+                        )}
+                        {Number(row.level_akb) < Number(2.7) &&
+                          Number(row.level_akb) >= Number(2.2) && (
+                            <TableCell style={{ width: 160 }} align="center">
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "center",
+                                }}
+                              >
+                                {row.level_akb}{" "}
+                                <BatteryChargingFullIcon
+                                  fontSize="small"
+                                  sx={{ color: "#FFCC40" }}
+                                />
+                              </Box>
+                            </TableCell>
+                          )}
+
+                        {Number(row.level_akb) < Number(2.2) && (
+                          <TableCell style={{ width: 160 }} align="center">
+                            <Box
+                              sx={{ display: "flex", justifyContent: "center" }}
+                            >
+                              {row.level_akb}{" "}
+                              <BatteryChargingFullIcon
+                                fontSize="small"
+                                sx={{ color: "#FF4848" }}
+                              />
                             </Box>
-                           
-                         </TableCell>
-                        }
+                          </TableCell>
+                        )}
 
-                        {Number(row.level_akb) < Number(2.2) && 
-                        <TableCell style={{ width: 160}} align="center">
-                          <Box sx={{display: 'flex', justifyContent: 'center'}}>
-                          {row.level_akb} <BatteryChargingFullIcon fontSize="small" sx ={{color: '#FF4848'}}/>
-                          </Box>
-                        </TableCell>
-                        }
-                     
-                 
-
-
-                        {APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1  &&
-                        APP_STORAGE.sensors.getIdFirstSess() ===
-                          APP_STORAGE.sensors.getIdLastSess() &&
+                        {APP_STORAGE.getRoleWrite() === 2 &&
+                          APP_STORAGE.getRoleRead() === 1 &&
+                          APP_STORAGE.sensors.getIdFirstSess() ===
+                            APP_STORAGE.sensors.getIdLastSess() &&
                           APP_STORAGE.sensors.getIdFirstSess() !== row.id && (
                             <TableCell component="th" scope="row">
                               <Button
@@ -298,7 +311,9 @@ export class DevSessTable extends React.Component<IProps> {
                           )}
 
                         {APP_STORAGE.sensors.getIdFirstSess() ===
-                          APP_STORAGE.sensors.getIdLastSess() && APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 &&
+                          APP_STORAGE.sensors.getIdLastSess() &&
+                          APP_STORAGE.getRoleWrite() === 2 &&
+                          APP_STORAGE.getRoleRead() === 1 &&
                           APP_STORAGE.sensors.getIdFirstSess() === row.id && (
                             <TableCell component="th" scope="row">
                               <Button sx={{ fontSize: "12px" }}>
@@ -308,9 +323,11 @@ export class DevSessTable extends React.Component<IProps> {
                           )}
 
                         {APP_STORAGE.sensors.getIdFirstSess() !==
-                          APP_STORAGE.sensors.getIdLastSess() && APP_STORAGE.getRoleWrite() === 2 && APP_STORAGE.getRoleRead() === 1 &&
+                          APP_STORAGE.sensors.getIdLastSess() &&
+                          APP_STORAGE.getRoleWrite() === 2 &&
+                          APP_STORAGE.getRoleRead() === 1 &&
                           String(toJS(APP_STORAGE.sensors.getIdFirstSess())) ===
-                          String(row.id) && (
+                            String(row.id) && (
                             <TableCell component="th" scope="row">
                               <Button sx={{ fontSize: "12px" }}>
                                 Установлено
@@ -321,7 +338,7 @@ export class DevSessTable extends React.Component<IProps> {
                         {APP_STORAGE.sensors.getIdFirstSess() !==
                           APP_STORAGE.sensors.getIdLastSess() &&
                           String(toJS(APP_STORAGE.sensors.getIdFirstSess())) !==
-                          String(row.id) && (
+                            String(row.id) && (
                             <TableCell component="th" scope="row">
                               <Button sx={{ fontSize: "12px", color: "#eee" }}>
                                 установить
@@ -333,7 +350,11 @@ export class DevSessTable extends React.Component<IProps> {
                           <Button
                             sx={{ fontSize: "12px" }}
                             onClick={() => {
-                              this.setRowId(row.id, row.time_dev, row.level_akb);
+                              this.setRowId(
+                                row.id,
+                                row.time_dev,
+                                row.level_akb
+                              );
                             }}
                           >
                             {" "}
@@ -360,8 +381,8 @@ export class DevSessTable extends React.Component<IProps> {
                           { label: "Все", value: -1 },
                         ]}
                         labelDisplayedRows={({ from, to, count }) =>
-                        `${from} из ${count} страниц`
-                      }
+                          `${from} из ${count} страниц`
+                        }
                         colSpan={3}
                         count={date.length}
                         rowsPerPage={rowsPerPage}
@@ -369,7 +390,7 @@ export class DevSessTable extends React.Component<IProps> {
                         page={page}
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
-                      //ActionsComponent={TablePaginationActions}
+                        //ActionsComponent={TablePaginationActions}
                       />
                     </TableRow>
                   </TableFooter>
@@ -378,7 +399,6 @@ export class DevSessTable extends React.Component<IProps> {
             </>
           </Box>
         )}
-        <ExportTable />
       </React.Fragment>
     );
   }

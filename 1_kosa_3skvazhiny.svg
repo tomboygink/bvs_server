@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"  viewBox="0 0 5410 5445" fill="none">
+
+  <!--1 скважина-->
+  <rect width="500" height="1000" rx="10" x="-150" y="100" stroke-width="22" stroke="black"/>
+  <rect width="100" height="4800" rx="10" x="50" y="250" stroke-width="22" stroke="black"/>
+  
+  <!--2 скважина-->
+  <rect width="500" height="1000" rx="10" x="1850" y="100" stroke-width="22" stroke="black"/>
+  <rect width="100" height="4800" rx="10" x="2050" y="250" stroke-width="22" stroke="black"/>
+  <!--3 скважина-->
+  <rect width="500" height="1000" rx="10" x="3850" y="100" stroke-width="22" stroke="black"/>
+  <rect width="100" height="4800" rx="10" x="4050" y="250" stroke-width="22" stroke="black"/>
+  
+  <!--Связь косы-->
+  <line x1="100" y1="20" x2="4100" y2="10" stroke="black" stroke-width="22"/>
+  
+  <!--коса 1 скважина-->
+  <line x1="100" y1="20" x2="100" y2="500" stroke="black" stroke-width="22"/>
+  <!--коса 2 скважина-->
+  <line x1="2100" y1="20" x2="2100" y2="500" stroke="black" stroke-width="22"/>
+  <!--коса 3 скважина-->
+  <line x1="4100" y1="20" x2="4100" y2="500" stroke="black" stroke-width="22"/>
+
+  <!--Уровень грунта-->
+  <line x1="-400" y1="500" x2="4600" y2="500" stroke-dasharray="100 50" stroke="gray"
+    stroke-width="22" />
+  
+  
+  <!--Первая скважина-->
+  <line x1="100" y1="500" x2="100" y2="4800" stroke="black" stroke-width="22"/>
+  <!--1 датчик-->
+  <rect class="ds" id="ds_1" width="50" height="100" rx="0" x="75" y="450" fill="green"/>
+  <!--2 датчик-->
+  <rect class="ds" id="ds_2" width="50" height="100" rx="0" x="75" y="1150" fill="green"/>
+  <!--3 датчик-->
+  <rect class="ds" id="ds_3" width="50" height="100" rx="0" x="75" y="2450" fill="green"/>
+  <!--4 датчик-->
+  <rect class="ds" id="ds_4" width="50" height="100" rx="0" x="75" y="3450" fill="green"/>
+  <!--5 датчик-->
+  <rect class="ds" id="ds_5" width="50" height="100" rx="0" x="75" y="4775" fill="green"/>
+  
+
+  <!--Вторая скважина-->
+  <line x1="2100" y1="500" x2="2100" y2="4800" stroke="black" stroke-width="22"/>
+  
+   <!--6 датчик-->
+  <rect class="ds" id="ds_6" width="50" height="100" rx="0" x="2075" y="450" fill="green"/>
+  <!--7 датчик-->
+  <rect class="ds" id="ds_7" width="50" height="100" rx="0" x="2075" y="1150" fill="green"/>
+  <!--8 датчик-->
+  <rect class="ds" id="ds_8" width="50" height="100" rx="0" x="2075" y="2400" fill="green"/>
+  <!--9 датчик-->
+  <rect class="ds" id="ds_9" width="50" height="100" rx="0" x="2075" y="3450" fill="green"/>
+  <!--10 датчик-->
+  <rect class="ds" id="ds_10" width="50" height="100" rx="0" x="2075" y="4775" fill="green"/>
+  
+  <!--Третья скважина-->
+  <line x1="4100" y1="500" x2="4100" y2="4800" stroke="black" stroke-width="22"/>
+  <!--11 датчик-->
+  <rect class="ds" id="ds_11" width="50" height="100" rx="0" x="4075" y="450" fill="green"/>
+  <!--12 датчик-->
+  <rect class="ds" id="ds_12" width="50" height="100" rx="0" x="4075" y="1150" fill="green"/>
+  <!--13 датчик-->
+  <rect class="ds" id="ds_13" width="50" height="100" rx="0" x="4075" y="2400" fill="green"/>
+  <!--14 датчик-->
+  <rect class="ds" id="ds_14" width="50" height="100" rx="0" x="4075" y="3450" fill="green"/>
+  <!--15 датчик-->
+  <rect class="ds" id="ds_15" width="50" height="100" rx="0" x="4075" y="4775" fill="green"/>
+    
+</svg>

@@ -25,6 +25,7 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 
 import { EditOrg } from "./EditOrg";
+import { TextInput } from "../../shared/TextInput";
 
 interface IProps {}
 
@@ -113,92 +114,38 @@ export class Orgs extends React.Component<IProps> {
                       Полное наименование -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.full_name || ""}
-                    />
+                    <TextInput value={row.full_name || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       {" "}
                       Наименование -{" "}
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.name || ""}
-                    />
+                    <TextInput value={row.name || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       ИНН -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.inn || ""}
-                    />
+                    <TextInput value={row.inn || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       Адрес -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.address || ""}
-                    />
+                    <TextInput value={row.address || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       Долгота -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.longitude || ""}
-                    />
+                    <TextInput value={row.longitude || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       Широта -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.latitude || ""}
-                    />
+                    <TextInput value={row.latitude || ""} />
                   </Box>
 
                   <Divider sx={{ mt: "12px" }} />
@@ -217,7 +164,7 @@ export class Orgs extends React.Component<IProps> {
       }
     }
     return (
-      <React.Fragment>
+      <>
         <Typography sx={{ fontWeight: "600", color: "#111111", mb: "8px" }}>
           {" "}
           Подробная информация{" "}
@@ -232,6 +179,11 @@ export class Orgs extends React.Component<IProps> {
             width: "100%",
             background: "#E3EDFF",
             p: 2,
+            cursor: "pointer",
+            transition: "0.3s",
+            ":hover": {
+              opacity: "0.6",
+            },
           }}
           onClick={() => this.OpenModalRegUser(2, "Добавить организацию")}
         >
@@ -242,7 +194,7 @@ export class Orgs extends React.Component<IProps> {
             Добавить организацию
           </Typography>
         </Box>
-      </React.Fragment>
+      </>
     );
   }
 }

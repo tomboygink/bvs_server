@@ -13,9 +13,9 @@ import {
   ReferenceLine,
 } from "recharts";
 import { toJS } from "mobx";
-import { Box , Divider  } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { Charts } from "./SvgWell";
-import { CustomTooltip, CustomizedLabel, customizedGroupTick } from "./Recharts";
+import { CustomTooltip, customizedGroupTick } from "./Recharts";
 
 interface IProps {}
 
@@ -67,22 +67,24 @@ export class DevSessCharts extends React.Component<IProps> {
 
       return (
         <Box
-        className="container_charts"
-        sx={{
-          background: "#fff",
-          borderTopLeftRadius: "48px",
-          border: "1px solid #eee"
-        }}
-      >
-  <Charts/>
+          className="container_charts"
+          sx={{
+            background: "#fff",
+            borderTopLeftRadius: "48px",
+            // border: "1px solid #eee",
+            border: "5px red solid",
+          }}
+        >
+          <Charts />
 
           <ResponsiveContainer className="item-2" width="100%">
             <LineChart
               className="LineChart"
               layout="vertical"
-              data={toJS(APP_STORAGE.sensors.getdataCharts())}>
+              data={toJS(APP_STORAGE.sensors.getdataCharts())}
+            >
               <CartesianGrid strokeDasharray="2 2" />
-              <XAxis 
+              <XAxis
                 type="number"
                 strokeWidth={"0.1mm"}
                 stroke="rgb(23 21 21)"
@@ -182,12 +184,12 @@ export class DevSessCharts extends React.Component<IProps> {
             sx={{
               background: "#fff",
               borderTopLeftRadius: "48px",
-              border: "1px solid #eee"
+              border: "1px solid #eee",
             }}
           >
- <Charts/>
+            <Charts />
 
- {/* < Box className="item-3" /> */}
+            {/* < Box className="item-3" /> */}
 
             <ResponsiveContainer className="item-2" width="100%">
               <LineChart
@@ -200,13 +202,12 @@ export class DevSessCharts extends React.Component<IProps> {
                 //   bottom: 5,
                 // }}
               >
-              
                 <XAxis
                   type="number"
                   strokeWidth={"0.1mm"}
                   stroke="rgb(255 255 255 / 0%)"
                   tickCount={27}
-                  tick={{ fill: "#7F00FF", fontSize: "14px" }} 
+                  tick={{ fill: "#7F00FF", fontSize: "14px" }}
                   domain={[-15, 15]}
                 />
 
@@ -223,7 +224,7 @@ export class DevSessCharts extends React.Component<IProps> {
                 />
 
                 <Tooltip content={<CustomTooltip />} />
-                <ReferenceLine y={0}  stroke="#8B4513" strokeDasharray="4 4" />
+                <ReferenceLine y={0} stroke="#8B4513" strokeDasharray="4 4" />
                 {/*
             // <ReferenceLine className="y7676" x="-15" stroke="red" /> */}
                 {/* <Customized component={customizedGroupTick} /> */}
@@ -256,14 +257,14 @@ export class DevSessCharts extends React.Component<IProps> {
     ) {
       return (
         <Box
-            className="container_charts"
-            sx={{
-              background: "#fff",
-              borderTopLeftRadius: "48px",
-              border: "1px solid #eee"
-            }}
-          >
-    <Charts/>
+          className="container_charts"
+          sx={{
+            background: "#fff",
+            borderTopLeftRadius: "48px",
+            border: "1px solid #eee",
+          }}
+        >
+          <Charts />
 
           <ResponsiveContainer className="item-2" width="100%">
             <LineChart

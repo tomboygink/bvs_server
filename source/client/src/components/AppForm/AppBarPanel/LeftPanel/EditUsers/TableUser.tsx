@@ -14,13 +14,14 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 import { observer } from "mobx-react";
 
-import { EditUser } from "./EditUser.1";
+import { EditUser } from "./EditUser";
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
 
 interface IProps {}
 
+//ToDo: компонент не используется - удалить
 @observer
 export class TableUser extends React.Component<IProps> {
   constructor(props: any) {
@@ -171,7 +172,7 @@ export class TableUser extends React.Component<IProps> {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell align="center">{key}</TableCell>
-              <TableCell align="center"> {row.u_family} </TableCell>
+              <TableCell align="center"> {row.u_family}</TableCell>
               <TableCell align="center"> {row.u_name} </TableCell>
               <TableCell align="center">{row.u_father}</TableCell>
               <TableCell align="center">{row.u_login}</TableCell>
