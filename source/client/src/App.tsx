@@ -18,7 +18,7 @@ export class App extends React.Component<IProps> {
   }
 
   componentDidMount(): void {
-    APP_STORAGE.main.setTitle("ТИТУЛЬНЫЙ ЗАГОЛОВОК СТРАНИЦЫ");
+    APP_STORAGE.main.setTitle("Система визуализации СДС");
     APP_STORAGE.get_UserBySessionCode();
   }
 

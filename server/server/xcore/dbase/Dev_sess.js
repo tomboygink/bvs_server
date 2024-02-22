@@ -98,9 +98,9 @@ var Dev_sessTable = (function () {
     };
     Dev_sessTable.prototype.selectFirstLastSess = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var dev_sess, db_res_last, db_res_first, result, i, tzoffset;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var dev_sess, result, db_res_last, db_res_first, dev_result, _a, _b, _c, _i, i, tzoffset, svg;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
                     case 0:
                         dev_sess = {
                             id: 0,
@@ -111,40 +111,64 @@ var Dev_sessTable = (function () {
                             level_akb: 0.0,
                             sess_data: ''
                         };
+                        result = {
+                            svg: "",
+                            dev_result: dev_result
+                        };
                         return [4, this.db.query("SELECT * FROM dev_sess where dev_number = '" + this.args.dev_number + "' order by id desc limit 1;")];
                     case 1:
-                        db_res_last = _a.sent();
+                        db_res_last = _d.sent();
                         return [4, this.db.query("SELECT dev_sess.* FROM dev_sess INNER JOIN control_dev_sess ON dev_sess.id = control_dev_sess.dev_sess_id " +
                                 "WHERE dev_sess.dev_number = '" + this.args.dev_number + "'")];
                     case 2:
-                        db_res_first = _a.sent();
-                        result = new Array();
-                        for (i in db_res_last.rows) {
-                            tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                        db_res_first = _d.sent();
+                        dev_result = new Array();
+                        _a = db_res_last.rows;
+                        _b = [];
+                        for (_c in _a)
+                            _b.push(_c);
+                        _i = 0;
+                        _d.label = 3;
+                    case 3:
+                        if (!(_i < _b.length)) return [3, 6];
+                        _c = _b[_i];
+                        if (!(_c in _a)) return [3, 5];
+                        i = _c;
+                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                        dev_sess = {
+                            id: db_res_last.rows[i].id,
+                            time_dev: (new Date(db_res_last.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
+                            time_srv: (new Date(db_res_last.rows[i].time_srv - tzoffset)).toISOString().slice(0, -8),
+                            dev_number: db_res_last.rows[i].dev_number,
+                            dev_id: db_res_last.rows[i].dev_id,
+                            level_akb: db_res_last.rows[i].level_akb,
+                            sess_data: db_res_last.rows[i].sess_data
+                        };
+                        dev_result.push(dev_sess);
+                        if (db_res_first.rows[i] !== undefined) {
                             dev_sess = {
-                                id: db_res_last.rows[i].id,
-                                time_dev: (new Date(db_res_last.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
-                                time_srv: (new Date(db_res_last.rows[i].time_srv - tzoffset)).toISOString().slice(0, -8),
-                                dev_number: db_res_last.rows[i].dev_number,
-                                dev_id: db_res_last.rows[i].dev_id,
-                                level_akb: db_res_last.rows[i].level_akb,
-                                sess_data: db_res_last.rows[i].sess_data
+                                id: db_res_first.rows[i].id,
+                                time_dev: (new Date(db_res_first.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
+                                time_srv: (new Date(db_res_first.rows[i].time_srv - tzoffset)).toISOString().slice(0, -8),
+                                dev_number: db_res_first.rows[i].dev_number,
+                                dev_id: db_res_first.rows[i].dev_id,
+                                level_akb: db_res_first.rows[i].level_akb,
+                                sess_data: db_res_first.rows[i].sess_data
                             };
-                            result.push(dev_sess);
-                            if (db_res_first.rows[i] !== undefined) {
-                                dev_sess = {
-                                    id: db_res_first.rows[i].id,
-                                    time_dev: (new Date(db_res_first.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
-                                    time_srv: (new Date(db_res_first.rows[i].time_srv - tzoffset)).toISOString().slice(0, -8),
-                                    dev_number: db_res_first.rows[i].dev_number,
-                                    dev_id: db_res_first.rows[i].dev_id,
-                                    level_akb: db_res_first.rows[i].level_akb,
-                                    sess_data: db_res_first.rows[i].sess_data
-                                };
-                            }
-                            result.push(dev_sess);
                         }
-                        return [2, result];
+                        dev_result.push(dev_sess);
+                        return [4, this.db.query("select svg from scheme_thermostreamer_svg where id_devs=" + db_res_last.rows[i].dev_id + "")];
+                    case 4:
+                        svg = _d.sent();
+                        result = {
+                            svg: svg.rows[0],
+                            dev_result: dev_result
+                        };
+                        _d.label = 5;
+                    case 5:
+                        _i++;
+                        return [3, 3];
+                    case 6: return [2, result];
                 }
             });
         });
