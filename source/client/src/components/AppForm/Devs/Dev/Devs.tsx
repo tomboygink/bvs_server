@@ -26,6 +26,7 @@ import { LeafletMap } from "./Map";
 import { TextInput } from "../../../shared/TextInput";
 import LatInput from "../../../shared/LatInput";
 import LongInput from "../../../shared/LongInput";
+import { UploadShemeModal } from "./Menu/UploadShemeModal";
 
 interface IProps {}
 
@@ -52,6 +53,11 @@ export class Devs extends React.Component<IProps> {
       var passedDay = Math.floor(delta / 1000 / 60 / 60 / 24);
     }
     APP_STORAGE.devs.setPassedDay(String(passedDay));
+  }
+
+  drawSheme() {
+    const svg = document.querySelector("#sheme");
+    const container = document.getElementsByClassName("sheme-container")[0];
   }
 
   drawDevs(dgrs: TDevsGroup[]): React.ReactNode[] {
@@ -92,6 +98,10 @@ export class Devs extends React.Component<IProps> {
             APP_STORAGE.sensors.get_DevPovs(APP_STORAGE.auth_form.getdt());
             APP_STORAGE.devs.setPeriodSess(period_ses);
           }, 0);
+
+          if (APP_STORAGE.sensors.getSheme().length > 0) {
+            this.drawSheme();
+          }
 
           if (gr_devs[key].deleted === true) {
             devs.push(
@@ -240,6 +250,18 @@ export class Devs extends React.Component<IProps> {
                       style={{ width: "100%", marginTop: "12px" }}
                       value={gr_devs[key].info || ""}
                     />
+
+                    {APP_STORAGE.sensors.getSheme().length > 0 && (
+                      <div
+                        className="sheme-container"
+                        style={{
+                          width: "200px",
+                          height: "200px",
+                        }}
+                      >
+                        <div id="sheme"></div>
+                      </div>
+                    )}
                     {APP_STORAGE.devs.setLongitude && (
                       <Box sx={{ height: "400px", width: "100%" }}>
                         <LeafletMap longitude={longitude} latitude={latitude} />
@@ -253,19 +275,27 @@ export class Devs extends React.Component<IProps> {
           }
         }
       }
+
       var childs: React.ReactNode[] = new Array();
       if (gr_childs.length > 0) childs = this.drawDevs(gr_childs);
       devs.push(childs);
     }
+
     return devs;
   }
 
   drawDevsFunction(): React.ReactNode {
     let Dev: any;
     Dev = APP_STORAGE.devs_groups.getDevsGroups();
+
     return this.drawDevs(Dev);
   }
   render(): React.ReactNode {
-    return <>{this.drawDevsFunction()}</>;
+    return (
+      <>
+        {this.drawDevsFunction()}
+        <UploadShemeModal />
+      </>
+    );
   }
 }

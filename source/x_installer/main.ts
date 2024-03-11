@@ -17,6 +17,7 @@ import { dev_povs_table } from './sql/dev_povs';
 import { control_dev_sess_table } from './sql/control_dev_sess';
 import { function_sql } from './sql/function';
 import { scheme_svg_table } from './sql/scheme_svg';
+import { scheme_thermostreamer_svg_table } from './sql/scheme_thermostreamer_svg';
 
 
 async function run() {
@@ -90,13 +91,18 @@ async function run() {
     console.log("ADDING TABLE \"info_log\"");
     await db.query(info_log_table.sql, info_log_table.args);
     console.log("TABLE \"info_log\" ADD");
-   
+
 
     //Создание таблицы схем месторождений 
     console.log("CREATING \"scheme_svg\"");
     await db.query(scheme_svg_table.sql, scheme_svg_table.args);
     console.log("TABLE \"scheme_svg\" ADD");
 
+
+    //Создание таблицы схемы термокосы
+    console.log("CREATING \"scheme_thermostreamer_svg\"");
+    await db.query(scheme_thermostreamer_svg_table.sql, scheme_thermostreamer_svg_table.args);
+    console.log("TABLE \"scheme_thermostreamer_svg\" ADD");
 
     //Добавление функций
     console.log("CREATING FUNCTION");

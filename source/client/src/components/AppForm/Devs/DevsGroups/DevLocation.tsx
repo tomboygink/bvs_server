@@ -124,6 +124,7 @@ export class DevLocation extends React.Component<IProps> {
 
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
     let parent: React.ReactNode[] = new Array();
+
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr: TDGroup = dgr.group;
@@ -134,7 +135,13 @@ export class DevLocation extends React.Component<IProps> {
       /////////////////////////////////////////////////////////////////////////////// Если есть дочерние строки
       parent.push(
         <React.Fragment key={"_gr_id_key_" + gr.id}>
-          <Box sx={{ display: "flex", width: "100%", flexDirection: "column" }}>
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              flexDirection: "column",
+            }}
+          >
             <Box id={String(gr.id)}>{childs}</Box>
           </Box>
         </React.Fragment>
@@ -404,9 +411,9 @@ export class DevLocation extends React.Component<IProps> {
                           </MenuItem>
 
                           <MenuItem
-                            onClick={() =>
-                              APP_STORAGE.importdevs.setOpenModalSvg(true)
-                            }
+                            onClick={() => {
+                              APP_STORAGE.importdevs.setOpenModalSvg(true);
+                            }}
                           >
                             <ListItemIcon>
                               <PhotoSizeSelectLargeIcon fontSize="small" />
@@ -492,6 +499,7 @@ export class DevLocation extends React.Component<IProps> {
                     className="svg-container"
                     sx={{
                       borderRadius: "4px",
+
                       background: "#fff",
                       display: "flex",
                       padding: "8px",

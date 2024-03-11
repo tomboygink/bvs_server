@@ -39,6 +39,8 @@ export class DevsStorage {
 
   @observable open_modal_change: boolean = false;
 
+  @observable open_modal_uploadSheme: boolean = false;
+
   @observable user_role: boolean = null;
   @observable org_id: number = null;
 
@@ -241,6 +243,14 @@ export class DevsStorage {
   @computed getOpenModalChange(): boolean {
     return this.open_modal_change;
   } /// открываем модальное окно редактирования
+
+  @action setOpenModalUploadSheme(val: boolean) {
+    this.open_modal_uploadSheme = val;
+  }
+
+  @computed getOpenModalUploadSheme(): boolean {
+    return this.open_modal_uploadSheme;
+  }
 
   ////// Добавление нового устройства
   @observable setId(val: string) {

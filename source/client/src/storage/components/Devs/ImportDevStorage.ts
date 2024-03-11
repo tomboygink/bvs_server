@@ -12,6 +12,7 @@ import {
   SAVE_ERROR,
   SAVE_SUCCESS,
 } from "../../../../utils/consts";
+import { json } from "stream/consumers";
 
 export class ImportDevStorage {
   @observable modal: boolean = false;
@@ -20,6 +21,8 @@ export class ImportDevStorage {
 
   @observable svgData: any = [];
   @observable svgString: string = "";
+
+  @observable devShemeSvg: any = [];
 
   @observable text_button: string = "";
 
@@ -65,6 +68,14 @@ export class ImportDevStorage {
   @computed getArraySvgData(): any {
     return this.svgData;
   }
+  @action setDevShemeSvgData(val: any) {
+    this.devShemeSvg = val;
+  }
+
+  @computed getDevShemeSvgData(): any {
+    return this.devShemeSvg;
+  }
+
   @action setSvg(val: any) {
     this.svgString = val;
   }
@@ -446,7 +457,6 @@ export class ImportDevStorage {
   }
 
   async set_SchemeSvg(sess_code: string) {
-    console.log("this block");
     var q: IWSQuery = new WSQuery("set_SchemeSvg");
     q.args = {
       id: APP_STORAGE.devs_groups.getParentId(),
@@ -479,5 +489,32 @@ export class ImportDevStorage {
     //     APP_STORAGE.auth_form.getdt()
     //   );
     // }, 100);
+  }
+
+  set_DevShemeSvg(sess_code: string) {
+    const q: IWSQuery = new WSQuery("set_ThermoStreamer_Svg");
+
+    q.args = {
+      id: APP_STORAGE.devs.getId(),
+      svg_file: this.getDevShemeSvgData(), ////data:image\/svg\+xml;base64
+    };
+    q.sess_code = sess_code;
+    api
+      .fetch(q)
+      .then(() => {
+        this.setSuccessSave_mess(SAVE_SUCCESS);
+        setTimeout(() => {
+          APP_STORAGE.devs.setOpenModalUploadSheme(false);
+          APP_STORAGE.importdevs.setDevShemeSvgData("");
+          this.setSuccessSave_mess("");
+        }, 2000);
+      })
+      .catch((e) => {
+        console.log("error=>", e.message);
+        this.setErrorSave_mess(SAVE_ERROR);
+        setTimeout(() => {
+          this.setErrorSave_mess("");
+        }, 2000);
+      });
   }
 }

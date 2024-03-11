@@ -1,6 +1,11 @@
 import { observable, action, computed, makeAutoObservable } from "mobx";
 import { toJS } from "mobx";
-import { IWSQuery, IWSResult, WSQuery } from "../../../xcore/WSQuery";
+import {
+  IWSQuery,
+  IWSResult,
+  IWSResultSessionss,
+  WSQuery,
+} from "../../../xcore/WSQuery";
 
 import { PageStorage } from "./PageStorage";
 import { AuthFormStorage } from "./components/AuthFormStorage";
@@ -125,91 +130,95 @@ class AppStorage {
     // WSocket.get();
   }
 
-  @action async onWSData(dt: IWSResult) {
-    console.log("SOCKET RESULT",  (dt));
+  @action async onWSData(dt: IWSResult | IWSResultSessionss) {
+    console.log("SOCKET RESULT", dt);
 
     switch (dt.cmd) {
       case "get_UserByAuth":
         {
-          this.auth_form.onGetUserByAuth(dt);
+          this.auth_form.onGetUserByAuth(dt as IWSResult);
         }
         break;
       case "get_UserBySessionCode":
         {
-          this.auth_form.onGetUserBySessionCode(dt);
+          this.auth_form.onGetUserBySessionCode(dt as IWSResult);
         }
         break;
       case "set_ChangePass":
         {
-          this.modal.onGetChangePass(dt);
+          this.modal.onGetChangePass(dt as IWSResult);
         }
         break;
       case "set_CUserData":
         {
-          this.modal.onGetCUserData(dt);
+          this.modal.onGetCUserData(dt as IWSResult);
         }
         break;
       case "set_ForgPass":
         {
-          this.auth_form.onSaveNewPass(dt);
+          this.auth_form.onSaveNewPass(dt as IWSResult);
         }
         break;
       case "set_SaveNewPass":
         {
-          this.auth_form.onSaveNewPass(dt);
+          this.auth_form.onSaveNewPass(dt as IWSResult);
         }
         break;
       case "set_SaveNewPass":
         {
-          this.auth_form.onSaveNewPass(dt);
+          this.auth_form.onSaveNewPass(dt as IWSResult);
         }
         break;
       case "get_Org":
         {
-          this.reg_user.setAllOrganization(dt);
+          this.reg_user.setAllOrganization(dt as IWSResult);
         }
         break;
       case "get_Jobs":
         {
-          this.reg_user.setAllJobsTitle(dt);
+          this.reg_user.setAllJobsTitle(dt as IWSResult);
         }
         break;
       case "get_AllUser":
         {
-          this.reg_user.setUsersAll(dt);
+          this.reg_user.setUsersAll(dt as IWSResult);
         }
         break;
       case "get_DevsGroups":
         {
-          this.devs_groups.setDevsGroupsAll(dt);
+          this.devs_groups.setDevsGroupsAll(dt as IWSResult);
         }
         break;
       case "get_Devs":
         {
-          this.devs.setDevsAll(dt);
+          this.devs.setDevsAll(dt as IWSResult);
         }
         break;
       case "get_DevSessions":
         {
-          this.sensors.setDevSess(dt);
+          this.sensors.setDevSess(dt as IWSResult);
         }
         break;
       case "get_DevFirstLastSessions":
         {
-          this.sensors.set_DevFirstLastSessions(dt);
+          this.sensors.set_DevFirstLastSessions(dt as IWSResultSessionss);
+          this.sensors.setDevSheme(dt as IWSResultSessionss);
         }
         break;
+      case "set_ThermoStreamer_Svg": {
+        this.sensors.setDevSheme(dt as IWSResultSessionss);
+      }
       case "set_ChangeOrg": {
-        this.org.get_ChangeOrg(dt);
+        this.org.get_ChangeOrg(dt as IWSResult);
       }
       case "set_NewControlDevSess": {
-        this.devs.get_NewControlDevSess(dt);
+        this.devs.get_NewControlDevSess(dt as IWSResult);
       }
       case "get_DevPovs": {
-        this.sensors.set_DevPovs(dt);
+        this.sensors.set_DevPovs(dt as IWSResult);
       }
       case "get_DevPovs": {
-        this.sensors.set_DevPovs(dt);
+        this.sensors.set_DevPovs(dt as IWSResult);
       }
       default:
         {
@@ -217,7 +226,7 @@ class AppStorage {
         break;
     }
     if (dt.error) {
-      this.shared_store.setResponseErrorMess(dt);
+      this.shared_store.setResponseErrorMess(dt as IWSResult);
     }
   }
 

@@ -1,5 +1,10 @@
 import { observable, action, computed, makeAutoObservable } from "mobx";
-import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
+import {
+  IWSQuery,
+  WSQuery,
+  IWSResult,
+  IWSResultSessionss,
+} from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
 import { api } from "../../../api/api";
 import { APP_STORAGE } from "../../AppStorage";
@@ -24,6 +29,8 @@ export class SensorsStorage {
   @observable number: string = "";
   @observable id_dev: string = "";
   @observable del: boolean = false;
+
+  @observable sheme: string = "";
 
   @observable id_dev_sess: string = "";
   @observable chose_sess_time: string = "";
@@ -205,6 +212,14 @@ export class SensorsStorage {
     return this.del;
   }
 
+  @action setSheme(val: string) {
+    this.sheme = val;
+  }
+
+  @computed getSheme(): string {
+    return this.sheme;
+  }
+
   @action setOpenDevsess(val: boolean) {
     this.open_devsess = val;
   }
@@ -321,7 +336,10 @@ export class SensorsStorage {
       };
       q.sess_code = sess_code;
       // (await WSocket.get()).send(q);
-      api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
+      api
+        .fetch(q)
+
+        .catch((e) => console.log("error=>", e)); // fetch-запрос
     }
   }
 
@@ -375,19 +393,52 @@ export class SensorsStorage {
       this.setEmptySession(" Ничего не найдено ");
     }
   }
+  //ToDo: схема устройства svg. Перенести в devs?
+  setDevSheme(dt: IWSResultSessionss) {
+    let svg;
+    if (dt.data?.svg) {
+      svg = atob(dt.data.svg.svg.replace(/data:image\/svg\+xml;base64,/, ""));
+    }
 
-  async set_DevFirstLastSessions(dt: IWSResult) {
-    if (Object.keys(dt.data).length > 0) {
-      let start_sess = JSON.parse(dt.data[1].sess_data);
-      let end_sess = JSON.parse(dt.data[0].sess_data);
+    if (svg) {
+      this.setSheme(svg);
+    } else this.setSheme("");
+  }
 
-      this.setTimeDevSessFirst(dt.data[1].time_dev);
-      this.setTimeDevSessLast(dt.data[0].time_dev);
-      this.setIdFirstSess(dt.data[1].id);
-      this.setIdLastSess(dt.data[0].id);
+  async set_DevFirstLastSessions(dt: IWSResultSessionss) {
+    // let svg;
+    // if (dt.data?.svg) {
+    //   svg = atob(dt.data.svg.svg.replace(/data:image\/svg\+xml;base64,/, ""));
+    // }
 
-      this.setAkbSessFirst(dt.data[0].level_akb);
-      this.setAkbSessLast(dt.data[1].level_akb);
+    // if (svg) {
+    //   this.setSheme(svg);
+    // } else this.setSheme("");
+
+    if (dt.data.hasOwnProperty("dev_result")) {
+      const {
+        sess_data: startSess,
+        time_dev: timeDevFirst,
+        id: idFirst,
+        level_akb: akbFirst,
+      } = dt.data.dev_result[0];
+      const {
+        sess_data: endSess,
+        time_dev: timeDevLast,
+        id: idLast,
+        level_akb: akbLast,
+      } = dt.data.dev_result[1];
+
+      let start_sess = JSON.parse(startSess);
+      let end_sess = JSON.parse(endSess);
+
+      this.setTimeDevSessFirst(timeDevLast);
+      this.setTimeDevSessLast(timeDevFirst);
+      this.setIdFirstSess(idLast);
+      this.setIdLastSess(idFirst);
+
+      this.setAkbSessFirst(akbLast);
+      this.setAkbSessLast(akbFirst);
 
       var obj_first: any = {
         depth: "",
@@ -469,10 +520,21 @@ export class SensorsStorage {
           (a: { depth: number }, b: { depth: number }) => a.depth - b.depth
         )
       );
+      // if (Object.keys(dt.data).length > 0) {
+      //   // let start_sess = JSON.parse(dt.data[1].sess_data);
+      //   // let end_sess = JSON.parse(dt.data[0].sess_data);
+      // } else {
+      //   this.setSessFirstLastCharts([]);
+      // }
+      // if (Object.keys(dt.data).length === 0) {
+      //   this.setSessFirstLast([]);
+      //   this.setTimeDevSessFirst("");
+      //   this.setTimeDevSessLast("");
+      //   this.setAkbSessLast("");
+      //   APP_STORAGE.sensors.setChoseSessTime("");
+      // }
     } else {
       this.setSessFirstLastCharts([]);
-    }
-    if (Object.keys(dt.data).length === 0) {
       this.setSessFirstLast([]);
       this.setTimeDevSessFirst("");
       this.setTimeDevSessLast("");

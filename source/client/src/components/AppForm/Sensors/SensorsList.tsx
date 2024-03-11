@@ -1,29 +1,36 @@
 import * as React from "react";
-import { Box, Typography } from "@mui/material";
-
-import SensorsIcon from "@mui/icons-material/Sensors";
 
 import { observer } from "mobx-react";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import { TableCell } from "@mui/material";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Box,
+  Typography,
+} from "@mui/material";
+import SensorsIcon from "@mui/icons-material/Sensors";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
+import LeakAddIcon from "@mui/icons-material/LeakAdd";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 
 import { AdditionInfo } from "../AdditionInfo/AdditionInfo";
 import { DevPovs } from "../DevPovs/DevPovs";
-
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
-
-import LeakAddIcon from "@mui/icons-material/LeakAdd";
+import {
+  PeriodWindow,
+  PeriodWindowGreen,
+  PeriodWindowRed,
+  PeriodWindowOrange,
+  PeriodWindowYellow,
+  PeriodWindowInitial,
+} from "./PeriodWindow";
 
 interface IProps {}
 
@@ -224,6 +231,14 @@ export class SensorsList extends React.Component<IProps> {
     const [year_chose, month_chose, day_chose] = ChoseData.split("-");
     let ChoseSess = `${day_chose}.${month_chose}.${year_chose}`;
     let ChoseTimeSess = APP_STORAGE.sensors.getChoseSessTime().split("T")[1];
+    const count =
+      Number(APP_STORAGE.devs.getPassedDay()) /
+      Number(APP_STORAGE.devs.getPeriodSess());
+    const isVisibleBlockedDev = () => {
+      return (
+        APP_STORAGE.getRoleRead() === 1 && APP_STORAGE.getRoleWrite() === 2
+      );
+    };
 
     let periodSess;
 
@@ -311,8 +326,10 @@ export class SensorsList extends React.Component<IProps> {
             ) : (
               ""
             )}
+            <PeriodWindow isVisible={isVisibleBlockedDev()} />
 
-            {Number(APP_STORAGE.devs.getPassedDay()) < 1000 ? (
+            {Number(APP_STORAGE.devs.getPassedDay()) < 1000 &&
+            APP_STORAGE.devs.getPassedDay() ? (
               <Box
                 sx={{
                   background: "#266BF1",
@@ -321,7 +338,7 @@ export class SensorsList extends React.Component<IProps> {
                   borderRadius: "4px",
                   display: "flex",
                   justifyContent: "space-between",
-                  height: "54px",
+                  minHeight: "54px",
                   alignItems: "center",
                 }}
               >
@@ -435,6 +452,19 @@ export class SensorsList extends React.Component<IProps> {
                 </Box>
               </Box>
             )}
+
+            {/* {!isDeleted &&
+              APP_STORAGE.sensors.getSessFirstLast().length === 0 && (
+                <PeriodWindowInitial number={APP_STORAGE.sensors.getNumber()} />
+              )}
+            {!isDeleted && count <= 1 && <PeriodWindowGreen />}
+            {!isDeleted && count > 1 && count <= 2 && <PeriodWindowYellow />}
+            {!isDeleted && count > 2 && count <= 3 && <PeriodWindowOrange />}
+            {!isDeleted &&
+              count > 3 &&
+              APP_STORAGE.sensors.getSessFirstLast().length !== 0 && (
+                <PeriodWindowRed />
+              )} */}
 
             <Box
               sx={{

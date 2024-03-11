@@ -51,6 +51,7 @@ var dev_povs_1 = require("./sql/dev_povs");
 var control_dev_sess_1 = require("./sql/control_dev_sess");
 var function_1 = require("./sql/function");
 var scheme_svg_1 = require("./sql/scheme_svg");
+var scheme_thermostreamer_svg_1 = require("./sql/scheme_thermostreamer_svg");
 function run() {
     return __awaiter(this, void 0, void 0, function () {
         var db, dt;
@@ -138,9 +139,14 @@ function run() {
                 case 17:
                     _a.sent();
                     console.log("TABLE \"scheme_svg\" ADD");
+                    console.log("CREATING \"scheme_thermostreamer_svg\"");
+                    return [4, db.query(scheme_thermostreamer_svg_1.scheme_thermostreamer_svg_table.sql, scheme_thermostreamer_svg_1.scheme_thermostreamer_svg_table.args)];
+                case 18:
+                    _a.sent();
+                    console.log("TABLE \"scheme_thermostreamer_svg\" ADD");
                     console.log("CREATING FUNCTION");
                     return [4, db.query(function_1.function_sql.sql, function_1.function_sql.args)];
-                case 18:
+                case 19:
                     _a.sent();
                     console.log("FUNCTION CREATED");
                     (0, DBase_1.endDB)();

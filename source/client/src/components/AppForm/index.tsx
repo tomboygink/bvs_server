@@ -32,6 +32,7 @@ import { Devs } from "./Devs/Dev/Devs"; //////////////////////////// устро�
 import { SensorsList } from "./Sensors/SensorsList"; ///////////////////////////////сенсоры на устройствах
 import { ChangeDevsModal } from "./Devs/Dev/Menu/ChangeDevsModal"; ////////////////////////////Редактировать устройства
 import { AddNewDevModal } from "./Devs/Dev/Menu/AddNewDevModal"; //////////////Добавить новое устройство
+import { UploadShemeModal } from "./Devs/Dev/Menu/UploadShemeModal"; // Загрузить схему устройства
 import { Calendar } from "./Devs/Dev/Calendar";
 import { DevsGroupsTree } from "./Devs/DevsGroupsTree";
 import { DevWrapper } from "./Devs/DevWrapper";
@@ -131,7 +132,9 @@ export class AppForm extends React.Component<IProps> {
             <AppBarPanel />
             <Modal />
             <ModalLeftPanel />
-            <ChangeDevsModal /> <NewDevPovs />
+            <ChangeDevsModal />
+            <UploadShemeModal />
+            <NewDevPovs />
             {/*-------------------------Модальное окно - редактировать уствройство */}
             <AddNewSubgroup />
             <ChangeDevsGroups />

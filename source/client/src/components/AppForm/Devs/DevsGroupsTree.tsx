@@ -94,12 +94,12 @@ export class DevsGroupsTree extends React.Component<IProps> {
                       sx={{ color: "#0FA958" }}
                     />
                   }
-                  sx={{ color: "#002757" }}
+                  sx={{ color: "black" }}
                 ></TreeItem>
               </React.Fragment>
             );
           }
-          if (passedDay <= Number(dev.period_sess) * 2) {
+          if (passedDay < Number(dev.period_sess) * 2) {
             return (
               <React.Fragment key={"_dev_id_key_" + dev.id}>
                 <TreeItem
@@ -111,22 +111,45 @@ export class DevsGroupsTree extends React.Component<IProps> {
                       sx={{ color: "#FBBC05" }}
                     />
                   }
-                  sx={{ color: "#FBBC05" }}
+                  sx={{ color: "black" }}
                 ></TreeItem>
               </React.Fragment>
             );
           }
 
-          if (passedDay > Number(dev.period_sess) * 2) {
+          if (
+            passedDay >= Number(dev.period_sess) * 2 &&
+            passedDay < Number(dev.period_sess) * 3
+          ) {
             return (
               <React.Fragment key={"_dev_id_key_" + dev.id}>
                 <TreeItem
                   nodeId={"_dev_id_key_" + dev.id}
                   label={dev.number}
                   icon={
-                    <CrisisAlertIcon fontSize="small" sx={{ color: "red" }} />
+                    <CrisisAlertIcon
+                      fontSize="small"
+                      sx={{ color: "#FC8904" }}
+                    />
                   }
-                  sx={{ color: "red" }}
+                  sx={{ color: "black" }}
+                ></TreeItem>
+              </React.Fragment>
+            );
+          }
+          if (passedDay >= Number(dev.period_sess) * 3) {
+            return (
+              <React.Fragment key={"_dev_id_key_" + dev.id}>
+                <TreeItem
+                  nodeId={"_dev_id_key_" + dev.id}
+                  label={dev.number}
+                  icon={
+                    <CrisisAlertIcon
+                      fontSize="small"
+                      sx={{ color: "#EA4335" }}
+                    />
+                  }
+                  sx={{ color: "black" }}
                 ></TreeItem>
               </React.Fragment>
             );
@@ -172,12 +195,12 @@ export class DevsGroupsTree extends React.Component<IProps> {
                 icon={
                   <CrisisAlertIcon fontSize="small" sx={{ color: "#0FA958" }} />
                 }
-                sx={{ color: "#002757" }}
+                sx={{ color: "black" }}
               ></TreeItem>
             </React.Fragment>
           );
         }
-        if (passedDay <= Number(dev.period_sess) * 2) {
+        if (passedDay < Number(dev.period_sess) * 2) {
           return (
             <React.Fragment key={"_dev_id_key_" + dev.id}>
               <TreeItem
@@ -186,22 +209,40 @@ export class DevsGroupsTree extends React.Component<IProps> {
                 icon={
                   <CrisisAlertIcon fontSize="small" sx={{ color: "#FBBC05" }} />
                 }
-                sx={{ color: "#FBBC05" }}
+                sx={{ color: "black" }}
               ></TreeItem>
             </React.Fragment>
           );
         }
 
-        if (passedDay > Number(dev.period_sess) * 2) {
+        if (
+          passedDay >= Number(dev.period_sess) * 2 &&
+          passedDay < Number(dev.period_sess) * 3
+        ) {
           return (
             <React.Fragment key={"_dev_id_key_" + dev.id}>
               <TreeItem
                 nodeId={"_dev_id_key_" + dev.id}
                 label={dev.number}
                 icon={
-                  <CrisisAlertIcon fontSize="small" sx={{ color: "red" }} />
+                  <CrisisAlertIcon fontSize="small" sx={{ color: "#FC8904" }} />
                 }
-                sx={{ color: "red" }}
+                sx={{ color: "black" }}
+              ></TreeItem>
+            </React.Fragment>
+          );
+        }
+
+        if (passedDay >= Number(dev.period_sess) * 3) {
+          return (
+            <React.Fragment key={"_dev_id_key_" + dev.id}>
+              <TreeItem
+                nodeId={"_dev_id_key_" + dev.id}
+                label={dev.number}
+                icon={
+                  <CrisisAlertIcon fontSize="small" sx={{ color: "#EA4335" }} />
+                }
+                sx={{ color: "black" }}
               ></TreeItem>
             </React.Fragment>
           );

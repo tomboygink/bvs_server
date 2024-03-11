@@ -25,9 +25,9 @@
   <line x1="-400" y1="500" x2="4600" y2="500" stroke-dasharray="100 50" stroke="gray"
     stroke-width="22" />
   
-  
+
   <!--Первая скважина-->
-  <line x1="100" y1="500" x2="100" y2="4800" stroke="black" stroke-width="22"/>
+    <line x1="100" y1="500" x2="100" y2="4800" stroke="black" stroke-width="22"/>
   <!--1 датчик-->
   <rect class="ds" id="ds_1" width="50" height="100" rx="0" x="75" y="450" fill="green"/>
   <!--2 датчик-->
@@ -39,7 +39,6 @@
   <!--5 датчик-->
   <rect class="ds" id="ds_5" width="50" height="100" rx="0" x="75" y="4775" fill="green"/>
   
-
   <!--Вторая скважина-->
   <line x1="2100" y1="500" x2="2100" y2="4800" stroke="black" stroke-width="22"/>
   

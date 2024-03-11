@@ -71,8 +71,7 @@ export class DevSessCharts extends React.Component<IProps> {
           sx={{
             background: "#fff",
             borderTopLeftRadius: "48px",
-            // border: "1px solid #eee",
-            border: "5px red solid",
+            border: "1px solid #eee",
           }}
         >
           <Charts />
@@ -103,6 +102,7 @@ export class DevSessCharts extends React.Component<IProps> {
                 tick={customizedGroupTick}
               />
               {/* <YAxis data ={toJS(APP_STORAGE.sensors.getSessFirstLastChartsCharts())}  type="category"  stroke="#266BF1"  tickCount={60}   />  */}
+
               <Tooltip content={<CustomTooltip />} />
               {/* <Legend /> */}
 
@@ -115,17 +115,18 @@ export class DevSessCharts extends React.Component<IProps> {
                 {" "}
               </Line>
               <Line
-                data={toJS(APP_STORAGE.sensors.getSess_second())}
-                strokeWidth={"2"}
-                dataKey="data_s"
-                stroke="#9566FB"
-              />
-              <Line
                 data={toJS(APP_STORAGE.sensors.getSess_first())}
                 strokeWidth={"2"}
                 dataKey="data_f"
                 stroke="#00B394"
               />
+              <Line
+                data={toJS(APP_STORAGE.sensors.getSess_second())}
+                strokeWidth={"2"}
+                dataKey="data_s"
+                stroke="#9566FB"
+              />
+
               {/* <Line dataKey="град." stroke="#82ca9d" > <LabelList content={<CustomizedLabel />} /> </Line> */}
             </LineChart>
           </ResponsiveContainer>
@@ -224,18 +225,11 @@ export class DevSessCharts extends React.Component<IProps> {
                 />
 
                 <Tooltip content={<CustomTooltip />} />
+                {/* <Tooltip /> */}
                 <ReferenceLine y={0} stroke="#8B4513" strokeDasharray="4 4" />
                 {/*
             // <ReferenceLine className="y7676" x="-15" stroke="red" /> */}
                 {/* <Customized component={customizedGroupTick} /> */}
-
-                <Line
-                  data={toJS(APP_STORAGE.sensors.getSess_second())}
-                  strokeWidth={"3"}
-                  dataKey="data_s"
-                  stroke="#9566FB"
-                  // label={CustomizedLabel}
-                />
                 <Line
                   data={toJS(APP_STORAGE.sensors.getSess_first())}
                   strokeWidth={"2"}
@@ -243,6 +237,14 @@ export class DevSessCharts extends React.Component<IProps> {
                   stroke="#00B394"
                   // label ={CustomizedLabel}
                 />
+                <Line
+                  data={toJS(APP_STORAGE.sensors.getSess_second())}
+                  strokeWidth={"3"}
+                  dataKey="data_s"
+                  stroke="#9566FB"
+                  // label={CustomizedLabel}
+                />
+
                 <CartesianGrid strokeDasharray="3 3" opacity={50} />
               </LineChart>
             </ResponsiveContainer>
@@ -291,8 +293,6 @@ export class DevSessCharts extends React.Component<IProps> {
                 stroke="rgb(255 255 255 / 0%)"
                 tick={customizedGroupTick}
               />
-
-              <Tooltip content={<CustomTooltip />} />
 
               <Line strokeWidth={"1"} dataKey="data_s" stroke="#9566FB" />
               <Line strokeWidth={"2"} dataKey="data_f" stroke="#00B394" />

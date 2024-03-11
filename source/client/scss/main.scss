@@ -241,6 +241,10 @@ tr.MuiTableRow-root.active_row.css-efx171-MuiTableRow-root:hover {
 .css-vr2p86-MuiButtonBase-root-MuiButton-root:hover {
   color: base.$blue;
 }
+
+.css-1c2eg5s-MuiButtonBase-root-MuiButton-root:hover {
+  color: base.$blue;
+}
 .setDevSess:hover {
   color: base.$blue;
 }
@@ -503,12 +507,30 @@ svg.svg_icon {
   background: #fff;
   border-radius: 5px;
   padding: 8px;
-  color: #3761EE;
+  color: #3761ee;
   font-size: 14px;
   font-weight: 700;
   box-shadow: -1px 2px 8px 0px rgba(59, 59, 59, 0.2);
 }
 
+.sheme-container {
+  position: relative;
+}
+
+#tooltipDevSheme {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  background: #fff;
+  border-radius: 5px;
+  padding: 8px;
+  color: #3761ee;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: -1px 2px 8px 0px rgba(59, 59, 59, 0.2);
+  z-index: 500;
+}
 
 .upload-files-container {
   padding: 30px 60px;
@@ -617,4 +639,30 @@ svg.svg_icon {
   margin: 10px;
   padding: 7.5px 50px;
   cursor: pointer;
+}
+
+.devSheme-block {
+  color: #000;
+  background-color: #e5f4ff;
+  transition: all 1s;
+  position: relative;
+  display: none;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.devSheme-info {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+
+.devSheme-name,
+.devSheme-size {
+  padding: 0 3px;
 }

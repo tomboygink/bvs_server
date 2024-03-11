@@ -47,6 +47,30 @@ class AppServer {
       res.render("index.hbs", { title: "Система визуализации СДС" });
     });
 
+    this.app.get(
+      "/confirm_mail",
+      (req: express.Request, res: express.Response) => {
+        res.render("confirm_mail.hbs", {
+          title: "Подтверждение электронной почты",
+        });
+      }
+    );
+
+    this.app.get(
+      "/forgot_pass",
+      (req: express.Request, res: express.Response) => {
+        res.render("forgot_pass.hbs", {
+          title: "Восстановление пароля",
+        });
+      }
+    );
+
+    this.app.get("/show-map", (req: express.Request, res: express.Response) => {
+      res.render("show-map.hbs", {
+        title: "Устройство на карте",
+      });
+    });
+
     this.app.use(cors());
     this.app.use(bodyParser.json());
 

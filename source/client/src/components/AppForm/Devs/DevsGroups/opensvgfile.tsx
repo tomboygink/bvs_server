@@ -31,9 +31,13 @@ export class Opensvgfile extends React.Component<IProps> {
           .getArraySvgData()
           .replace(/data:image\/svg\+xml;base64,/, "")
       );
+
       if (svg) {
         APP_STORAGE.importdevs.set_SchemeSvg(APP_STORAGE.auth_form.getdt());
-      }
+      } else
+        APP_STORAGE.importdevs.setErrorSave_mess(
+          "Ошибка! Убедитесь, что загружаемый файл в формате .svg"
+        );
     } catch (err) {
       APP_STORAGE.importdevs.setErrorSave_mess(
         "Ошибка! Убедитесь, что загружаемый файл в формате .svg"
@@ -86,6 +90,8 @@ export class Opensvgfile extends React.Component<IProps> {
 
   async onClose() {
     APP_STORAGE.importdevs.setOpenModalSvg(false);
+    APP_STORAGE.importdevs.setErrorSave_mess("");
+    APP_STORAGE.importdevs.setArraySvgData("");
   }
 
   render(): React.ReactNode {
@@ -126,6 +132,7 @@ export class Opensvgfile extends React.Component<IProps> {
                     <span className="browse-files">
                       <input
                         onInput={(e) => this._handleFile(e)}
+                        // onInput={(e) => this.showFile(e)}
                         type="file"
                         id="fileInput"
                         className="default-file-input"
@@ -204,8 +211,14 @@ export class Opensvgfile extends React.Component<IProps> {
                 {/* <button type="button" className="upload-button" onClick={() => (this.uploadfile())}> Загрузить файл </button> */}
                 <Button
                   onClick={() => this.uploadfile()}
-                  variant="contained"
-                  sx={{ marginBottom: "12px" }}
+                  sx={{
+                    background: "#266BF1",
+                    color: "#fff;",
+                    mt: "18px",
+                    mb: "18px",
+                    fontSize: "12px",
+                    alignSelf: "flex-end",
+                  }}
                 >
                   {" "}
                   Сохранить

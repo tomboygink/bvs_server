@@ -9,7 +9,8 @@ import { DevSessWrapper } from "./TableSessByPeriod/DevSessWrapper";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 import { SelectedSession } from "./Dev/SelectedSession";
 import { CriticalityTable } from "./Dev/CriticalityTable";
-import { Devs } from "./Dev/Devs";
+// import { Devs } from "./Dev/Devs";
+import { Devs } from "./Dev/DevsFC";
 
 interface IProps {}
 

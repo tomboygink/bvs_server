@@ -14,6 +14,8 @@ import {
   INVALID_PASSWORD_ERROR,
 } from "../../../../utils/consts";
 import { ThirtyFpsTwoTone, ThreeSixty } from "@mui/icons-material";
+import { IDevice } from "../../../models/IDevice";
+import { TDevice } from "./DevEntityes";
 
 export class DevsGroupStorage {
   @observable search: any;
@@ -64,6 +66,8 @@ export class DevsGroupStorage {
   @observable devs_groups: Array<string> = [];
 
   @observable devs_numbers: Array<string> = [];
+
+  @observable all_devs: IDevice[] = [];
   constructor() {
     makeAutoObservable(this);
   }
@@ -291,6 +295,14 @@ export class DevsGroupStorage {
     return this.devs_numbers;
   }
 
+  @action setAllDevs(val: IDevice[]) {
+    this.all_devs = val;
+  }
+
+  @computed getAllDevs(): IDevice[] {
+    return this.all_devs;
+  }
+
   async set_NewDevGroup(name: string, value: any, _options?: any) {
     ///////// Добавляем новое расположение устройств
 
@@ -485,6 +497,8 @@ export class DevsGroupStorage {
       }
     };
     recursion(DevGr);
+    this.setAllDevs(allDevs);
+    // console.log("alldevs=>", JSON.parse(JSON.stringify(this.getAllDevs())));
     const allNumbers = allDevs.map((dev) => {
       return dev.number;
     });

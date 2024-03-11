@@ -38,17 +38,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.DevsTable = exports.DevsEntity = void 0;
 var DBase_1 = require("./DBase");
+var DateStr_1 = require("../../xcore/dbase/DateStr");
 var DevsEntity = (function () {
     function DevsEntity() {
         this.id = 0;
         this.group_dev_id = 0;
-        this.number = '';
-        this.name = '';
+        this.number = "";
+        this.name = "";
         this.period_sess = 0;
-        this.latitude = '';
-        this.longitude = '';
+        this.latitude = "";
+        this.longitude = "";
         this.sensors = {};
-        this.info = '';
+        this.info = "";
     }
     return DevsEntity;
 }());
@@ -66,32 +67,59 @@ var DevsTable = (function () {
                 switch (_a.label) {
                     case 0:
                         result = new Array();
-                        if (!(this.args.period_sess !== '')) return [3, 3];
+                        if (!(this.args.period_sess !== "")) return [3, 4];
                         return [4, this.db.query("SELECT number FROM devs WHERE number = '" + this.args.number + "'")];
                     case 1:
                         data = _a.sent();
-                        if (!(data.rows.length === 0 || data.rows[0].number !== this.args.number)) return [3, 3];
-                        return [4, this.db.query("SELECT AddDevs(CAST(" + this.args.group_dev_id + " AS BIGINT), " +
-                                "CAST('" + this.args.number + "' AS VARCHAR(80))," +
-                                "CAST('" + this.args.name + "' AS VARCHAR(250))," +
-                                "CAST('" + this.args.latitude + "' AS VARCHAR(60))," +
-                                "CAST('" + this.args.longitude + "' AS VARCHAR(60))," +
-                                "CAST('" + this.args.sensors + "' AS JSON)," +
-                                "CAST(" + this.args.deleted + " AS BOOLEAN)," +
-                                "CAST('" + this.args.info + "' AS TEXT)," +
-                                "CAST('" + this.args.period_sess + "' AS BIGINT)) AS id")];
+                        if (!(data.rows.length === 0 || data.rows[0].number !== this.args.number)) return [3, 4];
+                        return [4, this.db.query("SELECT AddDevs(CAST(" +
+                                this.args.group_dev_id +
+                                " AS BIGINT), " +
+                                "CAST('" +
+                                this.args.number +
+                                "' AS VARCHAR(80))," +
+                                "CAST('" +
+                                this.args.name +
+                                "' AS VARCHAR(250))," +
+                                "CAST('" +
+                                this.args.latitude +
+                                "' AS VARCHAR(60))," +
+                                "CAST('" +
+                                this.args.longitude +
+                                "' AS VARCHAR(60))," +
+                                "CAST('" +
+                                this.args.sensors +
+                                "' AS JSON)," +
+                                "CAST(" +
+                                this.args.deleted +
+                                " AS BOOLEAN)," +
+                                "CAST('" +
+                                this.args.info +
+                                "' AS TEXT)," +
+                                "CAST('" +
+                                this.args.period_sess +
+                                "' AS BIGINT)) AS id")];
                     case 2:
                         db_res = _a.sent();
+                        return [4, this.db.query("SELECT AddScheme_ThermoStreamer_Svg(" +
+                                "CAST (" +
+                                db_res.rows[0].id +
+                                " AS BIGINT), " +
+                                "CAST ('' AS TEXT), " +
+                                "CAST ('" +
+                                (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) +
+                                "' AS TIMESTAMP)) AS id")];
+                    case 3:
+                        _a.sent();
                         for (p in db_res.rows) {
                             result.push(db_res.rows[p]);
                         }
-                        _a.label = 3;
-                    case 3: return [2, result];
+                        _a.label = 4;
+                    case 4: return [2, result];
                 }
             });
         });
     };
-    ;
     DevsTable.prototype.delete_duplicate = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -126,25 +154,59 @@ var DevsTable = (function () {
             var data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.db.query("select * from devs where number = \'" + this.args.number + "\' ")];
+                    case 0: return [4, this.db.query("select * from devs where number = '" + this.args.number + "' ")];
                     case 1:
                         data = _a.sent();
-                        if (!(data.rows[0] === undefined || data.rows[0].id === this.args.id)) return [3, 3];
+                        if (!(data.rows[0] === undefined || data.rows[0].id === this.args.id)) return [3, 5];
                         return [4, this.db.query("SELECT * FROM UpdateDevs(" +
-                                "CAST (" + this.args.id + " AS BIGINT), " +
-                                "CAST (" + this.args.group_dev_id + " AS BIGINT), " +
-                                "CAST ('" + this.args.number + "' AS VARCHAR(80)), " +
-                                "CAST ('" + this.args.name + "' AS VARCHAR(250)), " +
-                                "CAST ('" + this.args.latitude + "' AS VARCHAR(60)), " +
-                                "CAST ('" + this.args.longitude + "' AS VARCHAR(60)), " +
-                                "CAST ('" + this.args.sensors + "' AS JSON), " +
-                                "CAST ('" + this.args.deleted + "' AS BOOLEAN), " +
-                                "CAST ('" + this.args.info + "' AS TEXT)," +
-                                "CAST ('" + this.args.period_sess + "' AS BIGINT))")];
+                                "CAST (" +
+                                this.args.id +
+                                " AS BIGINT), " +
+                                "CAST (" +
+                                this.args.group_dev_id +
+                                " AS BIGINT), " +
+                                "CAST ('" +
+                                this.args.number +
+                                "' AS VARCHAR(80)), " +
+                                "CAST ('" +
+                                this.args.name +
+                                "' AS VARCHAR(250)), " +
+                                "CAST ('" +
+                                this.args.latitude +
+                                "' AS VARCHAR(60)), " +
+                                "CAST ('" +
+                                this.args.longitude +
+                                "' AS VARCHAR(60)), " +
+                                "CAST ('" +
+                                this.args.sensors +
+                                "' AS JSON), " +
+                                "CAST ('" +
+                                this.args.deleted +
+                                "' AS BOOLEAN), " +
+                                "CAST ('" +
+                                this.args.info +
+                                "' AS TEXT)," +
+                                "CAST ('" +
+                                this.args.period_sess +
+                                "' AS BIGINT))")];
                     case 2:
                         _a.sent();
+                        return [4, this.db.query("UPDATE control_dev_sess SET dev_number = '" +
+                                this.args.number +
+                                "' WHERE dev_id = " +
+                                this.args.id +
+                                "")];
+                    case 3:
+                        _a.sent();
+                        return [4, this.db.query("UPDATE dev_sess SET dev_number = '" +
+                                this.args.number +
+                                "' WHERE dev_id=" +
+                                this.args.id +
+                                "")];
+                    case 4:
+                        _a.sent();
                         return [2, true];
-                    case 3: return [2, false];
+                    case 5: return [2, false];
                 }
             });
         });
