@@ -358,6 +358,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               aria-label="minimum height"
               minRows={4}
               style={{ width: "100%" }}
+              // onChange={(e) => console.log("value=>", e.target.value)}
               onChange={(e) => {
                 APP_STORAGE.devs.setInfo(e.target.value);
               }}

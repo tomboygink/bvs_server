@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent, FormEvent } from "react";
+import React, { FC, ChangeEvent, FormEvent, useState } from "react";
 import { observer } from "mobx-react";
 import {
   Box,
@@ -18,10 +18,14 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import { CloseButton } from "../../../../shared/CloseButton";
 import { Button } from "../../../../shared/Button";
+import { set } from "mobx";
 
 interface IProps {}
 
 export const UploadShemeModal: FC<IProps> = observer(() => {
+  const [key, setKey] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [fileSize, setFileSize] = useState("");
   const handleClose = () => {
     APP_STORAGE.devs.setOpenModalUploadSheme(false);
     APP_STORAGE.importdevs.setDevShemeSvgData("");
@@ -34,35 +38,18 @@ export const UploadShemeModal: FC<IProps> = observer(() => {
     reader.onload = (event: any) => {
       APP_STORAGE.importdevs.setDevShemeSvgData(event.target.result);
     };
-    const fileInput = document.querySelector(
-      ".devSheme-input"
-    ) as HTMLInputElement;
-    const uploadedFile = document.querySelector(
-      ".devSheme-block"
-    ) as HTMLInputElement;
-    const fileName = document.querySelector(
-      ".devSheme-name"
-    ) as HTMLInputElement;
-    const fileSize = document.querySelector(
-      ".devSheme-size"
-    ) as HTMLInputElement;
-    fileName.innerHTML = fileInput.files[0].name;
-    fileSize.innerHTML = (fileInput.files[0].size / 1024).toFixed(1) + " KB";
-    uploadedFile.style.cssText = "display: flex;";
+
+    setFileName(file.name);
+    setFileSize(`${(file.size / 1024).toFixed(1)} KB`);
+
     reader.readAsDataURL(file);
   };
 
   const removeFile = () => {
-    const fileInput = document.querySelector(
-      ".devSheme-input"
-    ) as HTMLInputElement;
-
-    let uploadedFile = document.querySelector(
-      ".devSheme-block"
-    ) as HTMLInputElement;
-
-    uploadedFile.style.cssText = "display: none;";
-    fileInput.value = "";
+    const randomString = Math.random().toString(36);
+    setKey(randomString);
+    setFileName("");
+    setFileSize("");
     APP_STORAGE.importdevs.setErrorSave_mess("");
     APP_STORAGE.importdevs.setDevShemeSvgData("");
   };
@@ -143,6 +130,7 @@ export const UploadShemeModal: FC<IProps> = observer(() => {
                 type="file"
                 id="uploadShemeInput"
                 className="devSheme-input default-file-input"
+                key={key}
                 onChange={(e) => handleUploadFile(e)}
               />
               <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -184,18 +172,20 @@ export const UploadShemeModal: FC<IProps> = observer(() => {
             </span>
           </label>
         </Box>
-        <div className="devSheme-block">
-          <div className="devSheme-info">
-            <span className="devSheme-name"> </span> |{" "}
-            <span className="devSheme-size"> </span>
+        {fileName && (
+          <div className="devSheme-block">
+            <div className="devSheme-info">
+              <span className="devSheme-name">{fileName}</span> |{" "}
+              <span className="devSheme-size">{fileSize}</span>
+            </div>
+            <span
+              className="material-icons remove-file-icon"
+              onClick={removeFile}
+            >
+              <DeleteOutlineOutlinedIcon />
+            </span>
           </div>
-          <span
-            className="material-icons remove-file-icon"
-            onClick={removeFile}
-          >
-            <DeleteOutlineOutlinedIcon />
-          </span>
-        </div>
+        )}
       </DialogContent>
       <DialogActions>
         <Button />

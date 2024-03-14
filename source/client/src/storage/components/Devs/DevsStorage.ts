@@ -859,7 +859,6 @@ export class DevsStorage {
         info: this.getInfo() || "",
         period_sess: this.getPeriodSess() || 0,
       };
-
       q.sess_code = sess_code;
       // (await WSocket.get()).send(q);
       api

@@ -16,6 +16,9 @@ import { TextInput } from "../../../shared/TextInput";
 import "../../../../../scss/dev.scss";
 
 interface IProps {}
+interface Dictionary {
+  [key: number]: SVGElement[];
+}
 
 export const Devs: FC<IProps> = observer(() => {
   const [selectedGroup, setSelectedGroup] = useState<IGroup | null>(null);
@@ -61,14 +64,45 @@ export const Devs: FC<IProps> = observer(() => {
     const newSvg = document.getElementById("devSheme");
     newSvg.outerHTML = sensors.getSheme();
     newSvg.classList.add("dev-sheme");
-    const hrefs = document.querySelectorAll(".ds");
+    const hrefs: SVGElement[] = Array.from(document.querySelectorAll(".ds"));
     const tooltip: HTMLElement = document.querySelector("#tooltipDevSheme");
     const textContolSession = document.querySelector(".control-session");
     const textLastSession = document.querySelector(".last-session");
     const textDepth = document.querySelector(".depth");
-
+    const dictionary: Dictionary = {};
+    const indexArr: Array<number> = [];
     hrefs.forEach((item, i) => {
-      let sensor: HTMLElement = document.querySelector(`#ds_${i + 1}`);
+      const classList = item.classList;
+
+      if (classList.value.includes("kosa")) {
+        indexArr.push(i);
+      }
+    });
+    indexArr.push(hrefs.length);
+
+    indexArr.forEach((item, i) => {
+      if (i !== indexArr.length - 1) {
+        dictionary[i] = hrefs.slice(item, indexArr[i + 1]);
+      }
+    });
+
+    for (let key in dictionary) {
+      dictionary[key].forEach((item, i) => {
+        const index = Number(item.id.replace("ds_", ""));
+
+        item.addEventListener("mousemove", () => {
+          textDepth.textContent = ` ${
+            toJS(APP_STORAGE.sensors.getSessFirstLast())[index - 1]?.depth
+              ? toJS(APP_STORAGE.sensors.getSessFirstLast())[index - 1]?.depth -
+                toJS(APP_STORAGE.sensors.getSessFirstLast())[indexArr[key]]
+                  ?.depth
+              : "нет данных"
+          } `;
+        });
+      });
+    }
+    hrefs.forEach((item, i) => {
+      const sensor: HTMLElement = document.querySelector(`#ds_${i + 1}`);
 
       item.addEventListener("mouseout", () => {
         sensor.style.fill = "";
@@ -91,21 +125,6 @@ export const Devs: FC<IProps> = observer(() => {
             ? toJS(APP_STORAGE.sensors.getSessFirstLast())[i]?.data_s
             : "нет данных"
         } `;
-        if (i <= 4) {
-          textDepth.textContent = ` ${i} `;
-        } else if (i <= 9) {
-          textDepth.textContent = ` ${i - 5} `;
-        } else textDepth.textContent = ` ${i - 10} `;
-
-        if (!toJS(APP_STORAGE.sensors.getSessFirstLast())[i]?.data_s) {
-          textDepth.textContent = ` нет данных `;
-        }
-
-        // textDepth.textContent = ` ${
-        //   toJS(APP_STORAGE.sensors.getSessFirstLast())[i]?.depth
-        //     ? toJS(APP_STORAGE.sensors.getSessFirstLast())[i]?.depth
-        //     : "нет данных"
-        // } `;
 
         tooltip.style.display = "block";
         tooltip.style.left = clientRectangle.left + "px";

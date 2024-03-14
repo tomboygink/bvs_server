@@ -96,6 +96,9 @@ export class AppForm extends React.Component<IProps> {
       new_group = <AddNewGroup />;
       left_form = <DevsGroupsTree />;
     }
+    // if (APP_STORAGE.devs_groups.getMiddleForm() === 1) {
+    //   right_form = <SensorsList />;
+    // }
     if (APP_STORAGE.devs_groups.getMiddleForm() === 2) {
       middle_form = (
         <>

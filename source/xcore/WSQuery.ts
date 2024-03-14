@@ -68,7 +68,7 @@ export class WSQuery implements IWSQuery {
 export interface IWSResult {
   cmd: string /* команда запроса */;
   error: string /* ошибка */;
-  data: any[] /* строки из запроса */;
+  data: any /* строки из запроса */;
   code: string /* дополнительный код ответа */;
 }
 

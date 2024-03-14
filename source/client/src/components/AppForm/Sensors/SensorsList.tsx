@@ -23,14 +23,7 @@ import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 
 import { AdditionInfo } from "../AdditionInfo/AdditionInfo";
 import { DevPovs } from "../DevPovs/DevPovs";
-import {
-  PeriodWindow,
-  PeriodWindowGreen,
-  PeriodWindowRed,
-  PeriodWindowOrange,
-  PeriodWindowYellow,
-  PeriodWindowInitial,
-} from "./PeriodWindow";
+import { PeriodWindow } from "./PeriodWindow";
 
 interface IProps {}
 
@@ -299,6 +292,9 @@ export class SensorsList extends React.Component<IProps> {
 
     return (
       <div className="wrapper-sensors">
+        {APP_STORAGE.devs_groups.getMiddleForm() === 1 && (
+          <PeriodWindow isVisible={isVisibleBlockedDev()} />
+        )}
         {APP_STORAGE.devs_groups.getMiddleForm() === 2 && (
           <>
             {APP_STORAGE.sensors.getDeletedDev() === true &&
@@ -337,9 +333,11 @@ export class SensorsList extends React.Component<IProps> {
                   mt: "20px",
                   borderRadius: "4px",
                   display: "flex",
-                  justifyContent: "space-between",
+                  gap: "12px",
+
                   minHeight: "54px",
                   alignItems: "center",
+                  padding: "12px",
                 }}
               >
                 <svg
@@ -378,7 +376,7 @@ export class SensorsList extends React.Component<IProps> {
                   </Typography>
                 </Box>
 
-                <Box
+                {/* <Box
                   sx={{
                     background: "#75A4FF",
                     p: "8px",
@@ -391,7 +389,7 @@ export class SensorsList extends React.Component<IProps> {
                   }}
                 >
                   <SignalCellularAltIcon />
-                </Box>
+                </Box> */}
               </Box>
             ) : (
               <Box
@@ -452,19 +450,6 @@ export class SensorsList extends React.Component<IProps> {
                 </Box>
               </Box>
             )}
-
-            {/* {!isDeleted &&
-              APP_STORAGE.sensors.getSessFirstLast().length === 0 && (
-                <PeriodWindowInitial number={APP_STORAGE.sensors.getNumber()} />
-              )}
-            {!isDeleted && count <= 1 && <PeriodWindowGreen />}
-            {!isDeleted && count > 1 && count <= 2 && <PeriodWindowYellow />}
-            {!isDeleted && count > 2 && count <= 3 && <PeriodWindowOrange />}
-            {!isDeleted &&
-              count > 3 &&
-              APP_STORAGE.sensors.getSessFirstLast().length !== 0 && (
-                <PeriodWindowRed />
-              )} */}
 
             <Box
               sx={{

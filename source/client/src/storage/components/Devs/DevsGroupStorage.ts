@@ -442,67 +442,74 @@ export class DevsGroupStorage {
 
   setDevsGroupsAll(dt: IWSResult) {
     /* -----  Получаем все группы устройств   */
+    if (typeof dt.data === "string") {
+      const data = dt.data;
+      //Экранируем символ перевода строки (чтобы приложение не ломалось, когда в многострочных полях строки есть перевод строки)
+      const str: string = data.replace(/\n/g, "\\n");
+      let devs_g = [];
+      let DevGr = [];
 
-    let devs_g = [];
-    let DevGr = [];
+      // Объект создан для корректной работы кода с fetch-запросами, в дальнейшем - переписать логику:
+      let obj = {
+        0: str,
+      };
 
-    // Объект создан для корректной работы кода с fetch-запросами, в дальнейшем - переписать логику:
-    let obj = {
-      0: dt.data,
-    };
+      // Условие для работы с Websocket:
+      // if (
+      //   Object.keys(JSON.parse(JSON.stringify(dt.data))).length !== 0 &&
+      //   JSON.parse(JSON.stringify(dt.data)).constructor === Object
+      // ) {
+      //   devs_g = JSON.parse(JSON.stringify(dt.data));
 
-    // Условие для работы с Websocket:
-    // if (
-    //   Object.keys(JSON.parse(JSON.stringify(dt.data))).length !== 0 &&
-    //   JSON.parse(JSON.stringify(dt.data)).constructor === Object
-    // ) {
-    //   devs_g = JSON.parse(JSON.stringify(dt.data));
+      // }
 
-    // }
+      //Условие для работы с fetch:
+      if (
+        Object.keys(JSON.parse(JSON.stringify(dt.data))).length !== 0 &&
+        obj.constructor === Object
+      ) {
+        devs_g = JSON.parse(JSON.stringify(obj));
+      }
+      // console.log("devs_g.>", devs_g); // \n
+      // console.log("devs_g.0=>", JSON.parse(JSON.stringify( devs_g[0]))); // \space
 
-    //Условие для работы с fetch:
-    if (
-      Object.keys(JSON.parse(JSON.stringify(dt.data))).length !== 0 &&
-      obj.constructor === Object
-    ) {
-      devs_g = JSON.parse(JSON.stringify(obj));
-    }
+      for (var key in devs_g) {
+        if (devs_g.hasOwnProperty(key)) {
+          let a = devs_g[key];
 
-    for (var key in devs_g) {
-      if (devs_g.hasOwnProperty(key)) {
-        let a = devs_g[key];
-        let root = JSON.parse(a);
+          let root = JSON.parse(a);
 
-        if (root.childs.length > 0) {
-          for (let i = 0; i < root.childs.length; i++) {
-            DevGr.push(root.childs[i]);
+          if (root.childs.length > 0) {
+            for (let i = 0; i < root.childs.length; i++) {
+              DevGr.push(root.childs[i]);
+            }
           }
         }
       }
-    }
 
-    this.setDevsGroups(DevGr);
+      this.setDevsGroups(DevGr);
 
-    // const arr = DevGr.reduce((acc, { devs }) => {
-    //   return [...acc, ...devs];
-    // }, []);
+      // const arr = DevGr.reduce((acc, { devs }) => {
+      //   return [...acc, ...devs];
+      // }, []);
 
-    let allDevs: any[] = [];
-    const recursion = (arr: any[]) => {
-      for (let elem of arr) {
-        allDevs.push(...elem.devs);
-        if (elem.childs.length !== 0) {
-          recursion(elem.childs);
+      let allDevs: any[] = [];
+      const recursion = (arr: any[]) => {
+        for (let elem of arr) {
+          allDevs.push(...elem.devs);
+          if (elem.childs.length !== 0) {
+            recursion(elem.childs);
+          }
         }
-      }
-    };
-    recursion(DevGr);
-    this.setAllDevs(allDevs);
-    // console.log("alldevs=>", JSON.parse(JSON.stringify(this.getAllDevs())));
-    const allNumbers = allDevs.map((dev) => {
-      return dev.number;
-    });
-    this.setNumbers(allNumbers);
+      };
+      recursion(DevGr);
+      this.setAllDevs(allDevs);
+      // console.log("alldevs=>", JSON.parse(JSON.stringify(this.getAllDevs())));
+      const allNumbers = allDevs.map((dev) => {
+        return dev.number;
+      });
+      this.setNumbers(allNumbers);
+    }
   }
 
   async set_ChangeDevsGroups(name: string, value: any, _options?: any) {

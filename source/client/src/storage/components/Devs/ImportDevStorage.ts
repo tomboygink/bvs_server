@@ -499,6 +499,7 @@ export class ImportDevStorage {
       svg_file: this.getDevShemeSvgData(), ////data:image\/svg\+xml;base64
     };
     q.sess_code = sess_code;
+
     api
       .fetch(q)
       .then(() => {

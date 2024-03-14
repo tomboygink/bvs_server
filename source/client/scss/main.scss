@@ -646,7 +646,7 @@ svg.svg_icon {
   background-color: #e5f4ff;
   transition: all 1s;
   position: relative;
-  display: none;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
