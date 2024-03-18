@@ -557,12 +557,12 @@ export class DevsStorage {
       lng = lngchar;
     }
 
-    if (String(lng) === ".") {
-      lng = Number(0.0);
+    if (String(lng) === "." || String(lng) === "0") {
+      lng = "0.0";
     }
 
-    if (String(lat) === ".") {
-      lat = Number(0.0);
+    if (String(lat) === "." || String(lat) === "0") {
+      lat = "0.0";
     }
     this.setLatitude(lat);
     this.setLongitude(lng);
@@ -606,56 +606,10 @@ export class DevsStorage {
       );
     };
 
-    // if (this.getNumber() === "") {
-    //   this.setNumberError(true);
-    //   this.setNumberError_mess("Поле не может быть пустым");
-    // }
-
-    // if (this.getNumber() !== "") {
-    //   this.setNumberError(false);
-    //   this.setNumberError_mess("");
-    // }
-
-    // if (this.getName() === "") {
-    //   this.setNameError(true);
-    //   this.setNameError_mess("Поле не может быть пустым");
-    // }
-
-    // if (this.getName() !== "") {
-    //   this.setNameError(false);
-    //   this.setNameError_mess("");
-    // }
-
-    // if (this.getLatitude() === "") {
-    //   this.setLatitudeError(true);
-    //   this.setLatitudeError_mess("Поле не может быть пустым");
-    // }
-
-    // if (this.getLatitude() !== "") {
-    //   this.setLatitudeError(false);
-    //   this.setLatitudeError_mess("");
-    // }
-
-    // if (this.getLongitude() === "") {
-    //   this.setLongitudeError(true);
-    //   this.setLongitudeError_mess("Поле не может быть пустым");
-    // }
-
-    // if (this.getLongitude() !== "") {
-    //   this.setLongitudeError(false);
-    //   this.setLongitudeError_mess("");
-    // }
-
     var sess_code = value;
     var q: IWSQuery = new WSQuery("set_NewDevs");
 
-    if (
-      isValidValues()
-      // this.getNumber() !== "" &&
-      // this.getName() !== "" &&
-      // this.getLatitude() !== "" &&
-      // this.getLongitude() !== ""
-    ) {
+    if (isValidValues()) {
       q.args = {
         group_dev_id: this.getIdDevs(),
         number: this.getNumber() || "",
@@ -664,7 +618,7 @@ export class DevsStorage {
         longitude: lng || "",
         sensors: '{"s":' + JSON.stringify(this.getDepthNewSensors()) + "}",
         deleted: this.getDeleted() || false,
-        info: this.getDeleted() || "",
+        info: this.getInfo() || "",
         period_sess: this.getPeriodSess() || "",
       };
       q.sess_code = sess_code;
@@ -771,25 +725,17 @@ export class DevsStorage {
       lng = lngchar;
     }
 
-    if (String(lng) === ".") {
-      lng = Number(0.0);
+    if (String(lng) === "." || String(lng) === "0") {
+      lng = "0.0";
     }
 
-    if (String(lat) === ".") {
-      lat = Number(0.0);
+    if (String(lat) === "." || String(lat) === "0") {
+      lat = "0.0";
     }
     this.setLatitude(lat);
     this.setLongitude(lng);
 
     var sess_code = value;
-
-    // if (this.getNumber().trim()) {
-    //   this.setNumberError(false);
-    //   this.setNumberError_mess("");
-    // } else {
-    //   this.setNumberError(true);
-    //   this.setNumberError_mess(EMPTY_FIELD_ERROR);
-    // }
 
     if (this.getName().trim()) {
       this.setNameError(false);
@@ -852,8 +798,8 @@ export class DevsStorage {
         group_dev_id: this.getGroupDevId() || "",
         number: this.getNumber().replace(/"([^"]*)"/g, "«$1»") || "" || "",
         name: this.getName().replace(/"([^"]*)"/g, "«$1»") || "" || "",
-        latitude: lat || "",
-        longitude: lng || "",
+        latitude: lat || "0.0",
+        longitude: lng || "0.0",
         sensors: '{"s":' + JSON.stringify(this.getChangeSensors()) + "}",
         deleted: this.getCheckboxEd(),
         info: this.getInfo() || "",

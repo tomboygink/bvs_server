@@ -15,7 +15,13 @@ interface Props {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => void;
+  onBlur?: (
+    event: ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => void;
   value?: string;
+  defaultValue?: string;
   variant?: "outlined" | "filled" | "standard";
   fullWidth?: boolean;
   disabled?: boolean;
@@ -30,7 +36,9 @@ export const TextInput: FC<Props> = ({
   error,
   helperText,
   onChange,
+  onBlur,
   value,
+  defaultValue,
   variant = "outlined",
   fullWidth = true,
   disabled = false,
@@ -49,7 +57,9 @@ export const TextInput: FC<Props> = ({
       error={error}
       helperText={helperText}
       onChange={onChange}
+      onBlur={onBlur}
       value={value}
+      defaultValue={defaultValue}
       disabled={disabled}
     />
   );
