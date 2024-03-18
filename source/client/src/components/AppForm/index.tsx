@@ -23,6 +23,7 @@ import { JobsTitlesMenu } from "./JobsTitles/JobsTitlesMenu";
 import { JobsTitles } from "./JobsTitles/JobsTitles";
 
 import { DevLocation } from "./Devs/DevsGroups/DevLocation"; ////////расположение устройств
+import { DevLocationFC } from "./Devs/DevsGroups/DevLocationFC";
 import { ChangeDevsGroups } from "./Devs/DevsGroups/Menu/ChangeDevsGroups"; /////// Редактировать расположение5 устройств (модальное окно)
 import { MoveDevsGroups } from "./Devs/DevsGroups/Menu/MoveDevsGroups"; ////////////Переместить расположение устройств (модальное окно)
 import { AddNewGroup } from "./Devs/DevsGroups/Menu/AddNewGroup"; ////////// Добавить новое расположение
@@ -93,6 +94,12 @@ export class AppForm extends React.Component<IProps> {
       APP_STORAGE.devs_groups.getMiddleForm() === ""
     ) {
       middle_form = <DevLocation />;
+      // middle_form = (
+      //   <>
+      //   <DevLocation />
+      //     <DevLocationFC />;
+      //   </>
+      // );
       new_group = <AddNewGroup />;
       left_form = <DevsGroupsTree />;
     }

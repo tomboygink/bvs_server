@@ -1,6 +1,5 @@
 import { observer } from "mobx-react";
 import { toJS } from "mobx";
-
 import React, { FC, useEffect, useState } from "react";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
 import { CONFIG } from "../../../../../../xcore/config";
@@ -56,6 +55,7 @@ export const Devs: FC<IProps> = observer(() => {
     }
   };
 
+  // Отрисовка схемы устройства
   const drawSheme = () => {
     const element = document.createElement("div");
     element.id = "devSheme";
@@ -141,7 +141,6 @@ export const Devs: FC<IProps> = observer(() => {
     const { number, id, deleted, time, period_sess } = currentDev;
     setDataOfCurrentDev(number, id, deleted, time);
     sensors.get_DevFirstLastSessions("sess_id", sessId);
-
     sensors.get_DevPovs(sessId);
     APP_STORAGE.devs.setPeriodSess(period_sess);
     getSelectedGroup(groups, id, setSelectedGroup);

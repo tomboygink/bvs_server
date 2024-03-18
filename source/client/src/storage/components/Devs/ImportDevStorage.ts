@@ -186,11 +186,11 @@ export class ImportDevStorage {
       arr.forEach((item, i) => {
         const isValid = () => {
           return (
-            item[0] &&
-            item[1] &&
-            item[2] &&
-            item[3] &&
-            item[4] &&
+            String(item[0]).trim() !== "" &&
+            String(item[1]).trim() !== "" &&
+            String(item[2]).trim() !== "" &&
+            String(item[3]) !== "" &&
+            String(item[4]) !== "" &&
             !Number.isNaN(Number(item[0])) &&
             !Number.isNaN(Number(item[2])) &&
             !Number.isNaN(Number(item[3])) &&

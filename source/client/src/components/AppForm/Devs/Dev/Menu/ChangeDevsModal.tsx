@@ -306,20 +306,20 @@ export class ChangeDevsModal extends React.Component<IProps> {
               error={APP_STORAGE.devs.getNumberError()}
               helperText={APP_STORAGE.devs.getNumberError_mess()}
               label="Номер устройства"
-              onChange={(e) => {
+              onBlur={(e) => {
                 APP_STORAGE.devs.setNumber(e.target.value);
               }}
-              value={APP_STORAGE.devs.getNumber()}
+              defaultValue={APP_STORAGE.devs.getNumber()}
             />
 
             <TextInput
               error={APP_STORAGE.devs.getNameError()}
               helperText={APP_STORAGE.devs.getNameError_mess()}
               label="Название устройства "
-              onChange={(e) => {
+              onBlur={(e) => {
                 APP_STORAGE.devs.setName(e.target.value);
               }}
-              value={APP_STORAGE.devs.getName()}
+              defaultValue={APP_STORAGE.devs.getName()}
             />
 
             <TextInput
@@ -330,10 +330,10 @@ export class ChangeDevsModal extends React.Component<IProps> {
               error={APP_STORAGE.devs.getLatitudeError()}
               helperText={APP_STORAGE.devs.getLatitudeError_mess()}
               label="Широта"
-              onChange={(e) => {
+              onBlur={(e) => {
                 APP_STORAGE.devs.setLatitude(e.target.value);
               }}
-              value={APP_STORAGE.devs.getLatitude()}
+              defaultValue={APP_STORAGE.devs.getLatitude()}
             />
             <TextInput
               InputProps={{
@@ -343,10 +343,10 @@ export class ChangeDevsModal extends React.Component<IProps> {
               error={APP_STORAGE.devs.getLongitudeError()}
               helperText={APP_STORAGE.devs.getLongitudeError_mess()}
               label="Долгота"
-              onChange={(e) => {
+              onBlur={(e) => {
                 APP_STORAGE.devs.setLongitude(e.target.value);
               }}
-              value={APP_STORAGE.devs.getLongitude()}
+              defaultValue={APP_STORAGE.devs.getLongitude()}
             />
             <Divider sx={{ padding: "12px" }} />
             <Typography sx={{ color: "#999999" }} variant="caption">
@@ -359,10 +359,10 @@ export class ChangeDevsModal extends React.Component<IProps> {
               minRows={4}
               style={{ width: "100%" }}
               // onChange={(e) => console.log("value=>", e.target.value)}
-              onChange={(e) => {
+              onBlur={(e) => {
                 APP_STORAGE.devs.setInfo(e.target.value);
               }}
-              value={APP_STORAGE.devs.getInfo()}
+              defaultValue={APP_STORAGE.devs.getInfo()}
             />
             <Box
               sx={{ border: "1px solid #eee", p: "12px", borderRadius: "4px" }}
@@ -404,7 +404,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
                 value={APP_STORAGE.devs.getPeriodSess()}
                 sx={{ fontSize: "12px" }}
                 label="Период сессии"
-                onChange={(e) => {
+                onBlur={(e) => {
                   this.SelectedPeriodSess(e.target.value);
                 }}
               >

@@ -40,13 +40,13 @@ export class ChangeDevsGroups extends React.Component<IProps> {
 
   async closeModal() {
     APP_STORAGE.devs_groups.setOpenModalChDevsGr(false);
-    APP_STORAGE.devs_groups.setName("");
+    //APP_STORAGE.devs_groups.setName("");
     APP_STORAGE.devs_groups.setNameError(false);
     APP_STORAGE.devs_groups.setNameError_mess("");
-    APP_STORAGE.devs_groups.setLongitude("");
+    //APP_STORAGE.devs_groups.setLongitude("");
     APP_STORAGE.devs_groups.setLongitudeError(false);
     APP_STORAGE.devs_groups.setLongitudeError_mess("");
-    APP_STORAGE.devs_groups.setLatitude("");
+    //APP_STORAGE.devs_groups.setLatitude("");
     APP_STORAGE.devs_groups.setLatitudeError(false);
     APP_STORAGE.devs_groups.setLatitudeError_mess("");
   }
@@ -130,10 +130,10 @@ export class ChangeDevsGroups extends React.Component<IProps> {
               error={APP_STORAGE.devs_groups.getNameError()}
               helperText={APP_STORAGE.devs_groups.getNameError_mess()}
               label="Место расположения"
-              onChange={(e) => {
+              onBlur={(e) => {
                 APP_STORAGE.devs_groups.setName(e.target.value);
               }}
-              value={APP_STORAGE.devs_groups.getName() || ""}
+              defaultValue={APP_STORAGE.devs_groups.getName() || ""}
             />
 
             <FormControl
@@ -175,10 +175,10 @@ export class ChangeDevsGroups extends React.Component<IProps> {
               error={APP_STORAGE.devs_groups.getLongitudeError()}
               helperText={APP_STORAGE.devs_groups.getLongitudeError_mess()}
               label="Долгота"
-              onChange={(e) => {
+              onBlur={(e) => {
                 APP_STORAGE.devs_groups.setLongitude(e.target.value);
               }}
-              value={APP_STORAGE.devs_groups.getLongitude() || ""}
+              defaultValue={APP_STORAGE.devs_groups.getLongitude() || ""}
             />
 
             <TextInput
@@ -189,10 +189,10 @@ export class ChangeDevsGroups extends React.Component<IProps> {
               error={APP_STORAGE.devs_groups.getLatitudeError()}
               helperText={APP_STORAGE.devs_groups.getLatitudeError_mess()}
               label="Широта"
-              onChange={(e) => {
+              onBlur={(e) => {
                 APP_STORAGE.devs_groups.setLatitude(e.target.value);
               }}
-              value={APP_STORAGE.devs_groups.getLatitude() || ""}
+              defaultValue={APP_STORAGE.devs_groups.getLatitude() || ""}
             />
             <Divider sx={{ padding: "12px" }} />
             <Typography sx={{ color: "#999999" }} variant="caption">
@@ -204,10 +204,10 @@ export class ChangeDevsGroups extends React.Component<IProps> {
               aria-label="minimum height"
               minRows={4}
               style={{ width: "100%" }}
-              onChange={(e) => {
+              onBlur={(e) => {
                 APP_STORAGE.devs_groups.setInfo(e.target.value);
               }}
-              value={APP_STORAGE.devs_groups.getInfo() || ""}
+              defaultValue={APP_STORAGE.devs_groups.getInfo() || ""}
             />
 
             <FormGroup sx={{ mt: "12px" }}>

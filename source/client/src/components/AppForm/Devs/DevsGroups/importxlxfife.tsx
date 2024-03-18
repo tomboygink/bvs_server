@@ -260,17 +260,18 @@ export class Importxlxfife extends React.Component<IProps> {
                   {" "}
                   Импортировать файл
                 </Button>
-                {APP_STORAGE.importdevs.getValid_devs().length !== 0 && (
-                  <Stack sx={{ width: "100%" }} spacing={2}>
-                    <Alert severity="success">
-                      Устройства с номерами:&nbsp;
-                      {APP_STORAGE.importdevs.getValid_devs().map((item) => {
-                        return `${item}, `;
-                      })}
-                      успешно добавлены
-                    </Alert>
-                  </Stack>
-                )}
+                {APP_STORAGE.importdevs.getValid_devs().length !== 0 &&
+                  APP_STORAGE.importdevs.getErrorSaved_devs().length === 0 && (
+                    <Stack sx={{ width: "100%" }} spacing={2}>
+                      <Alert severity="success">
+                        Устройства с номерами:&nbsp;
+                        {APP_STORAGE.importdevs.getValid_devs().map((item) => {
+                          return `${item}, `;
+                        })}
+                        успешно добавлены
+                      </Alert>
+                    </Stack>
+                  )}
 
                 {APP_STORAGE.shared_store.getErrorResponseMess().length > 0 &&
                   APP_STORAGE.importdevs.getDuplicates().length === 0 && (
