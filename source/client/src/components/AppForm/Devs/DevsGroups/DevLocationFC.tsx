@@ -147,7 +147,11 @@ export const DevLocationFC: FC<IProps> = observer(() => {
                     Импортировать список устройств
                   </MenuItem>
 
-                  <MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      APP_STORAGE.importdevs.setOpenModalSvg(true);
+                    }}
+                  >
                     <ListItemIcon>
                       <PostAddOutlinedIcon fontSize="small" />
                     </ListItemIcon>{" "}

@@ -125,7 +125,6 @@ export class MoveDevsGroups extends React.Component<IProps> {
   async SaveChangeDevsGroups(a: any) {
     // Если a === 0 => перемещение в корень
     if (Number(0) === Number(a)) {
-      console.log("block 1", a);
       APP_STORAGE.devs_groups.setParent(String(0));
       APP_STORAGE.devs_groups.set_ChangeDevsGroups(
         "sess_id",
@@ -134,13 +133,11 @@ export class MoveDevsGroups extends React.Component<IProps> {
     }
 
     if (APP_STORAGE.devs.getMenu_devs() === "2") {
-      console.log("block 2");
       ////// Перемещение для устройств
       APP_STORAGE.devs.set_ChangeDevs("sess_id", APP_STORAGE.auth_form.getdt());
     }
 
     if (APP_STORAGE.devs.getMenu_devs() === "3") {
-      console.log("block 3");
       ////// Перемещение для групп устройств
       APP_STORAGE.devs_groups.set_ChangeDevsGroups(
         "sess_id",

@@ -96,7 +96,7 @@ export class AppForm extends React.Component<IProps> {
       middle_form = <DevLocation />;
       // middle_form = (
       //   <>
-      //   <DevLocation />
+      //     <DevLocation />
       //     <DevLocationFC />;
       //   </>
       // );

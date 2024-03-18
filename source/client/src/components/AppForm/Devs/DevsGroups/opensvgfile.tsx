@@ -132,8 +132,8 @@ export class Opensvgfile extends React.Component<IProps> {
                     {" "}
                     <span className="browse-files">
                       <input
-                        //onInput={(e) => this._handleFile(e)}
-                        onInput={(e) => console.log("e=>", e)}
+                        onInput={(e) => this._handleFile(e)}
+                        //onInput={(e) => console.log("e=>", e)}
                         type="file"
                         id="fileInput"
                         className="default-file-input"
