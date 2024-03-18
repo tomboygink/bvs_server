@@ -1,29 +1,29 @@
 import * as React from "react";
-import { Box, Typography } from "@mui/material";
-
-import SensorsIcon from "@mui/icons-material/Sensors";
 
 import { observer } from "mobx-react";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import { TableCell } from "@mui/material";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Box,
+  Typography,
+} from "@mui/material";
+import SensorsIcon from "@mui/icons-material/Sensors";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
+import LeakAddIcon from "@mui/icons-material/LeakAdd";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 
 import { AdditionInfo } from "../AdditionInfo/AdditionInfo";
 import { DevPovs } from "../DevPovs/DevPovs";
-
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
-
-import LeakAddIcon from "@mui/icons-material/LeakAdd";
+import { PeriodWindow } from "./PeriodWindow";
 
 interface IProps {}
 
@@ -224,6 +224,14 @@ export class SensorsList extends React.Component<IProps> {
     const [year_chose, month_chose, day_chose] = ChoseData.split("-");
     let ChoseSess = `${day_chose}.${month_chose}.${year_chose}`;
     let ChoseTimeSess = APP_STORAGE.sensors.getChoseSessTime().split("T")[1];
+    const count =
+      Number(APP_STORAGE.devs.getPassedDay()) /
+      Number(APP_STORAGE.devs.getPeriodSess());
+    const isVisibleBlockedDev = () => {
+      return (
+        APP_STORAGE.getRoleRead() === 1 && APP_STORAGE.getRoleWrite() === 2
+      );
+    };
 
     let periodSess;
 
@@ -284,6 +292,9 @@ export class SensorsList extends React.Component<IProps> {
 
     return (
       <div className="wrapper-sensors">
+        {APP_STORAGE.devs_groups.getMiddleForm() === 1 && (
+          <PeriodWindow isVisible={isVisibleBlockedDev()} />
+        )}
         {APP_STORAGE.devs_groups.getMiddleForm() === 2 && (
           <>
             {APP_STORAGE.sensors.getDeletedDev() === true &&
@@ -297,7 +308,7 @@ export class SensorsList extends React.Component<IProps> {
                   display: "flex",
                   padding: "12px",
                   height: "48px",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <ErrorOutlineIcon
@@ -311,8 +322,10 @@ export class SensorsList extends React.Component<IProps> {
             ) : (
               ""
             )}
+            <PeriodWindow isVisible={isVisibleBlockedDev()} />
 
-            {Number(APP_STORAGE.devs.getPassedDay()) < 1000 ? (
+            {Number(APP_STORAGE.devs.getPassedDay()) < 1000 &&
+            APP_STORAGE.devs.getPassedDay() ? (
               <Box
                 sx={{
                   background: "#266BF1",
@@ -320,9 +333,11 @@ export class SensorsList extends React.Component<IProps> {
                   mt: "20px",
                   borderRadius: "4px",
                   display: "flex",
-                  justifyContent: "space-between",
-                  height: "54px",
-                  alignItems: "center"
+                  gap: "12px",
+
+                  minHeight: "54px",
+                  alignItems: "center",
+                  padding: "12px",
                 }}
               >
                 <svg
@@ -361,7 +376,7 @@ export class SensorsList extends React.Component<IProps> {
                   </Typography>
                 </Box>
 
-                <Box
+                {/* <Box
                   sx={{
                     background: "#75A4FF",
                     p: "8px",
@@ -370,11 +385,11 @@ export class SensorsList extends React.Component<IProps> {
                     display: "flex",
                     alignItems: "center",
                     borderTopLeftRadius: "0px",
-                    borderBottomLeftRadius: "0px"
+                    borderBottomLeftRadius: "0px",
                   }}
                 >
                   <SignalCellularAltIcon />
-                </Box>
+                </Box> */}
               </Box>
             ) : (
               <Box
@@ -387,7 +402,7 @@ export class SensorsList extends React.Component<IProps> {
                   justifyContent: "space-between",
                   height: "54px",
 
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <svg
@@ -428,7 +443,7 @@ export class SensorsList extends React.Component<IProps> {
                     display: "flex",
                     alignItems: "center",
                     borderTopLeftRadius: "0px",
-                    borderBottomLeftRadius: "0px"
+                    borderBottomLeftRadius: "0px",
                   }}
                 >
                   <SignalCellularAltIcon />
@@ -443,7 +458,7 @@ export class SensorsList extends React.Component<IProps> {
                 padding: "12px",
                 borderRadius: "4px",
                 display: "flex",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <LeakAddIcon sx={{ color: "#808080", mr: "5px" }} />
@@ -454,7 +469,7 @@ export class SensorsList extends React.Component<IProps> {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                color: "#111111"
+                color: "#111111",
               }}
             >
               <Typography
@@ -491,7 +506,7 @@ export class SensorsList extends React.Component<IProps> {
             display: "flex",
             flexDirection: "column;",
             alignItems: "flex-start;",
-            width: "100%"
+            width: "100%",
           }}
         >
           <Box
@@ -503,7 +518,7 @@ export class SensorsList extends React.Component<IProps> {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              overflow: "auto"
+              overflow: "auto",
             }}
           >
             <TableContainer className="table_container sensors">

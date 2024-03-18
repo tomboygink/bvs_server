@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import CloseIcon from "@mui/icons-material/Close";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 import {
   Box,
@@ -9,13 +9,11 @@ import {
   Divider,
   Typography,
   Button,
-  FormHelperText,
   Stack,
   Alert,
 } from "@mui/material";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
-
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { CloseButton } from "../../../shared/CloseButton";
 
 interface IProps {}
 
@@ -33,9 +31,13 @@ export class Opensvgfile extends React.Component<IProps> {
           .getArraySvgData()
           .replace(/data:image\/svg\+xml;base64,/, "")
       );
+
       if (svg) {
         APP_STORAGE.importdevs.set_SchemeSvg(APP_STORAGE.auth_form.getdt());
-      }
+      } else
+        APP_STORAGE.importdevs.setErrorSave_mess(
+          "Ошибка! Убедитесь, что загружаемый файл в формате .svg"
+        );
     } catch (err) {
       APP_STORAGE.importdevs.setErrorSave_mess(
         "Ошибка! Убедитесь, что загружаемый файл в формате .svg"
@@ -61,6 +63,7 @@ export class Opensvgfile extends React.Component<IProps> {
   }
 
   private _handleFile = async (e: any) => {
+    console.log("handleFile=>", e);
     let fileToUpload = e.target.files[0];
     let reader = new FileReader();
 
@@ -88,6 +91,8 @@ export class Opensvgfile extends React.Component<IProps> {
 
   async onClose() {
     APP_STORAGE.importdevs.setOpenModalSvg(false);
+    APP_STORAGE.importdevs.setErrorSave_mess("");
+    APP_STORAGE.importdevs.setArraySvgData("");
   }
 
   render(): React.ReactNode {
@@ -110,10 +115,8 @@ export class Opensvgfile extends React.Component<IProps> {
               }}
             >
               <Typography>Загрузить схему расположения</Typography>
-
-              <CloseIcon
-                sx={{ color: "#1976D2" }}
-                onClick={() => {
+              <CloseButton
+                onClose={() => {
                   this.onClose();
                 }}
               />
@@ -129,7 +132,8 @@ export class Opensvgfile extends React.Component<IProps> {
                     {" "}
                     <span className="browse-files">
                       <input
-                        onInput={(e) => this._handleFile(e)}
+                        //onInput={(e) => this._handleFile(e)}
+                        onInput={(e) => console.log("e=>", e)}
                         type="file"
                         id="fileInput"
                         className="default-file-input"
@@ -208,8 +212,14 @@ export class Opensvgfile extends React.Component<IProps> {
                 {/* <button type="button" className="upload-button" onClick={() => (this.uploadfile())}> Загрузить файл </button> */}
                 <Button
                   onClick={() => this.uploadfile()}
-                  variant="contained"
-                  sx={{ marginBottom: "12px" }}
+                  sx={{
+                    background: "#266BF1",
+                    color: "#fff;",
+                    mt: "18px",
+                    mb: "18px",
+                    fontSize: "12px",
+                    alignSelf: "flex-end",
+                  }}
                 >
                   {" "}
                   Сохранить
@@ -234,44 +244,6 @@ export class Opensvgfile extends React.Component<IProps> {
                     невозможно.
                   </Alert>
                 </Stack>
-                {/* <Box
-                  sx={{
-                    m: "8px",
-                    background: "#eee",
-                    display: "flex",
-                    alignItems: "center",
-                    borderRadius: "4px",
-                    p: "8px",
-                  }}
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 6C12.5523 6 13 6.44772 13 7V13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13V7C11 6.44772 11.4477 6 12 6Z"
-                      fill="#8d8989"
-                    />
-                    <path
-                      d="M12 16C11.4477 16 11 16.4477 11 17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17C13 16.4477 12.5523 16 12 16Z"
-                      fill="#8d8989"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12Z"
-                      fill="#8d8989"
-                    />
-                  </svg>
-
-                  <FormHelperText sx={{ pl: "12px" }}>
-                    Внимание! После нажатия на кнопку , отменить операцию будет
-                    невозможно.
-                  </FormHelperText>
-                </Box> */}
               </div>
             </form>
           </Box>

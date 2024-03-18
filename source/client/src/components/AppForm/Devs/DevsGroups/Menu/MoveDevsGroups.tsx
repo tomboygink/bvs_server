@@ -14,24 +14,20 @@ import {
   Select,
   MenuItem,
   Alert,
+  Stack,
 } from "@mui/material";
-import Autocomplete from "@mui/material/Autocomplete";
 
-import CloseIcon from "@mui/icons-material/Close";
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
-import FormGroup from "@mui/material/FormGroup";
-import Stack from "@mui/material/Stack";
-
 import { AntSwitch } from "../../../AppBarPanel/LeftPanel/RegistationUsers/switch";
 
 import { TDevsGroup } from "../../../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../../../storage/components/Devs/DevEntityes";
 import { options } from "../../StyledMua";
+import { CloseButton } from "../../../../shared/CloseButton";
 
-// import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-// import TreeItem from "@mui/lab/TreeItem";
+
 import { TreeView, TreeItem } from "@mui/x-tree-view";
 
 interface IProps {}
@@ -199,10 +195,8 @@ export class MoveDevsGroups extends React.Component<IProps> {
               <Typography>
                 Переместить {APP_STORAGE.devs_groups.getName()}
               </Typography>
-
-              <CloseIcon
-                sx={{ color: "#1976D2" }}
-                onClick={() => {
+              <CloseButton
+                onClose={() => {
                   this.closeModal();
                 }}
               />

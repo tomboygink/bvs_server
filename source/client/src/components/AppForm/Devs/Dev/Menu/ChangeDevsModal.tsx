@@ -33,6 +33,7 @@ import { Change_ModalSensors } from "./AddSensorsModal";
 import LongInput from "../../../../shared/LongInput";
 import LatInput from "../../../../shared/LatInput";
 import { TextInput } from "../../../../shared/TextInput";
+import { CloseButton } from "../../../../shared/CloseButton";
 
 interface IProps {}
 
@@ -165,17 +166,9 @@ export class ChangeDevsModal extends React.Component<IProps> {
                 }}
                 align="left"
               >
-                <TextField
+                <TextInput
                   id={"_id_s" + uniqueChars[i].depth}
-                  inputProps={{ style: { fontSize: 12 } }}
-                  InputLabelProps={{ style: { fontSize: 12 } }}
-                  variant="outlined"
-                  fullWidth
-                  required
                   label="Глубина"
-                  autoComplete="Глубина"
-                  autoFocus
-                  size="small"
                   value={uniqueChars[i].depth}
                 />
               </TableCell>
@@ -244,20 +237,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               }}
               align="left"
             >
-              <TextField
-                id={"_id_s" + 7777}
-                inputProps={{ style: { fontSize: 12 } }}
-                InputLabelProps={{ style: { fontSize: 12 } }}
-                variant="outlined"
-                fullWidth
-                required
-                disabled={true}
-                label="Глубина"
-                autoComplete="Глубина"
-                autoFocus
-                size="small"
-                value={""}
-              />
+              <TextInput id={"_id_s" + 7777} disabled={true} label="Глубина" />
             </TableCell>
 
             <TableCell
@@ -306,12 +286,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               }}
             >
               <Typography>Редактировать устройство</Typography>
-              <CloseIcon
-                sx={{ color: "#1976D2" }}
-                onClick={() => {
-                  this.closeModal();
-                }}
-              />
+              <CloseButton onClose={() => this.closeModal()} />
             </Box>
 
             <Divider sx={{ marginBottom: "20px" }} />
@@ -327,73 +302,47 @@ export class ChangeDevsModal extends React.Component<IProps> {
               value={APP_STORAGE.devs.getNumber()}
             /> */}
 
-            <TextField
-              sx={{ mt: "14px" }}
-              inputProps={{ style: { fontSize: 12 } }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
+            <TextInput
               error={APP_STORAGE.devs.getNumberError()}
               helperText={APP_STORAGE.devs.getNumberError_mess()}
-              variant="outlined"
-              fullWidth
-              required
               label="Номер устройства"
-              autoFocus
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.devs.setNumber(e.target.value);
               }}
               value={APP_STORAGE.devs.getNumber()}
             />
 
-            <TextField
-              sx={{ mt: "14px" }}
-              inputProps={{ style: { fontSize: 12 } }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
+            <TextInput
               error={APP_STORAGE.devs.getNameError()}
               helperText={APP_STORAGE.devs.getNameError_mess()}
-              fullWidth
-              required
               label="Название устройства "
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.devs.setName(e.target.value);
               }}
               value={APP_STORAGE.devs.getName()}
             />
 
-            <TextField
-              sx={{ mt: "14px" }}
+            <TextInput
               InputProps={{
                 style: { fontSize: 12 },
                 inputComponent: LatInput as any,
               }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
               error={APP_STORAGE.devs.getLatitudeError()}
               helperText={APP_STORAGE.devs.getLatitudeError_mess()}
-              fullWidth
-              required
               label="Широта"
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.devs.setLatitude(e.target.value);
               }}
               value={APP_STORAGE.devs.getLatitude()}
             />
-            <TextField
-              sx={{ mt: "14px", fontSize: "12px" }}
+            <TextInput
               InputProps={{
+                style: { fontSize: 12 },
                 inputComponent: LongInput as any,
               }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
               error={APP_STORAGE.devs.getLongitudeError()}
               helperText={APP_STORAGE.devs.getLongitudeError_mess()}
-              fullWidth
-              required
               label="Долгота"
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.devs.setLongitude(e.target.value);
               }}
@@ -409,6 +358,7 @@ export class ChangeDevsModal extends React.Component<IProps> {
               aria-label="minimum height"
               minRows={4}
               style={{ width: "100%" }}
+              // onChange={(e) => console.log("value=>", e.target.value)}
               onChange={(e) => {
                 APP_STORAGE.devs.setInfo(e.target.value);
               }}

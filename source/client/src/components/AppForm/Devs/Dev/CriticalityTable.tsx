@@ -85,7 +85,7 @@ export class CriticalityTable extends React.Component<IProps> {
               <TableHead>
                 <TableRow>
                   <TableCell>Глубина</TableCell>
-                  <TableCell align="center">Контрольна сессия</TableCell>
+                  <TableCell align="center">Контрольная сессия</TableCell>
                   <TableCell align="center">Последняя сессия</TableCell>
                   <TableCell align="center">Критичность</TableCell>
                 </TableRow>
@@ -109,7 +109,7 @@ export class CriticalityTable extends React.Component<IProps> {
                                   sx={{
                                     p: "4px",
                                     color: "#002757",
-                                    fontWeight: "500"
+                                    fontWeight: "500",
                                   }}
                                 >
                                   {" "}
@@ -136,7 +136,7 @@ export class CriticalityTable extends React.Component<IProps> {
                                   sx={{
                                     p: "4px",
                                     color: "#002757",
-                                    fontWeight: "500"
+                                    fontWeight: "500",
                                   }}
                                 >
                                   {" "}
@@ -163,7 +163,7 @@ export class CriticalityTable extends React.Component<IProps> {
                                   sx={{
                                     p: "4px",
                                     color: "#002757",
-                                    fontWeight: "500"
+                                    fontWeight: "500",
                                   }}
                                 >
                                   {" "}

@@ -23,6 +23,7 @@ import { observer } from "mobx-react";
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import AddIcon from "@mui/icons-material/Add";
+import { TextInput } from "../../../../shared/TextInput";
 import TelInput from "../../../../shared/TelInput";
 import { AntSwitch } from "./switch";
 
@@ -123,108 +124,52 @@ export class NewUserRegistration extends React.Component<IProps> {
 
     return (
       <React.Fragment>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <TextField
-            inputProps={{ style: { fontSize: 12 } }} // font size of input text
-            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-            variant="outlined"
-            margin="normal"
-            required
+        <Stack direction="row" spacing={2}>
+          <TextInput
             error={APP_STORAGE.reg_user.getErrorFamily()}
             helperText={APP_STORAGE.reg_user.getTextHelpFamily()}
             label="Фамилия"
-            autoFocus
-            size="small"
             onChange={(e) => {
               APP_STORAGE.reg_user.setFamily(e.target.value);
             }}
             value={APP_STORAGE.reg_user.getFamily()}
           />
 
-          <TextField
-            inputProps={{ style: { fontSize: 12 } }} // font size of input text
-            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-            variant="outlined"
-            margin="normal"
-            required
+          <TextInput
             error={APP_STORAGE.reg_user.getErrorName()}
             helperText={APP_STORAGE.reg_user.getTextHelpName()}
             label="Имя"
-            size="small"
             onChange={(e) => {
               APP_STORAGE.reg_user.setName(e.target.value);
             }}
             value={APP_STORAGE.reg_user.getName()}
           />
 
-          <TextField
-            inputProps={{ style: { fontSize: 12 } }} // font size of input text
-            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-            variant="outlined"
-            margin="normal"
-            required
+          <TextInput
+            required={false}
             error={APP_STORAGE.reg_user.getErrorFather()}
             helperText={APP_STORAGE.reg_user.getTextHelpFather()}
             label="Отчество"
-            size="small"
             onChange={(e) => {
               APP_STORAGE.reg_user.setFather(e.target.value);
             }}
             value={APP_STORAGE.reg_user.getFather()}
           />
-        </Box>
+        </Stack>
 
-        <TextField
-          sx={{ mt: "12px" }}
-          inputProps={{ style: { fontSize: 12 } }} // font size of input text
-          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-          variant="outlined"
-          fullWidth
-          required
+        <TextInput
+          InputProps={{ style: { fontSize: 12 }, type: "email" }}
           error={APP_STORAGE.reg_user.getErrorEmail()}
           helperText={APP_STORAGE.reg_user.getTextHelpEmail()}
           label="email"
-          size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setEmail(e.target.value);
           }}
           value={APP_STORAGE.reg_user.getEmail()}
         />
 
-        {/* <TextField
-          sx={{ mt: "14px" }}
-          inputProps={{ style: { fontSize: 12 } }} // font size of input text
-          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-          variant="outlined"
-          fullWidth
-          required
-          error={APP_STORAGE.reg_user.getErrorTelephone()}
-          helperText={APP_STORAGE.reg_user.getTextHelpTelephone()}
+        <TextInput
           label="Телефон"
-          autoComplete="89841797813"
-          autoFocus
-          size="small"
-          onChange={(e) => {
-            APP_STORAGE.reg_user.setTelephone(e.target.value);
-          }}
-          value={APP_STORAGE.reg_user.getTelephone()}
-        />
-
-        <FormHelperText sx={{ ml: "12px" }}>
-          номер телефона должен содержать 10 символов.
-        </FormHelperText> */}
-        <TextField
-          sx={{ mt: "14px" }}
-          variant="outlined"
-          fullWidth
-          required
-          label="Телефон"
-          size="small"
-          InputLabelProps={{
-            style: {
-              fontSize: 12,
-            },
-          }}
           InputProps={{
             inputComponent: TelInput as any,
             style: { fontSize: 12 },
@@ -322,12 +267,7 @@ export class NewUserRegistration extends React.Component<IProps> {
           </FormHelperText>
         </FormControl>
 
-        <TextField
-          sx={{ mt: "14px" }}
-          inputProps={{ style: { fontSize: 12 } }} // font size of input text
-          InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-          variant="outlined"
-          required
+        <TextInput
           error={
             APP_STORAGE.reg_user.getErrorLogin() ||
             APP_STORAGE.reg_user.getErrorLoginDouble()
@@ -336,27 +276,18 @@ export class NewUserRegistration extends React.Component<IProps> {
             APP_STORAGE.reg_user.getTextHelpLogin() ||
             APP_STORAGE.reg_user.getTextHelpLoginDouble()
           }
-          fullWidth
           label="Логин"
-          size="small"
           onChange={(e) => {
             APP_STORAGE.reg_user.setLogin(e.target.value);
           }}
           value={APP_STORAGE.reg_user.getLogin().trim()}
         />
         <form>
-          <TextField
-            sx={{ mt: "14px" }}
-            inputProps={{ style: { fontSize: 12 } }} // font size of input text
-            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-            variant="outlined"
-            required
+          <TextInput
+            InputProps={{ style: { fontSize: 12 }, type: "password" }}
             error={APP_STORAGE.reg_user.getErrorPassword()}
             helperText={APP_STORAGE.reg_user.getTextHelpPassword()}
-            fullWidth
             label="Пароль"
-            type="password"
-            size="small"
             onChange={(e) => {
               APP_STORAGE.reg_user.setPassword(e.target.value);
             }}
@@ -367,18 +298,11 @@ export class NewUserRegistration extends React.Component<IProps> {
             используйте 6 или более символов, сочетая буквы, цифры и символы.
           </FormHelperText>
 
-          <TextField
-            sx={{ mt: "14px" }}
-            inputProps={{ style: { fontSize: 12 } }} // font size of input text
-            InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-            variant="outlined"
-            required
+          <TextInput
+            InputProps={{ style: { fontSize: 12 }, type: "password" }}
             error={APP_STORAGE.reg_user.getErrorRepeatPassword()}
             helperText={APP_STORAGE.reg_user.getTextHelpRepeatPassword()}
-            fullWidth
             label="Повторите пароль"
-            type="password"
-            size="small"
             onChange={(e) => {
               APP_STORAGE.reg_user.setRepeatPassword(e.target.value);
             }}
@@ -471,19 +395,6 @@ export class NewUserRegistration extends React.Component<IProps> {
             </Alert>
           </Stack>
         )}
-        {/* {APP_STORAGE.reg_user.getResulSave().length > 0 && (
-          <Typography
-            sx={{
-              background: "#EDF7ED",
-              color: "#1E4620",
-              p: "12px",
-              borderRadius: "4px",
-            }}
-          >
-            {" "}
-            {APP_STORAGE.reg_user.getResulSave()}
-          </Typography>
-        )} */}
       </React.Fragment>
     );
   }

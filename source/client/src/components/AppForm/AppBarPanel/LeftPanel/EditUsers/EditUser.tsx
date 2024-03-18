@@ -1,17 +1,12 @@
 import React from "react";
 import { observer } from "mobx-react";
-
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
-
-import { TextField, Box, Dialog, Divider, Typography } from "@mui/material";
-
-import CloseIcon from "@mui/icons-material/Close";
-import { AntSwitch } from "../RegistationUsers/switch";
-
-import NativeSelect from "@mui/material/NativeSelect";
-
 import {
-  Link,
+  TextField,
+  Box,
+  Dialog,
+  Divider,
+  Typography,
   Button,
   FormHelperText,
   TextareaAutosize,
@@ -20,14 +15,16 @@ import {
   FormControl,
   InputLabel,
   Checkbox,
+  FormGroup,
+  Stack,
   Alert,
 } from "@mui/material";
-import FormGroup from "@mui/material/FormGroup";
-import Stack from "@mui/material/Stack";
+import CloseIcon from "@mui/icons-material/Close";
+import { AntSwitch } from "../RegistationUsers/switch";
+import TelInput from "../../../../shared/TelInput";
+import { TextInput } from "../../../../shared/TextInput";
 
-// Экспортировано для запуска
-export interface IProps {}
-
+interface IProps {}
 @observer
 export class EditUser extends React.Component<IProps> {
   constructor(props: any) {
@@ -133,52 +130,29 @@ export class EditUser extends React.Component<IProps> {
             <Divider sx={{ marginBottom: "20px" }} />
 
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <TextField
-                inputProps={{ style: { fontSize: 12 } }}
-                InputLabelProps={{ style: { fontSize: 12 } }}
-                variant="outlined"
-                margin="normal"
-                required
+              <TextInput
                 error={APP_STORAGE.edit_user.getErrorFamily()}
                 helperText={APP_STORAGE.edit_user.getTextHelpFamily()}
                 label="Фамилия"
-                autoComplete="фамилия"
-                autoFocus
-                size="small"
                 onChange={(e) => {
                   APP_STORAGE.edit_user.setFamily(e.target.value);
                 }}
                 value={APP_STORAGE.edit_user.getFamily() || ""}
               />
 
-              <TextField
-                inputProps={{ style: { fontSize: 12 } }}
-                InputLabelProps={{ style: { fontSize: 12 } }}
-                variant="outlined"
-                margin="normal"
-                required
+              <TextInput
                 error={APP_STORAGE.edit_user.getErrorName()}
                 helperText={APP_STORAGE.edit_user.getTextHelpName()}
                 label="Имя"
-                autoComplete="имя"
-                autoFocus
-                size="small"
                 onChange={(e) => {
                   APP_STORAGE.edit_user.setName(e.target.value);
                 }}
                 value={APP_STORAGE.edit_user.getName() || ""}
               />
 
-              <TextField
-                inputProps={{ style: { fontSize: 12 } }}
-                InputLabelProps={{ style: { fontSize: 12 } }}
-                variant="outlined"
-                margin="normal"
-                required
+              <TextInput
                 label="Отчество"
-                autoComplete="отчество"
-                autoFocus
-                size="small"
+                required={false}
                 onChange={(e) => {
                   APP_STORAGE.edit_user.setFather(e.target.value);
                 }}
@@ -187,17 +161,10 @@ export class EditUser extends React.Component<IProps> {
             </Box>
 
             <Box sx={{ display: "flex" }}>
-              <TextField
-                sx={{ mt: "12px" }}
-                inputProps={{ style: { fontSize: 12 } }}
-                InputLabelProps={{ style: { fontSize: 12 } }}
-                variant="outlined"
-                fullWidth
-                required
+              <TextInput
+                error={APP_STORAGE.edit_user.getErrorEmail()}
+                helperText={APP_STORAGE.edit_user.getTextHelpEmail()}
                 label="email"
-                autoComplete="email"
-                autoFocus
-                size="small"
                 onChange={(e) => {
                   APP_STORAGE.edit_user.setEmail(e.target.value);
                 }}
@@ -210,27 +177,19 @@ export class EditUser extends React.Component<IProps> {
                 inputProps={{ "aria-label": "controlled" }}
               />
             </Box>
-
-            <TextField
-              sx={{ mt: "14px" }}
-              inputProps={{ style: { fontSize: 12 } }} // font size of input text
-              InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-              variant="outlined"
-              fullWidth
-              required
+            <TextInput
               label="Телефон"
-              autoComplete="телефон"
-              autoFocus
-              size="small"
+              InputProps={{
+                inputComponent: TelInput as any,
+                style: { fontSize: 12 },
+              }}
+              error={APP_STORAGE.edit_user.getErrorTelephone()}
+              helperText={APP_STORAGE.edit_user.getTextHelpTelephone()}
               onChange={(e) => {
                 APP_STORAGE.edit_user.setTelephone(e.target.value);
               }}
-              value={APP_STORAGE.edit_user.getTelephone() || ""}
+              value={APP_STORAGE.edit_user.getTelephone()}
             />
-
-            <FormHelperText sx={{ ml: "12px" }}>
-              номер телефона должен содержать 10 символов.
-            </FormHelperText>
 
             <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
               <InputLabel className="org" sx={{ fontSize: "12px" }}>
@@ -270,48 +229,25 @@ export class EditUser extends React.Component<IProps> {
                     m: 1,
                     borderRadius: "4px",
                   }}
-                >
-                  {/* <MenuItem
-                onClick={() => this.OpenModalRegUser(3, "Добавить должность")}
-              >
-                <AddIcon sx={{ fontSize: "17px", mt: 1, color: "#266BF1" }} />
-                <Typography sx={{ fontSize: "12px", mt: 1 }}>
-                  Добавить организацию
-                </Typography>
-              </MenuItem> */}
-                </Box>
+                ></Box>
               </Select>
             </FormControl>
 
-            <TextField
-              sx={{ mt: "14px" }}
-              inputProps={{ style: { fontSize: 12 } }} // font size of input text
+            <TextInput
+              InputProps={{ style: { fontSize: 12 }, disabled: true }} // font size of input text
               InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-              variant="outlined"
-              fullWidth
               label="Логин"
-              autoComplete="логин"
-              autoFocus
-              size="small"
-              disabled={true}
               value={APP_STORAGE.edit_user.getLogin() || ""}
             />
 
             <form>
-              <TextField
-                sx={{ mt: "14px" }}
-                inputProps={{ style: { fontSize: 12 } }}
+              <TextInput
+                InputProps={{ style: { fontSize: 12 }, type: "password" }}
                 InputLabelProps={{ style: { fontSize: 12 } }}
-                variant="outlined"
-                required
                 error={APP_STORAGE.edit_user.getErrorPassword()}
                 helperText={APP_STORAGE.edit_user.getTextHelpPassword()}
                 fullWidth
                 label="Новый пароль"
-                autoComplete="Новый пароль"
-                autoFocus
-                type="password"
-                size="small"
                 onChange={(e) => {
                   APP_STORAGE.edit_user.setPassword(e.target.value);
                 }}
@@ -323,20 +259,11 @@ export class EditUser extends React.Component<IProps> {
                 символы.
               </FormHelperText>
 
-              <TextField
-                sx={{ mt: "14px" }}
-                inputProps={{ style: { fontSize: 12 } }} // font size of input text
-                InputLabelProps={{ style: { fontSize: 12 } }} // font size of input label
-                variant="outlined"
-                required
+              <TextInput
+                InputProps={{ style: { fontSize: 12 }, type: "password" }} // font size of input text
                 error={APP_STORAGE.edit_user.getErrorRepeatPassword()}
                 helperText={APP_STORAGE.edit_user.getTextHelpRepeatPassword()}
-                fullWidth
                 label="Повторите пароль"
-                autoComplete="повторите пароль"
-                autoFocus
-                type="password"
-                size="small"
                 onChange={(e) => {
                   APP_STORAGE.edit_user.setRepeatPassword(e.target.value);
                 }}
@@ -380,10 +307,10 @@ export class EditUser extends React.Component<IProps> {
                 </Typography>
                 <AntSwitch
                   checked={APP_STORAGE.edit_user.getCheckboxEd()}
-                  // Закомментировано для запуска
-                  // onChange={editing => {
-                  //   this.ChekedForEdit(editing);
-                  // }}
+                  //Закомментировано для запуска
+                  onChange={(editing) => {
+                    this.ChekedForEdit(editing);
+                  }}
                 />
               </Stack>
 
@@ -400,8 +327,8 @@ export class EditUser extends React.Component<IProps> {
                 </Typography>
                 <AntSwitch
                   checked={APP_STORAGE.edit_user.getCheckboxRead()}
-                  // Добавлен тип any для запуска
-                  onChange={(readind: any) => {
+                  // Закомментировано для запуска
+                  onChange={(readind) => {
                     this.ChekedForRead(readind);
                   }}
                 />
@@ -445,8 +372,22 @@ export class EditUser extends React.Component<IProps> {
                 Сохранить
               </Button>
             </Box>
+            {APP_STORAGE.edit_user.getSuccessSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="success">
+                  {APP_STORAGE.edit_user.getSuccessSave_mess()}
+                </Alert>
+              </Stack>
+            )}
+            {APP_STORAGE.edit_user.getErrorSave_mess().length > 0 && (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">
+                  {APP_STORAGE.edit_user.getErrorSave_mess()}
+                </Alert>
+              </Stack>
+            )}
 
-            {APP_STORAGE.reg_user.getResulSave().length > 0 && (
+            {/* {APP_STORAGE.reg_user.getResulSave().length > 0 && (
               <Typography
                 sx={{
                   background: "#EDF7ED",
@@ -458,7 +399,7 @@ export class EditUser extends React.Component<IProps> {
                 {" "}
                 {APP_STORAGE.reg_user.getResulSave()}
               </Typography>
-            )}
+            )} */}
           </Box>
         </Dialog>
       </React.Fragment>

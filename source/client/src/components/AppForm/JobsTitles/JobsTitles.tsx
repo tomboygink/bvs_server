@@ -1,11 +1,15 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Box, Typography, TextField, ListItemIcon, Link, TextareaAutosize } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  ListItemIcon,
+  Link,
+  TextareaAutosize,
+} from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-
-import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
-import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -14,16 +18,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import Divider from "@mui/material/Divider";
 
-import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
-import { EditJobsTitles } from './EditJobsTitles'
-import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
-
-import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
-
-import DirectionsIcon from "@mui/icons-material/Directions";
-
-import { CONFIG } from "../../../../../xcore/config";
+import { EditJobsTitles } from "./EditJobsTitles";
 
 interface IProps {}
 
@@ -34,18 +30,14 @@ export class JobsTitles extends React.Component<IProps> {
     super(props);
   }
   async OpenModalRegUser(e: any, tittle: string) {
-    
-
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
+    APP_STORAGE.reg_user.setTakeModal(e); // идентификатор модального окна
+    APP_STORAGE.reg_user.setTittleModal(tittle); // заголовок модального окна
+    APP_STORAGE.reg_user.setModalRegUser(true);
+    APP_STORAGE.app_bar.setSetOpenAppBar(false);
+    APP_STORAGE.reg_user.setOpenTableUsers(false);
+  }
 
-  APP_STORAGE.reg_user.setTakeModal(e); // идентификатор модального окна
-  APP_STORAGE.reg_user.setTittleModal(tittle); // заголовок модального окна
-  APP_STORAGE.reg_user.setModalRegUser(true);
-  APP_STORAGE.app_bar.setSetOpenAppBar(false);
-  APP_STORAGE.reg_user.setOpenTableUsers(false);
-  APP_STORAGE.reg_user.setOpenTableUsers(false);
- 
-}
   render(): React.ReactNode {
     let table_rows = [];
     if (APP_STORAGE.reg_user.getJobsAll()) {
@@ -54,21 +46,21 @@ export class JobsTitles extends React.Component<IProps> {
       );
       for (var key in jobstitles) {
         let row = jobstitles[key];
-   
+
         if (String(row.id) === APP_STORAGE.reg_user.getNodeidJobsTitles()) {
-          setTimeout(() => {  ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
+          setTimeout(() => {
+            ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
             APP_STORAGE.jobs.setId(row.id),
-            APP_STORAGE.jobs.setIdOrg(row.org_id),
-            APP_STORAGE.jobs.setJobsTitles(row.name),
-            APP_STORAGE.jobs.setInfo(row.info)
-           }, 100);
+              APP_STORAGE.jobs.setIdOrg(row.org_id),
+              APP_STORAGE.jobs.setJobsTitles(row.name),
+              APP_STORAGE.jobs.setInfo(row.info);
+          }, 100);
 
           table_rows.push(
             <React.Fragment key={String(row.id)}>
               <Box id="long-button" className="grid__card_middle">
-                
                 <Box>
-                {APP_STORAGE.getRoleWrite() === 2 &&
+                  {APP_STORAGE.getRoleWrite() === 2 &&
                     APP_STORAGE.getRoleRead() === 1 && (
                       <div className="edit_user_menu">
                         <IconButton
@@ -81,7 +73,7 @@ export class JobsTitles extends React.Component<IProps> {
                           aria-expanded={open ? "true" : undefined}
                           aria-haspopup="true"
                         >
-                        <MoreVertIcon />
+                          <MoreVertIcon />
                         </IconButton>
                         <Menu
                           id="long-menu"
@@ -95,9 +87,9 @@ export class JobsTitles extends React.Component<IProps> {
                           }}
                         >
                           <MenuItem
-                          onClick={() => {
-                            APP_STORAGE.jobs.setModalEditJobsTitles(true);
-                          }}
+                            onClick={() => {
+                              APP_STORAGE.jobs.setModalEditJobsTitles(true);
+                            }}
                           >
                             <ListItemIcon>
                               <ModeEditRoundedIcon fontSize="small" />
@@ -107,11 +99,11 @@ export class JobsTitles extends React.Component<IProps> {
                         </Menu>
                       </div>
                     )}
-              
+
                   <Box className="wrapper_user_card">
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       {" "}
-                      Должность-{" "}
+                      Должность -{" "}
                     </Typography>
 
                     <TextField
@@ -124,17 +116,16 @@ export class JobsTitles extends React.Component<IProps> {
                       size="small"
                       value={row.name || ""}
                     />
-
                   </Box>
 
-                  <Divider  sx ={{mt: '12px'}}/>
+                  <Divider sx={{ mt: "12px" }} />
                   <TextareaAutosize
-          className="info"
-          aria-label="minimum height"
-          minRows={4}
-          style={{ width: "100%" , marginTop: '12px'}}
-          value={row.info || ""}
-        />
+                    className="info"
+                    aria-label="minimum height"
+                    minRows={4}
+                    style={{ width: "100%", marginTop: "12px" }}
+                    value={row.info || ""}
+                  />
                 </Box>
               </Box>
             </React.Fragment>
@@ -151,20 +142,26 @@ export class JobsTitles extends React.Component<IProps> {
         {table_rows}
         <EditJobsTitles />
         <Box
-              sx={{
-                borderRadius: "4px",
-                width: '100%',
-                background:'#E3EDFF',
-                p:2
-                
-              }}
-              onClick={() => this.OpenModalRegUser(3, "Добавить должность")}
-            >
-              <Typography sx={{ display: "flex", color:'#266BF1', justifyContent: 'center' }}>
-                {" "}
-                Добавить должность
-              </Typography>
-            </Box>
+          sx={{
+            borderRadius: "4px",
+            width: "100%",
+            background: "#E3EDFF",
+            p: 2,
+            cursor: "pointer",
+            transition: "0.3s",
+            ":hover": {
+              opacity: "0.6",
+            },
+          }}
+          onClick={() => this.OpenModalRegUser(3, "Добавить должность")}
+        >
+          <Typography
+            sx={{ display: "flex", color: "#266BF1", justifyContent: "center" }}
+          >
+            {" "}
+            Добавить должность
+          </Typography>
+        </Box>
       </React.Fragment>
     );
   }

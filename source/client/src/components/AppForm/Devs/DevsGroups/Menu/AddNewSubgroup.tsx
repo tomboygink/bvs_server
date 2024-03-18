@@ -15,11 +15,14 @@ import {
   MenuItem,
   Stack,
   Alert,
+  FormHelperText,
 } from "@mui/material";
 import LongInput from "../../../../shared/LongInput";
 import CloseIcon from "@mui/icons-material/Close";
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
-import SaveIcon from "@mui/icons-material/Save";
+import { CloseButton } from "../../../../shared/CloseButton";
+import { TextInput } from "../../../../shared/TextInput";
+import LatInput from "../../../../shared/LatInput";
 
 interface IProps {}
 
@@ -42,6 +45,8 @@ export class AddNewSubgroup extends React.Component<IProps> {
     APP_STORAGE.devs_groups.setName("");
     APP_STORAGE.devs_groups.setNameError(false);
     APP_STORAGE.devs_groups.setNameError_mess("");
+    APP_STORAGE.devs_groups.setOrgError(false);
+    APP_STORAGE.devs_groups.setOrgError_mess("");
     APP_STORAGE.devs_groups.setLongitude("");
     APP_STORAGE.devs_groups.setLongitudeError(false);
     APP_STORAGE.devs_groups.setLongitudeError_mess("");
@@ -104,10 +109,8 @@ export class AddNewSubgroup extends React.Component<IProps> {
               }}
             >
               <Typography>Добавить расположение устройств</Typography>
-
-              <CloseIcon
-                sx={{ color: "#1976D2" }}
-                onClick={() => {
+              <CloseButton
+                onClose={() => {
                   this.closeModal();
                 }}
               />
@@ -115,18 +118,10 @@ export class AddNewSubgroup extends React.Component<IProps> {
 
             <Divider sx={{ marginBottom: "20px" }} />
 
-            <TextField
-              sx={{ mt: "14px" }}
-              inputProps={{ style: { fontSize: 12 } }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
+            <TextInput
               error={APP_STORAGE.devs_groups.getNameError()}
               helperText={APP_STORAGE.devs_groups.getNameError_mess()}
-              fullWidth
-              required
               label="Место расположения"
-              autoFocus
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.devs_groups.setName(e.target.value);
               }}
@@ -162,51 +157,37 @@ export class AddNewSubgroup extends React.Component<IProps> {
                   }}
                 ></Box>
               </Select>
+              <FormHelperText>
+                {APP_STORAGE.devs_groups.getOrgError_mess()}
+              </FormHelperText>
             </FormControl>
-
-            <TextField
-              sx={{ mt: "14px" }}
+            <TextInput
+              InputProps={{
+                inputComponent: LatInput,
+                style: { fontSize: 12 },
+              }}
+              error={APP_STORAGE.devs_groups.getLatitudeError()}
+              helperText={APP_STORAGE.devs_groups.getLatitudeError_mess()}
+              label="Широта"
+              onChange={(e) => {
+                APP_STORAGE.devs_groups.setLatitude(e.target.value);
+              }}
+              value={APP_STORAGE.devs_groups.getLatitude()}
+            />
+            <TextInput
               InputProps={{
                 inputComponent: LongInput as any,
                 style: { fontSize: 12 },
               }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
               error={APP_STORAGE.devs_groups.getLongitudeError()}
               helperText={APP_STORAGE.devs_groups.getLongitudeError_mess()}
-              fullWidth
-              required
-              type="number"
               label="Долгота"
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.devs_groups.setLongitude(e.target.value);
               }}
               value={APP_STORAGE.devs_groups.getLongitude()}
             />
 
-            <TextField
-              sx={{ mt: "14px" }}
-              inputProps={{
-                inputMode: "decimal",
-                step: 0.1,
-                pattern: "[0..9]*[.][0..9]*",
-                fontSize: 12,
-              }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
-              error={APP_STORAGE.devs_groups.getLatitudeError()}
-              helperText={APP_STORAGE.devs_groups.getLatitudeError_mess()}
-              fullWidth
-              required
-              label="Широта"
-              type="number"
-              size="small"
-              onChange={(e) => {
-                APP_STORAGE.devs_groups.setLatitude(e.target.value);
-              }}
-              value={APP_STORAGE.devs_groups.getLatitude()}
-            />
             <Divider sx={{ padding: "12px" }} />
             <Typography sx={{ color: "#999999" }} variant="caption">
               Информация:

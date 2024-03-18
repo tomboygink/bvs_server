@@ -10,8 +10,16 @@ import {
   INVALID_EMAIL_ERROR,
   INVALID_PASSWORD_ERROR,
   INVALID_TELEPHONE_ERROR,
+  PASSWORDS_NOT_MATCH,
+  MATCHING_OLD_PASSWORD_ERROR,
+  SAVE_SUCCESS,
+  SAVE_ERROR,
 } from "../../../utils/consts";
-import { regexp_email, regexp_dash } from "../../../utils/consts";
+import {
+  regexp_email,
+  regexp_dash,
+  regexp_password,
+} from "../../../utils/consts";
 
 export class ModalStorage {
   @observable PersonalAccaunt: boolean = false;
@@ -66,6 +74,8 @@ export class ModalStorage {
   @observable dt: any = null;
   @observable error: boolean = false;
   @observable error_mass: string = null;
+  @observable errorSave_mess: string = "";
+  @observable successSave_mess: string = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -338,6 +348,22 @@ export class ModalStorage {
     return this.error_mass;
   }
 
+  @action setErrorSave_mess(val: string) {
+    this.errorSave_mess = val;
+  }
+
+  @computed getErrorSave_mess(): string {
+    return this.errorSave_mess;
+  }
+
+  @action setSuccessSave_mess(val: string) {
+    this.successSave_mess = val;
+  }
+
+  @computed getSuccessSave_mess(): string {
+    return this.successSave_mess;
+  }
+
   async set_ActMail(name: string, value: any, _options?: any) {
     var sess_code = value;
     var q: IWSQuery = new WSQuery("set_ActMail");
@@ -451,54 +477,67 @@ export class ModalStorage {
   async set_ChangePass(name: string, value: any, _options?: any) {
     var sess_code = value;
     var q: IWSQuery = new WSQuery("set_ChangePass");
-    if (this.getOld_Pass() === "") {
-      /// проверка пароля, если не пусто
-      this.setErrr_old_pass(true);
-      this.setError_old_message("Введите старый пароль.");
-    }
-
-    if (this.getOld_Pass() !== "") {
-      ///если пароль введен , то удаляем ошибку
+    const isValidPassword = regexp_password.test(this.getNew_Pass());
+    if (this.getOld_Pass()) {
       this.setErrr_old_pass(false);
       this.setError_old_message("");
+    } else {
+      this.setErrr_old_pass(true);
+      this.setError_old_message(EMPTY_FIELD_ERROR);
     }
-
-    if (this.getNew_Pass() === "" && this.getOld_Pass() !== "") {
+    if (this.getOld_Pass() && !this.getNew_Pass()) {
       this.setErrr_new_pass(true);
-      this.setError_new_message("Введите новый пароль.");
-    }
-
-    if (this.getNew_Pass().length < 6) {
-      this.setErrr_new_pass(true);
-      this.setError_new_message("Пароль не должен быть короче 6 символов.");
-    }
-
-    if (this.getNew_Pass() !== "" && this.getNew_Pass().length > 6) {
-      ///если пароль введен , то удаляем ошибку
+      this.setError_new_message(EMPTY_FIELD_ERROR);
+    } else if (this.getOld_Pass() && this.getNew_Pass()) {
+      if (this.getNew_Pass().length < 6 || !isValidPassword) {
+        this.setErrr_new_pass(true);
+        this.setError_new_message(INVALID_PASSWORD_ERROR);
+      } else if (this.getNew_Pass() !== this.getRepeat_password()) {
+        this.setErrr_new_pass(false);
+        this.setError_new_message("");
+        this.setError_pass(true);
+        this.setError_message(PASSWORDS_NOT_MATCH);
+      } else if (this.getNew_Pass() === this.getOld_Pass()) {
+        this.setErrr_new_pass(true);
+        this.setError_new_message(MATCHING_OLD_PASSWORD_ERROR);
+        this.setError_pass(false);
+        this.setError_message("");
+      } else {
+        this.setErrr_new_pass(false);
+        this.setError_new_message("");
+        this.setError_pass(false);
+        this.setError_message("");
+      }
+    } else {
       this.setErrr_new_pass(false);
       this.setError_new_message("");
-    }
-
-    if (
-      this.getNew_Pass() !== this.getRepeat_password() &&
-      this.getOld_Pass() !== "" &&
-      this.getNew_Pass() !== ""
-    ) {
-      this.setError_pass(true);
-      this.setError_message("Пароли не совпадают. Повторите попытку.");
-    }
-
-    if (this.getNew_Pass() === this.getRepeat_password()) {
       this.setError_pass(false);
       this.setError_message("");
     }
 
-    if (
-      this.getOld_Pass() !== "" &&
-      this.getNew_Pass() !== "" &&
-      this.getNew_Pass() === this.getRepeat_password() &&
-      this.getNew_Pass().length > 6
-    ) {
+    const isValidValues = () => {
+      return (
+        !this.getErrr_old_pass() &&
+        !this.getErrr_new_pass() &&
+        !this.getError_pass()
+      );
+    };
+
+    // if (
+    //   this.getNew_Pass() !== this.getRepeat_password() &&
+    //   this.getOld_Pass() !== "" &&
+    //   this.getNew_Pass() !== ""
+    // ) {
+    //   this.setError_pass(true);
+    //   this.setError_message("Пароли не совпадают. Повторите попытку.");
+    // }
+
+    // if (this.getNew_Pass() === this.getRepeat_password()) {
+    //   this.setError_pass(false);
+    //   this.setError_message("");
+    // }
+
+    if (isValidValues()) {
       q.args = {
         login: this.getLogin(),
         old_password: this.getOld_Pass().trim(),
@@ -507,7 +546,28 @@ export class ModalStorage {
       };
       q.sess_code = sess_code;
       // (await WSocket.get()).send(q);
-      api.fetch(q).catch((e) => console.log("error=>", e)); //fetch-запрос
+      api
+        .fetch(q)
+        .then(() => {
+          if (APP_STORAGE.shared_store.getErrorResponseMess().length > 0) {
+            setTimeout(() => {
+              APP_STORAGE.shared_store.setErrorResponseMess("");
+            }, 2000);
+          } else {
+            this.setSuccessSave_mess(SAVE_SUCCESS);
+            setTimeout(() => {
+              this.setSuccessSave_mess("");
+            }, 2000);
+          }
+        })
+
+        .catch((e) => {
+          console.log("error=>", e);
+          this.setErrorSave_mess(SAVE_ERROR);
+          setTimeout(() => {
+            this.setErrorSave_mess("");
+          });
+        }); //fetch-запрос
     }
   }
 

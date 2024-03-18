@@ -2,14 +2,15 @@ import React, { FC, ChangeEvent, ReactNode } from "react";
 import { TextField } from "@mui/material";
 
 interface Props {
+  id?: string;
   name?: string;
   required?: boolean;
-  label: string;
+  label?: string;
   InputProps?: object;
   InputLabelProps?: object;
   error?: boolean;
   helperText?: string;
-  onChange: (
+  onChange?: (
     event: ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
@@ -17,8 +18,10 @@ interface Props {
   value?: string;
   variant?: "outlined" | "filled" | "standard";
   fullWidth?: boolean;
+  disabled?: boolean;
 }
 export const TextInput: FC<Props> = ({
+  id,
   name,
   required = true,
   label,
@@ -30,9 +33,11 @@ export const TextInput: FC<Props> = ({
   value,
   variant = "outlined",
   fullWidth = true,
+  disabled = false,
 }) => {
   return (
     <TextField
+      id={id}
       required={required}
       sx={{ mt: "14px" }}
       variant={variant}
@@ -45,6 +50,7 @@ export const TextInput: FC<Props> = ({
       helperText={helperText}
       onChange={onChange}
       value={value}
+      disabled={disabled}
     />
   );
 };

@@ -1,7 +1,14 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Box, Typography, TextField, ListItemIcon, Link, TextareaAutosize } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  ListItemIcon,
+  Link,
+  TextareaAutosize,
+} from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
@@ -17,9 +24,8 @@ import Divider from "@mui/material/Divider";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 
-import {EditOrg} from './EditOrg'
-
-
+import { EditOrg } from "./EditOrg";
+import { TextInput } from "../../shared/TextInput";
 
 interface IProps {}
 
@@ -31,39 +37,33 @@ export class Orgs extends React.Component<IProps> {
   }
 
   async OpenModalRegUser(e: any, tittle: string) {
-    
-
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); /// получаем все организации
 
-  APP_STORAGE.reg_user.setTakeModal(e); // идентификатор модального окна
-  APP_STORAGE.reg_user.setTittleModal(tittle); // заголовок модального окна
-  APP_STORAGE.reg_user.setModalRegUser(true);
-  APP_STORAGE.app_bar.setSetOpenAppBar(false);
-  APP_STORAGE.reg_user.setOpenTableUsers(false);
-  APP_STORAGE.reg_user.setOpenTableUsers(false);
- 
-}
+    APP_STORAGE.reg_user.setTakeModal(e); // идентификатор модального окна
+    APP_STORAGE.reg_user.setTittleModal(tittle); // заголовок модального окна
+    APP_STORAGE.reg_user.setModalRegUser(true);
+    APP_STORAGE.app_bar.setSetOpenAppBar(false);
+    APP_STORAGE.reg_user.setOpenTableUsers(false);
+    APP_STORAGE.reg_user.setOpenTableUsers(false);
+  }
   render(): React.ReactNode {
     let table_rows = [];
     if (APP_STORAGE.reg_user.getOrgAll()) {
-      let org = JSON.parse(
-        JSON.stringify(APP_STORAGE.reg_user.getOrgAll())
-      );
+      let org = JSON.parse(JSON.stringify(APP_STORAGE.reg_user.getOrgAll()));
       for (var key in org) {
         let row = org[key];
         if (String(row.id) === APP_STORAGE.reg_user.getNodeidOrg()) {
+          setTimeout(() => {
+            ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
+            APP_STORAGE.org.setFullNameOrg(row.full_name);
+            APP_STORAGE.org.setNameOrg(row.name);
+            APP_STORAGE.org.setInn(row.inn);
+            APP_STORAGE.org.setAddress(row.address);
+            APP_STORAGE.org.setLatitude(row.latitude);
+            APP_STORAGE.org.setLongitude(row.longitude);
+            APP_STORAGE.org.setKeyOrg(row.id);
+          }, 100);
 
-          setTimeout(() => {  ///////////////////////////////////////////Функция для отрисовки графика при нажатии на устройство
-          APP_STORAGE.org.setFullNameOrg(row.full_name);
-          APP_STORAGE.org.setNameOrg(row.name);
-          APP_STORAGE.org.setInn(row.inn);
-          APP_STORAGE.org.setAddress(row.address);
-          APP_STORAGE.org.setLatitude(row.latitude);
-          APP_STORAGE.org.setLongitude(row.longitude);
-          APP_STORAGE.org.setKeyOrg(row.id);
-         }, 100);
-
-          
           table_rows.push(
             <React.Fragment key={String(row.id)}>
               <Box id="long-button" className="grid__card_middle">
@@ -81,7 +81,7 @@ export class Orgs extends React.Component<IProps> {
                           aria-expanded={open ? "true" : undefined}
                           aria-haspopup="true"
                         >
-                        <MoreVertIcon />
+                          <MoreVertIcon />
                         </IconButton>
                         <Menu
                           id="long-menu"
@@ -95,9 +95,9 @@ export class Orgs extends React.Component<IProps> {
                           }}
                         >
                           <MenuItem
-                          onClick={() => {
-                            APP_STORAGE.org.setModalEditOrg(true);
-                          }}
+                            onClick={() => {
+                              APP_STORAGE.org.setModalEditOrg(true);
+                            }}
                           >
                             <ListItemIcon>
                               <ModeEditRoundedIcon fontSize="small" />
@@ -111,105 +111,51 @@ export class Orgs extends React.Component<IProps> {
                   <Box className="wrapper_user_card">
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       {" "}
-                     Полное наименование - 
+                      Полное наименование -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.full_name || ""}
-                    />
+                    <TextInput value={row.full_name || ""} />
 
-                  <Typography className="box_info" sx={{ color: "#000" }}>
-                  {" "}
-                  Наименование -{" "}
-                  </Typography>
+                    <Typography className="box_info" sx={{ color: "#000" }}>
+                      {" "}
+                      Наименование -{" "}
+                    </Typography>
 
-                  <TextField
-                  className="box_info"
-                  fullWidth
-                  inputProps={{ style: { fontSize: 12 } }}
-                  InputLabelProps={{ style: { fontSize: 12 } }}
-                  variant="outlined"
-                  margin="normal"
-                  size="small"
-                  value={row.name || ""}
-                  />
+                    <TextInput value={row.name || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       ИНН -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.inn || ""}
-                    />
+                    <TextInput value={row.inn || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       Адрес -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.address || ""}
-                    />
+                    <TextInput value={row.address || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       Долгота -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.longitude || ""}
-                    />
+                    <TextInput value={row.longitude || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       Широта -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.latitude || ""}
-                    /> 
+                    <TextInput value={row.latitude || ""} />
                   </Box>
 
-                  <Divider  sx ={{mt: '12px'}}/>
+                  <Divider sx={{ mt: "12px" }} />
                   <TextareaAutosize
-          className="info"
-          aria-label="minimum height"
-          minRows={4}
-          style={{ width: "100%" , marginTop: '12px'}}
-          value={row.info || ""}
-        />
+                    className="info"
+                    aria-label="minimum height"
+                    minRows={4}
+                    style={{ width: "100%", marginTop: "12px" }}
+                    value={row.info || ""}
+                  />
                 </Box>
               </Box>
             </React.Fragment>
@@ -218,32 +164,37 @@ export class Orgs extends React.Component<IProps> {
       }
     }
     return (
-      <React.Fragment>
+      <>
         <Typography sx={{ fontWeight: "600", color: "#111111", mb: "8px" }}>
           {" "}
           Подробная информация{" "}
         </Typography>
 
-     
         {table_rows}
         <EditOrg />
 
         <Box
-              sx={{
-                borderRadius: "4px",
-                width: '100%',
-                background:'#E3EDFF',
-                p:2
-                
-              }}
-              onClick={() => this.OpenModalRegUser(2, "Добавить организацию")}
-            >
-              <Typography sx={{ display: "flex", color:'#266BF1', justifyContent: 'center' }}>
-                {" "}
-                Добавить организацию
-              </Typography>
-            </Box>
-      </React.Fragment>
+          sx={{
+            borderRadius: "4px",
+            width: "100%",
+            background: "#E3EDFF",
+            p: 2,
+            cursor: "pointer",
+            transition: "0.3s",
+            ":hover": {
+              opacity: "0.6",
+            },
+          }}
+          onClick={() => this.OpenModalRegUser(2, "Добавить организацию")}
+        >
+          <Typography
+            sx={{ display: "flex", color: "#266BF1", justifyContent: "center" }}
+          >
+            {" "}
+            Добавить организацию
+          </Typography>
+        </Box>
+      </>
     );
   }
 }

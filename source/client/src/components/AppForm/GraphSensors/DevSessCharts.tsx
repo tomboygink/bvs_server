@@ -13,9 +13,9 @@ import {
   ReferenceLine,
 } from "recharts";
 import { toJS } from "mobx";
-import { Box , Divider  } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { Charts } from "./SvgWell";
-import { CustomTooltip, CustomizedLabel, customizedGroupTick } from "./Recharts";
+import { CustomTooltip, customizedGroupTick } from "./Recharts";
 
 interface IProps {}
 
@@ -67,22 +67,23 @@ export class DevSessCharts extends React.Component<IProps> {
 
       return (
         <Box
-        className="container_charts"
-        sx={{
-          background: "#fff",
-          borderTopLeftRadius: "48px",
-          border: "1px solid #eee"
-        }}
-      >
-  <Charts/>
+          className="container_charts"
+          sx={{
+            background: "#fff",
+            borderTopLeftRadius: "48px",
+            border: "1px solid #eee",
+          }}
+        >
+          <Charts />
 
           <ResponsiveContainer className="item-2" width="100%">
             <LineChart
               className="LineChart"
               layout="vertical"
-              data={toJS(APP_STORAGE.sensors.getdataCharts())}>
+              data={toJS(APP_STORAGE.sensors.getdataCharts())}
+            >
               <CartesianGrid strokeDasharray="2 2" />
-              <XAxis 
+              <XAxis
                 type="number"
                 strokeWidth={"0.1mm"}
                 stroke="rgb(23 21 21)"
@@ -101,6 +102,7 @@ export class DevSessCharts extends React.Component<IProps> {
                 tick={customizedGroupTick}
               />
               {/* <YAxis data ={toJS(APP_STORAGE.sensors.getSessFirstLastChartsCharts())}  type="category"  stroke="#266BF1"  tickCount={60}   />  */}
+
               <Tooltip content={<CustomTooltip />} />
               {/* <Legend /> */}
 
@@ -113,17 +115,18 @@ export class DevSessCharts extends React.Component<IProps> {
                 {" "}
               </Line>
               <Line
-                data={toJS(APP_STORAGE.sensors.getSess_second())}
-                strokeWidth={"2"}
-                dataKey="data_s"
-                stroke="#9566FB"
-              />
-              <Line
                 data={toJS(APP_STORAGE.sensors.getSess_first())}
                 strokeWidth={"2"}
                 dataKey="data_f"
                 stroke="#00B394"
               />
+              <Line
+                data={toJS(APP_STORAGE.sensors.getSess_second())}
+                strokeWidth={"2"}
+                dataKey="data_s"
+                stroke="#9566FB"
+              />
+
               {/* <Line dataKey="град." stroke="#82ca9d" > <LabelList content={<CustomizedLabel />} /> </Line> */}
             </LineChart>
           </ResponsiveContainer>
@@ -182,12 +185,12 @@ export class DevSessCharts extends React.Component<IProps> {
             sx={{
               background: "#fff",
               borderTopLeftRadius: "48px",
-              border: "1px solid #eee"
+              border: "1px solid #eee",
             }}
           >
- <Charts/>
+            <Charts />
 
- {/* < Box className="item-3" /> */}
+            {/* < Box className="item-3" /> */}
 
             <ResponsiveContainer className="item-2" width="100%">
               <LineChart
@@ -200,13 +203,12 @@ export class DevSessCharts extends React.Component<IProps> {
                 //   bottom: 5,
                 // }}
               >
-              
                 <XAxis
                   type="number"
                   strokeWidth={"0.1mm"}
                   stroke="rgb(255 255 255 / 0%)"
                   tickCount={27}
-                  tick={{ fill: "#7F00FF", fontSize: "14px" }} 
+                  tick={{ fill: "#7F00FF", fontSize: "14px" }}
                   domain={[-15, 15]}
                 />
 
@@ -223,18 +225,11 @@ export class DevSessCharts extends React.Component<IProps> {
                 />
 
                 <Tooltip content={<CustomTooltip />} />
-                <ReferenceLine y={0}  stroke="#8B4513" strokeDasharray="4 4" />
+                {/* <Tooltip /> */}
+                <ReferenceLine y={0} stroke="#8B4513" strokeDasharray="4 4" />
                 {/*
             // <ReferenceLine className="y7676" x="-15" stroke="red" /> */}
                 {/* <Customized component={customizedGroupTick} /> */}
-
-                <Line
-                  data={toJS(APP_STORAGE.sensors.getSess_second())}
-                  strokeWidth={"3"}
-                  dataKey="data_s"
-                  stroke="#9566FB"
-                  // label={CustomizedLabel}
-                />
                 <Line
                   data={toJS(APP_STORAGE.sensors.getSess_first())}
                   strokeWidth={"2"}
@@ -242,6 +237,14 @@ export class DevSessCharts extends React.Component<IProps> {
                   stroke="#00B394"
                   // label ={CustomizedLabel}
                 />
+                <Line
+                  data={toJS(APP_STORAGE.sensors.getSess_second())}
+                  strokeWidth={"3"}
+                  dataKey="data_s"
+                  stroke="#9566FB"
+                  // label={CustomizedLabel}
+                />
+
                 <CartesianGrid strokeDasharray="3 3" opacity={50} />
               </LineChart>
             </ResponsiveContainer>
@@ -256,14 +259,14 @@ export class DevSessCharts extends React.Component<IProps> {
     ) {
       return (
         <Box
-            className="container_charts"
-            sx={{
-              background: "#fff",
-              borderTopLeftRadius: "48px",
-              border: "1px solid #eee"
-            }}
-          >
-    <Charts/>
+          className="container_charts"
+          sx={{
+            background: "#fff",
+            borderTopLeftRadius: "48px",
+            border: "1px solid #eee",
+          }}
+        >
+          <Charts />
 
           <ResponsiveContainer className="item-2" width="100%">
             <LineChart
@@ -290,8 +293,6 @@ export class DevSessCharts extends React.Component<IProps> {
                 stroke="rgb(255 255 255 / 0%)"
                 tick={customizedGroupTick}
               />
-
-              <Tooltip content={<CustomTooltip />} />
 
               <Line strokeWidth={"1"} dataKey="data_s" stroke="#9566FB" />
               <Line strokeWidth={"2"} dataKey="data_f" stroke="#00B394" />

@@ -26,6 +26,8 @@ import { APP_STORAGE } from "../../../storage/AppStorage";
 import IdInput from "../../shared/IdInput";
 import LatInput from "../../shared/LatInput";
 import LongInput from "../../shared/LongInput";
+import { TextInput } from "../../shared/TextInput";
+import { CloseButton } from "../../shared/CloseButton";
 
 interface IProps {}
 
@@ -54,125 +56,103 @@ export class EditOrg extends React.Component<IProps> {
           <Box sx={{ p: 2 }}>
             <Box
               className="ModalTitle"
-              sx={{ display: "flex", justifyContent: "space-between" }}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
               <Typography>Изменить данные организации </Typography>
 
-              <CloseIcon
-                sx={{ color: "#1976D2" }}
-                onClick={() => {
-                  APP_STORAGE.org.setModalEditOrg(false);
-                }}
+              <CloseButton
+                onClose={() => APP_STORAGE.org.setModalEditOrg(false)}
               />
             </Box>
             <Divider sx={{ marginBottom: "20px" }} />
 
-            <TextField
-              inputProps={{ style: { fontSize: 12 } }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              error={APP_STORAGE.org.getErrorFullNameOrg()}
-              helperText={APP_STORAGE.org.getHelpTextFullNameOrg()}
+            <TextInput
               label="Полное наименование"
-              autoFocus
-              size="small"
+              error={
+                APP_STORAGE.org.getErrorFullNameOrg() ||
+                APP_STORAGE.org.getErrorFullNameDouble()
+              }
+              helperText={
+                APP_STORAGE.org.getHelpTextFullNameOrg() ||
+                APP_STORAGE.org.getHelpTextFullNameDouble()
+              }
               onChange={(e) => {
                 APP_STORAGE.org.setFullNameOrg(e.target.value);
               }}
               value={APP_STORAGE.org.getFullNameOrg() || ""}
             />
 
-            <TextField
-              inputProps={{ style: { fontSize: 12 } }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              error={APP_STORAGE.org.getErrorNameOrg()}
-              helperText={APP_STORAGE.org.getHelpTextNameOrg()}
+            <TextInput
               label="Наименование"
-              size="small"
+              error={
+                APP_STORAGE.org.getErrorNameOrg() ||
+                APP_STORAGE.org.getErrorNameDouble()
+              }
+              helperText={
+                APP_STORAGE.org.getHelpTextNameOrg() ||
+                APP_STORAGE.org.getHelpTextNameDouble()
+              }
               onChange={(e) => {
                 APP_STORAGE.org.setNameOrg(e.target.value);
               }}
               value={APP_STORAGE.org.getNameOrg() || ""}
             />
-            <TextField
+            <TextInput
+              label="ИНН"
               InputProps={{
                 inputComponent: IdInput as any,
                 style: { fontSize: 12 },
               }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              label="ИНН"
-              size="small"
-              error={APP_STORAGE.org.getErrorInn()}
-              helperText={APP_STORAGE.org.getHelpTextInn()}
+              error={
+                APP_STORAGE.org.getErrorInn() ||
+                APP_STORAGE.org.getErrorInnDouble()
+              }
+              helperText={
+                APP_STORAGE.org.getHelpTextInn() ||
+                APP_STORAGE.org.getHelpTextInnDouble()
+              }
               onChange={(e) => {
                 APP_STORAGE.org.setInn(e.target.value);
               }}
               value={APP_STORAGE.org.getInn() || ""}
             />
 
-            <TextField
-              inputProps={{ style: { fontSize: 12 } }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
+            <TextInput
+              label="Адрес"
               error={APP_STORAGE.org.getErrorAddress()}
               helperText={APP_STORAGE.org.getHelpTextAddress()}
-              label="Адрес"
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.org.setAddress(e.target.value);
               }}
               value={APP_STORAGE.org.getAddress() || ""}
             />
 
-            <TextField
+            <TextInput
+              label="Широта"
               InputProps={{
                 inputComponent: LatInput as any,
                 style: { fontSize: 12 },
               }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
               error={APP_STORAGE.org.getErrorLatitude()}
               helperText={APP_STORAGE.org.getHelpTextLatitude()}
-              label="Широта"
-              autoComplete="Широта"
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.org.setLatitude(e.target.value);
               }}
               value={APP_STORAGE.org.getLatitude() || ""}
             />
 
-            <TextField
+            <TextInput
+              label="Долгота"
               InputProps={{
                 inputComponent: LongInput as any,
                 style: { fontSize: 12 },
               }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
-              margin="normal"
-              fullWidth
               error={APP_STORAGE.org.getErrorLongitude()}
               helperText={APP_STORAGE.org.getHelpTextLongitude()}
-              required
-              label="Долгота"
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.org.setLongitude(e.target.value);
               }}

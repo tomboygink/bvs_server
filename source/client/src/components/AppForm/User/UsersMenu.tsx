@@ -1,7 +1,4 @@
 import * as React from "react";
-// import TreeItem from "@mui/lab/TreeItem";
-
-// import TreeView from "@mui/lab/TreeView";
 
 import { TreeView, TreeItem } from "@mui/x-tree-view";
 
@@ -17,9 +14,8 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+
 import SearchIcon from "@mui/icons-material/Search";
-import DirectionsIcon from "@mui/icons-material/Directions";
 
 interface IProps {}
 
@@ -90,7 +86,7 @@ export class UsersMenu extends React.Component<IProps> {
     }
 
     return (
-      <React.Fragment>
+      <Box>
         <Typography sx={{ fontWeight: "600", color: "#111111", mb: "8px" }}>
           {" "}
           Список пользователей{" "}
@@ -136,7 +132,7 @@ export class UsersMenu extends React.Component<IProps> {
             {table_rows}
           </TreeView>
         </Box>
-      </React.Fragment>
+      </Box>
     );
   }
 }

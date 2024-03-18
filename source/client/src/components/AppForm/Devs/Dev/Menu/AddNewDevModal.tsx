@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-
+import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import {
   TextField,
   Box,
@@ -15,25 +15,23 @@ import {
   Select,
   Alert,
   Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
 } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
-import { APP_STORAGE } from "../../../../../storage/AppStorage";
-import SaveIcon from "@mui/icons-material/Save";
-
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import { TableCell } from "@mui/material";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-
-import Paper from "@mui/material/Paper";
 
 import SensorsIcon from "@mui/icons-material/Sensors";
 
 import { ModalSensors } from "./ModalSensors";
-
-import { TDSensor } from "../../../../../storage/components/Devs/DevEntityes";
+import { TextInput } from "../../../../shared/TextInput";
+import { CloseButton } from "../../../../shared/CloseButton";
+import LatInput from "../../../../shared/LatInput";
+import LongInput from "../../../../shared/LongInput";
 
 interface IProps {}
 
@@ -157,12 +155,8 @@ export class AddNewDevModal extends React.Component<IProps> {
               }}
             >
               <Typography>Добавить устройство</Typography>
-
-              <CloseIcon
-                sx={{ color: "#1976D2" }}
-                onClick={() => {
-                  APP_STORAGE.devs.setOpenModal(false);
-                }}
+              <CloseButton
+                onClose={() => APP_STORAGE.devs.setOpenModal(false)}
               />
             </Box>
 
@@ -170,69 +164,49 @@ export class AddNewDevModal extends React.Component<IProps> {
 
             {group_devs}
 
-            <TextField
-              sx={{ mt: "14px" }}
-              inputProps={{ style: { fontSize: 12 } }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
+            <TextInput
               error={APP_STORAGE.devs.getNumberError()}
               helperText={APP_STORAGE.devs.getNumberError_mess()}
-              fullWidth
-              required
               label="Номер устройства"
-              autoFocus
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.devs.setNumber(e.target.value);
               }}
               value={APP_STORAGE.devs.getNumber()}
             />
 
-            <TextField
-              sx={{ mt: "14px" }}
-              inputProps={{ style: { fontSize: 12 } }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
+            <TextInput
               error={APP_STORAGE.devs.getNameError()}
               helperText={APP_STORAGE.devs.getNameError_mess()}
-              fullWidth
-              required
               label="Название устройства "
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.devs.setName(e.target.value);
               }}
               value={APP_STORAGE.devs.getName()}
             />
 
-            <TextField
-              sx={{ mt: "14px" }}
-              inputProps={{ style: { fontSize: 12 } }}
-              InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
+            <TextInput
+              InputProps={{
+                inputComponent: LatInput as any,
+                style: { fontSize: 12 },
+              }}
               error={APP_STORAGE.devs.getLongitudeError()}
               helperText={APP_STORAGE.devs.getLongitudeError_mess()}
-              fullWidth
-              required
               label="Долгота"
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.devs.setLongitude(e.target.value);
               }}
               value={APP_STORAGE.devs.getLongitude()}
             />
 
-            <TextField
-              sx={{ mt: "14px" }}
-              inputProps={{ style: { fontSize: 12 } }}
+            <TextInput
+              InputProps={{
+                inputComponent: LongInput as any,
+                style: { fontSize: 12 },
+              }}
               InputLabelProps={{ style: { fontSize: 12 } }}
-              variant="outlined"
               error={APP_STORAGE.devs.getLatitudeError()}
               helperText={APP_STORAGE.devs.getLatitudeError_mess()}
-              fullWidth
-              required
               label="Широта"
-              size="small"
               onChange={(e) => {
                 APP_STORAGE.devs.setLatitude(e.target.value);
               }}

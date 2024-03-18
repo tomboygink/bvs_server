@@ -1,41 +1,33 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { toJS } from "mobx";
 
 import {
   Box,
   Typography,
-  TextField,
   ListItemIcon,
   Link,
   TextareaAutosize,
+  IconButton,
+  Menu,
+  MenuItem,
+  Divider,
 } from "@mui/material";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
 
-import { TDevsGroup } from "../../../../storage/components/Devs/DevEntityes";
-import { TDGroup } from "../../../../storage/components/Devs/DevEntityes";
-
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
-import Divider from "@mui/material/Divider";
-
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
-
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
-
 import DirectionsIcon from "@mui/icons-material/Directions";
+import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
+import PhotoSizeSelectLargeIcon from "@mui/icons-material/PhotoSizeSelectLarge";
 
 import { CONFIG } from "../../../../../../xcore/config";
 
-import MapStations from "./Map/MapStations";
-
-import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
-import PhotoSizeSelectLargeIcon from "@mui/icons-material/PhotoSizeSelectLarge";
+import { TDevsGroup } from "../../../../storage/components/Devs/DevEntityes";
+import { TDGroup } from "../../../../storage/components/Devs/DevEntityes";
+import { TextInput } from "../../../shared/TextInput";
 
 interface IProps {}
 
@@ -124,7 +116,6 @@ export class DevLocation extends React.Component<IProps> {
         APP_STORAGE.devs_groups.setLongitude(gr.longitude);
         APP_STORAGE.devs.setCheckboxEd(gr.deleted);
         APP_STORAGE.devs.setInfo(gr.g_info);
-
         APP_STORAGE.devs_groups.setOpenModalMoveDevsGr(true);
       }
     }
@@ -133,6 +124,7 @@ export class DevLocation extends React.Component<IProps> {
 
   drawDevGroup(dgrs: TDevsGroup[]): React.ReactNode[] {
     let parent: React.ReactNode[] = new Array();
+
     for (var ii in dgrs) {
       var dgr: TDevsGroup = dgrs[ii];
       var gr: TDGroup = dgr.group;
@@ -143,7 +135,13 @@ export class DevLocation extends React.Component<IProps> {
       /////////////////////////////////////////////////////////////////////////////// Если есть дочерние строки
       parent.push(
         <React.Fragment key={"_gr_id_key_" + gr.id}>
-          <Box sx={{ display: "flex", width: "100%", flexDirection: "column" }}>
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              flexDirection: "column",
+            }}
+          >
             <Box id={String(gr.id)}>{childs}</Box>
           </Box>
         </React.Fragment>
@@ -268,31 +266,14 @@ export class DevLocation extends React.Component<IProps> {
                     Место расположения -
                   </Typography>
 
-                  <TextField
-                    disabled={true}
-                    className="box_info"
-                    fullWidth
-                    inputProps={{ style: { fontSize: 12 } }}
-                    InputLabelProps={{ style: { fontSize: 12 } }}
-                    variant="outlined"
-                    margin="normal"
-                    size="small"
-                    value={gr.g_name || ""}
-                  />
+                  <TextInput disabled={true} value={gr.g_name || ""} />
 
                   <Typography className="box_info" sx={{ color: "#000" }}>
                     Долгота -
                   </Typography>
 
-                  <TextField
+                  <TextInput
                     disabled={true}
-                    className="box_info"
-                    fullWidth
-                    inputProps={{ style: { fontSize: 12 } }}
-                    InputLabelProps={{ style: { fontSize: 12 } }}
-                    variant="outlined"
-                    margin="normal"
-                    size="small"
                     value={gr.longitude.trim() || ""}
                   />
 
@@ -300,20 +281,15 @@ export class DevLocation extends React.Component<IProps> {
                     Широта -
                   </Typography>
 
-                  <TextField
-                    disabled={true}
-                    className="box_info"
-                    fullWidth
-                    inputProps={{ style: { fontSize: 12 } }}
-                    InputLabelProps={{ style: { fontSize: 12 } }}
-                    variant="outlined"
-                    margin="normal"
-                    size="small"
-                    value={gr.latitude.trim() || ""}
-                  />
+                  <TextInput disabled={true} value={gr.latitude.trim() || ""} />
                 </Box>
 
                 <Link
+                  underline="hover"
+                  href={`http://${CONFIG.host}:${
+                    CONFIG.port
+                  }/show-map?lng=${latitude.trim()}&lat=${longitude.trim()}`}
+                  target="_blank"
                   sx={{
                     color: "#808080",
                     fontSize: "1rem",
@@ -323,20 +299,7 @@ export class DevLocation extends React.Component<IProps> {
                   }}
                 >
                   Показать на карте
-                  <IconButton
-                    sx={{ color: "#808080" }}
-                    aria-label="directions"
-                    onClick={() => {
-                      window.open(
-                        `http://${CONFIG.host}:${CONFIG.port}/show-map?lng=` +
-                          latitude.trim() +
-                          "&lat=" +
-                          longitude.trim()
-                      );
-                    }}
-                  >
-                    <DirectionsIcon />
-                  </IconButton>
+                  <DirectionsIcon />
                 </Link>
 
                 <Divider sx={{ m: "2px" }} />
@@ -347,10 +310,6 @@ export class DevLocation extends React.Component<IProps> {
                   style={{ width: "100%", marginTop: "12px" }}
                   value={gr.g_info || ""}
                 />
-
-                {/* <Box sx={{ height: "400px", width: "100%" }}>
-                  <MapStations longitude={longitude} latitude={latitude} />
-                </Box> */}
               </Box>
               {APP_STORAGE.importdevs.getSvg().length && (
                 <>
@@ -452,9 +411,9 @@ export class DevLocation extends React.Component<IProps> {
                           </MenuItem>
 
                           <MenuItem
-                            onClick={() =>
-                              APP_STORAGE.importdevs.setOpenModalSvg(true)
-                            }
+                            onClick={() => {
+                              APP_STORAGE.importdevs.setOpenModalSvg(true);
+                            }}
                           >
                             <ListItemIcon>
                               <PhotoSizeSelectLargeIcon fontSize="small" />
@@ -485,49 +444,26 @@ export class DevLocation extends React.Component<IProps> {
                     Место расположения -
                   </Typography>
 
-                  <TextField
-                    className="box_info"
-                    fullWidth
-                    inputProps={{ style: { fontSize: 12 } }}
-                    InputLabelProps={{ style: { fontSize: 12 } }}
-                    variant="outlined"
-                    margin="normal"
-                    size="small"
-                    value={gr.g_name || ""}
-                  />
+                  <TextInput value={gr.g_name || ""} />
 
                   <Typography className="box_info" sx={{ color: "#000" }}>
                     Долгота -
                   </Typography>
 
-                  <TextField
-                    className="box_info"
-                    fullWidth
-                    inputProps={{ style: { fontSize: 12 } }}
-                    InputLabelProps={{ style: { fontSize: 12 } }}
-                    variant="outlined"
-                    margin="normal"
-                    size="small"
-                    value={gr.longitude.trim() || ""}
-                  />
+                  <TextInput value={gr.longitude.trim() || ""} />
 
                   <Typography className="box_info" sx={{ color: "#000" }}>
                     Широта -
                   </Typography>
 
-                  <TextField
-                    className="box_info"
-                    fullWidth
-                    inputProps={{ style: { fontSize: 12 } }}
-                    InputLabelProps={{ style: { fontSize: 12 } }}
-                    variant="outlined"
-                    margin="normal"
-                    size="small"
-                    value={gr.latitude.trim() || ""}
-                  />
+                  <TextInput value={gr.latitude.trim() || ""} />
                 </Box>
-
                 <Link
+                  underline="hover"
+                  href={`http://${CONFIG.host}:${
+                    CONFIG.port
+                  }/show-map?lng=${latitude.trim()}&lat=${longitude.trim()}`}
+                  target="_blank"
                   sx={{
                     fontSize: "1rem",
                     display: "flex",
@@ -536,20 +472,7 @@ export class DevLocation extends React.Component<IProps> {
                   }}
                 >
                   Показать на карте
-                  <IconButton
-                    color="primary"
-                    aria-label="directions"
-                    onClick={() => {
-                      window.open(
-                        `http://${CONFIG.host}:${CONFIG.port}/show-map?lat=` +
-                          latitude.trim() +
-                          "&lng=" +
-                          longitude.trim()
-                      );
-                    }}
-                  >
-                    <DirectionsIcon />
-                  </IconButton>
+                  <DirectionsIcon />
                 </Link>
 
                 <Divider sx={{ m: "2px" }} />
@@ -562,14 +485,9 @@ export class DevLocation extends React.Component<IProps> {
                     value={gr.g_info || ""}
                   />
                 )}
-                <Box></Box>
-
-                {/* <Box sx={{ height: "400px", width: "100%", mt: "8px" }}>
-                  <MapStations longitude={longitude} latitude={latitude} />
-                </Box> */}
               </Box>
 
-              {APP_STORAGE.importdevs.getSvg().length && (
+              {APP_STORAGE.importdevs.getSvg().length > 0 && (
                 <>
                   <Typography
                     sx={{ fontWeight: "600", color: "#0D1C52", mb: "12px" }}
@@ -581,6 +499,7 @@ export class DevLocation extends React.Component<IProps> {
                     className="svg-container"
                     sx={{
                       borderRadius: "4px",
+
                       background: "#fff",
                       display: "flex",
                       padding: "8px",
@@ -605,6 +524,7 @@ export class DevLocation extends React.Component<IProps> {
   drawDevLocation(): React.ReactNode {
     let DevGr: any;
     DevGr = APP_STORAGE.devs_groups.getDevsGroups();
+
     return this.drawDevGroup(DevGr);
   }
 

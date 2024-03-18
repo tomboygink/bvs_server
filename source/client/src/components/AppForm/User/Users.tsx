@@ -19,8 +19,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Divider from "@mui/material/Divider";
 
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
-import { EditUser } from "../AppBarPanel/LeftPanel/EditUsers/EditUser.1";
-import { userAPI } from "../../../storage/services/userApi";
+import { EditUser } from "../AppBarPanel/LeftPanel/EditUsers/EditUser";
+import { TextInput } from "../../shared/TextInput";
 
 interface IProps {}
 
@@ -104,106 +104,43 @@ export class Users extends React.Component<IProps> {
                       Фамилия -{" "}
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.u_family || ""}
-                    />
+                    <TextInput value={row.u_family || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       Имя -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.u_name || ""}
-                    />
+                    <TextInput value={row.u_name || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       Отчество -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.u_father || ""}
-                    />
+                    <TextInput value={row.u_father || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       email -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.u_email || ""}
-                    />
+                    <TextInput value={row.u_email || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       Телефон -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.u_telephone || ""}
-                    />
+                    <TextInput value={row.u_telephone || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       Логин -
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value={row.u_login || ""}
-                    />
+                    <TextInput value={row.u_login || ""} />
 
                     <Typography className="box_info" sx={{ color: "#000" }}>
                       Состояние записи
                     </Typography>
 
-                    <TextField
-                      className="box_info"
-                      fullWidth
-                      inputProps={{ style: { fontSize: 12 } }}
-                      InputLabelProps={{ style: { fontSize: 12 } }}
-                      variant="outlined"
-                      margin="normal"
-                      size="small"
-                      value="Действующая"
-                    />
+                    <TextInput value="Действующая" />
                   </Box>
 
                   <Divider sx={{ mt: "12px" }} />
@@ -223,7 +160,7 @@ export class Users extends React.Component<IProps> {
       }
     }
     return (
-      <React.Fragment>
+      <Box>
         <Typography sx={{ fontWeight: "600", color: "#111111", mb: "8px" }}>
           {" "}
           Подробная информация{" "}
@@ -236,6 +173,11 @@ export class Users extends React.Component<IProps> {
             width: "100%",
             background: "#E3EDFF",
             p: 2,
+            cursor: "pointer",
+            transition: "0.3s",
+            ":hover": {
+              opacity: "0.6",
+            },
           }}
           onClick={() => this.OpenModalRegUser(1, "Добавить пользователя")}
         >
@@ -246,7 +188,7 @@ export class Users extends React.Component<IProps> {
             Добавить пользователя
           </Typography>
         </Box>
-      </React.Fragment>
+      </Box>
     );
   }
 }

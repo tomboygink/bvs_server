@@ -1,28 +1,35 @@
-import 'leaflet.markercluster';
-import {createPathComponent} from '@react-leaflet/core';
-import L from 'leaflet';
+import "leaflet.markercluster";
+import { createPathComponent } from "@react-leaflet/core";
+import L from "leaflet";
 
-const MarkerClusterGroup = createPathComponent(({children: _c, ...props}, ctx) => {
-  const clusterProps: Record<string, any> = {};
-  const clusterEvents: Record < string, any >= {};
+//ToDo Компонент не используется - удалить?
 
-  // Splitting props and events to different objects
-  Object.entries(props).forEach(([propName, prop]) => propName.startsWith('on') ? (clusterEvents[propName] = prop)
-                                                                                : (clusterProps[propName] = prop));
+// const MarkerClusterGroup = createPathComponent(
+//   ({ children: _c, ...props }, ctx) => {
+//     const clusterProps: Record<string, any> = {};
+//     const clusterEvents: Record<string, any> = {};
 
-  // Creating markerClusterGroup Leaflet element
-  const markerClusterGroup = L.markerClusterGroup(clusterProps);
+//     // Splitting props and events to different objects
+//     Object.entries(props).forEach(([propName, prop]) =>
+//       propName.startsWith("on")
+//         ? (clusterEvents[propName] = prop)
+//         : (clusterProps[propName] = prop)
+//     );
 
-  // Initializing event listeners
-  Object.entries(clusterEvents).forEach(([eventAsProp, callback]) => {
-    const clusterEvent = `cluster${eventAsProp.substring(2).toLowerCase()}`;
-    markerClusterGroup.on(clusterEvent, callback);
-  });
+//     // Creating markerClusterGroup Leaflet element
+//     const markerClusterGroup = L.markerClusterGroup(clusterProps);
 
-  return {
-    instance: markerClusterGroup,
-    context: {...ctx, layerContainer: markerClusterGroup},
-  };
-});
+//     // Initializing event listeners
+//     Object.entries(clusterEvents).forEach(([eventAsProp, callback]) => {
+//       const clusterEvent = `cluster${eventAsProp.substring(2).toLowerCase()}`;
+//       markerClusterGroup.on(clusterEvent, callback);
+//     });
 
-export default MarkerClusterGroup;
+//     return {
+//       instance: markerClusterGroup,
+//       context: { ...ctx, layerContainer: markerClusterGroup },
+//     };
+//   }
+// );
+
+// export default MarkerClusterGroup;

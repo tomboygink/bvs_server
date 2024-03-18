@@ -18,6 +18,7 @@ import {
   DOUBLE_NAME_ORG_ERROR,
   DOUBLE_INN_ERROR,
   INVALID_INN_ERROR,
+  INVALID_TELEPHONE_ERROR,
 } from "../../../utils/consts";
 import {
   regexp_email,
@@ -585,7 +586,7 @@ export class ModalLeftPanel {
   }
 
   @action setTextHelpLatitude(val: string) {
-    this.texthelp_latitude;
+    this.texthelp_latitude = val;
   }
 
   @computed getTextHelpLatitude(): string {
@@ -769,6 +770,14 @@ export class ModalLeftPanel {
       this.setTextHelpTelephone(EMPTY_FIELD_ERROR);
     }
 
+    if (telephone.length === 12) {
+      this.setErrorTelephone(false);
+      this.setTextHelpTelephone("");
+    } else {
+      this.setErrorTelephone(true);
+      this.setTextHelpTelephone(INVALID_TELEPHONE_ERROR);
+    }
+
     if (this.getKeyOrg()) {
       this.setErrorOrg(false);
       this.setTextHelpOrg("");
@@ -835,103 +844,13 @@ export class ModalLeftPanel {
       );
     };
 
-    // if (this.getFamily() === "") {
-    //   this.setErrorFamily(true);
-    //   this.setTextHelpFamily(EMPTY_FIELD_ERROR);
-    // } else {
-    //   this.setErrorFamily(false);
-    //   this.setTextHelpFamily("");
-    // }
-
-    // if (this.getName() === "") {
-    //   this.setErrorName(true);
-    //   this.setTextHelpName(EMPTY_FIELD_ERROR);
-    // } else {
-    //   this.setErrorName(false);
-    //   this.setTextHelpName("");
-    // }
-
-    // if (email === null) {
-    //   this.setErrorEmail(true);
-    //   this.setTextHelpEmail(INVALID_EMAIL_ERROR);
-    // } else {
-    //   this.setErrorEmail(false);
-    //   this.setTextHelpEmail("");
-    // }
-
-    // if (this.getTelephone() === "") {
-    //   this.setErrorTelephone(true);
-    //   this.setTextHelpTelephone(EMPTY_FIELD_ERROR);
-    //   //this.setTextHelpTelephone("Введите корректный номер телефона");
-    // } else {
-    //   this.setErrorTelephone(false);
-    //   this.setTextHelpTelephone("");
-    // }
-
-    // if (telephone === null) {
-    //   this.setErrorTelephone(true);
-    //   this.setTextHelpTelephone("Введите корректный номер телефона");
-    // } else {
-    //   this.setErrorTelephone(false);
-    //   this.setTextHelpTelephone("");
-    // }
-
-    // if (this.getLogin() === "") {
-    //   this.setErrorLogin(true);
-    //   this.setTextHelpLogin(EMPTY_FIELD_ERROR);
-    // } else {
-    //   this.setErrorLogin(false);
-    //   this.setTextHelpLogin("");
-    // }
-    // if (this.getPassword() === "") {
-    //   this.setErrorPassword(true);
-    //   this.setTextHelpPassword(EMPTY_FIELD_ERROR);
-    // } else if (this.getPassword().length < 6) {
-    //   this.setErrorPassword(true);
-    //   this.setTextHelpPassword(INVALID_PASSWORD_ERROR);
-    // } else {
-    //   this.setErrorPassword(false);
-    //   this.setTextHelpPassword("");
-    // }
-
-    // if (this.getRepeatPassword() === "") {
-    //   this.setErrorRepeatPassword(true);
-    //   this.setTextHelpRepeatPassword(EMPTY_FIELD_ERROR);
-    // } else if (
-    //   this.getPassword() !== "" &&
-    //   this.getPassword() !== this.getRepeatPassword()
-    // ) {
-    //   this.setErrorRepeatPassword(true);
-    //   this.setTextHelpRepeatPassword(PASSWORDS_NOT_MATCH);
-    // } else {
-    //   this.setErrorRepeatPassword(false);
-    //   this.setTextHelpRepeatPassword("");
-    //   this.setErrorPassword(false);
-    //   this.setTextHelpPassword("");
-    // }
-    if (
-      isValidValues()
-      // this.getFamily() &&
-      // email !== null &&
-      // // telephone !== null &&
-      // this.getTelephone() &&
-      // this.getPassword() === this.getRepeatPassword() &&
-      // this.getPassword().length >= 6 &&
-      // this.getName() &&
-      // this.getEmail() &&
-      // this.getTelephone() &&
-      // this.getLogin() &&
-      // this.getPassword() &&
-      // this.getRepeatPassword() &&
-      // user_login !== this.getLogin()
-    ) {
+    if (isValidValues()) {
       //// Отправляем данные с формы на сервер
       q.args = {
         family: this.getFamily() || "",
         name: this.getName() || "",
         father: this.getFather() || "",
         email: this.getEmail() || "",
-        // telephone: this.getTelephone() || "",
         telephone: telephone || "",
         id_org: this.getKeyOrg() || "",
         id_job: this.getKeyJobs() || "",
@@ -1018,6 +937,7 @@ export class ModalLeftPanel {
       var inn_double = "";
 
       let org = JSON.parse(JSON.stringify(this.getOrgAll())); /// получаем все организации
+
       // разделяем обьект на ключ значение и проверяем,  есть ли уже такая организация в бд
       for (var key in org) {
         let a = org[key];
@@ -1119,16 +1039,7 @@ export class ModalLeftPanel {
 
     //// Отправляем данные с формы на сервер
     const q: IWSQuery = new WSQuery("set_NewOrg");
-    if (
-      isValidValues()
-      // this.getAddress() !== "" &&
-      // inn !== null &&
-      // full_name !== this.getFullNameOrg() &&
-      // name_double !== this.getNameOrg() &&
-      // inn_double !== this.getInn() &&
-      // this.getFullNameOrg() !== "" &&
-      // this.getNameOrg() !== ""
-    ) {
+    if (isValidValues()) {
       q.args = {
         name: this.getNameOrg() || "",
         full_name: this.getFullNameOrg() || "",

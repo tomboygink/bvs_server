@@ -1,24 +1,50 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import {
-  TextField,
-  Box,
-  Button,
-  Typography,
-  Divider,
-  Alert,
-} from "@mui/material";
+import { Box, Button, Alert, InputAdornment } from "@mui/material";
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
-import SaveIcon from "@mui/icons-material/Save";
+
+import { TextInput } from "../../../../shared/TextInput";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 interface IProps {}
 
-//Компонент формы приложения
+type State = {
+  showOldPassword: boolean;
+  showNewPassword: boolean;
+  showRepeatPassword: boolean;
+};
+
+//Компонент формы приложени  я
 @observer
-export class ChangePassword extends React.Component<IProps> {
+export class ChangePassword extends React.Component<IProps, State> {
   constructor(props: any) {
     super(props);
+    this.state = {
+      showOldPassword: false,
+      showNewPassword: false,
+      showRepeatPassword: false,
+    };
+  }
+
+  handleClickShowOldPassword() {
+    this.state.showOldPassword
+      ? this.setState({ showOldPassword: false })
+      : this.setState({ showOldPassword: true });
+  }
+
+  handleClickShowNewPassword() {
+    this.state.showNewPassword
+      ? this.setState({ showNewPassword: false })
+      : this.setState({ showNewPassword: true });
+  }
+
+  handleClickShowRepeatPassword() {
+    this.state.showRepeatPassword
+      ? this.setState({ showRepeatPassword: false })
+      : this.setState({ showRepeatPassword: true });
   }
 
   async saveСhanges() {
@@ -27,17 +53,12 @@ export class ChangePassword extends React.Component<IProps> {
 
   render(): React.ReactNode {
     const user = APP_STORAGE.auth_form.user;
+
     if (APP_STORAGE.modal.getLogin() === "") {
       APP_STORAGE.modal.setLogin(user.login);
     }
 
-    var alert: React.ReactNode = <></>;
     if (APP_STORAGE.modal.getCmdErrPass() === null) {
-      alert = (
-        <Alert sx={{ mt: "12px" }} severity="success">
-          Пароль успешно сохранен.
-        </Alert>
-      );
       setTimeout(() => {
         APP_STORAGE.modal.setPersonalAccaunt(false);
         APP_STORAGE.modal.setOld_Pass(""),
@@ -49,78 +70,95 @@ export class ChangePassword extends React.Component<IProps> {
       APP_STORAGE.modal.getCmdErrPass() !== null &&
       APP_STORAGE.modal.getCmdErrPass() !== ""
     ) {
-      alert = (
-        <Alert sx={{ mt: "12px" }} severity="error">
-          Необходимо проверить правильность введенных данных.
-        </Alert>
-      );
     }
 
     return (
       <React.Fragment>
         <form>
-          <Box
-          //    sx= {{display: 'grid' , gridTemplateColumns: '1fr 8fr', gap: '8px' , alignItems: 'center'}}
-          >
+          <Box>
             {/* ---------------------------------------смена пароля */}
-            <TextField
-              inputProps={{ style: { fontSize: 12 } }} // размер текста для text
-              InputLabelProps={{ style: { fontSize: 12 } }} // размер текста для label
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              required
+
+            <TextInput
+              label="Старый пароль"
               error={APP_STORAGE.modal.getErrr_old_pass()}
               helperText={APP_STORAGE.modal.getError_old_message()}
-              label="Старый пароль"
-              autoComplete="старый пароль"
-              autoFocus
-              size="small"
-              type="password"
               onChange={(e) => {
                 APP_STORAGE.modal.setOld_Pass(e.target.value);
               }}
               value={APP_STORAGE.modal.getOld_Pass().trim() || ""}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => this.handleClickShowOldPassword()}
+                      edge="end"
+                    >
+                      {this.state.showOldPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                style: { fontSize: 12 },
+                type: this.state.showOldPassword ? "text" : "password",
+              }}
             />
 
-            <TextField
-              inputProps={{ style: { fontSize: 12 } }} // размер текста для text
-              InputLabelProps={{ style: { fontSize: 12 } }} // размер текста для label
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              required
+            <TextInput
+              label="Новый пароль"
               error={APP_STORAGE.modal.getErrr_new_pass()}
               helperText={APP_STORAGE.modal.getError_new_message()}
-              label="Новый пароль"
-              autoComplete="новый пароль"
-              autoFocus
-              size="small"
-              type="password"
               onChange={(e) => {
                 APP_STORAGE.modal.setNew_Pass(e.target.value);
               }}
               value={APP_STORAGE.modal.getNew_Pass().trim() || ""}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => this.handleClickShowNewPassword()}
+                      edge="end"
+                    >
+                      {this.state.showNewPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                style: { fontSize: 12 },
+                type: this.state.showNewPassword ? "text" : "password",
+              }}
             />
-
-            <TextField
-              inputProps={{ style: { fontSize: 12 } }} 
-              InputLabelProps={{ style: { fontSize: 12 } }} 
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              required
+            <TextInput
+              label="Повторите пароль"
               error={APP_STORAGE.modal.getError_pass()}
               helperText={APP_STORAGE.modal.getError_message()}
-              label="Новый пароль"
-              autoComplete="новый пароль"
-              autoFocus
-              size="small"
-              type="password"
               onChange={(e) => {
                 APP_STORAGE.modal.setRepeat_password(e.target.value);
               }}
               value={APP_STORAGE.modal.getRepeat_password().trim() || ""}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => this.handleClickShowRepeatPassword()}
+                      edge="end"
+                    >
+                      {this.state.showRepeatPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                style: { fontSize: 12 },
+                type: this.state.showRepeatPassword ? "text" : "password",
+              }}
             />
           </Box>
 
@@ -146,7 +184,22 @@ export class ChangePassword extends React.Component<IProps> {
               Сохранить
             </Button>
           </Box>
-          {alert}
+          {APP_STORAGE.modal.getSuccessSave_mess().length > 0 && (
+            <Alert severity="success">
+              {APP_STORAGE.modal.getSuccessSave_mess()}
+            </Alert>
+          )}
+          {APP_STORAGE.shared_store.getErrorResponseMess().length > 0 && (
+            <Alert severity="error">
+              {APP_STORAGE.shared_store.getErrorResponseMess()}
+            </Alert>
+          )}
+          {APP_STORAGE.modal.getErrorSave_mess().length > 0 && (
+            <Alert severity="error">
+              {APP_STORAGE.modal.getErrorSave_mess()}
+            </Alert>
+          )}
+          {/* {alert} */}
         </form>
       </React.Fragment>
     );

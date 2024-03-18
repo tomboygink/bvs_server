@@ -1,29 +1,20 @@
 import React from "react";
-import { toJS } from "mobx";
 
 import { observer } from "mobx-react";
 
 import { Box, Typography } from "@mui/material";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
-// import TreeItem from "@mui/lab/TreeItem";
-
-// import TreeView from "@mui/lab/TreeView";
-
 import { TreeView, TreeItem } from "@mui/x-tree-view";
 
 import { handleChange } from "./StyledMua";
-
+import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
+import FolderZipIcon from "@mui/icons-material/FolderZip";
 import FolderIcon from "@mui/icons-material/Folder";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDevice } from "../../../storage/components/Devs/DevEntityes";
-
-import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
-import FolderZipIcon from "@mui/icons-material/FolderZip";
-
-import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 
 interface IProps {
   devs_tree: TDevsGroup;
@@ -103,12 +94,12 @@ export class DevsGroupsTree extends React.Component<IProps> {
                       sx={{ color: "#0FA958" }}
                     />
                   }
-                  sx={{ color: "#002757" }}
+                  sx={{ color: "black" }}
                 ></TreeItem>
               </React.Fragment>
             );
           }
-          if (passedDay <= Number(dev.period_sess) * 2) {
+          if (passedDay < Number(dev.period_sess) * 2) {
             return (
               <React.Fragment key={"_dev_id_key_" + dev.id}>
                 <TreeItem
@@ -120,22 +111,45 @@ export class DevsGroupsTree extends React.Component<IProps> {
                       sx={{ color: "#FBBC05" }}
                     />
                   }
-                  sx={{ color: "#FBBC05" }}
+                  sx={{ color: "black" }}
                 ></TreeItem>
               </React.Fragment>
             );
           }
 
-          if (passedDay > Number(dev.period_sess) * 2) {
+          if (
+            passedDay >= Number(dev.period_sess) * 2 &&
+            passedDay < Number(dev.period_sess) * 3
+          ) {
             return (
               <React.Fragment key={"_dev_id_key_" + dev.id}>
                 <TreeItem
                   nodeId={"_dev_id_key_" + dev.id}
                   label={dev.number}
                   icon={
-                    <CrisisAlertIcon fontSize="small" sx={{ color: "red" }} />
+                    <CrisisAlertIcon
+                      fontSize="small"
+                      sx={{ color: "#FC8904" }}
+                    />
                   }
-                  sx={{ color: "red" }}
+                  sx={{ color: "black" }}
+                ></TreeItem>
+              </React.Fragment>
+            );
+          }
+          if (passedDay >= Number(dev.period_sess) * 3) {
+            return (
+              <React.Fragment key={"_dev_id_key_" + dev.id}>
+                <TreeItem
+                  nodeId={"_dev_id_key_" + dev.id}
+                  label={dev.number}
+                  icon={
+                    <CrisisAlertIcon
+                      fontSize="small"
+                      sx={{ color: "#EA4335" }}
+                    />
+                  }
+                  sx={{ color: "black" }}
                 ></TreeItem>
               </React.Fragment>
             );
@@ -181,12 +195,12 @@ export class DevsGroupsTree extends React.Component<IProps> {
                 icon={
                   <CrisisAlertIcon fontSize="small" sx={{ color: "#0FA958" }} />
                 }
-                sx={{ color: "#002757" }}
+                sx={{ color: "black" }}
               ></TreeItem>
             </React.Fragment>
           );
         }
-        if (passedDay <= Number(dev.period_sess) * 2) {
+        if (passedDay < Number(dev.period_sess) * 2) {
           return (
             <React.Fragment key={"_dev_id_key_" + dev.id}>
               <TreeItem
@@ -195,22 +209,40 @@ export class DevsGroupsTree extends React.Component<IProps> {
                 icon={
                   <CrisisAlertIcon fontSize="small" sx={{ color: "#FBBC05" }} />
                 }
-                sx={{ color: "#FBBC05" }}
+                sx={{ color: "black" }}
               ></TreeItem>
             </React.Fragment>
           );
         }
 
-        if (passedDay > Number(dev.period_sess) * 2) {
+        if (
+          passedDay >= Number(dev.period_sess) * 2 &&
+          passedDay < Number(dev.period_sess) * 3
+        ) {
           return (
             <React.Fragment key={"_dev_id_key_" + dev.id}>
               <TreeItem
                 nodeId={"_dev_id_key_" + dev.id}
                 label={dev.number}
                 icon={
-                  <CrisisAlertIcon fontSize="small" sx={{ color: "red" }} />
+                  <CrisisAlertIcon fontSize="small" sx={{ color: "#FC8904" }} />
                 }
-                sx={{ color: "red" }}
+                sx={{ color: "black" }}
+              ></TreeItem>
+            </React.Fragment>
+          );
+        }
+
+        if (passedDay >= Number(dev.period_sess) * 3) {
+          return (
+            <React.Fragment key={"_dev_id_key_" + dev.id}>
+              <TreeItem
+                nodeId={"_dev_id_key_" + dev.id}
+                label={dev.number}
+                icon={
+                  <CrisisAlertIcon fontSize="small" sx={{ color: "#EA4335" }} />
+                }
+                sx={{ color: "black" }}
               ></TreeItem>
             </React.Fragment>
           );

@@ -19,6 +19,7 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
@@ -98,7 +99,9 @@ export class MenuDevs extends React.Component<IProps> {
           }
 
           if (dev.getMenu_devs() === "4") {
-            this.set_NewControlDevSess();
+            //this.set_NewControlDevSess();
+            APP_STORAGE.devs.setOpenModalUploadSheme(true);
+            devGr.setOpen_menu(false);
           }
 
           if (dev.getMenu_devs() === "5") {
@@ -150,6 +153,12 @@ export class MenuDevs extends React.Component<IProps> {
               <LogoutRoundedIcon fontSize="small" />
             </ListItemIcon>{" "}
             Переместить
+          </MenuItem>
+          <MenuItem onClick={() => this.editDevice("4")}>
+            <ListItemIcon>
+              <CloudUploadOutlinedIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            Загрузить схему
           </MenuItem>
 
           <Divider />

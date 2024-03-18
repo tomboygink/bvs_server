@@ -1,3 +1,4 @@
+import { IDevice } from "../../../models/IDevice";
 /*
 Описание сенсора на устройстве
 */
@@ -42,7 +43,7 @@ export const DEVICE: TDevice = {
   info: "",
   time: "",
   deleted: false,
-  period_sess: 0
+  period_sess: 0,
 };
 
 /**
@@ -71,7 +72,7 @@ export const D_GROUP: TDGroup = {
   org_id: "",
   g_info: "",
   deleted: false,
-  svg: ""
+  svg: "",
 };
 
 /**
@@ -96,5 +97,5 @@ export const DEV_GR_NODE: TDevsGroup = {
   p_id: 0,
   childs: [],
   devs: [],
-  updated: false
+  updated: false,
 };

@@ -1,15 +1,19 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { TextField } from "@mui/material";
-import { Divider } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  Modal,
+  TextField,
+  Divider,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
+import { CloseButton } from "../../../../shared/CloseButton";
+import { TextInput } from "../../../../shared/TextInput";
 
 interface IProps {}
 
@@ -53,27 +57,20 @@ export class ModalSensors extends React.Component<IProps> {
                 }}
               >
                 <Typography>Введите глубину датчика</Typography>
-
-                <CloseIcon
-                  sx={{ color: "#1976D2" }}
-                  onClick={() => {
-                    APP_STORAGE.devs.setDepthSensors(false);
-                  }}
+                <CloseButton
+                  onClose={() => APP_STORAGE.devs.setDepthSensors(false)}
                 />
               </Box>
 
               <Divider sx={{ marginBottom: "20px" }} />
 
-              <TextField
-                size="small"
-                fullWidth
-                id="outlined-number"
+              <TextInput
                 label="Глубина"
-                type="number"
                 InputLabelProps={{
                   shrink: true,
                 }}
-                inputProps={{
+                InputProps={{
+                  type: "number",
                   inputMode: "decimal",
                   step: 0.1,
                   pattern: "[0..9]*[.][0..9]*",
@@ -81,7 +78,6 @@ export class ModalSensors extends React.Component<IProps> {
                 onChange={(e) => {
                   APP_STORAGE.devs.setSensors(Number(e.target.value));
                 }}
-                sx={{ mt: 2 }}
               />
 
               <Box

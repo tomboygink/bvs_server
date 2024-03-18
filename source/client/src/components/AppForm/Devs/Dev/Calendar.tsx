@@ -2,12 +2,7 @@ import * as React from "react";
 
 import { observer } from "mobx-react";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
-import {
-  Box,
-  Button,
-  TextField
-} from "@mui/material";
-
+import { Box, Button, TextField } from "@mui/material";
 
 interface IProps {}
 
@@ -42,7 +37,6 @@ export class Calendar extends React.Component<IProps> {
 
     return (
       <React.Fragment>
-
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box>
             <Box sx={{ display: "flex", flexWrap: "wrap" }}>

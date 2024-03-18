@@ -4,11 +4,10 @@ import { observer } from "mobx-react";
 import DoneIcon from "@mui/icons-material/Done";
 import * as XLSX from "xlsx";
 
-import CloseIcon from "@mui/icons-material/Close";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 import {
-  TextField,
   Box,
   Dialog,
   Divider,
@@ -21,12 +20,11 @@ import {
   TableCell,
   Stack,
   Alert,
+  IconButton,
 } from "@mui/material";
-import Autocomplete from "@mui/material/Autocomplete";
-import { APP_STORAGE } from "../../../../storage/AppStorage";
-import { toJS } from "mobx";
 
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { APP_STORAGE } from "../../../../storage/AppStorage";
+import { CloseButton } from "../../../shared/CloseButton";
 
 interface IProps {}
 
@@ -76,9 +74,7 @@ export class Importxlxfife extends React.Component<IProps> {
     fileName.innerHTML = fileInput.files[0].name;
     fileSize.innerHTML = (fileInput.files[0].size / 1024).toFixed(1) + " KB";
     uploadedFile.style.cssText = "display: flex;";
-    // progressBar.style.width = '0';
 
-    console.log("reading input file:");
     const file = e.target.files[0];
     const data = await file.arrayBuffer();
 
@@ -86,9 +82,6 @@ export class Importxlxfife extends React.Component<IProps> {
 
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
 
-    // const jsonData = XLSX.utils.sheet_to_json(worksheet, {
-    //   header: 1,
-    // });
     const jsonData = XLSX.utils.sheet_to_json(worksheet, {
       header: 1,
       blankrows: false,
@@ -119,21 +112,6 @@ export class Importxlxfife extends React.Component<IProps> {
   }
 
   render(): React.ReactNode {
-    // let alert;
-    // const serverErrorMess = APP_STORAGE.shared_store.getErrorResponseMess();
-    // const saveErrorMess = APP_STORAGE.importdevs.getErrorSave_mess();
-    // const duplicatesErrorMess = APP_STORAGE.importdevs.getDuplicates();
-    // const invalidDevsErrorMess = APP_STORAGE.importdevs.getInvalid_devs();
-    // const validDevs = APP_STORAGE.importdevs.getValid_devs();
-    // if (saveErrorMess.length !== 0) {
-    //   const alert = (
-    //     <Stack sx={{ width: "100%" }} spacing={2}>
-    //       <Alert severity="error">
-    //         {APP_STORAGE.importdevs.getErrorSave_mess()}
-    //       </Alert>
-    //     </Stack>
-    //   );
-    // }
     return (
       <React.Fragment>
         <Dialog
@@ -153,10 +131,8 @@ export class Importxlxfife extends React.Component<IProps> {
               }}
             >
               <Typography>Импортировать список устройств</Typography>
-
-              <CloseIcon
-                sx={{ color: "#1976D2" }}
-                onClick={() => {
+              <CloseButton
+                onClose={() => {
                   this.onClose();
                 }}
               />
@@ -170,8 +146,8 @@ export class Importxlxfife extends React.Component<IProps> {
               >
                 {" "}
                 Скачать шаблон файла
+                <FileDownloadIcon sx={{ color: "#1976D2" }} />
               </Button>
-              <FileDownloadIcon sx={{ color: "#1976D2" }} />
             </Box>
 
             <form className="form-container">
@@ -329,21 +305,6 @@ export class Importxlxfife extends React.Component<IProps> {
                   </Stack>
                 )}
 
-                {/* {APP_STORAGE.importdevs.getErrorSave_mess().length > 0 && (
-                  <Stack sx={{ width: "100%" }} spacing={2}>
-                    <Alert severity="error">
-                      {APP_STORAGE.importdevs.getErrorSave_mess()}
-                    </Alert>
-                  </Stack>
-                )} */}
-                {/* {APP_STORAGE.importdevs.getSuccessSave_mess().length > 0 && (
-                  <Stack sx={{ width: "100%" }} spacing={2}>
-                    <Alert severity="success">
-                      {APP_STORAGE.importdevs.getSuccessSave_mess()}
-                    </Alert>
-                  </Stack>
-                )} */}
-
                 {APP_STORAGE.importdevs.getInvalid_devs().length !== 0 && (
                   <Stack sx={{ width: "100%" }} spacing={2}>
                     <Alert severity="error">
@@ -361,44 +322,6 @@ export class Importxlxfife extends React.Component<IProps> {
                     невозможно.
                   </Alert>
                 </Stack>
-                {/* <Box
-                  sx={{
-                    m: "8px",
-                    background: "#eee",
-                    display: "flex",
-                    alignItems: "center",
-                    borderRadius: "4px",
-                    p: "8px",
-                  }}
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 6C12.5523 6 13 6.44772 13 7V13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13V7C11 6.44772 11.4477 6 12 6Z"
-                      fill="#8d8989"
-                    />
-                    <path
-                      d="M12 16C11.4477 16 11 16.4477 11 17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17C13 16.4477 12.5523 16 12 16Z"
-                      fill="#8d8989"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12Z"
-                      fill="#8d8989"
-                    />
-                  </svg>
-
-                  <FormHelperText sx={{ pl: "12px" }}>
-                    Внимание! После нажатия на кнопку , отменить операцию будет
-                    невозможно.
-                  </FormHelperText>
-                </Box> */}
               </div>
             </form>
           </Box>

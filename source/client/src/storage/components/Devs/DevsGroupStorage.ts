@@ -14,6 +14,8 @@ import {
   INVALID_PASSWORD_ERROR,
 } from "../../../../utils/consts";
 import { ThirtyFpsTwoTone, ThreeSixty } from "@mui/icons-material";
+import { IDevice } from "../../../models/IDevice";
+import { TDevice } from "./DevEntityes";
 
 export class DevsGroupStorage {
   @observable search: any;
@@ -64,6 +66,8 @@ export class DevsGroupStorage {
   @observable devs_groups: Array<string> = [];
 
   @observable devs_numbers: Array<string> = [];
+
+  @observable all_devs: IDevice[] = [];
   constructor() {
     makeAutoObservable(this);
   }
@@ -291,6 +295,14 @@ export class DevsGroupStorage {
     return this.devs_numbers;
   }
 
+  @action setAllDevs(val: IDevice[]) {
+    this.all_devs = val;
+  }
+
+  @computed getAllDevs(): IDevice[] {
+    return this.all_devs;
+  }
+
   async set_NewDevGroup(name: string, value: any, _options?: any) {
     ///////// Добавляем новое расположение устройств
 
@@ -341,7 +353,11 @@ export class DevsGroupStorage {
 
     if (this.getKeyOrg()) {
       this.setOrgError(false);
-    } else this.setOrgError(true);
+      this.setOrgError_mess("");
+    } else {
+      this.setOrgError(true);
+      this.setOrgError_mess(EMPTY_FIELD_ERROR);
+    }
 
     if (this.getLatitude()) {
       this.setLatitudeError(false);
@@ -358,40 +374,7 @@ export class DevsGroupStorage {
       this.setLongitudeError(true);
       this.setLongitudeError_mess(EMPTY_FIELD_ERROR);
     }
-    //   if (this.getName() === "") {
-    //     this.setNameError(true);
-    //     this.setNameError_mess("Поле не может быть пустым");
-    //     console.log("Нет названия места");
-    //   }
 
-    // if (this.getName() !== "") {
-    //   this.setNameError(false);
-    //   this.setNameError_mess("");
-    // }
-
-    // if (this.getKeyOrg() !== "") {
-    //   this.setOrgError(false);
-    // }
-
-    // if (this.getLatitude() === "") {
-    //   this.setLatitudeError(true);
-    //   this.setLatitudeError_mess("Поле не должно быть пустым");
-    // }
-
-    // if (this.getLatitude() !== "") {
-    //   this.setLatitudeError(false);
-    //   this.setLatitudeError_mess("");
-    // }
-
-    // if (this.getLongitude() === "") {
-    //   this.setLongitudeError(true);
-    //   this.setLongitudeError_mess("Поле не должно быть пустым");
-    // }
-
-    // if (this.getLongitude() !== "") {
-    //   this.setLongitudeError(false);
-    //   this.setLongitudeError_mess("");
-    // }
     const isValidValue = () => {
       return (
         !this.getNameError() &&
@@ -459,65 +442,74 @@ export class DevsGroupStorage {
 
   setDevsGroupsAll(dt: IWSResult) {
     /* -----  Получаем все группы устройств   */
+    if (typeof dt.data === "string") {
+      const data = dt.data;
+      //Экранируем символ перевода строки (чтобы приложение не ломалось, когда в многострочных полях строки есть перевод строки)
+      const str: string = data.replace(/\n/g, "\\n");
+      let devs_g = [];
+      let DevGr = [];
 
-    let devs_g = [];
-    let DevGr = [];
+      // Объект создан для корректной работы кода с fetch-запросами, в дальнейшем - переписать логику:
+      let obj = {
+        0: str,
+      };
 
-    // Объект создан для корректной работы кода с fetch-запросами, в дальнейшем - переписать логику:
-    let obj = {
-      0: dt.data,
-    };
+      // Условие для работы с Websocket:
+      // if (
+      //   Object.keys(JSON.parse(JSON.stringify(dt.data))).length !== 0 &&
+      //   JSON.parse(JSON.stringify(dt.data)).constructor === Object
+      // ) {
+      //   devs_g = JSON.parse(JSON.stringify(dt.data));
 
-    // Условие для работы с Websocket:
-    // if (
-    //   Object.keys(JSON.parse(JSON.stringify(dt.data))).length !== 0 &&
-    //   JSON.parse(JSON.stringify(dt.data)).constructor === Object
-    // ) {
-    //   devs_g = JSON.parse(JSON.stringify(dt.data));
+      // }
 
-    // }
+      //Условие для работы с fetch:
+      if (
+        Object.keys(JSON.parse(JSON.stringify(dt.data))).length !== 0 &&
+        obj.constructor === Object
+      ) {
+        devs_g = JSON.parse(JSON.stringify(obj));
+      }
+      // console.log("devs_g.>", devs_g); // \n
+      // console.log("devs_g.0=>", JSON.parse(JSON.stringify( devs_g[0]))); // \space
 
-    //Условие для работы с fetch:
-    if (
-      Object.keys(JSON.parse(JSON.stringify(dt.data))).length !== 0 &&
-      obj.constructor === Object
-    ) {
-      devs_g = JSON.parse(JSON.stringify(obj));
-    }
+      for (var key in devs_g) {
+        if (devs_g.hasOwnProperty(key)) {
+          let a = devs_g[key];
 
-    for (var key in devs_g) {
-      if (devs_g.hasOwnProperty(key)) {
-        let a = devs_g[key];
-        let root = JSON.parse(a);
+          let root = JSON.parse(a);
 
-        if (root.childs.length > 0) {
-          for (let i = 0; i < root.childs.length; i++) {
-            DevGr.push(root.childs[i]);
+          if (root.childs.length > 0) {
+            for (let i = 0; i < root.childs.length; i++) {
+              DevGr.push(root.childs[i]);
+            }
           }
         }
       }
-    }
 
-    this.setDevsGroups(DevGr);
+      this.setDevsGroups(DevGr);
 
-    // const arr = DevGr.reduce((acc, { devs }) => {
-    //   return [...acc, ...devs];
-    // }, []);
+      // const arr = DevGr.reduce((acc, { devs }) => {
+      //   return [...acc, ...devs];
+      // }, []);
 
-    let allDevs: any[] = [];
-    const recursion = (arr: any[]) => {
-      for (let elem of arr) {
-        allDevs.push(...elem.devs);
-        if (elem.childs.length !== 0) {
-          recursion(elem.childs);
+      let allDevs: any[] = [];
+      const recursion = (arr: any[]) => {
+        for (let elem of arr) {
+          allDevs.push(...elem.devs);
+          if (elem.childs.length !== 0) {
+            recursion(elem.childs);
+          }
         }
-      }
-    };
-    recursion(DevGr);
-    const allNumbers = allDevs.map((dev) => {
-      return dev.number;
-    });
-    this.setNumbers(allNumbers);
+      };
+      recursion(DevGr);
+      this.setAllDevs(allDevs);
+      // console.log("alldevs=>", JSON.parse(JSON.stringify(this.getAllDevs())));
+      const allNumbers = allDevs.map((dev) => {
+        return dev.number;
+      });
+      this.setNumbers(allNumbers);
+    }
   }
 
   async set_ChangeDevsGroups(name: string, value: any, _options?: any) {

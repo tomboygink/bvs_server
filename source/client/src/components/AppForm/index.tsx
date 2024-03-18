@@ -11,7 +11,7 @@ import { Modal } from "./AppBarPanel/TopMenu/Modal/Modal"; //// Модально
 import { ModalLeftPanel } from "./AppBarPanel/LeftPanel/RegistationUsers/ModalLeftPanel";
 import { NewDevPovs } from "./Devs/Dev/Menu/NewDevPovs";
 
-import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser"; /////////////Таблица пользователей
+// import { TableUser } from "../../components/AppForm/AppBarPanel/LeftPanel/EditUsers/TableUser"; /////////////Таблица пользователей
 import { UsersMenu } from "./User/UsersMenu"; //////////////////////////// устройства
 // import UsersMenu from "./User/UsersMenuFC";
 import { Users } from "./User/Users";
@@ -32,6 +32,7 @@ import { Devs } from "./Devs/Dev/Devs"; //////////////////////////// устро�
 import { SensorsList } from "./Sensors/SensorsList"; ///////////////////////////////сенсоры на устройствах
 import { ChangeDevsModal } from "./Devs/Dev/Menu/ChangeDevsModal"; ////////////////////////////Редактировать устройства
 import { AddNewDevModal } from "./Devs/Dev/Menu/AddNewDevModal"; //////////////Добавить новое устройство
+import { UploadShemeModal } from "./Devs/Dev/Menu/UploadShemeModal"; // Загрузить схему устройства
 import { Calendar } from "./Devs/Dev/Calendar";
 import { DevsGroupsTree } from "./Devs/DevsGroupsTree";
 import { DevWrapper } from "./Devs/DevWrapper";
@@ -95,6 +96,9 @@ export class AppForm extends React.Component<IProps> {
       new_group = <AddNewGroup />;
       left_form = <DevsGroupsTree />;
     }
+    // if (APP_STORAGE.devs_groups.getMiddleForm() === 1) {
+    //   right_form = <SensorsList />;
+    // }
     if (APP_STORAGE.devs_groups.getMiddleForm() === 2) {
       middle_form = (
         <>
@@ -131,7 +135,9 @@ export class AppForm extends React.Component<IProps> {
             <AppBarPanel />
             <Modal />
             <ModalLeftPanel />
-            <ChangeDevsModal /> <NewDevPovs />
+            <ChangeDevsModal />
+            <UploadShemeModal />
+            <NewDevPovs />
             {/*-------------------------Модальное окно - редактировать уствройство */}
             <AddNewSubgroup />
             <ChangeDevsGroups />

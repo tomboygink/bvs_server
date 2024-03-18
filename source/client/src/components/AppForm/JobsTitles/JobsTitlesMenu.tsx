@@ -45,9 +45,8 @@ export class JobsTitlesMenu extends React.Component<IProps> {
     APP_STORAGE.edit_user.setKeyJobs(null); // Почему null?
     APP_STORAGE.reg_user.setJobsAll([]);
     APP_STORAGE.edit_user.get_Jobs("sess_id", APP_STORAGE.auth_form.getdt()); // должность
-
-    console.log("JobsTitlesMenu=>");
   }
+
   async SeachFamily(a: any) {
     let filter = (
       document.getElementById("search") as HTMLInputElement

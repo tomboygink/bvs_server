@@ -74,6 +74,21 @@ var AppServer = (function () {
         this.app.get("/", function (req, res) {
             res.render("index.hbs", { title: "Система визуализации СДС" });
         });
+        this.app.get("/confirm_mail", function (req, res) {
+            res.render("confirm_mail.hbs", {
+                title: "Подтверждение электронной почты"
+            });
+        });
+        this.app.get("/forgot_pass", function (req, res) {
+            res.render("forgot_pass.hbs", {
+                title: "Восстановление пароля"
+            });
+        });
+        this.app.get("/show-map", function (req, res) {
+            res.render("show-map.hbs", {
+                title: "Устройство на карте"
+            });
+        });
         this.app.use((0, cors_1["default"])());
         this.app.use(body_parser_1["default"].json());
         this.app.post("/api", (0, cors_1["default"])(), function (req, res) { return __awaiter(_this, void 0, void 0, function () {

@@ -9,7 +9,8 @@ import {
   Typography,
   TextField,
   Link,
-  TextareaAutosize
+  TextareaAutosize,
+  Stack,
 } from "@mui/material";
 
 import { TDevsGroup } from "../../../../storage/components/Devs/DevEntityes";
@@ -22,6 +23,10 @@ import { MenuDevs } from "./Menu/MenuDevs";
 
 import Collapse from "@mui/material/Collapse";
 import { LeafletMap } from "./Map";
+import { TextInput } from "../../../shared/TextInput";
+import LatInput from "../../../shared/LatInput";
+import LongInput from "../../../shared/LongInput";
+import { UploadShemeModal } from "./Menu/UploadShemeModal";
 
 interface IProps {}
 
@@ -48,6 +53,11 @@ export class Devs extends React.Component<IProps> {
       var passedDay = Math.floor(delta / 1000 / 60 / 60 / 24);
     }
     APP_STORAGE.devs.setPassedDay(String(passedDay));
+  }
+
+  drawSheme() {
+    const svg = document.querySelector("#sheme");
+    const container = document.getElementsByClassName("sheme-container")[0];
   }
 
   drawDevs(dgrs: TDevsGroup[]): React.ReactNode[] {
@@ -89,6 +99,10 @@ export class Devs extends React.Component<IProps> {
             APP_STORAGE.devs.setPeriodSess(period_ses);
           }, 0);
 
+          if (APP_STORAGE.sensors.getSheme().length > 0) {
+            this.drawSheme();
+          }
+
           if (gr_devs[key].deleted === true) {
             devs.push(
               <React.Fragment key={"_gr_id_key_" + gr_devs[key].id}>
@@ -102,101 +116,52 @@ export class Devs extends React.Component<IProps> {
                         APP_STORAGE.getRoleRead() === 1 && <MenuDevs />}
                     </Box>
 
-                    <Box sx={{ width: "100%" }}>
+                    <Stack sx={{ width: "100%" }} spacing={2}>
                       <Collapse in={false} timeout="auto" unmountOnExit />
-                      <TextField
-                        sx={{ pt: "0px", mt: "4px" }}
-                        className="box_info"
-                        fullWidth
-                        inputProps={{ style: { fontSize: 12 } }}
-                        InputLabelProps={{ style: { fontSize: 12 } }}
-                        variant="outlined"
-                        margin="normal"
+                      <TextInput
                         label="Место расположения"
-                        size="small"
                         value={gr.g_name || ""}
                       />
 
-                      <TextField
-                        sx={{ pt: "0px", mt: "4px" }}
-                        className="box_info"
-                        fullWidth
-                        inputProps={{ style: { fontSize: 12 } }}
-                        InputLabelProps={{ style: { fontSize: 12 } }}
-                        variant="outlined"
-                        margin="normal"
-                        size="small"
+                      <TextInput
                         label="Название устройства"
                         value={gr_devs[key].name || ""}
                       />
 
-                      <TextField
-                        sx={{ pt: "0px", mt: "4px" }}
-                        className="box_info"
-                        fullWidth
-                        inputProps={{ style: { fontSize: 12 } }}
-                        InputLabelProps={{ style: { fontSize: 12 } }}
-                        variant="outlined"
-                        margin="normal"
+                      <TextInput
                         label="Номер устройства"
-                        size="small"
                         value={gr_devs[key].number || ""}
                       />
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "flex-start"
-                        }}
-                      >
-                        <TextField
-                          sx={{ pt: "0px", mt: "4px", mr: "16px" }}
-                          className="box_info"
-                          inputProps={{ style: { fontSize: 12 } }}
-                          InputLabelProps={{ style: { fontSize: 12 } }}
-                          variant="outlined"
-                          margin="normal"
+                      <Stack spacing={2} direction="row">
+                        <TextInput
+                          fullWidth={false}
                           label="Долгота"
-                          size="small"
                           value={gr_devs[key].longitude.trim() || ""}
                         />
 
-                        <TextField
-                          sx={{ pt: "0px", mt: "4px", mr: "16px" }}
-                          inputProps={{ style: { fontSize: 12 } }}
-                          InputLabelProps={{ style: { fontSize: 12 } }}
-                          variant="outlined"
+                        <TextInput
+                          fullWidth={false}
                           label="Широта"
-                          margin="normal"
-                          size="small"
                           value={gr_devs[key].latitude.trim() || ""}
                         />
                         <Link
+                          underline="hover"
+                          href={`http://${CONFIG.host}:${
+                            CONFIG.port
+                          }/show-map?lat=${latitude.trim()}&lng=${longitude.trim()}`}
+                          target="_blank"
                           sx={{
                             fontSize: "1rem",
                             display: "flex",
                             alignItems: "center",
-                            flexDirection: "row-reverse"
-                          }}
-                          onClick={() => {
-                            window.open(
-                              `http://${CONFIG.host}:${CONFIG.port}/show-map?lat=` +
-                                latitude.trim() +
-                                "&lng=" +
-                                longitude.trim()
-                            );
+                            flexDirection: "row-reverse",
                           }}
                         >
                           Показать на карте (на отдельной странице)
-                          <IconButton
-                            color="primary"
-                            sx={{ p: "0px" }}
-                            aria-label="directions"
-                          >
-                            <DirectionsIcon />
-                          </IconButton>
+                          <DirectionsIcon />
                         </Link>
-                      </Box>
-                    </Box>
+                      </Stack>
+                    </Stack>
 
                     <TextareaAutosize
                       className="info"
@@ -230,101 +195,53 @@ export class Devs extends React.Component<IProps> {
                         APP_STORAGE.getRoleRead() === 1 && <MenuDevs />}
                     </Box>
 
-                    <Box sx={{ width: "100%" }}>
+                    <Stack sx={{ width: "100%" }} spacing={2}>
                       <Collapse in={false} timeout="auto" unmountOnExit />
-                      <TextField
-                        sx={{ pt: "0px", mt: "4px" }}
-                        className="box_info"
-                        fullWidth
-                        inputProps={{ style: { fontSize: 12 } }}
-                        InputLabelProps={{ style: { fontSize: 12 } }}
-                        variant="outlined"
-                        margin="normal"
+
+                      <TextInput
                         label="Место расположения"
-                        size="small"
                         value={gr.g_name || ""}
                       />
 
-                      <TextField
-                        sx={{ pt: "0px", mt: "4px" }}
-                        className="box_info"
-                        fullWidth
-                        inputProps={{ style: { fontSize: 12 } }}
-                        InputLabelProps={{ style: { fontSize: 12 } }}
-                        variant="outlined"
-                        margin="normal"
-                        size="small"
+                      <TextInput
                         label="Название устройства"
                         value={gr_devs[key].name || ""}
                       />
 
-                      <TextField
-                        sx={{ pt: "0px", mt: "4px" }}
-                        className="box_info"
-                        fullWidth
-                        inputProps={{ style: { fontSize: 12 } }}
-                        InputLabelProps={{ style: { fontSize: 12 } }}
-                        variant="outlined"
-                        margin="normal"
+                      <TextInput
                         label="Номер устройства"
-                        size="small"
                         value={gr_devs[key].number || ""}
                       />
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "flex-start"
-                        }}
-                      >
-                        <TextField
-                          sx={{ pt: "0px", mt: "4px", mr: "16px" }}
-                          className="box_info"
-                          inputProps={{ style: { fontSize: 12 } }}
-                          InputLabelProps={{ style: { fontSize: 12 } }}
-                          variant="outlined"
-                          margin="normal"
+                      <Stack spacing={2} direction="row">
+                        <TextInput
                           label="Долгота"
-                          size="small"
                           value={gr_devs[key].longitude.trim() || ""}
+                          fullWidth={false}
                         />
 
-                        <TextField
-                          sx={{ pt: "0px", mt: "4px", mr: "16px" }}
-                          inputProps={{ style: { fontSize: 12 } }}
-                          InputLabelProps={{ style: { fontSize: 12 } }}
-                          variant="outlined"
+                        <TextInput
                           label="Широта"
-                          margin="normal"
-                          size="small"
                           value={gr_devs[key].latitude.trim() || ""}
+                          fullWidth={false}
                         />
                         <Link
+                          underline="hover"
+                          href={`http://${CONFIG.host}:${
+                            CONFIG.port
+                          }/show-map?lat=${latitude.trim()}&lng=${longitude.trim()}`}
+                          target="_blank"
                           sx={{
                             fontSize: "1rem",
                             display: "flex",
                             alignItems: "center",
-                            flexDirection: "row-reverse"
-                          }}
-                          onClick={() => {
-                            window.open(
-                              `http://${CONFIG.host}:${CONFIG.port}/show-map?lat=` +
-                                latitude.trim() +
-                                "&lng=" +
-                                longitude.trim()
-                            );
+                            flexDirection: "row-reverse",
                           }}
                         >
                           Показать на карте (на отдельной странице)
-                          <IconButton
-                            color="primary"
-                            sx={{ p: "0px" }}
-                            aria-label="directions"
-                          >
-                            <DirectionsIcon />
-                          </IconButton>
+                          <DirectionsIcon />
                         </Link>
-                      </Box>
-                    </Box>
+                      </Stack>
+                    </Stack>
 
                     <TextareaAutosize
                       className="info"
@@ -333,6 +250,18 @@ export class Devs extends React.Component<IProps> {
                       style={{ width: "100%", marginTop: "12px" }}
                       value={gr_devs[key].info || ""}
                     />
+
+                    {APP_STORAGE.sensors.getSheme().length > 0 && (
+                      <div
+                        className="sheme-container"
+                        style={{
+                          width: "200px",
+                          height: "200px",
+                        }}
+                      >
+                        <div id="sheme"></div>
+                      </div>
+                    )}
                     {APP_STORAGE.devs.setLongitude && (
                       <Box sx={{ height: "400px", width: "100%" }}>
                         <LeafletMap longitude={longitude} latitude={latitude} />
@@ -346,19 +275,27 @@ export class Devs extends React.Component<IProps> {
           }
         }
       }
+
       var childs: React.ReactNode[] = new Array();
       if (gr_childs.length > 0) childs = this.drawDevs(gr_childs);
       devs.push(childs);
     }
+
     return devs;
   }
 
   drawDevsFunction(): React.ReactNode {
     let Dev: any;
     Dev = APP_STORAGE.devs_groups.getDevsGroups();
+
     return this.drawDevs(Dev);
   }
   render(): React.ReactNode {
-    return <>{this.drawDevsFunction()}</>;
+    return (
+      <>
+        {this.drawDevsFunction()}
+        <UploadShemeModal />
+      </>
+    );
   }
 }
