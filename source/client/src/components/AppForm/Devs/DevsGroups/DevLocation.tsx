@@ -74,14 +74,12 @@ export class DevLocation extends React.Component<IProps> {
 
       if (APP_STORAGE.devs.getIdDevs() === String(gr.id)) {
         APP_STORAGE.devs_groups.setName(String(gr.g_name));
-
         APP_STORAGE.devs_groups.setLongitude(String(gr.longitude));
         APP_STORAGE.devs_groups.setLatitude(String(gr.latitude));
         APP_STORAGE.devs_groups.setInfo(String(gr.g_info));
         APP_STORAGE.devs_groups.setKeyOrg(String(gr.org_id));
         APP_STORAGE.devs_groups.setParent(String(gr.parent_id));
         APP_STORAGE.devs_groups.setCheckboxEd(gr.deleted);
-
         APP_STORAGE.devs_groups.setOpenModalChDevsGr(true);
       }
     }

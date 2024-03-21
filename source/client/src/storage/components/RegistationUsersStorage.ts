@@ -125,6 +125,12 @@ export class ModalLeftPanel {
   @observable nodeid_org: string = "";
   @observable nodeid_jobstitles: string = "";
 
+  // Добавление новой скважины
+  @observable number_well: string = "";
+  @observable org_id: string = "";
+  @observable group_id: string = "";
+  @observable dev_id: string = "";
+
   constructor() {
     makeAutoObservable(this);
     Map<string, string>;
@@ -651,6 +657,31 @@ export class ModalLeftPanel {
     return this.texthelp_jobs;
   }
 
+  //Добавление новой скважины
+  @action setNumberWell(val: string) {
+    this.number_well = val;
+  }
+  @computed getNumberWell(): string {
+    return this.number_well;
+  }
+  @action setOrgId(val: string) {
+    this.org_id = val;
+  }
+  @computed getOrgId(): string {
+    return this.org_id;
+  }
+  @action setGroupId(val: string) {
+    this.group_id = val;
+  }
+  @computed getGroupId(): string {
+    return this.group_id;
+  }
+  @action setDevId(val: string) {
+    this.dev_id = val;
+  }
+  @computed getDevId(): string {
+    return this.dev_id;
+  }
   async get_AllUsers(name: string, value: any, _options?: any) {
     /* -----  Отправляем запрос на получение всех пользователей   */
     var sess_code = value;
@@ -1139,5 +1170,33 @@ export class ModalLeftPanel {
           }, 2000);
         }); //fetch-запрос
     }
+  }
+
+  set_NewThermalWell(name: string, value: string, _options?: string) {
+    const sess_code = value;
+    const q: IWSQuery = new WSQuery("set_ThermalWell");
+    q.args = {
+      number: this.getNumberWell(),
+      org_id: this.getOrgId() || "",
+      group_id: this.getGroupId() || "",
+      dev_id: this.getDevId(),
+    };
+    q.sess_code = sess_code;
+    console.log("code=>", value);
+    api
+      .fetch(q)
+      .then(() => {
+        this.setSuccessSave_mess(SAVE_SUCCESS);
+        setTimeout(() => {
+          this.setSuccessSave_mess("");
+        }, 2000);
+      })
+      .catch((e) => {
+        console.log("error=>", e);
+        this.setErrorSave_mess(SAVE_ERROR);
+        setTimeout(() => {
+          this.setErrorSave_mess("");
+        }, 2000);
+      });
   }
 }

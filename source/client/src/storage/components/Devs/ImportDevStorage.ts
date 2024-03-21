@@ -376,6 +376,7 @@ export class ImportDevStorage {
       // }
     } catch (err) {
       console.log("error=>", err.message);
+
       this.setErrorSave_mess(MATCHING_TEMPLATE_ERROR);
       setTimeout(() => {
         this.setErrorSave_mess("");
@@ -384,40 +385,101 @@ export class ImportDevStorage {
       APP_STORAGE.importdevs.setArrayJsonData([]);
     }
   }
+  // Первоначальный вариант функции для отрисовки схемы:
+  // async uploadfile() {
+  //   var element = document.createElement("div");
+  //   element.id = "svg";
+  //   document.getElementsByClassName("svg-container")[0].innerHTML = "";
+  //   document.getElementsByClassName("svg-container")[0].appendChild(element);
+  //   var newSvg = document.getElementById("svg");
 
+  //   newSvg.outerHTML = APP_STORAGE.importdevs.getSvg();
+
+  //   APP_STORAGE.importdevs.setOpenModalSvg(false);
+  //   var hrefs = document.getElementsByClassName("well");
+  //   console.log("sensors=>", toJS(APP_STORAGE.devs.getChangeSensors2()));
+  //   for (let i in hrefs) {
+  //     hrefs.item(Number(i)).addEventListener("mouseout", function (e) {
+  //       console.log("item=>", hrefs[i]);
+  //       document.getElementById(hrefs[i].id).style.stroke = "";
+  //       e.preventDefault(); /*use if you want to prevent the original link following action*/
+  //       var tooltip = document.getElementById("tooltip");
+  //       tooltip.style.display = "none";
+  //     });
+
+  //     hrefs.item(Number(i)).addEventListener("mousemove", function (e) {
+  //       e.preventDefault(); /*use if you want to prevent the original link following action*/
+
+  //       for (var j in APP_STORAGE.devs.getChangeSensors2()) {
+  //         if (
+  //           String(hrefs[i].id.slice(5)) ===
+  //           String(APP_STORAGE.devs.getChangeSensors2()[j].id)
+  //         ) {
+  //           document.getElementById(hrefs[i].id).style.stroke = "#25E48B";
+  //           var clientRectangle = document
+  //             .getElementById(hrefs[i].id)
+  //             .getBoundingClientRect();
+  //           let tooltip = document.getElementById("tooltip");
+  //           tooltip.innerHTML =
+  //             "Номер косы" +
+  //             "-" +
+  //             APP_STORAGE.devs.getChangeSensors2()[j].number;
+  //           tooltip.style.display = "block";
+  //           tooltip.style.left = clientRectangle.left + "px";
+  //           tooltip.style.top = clientRectangle.top + "px";
+  //         }
+  //       }
+  //     });
+
+  //     hrefs.item(Number(i)).addEventListener("click", function (e) {
+  //       e.preventDefault(); /*use if you want to prevent the original link following action*/
+
+  //       for (var j in APP_STORAGE.devs.getChangeSensors2()) {
+  //         if (
+  //           String(hrefs[i].id.slice(5)) ===
+  //           String(APP_STORAGE.devs.getChangeSensors2()[j].id)
+  //         ) {
+  //           APP_STORAGE.devs.setIdChild("_dev_id_key_" + hrefs[i].id.slice(5));
+  //           APP_STORAGE.sensors.setEmptySession("");
+  //           APP_STORAGE.sensors.setSessFirstLast([]);
+  //           APP_STORAGE.sensors.setSessFirstLastCharts([]);
+  //           APP_STORAGE.sensors.setSess_first([]);
+  //           APP_STORAGE.sensors.setSess_second([]);
+  //           APP_STORAGE.sensors.setSortDesc("");
+  //           APP_STORAGE.sensors.setAkbSessChose("");
+  //           APP_STORAGE.sensors.setChoseSessTime("");
+  //           APP_STORAGE.sensors.setAkbSessLast("");
+  //           APP_STORAGE.devs_groups.setMiddleForm(2);
+
+  //           APP_STORAGE.devs.setTopMenuDev("top_menu-1");
+  //         }
+  //       }
+  //     });
+  //   }
+  // }
+
+  // Переделанный вариант
   async uploadfile() {
-    var element = document.createElement("div");
-    element.id = "svg";
-    document.getElementsByClassName("svg-container")[0].innerHTML = "";
-    document.getElementsByClassName("svg-container")[0].appendChild(element);
-    var newSvg = document.getElementById("svg");
-
-    newSvg.outerHTML = APP_STORAGE.importdevs.getSvg();
+    //const element = document.createElement("div");
+    //element.id = "svg";
+    //document.getElementsByClassName("svg-container")[0].innerHTML = "";
+    //document.getElementsByClassName("svg-container")[0].appendChild(element);
+    //var newSvg = document.getElementById("svg");
+    let tooltip = document.getElementById("tooltip");
+    //newSvg.outerHTML = APP_STORAGE.importdevs.getSvg();
 
     APP_STORAGE.importdevs.setOpenModalSvg(false);
-    var hrefs = document.getElementsByClassName("well");
-
-    for (let i in hrefs) {
-      hrefs.item(Number(i)).addEventListener("mouseout", function (e) {
-        document.getElementById(hrefs[i].id).style.stroke = "";
-        e.preventDefault(); /*use if you want to prevent the original link following action*/
-        var tooltip = document.getElementById("tooltip");
+    const hrefs: SVGElement[] = Array.from(document.querySelectorAll(".well"));
+    hrefs.forEach((item, i) => {
+      item.addEventListener("mouseout", () => {
+        item.style.stroke = "";
         tooltip.style.display = "none";
       });
-
-      hrefs.item(Number(i)).addEventListener("mousemove", function (e) {
-        e.preventDefault(); /*use if you want to prevent the original link following action*/
-
-        for (var j in APP_STORAGE.devs.getChangeSensors2()) {
-          if (
-            String(hrefs[i].id.slice(5)) ===
-            String(APP_STORAGE.devs.getChangeSensors2()[j].id)
-          ) {
-            document.getElementById(hrefs[i].id).style.stroke = "#25E48B";
-            var clientRectangle = document
-              .getElementById(hrefs[i].id)
-              .getBoundingClientRect();
-            let tooltip = document.getElementById("tooltip");
+      item.addEventListener("mousemove", () => {
+        APP_STORAGE.devs.getChangeSensors2().forEach((dev, j) => {
+          if (item.id.slice(5) === dev.id) {
+            item.style.stroke = "#25E48B";
+            const clientRectangle = item.getBoundingClientRect();
             tooltip.innerHTML =
               "Номер косы" +
               "-" +
@@ -426,18 +488,12 @@ export class ImportDevStorage {
             tooltip.style.left = clientRectangle.left + "px";
             tooltip.style.top = clientRectangle.top + "px";
           }
-        }
+        });
       });
-
-      hrefs.item(Number(i)).addEventListener("click", function (e) {
-        e.preventDefault(); /*use if you want to prevent the original link following action*/
-
-        for (var j in APP_STORAGE.devs.getChangeSensors2()) {
-          if (
-            String(hrefs[i].id.slice(5)) ===
-            String(APP_STORAGE.devs.getChangeSensors2()[j].id)
-          ) {
-            APP_STORAGE.devs.setIdChild("_dev_id_key_" + hrefs[i].id.slice(5));
+      item.addEventListener("click", () => {
+        APP_STORAGE.devs.getChangeSensors2().forEach((dev, j) => {
+          if (item.id.slice(5) === dev.id) {
+            APP_STORAGE.devs.setIdChild("_dev_id_key_" + item.id.slice(5));
             APP_STORAGE.sensors.setEmptySession("");
             APP_STORAGE.sensors.setSessFirstLast([]);
             APP_STORAGE.sensors.setSessFirstLastCharts([]);
@@ -448,12 +504,11 @@ export class ImportDevStorage {
             APP_STORAGE.sensors.setChoseSessTime("");
             APP_STORAGE.sensors.setAkbSessLast("");
             APP_STORAGE.devs_groups.setMiddleForm(2);
-
             APP_STORAGE.devs.setTopMenuDev("top_menu-1");
           }
-        }
+        });
       });
-    }
+    });
   }
 
   async set_SchemeSvg(sess_code: string) {

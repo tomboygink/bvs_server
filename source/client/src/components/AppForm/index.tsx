@@ -93,13 +93,9 @@ export class AppForm extends React.Component<IProps> {
       APP_STORAGE.devs_groups.getMiddleForm() === 1 ||
       APP_STORAGE.devs_groups.getMiddleForm() === ""
     ) {
-      middle_form = <DevLocation />;
-      // middle_form = (
-      //   <>
-      //     <DevLocation />
-      //     <DevLocationFC />;
-      //   </>
-      // );
+      //middle_form = <DevLocation />;
+      middle_form = <DevLocationFC />;
+
       new_group = <AddNewGroup />;
       left_form = <DevsGroupsTree />;
     }

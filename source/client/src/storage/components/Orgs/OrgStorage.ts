@@ -20,7 +20,7 @@ import {
 
 import { regexp_inn } from "../../../../utils/consts";
 
-type Org = {
+export interface Org {
   id: string;
   name: string;
   full_name: string;
@@ -29,7 +29,7 @@ type Org = {
   latitude: string;
   longitude: string;
   info: string;
-};
+}
 export class OrgStorage {
   @observable modal_edit_org: boolean = false;
 

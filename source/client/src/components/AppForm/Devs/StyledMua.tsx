@@ -96,7 +96,7 @@ export const handleChange = async (event: any, node: any) => {
     APP_STORAGE.main.setTitle("Показания устройств");
     APP_STORAGE.devs.setIdDevs(node);
     APP_STORAGE.devs_groups.setMiddleForm(1);
-    APP_STORAGE.importdevs.setSvg("");
+    //APP_STORAGE.importdevs.setSvg("");
   }
 
   if (node.includes("_dev_id_key_") === true) {

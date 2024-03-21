@@ -8,6 +8,7 @@ import { TextField, Box, Dialog, Divider, Typography } from "@mui/material";
 import { NewUserRegistration } from "./NewUserRegistration";
 import { NewOrganization } from "./NewOrganization";
 import { NewJobsTittle } from "./NewJobsTittle";
+import { NewWell } from "./NewWell";
 
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -90,7 +91,12 @@ export class ModalLeftPanel extends React.Component<IProps> {
     ) {
       modal_date = <NewJobsTittle />;
     }
-
+    if (
+      APP_STORAGE.reg_user.getModalRegUser() === true &&
+      APP_STORAGE.reg_user.getTakeModal() === 4
+    ) {
+      modal_date = <NewWell />;
+    }
     return (
       <React.Fragment>
         <Dialog
