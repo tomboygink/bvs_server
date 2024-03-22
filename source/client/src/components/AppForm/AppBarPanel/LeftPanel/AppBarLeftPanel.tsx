@@ -20,6 +20,7 @@ import BusinessIcon from "@mui/icons-material/Business";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import EngineeringOutlinedIcon from "@mui/icons-material/EngineeringOutlined";
+import AccountTreeOutlinedIcon from "@mui/icons-material/AccountTreeOutlined";
 
 import LogoutIcon from "@mui/icons-material/Logout";
 
@@ -47,6 +48,8 @@ export class AppBarLeftPanel extends React.Component<IProps> {
     APP_STORAGE.devs_groups.setMiddleForm(6);
     APP_STORAGE.app_bar.setSetOpenAppBar(false);
   }
+
+  openListWell() {}
 
   async DevLocation(e: any) {
     APP_STORAGE.devs_groups.setMiddleForm(e);
@@ -146,6 +149,16 @@ export class AppBarLeftPanel extends React.Component<IProps> {
             Должности
           </MenuItem>
 
+          <MenuItem onClick={() => this.openListWell()}>
+            <ListItemIcon className="list_item">
+              <AccountTreeOutlinedIcon
+                fontSize="small"
+                sx={{ color: "#007FFF" }}
+              />
+            </ListItemIcon>{" "}
+            Скважины
+          </MenuItem>
+
           <Divider light sx={{ pb: 1, pt: 1 }} />
 
           <MenuItem
@@ -173,6 +186,22 @@ export class AppBarLeftPanel extends React.Component<IProps> {
               <WorkOutlineIcon fontSize="small" sx={{ color: "#007FFF" }} />
             </ListItemIcon>
             Добавить должность
+          </MenuItem>
+
+          <MenuItem
+            onClick={() => this.OpenModalRegUser(4, "Добавить скважину")}
+          >
+            <ListItemIcon
+              sx={{ color: "#007FFF", fontSize: "12px", fontWeight: "600" }}
+              className="list_item"
+            >
+              <AccountTreeOutlinedIcon
+                fontSize="small"
+                sx={{ color: "#007FFF" }}
+              />
+              +
+            </ListItemIcon>{" "}
+            Добавить скважину
           </MenuItem>
 
           <Divider light sx={{ pb: 1, pt: 1 }} />
