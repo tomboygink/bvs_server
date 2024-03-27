@@ -9,6 +9,7 @@ import { NewUserRegistration } from "./NewUserRegistration";
 import { NewOrganization } from "./NewOrganization";
 import { NewJobsTittle } from "./NewJobsTittle";
 import { NewWell } from "./NewWell";
+import { CloseButton } from "../../../../shared/CloseButton";
 
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -103,22 +104,23 @@ export class ModalLeftPanel extends React.Component<IProps> {
           componentsProps={{
             backdrop: { style: { backgroundColor: "rgba(0 0 0 / 35%)" } },
           }}
+          PaperProps={{
+            component: "form",
+          }}
           open={APP_STORAGE.reg_user.getModalRegUser()}
           fullWidth
         >
           <Box sx={{ p: 2 }}>
             <Box
               className="ModalTitle"
-              sx={{ display: "flex", justifyContent: "space-between" }}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                mb: "12px",
+              }}
             >
               <Typography>{APP_STORAGE.reg_user.getTittleModal()}</Typography>
-
-              <CloseIcon
-                sx={{ color: "#1976D2" }}
-                onClick={() => {
-                  this.closeModal();
-                }}
-              />
+              <CloseButton onClose={() => this.closeModal()} />
             </Box>
             <Divider sx={{ marginBottom: "20px" }} />
 

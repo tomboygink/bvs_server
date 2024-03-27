@@ -22,6 +22,9 @@ import { Orgs } from "./Оrgs/Оrgs";
 import { JobsTitlesMenu } from "./JobsTitles/JobsTitlesMenu";
 import { JobsTitles } from "./JobsTitles/JobsTitles";
 
+import { Wells } from "./Wells/Wells";
+import { WellsMenu } from "./Wells/WellsMenu";
+
 import { DevLocation } from "./Devs/DevsGroups/DevLocation"; ////////расположение устройств
 import { DevLocationFC } from "./Devs/DevsGroups/DevLocationFC";
 import { ChangeDevsGroups } from "./Devs/DevsGroups/Menu/ChangeDevsGroups"; /////// Редактировать расположение5 устройств (модальное окно)
@@ -127,6 +130,11 @@ export class AppForm extends React.Component<IProps> {
     if (APP_STORAGE.devs_groups.getMiddleForm() === 6) {
       middle_form = <JobsTitles />;
       left_form = <JobsTitlesMenu />;
+    }
+
+    if (APP_STORAGE.devs_groups.getMiddleForm() === 7) {
+      middle_form = <Wells />;
+      left_form = <WellsMenu />;
     }
 
     right_form = <SensorsList />;

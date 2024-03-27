@@ -1,15 +1,9 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
 import { toJS } from "mobx";
 import {
   Box,
-  Link,
-  TextField,
   Button,
-  FormHelperText,
-  TextareaAutosize,
-  Typography,
-  Divider,
   Select,
   MenuItem,
   FormControl,
@@ -17,79 +11,176 @@ import {
   Alert,
   Stack,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+
 import { Org } from "../../../../../storage/components/Orgs/OrgStorage";
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
+import { useFormValidation } from "../../../../../hooks/UseFormValidation";
 import { TextInput } from "../../../../shared/TextInput";
 import { IGroup } from "../../../../../models/IDevice";
 
 interface IProps {}
+
 export const NewWell: FC<IProps> = observer(() => {
+  const {
+    values,
+    errors,
+    handleChange,
+    handleSelectChange,
+    isInValidInput,
+    isValid,
+  } = useFormValidation();
+
+  const [validationMessage, setValidationMessage] = useState("");
+  const [group, setGroup] = useState([]);
+  const [currentDevs, setCurrentDevs] = useState([]);
+
   const orgs: Org[] = JSON.parse(
     JSON.stringify(APP_STORAGE.reg_user.getOrgAll())
   );
   const locations = JSON.parse(
     JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
   );
-  const [group, setGroup] = useState([]);
+  const allDevs = toJS(APP_STORAGE.devs_groups.getAllDevs());
 
-  const handleAddWell = () => {
-    APP_STORAGE.reg_user.set_NewThermalWell(
-      "sess_id",
-      APP_STORAGE.auth_form.getdt()
+  // Получение значения: форма валидна или нет
+  const isValidForm = () => {
+    return (
+      isValid && Boolean(values.addWell_location) && Boolean(values.addWell_org)
     );
   };
 
+  // Options для списка с расположением
   const getGroups = (locations: IGroup[]) => {
-    // const arr = locations.reduce((acc, { group: { g_name } }) => {
-    //   return [...acc, g_name];
-    // }, []);
     let allLocations: any[] = [];
-    const recursion = (arr: any[]) => {
-      for (let elem of arr) {
-        allLocations.push({ id: elem.group.id, name: elem.group.g_name });
-        if (elem.childs.length !== 0) {
-          recursion(elem.childs);
+    const recursion = (arr: IGroup[]) => {
+      arr.forEach((item) => {
+        if (item.childs.length > 0) {
+          recursion(item.childs);
         }
-      }
+
+        allLocations = [
+          ...allLocations,
+          {
+            id: item.group.id,
+            name: item.group.g_name,
+            parent_id: item.group.parent_id,
+            org_id: item.group.org_id,
+          },
+        ];
+      });
+      // const groups = arr.reduce((acc, { group: { g_name, id } }) => {
+      //   return [...acc, { id, name: g_name }];
+      // }, []);
+      // setGroup(groups);
     };
     recursion(locations);
-
     setGroup(allLocations);
   };
 
+  //Options для списка с организация и устройствами в зависимости от выбранного расположения
+  const getOrg = (arr: Org[]) => {
+    let selectedLocation: {
+      id: string;
+      name: string;
+      parent_id: string;
+      org_id: string;
+    };
+    selectedLocation = group.find((item) => {
+      return item.id === values.addWell_location;
+    });
+    const org = arr.find((item) => {
+      return item.id === selectedLocation?.org_id;
+    });
+    const devs = allDevs.filter(
+      (item) => item.group_dev_id === values.addWell_location
+    );
+    if (org) {
+      values.addWell_org = org.id;
+    }
+    if (devs.length !== 0) {
+      setCurrentDevs(devs);
+    } else setCurrentDevs([]);
+  };
+
+  // Отправка формы
+  const handleAddWell = () => {
+    setValidationMessage("");
+    isValidForm()
+      ? APP_STORAGE.reg_user.set_NewThermalWell(
+          "sess_id",
+          APP_STORAGE.auth_form.getdt(),
+          values
+        )
+      : setValidationMessage("Не заполнены обязательные поля");
+  };
+
   useEffect(() => {
+    values.addWell_dev = "";
+    getOrg(orgs);
     getGroups(locations);
-  }, []);
+  }, [APP_STORAGE.devs_groups.getDevsGroups(), values.addWell_location]);
 
   return (
     <React.Fragment>
       <TextInput
-        // error={APP_STORAGE.reg_user.getErrorJobs()}
-        // helperText={APP_STORAGE.reg_user.getTextHelpJobs()}
-        label="Номер скважины"
-        onChange={(e) => {
-          APP_STORAGE.reg_user.setNumberWell(e.target.value);
+        InputProps={{
+          name: "addWell_number",
+          style: { fontSize: 12 },
         }}
-        value={APP_STORAGE.reg_user.getNumberWell() || ""}
+        error={
+          "addWell_number" in isInValidInput &&
+          Boolean(isInValidInput.addWell_number)
+        }
+        helperText={
+          "addWell_number" in errors ? String(errors.addWell_number) : ""
+        }
+        label="Номер скважины"
+        value={values.addWell_number || ""}
+        onChange={handleChange}
       />
 
-      <FormControl
-        fullWidth
-        size="small"
-        sx={{ mt: "14px" }}
-        // error={APP_STORAGE.reg_user.getErrorOrg()}
-      >
+      <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+        <InputLabel className="org" sx={{ fontSize: "12px" }}>
+          Расположение*
+        </InputLabel>
+
+        <Select
+          name="addWell_location"
+          sx={{ fontSize: "12px" }}
+          label="расположение"
+          value={values.addWell_location || ""}
+          onChange={handleSelectChange}
+        >
+          {group
+            .map((item) => {
+              return (
+                <MenuItem
+                  id={`optionOrg_${item.id}`}
+                  key={item.id}
+                  sx={{
+                    fontSize: "12px",
+                    fontWeight: `${item.parent_id === "0" ? "600" : "400"}`,
+                    pl: `${item.parent_id === "0" ? "16px" : "32px"}`,
+                  }}
+                  value={item.id}
+                >
+                  {item.name}
+                </MenuItem>
+              );
+            })
+            .reverse()}
+        </Select>
+      </FormControl>
+      <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
         <InputLabel className="org" sx={{ fontSize: "12px" }}>
           Организация*
         </InputLabel>
         <Select
+          name="addWell_org"
           sx={{ fontSize: "12px" }}
-          value={APP_STORAGE.reg_user.getOrgId() || ""}
+          value={values.addWell_org || ""}
           label="организация"
-          onChange={(e) => {
-            APP_STORAGE.reg_user.setOrgId(e.target.value);
-          }}
+          onChange={handleSelectChange}
         >
           {orgs.map((item) => {
             return (
@@ -98,77 +189,31 @@ export const NewWell: FC<IProps> = observer(() => {
               </MenuItem>
             );
           })}
-          <Divider />
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              m: 1,
-              borderRadius: "4px",
-            }}
-          >
-            <MenuItem
-            //   onClick={() => this.OpenModalRegUser(2, "Добавить организацию")}
-            >
-              <AddIcon sx={{ fontSize: "17px", mt: 1, color: "#266BF1" }} />
-              <Typography sx={{ fontSize: "12px", mt: 1 }}>
-                Добавить организацию
-              </Typography>
-            </MenuItem>
-          </Box>
         </Select>
-        <FormHelperText>
-          {/* {APP_STORAGE.reg_user.getTextHelpOrg()} */}
-        </FormHelperText>
       </FormControl>
-      <FormControl
-        fullWidth
-        size="small"
-        sx={{ mt: "14px" }}
-        // error={APP_STORAGE.reg_user.getErrorOrg()}
-      >
+      <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
         <InputLabel className="org" sx={{ fontSize: "12px" }}>
-          Расположение*
+          Устройство
         </InputLabel>
         <Select
+          name="addWell_dev"
           sx={{ fontSize: "12px" }}
-          value={APP_STORAGE.reg_user.getGroupId() || ""}
-          label="расположение"
-          onChange={(e) => APP_STORAGE.reg_user.setGroupId(e.target.value)}
+          value={currentDevs.length === 0 ? "" : values.addWell_dev}
+          onChange={handleSelectChange}
+          label="Устройство"
         >
-          {group.map((item) => {
+          <MenuItem value="">
+            <em>Ничего не выбирать</em>
+          </MenuItem>
+          {currentDevs.map((item) => {
             return (
-              <MenuItem key={item.id} sx={{ fontSize: "12px" }} value={item.id}>
-                {item.name}
+              <MenuItem key={item.id} value={item.id}>
+                {item.number}
               </MenuItem>
             );
           })}
-          <Divider />
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              m: 1,
-              borderRadius: "4px",
-            }}
-          >
-            <MenuItem
-            //   onClick={() => this.OpenModalRegUser(2, "Добавить организацию")}
-            >
-              <AddIcon sx={{ fontSize: "17px", mt: 1, color: "#266BF1" }} />
-              <Typography sx={{ fontSize: "12px", mt: 1 }}>
-                Добавить организацию
-              </Typography>
-            </MenuItem>
-          </Box>
         </Select>
-        <FormHelperText>
-          {/* {APP_STORAGE.reg_user.getTextHelpOrg()} */}
-        </FormHelperText>
       </FormControl>
-
       <Box
         sx={{
           display: "flex",
@@ -201,6 +246,11 @@ export const NewWell: FC<IProps> = observer(() => {
           <Alert severity="error">
             {APP_STORAGE.reg_user.getErrorSave_mess()}
           </Alert>
+        </Stack>
+      )}
+      {validationMessage.length !== 0 && (
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          <Alert severity="error">{validationMessage}</Alert>
         </Stack>
       )}
     </React.Fragment>

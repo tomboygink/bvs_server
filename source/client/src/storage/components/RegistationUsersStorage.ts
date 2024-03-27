@@ -124,12 +124,7 @@ export class ModalLeftPanel {
   @observable nodeid_user: string = "";
   @observable nodeid_org: string = "";
   @observable nodeid_jobstitles: string = "";
-
-  // Добавление новой скважины
-  @observable number_well: string = "";
-  @observable org_id: string = "";
-  @observable group_id: string = "";
-  @observable dev_id: string = "";
+  @observable nodeid_well: string = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -155,6 +150,14 @@ export class ModalLeftPanel {
   } /// OrgMenu
   @computed getNodeidJobsTitles(): string {
     return this.nodeid_jobstitles;
+  }
+
+  @action setNodeIdWell(val: string) {
+    this.nodeid_well = val;
+  }
+
+  @computed getNodeIdWell(): string {
+    return this.nodeid_well;
   }
 
   @action setOpenTableUsers(val: boolean) {
@@ -657,31 +660,6 @@ export class ModalLeftPanel {
     return this.texthelp_jobs;
   }
 
-  //Добавление новой скважины
-  @action setNumberWell(val: string) {
-    this.number_well = val;
-  }
-  @computed getNumberWell(): string {
-    return this.number_well;
-  }
-  @action setOrgId(val: string) {
-    this.org_id = val;
-  }
-  @computed getOrgId(): string {
-    return this.org_id;
-  }
-  @action setGroupId(val: string) {
-    this.group_id = val;
-  }
-  @computed getGroupId(): string {
-    return this.group_id;
-  }
-  @action setDevId(val: string) {
-    this.dev_id = val;
-  }
-  @computed getDevId(): string {
-    return this.dev_id;
-  }
   async get_AllUsers(name: string, value: any, _options?: any) {
     /* -----  Отправляем запрос на получение всех пользователей   */
     var sess_code = value;
@@ -1172,22 +1150,34 @@ export class ModalLeftPanel {
     }
   }
 
-  set_NewThermalWell(name: string, value: string, _options?: string) {
+  set_NewThermalWell(
+    name: string,
+    value: string,
+    options?: { [key: string]: string }
+  ) {
+    const {
+      addWell_number: number,
+      addWell_location: location,
+      addWell_org: org,
+      addWell_dev: dev,
+    } = options;
+
     const sess_code = value;
     const q: IWSQuery = new WSQuery("set_ThermalWell");
     q.args = {
-      number: this.getNumberWell(),
-      org_id: this.getOrgId() || "",
-      group_id: this.getGroupId() || "",
-      dev_id: this.getDevId(),
+      number: number,
+      org_id: Number(org),
+      group_id: Number(location),
+      dev_id: Number(dev) || null,
     };
     q.sess_code = sess_code;
-    console.log("code=>", value);
+
     api
       .fetch(q)
       .then(() => {
         this.setSuccessSave_mess(SAVE_SUCCESS);
         setTimeout(() => {
+          this.setModalRegUser(false);
           this.setSuccessSave_mess("");
         }, 2000);
       })
