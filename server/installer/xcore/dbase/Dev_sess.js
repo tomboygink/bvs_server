@@ -43,10 +43,10 @@ var Dev_sessEntity = (function () {
     function Dev_sessEntity() {
         this.id = 0;
         this.time_srv = new Date(Date.now());
-        this.dev_number = '';
+        this.dev_number = "";
         this.dev_id = 0;
         this.level_akb = 0;
-        this.sess_data = '';
+        this.sess_data = "";
     }
     return Dev_sessEntity;
 }());
@@ -65,25 +65,35 @@ var Dev_sessTable = (function () {
                     case 0:
                         dev_sess = {
                             id: 0,
-                            time_dev: '',
-                            time_srv: '',
-                            dev_number: '',
+                            time_dev: "",
+                            time_srv: "",
+                            dev_number: "",
                             dev_id: 0,
                             level_akb: 0.0,
-                            sess_data: ''
+                            sess_data: ""
                         };
-                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                        tzoffset = new Date().getTimezoneOffset() * 60000;
                         start_date = (0, DateStr_1.dateTimeToSQL)(new Date(this.args.sess_period_start));
                         end_date = (0, DateStr_1.dateTimeToSQL)(new Date(this.args.sess_period_end));
-                        return [4, this.db.query("SELECT * FROM SelectDev_Sess ('" + this.args.dev_number + "', '" + start_date + "', '" + end_date + "')")];
+                        return [4, this.db.query("SELECT * FROM SelectDev_Sess ('" +
+                                this.args.dev_number +
+                                "', '" +
+                                start_date +
+                                "', '" +
+                                end_date +
+                                "')")];
                     case 1:
                         db_res = _a.sent();
                         result = new Array();
                         for (i in db_res.rows) {
                             dev_sess = {
                                 id: db_res.rows[i].id,
-                                time_dev: (new Date(db_res.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
-                                time_srv: (new Date(db_res.rows[i].time_srv - tzoffset)).toISOString().slice(0, -8),
+                                time_dev: new Date(db_res.rows[i].time_dev - tzoffset)
+                                    .toISOString()
+                                    .slice(0, -8),
+                                time_srv: new Date(db_res.rows[i].time_srv - tzoffset)
+                                    .toISOString()
+                                    .slice(0, -8),
                                 dev_number: db_res.rows[i].dev_number,
                                 dev_id: db_res.rows[i].dev_id,
                                 level_akb: db_res.rows[i].level_akb,
@@ -104,22 +114,26 @@ var Dev_sessTable = (function () {
                     case 0:
                         dev_sess = {
                             id: 0,
-                            time_dev: '',
-                            time_srv: '',
-                            dev_number: '',
+                            time_dev: "",
+                            time_srv: "",
+                            dev_number: "",
                             dev_id: 0,
                             level_akb: 0.0,
-                            sess_data: ''
+                            sess_data: ""
                         };
                         result = {
                             svg: "",
                             dev_result: dev_result
                         };
-                        return [4, this.db.query("SELECT * FROM dev_sess where dev_number = '" + this.args.dev_number + "' order by id desc limit 1;")];
+                        return [4, this.db.query("SELECT * FROM dev_sess where dev_number = '" +
+                                this.args.dev_number +
+                                "' order by id desc limit 1;")];
                     case 1:
                         db_res_last = _d.sent();
                         return [4, this.db.query("SELECT dev_sess.* FROM dev_sess INNER JOIN control_dev_sess ON dev_sess.id = control_dev_sess.dev_sess_id " +
-                                "WHERE dev_sess.dev_number = '" + this.args.dev_number + "'")];
+                                "WHERE dev_sess.dev_number = '" +
+                                this.args.dev_number +
+                                "'")];
                     case 2:
                         db_res_first = _d.sent();
                         dev_result = new Array();
@@ -134,11 +148,15 @@ var Dev_sessTable = (function () {
                         _c = _b[_i];
                         if (!(_c in _a)) return [3, 5];
                         i = _c;
-                        tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                        tzoffset = new Date().getTimezoneOffset() * 60000;
                         dev_sess = {
                             id: db_res_last.rows[i].id,
-                            time_dev: (new Date(db_res_last.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
-                            time_srv: (new Date(db_res_last.rows[i].time_srv - tzoffset)).toISOString().slice(0, -8),
+                            time_dev: new Date(db_res_last.rows[i].time_dev - tzoffset)
+                                .toISOString()
+                                .slice(0, -8),
+                            time_srv: new Date(db_res_last.rows[i].time_srv - tzoffset)
+                                .toISOString()
+                                .slice(0, -8),
                             dev_number: db_res_last.rows[i].dev_number,
                             dev_id: db_res_last.rows[i].dev_id,
                             level_akb: db_res_last.rows[i].level_akb,
@@ -148,8 +166,12 @@ var Dev_sessTable = (function () {
                         if (db_res_first.rows[i] !== undefined) {
                             dev_sess = {
                                 id: db_res_first.rows[i].id,
-                                time_dev: (new Date(db_res_first.rows[i].time_dev - tzoffset)).toISOString().slice(0, -8),
-                                time_srv: (new Date(db_res_first.rows[i].time_srv - tzoffset)).toISOString().slice(0, -8),
+                                time_dev: new Date(db_res_first.rows[i].time_dev - tzoffset)
+                                    .toISOString()
+                                    .slice(0, -8),
+                                time_srv: new Date(db_res_first.rows[i].time_srv - tzoffset)
+                                    .toISOString()
+                                    .slice(0, -8),
                                 dev_number: db_res_first.rows[i].dev_number,
                                 dev_id: db_res_first.rows[i].dev_id,
                                 level_akb: db_res_first.rows[i].level_akb,
@@ -157,7 +179,9 @@ var Dev_sessTable = (function () {
                             };
                         }
                         dev_result.push(dev_sess);
-                        return [4, this.db.query("select svg from scheme_thermostreamer_svg where id_devs=" + db_res_last.rows[i].dev_id + "")];
+                        return [4, this.db.query("select svg from scheme_thermostreamer_svg where id_devs=" +
+                                db_res_last.rows[i].dev_id +
+                                "")];
                     case 4:
                         svg = _d.sent();
                         result = {

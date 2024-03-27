@@ -12,6 +12,7 @@ import { Dev_sessTable } from '../xcore/dbase/Dev_sess';
 import { SchemeSvgTable } from '../xcore/dbase/SchemeSvg';
 import { SendMail } from '../xcore/mailer/sendMail'
 import { SchemeThermoStreamerSvgTable } from '../xcore/dbase/Scheme_Thermostreamer_Svg';
+import { ThermalWellTable } from '../xcore/dbase/ThermalWell';
 
 
 var res: any = {
@@ -469,7 +470,7 @@ export async function router(body: any) {
                 res.data = null;
                 res.error = null;
             }
-            else{
+            else {
                 res.cmd = body.cmd;
                 res.code = body.sess_code;
                 res.data = null;
@@ -492,7 +493,6 @@ export async function router(body: any) {
 
 
         //------------------------------------------------------------------------ПОЛУЧЕНИЕ СЕССИЙ ЗА ОПРЕДЕЛЕННЫЙ ПЕРИОД 
-
         case 'get_DevSessions': {
             var dev_sess = new Dev_sessTable(body.args, body.sess_code);
             data = await dev_sess.selectDevSess();
@@ -513,7 +513,7 @@ export async function router(body: any) {
             res.error = null;
         } break;
 
-        
+
         //------------------------------------------------------------------------ДОБАВЛЕНИЕ СХЕМЫ ТЕРМОКОСЫ 
         case 'set_ThermoStreamer_Svg': {
             var schemeThermoStreamerSvg = new SchemeThermoStreamerSvgTable(body.args);
@@ -524,7 +524,61 @@ export async function router(body: any) {
             res.error = null;
         } break;
 
-        
+        //------------------------------------------------------------------------ДОБАВЛЕНИЕ ТЕРМОСКВАЖИНЫ
+        case 'set_ThermalWell': {
+            var thermalWell = new ThermalWellTable(body.args, body.sess_code);
+            data = await thermalWell.insertThermalWell();
+            if (data === null || data[0] === undefined) {
+                res.cmd = body.cmd;
+                res.code = body.sess_code;
+                res.data = null;
+                res.error = "Ошибка добавления скважины";
+            }
+            else {
+                res.cmd = body.cmd;
+                res.code = body.sess_code;
+                res.data = null;
+                res.error = null;
+            }
+        } break;
+
+
+        //------------------------------------------------------------------------ПОЛУЧЕНИЕ ТЕРМОСКВАЖИН
+        case 'get_ThermalWell': {
+            var thermalWell = new ThermalWellTable(body.args, body.sess_code);
+            data = await thermalWell.selectThermalWell();
+            if (data === null || data[0] === undefined) {
+                res.cmd = body.cmd;
+                res.code = body.sess_code;
+                res.data = null;
+                res.error = "Ошибка получения данных";
+            }
+            else {
+                res.cmd = body.cmd;
+                res.code = body.sess_code;
+                res.data = data;
+                res.error = null;
+            }
+        } break;
+
+
+        //------------------------------------------------------------------------ПОЛУЧЕНИЕ ТЕРМОСКВАЖИН
+        case 'set_ChangeThermalWell': {
+            var thermalWell = new ThermalWellTable(body.args, body.sess_code);
+            data = await thermalWell.updateThermalWell();
+            if (data === true) {
+                res.cmd = body.cmd;
+                res.code = body.sess_code;
+                res.data = null;
+                res.error = null;
+            }
+            else {
+                res.cmd = body.cmd;
+                res.code = body.sess_code;
+                res.data = null;
+                res.error = "Произошла ошибка редактирования"
+            }
+        } break;
 
 
         //------------------------------------------------------------------------УДАЛЕНИЕ КУКОВ ПОСЛЕ ВЫХОДА

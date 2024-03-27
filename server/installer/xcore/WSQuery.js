@@ -9,17 +9,17 @@ function objToString(obj) {
             first = false;
         }
         else {
-            sstr += ',';
+            sstr += ",";
         }
         if (obj[k] === null) {
             sstr += '"' + k + '":null';
         }
-        else if ('object' == typeof obj[k]) {
+        else if ("object" == typeof obj[k]) {
             sstr += '"' + k + '":' + objToString(obj[k]);
         }
-        else if ('undefined' == typeof obj[k]) {
+        else if ("undefined" == typeof obj[k]) {
         }
-        else if ('string' == typeof obj[k]) {
+        else if ("string" == typeof obj[k]) {
             sstr += '"' + k + '":"' + obj[k].replaceAll('"', '\\"') + '"';
         }
         else {
@@ -35,25 +35,25 @@ function WSStr(obj) {
 exports.WSStr = WSStr;
 var WSQuery = (function () {
     function WSQuery(_cmd, _args, _sess_code) {
-        this.cmd = '';
+        this.cmd = "";
         this.args = {};
-        this.sess_code = '';
-        this.cmd = _cmd || '';
+        this.sess_code = "";
+        this.cmd = _cmd || "";
         this.args = _args || {};
-        this.sess_code = _sess_code || '';
+        this.sess_code = _sess_code || "";
     }
     return WSQuery;
 }());
 exports.WSQuery = WSQuery;
 var WSResult = (function () {
     function WSResult(_cmd) {
-        this.cmd = '';
+        this.cmd = "";
         this.error = null;
         this.data = null;
-        this.code = '';
-        this.cmd = _cmd || '';
+        this.code = "";
+        this.cmd = _cmd || "";
         this.data = new Array();
-        this.code = '';
+        this.code = "";
     }
     return WSResult;
 }());
