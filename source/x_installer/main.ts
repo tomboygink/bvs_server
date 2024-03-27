@@ -18,6 +18,7 @@ import { control_dev_sess_table } from './sql/control_dev_sess';
 import { function_sql } from './sql/function';
 import { scheme_svg_table } from './sql/scheme_svg';
 import { scheme_thermostreamer_svg_table } from './sql/scheme_thermostreamer_svg';
+import { skvazhiny_table } from './sql/skvazhiny';
 
 
 async function run() {
@@ -92,6 +93,10 @@ async function run() {
     await db.query(info_log_table.sql, info_log_table.args);
     console.log("TABLE \"info_log\" ADD");
 
+    //Создание таблицы скважины
+    console.log("ADDING TABLE \"skvazhiny\"");
+    await db.query(skvazhiny_table.sql, skvazhiny_table.args);
+    console.log("TABLE \"skvazhiny\" ADD");
 
     //Создание таблицы схем месторождений 
     console.log("CREATING \"scheme_svg\"");
