@@ -6,6 +6,7 @@ import { APP_STORAGE } from "../../storage/AppStorage";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../xcore/WSQuery";
 import { WSocket } from "../WSocket";
 import { api, api1 } from "../../api/api";
+import { Org } from "./Orgs/OrgStorage";
 import {
   SAVE_SUCCESS,
   SAVE_ERROR,
@@ -36,7 +37,7 @@ export class ModalLeftPanel {
 
   @observable result_save: string = "";
 
-  @observable organization: Array<string> = [];
+  @observable organization: Array<Org> = [];
   @observable jobs_titles: Array<string> = [];
   @observable users: Array<string> = null;
   @observable jobs_titles_error: string = "";
@@ -195,10 +196,10 @@ export class ModalLeftPanel {
     return this.key_jobs;
   }
 
-  @action setOrgAll(val: Array<string>) {
+  @action setOrgAll(val: Array<Org>) {
     this.organization = val;
   }
-  @computed getOrgAll(): Array<string> {
+  @computed getOrgAll(): Array<Org> {
     return this.organization;
   }
 
@@ -673,6 +674,7 @@ export class ModalLeftPanel {
 
   setUsersAll(dt: IWSResult) {
     /* -----  Получаем всех пользователей   */
+
     this.setAllUsers(dt.data);
   }
 
@@ -1150,6 +1152,7 @@ export class ModalLeftPanel {
     }
   }
 
+  // Добавление скважины
   set_NewThermalWell(
     name: string,
     value: string,
@@ -1175,6 +1178,12 @@ export class ModalLeftPanel {
     api
       .fetch(q)
       .then(() => {
+        APP_STORAGE.wells.getDefaultWells();
+        // APP_STORAGE.devs_groups.get_DevsGroups(
+        //   "sess_id",
+        //   APP_STORAGE.auth_form.getdt()
+        // );
+
         this.setSuccessSave_mess(SAVE_SUCCESS);
         setTimeout(() => {
           this.setModalRegUser(false);

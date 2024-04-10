@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, FC, ChangeEvent } from "react";
+import { observer } from "mobx-react";
 import {
   Typography,
   Box,
@@ -10,38 +11,32 @@ import {
 import { TreeView, TreeItem } from "@mui/x-tree-view";
 import SearchIcon from "@mui/icons-material/Search";
 import GpsNotFixedIcon from "@mui/icons-material/GpsNotFixed";
-import { set } from "mobx";
+import { set, toJS } from "mobx";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-const wells = [
-  {
-    id: "11",
-    number: "4556",
-    location: "1",
-    org: "1",
-    dev: "45",
-  },
-  {
-    id: "12",
-    number: "4596879",
-  },
-  {
-    id: "13",
-    number: "7845",
-  },
-  {
-    id: "14",
-    number: "1658",
-  },
-  {
-    id: "15",
-    number: "754546",
-  },
-];
+import { IDefaultWell } from "../../../models/IWell";
 
-export const WellsMenu = () => {
+export const WellsMenu: FC = observer(() => {
+  const wells = APP_STORAGE.wells.getDefaultWells();
+  const [filteredWells, setFilteredWells] = useState<IDefaultWell[]>(wells);
+  const [searchValue, setSearchValue] = useState<string>("");
   const handleSelect = (e: any, node: any) => {
     APP_STORAGE.reg_user.setNodeIdWell(node);
   };
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchValue(value);
+  };
+
+  const getFiltredWells = () => {
+    const filteredWells = wells.filter((well) =>
+      well.number.includes(searchValue)
+    );
+    setFilteredWells(filteredWells);
+  };
+  useEffect(() => setFilteredWells(wells), [wells]);
+  useEffect(() => {
+    getFiltredWells();
+  }, [searchValue]);
 
   return (
     <React.Fragment>
@@ -71,9 +66,7 @@ export const WellsMenu = () => {
             sx={{ ml: 1, flex: 1, fontSize: "14px", pl: "14px" }}
             placeholder="Поиск по номеру"
             inputProps={{ "aria-label": "search google maps" }}
-            onChange={(e) => {
-              console.log(e.target.value);
-            }}
+            onChange={handleSearch}
           />
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
           <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
@@ -86,12 +79,26 @@ export const WellsMenu = () => {
           aria-label="customized"
           sx={{ flexGrow: 1, maxWidth: 400, overflow: "auto" }}
         >
-          {wells.map((well) => {
+          {/* {APP_STORAGE.wells.getWells().map((well) => {
             return (
               <TreeItem
-                key={well.id}
-                nodeId={well.id}
+                key={well.number}
+                nodeId={well.number}
                 label={well.number}
+                icon={<GpsNotFixedIcon sx={{ color: "#266BF1" }} />}
+                sx={{
+                  color: "#222",
+                  fontSize: "14px",
+                }} 
+              ></TreeItem>
+            );
+          })} */}
+          {filteredWells?.map((item) => {
+            return (
+              <TreeItem
+                key={item.id}
+                nodeId={item.number}
+                label={item.number}
                 icon={<GpsNotFixedIcon sx={{ color: "#266BF1" }} />}
                 sx={{
                   color: "#222",
@@ -104,4 +111,4 @@ export const WellsMenu = () => {
       </Box>
     </React.Fragment>
   );
-};
+});

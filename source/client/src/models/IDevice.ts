@@ -15,6 +15,7 @@ export interface IDevice {
   period_sess: string;
   sensors: TDSensorsList;
   time: string;
+  well: string;
 }
 
 export interface IGroupData {
@@ -38,4 +39,11 @@ export interface IGroup {
   p_id: string;
   sheme_svg: "" | null;
   update: boolean;
+}
+
+export interface ILocation {
+  id: string;
+  name: string;
+  parent_id: string;
+  org_id: string;
 }

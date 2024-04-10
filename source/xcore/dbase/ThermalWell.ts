@@ -27,7 +27,6 @@ export class ThermalWellTable {
 
     //Добавление скважины в базу данных
     async insertThermalWell(): Promise<ThermalWellEntity[]> {
-        console.log("this")
         var db_res = await this.db.query("INSERT INTO skvazhiny(number, org_id, group_id, dev_id, create_at) " +
             "VALUES(\'" + this.args.number + "\'," + this.args.org_id + "," + this.args.group_id + "," + this.args.dev_id + ",\'" + dateTimeToSQL(new Date(Date.now())) + "\') RETURNING  id");
         return db_res.rows[0].id;

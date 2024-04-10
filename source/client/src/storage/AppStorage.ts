@@ -31,6 +31,7 @@ import { JobsTitlesStorage } from "./components/JobsTitles/JobsTitlesStorage";
 import { SharedSrorage } from "./SharedStorage";
 import { ImportDevStorage } from "./components/Devs/ImportDevStorage";
 import { api } from "../api/api";
+import { WellsStorage } from "./components/Wells/WellsStorage";
 
 // ********************************************************************************************************************************************************
 // ХРАНИЛИЩЕ
@@ -50,6 +51,7 @@ class AppStorage {
   @observable importdevs: ImportDevStorage = null;
   @observable mobale: MobaleStorage = null; ////////////////////// Для мобильных устройств
   @observable shared_store: SharedSrorage = null;
+  @observable wells: WellsStorage = null;
 
   @observable devs_group_move: Array<any>; /////////////////////////////////////Тест(потом нужно удалить)
 
@@ -125,6 +127,7 @@ class AppStorage {
     this.mobale = new MobaleStorage();
     this.importdevs = new ImportDevStorage();
     this.shared_store = new SharedSrorage();
+    this.wells = new WellsStorage();
     makeAutoObservable(this);
 
     // WSocket.get();
@@ -219,6 +222,15 @@ class AppStorage {
       }
       case "get_DevPovs": {
         this.sensors.set_DevPovs(dt as IWSResult);
+      }
+      case "set_ThermalWell": {
+        this.wells.fetchWells();
+      }
+      case "set_ChangeThermalWell": {
+        this.wells.fetchWells();
+      }
+      case "get_ThermalWell": {
+        this.wells.setAllWells(dt as IWSResult);
       }
       default:
         {

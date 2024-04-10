@@ -14,6 +14,7 @@ import {
 
 import { Org } from "../../../../../storage/components/Orgs/OrgStorage";
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
+import { getGroups } from "../../../../../../utils/functions";
 import { useFormValidation } from "../../../../../hooks/UseFormValidation";
 import { TextInput } from "../../../../shared/TextInput";
 import { IGroup } from "../../../../../models/IDevice";
@@ -49,34 +50,6 @@ export const NewWell: FC<IProps> = observer(() => {
     );
   };
 
-  // Options для списка с расположением
-  const getGroups = (locations: IGroup[]) => {
-    let allLocations: any[] = [];
-    const recursion = (arr: IGroup[]) => {
-      arr.forEach((item) => {
-        if (item.childs.length > 0) {
-          recursion(item.childs);
-        }
-
-        allLocations = [
-          ...allLocations,
-          {
-            id: item.group.id,
-            name: item.group.g_name,
-            parent_id: item.group.parent_id,
-            org_id: item.group.org_id,
-          },
-        ];
-      });
-      // const groups = arr.reduce((acc, { group: { g_name, id } }) => {
-      //   return [...acc, { id, name: g_name }];
-      // }, []);
-      // setGroup(groups);
-    };
-    recursion(locations);
-    setGroup(allLocations);
-  };
-
   //Options для списка с организация и устройствами в зависимости от выбранного расположения
   const getOrg = (arr: Org[]) => {
     let selectedLocation: {
@@ -97,15 +70,22 @@ export const NewWell: FC<IProps> = observer(() => {
     if (org) {
       values.addWell_org = org.id;
     }
+
     if (devs.length !== 0) {
       setCurrentDevs(devs);
     } else setCurrentDevs([]);
   };
 
   // Отправка формы
+
   const handleAddWell = () => {
     setValidationMessage("");
-    isValidForm()
+    const hasWell = APP_STORAGE.wells
+      .getDefaultWells()
+      .find((item) => item.dev_id === values.addWell_dev);
+    hasWell
+      ? setValidationMessage("Устройство уже используется в другой скважине")
+      : isValidForm()
       ? APP_STORAGE.reg_user.set_NewThermalWell(
           "sess_id",
           APP_STORAGE.auth_form.getdt(),
@@ -117,7 +97,7 @@ export const NewWell: FC<IProps> = observer(() => {
   useEffect(() => {
     values.addWell_dev = "";
     getOrg(orgs);
-    getGroups(locations);
+    setGroup(getGroups(locations));
   }, [APP_STORAGE.devs_groups.getDevsGroups(), values.addWell_location]);
 
   return (

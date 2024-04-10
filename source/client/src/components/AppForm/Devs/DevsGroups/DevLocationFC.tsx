@@ -127,11 +127,14 @@ export const DevLocationFC: FC<IProps> = observer(() => {
   // Отрисовка схемы расположения
   const drawShemeSvg = () => {
     let tooltip = document.getElementById("tooltip");
+    const devTooltip = tooltip.querySelector(".tooltip__dev");
+    const wellTooltip = tooltip.querySelector(".tooltip__well");
 
     APP_STORAGE.importdevs.setOpenModalSvg(false);
     const hrefs: SVGElement[] = Array.from(
       svgRef.current.querySelectorAll(".well")
     );
+
     hrefs.forEach((item, i) => {
       item.addEventListener("mouseout", () => {
         item.style.stroke = "";
@@ -142,10 +145,23 @@ export const DevLocationFC: FC<IProps> = observer(() => {
           if (item.id.slice(5) === dev.id) {
             item.style.stroke = "#25E48B";
             const clientRectangle = item.getBoundingClientRect();
-            tooltip.innerHTML =
-              "Номер косы" +
-              "-" +
-              APP_STORAGE.devs.getChangeSensors2()[j].number;
+            devTooltip.textContent = `Номер косы - ${
+              APP_STORAGE.devs.getChangeSensors2()[j].number
+            }`;
+            if (APP_STORAGE.devs.getChangeSensors2()[j].well) {
+              wellTooltip.textContent = `Номер скважины - ${
+                APP_STORAGE.devs.getChangeSensors2()[j].well
+              }`;
+            } else {
+              wellTooltip.textContent = "";
+            }
+
+            // tooltip.innerHTML = `Номер косы - ${
+            //   APP_STORAGE.devs.getChangeSensors2()[j].number
+            // }. Номер скважины - ${
+            //   APP_STORAGE.devs.getChangeSensors2()[j].well
+            // }`;
+
             tooltip.style.display = "block";
             tooltip.style.left = clientRectangle.left + "px";
             tooltip.style.top = clientRectangle.top + "px";
@@ -339,10 +355,16 @@ export const DevLocationFC: FC<IProps> = observer(() => {
                   mb: "22px",
                 }}
               ></Box>
-              <Box
-                id="tooltip"
-                sx={{ position: "absolute", display: "none" }}
-              ></Box>
+              <Box id="tooltip" sx={{ position: "absolute", display: "none" }}>
+                <Typography
+                  sx={{ fontSize: "12px", fontWeight: "700" }}
+                  className="tooltip__dev"
+                ></Typography>
+                <Typography
+                  sx={{ fontSize: "12px", fontWeight: "700" }}
+                  className="tooltip__well"
+                ></Typography>
+              </Box>
             </>
           )}
         </>
