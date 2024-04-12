@@ -377,7 +377,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
               aria-label="customized"
               sx={{ flexGrow: 1, maxWidth: 400, overflow: "auto" }}
             >
-              {/* {APP_STORAGE.devs_groups.getIsLoading() && (
+              {APP_STORAGE.devs_groups.getIsLoading() && (
                 <Box>
                   <Skeleton animation="wave" />
                   <Skeleton animation="wave" />
@@ -385,7 +385,7 @@ export class DevsGroupsTree extends React.Component<IProps> {
                   <Skeleton animation="wave" />
                   <Skeleton animation="wave" />
                 </Box>
-              )} */}
+              )}
 
               {this.drawDevsTree()}
             </TreeView>

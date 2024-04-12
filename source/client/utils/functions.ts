@@ -59,7 +59,23 @@ export const getGroups = (locations: IGroup[]) => {
   return allLocations;
 };
 
-export const getDevsOptions = (
+// Фильтр данных для options с расположением в зависимости от выбранной организации
+type Location = {
+  id: string;
+  name: string;
+  parent_id: string;
+  org_id: string;
+};
+export const filteredGroups = (
+  arr: Location[],
+  orgId: string,
+  setFunction: (state: Location[]) => void
+) => {
+  const filtered = arr.filter((item) => item.org_id === orgId).reverse();
+  setFunction(filtered);
+};
+
+export const filteredDevs = (
   arr: IDevice[],
   value: string,
   setFunction: (state: IDevice[]) => void
@@ -68,6 +84,5 @@ export const getDevsOptions = (
   setFunction(optionsData);
 };
 
-export const getOrgsOptions = (arr: any[], value: string) => {
-  return arr.filter((item) => item.id === value);
-};
+export const containsText = (text: string, searchText: string) =>
+  text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;

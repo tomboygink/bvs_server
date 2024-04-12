@@ -457,7 +457,10 @@ export class DevsGroupStorage {
     };
     q.sess_code = sess_code;
     // (await WSocket.get()).send(q);
-    this.setIsLoading(true);
+    if (this.getDevsGroups().length === 0) {
+      this.setIsLoading(true);
+    }
+
     api
       .fetch(q)
       .catch((e) => console.log("error=>", e))

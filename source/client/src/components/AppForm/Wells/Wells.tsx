@@ -1,39 +1,27 @@
 import React, { useState, useEffect, MouseEvent } from "react";
 import { observer } from "mobx-react";
 import { set, toJS } from "mobx";
-
 import {
   Typography,
   Box,
   Stack,
   Menu,
   MenuItem,
-  Divider,
-  Link,
   IconButton,
   ListItemIcon,
-  TextareaAutosize,
 } from "@mui/material";
-import DirectionsIcon from "@mui/icons-material/Directions";
+
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
-import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
-import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
-import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
-import PhotoSizeSelectLargeIcon from "@mui/icons-material/PhotoSizeSelectLarge";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 import { TextInput } from "../../shared/TextInput";
 import { EditWellModal } from "./EditWellModal";
-import { IWell, IDefaultWell } from "../../../models/IWell";
+import { IWell } from "../../../models/IWell";
 import { IDevice } from "../../../models/IDevice";
-import { IWSQuery, WSQuery, api } from "../../../api/api";
 
 export const Wells = observer(() => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedWell, setSelectedWell] = useState<null | IWell>(null);
-  const [wells, setWells] = useState<IWell[]>([]);
-
   const open = Boolean(anchorEl);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -102,7 +90,10 @@ export const Wells = observer(() => {
       </Typography>
       {APP_STORAGE.reg_user.getNodeIdWell() && (
         <>
-          <Stack spacing={2} sx={{ backgroundColor: "#fff", padding: "20px" }}>
+          <Stack
+            spacing={2}
+            sx={{ backgroundColor: "#fff", padding: "20px", mb: "20px" }}
+          >
             {APP_STORAGE.getRoleWrite() === 2 &&
               APP_STORAGE.getRoleRead() === 1 && (
                 <>
@@ -141,7 +132,7 @@ export const Wells = observer(() => {
                 style: { fontSize: 12 },
               }}
               label="Номер скважины"
-              value={selectedWell?.number || ""}
+              value={APP_STORAGE.wells.getSelectedWell()?.number || ""}
             />
             <TextInput
               InputProps={{
@@ -149,7 +140,7 @@ export const Wells = observer(() => {
                 style: { fontSize: 12 },
               }}
               label="Расположение"
-              value={selectedWell?.location.name || ""}
+              value={APP_STORAGE.wells.getSelectedWell()?.location.name || ""}
             />
 
             <TextInput
@@ -158,7 +149,7 @@ export const Wells = observer(() => {
                 style: { fontSize: 12 },
               }}
               label="Организация"
-              value={selectedWell?.org.name || ""}
+              value={APP_STORAGE.wells.getSelectedWell()?.org.name || ""}
             />
             <TextInput
               InputProps={{
@@ -166,7 +157,7 @@ export const Wells = observer(() => {
                 style: { fontSize: 12 },
               }}
               label="Устройство"
-              value={selectedWell?.dev?.number || ""}
+              value={APP_STORAGE.wells.getSelectedWell()?.dev?.number || ""}
             />
           </Stack>
         </>

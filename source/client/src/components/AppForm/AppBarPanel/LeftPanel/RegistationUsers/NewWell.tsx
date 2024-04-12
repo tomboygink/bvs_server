@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useState, useRef } from "react";
+import React, { FC, useEffect, useState, useMemo } from "react";
 import { observer } from "mobx-react";
-import { toJS } from "mobx";
+import { set, toJS } from "mobx";
 import {
   Box,
   Button,
@@ -11,19 +11,24 @@ import {
   Alert,
   Stack,
 } from "@mui/material";
-
+import { SelectChangeEvent } from "@mui/material";
 import { Org } from "../../../../../storage/components/Orgs/OrgStorage";
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
-import { getGroups } from "../../../../../../utils/functions";
+import {
+  getGroups,
+  filteredGroups,
+  filteredDevs,
+} from "../../../../../../utils/functions";
 import { useFormValidation } from "../../../../../hooks/UseFormValidation";
 import { TextInput } from "../../../../shared/TextInput";
-import { IGroup } from "../../../../../models/IDevice";
+import { SelectWithSearch } from "../../../../shared/SelectWithSearch";
 
 interface IProps {}
 
 export const NewWell: FC<IProps> = observer(() => {
   const {
     values,
+    setValues,
     errors,
     handleChange,
     handleSelectChange,
@@ -32,8 +37,10 @@ export const NewWell: FC<IProps> = observer(() => {
   } = useFormValidation();
 
   const [validationMessage, setValidationMessage] = useState("");
-  const [group, setGroup] = useState([]);
+  const [currentGroup, setCurrentGroup] = useState([]);
   const [currentDevs, setCurrentDevs] = useState([]);
+  const [isDisabledGroup, setIsDisabledGroup] = useState(true);
+  const [isDisabledDev, setIsDisabledDev] = useState(true);
 
   const orgs: Org[] = JSON.parse(
     JSON.stringify(APP_STORAGE.reg_user.getOrgAll())
@@ -43,41 +50,28 @@ export const NewWell: FC<IProps> = observer(() => {
   );
   const allDevs = toJS(APP_STORAGE.devs_groups.getAllDevs());
 
-  // Получение значения: форма валидна или нет
+  // Получаем значения: форма валидна или нет
   const isValidForm = () => {
     return (
       isValid && Boolean(values.addWell_location) && Boolean(values.addWell_org)
     );
   };
 
-  //Options для списка с организация и устройствами в зависимости от выбранного расположения
-  const getOrg = (arr: Org[]) => {
-    let selectedLocation: {
-      id: string;
-      name: string;
-      parent_id: string;
-      org_id: string;
-    };
-    selectedLocation = group.find((item) => {
-      return item.id === values.addWell_location;
-    });
-    const org = arr.find((item) => {
-      return item.id === selectedLocation?.org_id;
-    });
-    const devs = allDevs.filter(
-      (item) => item.group_dev_id === values.addWell_location
-    );
-    if (org) {
-      values.addWell_org = org.id;
-    }
+  // Обработчик закрытия поля выбора с организацией и поля выбора расположения (разблокируем следующее поле для редактирования)
+  const handleClose = (setFunc: (state: boolean) => void) => {
+    setFunc(false);
+  };
 
-    if (devs.length !== 0) {
-      setCurrentDevs(devs);
-    } else setCurrentDevs([]);
+  // Обработчик изменений в поле выбора  организацией
+  const hahdleChange = (event: SelectChangeEvent) => {
+    // Очищаем массивы, если выбрана другая организация
+    setCurrentGroup([]);
+    setCurrentDevs([]);
+
+    handleSelectChange(event);
   };
 
   // Отправка формы
-
   const handleAddWell = () => {
     setValidationMessage("");
     const hasWell = APP_STORAGE.wells
@@ -95,10 +89,18 @@ export const NewWell: FC<IProps> = observer(() => {
   };
 
   useEffect(() => {
-    values.addWell_dev = "";
-    getOrg(orgs);
-    setGroup(getGroups(locations));
-  }, [APP_STORAGE.devs_groups.getDevsGroups(), values.addWell_location]);
+    //Очищаем значения полей Расположение, Устройства, если выбрана другая организация
+    setValues({ ...values, addWell_location: "", addWell_dev: "" });
+
+    const group = getGroups(locations);
+    filteredGroups(group, values.addWell_org, setCurrentGroup);
+  }, [values.addWell_org]);
+
+  useEffect(() => {
+    //Очищаем значение полей Устройства, если выбрано другое расположение
+    setValues({ ...values, addWell_dev: "" });
+    filteredDevs(allDevs, values.addWell_location, setCurrentDevs);
+  }, [values.addWell_location]);
 
   return (
     <React.Fragment>
@@ -118,39 +120,6 @@ export const NewWell: FC<IProps> = observer(() => {
         value={values.addWell_number || ""}
         onChange={handleChange}
       />
-
-      <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
-        <InputLabel className="org" sx={{ fontSize: "12px" }}>
-          Расположение*
-        </InputLabel>
-
-        <Select
-          name="addWell_location"
-          sx={{ fontSize: "12px" }}
-          label="расположение"
-          value={values.addWell_location || ""}
-          onChange={handleSelectChange}
-        >
-          {group
-            .map((item) => {
-              return (
-                <MenuItem
-                  id={`optionOrg_${item.id}`}
-                  key={item.id}
-                  sx={{
-                    fontSize: "12px",
-                    fontWeight: `${item.parent_id === "0" ? "600" : "400"}`,
-                    pl: `${item.parent_id === "0" ? "16px" : "32px"}`,
-                  }}
-                  value={item.id}
-                >
-                  {item.name}
-                </MenuItem>
-              );
-            })
-            .reverse()}
-        </Select>
-      </FormControl>
       <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
         <InputLabel className="org" sx={{ fontSize: "12px" }}>
           Организация*
@@ -160,7 +129,8 @@ export const NewWell: FC<IProps> = observer(() => {
           sx={{ fontSize: "12px" }}
           value={values.addWell_org || ""}
           label="организация"
-          onChange={handleSelectChange}
+          onChange={hahdleChange}
+          onClose={() => handleClose(setIsDisabledGroup)}
         >
           {orgs.map((item) => {
             return (
@@ -171,14 +141,39 @@ export const NewWell: FC<IProps> = observer(() => {
           })}
         </Select>
       </FormControl>
-      <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+
+      <SelectWithSearch
+        name="addWell_location"
+        options={currentGroup}
+        label="Расположение*"
+        isDisabled={isDisabledGroup}
+        value={values.addWell_location || ""}
+        onChange={handleSelectChange}
+        onClose={() => handleClose(setIsDisabledDev)}
+      />
+      <SelectWithSearch
+        name="addWell_dev"
+        options={currentDevs}
+        label="Устройство"
+        isDisabled={isDisabledDev}
+        value={values.addWell_dev || ""}
+        onChange={handleSelectChange}
+        onClose={() => {}}
+      />
+
+      {/* <FormControl
+        disabled={isDisabledDev}
+        fullWidth
+        size="small"
+        sx={{ mt: "14px" }}
+      >
         <InputLabel className="org" sx={{ fontSize: "12px" }}>
           Устройство
         </InputLabel>
         <Select
           name="addWell_dev"
           sx={{ fontSize: "12px" }}
-          value={currentDevs.length === 0 ? "" : values.addWell_dev}
+          value={values.addWell_dev || ""}
           onChange={handleSelectChange}
           label="Устройство"
         >
@@ -193,7 +188,7 @@ export const NewWell: FC<IProps> = observer(() => {
             );
           })}
         </Select>
-      </FormControl>
+      </FormControl> */}
       <Box
         sx={{
           display: "flex",

@@ -95,6 +95,7 @@ export class WellsStorage {
   changeThermalWell(
     name: string,
     value: string,
+    newWell: IWell,
     options?: { [key: string]: string }
   ) {
     const {
@@ -117,8 +118,9 @@ export class WellsStorage {
     api
       .fetch(q)
       .then(() => {
-        // APP_STORAGE.wells.getDefaultWells();
         this.setSuccessSave_mess(SAVE_SUCCESS);
+        this.setSelectedWell(newWell);
+
         setTimeout(() => {
           this.setOpenModal(false);
           this.setSuccessSave_mess("");

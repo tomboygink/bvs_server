@@ -358,11 +358,11 @@ export const DevLocationFC: FC<IProps> = observer(() => {
               <Box id="tooltip" sx={{ position: "absolute", display: "none" }}>
                 <Typography
                   sx={{ fontSize: "12px", fontWeight: "700" }}
-                  className="tooltip__dev"
+                  className="tooltip__well"
                 ></Typography>
                 <Typography
                   sx={{ fontSize: "12px", fontWeight: "700" }}
-                  className="tooltip__well"
+                  className="tooltip__dev"
                 ></Typography>
               </Box>
             </>

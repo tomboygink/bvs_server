@@ -79,20 +79,6 @@ export const WellsMenu: FC = observer(() => {
           aria-label="customized"
           sx={{ flexGrow: 1, maxWidth: 400, overflow: "auto" }}
         >
-          {/* {APP_STORAGE.wells.getWells().map((well) => {
-            return (
-              <TreeItem
-                key={well.number}
-                nodeId={well.number}
-                label={well.number}
-                icon={<GpsNotFixedIcon sx={{ color: "#266BF1" }} />}
-                sx={{
-                  color: "#222",
-                  fontSize: "14px",
-                }} 
-              ></TreeItem>
-            );
-          })} */}
           {filteredWells?.map((item) => {
             return (
               <TreeItem
