@@ -38,10 +38,26 @@ export const Wells = observer(() => {
 
   const getSelectedWell = () => {
     let dev: IDevice;
+    let selectedWell = {
+      id: "",
+      number: "",
+      location: {
+        id: "",
+        name: "",
+      },
+      org: {
+        id: "",
+        name: "",
+      },
+      dev: {
+        id: "",
+        number: "",
+      },
+    };
 
     const well = APP_STORAGE.wells
       .getDefaultWells()
-      .find((well) => well.number === APP_STORAGE.reg_user.getNodeIdWell());
+      ?.find((well) => well.number === APP_STORAGE.reg_user.getNodeIdWell());
 
     if (well) {
       const org = APP_STORAGE.reg_user
@@ -57,7 +73,7 @@ export const Wells = observer(() => {
           .getAllDevs()
           .find((dev) => dev.id === well.dev_id);
       }
-      const selectedWell = {
+      selectedWell = {
         id: well.id,
         number: well.number,
         location: {
@@ -73,9 +89,9 @@ export const Wells = observer(() => {
           number: dev?.number || "",
         },
       };
-      setSelectedWell(selectedWell);
+      //setSelectedWell(selectedWell);
       APP_STORAGE.wells.setSelectedWell(selectedWell);
-    }
+    } else APP_STORAGE.wells.setSelectedWell(selectedWell);
   };
 
   useEffect(() => {

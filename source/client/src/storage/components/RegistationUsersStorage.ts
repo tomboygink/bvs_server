@@ -719,11 +719,7 @@ export class ModalLeftPanel {
     var user_login = "";
     var q: IWSQuery = new WSQuery("set_NewUser");
     var sess_code = value;
-    //const regexp_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; /// регулярное выражение для ввода email
-    // const regexp_ph = /^((\+7|7|8)+([0-9]){10})$/; /// регулярное выражение для ввода номера телефона
     const email = this.getEmail().match(regexp_email);
-    // const dash = /[\s-]/g;
-    //const telephone = this.getTelephone().match(regexp_ph);
     const telephone = this.getTelephone().replace(regexp_dash, "");
     const isValidPassword = regexp_password.test(this.getPassword()); // убрать дефисы и пробелы
 
@@ -1161,15 +1157,19 @@ export class ModalLeftPanel {
     const {
       addWell_number: number,
       addWell_location: location,
-      addWell_org: org,
       addWell_dev: dev,
     } = options;
 
     const sess_code = value;
     const q: IWSQuery = new WSQuery("set_ThermalWell");
+
+    const orgId = APP_STORAGE.devs_groups
+      .getLocations()
+      .find((loc) => loc.id === location).org_id;
+
     q.args = {
       number: number,
-      org_id: Number(org),
+      org_id: Number(orgId),
       group_id: Number(location),
       dev_id: Number(dev) || null,
     };
@@ -1178,12 +1178,8 @@ export class ModalLeftPanel {
     api
       .fetch(q)
       .then(() => {
-        APP_STORAGE.wells.getDefaultWells();
-        // APP_STORAGE.devs_groups.get_DevsGroups(
-        //   "sess_id",
-        //   APP_STORAGE.auth_form.getdt()
-        // );
-
+        //APP_STORAGE.wells.getDefaultWells();
+        APP_STORAGE.devs_groups.getDevsGroups();
         this.setSuccessSave_mess(SAVE_SUCCESS);
         setTimeout(() => {
           this.setModalRegUser(false);

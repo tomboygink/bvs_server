@@ -226,9 +226,9 @@ class AppStorage {
       case "set_ThermalWell": {
         this.wells.fetchWells();
       }
-      case "set_ChangeThermalWell": {
-        this.wells.fetchWells();
-      }
+      // case "set_ChangeThermalWell": {
+      //   this.wells.fetchWells();
+      // }
       case "get_ThermalWell": {
         this.wells.setAllWells(dt as IWSResult);
       }

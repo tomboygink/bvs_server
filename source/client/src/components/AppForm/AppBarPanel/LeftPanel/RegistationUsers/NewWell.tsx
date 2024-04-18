@@ -37,9 +37,9 @@ export const NewWell: FC<IProps> = observer(() => {
   } = useFormValidation();
 
   const [validationMessage, setValidationMessage] = useState("");
-  const [currentGroup, setCurrentGroup] = useState([]);
+  //const [currentGroup, setCurrentGroup] = useState([]);
   const [currentDevs, setCurrentDevs] = useState([]);
-  const [isDisabledGroup, setIsDisabledGroup] = useState(true);
+  //const [isDisabledGroup, setIsDisabledGroup] = useState(true);
   const [isDisabledDev, setIsDisabledDev] = useState(true);
 
   const orgs: Org[] = JSON.parse(
@@ -52,9 +52,7 @@ export const NewWell: FC<IProps> = observer(() => {
 
   // Получаем значения: форма валидна или нет
   const isValidForm = () => {
-    return (
-      isValid && Boolean(values.addWell_location) && Boolean(values.addWell_org)
-    );
+    return isValid && Boolean(values.addWell_location);
   };
 
   // Обработчик закрытия поля выбора с организацией и поля выбора расположения (разблокируем следующее поле для редактирования)
@@ -63,13 +61,13 @@ export const NewWell: FC<IProps> = observer(() => {
   };
 
   // Обработчик изменений в поле выбора  организацией
-  const hahdleChange = (event: SelectChangeEvent) => {
-    // Очищаем массивы, если выбрана другая организация
-    setCurrentGroup([]);
-    setCurrentDevs([]);
+  // const hahdleChange = (event: SelectChangeEvent) => {
+  //   // Очищаем массивы, если выбрана другая организация
+  //   setCurrentGroup([]);
+  //   setCurrentDevs([]);
 
-    handleSelectChange(event);
-  };
+  //   handleSelectChange(event);
+  // };
 
   // Отправка формы
   const handleAddWell = () => {
@@ -88,13 +86,13 @@ export const NewWell: FC<IProps> = observer(() => {
       : setValidationMessage("Не заполнены обязательные поля");
   };
 
-  useEffect(() => {
-    //Очищаем значения полей Расположение, Устройства, если выбрана другая организация
-    setValues({ ...values, addWell_location: "", addWell_dev: "" });
+  // useEffect(() => {
+  //   //Очищаем значения полей Расположение, Устройства, если выбрана другая организация
+  //   setValues({ ...values, addWell_location: "", addWell_dev: "" });
 
-    const group = getGroups(locations);
-    filteredGroups(group, values.addWell_org, setCurrentGroup);
-  }, [values.addWell_org]);
+  //   const group = getGroups(locations);
+  //   filteredGroups(group, values.addWell_org, setCurrentGroup);
+  // }, [values.addWell_org]);
 
   useEffect(() => {
     //Очищаем значение полей Устройства, если выбрано другое расположение
@@ -120,7 +118,7 @@ export const NewWell: FC<IProps> = observer(() => {
         value={values.addWell_number || ""}
         onChange={handleChange}
       />
-      <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+      {/* <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
         <InputLabel className="org" sx={{ fontSize: "12px" }}>
           Организация*
         </InputLabel>
@@ -140,13 +138,13 @@ export const NewWell: FC<IProps> = observer(() => {
             );
           })}
         </Select>
-      </FormControl>
+      </FormControl> */}
 
       <SelectWithSearch
         name="addWell_location"
-        options={currentGroup}
+        options={getGroups(locations)}
         label="Расположение*"
-        isDisabled={isDisabledGroup}
+        //isDisabled={isDisabledGroup}
         value={values.addWell_location || ""}
         onChange={handleSelectChange}
         onClose={() => handleClose(setIsDisabledDev)}
