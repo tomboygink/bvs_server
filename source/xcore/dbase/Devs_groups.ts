@@ -63,9 +63,18 @@ export class Devs_groupsTable {
 			deleted: false,		//удалено или нет 
 			info: '',			//информация по устройству
 			time: '',			//время
-			period_sess: 0, 	//поверочный интервал
-			well: '' 	//скважина для устройства 
+			period_sess: 0 	//поверочный интервал
+			//well: '' 	//скважина для устройства 
 		};
+
+		//скважины 
+		var well: any = {
+			id: 0,
+			number: '',
+			org_id: 0,
+			group_id: 0,
+			dev_id: 0
+		}
 
 		//группа 
 		var groups: any = {
@@ -74,15 +83,18 @@ export class Devs_groupsTable {
 			p_id: 0, // родительская группа 
 			childs: new Array(),
 			devs: new Array(), // устройства в данной группе 
+			wells: new Array(), // Скважины в данной группе
 			update: false,
 			scheme_svg: "", // схема месторождений
 		}
 		var devs = new Array();
+		var wells = new Array();
 		var t;
 
 		//отображение данных для администратора 
 		// if (this.args.users_w === true) {
 		//	console.log("im admin")
+
 		//запрос на получение данных по группам схемам месторождения
 		var roots_gr = await this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups " +
 			" INNER JOIN scheme_svg ON devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 ");
@@ -94,15 +106,15 @@ export class Devs_groupsTable {
 			for (var j in device) {
 				//Запрос на получение скважин по идентификатору устройства 
 
-				var well = await this.db.query("SELECT number as well_number FROM skvazhiny WHERE dev_id = " + device[j].id);
-				var well_data = '';
+				//var well = await this.db.query("SELECT number as well_number FROM skvazhiny WHERE dev_id = " + device[j].id);
+				//var well_data = '';
 				//В случае если скважина не указана пустое значение
-				if (well.rows[0] === undefined) {
-					well_data = '';
-				}
-				else {
-					well_data = well.rows[0].well_number;
-				}
+				// if (well.rows[0] === undefined) {
+				// 	well_data = '';
+				// }
+				// else {
+				// 	well_data = well.rows[0].well_number;
+				// }
 
 				var time_srv = await (await this.db.query("SELECT time_srv as time from dev_sess WHERE dev_number = '" + device[j].number + "' order by id desc limit 1;")).rows;
 				var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
@@ -120,16 +132,32 @@ export class Devs_groupsTable {
 					info: device[j].info,
 					time: t,
 					period_sess: device[j].period_sess,
-					well: well_data
+					//well: well_data
 				}
 				devs.push(dev);
 			}
+
+			var well_q = await (await this.db.query("SELECT * FROM skvazhiny WHERE group_id = " + roots_gr.rows[i].id + "order by number asc")).rows;
+			wells = new Array();
+			for (var w in well_q) {
+				well = {
+					id: well_q[w].id,
+					number: well_q[w].number,
+					org_id: well_q[w].org_id,
+					group_id: well_q[w].group_id,
+					dev_id: well_q[w].dev_id
+				}
+				wells.push(well);
+			}
+
+
 			groups.childs.push({
 				group: roots_gr.rows[i],
 				id: roots_gr.rows[i].id,
 				p_id: roots_gr.rows[i].parent_id,
 				childs: new Array(),
 				devs: devs,
+				wells: wells,
 				update: false,
 				scheme_svg: roots_gr.rows[i].scheme_svg
 			})
@@ -211,12 +239,20 @@ export class Devs_groupsTable {
 			info: '',
 			time: '',
 			period_sess: 0,
-			well: ''
+			//well: ''
 		};
 
-		var t;
-		var devs = new Array();
+		var well: any = {
+			id: 0,
+			number: '',
+			org_id: 0,
+			group_id: 0,
+			dev_id: 0
+		}
 
+		var t;
+		// var devs = new Array();
+		// var wells = new Array();
 
 
 
@@ -228,16 +264,15 @@ export class Devs_groupsTable {
 			for (var j in device) {
 
 				//Запрос на получение скважин по идентификатору устройства 
-
-				var well = await this.db.query("SELECT number as well_number FROM skvazhiny WHERE dev_id = " + device[j].id);
-				var well_data = '';
+				//var well = await this.db.query("SELECT number as well_number FROM skvazhiny WHERE dev_id = " + device[j].id);
+				//var well_data = '';
 				//В случае если скважина не указана пустое значение
-				if (well.rows[0] === undefined) {
-					well_data = '';
-				}
-				else {
-					well_data = well.rows[0].well_number;
-				}
+				// if (well.rows[0] === undefined) {
+				// 	well_data = '';
+				// }
+				// else {
+				// 	well_data = well.rows[0].well_number;
+				// }
 
 				var time_srv = await (await this.db.query("SELECT time_srv as time from dev_sess WHERE dev_number = '" + device[j].number + "' order by id desc limit 1;")).rows;
 				var tzoffset = (new Date()).getTimezoneOffset() * 60000; // смещение в миллисекундах
@@ -257,10 +292,25 @@ export class Devs_groupsTable {
 					info: device[j].info,
 					time: t,
 					period_sess: device[j].period_sess,
-					well: well_data
+					//well: well_data
 				}
 				devs.push(dev);
 			}
+
+			var well_q = await (await this.db.query("SELECT * FROM skvazhiny WHERE group_id = " + grs.rows[i].id + "order by number asc")).rows;
+			var wells = new Array();
+			for (var w in well_q) { 
+				well = {
+					id: well_q[w].id,
+					number: well_q[w].number,
+					org_id: well_q[w].org_id,
+					group_id: well_q[w].group_id,
+					dev_id: well_q[w].dev_id
+				}
+				wells.push(well);
+			}
+
+
 
 			reti.push({
 				group: grs.rows[i],

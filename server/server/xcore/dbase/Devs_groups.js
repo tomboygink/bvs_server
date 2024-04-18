@@ -92,7 +92,7 @@ var Devs_groupsTable = (function () {
     };
     Devs_groupsTable.prototype.selectDevsGroups = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var dev, groups, devs, t, roots_gr, _a, _b, _c, _i, i, device, _d, _e, _f, _g, j, well, well_data, time_srv, tzoffset, _h, _j, _k, _l, i, _m, result;
+            var dev, well, groups, devs, wells, t, roots_gr, _a, _b, _c, _i, i, device, _d, _e, _f, _g, j, time_srv, tzoffset, well_q, w, _h, _j, _k, _l, i, _m, result;
             return __generator(this, function (_o) {
                 switch (_o.label) {
                     case 0:
@@ -107,8 +107,14 @@ var Devs_groupsTable = (function () {
                             deleted: false,
                             info: '',
                             time: '',
-                            period_sess: 0,
-                            well: ''
+                            period_sess: 0
+                        };
+                        well = {
+                            id: 0,
+                            number: '',
+                            org_id: 0,
+                            group_id: 0,
+                            dev_id: 0
                         };
                         groups = {
                             group: {},
@@ -116,10 +122,12 @@ var Devs_groupsTable = (function () {
                             p_id: 0,
                             childs: new Array(),
                             devs: new Array(),
+                            wells: new Array(),
                             update: false,
                             scheme_svg: ""
                         };
                         devs = new Array();
+                        wells = new Array();
                         return [4, this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups " +
                                 " INNER JOIN scheme_svg ON devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=0 ")];
                     case 1:
@@ -131,9 +139,9 @@ var Devs_groupsTable = (function () {
                         _i = 0;
                         _o.label = 2;
                     case 2:
-                        if (!(_i < _b.length)) return [3, 12];
+                        if (!(_i < _b.length)) return [3, 13];
                         _c = _b[_i];
-                        if (!(_c in _a)) return [3, 11];
+                        if (!(_c in _a)) return [3, 12];
                         i = _c;
                         return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + roots_gr.rows[i].id + " order by number asc")];
                     case 3: return [4, (_o.sent()).rows];
@@ -147,23 +155,13 @@ var Devs_groupsTable = (function () {
                         _g = 0;
                         _o.label = 5;
                     case 5:
-                        if (!(_g < _e.length)) return [3, 10];
+                        if (!(_g < _e.length)) return [3, 9];
                         _f = _e[_g];
-                        if (!(_f in _d)) return [3, 9];
+                        if (!(_f in _d)) return [3, 8];
                         j = _f;
-                        return [4, this.db.query("SELECT number as well_number FROM skvazhiny WHERE dev_id = " + device[j].id)];
-                    case 6:
-                        well = _o.sent();
-                        well_data = '';
-                        if (well.rows[0] === undefined) {
-                            well_data = '';
-                        }
-                        else {
-                            well_data = well.rows[0].well_number;
-                        }
                         return [4, this.db.query("SELECT time_srv as time from dev_sess WHERE dev_number = '" + device[j].number + "' order by id desc limit 1;")];
-                    case 7: return [4, (_o.sent()).rows];
-                    case 8:
+                    case 6: return [4, (_o.sent()).rows];
+                    case 7:
                         time_srv = _o.sent();
                         tzoffset = (new Date()).getTimezoneOffset() * 60000;
                         if (time_srv[0] === undefined) {
@@ -183,49 +181,63 @@ var Devs_groupsTable = (function () {
                             deleted: device[j].deleted,
                             info: device[j].info,
                             time: t,
-                            period_sess: device[j].period_sess,
-                            well: well_data
+                            period_sess: device[j].period_sess
                         };
                         devs.push(dev);
-                        _o.label = 9;
-                    case 9:
+                        _o.label = 8;
+                    case 8:
                         _g++;
                         return [3, 5];
-                    case 10:
+                    case 9: return [4, this.db.query("SELECT * FROM skvazhiny WHERE group_id = " + roots_gr.rows[i].id + "order by number asc")];
+                    case 10: return [4, (_o.sent()).rows];
+                    case 11:
+                        well_q = _o.sent();
+                        wells = new Array();
+                        for (w in well_q) {
+                            well = {
+                                id: well_q[w].id,
+                                number: well_q[w].number,
+                                org_id: well_q[w].org_id,
+                                group_id: well_q[w].group_id,
+                                dev_id: well_q[w].dev_id
+                            };
+                            wells.push(well);
+                        }
                         groups.childs.push({
                             group: roots_gr.rows[i],
                             id: roots_gr.rows[i].id,
                             p_id: roots_gr.rows[i].parent_id,
                             childs: new Array(),
                             devs: devs,
+                            wells: wells,
                             update: false,
                             scheme_svg: roots_gr.rows[i].scheme_svg
                         });
-                        _o.label = 11;
-                    case 11:
+                        _o.label = 12;
+                    case 12:
                         _i++;
                         return [3, 2];
-                    case 12:
+                    case 13:
                         _h = groups.childs;
                         _j = [];
                         for (_k in _h)
                             _j.push(_k);
                         _l = 0;
-                        _o.label = 13;
-                    case 13:
-                        if (!(_l < _j.length)) return [3, 16];
+                        _o.label = 14;
+                    case 14:
+                        if (!(_l < _j.length)) return [3, 17];
                         _k = _j[_l];
-                        if (!(_k in _h)) return [3, 15];
+                        if (!(_k in _h)) return [3, 16];
                         i = _k;
                         _m = groups.childs[i];
                         return [4, this._d_tree(groups.childs[i])];
-                    case 14:
-                        _m.childs = _o.sent();
-                        _o.label = 15;
                     case 15:
-                        _l++;
-                        return [3, 13];
+                        _m.childs = _o.sent();
+                        _o.label = 16;
                     case 16:
+                        _l++;
+                        return [3, 14];
+                    case 17:
                         result = this.objToString(groups);
                         return [2, result];
                 }
@@ -234,7 +246,7 @@ var Devs_groupsTable = (function () {
     };
     Devs_groupsTable.prototype._d_tree = function (childs) {
         return __awaiter(this, void 0, void 0, function () {
-            var reti, dev, t, devs, grs, _a, _b, _c, _i, i, device, devs, _d, _e, _f, _g, j, well, well_data, time_srv, tzoffset, _h, _j;
+            var reti, dev, well, t, grs, _a, _b, _c, _i, i, device, devs, _d, _e, _f, _g, j, time_srv, tzoffset, well_q, wells, w, _h, _j;
             var _k;
             return __generator(this, function (_l) {
                 switch (_l.label) {
@@ -251,10 +263,15 @@ var Devs_groupsTable = (function () {
                             deleted: false,
                             info: '',
                             time: '',
-                            period_sess: 0,
-                            well: ''
+                            period_sess: 0
                         };
-                        devs = new Array();
+                        well = {
+                            id: 0,
+                            number: '',
+                            org_id: 0,
+                            group_id: 0,
+                            dev_id: 0
+                        };
                         return [4, this.db.query("SELECT devs_groups.*, scheme_svg.svg FROM devs_groups INNER JOIN scheme_svg on devs_groups.id = scheme_svg.id_devs_groups WHERE parent_id=" + childs.id)];
                     case 1:
                         grs = _l.sent();
@@ -265,9 +282,9 @@ var Devs_groupsTable = (function () {
                         _i = 0;
                         _l.label = 2;
                     case 2:
-                        if (!(_i < _b.length)) return [3, 13];
+                        if (!(_i < _b.length)) return [3, 14];
                         _c = _b[_i];
-                        if (!(_c in _a)) return [3, 12];
+                        if (!(_c in _a)) return [3, 13];
                         i = _c;
                         return [4, this.db.query("SELECT * FROM devs WHERE group_dev_id = " + grs.rows[i].id + " order by number asc")];
                     case 3: return [4, (_l.sent()).rows];
@@ -281,23 +298,13 @@ var Devs_groupsTable = (function () {
                         _g = 0;
                         _l.label = 5;
                     case 5:
-                        if (!(_g < _e.length)) return [3, 10];
+                        if (!(_g < _e.length)) return [3, 9];
                         _f = _e[_g];
-                        if (!(_f in _d)) return [3, 9];
+                        if (!(_f in _d)) return [3, 8];
                         j = _f;
-                        return [4, this.db.query("SELECT number as well_number FROM skvazhiny WHERE dev_id = " + device[j].id)];
-                    case 6:
-                        well = _l.sent();
-                        well_data = '';
-                        if (well.rows[0] === undefined) {
-                            well_data = '';
-                        }
-                        else {
-                            well_data = well.rows[0].well_number;
-                        }
                         return [4, this.db.query("SELECT time_srv as time from dev_sess WHERE dev_number = '" + device[j].number + "' order by id desc limit 1;")];
-                    case 7: return [4, (_l.sent()).rows];
-                    case 8:
+                    case 6: return [4, (_l.sent()).rows];
+                    case 7:
                         time_srv = _l.sent();
                         tzoffset = (new Date()).getTimezoneOffset() * 60000;
                         if (time_srv[0] === undefined) {
@@ -317,15 +324,28 @@ var Devs_groupsTable = (function () {
                             deleted: device[j].deleted,
                             info: device[j].info,
                             time: t,
-                            period_sess: device[j].period_sess,
-                            well: well_data
+                            period_sess: device[j].period_sess
                         };
                         devs.push(dev);
-                        _l.label = 9;
-                    case 9:
+                        _l.label = 8;
+                    case 8:
                         _g++;
                         return [3, 5];
-                    case 10:
+                    case 9: return [4, this.db.query("SELECT * FROM skvazhiny WHERE group_id = " + grs.rows[i].id + "order by number asc")];
+                    case 10: return [4, (_l.sent()).rows];
+                    case 11:
+                        well_q = _l.sent();
+                        wells = new Array();
+                        for (w in well_q) {
+                            well = {
+                                id: well_q[w].id,
+                                number: well_q[w].number,
+                                org_id: well_q[w].org_id,
+                                group_id: well_q[w].group_id,
+                                dev_id: well_q[w].dev_id
+                            };
+                            wells.push(well);
+                        }
                         _j = (_h = reti).push;
                         _k = {
                             group: grs.rows[i],
@@ -333,17 +353,17 @@ var Devs_groupsTable = (function () {
                             pid: grs.rows[i].parent_id
                         };
                         return [4, this._d_tree(grs.rows[i])];
-                    case 11:
+                    case 12:
                         _j.apply(_h, [(_k.childs = _l.sent(),
                                 _k.devs = devs,
                                 _k.updated = false,
                                 _k.scheme_svg = grs.rows[i].scheme_svg,
                                 _k)]);
-                        _l.label = 12;
-                    case 12:
+                        _l.label = 13;
+                    case 13:
                         _i++;
                         return [3, 2];
-                    case 13: return [2, reti];
+                    case 14: return [2, reti];
                 }
             });
         });
