@@ -318,6 +318,7 @@ export class Devs_groupsTable {
 				pid: grs.rows[i].parent_id,
 				childs: await this._d_tree(grs.rows[i]),
 				devs: devs,
+				wells:wells,
 				updated: false,
 				scheme_svg: grs.rows[i].scheme_svg
 			});

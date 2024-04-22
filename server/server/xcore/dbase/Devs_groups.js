@@ -356,6 +356,7 @@ var Devs_groupsTable = (function () {
                     case 12:
                         _j.apply(_h, [(_k.childs = _l.sent(),
                                 _k.devs = devs,
+                                _k.wells = wells,
                                 _k.updated = false,
                                 _k.scheme_svg = grs.rows[i].scheme_svg,
                                 _k)]);
