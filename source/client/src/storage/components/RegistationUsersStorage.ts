@@ -1178,8 +1178,10 @@ export class ModalLeftPanel {
     api
       .fetch(q)
       .then(() => {
-        //APP_STORAGE.wells.getDefaultWells();
-        APP_STORAGE.devs_groups.getDevsGroups();
+        APP_STORAGE.devs_groups.get_DevsGroups(
+          "sess_id",
+          APP_STORAGE.auth_form.getdt()
+        );
         this.setSuccessSave_mess(SAVE_SUCCESS);
         setTimeout(() => {
           this.setModalRegUser(false);

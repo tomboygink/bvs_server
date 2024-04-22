@@ -6,6 +6,7 @@ interface Props {
   location: IGroup;
 }
 import { TreeView, TreeItem } from "@mui/x-tree-view";
+import { APP_STORAGE } from "../../storage/AppStorage";
 export const TreeElement: FC<Props> = ({ location }) => {
   return (
     <TreeItem
@@ -24,18 +25,18 @@ export const TreeElement: FC<Props> = ({ location }) => {
           ))}
         </>
       )}
-      {location.devs.map(
-        (dev) =>
-          dev.well !== "" && (
-            <TreeItem
-              key={`dev_${dev.id}`}
-              nodeId={`well_${dev.well}`}
-              label={dev.well}
-              icon={<GpsNotFixedIcon sx={{ color: "#266BF1" }} />}
-              sx={{ color: "black" }}
-            ></TreeItem>
-          )
-      )}
+      {location?.wells?.map((well) => {
+        return (
+          <TreeItem
+            key={`dev_${well.id}`}
+            nodeId={`well_${well.id}`}
+            label={well.number}
+            icon={<GpsNotFixedIcon sx={{ color: "#266BF1" }} />}
+            sx={{ color: "black" }}
+            onClick={() => APP_STORAGE.wells.setDefaultWell(well)}
+          ></TreeItem>
+        );
+      })}
     </TreeItem>
   );
 };

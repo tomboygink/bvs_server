@@ -56,7 +56,7 @@ export const getGroups = (locations: IGroup[]) => {
     // setGroup(groups);
   };
   recursion(locations);
-  return allLocations;
+  return allLocations.reverse();
 };
 
 // Фильтр данных для options с расположением в зависимости от выбранной организации

@@ -2,6 +2,7 @@ import {
   TDSensor,
   TDSensorsList,
 } from "../storage/components/Devs/DevEntityes";
+import { IDefaultWell } from "./IWell";
 
 export interface IDevice {
   deleted: boolean;
@@ -15,7 +16,7 @@ export interface IDevice {
   period_sess: string;
   sensors: TDSensorsList;
   time: string;
-  well: string;
+  //well: string;
 }
 
 export interface IGroupData {
@@ -39,6 +40,7 @@ export interface IGroup {
   p_id: string;
   sheme_svg: "" | null;
   update: boolean;
+  wells: IDefaultWell[];
 }
 
 export interface ILocation {

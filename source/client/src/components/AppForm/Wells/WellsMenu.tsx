@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC, ChangeEvent } from "react";
+import React, { useState, useEffect, FC, ChangeEvent, useMemo } from "react";
 import { observer } from "mobx-react";
 import {
   Typography,
@@ -22,10 +22,11 @@ import { IGroup } from "../../../models/IDevice";
 import { arrayExtensions } from "mobx/dist/internal";
 
 export const WellsMenu: FC = observer(() => {
-  const wells = APP_STORAGE.wells.getDefaultWells();
   const groups = toJS(APP_STORAGE.devs_groups.getDevsGroups());
-  const [filteredWells, setFilteredWells] = useState<IDefaultWell[]>(wells);
+  const groups1 = toJS(APP_STORAGE.devs_groups.getDevsGroups());
+  // const [filteredWells, setFilteredWells] = useState<IDefaultWell[]>(wells);
   const [filteredGroup, setFilteredGroup] = useState<IGroup[]>(groups);
+
   const [searchValue, setSearchValue] = useState<string>("");
   const handleSelect = (e: any, node: any) => {
     APP_STORAGE.reg_user.setNodeIdWell(node.slice(5));
@@ -34,9 +35,10 @@ export const WellsMenu: FC = observer(() => {
     const value = e.target.value;
     setSearchValue(value);
   };
+
   const getFiltredWells = (array: IGroup[], searchValue: string) => {
     return array.filter((location) => {
-      if (location.devs.some((dev) => dev.well.includes(searchValue))) {
+      if (location.wells?.some((well) => well.number.includes(searchValue))) {
         return true;
       } else if (location.childs.length > 0) {
         location.childs = getFiltredWells(location.childs, searchValue);
@@ -46,11 +48,13 @@ export const WellsMenu: FC = observer(() => {
     });
   };
 
-  useEffect(() => setFilteredWells(wells), [wells]);
-  useEffect(() => setFilteredGroup(groups), []);
+  const filteredWells = useMemo(
+    () => getFiltredWells(groups1, searchValue),
+    [groups1, searchValue]
+  );
   useEffect(() => {
-    setFilteredGroup(getFiltredWells(groups, searchValue));
-  }, [searchValue]);
+    APP_STORAGE.wells.setLocationsWithWells(filteredWells);
+  }, [searchValue, filteredWells]);
 
   return (
     <React.Fragment>
@@ -88,7 +92,7 @@ export const WellsMenu: FC = observer(() => {
           </IconButton>
         </Paper>
         <TreeView onNodeSelect={handleSelect}>
-          {filteredGroup?.map((group) => {
+          {groups.map((group) => {
             return <TreeElement key={group.id} location={group} />;
           })}
         </TreeView>

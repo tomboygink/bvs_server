@@ -470,6 +470,7 @@ export class DevsGroupStorage {
   //TODO: оптимизировать функцию
   setDevsGroupsAll(dt: IWSResult) {
     /* -----  Получаем все группы устройств   */
+    // console.log("data=>", dt.data.replace(/\n/g, "\\n"));
     if (typeof dt.data === "string") {
       const data = dt.data;
       //Экранируем символ перевода строки (чтобы приложение не ломалось, когда в многострочных полях строки есть перевод строки)
@@ -498,8 +499,6 @@ export class DevsGroupStorage {
       ) {
         devs_g = JSON.parse(JSON.stringify(obj));
       }
-      // console.log("devs_g.>", devs_g); // \n
-      // console.log("devs_g.0=>", JSON.parse(JSON.stringify( devs_g[0]))); // \space
 
       for (var key in devs_g) {
         if (devs_g.hasOwnProperty(key)) {
@@ -516,6 +515,7 @@ export class DevsGroupStorage {
       }
 
       this.setDevsGroups(DevGr);
+      console.log("devGr=>", DevGr);
 
       // const arr = DevGr.reduce((acc, { devs }) => {
       //   return [...acc, ...devs];
@@ -538,7 +538,8 @@ export class DevsGroupStorage {
       });
       this.setNumbers(allNumbers);
       this.setLocations(getGroups(DevGr));
-      APP_STORAGE.wells.fetchWells();
+
+      // APP_STORAGE.wells.fetchWells();
 
       // let wells: IWell[] = [];
       // const recursionWells = (group: IGroup[]) => {

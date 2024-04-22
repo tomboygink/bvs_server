@@ -223,9 +223,9 @@ class AppStorage {
       case "get_DevPovs": {
         this.sensors.set_DevPovs(dt as IWSResult);
       }
-      case "set_ThermalWell": {
-        this.wells.fetchWells();
-      }
+      // case "set_ThermalWell": {
+      //   this.wells.fetchWells();
+      // }
       // case "set_ChangeThermalWell": {
       //   this.wells.fetchWells();
       // }

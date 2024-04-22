@@ -1,24 +1,10 @@
 import React, { FC, useEffect, useState, useMemo } from "react";
 import { observer } from "mobx-react";
 import { set, toJS } from "mobx";
-import {
-  Box,
-  Button,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Alert,
-  Stack,
-} from "@mui/material";
-import { SelectChangeEvent } from "@mui/material";
-import { Org } from "../../../../../storage/components/Orgs/OrgStorage";
+import { Box, Button, Alert, Stack } from "@mui/material";
+
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
-import {
-  getGroups,
-  filteredGroups,
-  filteredDevs,
-} from "../../../../../../utils/functions";
+import { getGroups, filteredDevs } from "../../../../../../utils/functions";
 import { useFormValidation } from "../../../../../hooks/UseFormValidation";
 import { TextInput } from "../../../../shared/TextInput";
 import { SelectWithSearch } from "../../../../shared/SelectWithSearch";
@@ -37,14 +23,9 @@ export const NewWell: FC<IProps> = observer(() => {
   } = useFormValidation();
 
   const [validationMessage, setValidationMessage] = useState("");
-  //const [currentGroup, setCurrentGroup] = useState([]);
   const [currentDevs, setCurrentDevs] = useState([]);
-  //const [isDisabledGroup, setIsDisabledGroup] = useState(true);
   const [isDisabledDev, setIsDisabledDev] = useState(true);
 
-  const orgs: Org[] = JSON.parse(
-    JSON.stringify(APP_STORAGE.reg_user.getOrgAll())
-  );
   const locations = JSON.parse(
     JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
   );
@@ -55,26 +36,22 @@ export const NewWell: FC<IProps> = observer(() => {
     return isValid && Boolean(values.addWell_location);
   };
 
-  // Обработчик закрытия поля выбора с организацией и поля выбора расположения (разблокируем следующее поле для редактирования)
+  // Обработчик закрытия поля выбора расположения (разблокируем следующее поле для редактирования)
   const handleClose = (setFunc: (state: boolean) => void) => {
     setFunc(false);
   };
 
-  // Обработчик изменений в поле выбора  организацией
-  // const hahdleChange = (event: SelectChangeEvent) => {
-  //   // Очищаем массивы, если выбрана другая организация
-  //   setCurrentGroup([]);
-  //   setCurrentDevs([]);
-
-  //   handleSelectChange(event);
-  // };
-
   // Отправка формы
   const handleAddWell = () => {
     setValidationMessage("");
-    const hasWell = APP_STORAGE.wells
-      .getDefaultWells()
-      .find((item) => item.dev_id === values.addWell_dev);
+    let hasWell;
+
+    if (APP_STORAGE.wells.getDefaultWells()) {
+      hasWell = APP_STORAGE.wells
+        .getDefaultWells()
+        .find((item) => item.dev_id === values.addWell_dev);
+    }
+
     hasWell
       ? setValidationMessage("Устройство уже используется в другой скважине")
       : isValidForm()
@@ -85,14 +62,6 @@ export const NewWell: FC<IProps> = observer(() => {
         )
       : setValidationMessage("Не заполнены обязательные поля");
   };
-
-  // useEffect(() => {
-  //   //Очищаем значения полей Расположение, Устройства, если выбрана другая организация
-  //   setValues({ ...values, addWell_location: "", addWell_dev: "" });
-
-  //   const group = getGroups(locations);
-  //   filteredGroups(group, values.addWell_org, setCurrentGroup);
-  // }, [values.addWell_org]);
 
   useEffect(() => {
     //Очищаем значение полей Устройства, если выбрано другое расположение

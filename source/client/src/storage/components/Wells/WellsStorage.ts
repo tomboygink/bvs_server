@@ -32,8 +32,9 @@ export class WellsStorage {
     group_id: "",
     dev_id: "",
   };
-  // @observable wells: IWell[] = [];
+  @observable locationsWithWells: IGroup[] = [];
   @observable defaultWells: IDefaultWell[] = [];
+
   @observable openModal: boolean = false;
 
   @observable successSave_mess: string = "";
@@ -65,14 +66,27 @@ export class WellsStorage {
   @computed getErrorSave_mess() {
     return this.errorSave_mess;
   }
+  @action setDefaultWell(well: IDefaultWell) {
+    this.defaultWell = well;
+  }
+  @computed getDefaultWell(): IDefaultWell {
+    return this.defaultWell;
+  }
   @action setDefaultWells(wells: IDefaultWell[]) {
     this.defaultWells = wells;
   }
   @computed getDefaultWells(): IDefaultWell[] {
     return this.defaultWells;
   }
+
   @action setOpenModal(val: boolean) {
     this.openModal = val;
+  }
+  @action setLocationsWithWells(groups: IGroup[]) {
+    this.locationsWithWells = groups;
+  }
+  @computed getLocationsWithWells(): IGroup[] {
+    return this.locationsWithWells;
   }
   @computed getOpenModal(): boolean {
     return this.openModal;
@@ -88,6 +102,7 @@ export class WellsStorage {
 
       .catch((err) => console.log("err", err));
   }
+
   setAllWells(dt: IWSResult) {
     this.setDefaultWells(dt.data);
   }

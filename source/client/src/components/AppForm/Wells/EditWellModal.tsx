@@ -60,23 +60,27 @@ export const EditWellModal: FC = observer(() => {
     const {
       editWell_number: number,
       editWell_location: location,
-      editWell_org: org,
+      //editWell_org: org,
       editWell_dev: dev,
     } = values;
 
     const {
       number: storeNumber,
       location: storeLocation,
-      org: storeOrg,
+      //org: storeOrg,
       dev: storeDev,
     } = APP_STORAGE.wells.getSelectedWell();
     const formData = {
       id: APP_STORAGE.wells.getSelectedWell().id,
       editWell_number: number ?? storeNumber,
       editWell_location: location ?? storeLocation.id,
-      editWell_org: org ?? storeOrg.id,
+      editWell_org: "",
       editWell_dev: dev ?? storeDev.id,
     };
+    const orgId = APP_STORAGE.devs_groups
+      .getLocations()
+      .find((loc) => loc.id === formData.editWell_location)?.org_id;
+    formData.editWell_org = orgId;
 
     const orgSelectedWell = APP_STORAGE.reg_user
       .getOrgAll()
@@ -110,13 +114,14 @@ export const EditWellModal: FC = observer(() => {
 
     if (
       formData.editWell_number === "" ||
-      formData.editWell_org === "" ||
+      //formData.editWell_org === "" ||
       formData.editWell_location === ""
     ) {
       setValidationMessage("Не заполнены обязательные поля");
     } else if (hasWell) {
       setValidationMessage("Устройство уже используется в другой скважине");
     } else {
+      console.log("formData", formData);
       APP_STORAGE.wells.changeThermalWell(
         "sess_id",
         APP_STORAGE.auth_form.getdt(),
@@ -206,7 +211,7 @@ export const EditWellModal: FC = observer(() => {
           onChange={handleChange}
           defaultValue={APP_STORAGE.wells.getSelectedWell()?.number}
         />
-        <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
+        {/* <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
           <InputLabel className="org" sx={{ fontSize: "12px" }}>
             Организация*
           </InputLabel>
@@ -225,10 +230,10 @@ export const EditWellModal: FC = observer(() => {
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
+        </FormControl> */}
         <SelectWithSearch
           name="editWell_location"
-          options={currentGroup}
+          options={getGroups(locations)}
           label="Расположение*"
           defaultValue={APP_STORAGE.wells.getSelectedWell()?.location.id}
           onChange={handleSelectChange}
