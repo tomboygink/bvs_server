@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import moment from "moment";
 import { observer } from "mobx-react";
 import { toJS } from "mobx";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
@@ -36,6 +36,15 @@ export class SelectedSession extends React.Component<IProps> {
   }
 
   render(): React.ReactNode {
+    const controlSessionTime = moment(
+      APP_STORAGE.sensors.getTimeDevSessFirst()
+    ).format("DD.MM.YYYY");
+    const lastSessionTime = moment(
+      APP_STORAGE.sensors.getTimeDevSessLast()
+    ).format("DD.MM.YYYY");
+    const selectedSessionTime = moment(
+      APP_STORAGE.sensors.getChoseSessTime()
+    ).format("DD.MM.YYYY");
     let count_sess = [];
     var ses_depth = [];
     var ses_date = [];
@@ -118,9 +127,9 @@ export class SelectedSession extends React.Component<IProps> {
                 <TableHead>
                   <TableRow>
                     <TableCell>Глубина</TableCell>
-                    <TableCell align="center">Контрольная сессия</TableCell>
-                    <TableCell align="center">Последняя сессия</TableCell>
-                    <TableCell align="center">Выбранная сессия</TableCell>
+                    <TableCell align="center">{`Контрольная сессия ${controlSessionTime}`}</TableCell>
+                    <TableCell align="center">{`Последняя сессия ${lastSessionTime}`}</TableCell>
+                    <TableCell align="center">{`Выбранная сессия ${selectedSessionTime}`}</TableCell>
                   </TableRow>
                 </TableHead>
 

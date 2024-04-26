@@ -23,7 +23,7 @@ import { arrayExtensions } from "mobx/dist/internal";
 
 export const WellsMenu: FC = observer(() => {
   const groups = toJS(APP_STORAGE.devs_groups.getDevsGroups());
-  const groups1 = toJS(APP_STORAGE.devs_groups.getDevsGroups());
+
   // const [filteredWells, setFilteredWells] = useState<IDefaultWell[]>(wells);
   const [filteredGroup, setFilteredGroup] = useState<IGroup[]>(groups);
 
@@ -49,8 +49,8 @@ export const WellsMenu: FC = observer(() => {
   };
 
   const filteredWells = useMemo(
-    () => getFiltredWells(groups1, searchValue),
-    [groups1, searchValue]
+    () => getFiltredWells(groups, searchValue),
+    [groups, searchValue]
   );
   useEffect(() => {
     APP_STORAGE.wells.setLocationsWithWells(filteredWells);
@@ -92,7 +92,7 @@ export const WellsMenu: FC = observer(() => {
           </IconButton>
         </Paper>
         <TreeView onNodeSelect={handleSelect}>
-          {groups.map((group) => {
+          {filteredWells.map((group) => {
             return <TreeElement key={group.id} location={group} />;
           })}
         </TreeView>

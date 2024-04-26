@@ -267,12 +267,7 @@ export class ImportDevStorage {
 
           api
             .fetch(q)
-            .then(() => {
-              APP_STORAGE.devs_groups.get_DevsGroups(
-                "sess_id",
-                APP_STORAGE.auth_form.getdt()
-              );
-            })
+            .then(() => {})
             .catch((e) => {
               console.log("error=>", e.message);
               this.setErrorSaved_devs(String(item[0]));
@@ -280,100 +275,10 @@ export class ImportDevStorage {
         }
       });
 
-      // for (var key in APP_STORAGE.importdevs.getArrayJsonData()) {
-      //   console.log("key=>", APP_STORAGE.importdevs.getArrayJsonData()[key]);
-      //   m1 = APP_STORAGE.importdevs
-      //     .getArrayJsonData()
-      //     [key].slice(5, APP_STORAGE.importdevs.getArrayJsonData()[key].length);
-
-      //   array_senssors = m1;
-
-      //   array_number = array_senssors.filter(
-      //     (item: any) => typeof item === "number"
-      //   );
-      //   var arrKeys = ["depth", "value"];
-
-      //   var getData = (arrKeys: any[], array_number: any) => {
-      //     return array_number.map((val: { toString: () => any }) => ({
-      //       [arrKeys[0]]: val.toString(),
-      //       [arrKeys[1]]: 1,
-      //     }));
-      //   };
-
-      //   let arr = getData(arrKeys, array_number);
-
-      //   // var sess_code = APP_STORAGE.auth_form.getdt();
-      //   // var q: IWSQuery = new WSQuery("set_NewDevs");
-      //   let lat: any;
-      //   let lng: any;
-
-      //   if (
-      //     Number(APP_STORAGE.importdevs.getArrayJsonData()[key][3] !== 0) &&
-      //     Number(APP_STORAGE.importdevs.getArrayJsonData()[key][4] !== 0)
-      //   ) {
-      //     let latnumber = APP_STORAGE.importdevs
-      //       .getArrayJsonData()
-      //       [key][3].toString()
-      //       .replace(/[^\d\.,]/g, ""); //// только цифты
-      //     let latchar = latnumber.replace(/,/g, "."); //// то
-      //     if (latchar.match(/\./g).length > 1) {
-      //       lat = latchar.substr(0, latchar.lastIndexOf("."));
-      //     } else {
-      //       lat = latchar;
-      //     }
-
-      //     let lngnumber = APP_STORAGE.importdevs
-      //       .getArrayJsonData()
-      //       [key][4].toString()
-      //       .replace(/[^\d\.,]/g, ""); //// только цифты
-      //     let lngchar = lngnumber.replace(/,/g, "."); //// то
-      //     if (lngchar.match(/\./g).length > 1) {
-      //       lng = lngchar.substr(0, latchar.lastIndexOf("."));
-      //     } else {
-      //       lng = lngchar;
-      //     }
-      //   } else if (
-      //     Number(APP_STORAGE.importdevs.getArrayJsonData()[key][3] === 0) &&
-      //     Number(APP_STORAGE.importdevs.getArrayJsonData()[key][4] === 0)
-      //   ) {
-      //     lat = "0.0";
-      //     lng = "0.0";
-      //   }
-
-      //   q.args = {
-      //     group_dev_id: APP_STORAGE.devs.getIdDevs(),
-      //     number: APP_STORAGE.importdevs.getArrayJsonData()[key][0] || "",
-      //     name: APP_STORAGE.importdevs.getArrayJsonData()[key][1] || "",
-      //     latitude: lat,
-      //     longitude: lng,
-      //     sensors: '{"s":' + JSON.stringify(arr) + "}",
-      //     deleted: false,
-      //     info: "",
-      //     period_sess: APP_STORAGE.importdevs.getArrayJsonData()[key][2] || "",
-      //   };
-      //   q.sess_code = sess_code;
-
-      //   // (await WSocket.get()).send(q);
-      //   // setTimeout(() => {
-      //   //   APP_STORAGE.devs_groups.get_DevsGroups(
-      //   //     "sess_id",
-      //   //     APP_STORAGE.auth_form.getdt()
-      //   //   );
-      //   // }, 1000);
-      //   // APP_STORAGE.importdevs.setOpenModal(false);
-      //   api
-      //     .fetch(q)
-      //     .then(() => {
-      //       setTimeout(() => {
-      //         APP_STORAGE.devs_groups.get_DevsGroups(
-      //           "sess_id",
-      //           APP_STORAGE.auth_form.getdt()
-      //         );
-      //       }, 1000);
-      //       APP_STORAGE.importdevs.setOpenModal(false);
-      //     })
-      //     .catch((e) => console.log("error=>", e)); // fetch-запрос
-      // }
+      APP_STORAGE.devs_groups.get_DevsGroups(
+        "sess_id",
+        APP_STORAGE.auth_form.getdt()
+      );
     } catch (err) {
       console.log("error=>", err.message);
 
@@ -385,89 +290,11 @@ export class ImportDevStorage {
       APP_STORAGE.importdevs.setArrayJsonData([]);
     }
   }
-  // Первоначальный вариант функции для отрисовки схемы:
-  // async uploadfile() {
-  //   var element = document.createElement("div");
-  //   element.id = "svg";
-  //   document.getElementsByClassName("svg-container")[0].innerHTML = "";
-  //   document.getElementsByClassName("svg-container")[0].appendChild(element);
-  //   var newSvg = document.getElementById("svg");
 
-  //   newSvg.outerHTML = APP_STORAGE.importdevs.getSvg();
+  // TODO: remove this
 
-  //   APP_STORAGE.importdevs.setOpenModalSvg(false);
-  //   var hrefs = document.getElementsByClassName("well");
-  //   console.log("sensors=>", toJS(APP_STORAGE.devs.getChangeSensors2()));
-  //   for (let i in hrefs) {
-  //     hrefs.item(Number(i)).addEventListener("mouseout", function (e) {
-  //       console.log("item=>", hrefs[i]);
-  //       document.getElementById(hrefs[i].id).style.stroke = "";
-  //       e.preventDefault(); /*use if you want to prevent the original link following action*/
-  //       var tooltip = document.getElementById("tooltip");
-  //       tooltip.style.display = "none";
-  //     });
-
-  //     hrefs.item(Number(i)).addEventListener("mousemove", function (e) {
-  //       e.preventDefault(); /*use if you want to prevent the original link following action*/
-
-  //       for (var j in APP_STORAGE.devs.getChangeSensors2()) {
-  //         if (
-  //           String(hrefs[i].id.slice(5)) ===
-  //           String(APP_STORAGE.devs.getChangeSensors2()[j].id)
-  //         ) {
-  //           document.getElementById(hrefs[i].id).style.stroke = "#25E48B";
-  //           var clientRectangle = document
-  //             .getElementById(hrefs[i].id)
-  //             .getBoundingClientRect();
-  //           let tooltip = document.getElementById("tooltip");
-  //           tooltip.innerHTML =
-  //             "Номер косы" +
-  //             "-" +
-  //             APP_STORAGE.devs.getChangeSensors2()[j].number;
-  //           tooltip.style.display = "block";
-  //           tooltip.style.left = clientRectangle.left + "px";
-  //           tooltip.style.top = clientRectangle.top + "px";
-  //         }
-  //       }
-  //     });
-
-  //     hrefs.item(Number(i)).addEventListener("click", function (e) {
-  //       e.preventDefault(); /*use if you want to prevent the original link following action*/
-
-  //       for (var j in APP_STORAGE.devs.getChangeSensors2()) {
-  //         if (
-  //           String(hrefs[i].id.slice(5)) ===
-  //           String(APP_STORAGE.devs.getChangeSensors2()[j].id)
-  //         ) {
-  //           APP_STORAGE.devs.setIdChild("_dev_id_key_" + hrefs[i].id.slice(5));
-  //           APP_STORAGE.sensors.setEmptySession("");
-  //           APP_STORAGE.sensors.setSessFirstLast([]);
-  //           APP_STORAGE.sensors.setSessFirstLastCharts([]);
-  //           APP_STORAGE.sensors.setSess_first([]);
-  //           APP_STORAGE.sensors.setSess_second([]);
-  //           APP_STORAGE.sensors.setSortDesc("");
-  //           APP_STORAGE.sensors.setAkbSessChose("");
-  //           APP_STORAGE.sensors.setChoseSessTime("");
-  //           APP_STORAGE.sensors.setAkbSessLast("");
-  //           APP_STORAGE.devs_groups.setMiddleForm(2);
-
-  //           APP_STORAGE.devs.setTopMenuDev("top_menu-1");
-  //         }
-  //       }
-  //     });
-  //   }
-  // }
-
-  // Переделанный вариант
   async uploadfile() {
-    //const element = document.createElement("div");
-    //element.id = "svg";
-    //document.getElementsByClassName("svg-container")[0].innerHTML = "";
-    //document.getElementsByClassName("svg-container")[0].appendChild(element);
-    //var newSvg = document.getElementById("svg");
     let tooltip = document.getElementById("tooltip");
-    //newSvg.outerHTML = APP_STORAGE.importdevs.getSvg();
-
     APP_STORAGE.importdevs.setOpenModalSvg(false);
     const hrefs: SVGElement[] = Array.from(document.querySelectorAll(".well"));
     hrefs.forEach((item, i) => {

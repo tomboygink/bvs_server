@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState, useMemo } from "react";
 import { observer } from "mobx-react";
 import { set, toJS } from "mobx";
 import { Box, Button, Alert, Stack } from "@mui/material";
-
+import { IWSQuery, WSQuery, api } from "../../../../../api/api";
 import { APP_STORAGE } from "../../../../../storage/AppStorage";
 import { getGroups, filteredDevs } from "../../../../../../utils/functions";
 import { useFormValidation } from "../../../../../hooks/UseFormValidation";
@@ -41,26 +41,39 @@ export const NewWell: FC<IProps> = observer(() => {
     setFunc(false);
   };
 
+  function sayHello() {
+    console.log("Hello");
+  }
+
   // Отправка формы
   const handleAddWell = () => {
     setValidationMessage("");
-    let hasWell;
-
-    if (APP_STORAGE.wells.getDefaultWells()) {
-      hasWell = APP_STORAGE.wells
-        .getDefaultWells()
-        .find((item) => item.dev_id === values.addWell_dev);
-    }
-
-    hasWell
-      ? setValidationMessage("Устройство уже используется в другой скважине")
-      : isValidForm()
+    isValidForm()
       ? APP_STORAGE.reg_user.set_NewThermalWell(
           "sess_id",
           APP_STORAGE.auth_form.getdt(),
           values
         )
       : setValidationMessage("Не заполнены обязательные поля");
+    // const validation = () => {
+    //   let hasWell;
+    //   if (APP_STORAGE.wells.getDefaultWells()) {
+    //     hasWell = APP_STORAGE.wells
+    //       .getDefaultWells()
+    //       .find((item) => item.dev_id === values.addWell_dev);
+    //   }
+
+    //   hasWell
+    //     ? setValidationMessage("Устройство уже используется в другой скважине")
+    //     : isValidForm()
+    //     ? APP_STORAGE.reg_user.set_NewThermalWell(
+    //         "sess_id",
+    //         APP_STORAGE.auth_form.getdt(),
+    //         values
+    //       )
+    //     : setValidationMessage("Не заполнены обязательные поля");
+    // };
+    // APP_STORAGE.wells.fetchWells(validation);
   };
 
   useEffect(() => {
@@ -68,6 +81,9 @@ export const NewWell: FC<IProps> = observer(() => {
     setValues({ ...values, addWell_dev: "" });
     filteredDevs(allDevs, values.addWell_location, setCurrentDevs);
   }, [values.addWell_location]);
+  // useEffect(() => {
+  //   APP_STORAGE.wells.fetchWells();
+  // }, []);
 
   return (
     <React.Fragment>

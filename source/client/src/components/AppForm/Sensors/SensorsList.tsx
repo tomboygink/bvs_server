@@ -210,23 +210,23 @@ export class SensorsList extends React.Component<IProps> {
   }
 
   render(): React.ReactNode {
-    let FirstData = APP_STORAGE.sensors.getTimeDevSessFirst().split("T")[0]; ///////// Перевернуть дату
-    const [year_first, month_first, day_first] = FirstData.split("-");
-    let FirstSess = `${day_first}.${month_first}.${year_first}`;
-    let FirstTimeSess = APP_STORAGE.sensors.getTimeDevSessFirst().split("T")[1];
+    //let FirstData = APP_STORAGE.sensors.getTimeDevSessFirst().split("T")[0]; ///////// Перевернуть дату
+    //const [year_first, month_first, day_first] = FirstData.split("-");
+    //let FirstSess = `${day_first}.${month_first}.${year_first}`;
+    //let FirstTimeSess = APP_STORAGE.sensors.getTimeDevSessFirst().split("T")[1];
 
-    let LastData = APP_STORAGE.sensors.getTimeDevSessLast().split("T")[0]; ///////// Перевернуть дату
-    const [year_last, month_last, day_last] = LastData.split("-");
-    let LastSess = `${day_last}.${month_last}.${year_last}`;
-    let LastTimeSess = APP_STORAGE.sensors.getTimeDevSessLast().split("T")[1];
+    //let LastData = APP_STORAGE.sensors.getTimeDevSessLast().split("T")[0]; ///////// Перевернуть дату
+    //const [year_last, month_last, day_last] = LastData.split("-");
+    //let LastSess = `${day_last}.${month_last}.${year_last}`;
+    //let LastTimeSess = APP_STORAGE.sensors.getTimeDevSessLast().split("T")[1];
 
-    let ChoseData = APP_STORAGE.sensors.getChoseSessTime().split("T")[0]; ///////// Перевернуть дату
-    const [year_chose, month_chose, day_chose] = ChoseData.split("-");
-    let ChoseSess = `${day_chose}.${month_chose}.${year_chose}`;
-    let ChoseTimeSess = APP_STORAGE.sensors.getChoseSessTime().split("T")[1];
-    const count =
-      Number(APP_STORAGE.devs.getPassedDay()) /
-      Number(APP_STORAGE.devs.getPeriodSess());
+    //let ChoseData = APP_STORAGE.sensors.getChoseSessTime().split("T")[0]; ///////// Перевернуть дату
+    //const [year_chose, month_chose, day_chose] = ChoseData.split("-");
+    // let ChoseSess = `${day_chose}.${month_chose}.${year_chose}`;
+    //let ChoseTimeSess = APP_STORAGE.sensors.getChoseSessTime().split("T")[1];
+    // const count =
+    //   Number(APP_STORAGE.devs.getPassedDay())
+    //   Number(APP_STORAGE.devs.getPeriodSess());
     const isVisibleBlockedDev = () => {
       return (
         APP_STORAGE.getRoleRead() === 1 && APP_STORAGE.getRoleWrite() === 2

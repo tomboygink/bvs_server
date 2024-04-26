@@ -63,7 +63,6 @@ export class Opensvgfile extends React.Component<IProps> {
   }
 
   private _handleFile = async (e: any) => {
-    console.log("handleFile=>", e);
     let fileToUpload = e.target.files[0];
     let reader = new FileReader();
 

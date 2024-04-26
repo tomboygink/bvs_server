@@ -406,39 +406,40 @@ export class SensorsStorage {
   }
 
   async set_DevFirstLastSessions(dt: IWSResultSessionss) {
-    // let svg;
-    // if (dt.data?.svg) {
-    //   svg = atob(dt.data.svg.svg.replace(/data:image\/svg\+xml;base64,/, ""));
-    // }
-
-    // if (svg) {
-    //   this.setSheme(svg);
-    // } else this.setSheme("");
-
     if (dt.data.hasOwnProperty("dev_result")) {
+      //Контрольная сессия
       const {
         sess_data: startSess,
         time_dev: timeDevFirst,
         id: idFirst,
         level_akb: akbFirst,
-      } = dt.data.dev_result[0];
+      } = dt.data.dev_result[1];
+
+      //Последняя сессия
       const {
         sess_data: endSess,
         time_dev: timeDevLast,
         id: idLast,
         level_akb: akbLast,
-      } = dt.data.dev_result[1];
+      } = dt.data.dev_result[0];
 
       let start_sess = JSON.parse(startSess);
       let end_sess = JSON.parse(endSess);
 
-      this.setTimeDevSessFirst(timeDevLast);
-      this.setTimeDevSessLast(timeDevFirst);
-      this.setIdFirstSess(idLast);
-      this.setIdLastSess(idFirst);
+      //Поменяны между собой first и last, протестировать
+      this.setTimeDevSessFirst(timeDevFirst);
+      this.setTimeDevSessLast(timeDevLast);
+      this.setIdFirstSess(idFirst);
+      this.setIdLastSess(idLast);
+      this.setAkbSessFirst(akbFirst);
+      this.setAkbSessLast(akbLast);
 
-      this.setAkbSessFirst(akbLast);
-      this.setAkbSessLast(akbFirst);
+      // this.setTimeDevSessFirst(timeDevLast);
+      // this.setTimeDevSessLast(timeDevFirst);
+      // this.setIdFirstSess(idLast);
+      // this.setIdLastSess(idFirst);
+      // this.setAkbSessFirst(akbLast);
+      // this.setAkbSessLast(akbFirst);
 
       var obj_first: any = {
         depth: "",

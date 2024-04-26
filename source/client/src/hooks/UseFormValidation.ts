@@ -15,7 +15,6 @@ export const useFormValidation = () => {
     >
   ) => {
     const target = event.target;
-
     const name = target.name;
     const value = target.value;
     const form = target.closest("form");
