@@ -6,6 +6,7 @@ import { APP_STORAGE } from "../../storage/AppStorage";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../xcore/WSQuery";
 import { WSocket } from "../WSocket";
 import { api, api1 } from "../../api/api";
+import { Org } from "./Orgs/OrgStorage";
 import {
   SAVE_SUCCESS,
   SAVE_ERROR,
@@ -36,7 +37,7 @@ export class ModalLeftPanel {
 
   @observable result_save: string = "";
 
-  @observable organization: Array<string> = [];
+  @observable organization: Array<Org> = [];
   @observable jobs_titles: Array<string> = [];
   @observable users: Array<string> = null;
   @observable jobs_titles_error: string = "";
@@ -195,10 +196,10 @@ export class ModalLeftPanel {
     return this.key_jobs;
   }
 
-  @action setOrgAll(val: Array<string>) {
+  @action setOrgAll(val: Array<Org>) {
     this.organization = val;
   }
-  @computed getOrgAll(): Array<string> {
+  @computed getOrgAll(): Array<Org> {
     return this.organization;
   }
 
@@ -673,6 +674,7 @@ export class ModalLeftPanel {
 
   setUsersAll(dt: IWSResult) {
     /* -----  Получаем всех пользователей   */
+
     this.setAllUsers(dt.data);
   }
 
@@ -717,11 +719,7 @@ export class ModalLeftPanel {
     var user_login = "";
     var q: IWSQuery = new WSQuery("set_NewUser");
     var sess_code = value;
-    //const regexp_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; /// регулярное выражение для ввода email
-    // const regexp_ph = /^((\+7|7|8)+([0-9]){10})$/; /// регулярное выражение для ввода номера телефона
     const email = this.getEmail().match(regexp_email);
-    // const dash = /[\s-]/g;
-    //const telephone = this.getTelephone().match(regexp_ph);
     const telephone = this.getTelephone().replace(regexp_dash, "");
     const isValidPassword = regexp_password.test(this.getPassword()); // убрать дефисы и пробелы
 
@@ -1150,6 +1148,7 @@ export class ModalLeftPanel {
     }
   }
 
+  // Добавление скважины
   set_NewThermalWell(
     name: string,
     value: string,
@@ -1158,15 +1157,19 @@ export class ModalLeftPanel {
     const {
       addWell_number: number,
       addWell_location: location,
-      addWell_org: org,
       addWell_dev: dev,
     } = options;
 
     const sess_code = value;
     const q: IWSQuery = new WSQuery("set_ThermalWell");
+
+    const orgId = APP_STORAGE.devs_groups
+      .getLocations()
+      .find((loc) => loc.id === location).org_id;
+
     q.args = {
       number: number,
-      org_id: Number(org),
+      org_id: Number(orgId),
       group_id: Number(location),
       dev_id: Number(dev) || null,
     };
@@ -1175,6 +1178,10 @@ export class ModalLeftPanel {
     api
       .fetch(q)
       .then(() => {
+        APP_STORAGE.devs_groups.get_DevsGroups(
+          "sess_id",
+          APP_STORAGE.auth_form.getdt()
+        );
         this.setSuccessSave_mess(SAVE_SUCCESS);
         setTimeout(() => {
           this.setModalRegUser(false);

@@ -2,7 +2,7 @@ export const skvazhiny_table = {
     sql: `
     DROP TABLE IF EXISTS skvazhiny;
     CREATE TABLE skvazhiny (
-        id          BIGINT NOT NULL PRIMARY KEY,
+        id          BIGSERIAL NOT NULL PRIMARY KEY,
         number      VARCHAR(60) DEFAULT(''),
         org_id      BIGINT DEFAULT(0),
         group_id    BIGINT DEFAULT(0),

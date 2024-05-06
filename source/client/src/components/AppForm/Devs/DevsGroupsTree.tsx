@@ -11,6 +11,8 @@ import { handleChange } from "./StyledMua";
 import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 import FolderZipIcon from "@mui/icons-material/FolderZip";
 import FolderIcon from "@mui/icons-material/Folder";
+import Skeleton from "@mui/material/Skeleton";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { TDevsGroup } from "../../../storage/components/Devs/DevEntityes";
 import { TDGroup } from "../../../storage/components/Devs/DevEntityes";
@@ -375,6 +377,16 @@ export class DevsGroupsTree extends React.Component<IProps> {
               aria-label="customized"
               sx={{ flexGrow: 1, maxWidth: 400, overflow: "auto" }}
             >
+              {APP_STORAGE.devs_groups.getIsLoading() && (
+                <Box>
+                  <Skeleton animation="wave" />
+                  <Skeleton animation="wave" />
+                  <Skeleton animation="wave" />
+                  <Skeleton animation="wave" />
+                  <Skeleton animation="wave" />
+                </Box>
+              )}
+
               {this.drawDevsTree()}
             </TreeView>
           </Box>

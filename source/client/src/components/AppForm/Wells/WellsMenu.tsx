@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, FC, ChangeEvent, useMemo } from "react";
+import { observer } from "mobx-react";
 import {
   Typography,
   Box,
@@ -9,39 +10,51 @@ import {
 } from "@mui/material";
 import { TreeView, TreeItem } from "@mui/x-tree-view";
 import SearchIcon from "@mui/icons-material/Search";
+import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
 import GpsNotFixedIcon from "@mui/icons-material/GpsNotFixed";
-import { set } from "mobx";
+import FolderIcon from "@mui/icons-material/Folder";
+import { set, toJS } from "mobx";
 import { APP_STORAGE } from "../../../storage/AppStorage";
-const wells = [
-  {
-    id: "11",
-    number: "4556",
-    location: "1",
-    org: "1",
-    dev: "45",
-  },
-  {
-    id: "12",
-    number: "4596879",
-  },
-  {
-    id: "13",
-    number: "7845",
-  },
-  {
-    id: "14",
-    number: "1658",
-  },
-  {
-    id: "15",
-    number: "754546",
-  },
-];
+import { handleChange } from "../Devs/StyledMua";
+import { IDefaultWell } from "../../../models/IWell";
+import { TreeElement } from "../../shared/TreeElement";
+import { IGroup } from "../../../models/IDevice";
+import { arrayExtensions } from "mobx/dist/internal";
 
-export const WellsMenu = () => {
+export const WellsMenu: FC = observer(() => {
+  const groups = toJS(APP_STORAGE.devs_groups.getDevsGroups());
+  const groups1 = toJS(APP_STORAGE.devs_groups.getDevsGroups());
+  // const [filteredWells, setFilteredWells] = useState<IDefaultWell[]>(wells);
+  const [filteredGroup, setFilteredGroup] = useState<IGroup[]>(groups);
+
+  const [searchValue, setSearchValue] = useState<string>("");
   const handleSelect = (e: any, node: any) => {
-    APP_STORAGE.reg_user.setNodeIdWell(node);
+    APP_STORAGE.reg_user.setNodeIdWell(node.slice(5));
   };
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchValue(value);
+  };
+
+  const getFiltredWells = (array: IGroup[], searchValue: string) => {
+    return array.filter((location) => {
+      if (location.wells?.some((well) => well.number.includes(searchValue))) {
+        return true;
+      } else if (location.childs.length > 0) {
+        location.childs = getFiltredWells(location.childs, searchValue);
+        return location.childs.length > 0;
+      }
+      return false;
+    });
+  };
+
+  const filteredWells = useMemo(
+    () => getFiltredWells(groups1, searchValue),
+    [groups1, searchValue]
+  );
+  useEffect(() => {
+    APP_STORAGE.wells.setLocationsWithWells(filteredWells);
+  }, [searchValue, filteredWells]);
 
   return (
     <React.Fragment>
@@ -71,27 +84,30 @@ export const WellsMenu = () => {
             sx={{ ml: 1, flex: 1, fontSize: "14px", pl: "14px" }}
             placeholder="Поиск по номеру"
             inputProps={{ "aria-label": "search google maps" }}
-            onChange={(e) => {
-              console.log(e.target.value);
-            }}
+            onChange={handleSearch}
           />
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
           <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
             <SearchIcon />
           </IconButton>
         </Paper>
-        <TreeView
+        <TreeView onNodeSelect={handleSelect}>
+          {groups.map((group) => {
+            return <TreeElement key={group.id} location={group} />;
+          })}
+        </TreeView>
+        {/* <TreeView
           className="wrapper_treeviw"
           onNodeSelect={handleSelect}
           aria-label="customized"
-          sx={{ flexGrow: 1, maxWidth: 400, overflow: "auto" }}
+          sx={{ flexGrow: 1, maxWidth: 400, overflow: "auto", color: "black" }}
         >
-          {wells.map((well) => {
+          {filteredWells?.map((item) => {
             return (
               <TreeItem
-                key={well.id}
-                nodeId={well.id}
-                label={well.number}
+                key={item.id}
+                nodeId={item.number}
+                label={item.number}
                 icon={<GpsNotFixedIcon sx={{ color: "#266BF1" }} />}
                 sx={{
                   color: "#222",
@@ -100,8 +116,8 @@ export const WellsMenu = () => {
               ></TreeItem>
             );
           })}
-        </TreeView>
+        </TreeView> */}
       </Box>
     </React.Fragment>
   );
-};
+});

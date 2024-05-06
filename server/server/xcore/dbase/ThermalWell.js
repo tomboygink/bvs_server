@@ -64,10 +64,8 @@ var ThermalWellTable = (function () {
             var db_res;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log("this");
-                        return [4, this.db.query("INSERT INTO skvazhiny(number, org_id, group_id, dev_id, create_at) " +
-                                "VALUES(\'" + this.args.number + "\'," + this.args.org_id + "," + this.args.group_id + "," + this.args.dev_id + ",\'" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "\') RETURNING  id")];
+                    case 0: return [4, this.db.query("INSERT INTO skvazhiny(number, org_id, group_id, dev_id, create_at) " +
+                            "VALUES(\'" + this.args.number + "\'," + this.args.org_id + "," + this.args.group_id + "," + this.args.dev_id + ",\'" + (0, DateStr_1.dateTimeToSQL)(new Date(Date.now())) + "\') RETURNING  id")];
                     case 1:
                         db_res = _a.sent();
                         return [2, db_res.rows[0].id];

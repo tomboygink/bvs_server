@@ -528,13 +528,13 @@ export async function router(body: any) {
         case 'set_ThermalWell': {
             var thermalWell = new ThermalWellTable(body.args, body.sess_code);
             data = await thermalWell.insertThermalWell();
-            if (data === null || data[0] === undefined) {
+            if (data === null || data[0] === undefined) {               
                 res.cmd = body.cmd;
                 res.code = body.sess_code;
                 res.data = null;
                 res.error = "Ошибка добавления скважины";
             }
-            else {
+            else {               
                 res.cmd = body.cmd;
                 res.code = body.sess_code;
                 res.data = null;

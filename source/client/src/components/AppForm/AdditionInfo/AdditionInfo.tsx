@@ -131,12 +131,11 @@ export class AdditionInfo extends React.Component<IProps> {
                 }}
               >
                 <Battery0BarIcon sx={{ color: "#aaa" }} />{" "}
-                {APP_STORAGE.sensors.getAkbSessLast()}
+                {APP_STORAGE.sensors.getAkbSessFirst()}
                 <Typography
                   sx={{ color: "#808080", fontSize: "12px", pl: "4px" }}
                 >
-                  {" "}
-                  {""} (заряд- контрольная сессия){" "}
+                  (заряд- контрольная сессия)
                 </Typography>
               </Box>
 
@@ -150,13 +149,12 @@ export class AdditionInfo extends React.Component<IProps> {
                   alignItems: "center",
                 }}
               >
-                <Battery0BarIcon sx={{ color: "#aaa" }} />{" "}
-                {APP_STORAGE.sensors.getAkbSessFirst()}
+                <Battery0BarIcon sx={{ color: "#aaa" }} />
+                {APP_STORAGE.sensors.getAkbSessLast()}
                 <Typography
                   sx={{ color: "#808080", fontSize: "12px", pl: "4px" }}
                 >
-                  {" "}
-                  {""} (заряд- последняя сессия){" "}
+                  (заряд- последняя сессия)
                 </Typography>
               </Box>
 
@@ -176,8 +174,7 @@ export class AdditionInfo extends React.Component<IProps> {
                   <Typography
                     sx={{ color: "#808080", fontSize: "12px", pl: "4px" }}
                   >
-                    {" "}
-                    {""} (заряд- выбранная сессия){" "}
+                    (заряд- выбранная сессия)
                   </Typography>
                 </Box>
               )}

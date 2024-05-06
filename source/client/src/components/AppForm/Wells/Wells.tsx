@@ -1,33 +1,29 @@
-import React, { useState, MouseEvent } from "react";
+import React, { useState, useEffect, MouseEvent } from "react";
 import { observer } from "mobx-react";
-import { toJS } from "mobx";
+import { set, toJS } from "mobx";
 import {
   Typography,
   Box,
   Stack,
   Menu,
   MenuItem,
-  Divider,
-  Link,
   IconButton,
   ListItemIcon,
-  TextareaAutosize,
 } from "@mui/material";
-import DirectionsIcon from "@mui/icons-material/Directions";
+
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
-import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
-import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
-import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
-import PhotoSizeSelectLargeIcon from "@mui/icons-material/PhotoSizeSelectLarge";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 import { TextInput } from "../../shared/TextInput";
+import { EditWellModal } from "./EditWellModal";
+import { IWell } from "../../../models/IWell";
+import { IDevice } from "../../../models/IDevice";
 
 export const Wells = observer(() => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedWell, setSelectedWell] = useState<null | object>(null);
+  const [selectedWell, setSelectedWell] = useState<null | IWell>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -40,9 +36,65 @@ export const Wells = observer(() => {
     APP_STORAGE.reg_user.setTittleModal("Добавить скважину");
   };
 
-  const getSelectedWell = () => {};
-  console.log("well", APP_STORAGE.reg_user.getNodeIdWell());
-  console.log("locations", toJS(APP_STORAGE.devs_groups.getDevsGroups()));
+  const getSelectedWell = () => {
+    let dev: IDevice;
+    let selectedWell = {
+      id: "",
+      number: "",
+      location: {
+        id: "",
+        name: "",
+      },
+      org: {
+        id: "",
+        name: "",
+      },
+      dev: {
+        id: "",
+        number: "",
+      },
+    };
+
+    const well = APP_STORAGE.wells.getDefaultWell();
+
+    if (well) {
+      const org = APP_STORAGE.reg_user
+        .getOrgAll()
+        .find((org) => org.id === well.org_id);
+
+      const location = APP_STORAGE.devs_groups
+        .getLocations()
+        .find((loc) => loc.id === well.group_id);
+      const dev = APP_STORAGE.devs_groups
+        .getAllDevs()
+        .find((dev) => dev.id === well.dev_id);
+      selectedWell = {
+        id: well.id,
+        number: well.number,
+        location: {
+          id: location?.id,
+          name: location?.name,
+        },
+        org: {
+          id: org?.id,
+          name: org?.full_name,
+        },
+        dev: {
+          id: dev?.id || "",
+          number: dev?.number || "",
+        },
+      };
+      setSelectedWell(selectedWell);
+      APP_STORAGE.wells.setSelectedWell(selectedWell);
+    } else APP_STORAGE.wells.setSelectedWell(selectedWell);
+  };
+  useEffect(() => {
+    APP_STORAGE.wells.fetchWells();
+  }, []);
+  useEffect(() => {
+    getSelectedWell();
+  }, [APP_STORAGE.reg_user.getNodeIdWell()]);
+
   return (
     <>
       <Typography sx={{ fontWeight: "600", color: "#111111", mb: "8px" }}>
@@ -51,80 +103,38 @@ export const Wells = observer(() => {
       </Typography>
       {APP_STORAGE.reg_user.getNodeIdWell() && (
         <>
-          <Stack spacing={2} sx={{ backgroundColor: "#fff", padding: "20px" }}>
+          <Stack
+            spacing={2}
+            sx={{ backgroundColor: "#fff", padding: "20px", mb: "20px" }}
+          >
             {APP_STORAGE.getRoleWrite() === 2 &&
               APP_STORAGE.getRoleRead() === 1 && (
                 <>
                   <IconButton
                     sx={{ alignSelf: "flex-end" }}
                     onClick={handleClick}
-                    aria-controls={open ? "menuPlace" : undefined}
+                    aria-controls={open ? "menuWell" : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
                   >
                     <MoreVertIcon />
                   </IconButton>
                   <Menu
-                    id="menuPlace"
+                    id="menuWell"
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleClose}
                   >
                     <MenuItem
                       onClick={() => {
-                        APP_STORAGE.devs_groups.setOpenModalChDevsGr(true);
-                        // handleClose();
+                        APP_STORAGE.wells.setOpenModal(true);
+                        handleClose();
                       }}
                     >
                       <ListItemIcon>
                         <ModeEditRoundedIcon fontSize="small" />
                       </ListItemIcon>{" "}
                       Редактировать
-                    </MenuItem>
-
-                    <MenuItem onClick={() => console.log("3")}>
-                      <ListItemIcon>
-                        <LogoutRoundedIcon fontSize="small" />
-                      </ListItemIcon>{" "}
-                      Переместить
-                    </MenuItem>
-
-                    <Divider />
-
-                    <MenuItem
-                      onClick={() => APP_STORAGE.devs.setOpenModal(true)}
-                    >
-                      <ListItemIcon>
-                        <CrisisAlertIcon fontSize="small" />
-                      </ListItemIcon>{" "}
-                      Добавить устройство
-                    </MenuItem>
-
-                    <MenuItem
-                      onClick={() => APP_STORAGE.importdevs.setOpenModal(true)}
-                    >
-                      <ListItemIcon>
-                        <PostAddOutlinedIcon fontSize="small" />
-                      </ListItemIcon>{" "}
-                      Импортировать список устройств
-                    </MenuItem>
-
-                    <MenuItem
-                      onClick={() => {
-                        APP_STORAGE.importdevs.setOpenModalSvg(true);
-                      }}
-                    >
-                      <ListItemIcon>
-                        <PhotoSizeSelectLargeIcon fontSize="small" />
-                      </ListItemIcon>{" "}
-                      Загрузить схему расположения
-                    </MenuItem>
-
-                    <MenuItem onClick={(e) => console.log(e)}>
-                      <ListItemIcon>
-                        <CreateNewFolderOutlinedIcon fontSize="small" />
-                      </ListItemIcon>{" "}
-                      Добавить подруппу
                     </MenuItem>
                   </Menu>
                 </>
@@ -134,14 +144,16 @@ export const Wells = observer(() => {
                 readOnly: true,
                 style: { fontSize: 12 },
               }}
-              label="Место расположения"
+              label="Номер скважины"
+              value={APP_STORAGE.wells.getSelectedWell()?.number || ""}
             />
             <TextInput
               InputProps={{
                 readOnly: true,
                 style: { fontSize: 12 },
               }}
-              label="Широта"
+              label="Расположение"
+              value={APP_STORAGE.wells.getSelectedWell()?.location.name || ""}
             />
 
             <TextInput
@@ -149,12 +161,21 @@ export const Wells = observer(() => {
                 readOnly: true,
                 style: { fontSize: 12 },
               }}
-              label="Долгота"
+              label="Организация"
+              value={APP_STORAGE.wells.getSelectedWell()?.org.name || ""}
+            />
+            <TextInput
+              InputProps={{
+                readOnly: true,
+                style: { fontSize: 12 },
+              }}
+              label="Устройство"
+              value={APP_STORAGE.wells.getSelectedWell()?.dev?.number || ""}
             />
           </Stack>
         </>
       )}
-
+      <EditWellModal />
       <Box
         sx={{
           borderRadius: "4px",

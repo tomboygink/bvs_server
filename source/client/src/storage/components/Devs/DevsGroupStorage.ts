@@ -1,8 +1,9 @@
-import { observable, action, computed, makeAutoObservable } from "mobx";
+import { observable, action, computed, makeAutoObservable, toJS } from "mobx";
 import { IWSQuery, WSQuery, IWSResult } from "../../../../../xcore/WSQuery";
 import { WSocket } from "../../WSocket";
 import { api, api1 } from "../../../api/api";
 import { regexp_number } from "../../../../utils/consts";
+import { getGroups, getMatchedOrg } from "../../../../utils/functions";
 import { APP_STORAGE } from "../../AppStorage";
 import {
   SAVE_ERROR,
@@ -14,7 +15,8 @@ import {
   INVALID_PASSWORD_ERROR,
 } from "../../../../utils/consts";
 import { ThirtyFpsTwoTone, ThreeSixty } from "@mui/icons-material";
-import { IDevice } from "../../../models/IDevice";
+import { IDevice, IGroup, ILocation } from "../../../models/IDevice";
+import { IWell } from "../../../models/IWell";
 import { TDevice } from "./DevEntityes";
 
 export class DevsGroupStorage {
@@ -63,11 +65,14 @@ export class DevsGroupStorage {
   @observable successSave_mess: string = ""; // Алерт в форме при успешном сохранении
   @observable errorSave_mess: string = ""; // Алерт в форме при ошибке
 
-  @observable devs_groups: Array<string> = [];
+  @observable devs_groups: IGroup[] = [];
 
   @observable devs_numbers: Array<string> = [];
 
   @observable all_devs: IDevice[] = [];
+
+  @observable locations: ILocation[] = [];
+  @observable isLoading: boolean = false;
   constructor() {
     makeAutoObservable(this);
   }
@@ -200,19 +205,27 @@ export class DevsGroupStorage {
   }
 
   ///////////////////////////////////////////////Список расположений устройств
-  @action setDevsGroups(val: Array<string>) {
+  @action setDevsGroups(val: IGroup[]) {
     this.devs_groups = val;
   }
-  @computed getDevsGroups(): Array<string> {
+  @computed getDevsGroups(): IGroup[] {
     return this.devs_groups;
   }
 
-  @action setDefaultExpandedDevsGroups(val: Array<string>) {
-    this.defaultExpanded_devs_froups = val;
+  @action setLocations(val: ILocation[]) {
+    this.locations = val;
   }
-  @computed getDefaultExpandedDevsGroups(): Array<string> {
-    return this.defaultExpanded_devs_froups;
+
+  @computed getLocations(): ILocation[] {
+    return this.locations;
   }
+
+  // @action setDefaultExpandedDevsGroups(val: Array<string>) {
+  //   this.defaultExpanded_devs_froups = val;
+  // }
+  // @computed getDefaultExpandedDevsGroups(): Array<string> {
+  //   return this.defaultExpanded_devs_froups;
+  // }
 
   //////////////////////////////////////////////////////////////////////////Проверка
   @action setNameError(val: boolean) {
@@ -301,6 +314,13 @@ export class DevsGroupStorage {
 
   @computed getAllDevs(): IDevice[] {
     return this.all_devs;
+  }
+
+  @action setIsLoading(val: boolean) {
+    this.isLoading = val;
+  }
+  @computed getIsLoading(): boolean {
+    return this.isLoading;
   }
 
   async set_NewDevGroup(name: string, value: any, _options?: any) {
@@ -437,11 +457,20 @@ export class DevsGroupStorage {
     };
     q.sess_code = sess_code;
     // (await WSocket.get()).send(q);
-    api.fetch(q).catch((e) => console.log("error=>", e)); // fetch-запрос
+    if (this.getDevsGroups().length === 0) {
+      this.setIsLoading(true);
+    }
+
+    api
+      .fetch(q)
+      .catch((e) => console.log("error=>", e))
+      .finally(() => this.setIsLoading(false)); // fetch-запрос
   }
 
+  //TODO: оптимизировать функцию
   setDevsGroupsAll(dt: IWSResult) {
     /* -----  Получаем все группы устройств   */
+    // console.log("data=>", dt.data.replace(/\n/g, "\\n"));
     if (typeof dt.data === "string") {
       const data = dt.data;
       //Экранируем символ перевода строки (чтобы приложение не ломалось, когда в многострочных полях строки есть перевод строки)
@@ -470,8 +499,6 @@ export class DevsGroupStorage {
       ) {
         devs_g = JSON.parse(JSON.stringify(obj));
       }
-      // console.log("devs_g.>", devs_g); // \n
-      // console.log("devs_g.0=>", JSON.parse(JSON.stringify( devs_g[0]))); // \space
 
       for (var key in devs_g) {
         if (devs_g.hasOwnProperty(key)) {
@@ -488,27 +515,56 @@ export class DevsGroupStorage {
       }
 
       this.setDevsGroups(DevGr);
+      console.log("devGr=>", DevGr);
 
       // const arr = DevGr.reduce((acc, { devs }) => {
       //   return [...acc, ...devs];
       // }, []);
 
       let allDevs: any[] = [];
-      const recursion = (arr: any[]) => {
+      const recursionDevs = (arr: any[]) => {
         for (let elem of arr) {
           allDevs.push(...elem.devs);
           if (elem.childs.length !== 0) {
-            recursion(elem.childs);
+            recursionDevs(elem.childs);
           }
         }
       };
-      recursion(DevGr);
+      recursionDevs(DevGr);
       this.setAllDevs(allDevs);
-      // console.log("alldevs=>", JSON.parse(JSON.stringify(this.getAllDevs())));
+
       const allNumbers = allDevs.map((dev) => {
         return dev.number;
       });
       this.setNumbers(allNumbers);
+      this.setLocations(getGroups(DevGr));
+
+      // APP_STORAGE.wells.fetchWells();
+
+      // let wells: IWell[] = [];
+      // const recursionWells = (group: IGroup[]) => {
+      //   group.forEach((element) => {
+      //     element.devs.forEach((dev) => {
+      //       if (dev.well) {
+      //         const org = getMatchedOrg(
+      //           APP_STORAGE.reg_user.getOrgAll(),
+      //           element.group.org_id
+      //         );
+      //         wells.push({
+      //           number: dev.well,
+      //           location: { id: element.group.id, name: element.group.g_name },
+      //           org: { id: element.group.org_id, name: org },
+      //           dev: { id: dev.id, number: dev.number },
+      //         });
+      //       }
+      //     });
+      //     if (element.childs.length > 0) {
+      //       recursionWells(element.childs);
+      //     }
+      //   });
+      // };
+      // recursionWells(DevGr);
+      //APP_STORAGE.wells.setWells(wells);
     }
   }
 
