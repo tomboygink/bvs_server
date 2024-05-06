@@ -75,9 +75,8 @@ export class NewUserRegistration extends React.Component<IProps> {
   }
 
   async OpenModalRegUser(e: any, tittle: string) {
-    /// Функция для открытия модашльного окна
+    /// Функция для открытия модального окна
     APP_STORAGE.reg_user.get_Org("sess_id", APP_STORAGE.auth_form.getdt()); // как только модальное окно открылось, отправляем запрос на получение всех организаций
-
     APP_STORAGE.reg_user.setTakeModal(e); // передаем идентифкатор
     APP_STORAGE.reg_user.setTittleModal(tittle); // передаем заголовок в модальное окно
     APP_STORAGE.reg_user.setModalRegUser(true);
@@ -282,33 +281,33 @@ export class NewUserRegistration extends React.Component<IProps> {
           }}
           value={APP_STORAGE.reg_user.getLogin().trim()}
         />
-        <form>
-          <TextInput
-            InputProps={{ style: { fontSize: 12 }, type: "password" }}
-            error={APP_STORAGE.reg_user.getErrorPassword()}
-            helperText={APP_STORAGE.reg_user.getTextHelpPassword()}
-            label="Пароль"
-            onChange={(e) => {
-              APP_STORAGE.reg_user.setPassword(e.target.value);
-            }}
-            value={APP_STORAGE.reg_user.getPassword().trim()}
-          />
 
-          <FormHelperText sx={{ ml: "12px" }}>
-            используйте 6 или более символов, сочетая буквы, цифры и символы.
-          </FormHelperText>
+        <TextInput
+          InputProps={{ style: { fontSize: 12 }, type: "password" }}
+          error={APP_STORAGE.reg_user.getErrorPassword()}
+          helperText={APP_STORAGE.reg_user.getTextHelpPassword()}
+          label="Пароль"
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setPassword(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getPassword().trim()}
+        />
 
-          <TextInput
-            InputProps={{ style: { fontSize: 12 }, type: "password" }}
-            error={APP_STORAGE.reg_user.getErrorRepeatPassword()}
-            helperText={APP_STORAGE.reg_user.getTextHelpRepeatPassword()}
-            label="Повторите пароль"
-            onChange={(e) => {
-              APP_STORAGE.reg_user.setRepeatPassword(e.target.value);
-            }}
-            value={APP_STORAGE.reg_user.getRepeatPassword().trim()}
-          />
-        </form>
+        <FormHelperText sx={{ ml: "12px" }}>
+          используйте 6 или более символов, сочетая буквы, цифры и символы.
+        </FormHelperText>
+
+        <TextInput
+          InputProps={{ style: { fontSize: 12 }, type: "password" }}
+          error={APP_STORAGE.reg_user.getErrorRepeatPassword()}
+          helperText={APP_STORAGE.reg_user.getTextHelpRepeatPassword()}
+          label="Повторите пароль"
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setRepeatPassword(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getRepeatPassword().trim()}
+        />
+
         <Divider sx={{ padding: "12px" }} />
 
         <FormGroup sx={{ mt: "12px" }}>

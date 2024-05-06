@@ -1182,6 +1182,8 @@ export class ModalLeftPanel {
           "sess_id",
           APP_STORAGE.auth_form.getdt()
         );
+        // APP_STORAGE.wells.fetchWells();
+
         this.setSuccessSave_mess(SAVE_SUCCESS);
         setTimeout(() => {
           this.setModalRegUser(false);

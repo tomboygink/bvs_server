@@ -25,6 +25,7 @@ import { TextInput } from "../../../shared/TextInput";
 import { CONFIG } from "../../../../../../xcore/config";
 import { APP_STORAGE } from "../../../../storage/AppStorage";
 import { IGroup } from "../../../../models/IDevice";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 interface IProps {}
 interface MutableRefObject<T> {
@@ -118,50 +119,48 @@ export const DevLocationFC: FC<IProps> = observer(() => {
       );
       APP_STORAGE.importdevs.setSvg(svgSheme);
       setTimeout(() => {
-        drawShemeSvg();
-        //APP_STORAGE.importdevs.uploadfile();
+        APP_STORAGE.wells.fetchWells(drawShemeSvg);
+        //drawShemeSvg();
       }, 100);
     } else APP_STORAGE.importdevs.setSvg("");
   };
 
   // Отрисовка схемы расположения
   const drawShemeSvg = () => {
+    let wells = toJS(APP_STORAGE.wells.getDefaultWells());
+    const allDevs = toJS(APP_STORAGE.devs_groups.getAllDevs());
+    const transformWells = wells?.map((well) => {
+      const dev = allDevs.find((dev) => dev.id === well.dev_id);
+      return {
+        id: well.id,
+        number: well.number,
+        dev: {
+          id: dev.id,
+          number: dev.number,
+        },
+      };
+    });
+
     let tooltip = document.getElementById("tooltip");
     const devTooltip = tooltip.querySelector(".tooltip__dev");
     const wellTooltip = tooltip.querySelector(".tooltip__well");
-
     APP_STORAGE.importdevs.setOpenModalSvg(false);
     const hrefs: SVGElement[] = Array.from(
       svgRef.current.querySelectorAll(".well")
     );
 
-    hrefs.forEach((item, i) => {
+    hrefs?.forEach((item, i) => {
       item.addEventListener("mouseout", () => {
         item.style.stroke = "";
         tooltip.style.display = "none";
       });
       item.addEventListener("mousemove", () => {
-        APP_STORAGE.devs.getChangeSensors2().forEach((dev, j) => {
-          if (item.id.slice(5) === dev.id) {
+        transformWells?.forEach((well, j) => {
+          if (item.id.slice(5) === well.id) {
             item.style.stroke = "#25E48B";
             const clientRectangle = item.getBoundingClientRect();
-            devTooltip.textContent = `Номер косы - ${
-              APP_STORAGE.devs.getChangeSensors2()[j].number
-            }`;
-            if (APP_STORAGE.devs.getChangeSensors2()[j].well) {
-              wellTooltip.textContent = `Номер скважины - ${
-                APP_STORAGE.devs.getChangeSensors2()[j].well
-              }`;
-            } else {
-              wellTooltip.textContent = "";
-            }
-
-            // tooltip.innerHTML = `Номер косы - ${
-            //   APP_STORAGE.devs.getChangeSensors2()[j].number
-            // }. Номер скважины - ${
-            //   APP_STORAGE.devs.getChangeSensors2()[j].well
-            // }`;
-
+            devTooltip.textContent = `Номер косы - ${transformWells[j].dev.number}`;
+            wellTooltip.textContent = `Номер скважины - ${transformWells[j].number}`;
             tooltip.style.display = "block";
             tooltip.style.left = clientRectangle.left + "px";
             tooltip.style.top = clientRectangle.top + "px";
@@ -169,9 +168,9 @@ export const DevLocationFC: FC<IProps> = observer(() => {
         });
       });
       item.addEventListener("click", () => {
-        APP_STORAGE.devs.getChangeSensors2().forEach((dev, j) => {
-          if (item.id.slice(5) === dev.id) {
-            APP_STORAGE.devs.setIdChild("_dev_id_key_" + item.id.slice(5));
+        transformWells?.forEach((well, j) => {
+          if (item.id.slice(5) === well.id) {
+            APP_STORAGE.devs.setIdChild("_dev_id_key_" + well.dev.id);
             APP_STORAGE.sensors.setEmptySession("");
             APP_STORAGE.sensors.setSessFirstLast([]);
             APP_STORAGE.sensors.setSessFirstLastCharts([]);

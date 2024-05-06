@@ -27,6 +27,7 @@ interface Props {
   defaultValue?: string;
   onClose?: () => void;
   isDev?: boolean;
+  displayEmpty?: boolean;
 }
 
 export const SelectWithSearch: FC<Props> = ({
@@ -39,6 +40,7 @@ export const SelectWithSearch: FC<Props> = ({
   defaultValue,
   onClose,
   isDev,
+  displayEmpty = false,
 }) => {
   const [searchText, setSearchText] = useState("");
   const displayedOptions = options.filter((option) =>
@@ -49,11 +51,6 @@ export const SelectWithSearch: FC<Props> = ({
     onClose();
   };
 
-  // const displayedOptions = useMemo(
-  //   () => allOptions.filter((option) => containsText(option.name, searchText)),
-  //   [searchText]
-  // );
-
   return (
     <FormControl
       disabled={isDisabled}
@@ -63,7 +60,6 @@ export const SelectWithSearch: FC<Props> = ({
     >
       <InputLabel sx={{ fontSize: "12px" }}>{label}</InputLabel>
       <Select
-        // Disables auto focus on MenuItems and allows TextField to be in focus
         name={name}
         MenuProps={{ autoFocus: false }}
         sx={{ fontSize: "12px" }}
@@ -72,18 +68,11 @@ export const SelectWithSearch: FC<Props> = ({
         label={label}
         onChange={onChange}
         onClose={handleClose}
-
-        // This prevents rendering empty string in Select's value
-        // if search text would exclude currently selected option.
-        //renderValue={() => value}
+        displayEmpty={displayEmpty}
       >
-        {/* TextField is put into ListSubheader so that it doesn't
-              act as a selectable item in the menu
-              i.e. we can click the TextField without triggering any selection.*/}
         <ListSubheader>
           <TextField
             size="small"
-            // Autofocus on textfield
             autoFocus
             placeholder="Начните вводить название..."
             fullWidth
@@ -97,7 +86,6 @@ export const SelectWithSearch: FC<Props> = ({
             onChange={(e) => setSearchText(e.target.value)}
             onKeyDown={(e) => {
               if (e.key !== "Escape") {
-                // Prevents autoselecting item while typing (default Select behaviour)
                 e.stopPropagation();
               }
             }}

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useRef } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { toJS } from "mobx";
 import { APP_STORAGE } from "../../../storage/AppStorage";
@@ -6,22 +6,13 @@ import {
   Dialog,
   Box,
   Button,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
   Alert,
   Stack,
   Typography,
   Divider,
 } from "@mui/material";
-import {
-  filteredDevs,
-  getGroups,
-  filteredGroups,
-} from "../../../../utils/functions";
+import { filteredDevs, getGroups } from "../../../../utils/functions";
 import { useFormValidation } from "../../../hooks/UseFormValidation";
-import { Org } from "../../../storage/components/Orgs/OrgStorage";
 import { CloseButton } from "../../shared/CloseButton";
 import { TextInput } from "../../shared/TextInput";
 import { SelectWithSearch } from "../../shared/SelectWithSearch";
@@ -29,7 +20,6 @@ import { IDevice } from "../../../models/IDevice";
 
 export const EditWellModal: FC = observer(() => {
   const [validationMessage, setValidationMessage] = useState("");
-  const [currentGroup, setCurrentGroup] = useState([]);
   const [currentDevs, setCurrentDevs] = useState([]);
 
   const {
@@ -39,10 +29,8 @@ export const EditWellModal: FC = observer(() => {
     handleChange,
     handleSelectChange,
     isInValidInput,
-    isValid,
     resetForm,
   } = useFormValidation();
-  const orgs = APP_STORAGE.reg_user.getOrgAll();
 
   const locations = JSON.parse(
     JSON.stringify(APP_STORAGE.devs_groups.getDevsGroups())
@@ -54,20 +42,15 @@ export const EditWellModal: FC = observer(() => {
     let devSelectedWell: IDevice;
     setValidationMessage("");
     const selectedWell = APP_STORAGE.wells.getSelectedWell();
-    const hasWell = APP_STORAGE.wells
-      .getDefaultWells()
-      .find((item) => item.dev_id === values.editWell_dev);
     const {
       editWell_number: number,
       editWell_location: location,
-      //editWell_org: org,
       editWell_dev: dev,
     } = values;
 
     const {
       number: storeNumber,
       location: storeLocation,
-      //org: storeOrg,
       dev: storeDev,
     } = APP_STORAGE.wells.getSelectedWell();
     const formData = {
@@ -112,16 +95,9 @@ export const EditWellModal: FC = observer(() => {
       },
     };
 
-    if (
-      formData.editWell_number === "" ||
-      //formData.editWell_org === "" ||
-      formData.editWell_location === ""
-    ) {
+    if (formData.editWell_number === "" || formData.editWell_location === "") {
       setValidationMessage("Не заполнены обязательные поля");
-    } else if (hasWell) {
-      setValidationMessage("Устройство уже используется в другой скважине");
     } else {
-      console.log("formData", formData);
       APP_STORAGE.wells.changeThermalWell(
         "sess_id",
         APP_STORAGE.auth_form.getdt(),
@@ -130,15 +106,6 @@ export const EditWellModal: FC = observer(() => {
       );
     }
   };
-
-  useEffect(() => {
-    //Очищаем значения полей Расположение, Устройства, если выбрана другая организация
-    setValues({ ...values, editWell_location: "", editWell_dev: "" });
-    const group = getGroups(locations);
-
-    filteredGroups(group, values.editWell_org, setCurrentGroup);
-  }, [values.editWell_org]);
-
   // Очистка формы при закрытии
   useEffect(() => {
     setValidationMessage("");
@@ -151,20 +118,21 @@ export const EditWellModal: FC = observer(() => {
     filteredDevs(allDevs, values.editWell_location, setCurrentDevs);
   }, [values.editWell_location]);
 
-  // Получаем Options для списка с расположениями и устройствами в зависимости от выбранной скважины (по умолчанию)
+  // Значение выбранной скважины при открытии модалки, пул устройств для выбранного расположения
   useEffect(() => {
-    const group = getGroups(locations);
-    filteredGroups(
-      group,
-      APP_STORAGE.wells.getSelectedWell()?.org.id,
-      setCurrentGroup
-    );
+    // APP_STORAGE.wells.fetchWells();
+    const selectedWell = APP_STORAGE.wells.getSelectedWell();
+    setValues({
+      editWell_number: selectedWell.number,
+      editWell_location: selectedWell.location.id,
+      editWell_dev: selectedWell.dev.id,
+    });
     filteredDevs(
       allDevs,
       APP_STORAGE.wells.getSelectedWell()?.location.id,
       setCurrentDevs
     );
-  }, [APP_STORAGE.wells.getSelectedWell()]);
+  }, [APP_STORAGE.wells.getSelectedWell(), APP_STORAGE.wells.getOpenModal()]);
 
   return (
     <Dialog
@@ -209,33 +177,13 @@ export const EditWellModal: FC = observer(() => {
           }
           label="Номер скважины"
           onChange={handleChange}
-          defaultValue={APP_STORAGE.wells.getSelectedWell()?.number}
+          value={values.editWell_number || ""}
         />
-        {/* <FormControl fullWidth size="small" sx={{ mt: "14px" }}>
-          <InputLabel className="org" sx={{ fontSize: "12px" }}>
-            Организация*
-          </InputLabel>
-
-          <Select
-            name="editWell_org"
-            sx={{ fontSize: "12px" }}
-            defaultValue={APP_STORAGE.wells.getSelectedWell()?.org.id}
-            label="организация"
-            onChange={handleSelectChange}
-            onClose={() => {}}
-          >
-            {orgs.map((org) => (
-              <MenuItem key={org.id} sx={{ fontSize: "12px" }} value={org.id}>
-                {org.full_name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl> */}
         <SelectWithSearch
           name="editWell_location"
           options={getGroups(locations)}
           label="Расположение*"
-          defaultValue={APP_STORAGE.wells.getSelectedWell()?.location.id}
+          value={values.editWell_location || ""}
           onChange={handleSelectChange}
           onClose={() => {}}
         />
@@ -243,7 +191,7 @@ export const EditWellModal: FC = observer(() => {
           name="editWell_dev"
           options={currentDevs}
           label="Устройство"
-          defaultValue={APP_STORAGE.wells.getSelectedWell()?.dev.id || ""}
+          value={values.editWell_dev || ""}
           onChange={handleSelectChange}
           onClose={() => {}}
           isDev

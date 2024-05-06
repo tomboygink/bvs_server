@@ -470,7 +470,7 @@ export class DevsGroupStorage {
   //TODO: оптимизировать функцию
   setDevsGroupsAll(dt: IWSResult) {
     /* -----  Получаем все группы устройств   */
-    // console.log("data=>", dt.data.replace(/\n/g, "\\n"));
+
     if (typeof dt.data === "string") {
       const data = dt.data;
       //Экранируем символ перевода строки (чтобы приложение не ломалось, когда в многострочных полях строки есть перевод строки)
@@ -515,14 +515,13 @@ export class DevsGroupStorage {
       }
 
       this.setDevsGroups(DevGr);
-      console.log("devGr=>", DevGr);
 
       // const arr = DevGr.reduce((acc, { devs }) => {
       //   return [...acc, ...devs];
       // }, []);
 
-      let allDevs: any[] = [];
-      const recursionDevs = (arr: any[]) => {
+      let allDevs: IDevice[] = [];
+      const recursionDevs = (arr: IGroup[]) => {
         for (let elem of arr) {
           allDevs.push(...elem.devs);
           if (elem.childs.length !== 0) {

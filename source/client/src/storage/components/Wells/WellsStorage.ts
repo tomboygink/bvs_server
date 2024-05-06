@@ -92,13 +92,16 @@ export class WellsStorage {
     return this.openModal;
   }
 
-  fetchWells() {
+  fetchWells(middleware?: () => void) {
     const sess_code = APP_STORAGE.auth_form.getdt();
     const q: IWSQuery = new WSQuery("get_ThermalWell");
     q.args = {};
     q.sess_code = sess_code;
     api
       .fetch(q)
+      .then(() => {
+        middleware && middleware();
+      })
 
       .catch((err) => console.log("err", err));
   }
@@ -137,6 +140,7 @@ export class WellsStorage {
           "sess_id",
           APP_STORAGE.auth_form.getdt()
         );
+
         this.setSuccessSave_mess(SAVE_SUCCESS);
         this.setSelectedWell(newWell);
 

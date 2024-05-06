@@ -18,6 +18,7 @@ import { TextInput } from "../../shared/TextInput";
 import { EditWellModal } from "./EditWellModal";
 import { IWell } from "../../../models/IWell";
 import { IDevice } from "../../../models/IDevice";
+import { Select } from "../../shared/Select";
 
 export const Wells = observer(() => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -88,9 +89,9 @@ export const Wells = observer(() => {
       APP_STORAGE.wells.setSelectedWell(selectedWell);
     } else APP_STORAGE.wells.setSelectedWell(selectedWell);
   };
-  useEffect(() => {
-    APP_STORAGE.wells.fetchWells();
-  }, []);
+  // useEffect(() => {
+  //   APP_STORAGE.wells.fetchWells();
+  // }, []);
   useEffect(() => {
     getSelectedWell();
   }, [APP_STORAGE.reg_user.getNodeIdWell()]);
