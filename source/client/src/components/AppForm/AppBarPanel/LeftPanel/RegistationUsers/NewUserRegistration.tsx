@@ -281,33 +281,33 @@ export class NewUserRegistration extends React.Component<IProps> {
           }}
           value={APP_STORAGE.reg_user.getLogin().trim()}
         />
-        <form>
-          <TextInput
-            InputProps={{ style: { fontSize: 12 }, type: "password" }}
-            error={APP_STORAGE.reg_user.getErrorPassword()}
-            helperText={APP_STORAGE.reg_user.getTextHelpPassword()}
-            label="Пароль"
-            onChange={(e) => {
-              APP_STORAGE.reg_user.setPassword(e.target.value);
-            }}
-            value={APP_STORAGE.reg_user.getPassword().trim()}
-          />
 
-          <FormHelperText sx={{ ml: "12px" }}>
-            используйте 6 или более символов, сочетая буквы, цифры и символы.
-          </FormHelperText>
+        <TextInput
+          InputProps={{ style: { fontSize: 12 }, type: "password" }}
+          error={APP_STORAGE.reg_user.getErrorPassword()}
+          helperText={APP_STORAGE.reg_user.getTextHelpPassword()}
+          label="Пароль"
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setPassword(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getPassword().trim()}
+        />
 
-          <TextInput
-            InputProps={{ style: { fontSize: 12 }, type: "password" }}
-            error={APP_STORAGE.reg_user.getErrorRepeatPassword()}
-            helperText={APP_STORAGE.reg_user.getTextHelpRepeatPassword()}
-            label="Повторите пароль"
-            onChange={(e) => {
-              APP_STORAGE.reg_user.setRepeatPassword(e.target.value);
-            }}
-            value={APP_STORAGE.reg_user.getRepeatPassword().trim()}
-          />
-        </form>
+        <FormHelperText sx={{ ml: "12px" }}>
+          используйте 6 или более символов, сочетая буквы, цифры и символы.
+        </FormHelperText>
+
+        <TextInput
+          InputProps={{ style: { fontSize: 12 }, type: "password" }}
+          error={APP_STORAGE.reg_user.getErrorRepeatPassword()}
+          helperText={APP_STORAGE.reg_user.getTextHelpRepeatPassword()}
+          label="Повторите пароль"
+          onChange={(e) => {
+            APP_STORAGE.reg_user.setRepeatPassword(e.target.value);
+          }}
+          value={APP_STORAGE.reg_user.getRepeatPassword().trim()}
+        />
+
         <Divider sx={{ padding: "12px" }} />
 
         <FormGroup sx={{ mt: "12px" }}>

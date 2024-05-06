@@ -129,7 +129,7 @@ export class EditUser extends React.Component<IProps> {
             </Box>
             <Divider sx={{ marginBottom: "20px" }} />
 
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Stack direction="row" spacing={2}>
               <TextInput
                 error={APP_STORAGE.edit_user.getErrorFamily()}
                 helperText={APP_STORAGE.edit_user.getTextHelpFamily()}
@@ -158,7 +158,7 @@ export class EditUser extends React.Component<IProps> {
                 }}
                 value={APP_STORAGE.edit_user.getFather() || ""}
               />
-            </Box>
+            </Stack>
 
             <Box sx={{ display: "flex" }}>
               <TextInput
@@ -240,36 +240,33 @@ export class EditUser extends React.Component<IProps> {
               value={APP_STORAGE.edit_user.getLogin() || ""}
             />
 
-            <form>
-              <TextInput
-                InputProps={{ style: { fontSize: 12 }, type: "password" }}
-                InputLabelProps={{ style: { fontSize: 12 } }}
-                error={APP_STORAGE.edit_user.getErrorPassword()}
-                helperText={APP_STORAGE.edit_user.getTextHelpPassword()}
-                fullWidth
-                label="Новый пароль"
-                onChange={(e) => {
-                  APP_STORAGE.edit_user.setPassword(e.target.value);
-                }}
-                value={APP_STORAGE.edit_user.getPassword() || ""}
-              />
+            <TextInput
+              InputProps={{ style: { fontSize: 12 }, type: "password" }}
+              InputLabelProps={{ style: { fontSize: 12 } }}
+              error={APP_STORAGE.edit_user.getErrorPassword()}
+              helperText={APP_STORAGE.edit_user.getTextHelpPassword()}
+              fullWidth
+              label="Новый пароль"
+              onChange={(e) => {
+                APP_STORAGE.edit_user.setPassword(e.target.value);
+              }}
+              value={APP_STORAGE.edit_user.getPassword() || ""}
+            />
 
-              <FormHelperText sx={{ ml: "12px" }}>
-                используйте 6 или более символов, сочетая буквы, цифры и
-                символы.
-              </FormHelperText>
+            <FormHelperText sx={{ ml: "12px" }}>
+              используйте 6 или более символов, сочетая буквы, цифры и символы.
+            </FormHelperText>
 
-              <TextInput
-                InputProps={{ style: { fontSize: 12 }, type: "password" }} // font size of input text
-                error={APP_STORAGE.edit_user.getErrorRepeatPassword()}
-                helperText={APP_STORAGE.edit_user.getTextHelpRepeatPassword()}
-                label="Повторите пароль"
-                onChange={(e) => {
-                  APP_STORAGE.edit_user.setRepeatPassword(e.target.value);
-                }}
-                value={APP_STORAGE.edit_user.getRepeatPassword() || ""}
-              />
-            </form>
+            <TextInput
+              InputProps={{ style: { fontSize: 12 }, type: "password" }} // font size of input text
+              error={APP_STORAGE.edit_user.getErrorRepeatPassword()}
+              helperText={APP_STORAGE.edit_user.getTextHelpRepeatPassword()}
+              label="Повторите пароль"
+              onChange={(e) => {
+                APP_STORAGE.edit_user.setRepeatPassword(e.target.value);
+              }}
+              value={APP_STORAGE.edit_user.getRepeatPassword() || ""}
+            />
 
             <Divider sx={{ padding: "12px" }} />
 
