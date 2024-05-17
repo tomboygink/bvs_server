@@ -1,27 +1,7 @@
 import React from "react";
-// const TextComponent = ({ text }) => {
-//   const [count, setCountCount] = React.useState(0);
-//   const handleClick = () => {
-//     setCountCount(count + 1);
-//   };
-//   return (
-//     <>
-//       <p>{text}</p>
-//       <button onClick={handleClick}>добавить</button>
-//       <p>{count}</p>
-//     </>
-//   );
-// };
-// export const App = () => {
-//   return (
-//     <>
-//       <TextComponent text="Система визуализации" />
-//       <TextComponent text="СДС" />
-//     </>
-//   );
-// };
 
 import { observer } from "mobx-react";
+import { toJS } from "mobx";
 import { APP_STORAGE } from "./storage/AppStorage";
 
 import { AuthForm } from "./components/AuthForm/AuthForm";
