@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Box, Typography } from "@mui/material";
-
+import { toJS } from "mobx";
 import { observer } from "mobx-react";
 import { APP_STORAGE } from "../../../storage/AppStorage";
 
@@ -32,6 +32,7 @@ export class DevPovs extends React.Component<IProps> {
       EndPovsDate = `${day_endPovs}.${month_endPovs}.${year_endPovs}`;
       EndPovsTime = APP_STORAGE.sensors.getTimeDevSessFirst().split("T")[1];
     }
+
 
     return (
       <div className="wrapper-sensors">

@@ -27,17 +27,18 @@ export class NewDevPovs extends React.Component<IProps> {
   componentDidMount(): void {}
 
   render(): React.ReactNode {
-    if (
-      APP_STORAGE.devs.getStartDevPovs() === "" ||
-      APP_STORAGE.devs.getEndDevPovs() === ""
-    ) {
-      var tzoffset = new Date().getTimezoneOffset() * 60000; // смещение в миллисекундах
-      var localISOTime = new Date(Date.now() - tzoffset)
-        .toISOString()
-        .slice(0, -8);
-      APP_STORAGE.devs.setStartDevPovs(localISOTime);
-      APP_STORAGE.devs.setEndDevPovs(localISOTime); // => '2023-03-16T09:00'
-    }
+     // if (
+    //   APP_STORAGE.devs.getStartDevPovs() === "" ||
+    //   APP_STORAGE.devs.getEndDevPovs() === ""
+    // ) {
+      
+    //   var tzoffset = new Date().getTimezoneOffset() * 60000; // смещение в миллисекундах
+    //   var localISOTime = new Date(Date.now() - tzoffset)
+    //     .toISOString()
+    //     .slice(0, -8);
+    //   APP_STORAGE.devs.setStartDevPovs(localISOTime);
+    //   APP_STORAGE.devs.setEndDevPovs(localISOTime); // => '2023-03-16T09:00'
+    // }
 
     return (
       <React.Fragment>
@@ -70,11 +71,12 @@ export class NewDevPovs extends React.Component<IProps> {
 
             <TextField
               size="small"
-              id="datetime-local"
+              // id="datetime-local"
               type="datetime-local"
-              defaultValue={APP_STORAGE.devs.getStartDevPovs()}
+              value={APP_STORAGE.devs.getStartDevPovs()}
               onChange={(e) => {
                 APP_STORAGE.devs.setStartDevPovs(e.target.value);
+                
               }}
               sx={{ mr: "16px", fontSize: "14px", mb: "8px" }}
               InputLabelProps={{
@@ -85,11 +87,12 @@ export class NewDevPovs extends React.Component<IProps> {
             <TextField
               sx={{ fontSize: "12px!important", mr: "16px", mb: "8px" }}
               size="small"
-              id="datetime-local"
+              // id="datetime-local"
               type="datetime-local"
               defaultValue={APP_STORAGE.devs.getEndDevPovs()}
               onChange={(e) => {
                 APP_STORAGE.devs.setEndDevPovs(e.target.value);
+               
               }}
               InputLabelProps={{
                 shrink: true,
