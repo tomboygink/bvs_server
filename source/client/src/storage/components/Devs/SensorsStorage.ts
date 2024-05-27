@@ -361,6 +361,7 @@ export class SensorsStorage {
   async set_DevPovs(dt: IWSResult) {
     // Для работы с fetch-запросом dt.data преобразован в объект:
     let data = new Object(dt.data);
+  
 
     // Для Websocket
     // if (Object.keys(dt.data).length !== 0) {

@@ -873,25 +873,6 @@ export class ModalLeftPanel {
       // (await WSocket.get()).send(q);
       //  this.setResulSave("Данные успешно сохранены");
 
-      //  setTimeout(() => {
-      //    this.setFamily(""),
-      //      this.setName(""),
-      //      this.setFather(""),
-      //      this.setEmail(""),
-      //      this.setTelephone(""),
-      //      this.setKeyOrg(""),
-      //      this.setKeyJobs(""),
-      //      this.setLogin(""),
-      //      this.setPassword(""),
-      //      this.setRepeatPassword(""),
-      //      this.setCheckboxEd(false),
-      //      this.setCheckboxRead(true),
-      //      this.setInfo(""),
-      //      this.get_AllUsers("sess_id", APP_STORAGE.auth_form.getdt());
-      //    this.setResulSave("");
-      //    this.setModalRegUser(false);
-      //  }, 2000);
-
       api
         .fetch(q)
         .then(() => {

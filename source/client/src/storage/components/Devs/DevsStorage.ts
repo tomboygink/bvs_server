@@ -847,6 +847,18 @@ export class DevsStorage {
     var sess_code = value;
     var q: IWSQuery = new WSQuery("set_NewDevPovs");
 
+    if (
+      this.getStartDevPovs() === "" ||
+      this.getEndDevPovs() === ""
+    ) {
+
+      var tzoffset = new Date().getTimezoneOffset() * 60000; // смещение в миллисекундах
+      var localISOTime = new Date(Date.now() - tzoffset)
+        .toISOString()
+        .slice(0, -8);
+      this.setStartDevPovs(localISOTime);
+      this.setEndDevPovs(localISOTime); // => '2023-03-16T09:00'
+    }
     q.args = {
       dev_id: this.getId(),
       dev_number: this.getNumber(),
